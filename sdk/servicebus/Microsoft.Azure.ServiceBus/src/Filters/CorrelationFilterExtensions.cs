@@ -41,10 +41,10 @@ namespace Microsoft.Azure.ServiceBus
                         correlationFilter.ContentType = element.Value;
                         break;
                     case "Properties":
-                        foreach (var prop in element.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs)))
+                        foreach (var prop in element.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace)))
                         {
-                            var key = prop.Element(XName.Get("Key", ManagementClientConstants.SbNs))?.Value;
-                            var value = XmlObjectConvertor.ParseValueObject(prop.Element(XName.Get("Value", ManagementClientConstants.SbNs)));
+                            var key = prop.Element(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace))?.Value;
+                            var value = XmlObjectConvertor.ParseValueObject(prop.Element(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace)));
                             correlationFilter.Properties.Add(key, value);
                         }
                         break;
@@ -64,35 +64,35 @@ namespace Microsoft.Azure.ServiceBus
             XElement parameterElement = null;
             if (filter.properties != null)
             {
-                parameterElement = new XElement(XName.Get("Properties", ManagementClientConstants.SbNs));
+                parameterElement = new XElement(XName.Get("Properties", ManagementClientConstants.ServiceBusNamespace));
                 foreach (var param in filter.properties)
                 {
                     parameterElement.Add(
-                        new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.SbNs),
-                            new XElement(XName.Get("Key", ManagementClientConstants.SbNs), param.Key),
+                        new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace),
+                            new XElement(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace), param.Key),
                             XmlObjectConvertor.SerializeObject(param.Value)));
                 }
             }
 
             return new XElement(
-                XName.Get("Filter", ManagementClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), nameof(CorrelationFilter)),
+                XName.Get("Filter", ManagementClientConstants.ServiceBusNamespace),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(CorrelationFilter)),
                 string.IsNullOrWhiteSpace(filter.CorrelationId) ? null :
-                    new XElement(XName.Get("CorrelationId", ManagementClientConstants.SbNs), filter.CorrelationId),
+                    new XElement(XName.Get("CorrelationId", ManagementClientConstants.ServiceBusNamespace), filter.CorrelationId),
                 string.IsNullOrWhiteSpace(filter.MessageId) ? null :
-                    new XElement(XName.Get("MessageId", ManagementClientConstants.SbNs), filter.MessageId),
+                    new XElement(XName.Get("MessageId", ManagementClientConstants.ServiceBusNamespace), filter.MessageId),
                 string.IsNullOrWhiteSpace(filter.To) ? null :
-                    new XElement(XName.Get("To", ManagementClientConstants.SbNs), filter.To),
+                    new XElement(XName.Get("To", ManagementClientConstants.ServiceBusNamespace), filter.To),
                 string.IsNullOrWhiteSpace(filter.ReplyTo) ? null :
-                    new XElement(XName.Get("ReplyTo", ManagementClientConstants.SbNs), filter.ReplyTo),
+                    new XElement(XName.Get("ReplyTo", ManagementClientConstants.ServiceBusNamespace), filter.ReplyTo),
                 string.IsNullOrWhiteSpace(filter.Label) ? null :
-                    new XElement(XName.Get("Label", ManagementClientConstants.SbNs), filter.Label),
+                    new XElement(XName.Get("Label", ManagementClientConstants.ServiceBusNamespace), filter.Label),
                 string.IsNullOrWhiteSpace(filter.SessionId) ? null :
-                    new XElement(XName.Get("SessionId", ManagementClientConstants.SbNs), filter.SessionId),
+                    new XElement(XName.Get("SessionId", ManagementClientConstants.ServiceBusNamespace), filter.SessionId),
                 string.IsNullOrWhiteSpace(filter.ReplyToSessionId) ? null :
-                    new XElement(XName.Get("ReplyToSessionId", ManagementClientConstants.SbNs), filter.ReplyToSessionId),
+                    new XElement(XName.Get("ReplyToSessionId", ManagementClientConstants.ServiceBusNamespace), filter.ReplyToSessionId),
                 string.IsNullOrWhiteSpace(filter.ContentType) ? null :
-                    new XElement(XName.Get("ContentType", ManagementClientConstants.SbNs), filter.ContentType),
+                    new XElement(XName.Get("ContentType", ManagementClientConstants.ServiceBusNamespace), filter.ContentType),
                 parameterElement);
         }
     }

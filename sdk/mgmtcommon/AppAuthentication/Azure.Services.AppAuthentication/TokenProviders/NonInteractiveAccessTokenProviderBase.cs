@@ -15,16 +15,5 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public Principal PrincipalUsed;
 
         public abstract Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority, CancellationToken cancellationToken);
-
-        internal async Task<AppAuthenticationResult> GetAuthResultAsync(string authority, string resource, string scope, CancellationToken cancellationToken)
-        {
-            if (string.IsNullOrWhiteSpace(resource))
-            {
-                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    AzureServiceTokenProviderException.MissingResource);
-            }
-
-            return await GetAuthResultAsync(resource, authority, cancellationToken).ConfigureAwait(false);
-        }
     }
 }

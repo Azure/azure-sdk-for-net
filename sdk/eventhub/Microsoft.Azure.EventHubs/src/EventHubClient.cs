@@ -19,12 +19,15 @@ namespace Microsoft.Azure.EventHubs
     public abstract class EventHubClient : ClientEntity
     {
         readonly Lazy<EventDataSender> innerSender;
-        bool closeCalled = false;
+        readonly List<WeakReference> childEntities;
+        readonly AsyncLock asyncLock;
 
         internal EventHubClient(EventHubsConnectionStringBuilder csb)
             : base($"{nameof(EventHubClient)}{ClientEntity.GetNextId()}({csb.EntityPath})")
         {
             this.innerSender = new Lazy<EventDataSender>(() => this.CreateEventSender());
+            this.childEntities = new List<WeakReference>();
+            this.asyncLock = new AsyncLock();
 
             this.ConnectionStringBuilder = csb;
             this.EventHubName = csb.EntityPath;
@@ -157,12 +160,24 @@ namespace Microsoft.Azure.EventHubs
         /// <returns></returns>
         public sealed override async Task CloseAsync()
         {
-            this.closeCalled = true;
+            this.IsClosed = true;
 
             EventHubsEventSource.Log.ClientCloseStart(this.ClientId);
             try
             {
                 await this.OnCloseAsync().ConfigureAwait(false);
+
+                using (await this.asyncLock.LockAsync().ConfigureAwait(false))
+                {
+                    foreach (var reference in this.childEntities)
+                    {
+                        var clientEntity = reference.Target as ClientEntity;
+                        if (clientEntity != null)
+                        {
+                            await clientEntity.CloseAsync().ConfigureAwait(false);
+                        }
+                    }
+                }
             }
             finally
             {
@@ -319,7 +334,7 @@ namespace Microsoft.Azure.EventHubs
                 throw Fx.Exception.Argument(nameof(eventDataBatch), Resources.EventDataListIsNullOrEmpty);
             }
 
-            await this.SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey);
+            await this.SendAsync(eventDataBatch.ToEnumerable(), eventDataBatch.PartitionKey).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -448,8 +463,6 @@ namespace Microsoft.Azure.EventHubs
         /// </summary>
         public IWebProxy WebProxy { get; set; }
 
-        internal bool CloseCalled => this.closeCalled;
-
         internal EventDataSender CreateEventSender(string partitionId = null)
         {
             return this.OnCreateEventSender(partitionId);
@@ -487,6 +500,17 @@ namespace Microsoft.Azure.EventHubs
             if (this.innerSender.IsValueCreated)
             {
                 this.innerSender.Value.RetryPolicy = this.RetryPolicy.Clone();
+            }
+        }
+
+        internal void AddChildEntity(ClientEntity clientEntity)
+        {
+            using (this.asyncLock.LockSync())
+            {
+                if (!this.IsClosed)
+                {
+                    this.childEntities.Add(new WeakReference(clientEntity));
+                }
             }
         }
     }

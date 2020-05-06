@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// An exception class raised for errors in authenticating client reqeusts.
+    /// An exception class raised for errors in authenticating client requests.
     /// </summary>
     public class AuthenticationFailedException : Exception
     {
@@ -27,6 +30,11 @@ namespace Azure.Identity
         public AuthenticationFailedException(string message, Exception innerException)
             : base(message, innerException)
         {
+        }
+
+        internal static AuthenticationFailedException CreateAggregateException(string message, IList<Exception> innerExceptions)
+        {
+            return new AuthenticationFailedException(message, new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", innerExceptions.ToArray()));
         }
     }
 }

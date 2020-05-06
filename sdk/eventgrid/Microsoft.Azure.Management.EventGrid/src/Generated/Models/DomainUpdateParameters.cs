@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// <summary>
     /// Properties of the Domain update.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DomainUpdateParameters
     {
         /// <summary>
@@ -32,9 +35,24 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the DomainUpdateParameters class.
         /// </summary>
         /// <param name="tags">Tags of the domains resource.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules"
+        /// /&gt;. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="inboundIpRules">This can be used to restrict traffic
+        /// from specific IPs instead of all IPs. Note: These are considered
+        /// only if PublicNetworkAccess is enabled.</param>
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="sku">The Sku pricing tier for the domain.</param>
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), IdentityInfo identity = default(IdentityInfo), ResourceSku sku = default(ResourceSku))
         {
             Tags = tags;
+            PublicNetworkAccess = publicNetworkAccess;
+            InboundIpRules = inboundIpRules;
+            Identity = identity;
+            Sku = sku;
             CustomInit();
         }
 
@@ -48,6 +66,37 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring
+        /// &amp;lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules"
+        /// /&amp;gt;. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets this can be used to restrict traffic from specific IPs
+        /// instead of all IPs. Note: These are considered only if
+        /// PublicNetworkAccess is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundIpRules")]
+        public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
 
     }
 }

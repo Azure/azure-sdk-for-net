@@ -42,18 +42,21 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the account was
         /// created.</param>
-        /// <param name="createdBy">Name of the user who created the
-        /// account.</param>
         /// <param name="provisioningState">Provisioning state of the Account.
         /// Possible values include: 'Succeeded', 'Creating', 'Deleting',
         /// 'Moving', 'Failed'</param>
-        public Account(Identity identity, string id = default(string), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string provisioningState = default(string))
+        /// <param name="userEmail">Email of the user who created the
+        /// resource</param>
+        /// <param name="userName">Name of the user who created the
+        /// resource</param>
+        public Account(Identity identity, string id = default(string), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, location, name, tags, type)
         {
             Identity = identity;
             CreatedAt = createdAt;
-            CreatedBy = createdBy;
             ProvisioningState = provisioningState;
+            UserEmail = userEmail;
+            UserName = userName;
             CustomInit();
         }
 
@@ -75,17 +78,23 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public System.DateTime? CreatedAt { get; private set; }
 
         /// <summary>
-        /// Gets name of the user who created the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
-
-        /// <summary>
         /// Gets provisioning state of the Account. Possible values include:
         /// 'Succeeded', 'Creating', 'Deleting', 'Moving', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets email of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userEmail")]
+        public string UserEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Validate the object.

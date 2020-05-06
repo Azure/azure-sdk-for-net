@@ -9,6 +9,35 @@ namespace DataFactory.Tests.JsonSamples
     public class TriggerJsonSamples : JsonSampleCollection<TriggerJsonSamples>
     {
         [JsonSample]
+        public const string ChainingTriggerSample = @"
+    {
+        ""name"": ""chainingTrigger"",
+        ""properties"": {
+            ""type"": ""ChainingTrigger"",
+            ""pipeline"": {
+              ""pipelineReference"": {
+                ""referenceName"": ""childPipeline"",
+                ""type"": ""PipelineReference""
+              },
+              ""parameters"": {}
+            },
+            ""typeProperties"": {
+              ""dependsOn"": [
+                {
+                  ""referenceName"": ""parentPipeline1"",
+                  ""type"": ""PipelineReference""
+                },
+                {
+                  ""referenceName"": ""parentPipeline2"",
+                  ""type"": ""PipelineReference""
+                }
+              ],
+              ""runDimension"": ""JobId""
+            }
+        }
+    }";
+
+        [JsonSample]
         public const string BlobTriggerSample = @"
 {
   name: ""myDemoTrigger"",
@@ -146,6 +175,25 @@ namespace DataFactory.Tests.JsonSamples
           value: ""@{trigger().outputs.windowEndTime}""
         },
       }
+    }
+  }
+}
+";
+
+        [JsonSample]
+        public const string RerunTumblingWindowTriggerSample = @"
+{
+  name: ""myDemoRerunTWTrigger"",
+  properties: {
+    type: ""RerunTumblingWindowTrigger"",
+    typeProperties: {
+      ""parentTrigger"": {
+                ""type"": ""TriggerReference"",
+                ""referenceName"": ""parentTrigger""
+            },
+            ""requestedStartTime"": ""2017-04-14T13:00:00Z"",
+            ""requestedEndTime"": ""2018-04-14T13:00:00Z"",
+            ""rerunConcurrency"": 1
     }
   }
 }

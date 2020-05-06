@@ -37,21 +37,19 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="snapshotId">snapshotId</param>
         /// <param name="fileSystemId">fileSystemId</param>
-        /// <param name="creationDate">name</param>
+        /// <param name="created">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
+        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? created = default(System.DateTime?), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
-            Tags = tags;
             SnapshotId = snapshotId;
             FileSystemId = fileSystemId;
-            CreationDate = creationDate;
+            Created = created;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -86,12 +84,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
-
-        /// <summary>
         /// Gets snapshotId
         /// </summary>
         /// <remarks>
@@ -115,8 +107,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// The creation date of the snapshot
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.created")]
+        public System.DateTime? Created { get; private set; }
 
         /// <summary>
         /// Gets azure lifecycle management

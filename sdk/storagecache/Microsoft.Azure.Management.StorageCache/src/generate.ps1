@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "storagecache/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated" -Namespace "Microsoft.Azure.Management.StorageCache"

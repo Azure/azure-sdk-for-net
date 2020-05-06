@@ -136,7 +136,7 @@ namespace Test.Azure.Management.Logic
                     workflowName,
                     workflow);
 
-                Assert.Throws<CloudException>(() => client.WorkflowTriggers.Reset(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName));
+                Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.Reset(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName));
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }

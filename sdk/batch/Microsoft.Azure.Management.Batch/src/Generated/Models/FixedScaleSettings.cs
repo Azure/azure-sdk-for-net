@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// pool.
         /// </summary>
         /// <remarks>
-        /// At least one of targetDedicatedNodes, targetLowPriority nodes must
+        /// At least one of targetDedicatedNodes, targetLowPriorityNodes must
         /// be set.
         /// </remarks>
         [JsonProperty(PropertyName = "targetDedicatedNodes")]
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// the pool.
         /// </summary>
         /// <remarks>
-        /// At least one of targetDedicatedNodes, targetLowPriority nodes must
+        /// At least one of targetDedicatedNodes, targetLowPriorityNodes must
         /// be set.
         /// </remarks>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]

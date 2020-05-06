@@ -104,7 +104,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
                 {
                     // Evaluate retry condition?
                     TimeSpan? retryInterval = this.RetryPolicy.GetNextRetryInterval(ex, timeoutHelper.RemainingTime(), ++retryCount);
-                    if (retryInterval != null && !this.EventHubClient.CloseCalled)
+                    if (retryInterval != null && !this.EventHubClient.IsClosed)
                     {
                         await Task.Delay(retryInterval.Value).ConfigureAwait(false);
                         shouldRetry = true;
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             catch
             {
                 // Cleanup any session (and thus link) in case of exception.
-                session?.Abort();
+                session?.SafeClose();
                 throw;
             }
         }

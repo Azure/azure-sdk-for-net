@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.ServiceBus.Management
@@ -466,6 +466,99 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             var content = await GetEntity($"{topicPath}/Subscriptions/{subscriptionName}/rules", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
             return RuleDescriptionExtensions.ParseCollectionFromContent(content);
+        }
+
+        #endregion
+
+        #region GetEntitesRuntimeInfo
+        /// <summary>
+        /// Retrieves the list of runtime information for queues present in the namespace.
+        /// </summary>
+        /// <param name="count">The number of queues to fetch. Defaults to 100. Maximum value allowed is 100.</param>
+        /// <param name="skip">The number of queues to skip. Defaults to 0. Cannot be negative.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns><see cref="IList&lt;QueueRuntimeInfo&gt;"/> containing list of queue runtime information.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
+        /// <exception cref="ServiceBusTimeoutException">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
+        /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
+        /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
+        /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
+        /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
+        public virtual async Task<IList<QueueRuntimeInfo>> GetQueuesRuntimeInfoAsync(int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        {
+            if (count > 100 || count < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+            }
+            if (skip < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+            }
+
+            var content = await GetEntity("$Resources/queues", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+            return QueueRuntimeInfoExtensions.ParseCollectionFromContent(content);
+        }
+        
+        /// <summary>
+        /// Retrieves the list of runtime information for topics present in the namespace.
+        /// </summary>
+        /// <param name="count">The number of topics to fetch. Defaults to 100. Maximum value allowed is 100.</param>
+        /// <param name="skip">The number of topics to skip. Defaults to 0. Cannot be negative.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns><see cref="IList&lt;TopicRuntimeInfo&gt;"/> containing list of topics.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
+        /// <exception cref="ServiceBusTimeoutException">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
+        /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
+        /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
+        /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
+        /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
+        public virtual async Task<IList<TopicRuntimeInfo>> GetTopicsRuntimeInfoAsync(int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        {
+             if (count > 100 || count < 1)
+             { 
+                 throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+             }
+             if (skip < 0)
+             {
+                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+             }
+
+             var content = await GetEntity("$Resources/topics", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+             
+             return TopicRuntimeInfoExtensions.ParseCollectionFromContent(content);
+        }
+
+        /// <summary>
+        /// Retrieves the list of runtime information for subscriptions present in the namespace.
+        /// </summary>
+        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="count">The number of subscriptions to fetch. Defaults to 100. Maximum value allowed is 100.</param>
+        /// <param name="skip">The number of subscriptions to skip. Defaults to 0. Cannot be negative.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns><see cref="IList&lt;SubscriptionRuntimeInfo&gt;"/> containing list of topics.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">If the parameters are out of range.</exception>
+        /// <exception cref="ServiceBusTimeoutException">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
+        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
+        /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
+        /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
+        /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
+        /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
+        public virtual async Task<IList<SubscriptionRuntimeInfo>> GetSubscriptionsRuntimeInfoAsync(string topicPath, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        {
+             if (count > 100 || count < 1)
+             { 
+                 throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+             }
+             if (skip < 0)
+             {
+                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+             }
+
+             var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+             
+             return SubscriptionRuntimeInfoExtensions.ParseCollectionFromContent(topicPath, content);
         }
 
         #endregion

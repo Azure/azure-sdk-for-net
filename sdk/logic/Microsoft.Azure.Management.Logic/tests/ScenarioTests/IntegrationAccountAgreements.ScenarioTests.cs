@@ -260,7 +260,7 @@ namespace Test.Azure.Management.Logic
                     agreement);
 
                 client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, integrationAccountName, agreementName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -286,7 +286,7 @@ namespace Test.Azure.Management.Logic
                     agreement);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
             }
         }
 
@@ -475,8 +475,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     CheckDuplicateGroupControlNumber = false,
                                     CheckDuplicateTransactionSetControlNumber = false,
-                                    ValidateEdiTypes = true,
-                                    ValidateXsdTypes = false,
+                                    ValidateEDITypes = true,
+                                    ValidateXSDTypes = false,
                                     AllowLeadingAndTrailingSpacesAndZeroes = false,
                                     TrimLeadingAndTrailingSpacesAndZeroes = false,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.NotAllowed
@@ -576,8 +576,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     CheckDuplicateGroupControlNumber = false,
                                     CheckDuplicateTransactionSetControlNumber = false,
-                                    ValidateEdiTypes = true,
-                                    ValidateXsdTypes = false,
+                                    ValidateEDITypes = true,
+                                    ValidateXSDTypes = false,
                                     AllowLeadingAndTrailingSpacesAndZeroes = false,
                                     TrimLeadingAndTrailingSpacesAndZeroes = false,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.NotAllowed
@@ -721,8 +721,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.Optional,
                                     TrimLeadingAndTrailingSpacesAndZeroes = true,
-                                    ValidateEdiTypes = true,
-                                    ValidateXsdTypes = true
+                                    ValidateEDITypes = true,
+                                    ValidateXSDTypes = true
                                 },
                                 SchemaReferences = new EdifactSchemaReference[0]
 
@@ -834,8 +834,8 @@ namespace Test.Azure.Management.Logic
                                     InterchangeControlNumberValidityDays = 30,
                                     TrailingSeparatorPolicy = TrailingSeparatorPolicy.Optional,
                                     TrimLeadingAndTrailingSpacesAndZeroes = true,
-                                    ValidateEdiTypes = true,
-                                    ValidateXsdTypes = true
+                                    ValidateEDITypes = true,
+                                    ValidateXSDTypes = true
                                 },
                                 SchemaReferences = new EdifactSchemaReference[0]
 
@@ -879,7 +879,7 @@ namespace Test.Azure.Management.Logic
                                 },
                                 ErrorSettings = new AS2ErrorSettings
                                 {
-                                    ResendIfMdnNotReceived = true,
+                                    ResendIfMDNNotReceived = true,
                                     SuspendDuplicateMessage = true
                                 },
                                 MdnSettings = new AS2MdnSettings
@@ -887,12 +887,12 @@ namespace Test.Azure.Management.Logic
                                     DispositionNotificationTo = "http://tempuri.org",
                                     MdnText = "Sample",
                                     MicHashingAlgorithm = HashingAlgorithm.MD5,
-                                    NeedMdn = true,
+                                    NeedMDN = true,
                                     ReceiptDeliveryUrl = "http://tempuri.org",
-                                    SendInboundMdnToMessageBox = true,
-                                    SendMdnAsynchronously = true,
-                                    SignMdn = true,
-                                    SignOutboundMdnIfOptional = true
+                                    SendInboundMDNToMessageBox = true,
+                                    SendMDNAsynchronously = true,
+                                    SignMDN = true,
+                                    SignOutboundMDNIfOptional = true
                                 },
                                 MessageConnectionSettings = new AS2MessageConnectionSettings
                                 {
@@ -903,12 +903,12 @@ namespace Test.Azure.Management.Logic
                                 },
                                 SecuritySettings = new AS2SecuritySettings
                                 {
-                                    EnableNrrForInboundDecodedMessages = true,
-                                    EnableNrrForInboundEncodedMessages = true,
-                                    EnableNrrForInboundMdn = true,
-                                    EnableNrrForOutboundDecodedMessages = true,
-                                    EnableNrrForOutboundEncodedMessages = true,
-                                    EnableNrrForOutboundMdn = true,
+                                    EnableNRRForInboundDecodedMessages = true,
+                                    EnableNRRForInboundEncodedMessages = true,
+                                    EnableNRRForInboundMDN = true,
+                                    EnableNRRForOutboundDecodedMessages = true,
+                                    EnableNRRForOutboundEncodedMessages = true,
+                                    EnableNRRForOutboundMDN = true,
 
                                     OverrideGroupSigningCertificate = false
 
@@ -958,7 +958,7 @@ namespace Test.Azure.Management.Logic
                                 },
                                 ErrorSettings = new AS2ErrorSettings
                                 {
-                                    ResendIfMdnNotReceived = true,
+                                    ResendIfMDNNotReceived = true,
                                     SuspendDuplicateMessage = true
                                 },
                                 MdnSettings = new AS2MdnSettings
@@ -966,12 +966,12 @@ namespace Test.Azure.Management.Logic
                                     DispositionNotificationTo = "http://tempuri.org",
                                     MdnText = "Sample",
                                     MicHashingAlgorithm = HashingAlgorithm.MD5,
-                                    NeedMdn = true,
+                                    NeedMDN = true,
                                     ReceiptDeliveryUrl = "http://tempuri.org",
-                                    SendInboundMdnToMessageBox = true,
-                                    SendMdnAsynchronously = true,
-                                    SignMdn = true,
-                                    SignOutboundMdnIfOptional = true
+                                    SendInboundMDNToMessageBox = true,
+                                    SendMDNAsynchronously = true,
+                                    SignMDN = true,
+                                    SignOutboundMDNIfOptional = true
                                 },
                                 MessageConnectionSettings = new AS2MessageConnectionSettings
                                 {
@@ -982,12 +982,12 @@ namespace Test.Azure.Management.Logic
                                 },
                                 SecuritySettings = new AS2SecuritySettings
                                 {
-                                    EnableNrrForInboundDecodedMessages = true,
-                                    EnableNrrForInboundEncodedMessages = true,
-                                    EnableNrrForInboundMdn = true,
-                                    EnableNrrForOutboundDecodedMessages = true,
-                                    EnableNrrForOutboundEncodedMessages = true,
-                                    EnableNrrForOutboundMdn = true,
+                                    EnableNRRForInboundDecodedMessages = true,
+                                    EnableNRRForInboundEncodedMessages = true,
+                                    EnableNRRForInboundMDN = true,
+                                    EnableNRRForOutboundDecodedMessages = true,
+                                    EnableNRRForOutboundEncodedMessages = true,
+                                    EnableNRRForOutboundMDN = true,
 
                                     OverrideGroupSigningCertificate = false
 

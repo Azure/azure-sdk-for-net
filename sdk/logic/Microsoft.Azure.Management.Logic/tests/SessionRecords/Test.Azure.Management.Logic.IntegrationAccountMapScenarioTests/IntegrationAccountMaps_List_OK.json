@@ -1,43 +1,42 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHM/YXBpLXZlcnNpb249MjAxOC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHM/YXBpLXZlcnNpb249MjAxOS0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c15e9c14-b019-4532-8bb8-62aadbb22a4f"
+          "f74762b5-d34f-416c-a15f-49ae5b81c42e"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11996"
         ],
         "x-ms-request-id": [
-          "0a7f08d3-81c0-4fe5-ae02-473ffaec034c"
+          "6f2fd888-57d9-473f-b032-89a34bc997b5"
         ],
         "x-ms-correlation-request-id": [
-          "0a7f08d3-81c0-4fe5-ae02-473ffaec034c"
+          "6f2fd888-57d9-473f-b032-89a34bc997b5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224931Z:0a7f08d3-81c0-4fe5-ae02-473ffaec034c"
+          "WESTUS:20191219T091644Z:6f2fd888-57d9-473f-b032-89a34bc997b5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,57 +44,59 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "12"
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:44 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "12"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cz9hcGktdmVyc2lvbj0yMDE4LTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cz9hcGktdmVyc2lvbj0yMDE5LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e5faba55-e696-43d7-9d30-52adf018c65d"
+          "1462127e-e0fe-4fc5-89bd-adb5d100fbb7"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "19995"
+          "19998"
         ],
         "x-ms-request-id": [
-          "b62f5180-1a4a-44e8-b489-de78319c836d"
+          "369a898c-4a8e-4bd4-a0d2-00e765c19090"
         ],
         "x-ms-correlation-request-id": [
-          "b62f5180-1a4a-44e8-b489-de78319c836d"
+          "369a898c-4a8e-4bd4-a0d2-00e765c19090"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224931Z:b62f5180-1a4a-44e8-b489-de78319c836d"
+          "WESTUS:20191219T091644Z:369a898c-4a8e-4bd4-a0d2-00e765c19090"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -103,34 +104,39 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "12"
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:44 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "12"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNT9hcGktdmVyc2lvbj0yMDE4LTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNj9hcGktdmVyc2lvbj0yMDE5LTA1LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "056ffdbf-880b-49c0-9608-0f7e8957c549"
+          "cef7d638-6e14-4134-a808-55edd5a70d70"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -143,29 +149,29 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:603bb8cf-8572-4138-b4ca-0a74b9f078c3"
+          "westus:df0151d7-b4b3-4b66-91b8-09f8a9e95389"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "158823f7-f87a-47ee-bfdf-ed31b85c9ee1"
+          "cebc7066-e437-4f8c-b80f-b157b0b164bf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224931Z:158823f7-f87a-47ee-bfdf-ed31b85c9ee1"
+          "WESTUS:20191219T091645Z:cebc7066-e437-4f8c-b80f-b157b0b164bf"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:44 GMT"
         ],
         "Content-Length": [
           "307"
@@ -177,24 +183,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825\",\r\n  \"name\": \"IntegrationAccount1825\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Enabled\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516\",\r\n  \"name\": \"IntegrationAccount5516\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts\",\r\n  \"location\": \"westus\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap2755?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNS9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDI3NTU/YXBpLXZlcnNpb249MjAxOC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8422?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNi9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDg0MjI/YXBpLXZlcnNpb249MjAxOS0wNS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"content\": \"<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>\\r\\n\\t                        <xsl:template match='/hello-world'>\\r\\n\\t\\t                        <HTML>\\r\\n\\t\\t\\t                        <HEAD>\\r\\n\\t\\t\\t\\t                        <TITLE/>\\r\\n\\t\\t\\t                        </HEAD>\\r\\n\\t\\t\\t                        <BODY>\\r\\n\\t\\t\\t\\t                        <H1>\\r\\n\\t\\t\\t\\t\\t                        <xsl:value-of select='greeting'/>\\r\\n\\t\\t\\t\\t                        </H1>\\r\\n\\t\\t\\t\\t                        <xsl:apply-templates select='greeter'/>\\r\\n\\t\\t\\t                        </BODY>\\r\\n\\t\\t                        </HTML>\\r\\n\\t                        </xsl:template>\\r\\n\\t                        <xsl:template match='greeter'>\\r\\n\\t\\t                        <DIV>\\r\\n\\t\\t\\t                        from\\r\\n\\t\\t\\t                        <I>\\r\\n\\t\\t\\t\\t                        <xsl:value-of select='.'/>\\r\\n\\t\\t\\t                        </I>\\r\\n\\t\\t                        </DIV>\\r\\n\\t                        </xsl:template>\\r\\n                        </xsl:stylesheet>\",\r\n    \"contentType\": \"application/xml\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4cfd2e71-5c68-4782-8fe3-76c18a979f06"
+          "4b33717e-1b6e-420f-b237-5d8f61f59603"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -207,29 +215,29 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:135ca239-99de-4e99-ad1e-db64f81dab9d"
+          "westus:1bb7368d-7536-4af0-bc29-d7f580c8bbf9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "d601d9a8-d055-4836-9d3d-0d845528a12c"
+          "16dd4395-2960-4d86-b18d-db2cc1c2ced0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224932Z:d601d9a8-d055-4836-9d3d-0d845528a12c"
+          "WESTUS:20191219T091646Z:16dd4395-2960-4d86-b18d-db2cc1c2ced0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:45 GMT"
         ],
         "Content-Length": [
           "741"
@@ -241,24 +249,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap2755/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.5733743Z&sp=%2Fmaps%2FIntegrationAccountMap2755%2Fread&sv=1.0&sig=5xLqQrPw63QbmBhYdvO3MtBSdtVjFArUdpaEXugAWM8\",\r\n      \"contentSize\": 997\r\n    },\r\n    \"createdTime\": \"2018-09-19T22:49:32.3940786Z\",\r\n    \"changedTime\": \"2018-09-19T22:49:32.3947247Z\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap2755\",\r\n  \"name\": \"IntegrationAccountMap2755\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap8422/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A46.4280286Z&sp=%2Fmaps%2FIntegrationAccountMap8422%2Fread&sv=1.0&sig=ZnSRyi33qesLY0rSYSSI7AtSiB89sp5UJpbWmzAb48w\",\r\n      \"contentSize\": 997\r\n    },\r\n    \"createdTime\": \"2019-12-19T09:16:46.0619795Z\",\r\n    \"changedTime\": \"2019-12-19T09:16:46.0623002Z\"\r\n  },\r\n  \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8422\",\r\n  \"name\": \"IntegrationAccountMap8422\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap9325?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNS9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDkzMjU/YXBpLXZlcnNpb249MjAxOC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap2500?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNi9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDI1MDA/YXBpLXZlcnNpb249MjAxOS0wNS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt20\",\r\n    \"content\": \"<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='2.0'>\\r\\n\\t                        <xsl:template match='@*|node()'>\\r\\n\\t\\t                        <xsl:copy>\\r\\n\\t\\t\\t                        <xsl:apply-templates select='@*|node()'/>\\r\\n\\t\\t                        </xsl:copy>\\r\\n\\t                        </xsl:template>\\r\\n                        </xsl:stylesheet>\",\r\n    \"contentType\": \"application/xml\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a5ec4e63-3a41-45e6-98d8-9a1a14326a7e"
+          "09eb9d70-3dfd-4b97-8b3e-9696585c0ddd"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -271,32 +281,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:32 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:2c193766-c4a8-4d3c-b898-31123ccead78"
+          "westus:b1d67023-fa99-4e24-8e42-2e554d8a04c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "afd7c561-2c09-46db-a68d-12f615871ae7"
+          "7f504ef6-6755-472d-9225-3f5867584c86"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224932Z:afd7c561-2c09-46db-a68d-12f615871ae7"
+          "WESTUS:20191219T091646Z:7f504ef6-6755-472d-9225-3f5867584c86"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:46 GMT"
+        ],
         "Content-Length": [
-          "743"
+          "742"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -305,24 +315,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt20\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap9325/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.7350937Z&sp=%2Fmaps%2FIntegrationAccountMap9325%2Fread&sv=1.0&sig=tcMmQ8hlbMY26sJzn59hcpu3qGgQ86iICBB14H0xUhI\",\r\n      \"contentSize\": 370\r\n    },\r\n    \"createdTime\": \"2018-09-19T22:49:32.7137887Z\",\r\n    \"changedTime\": \"2018-09-19T22:49:32.7141917Z\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap9325\",\r\n  \"name\": \"IntegrationAccountMap9325\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Xslt20\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap2500/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A46.6936019Z&sp=%2Fmaps%2FIntegrationAccountMap2500%2Fread&sv=1.0&sig=mnhzABkfFvcGGG_EshyO3I5MyRsvd70ZbzzZ1X1n3VM\",\r\n      \"contentSize\": 370\r\n    },\r\n    \"createdTime\": \"2019-12-19T09:16:46.6724259Z\",\r\n    \"changedTime\": \"2019-12-19T09:16:46.672763Z\"\r\n  },\r\n  \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap2500\",\r\n  \"name\": \"IntegrationAccountMap2500\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap8853?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNS9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDg4NTM/YXBpLXZlcnNpb249MjAxOC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8091?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNi9tYXBzL0ludGVncmF0aW9uQWNjb3VudE1hcDgwOTE/YXBpLXZlcnNpb249MjAxOS0wNS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Liquid\",\r\n    \"content\": \"{% if user %}\\r\\n                        Hello, {{ user.firstname }}\\r\\n                        {% else %}\\r\\n                        Hello World!\\r\\n                        {% endif %}\",\r\n    \"contentType\": \"text/plain\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "61ee519f-a809-4074-9a9c-30970442e70a"
+          "5c430163-d92a-40bc-9ecb-dd3504f889bb"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -335,29 +347,29 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:32 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:19c6e469-c7c2-45e2-88d4-68624efaf5b3"
+          "westus:519f8b92-35a1-4660-9cca-2a0a08c5d735"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "5173978e-07fd-442f-a248-649471130af3"
+          "ee85a84d-6e79-436c-a578-1e15ccbe3a4a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224932Z:5173978e-07fd-442f-a248-649471130af3"
+          "WESTUS:20191219T091647Z:ee85a84d-6e79-436c-a578-1e15ccbe3a4a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:46 GMT"
         ],
         "Content-Length": [
           "743"
@@ -369,32 +381,31 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Liquid\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap8853/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.9226225Z&sp=%2Fmaps%2FIntegrationAccountMap8853%2Fread&sv=1.0&sig=hjAQ5aQ-MRcjBZ8UIxX9K6xFdRwhRdJjAQecWrbntus\",\r\n      \"contentSize\": 177\r\n    },\r\n    \"createdTime\": \"2018-09-19T22:49:32.8668044Z\",\r\n    \"changedTime\": \"2018-09-19T22:49:32.8668749Z\"\r\n  },\r\n  \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap8853\",\r\n  \"name\": \"IntegrationAccountMap8853\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"mapType\": \"Liquid\",\r\n    \"contentLink\": {\r\n      \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap8091/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A46.9436116Z&sp=%2Fmaps%2FIntegrationAccountMap8091%2Fread&sv=1.0&sig=So-yyII_yuvTOsxOqciSuME7PBjhtUphxqwMv3tZTn0\",\r\n      \"contentSize\": 177\r\n    },\r\n    \"createdTime\": \"2019-12-19T09:16:46.9291509Z\",\r\n    \"changedTime\": \"2019-12-19T09:16:46.9294072Z\"\r\n  },\r\n  \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8091\",\r\n  \"name\": \"IntegrationAccountMap8091\",\r\n  \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNS9tYXBzP2FwaS12ZXJzaW9uPTIwMTgtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNi9tYXBzP2FwaS12ZXJzaW9uPTIwMTktMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "715664ee-b840-4f3b-9ca8-cecb3f757bac"
+          "9c90d506-d140-4053-9b65-3988115077de"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -403,25 +414,28 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus:082fc905-6d46-488d-b7c6-d52c7cf4ee6c"
+          "westus:ff058130-436e-47b5-add0-e5cc6eb05898"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "f3b729e3-ce36-4210-8f09-e0b399d797a5"
+          "e8b0139e-5480-4860-b286-9e8f6a602c24"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224932Z:f3b729e3-ce36-4210-8f09-e0b399d797a5"
+          "WESTUS:20191219T091647Z:e8b0139e-5480-4860-b286-9e8f6a602c24"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:46 GMT"
+        ],
         "Content-Length": [
-          "2241"
+          "2240"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -430,38 +444,37 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Xslt\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap2755/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.9851407Z&sp=%2Fmaps%2FIntegrationAccountMap2755%2Fread&sv=1.0&sig=Dr4gkk5Pqs2A3IAGqkubELXHH68AOcuT45mKDAYBxPk\",\r\n          \"contentSize\": 997\r\n        },\r\n        \"createdTime\": \"2018-09-19T22:49:32.3940786Z\",\r\n        \"changedTime\": \"2018-09-19T22:49:32.3947247Z\"\r\n      },\r\n      \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap2755\",\r\n      \"name\": \"IntegrationAccountMap2755\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Liquid\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap8853/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.9851407Z&sp=%2Fmaps%2FIntegrationAccountMap8853%2Fread&sv=1.0&sig=mUnyxB398nshgZaCLvZktpWcgySSdDRoUdxzzmZglKA\",\r\n          \"contentSize\": 177\r\n        },\r\n        \"createdTime\": \"2018-09-19T22:49:32.8668044Z\",\r\n        \"changedTime\": \"2018-09-19T22:49:32.8668749Z\"\r\n      },\r\n      \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap8853\",\r\n      \"name\": \"IntegrationAccountMap8853\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Xslt20\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-39.westus.logic.azure.com:443/integrationAccounts/fec5d3189c6a40b3a4ceca0987777363/maps/IntegrationAccountMap9325/contents/Value?api-version=2015-08-01-preview&se=2018-09-20T02%3A49%3A32.9851407Z&sp=%2Fmaps%2FIntegrationAccountMap9325%2Fread&sv=1.0&sig=fZgjY6qU-BKbaUH7RRxXNndzJ76Zhx__k-XDsMZESLg\",\r\n          \"contentSize\": 370\r\n        },\r\n        \"createdTime\": \"2018-09-19T22:49:32.7137887Z\",\r\n        \"changedTime\": \"2018-09-19T22:49:32.7141917Z\"\r\n      },\r\n      \"id\": \"/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825/maps/IntegrationAccountMap9325\",\r\n      \"name\": \"IntegrationAccountMap9325\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Xslt20\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap2500/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A47.0686974Z&sp=%2Fmaps%2FIntegrationAccountMap2500%2Fread&sv=1.0&sig=mbOoV0DG1pkVeNisLV_iPs5RR0AZf8t5ziBZ2lySbJw\",\r\n          \"contentSize\": 370\r\n        },\r\n        \"createdTime\": \"2019-12-19T09:16:46.6724259Z\",\r\n        \"changedTime\": \"2019-12-19T09:16:46.672763Z\"\r\n      },\r\n      \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap2500\",\r\n      \"name\": \"IntegrationAccountMap2500\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Liquid\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap8091/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A47.0686974Z&sp=%2Fmaps%2FIntegrationAccountMap8091%2Fread&sv=1.0&sig=Sy5TSf7_QYYGS9BWaxzXHa_5geK6ZLAxLn6Pvk2vUcs\",\r\n          \"contentSize\": 177\r\n        },\r\n        \"createdTime\": \"2019-12-19T09:16:46.9291509Z\",\r\n        \"changedTime\": \"2019-12-19T09:16:46.9294072Z\"\r\n      },\r\n      \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8091\",\r\n      \"name\": \"IntegrationAccountMap8091\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"mapType\": \"Xslt\",\r\n        \"contentLink\": {\r\n          \"uri\": \"https://prod-60.westus.logic.azure.com:443/integrationAccounts/248bddf3e9fb4f88af9a344786511555/maps/IntegrationAccountMap8422/contents/Value?api-version=2015-08-01-preview&se=2019-12-19T13%3A16%3A47.0686974Z&sp=%2Fmaps%2FIntegrationAccountMap8422%2Fread&sv=1.0&sig=7GP6-pgj3_--leMgLj-fDdERYhGv7pNpRll-gY9fZ0c\",\r\n          \"contentSize\": 997\r\n        },\r\n        \"createdTime\": \"2019-12-19T09:16:46.0619795Z\",\r\n        \"changedTime\": \"2019-12-19T09:16:46.0623002Z\"\r\n      },\r\n      \"id\": \"/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516/maps/IntegrationAccountMap8422\",\r\n      \"name\": \"IntegrationAccountMap8422\",\r\n      \"type\": \"Microsoft.Logic/integrationAccounts/maps\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount1825?api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjM0YjIyYTMtMjIwMi00ZmIxLWIwNDAtMTMzMmJkOTI4Yzg0L3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50MTgyNT9hcGktdmVyc2lvbj0yMDE4LTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/80d4fe69-c95b-4dd2-a938-9250f1c8ab03/resourceGroups/flowrg/providers/Microsoft.Logic/integrationAccounts/IntegrationAccount5516?api-version=2019-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODBkNGZlNjktYzk1Yi00ZGQyLWE5MzgtOTI1MGYxYzhhYjAzL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL2ludGVncmF0aW9uQWNjb3VudHMvSW50ZWdyYXRpb25BY2NvdW50NTUxNj9hcGktdmVyc2lvbj0yMDE5LTA1LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7f35e6a8-46dd-49fd-826a-4e6608ee940c"
+          "e51a765d-4caf-4f8a-9d55-c81e10f63442"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.0.0.0"
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/4.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 19 Sep 2018 22:49:32 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "westus:01c22f31-3766-4c6a-9971-3690fd3f39cb"
+          "westus:551361d3-18d5-4c24-bf7d-3aa8660b7845"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -470,19 +483,22 @@
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "6bc01557-4719-45e8-8a63-4dadc65db625"
+          "496725a3-3227-4a2b-bf97-61485b619b90"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180919T224933Z:6bc01557-4719-45e8-8a63-4dadc65db625"
+          "WESTUS:20191219T091647Z:496725a3-3227-4a2b-bf97-61485b619b90"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Thu, 19 Dec 2019 09:16:47 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
@@ -491,13 +507,13 @@
   ],
   "Names": {
     "IntegrationAccountMaps_List_OK": [
-      "IntegrationAccount1825",
-      "IntegrationAccountMap2755",
-      "IntegrationAccountMap9325",
-      "IntegrationAccountMap8853"
+      "IntegrationAccount5516",
+      "IntegrationAccountMap8422",
+      "IntegrationAccountMap2500",
+      "IntegrationAccountMap8091"
     ]
   },
   "Variables": {
-    "SubscriptionId": "f34b22a3-2202-4fb1-b040-1332bd928c84"
+    "SubscriptionId": "80d4fe69-c95b-4dd2-a938-9250f1c8ab03"
   }
 }

@@ -1,4 +1,4 @@
-﻿
+
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
@@ -27,7 +27,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
             string executingAssemblyPath = typeof(PowerBIDedicated.Tests.ScenarioTests.CapacityOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetDedicatedServicesClient(context);
 
@@ -149,7 +149,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
                 // Delete the servcapacityer and confirm that it is deleted.
                 client.Capacities.Delete(PowerBIDedicatedTestUtilities.DefaultResourceGroup, secondCapacity);
 
-                // delete the capacity again and make sure it continues to result in a succesful code.
+                // delete the capacity again and make sure it continues to result in a successful code.
                 client.Capacities.Delete(PowerBIDedicatedTestUtilities.DefaultResourceGroup, secondCapacity);
 
                 // delete the capacity with its old name, which should also succeed.
@@ -170,7 +170,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
             string executingAssemblyPath = typeof(PowerBIDedicated.Tests.ScenarioTests.CapacityOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetDedicatedServicesClient(context);
 
@@ -274,7 +274,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
             string executingAssemblyPath = typeof(PowerBIDedicated.Tests.ScenarioTests.CapacityOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetDedicatedServicesClient(context);
 
@@ -302,3 +302,4 @@ namespace PowerBIDedicated.Tests.ScenarioTests
         }
     }
 }
+

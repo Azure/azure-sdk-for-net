@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Capacity/operations?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "37a2d8d4-5537-45ef-ba27-86298829ac2f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.11.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 28 Oct 2019 03:59:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "westus:156a203c-9346-46ad-aafa-75b9198ca1b8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-correlation-request-id": [
+          "6878c65b-774c-4ca6-8a1b-876ffeb225ad"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191028T035934Z:6878c65b-774c-4ca6-8a1b-876ffeb225ad"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "6126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Capacity/appliedreservations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/calculateprice/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Calculate Reservation Price\",\r\n        \"description\": \"Calculate any Reservation Price\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/catalogs/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Read Reservation Catalog\",\r\n        \"description\": \"Read catalog of Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/checkoffers/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Check Subscription Offers\",\r\n        \"description\": \"Check any Subscription Offers\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/checkscopes/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Check Subscription\",\r\n        \"description\": \"Check any Subscription\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/operations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Read Operation\",\r\n        \"description\": \"Read any Operation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/availablescopes/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Find Available Scope\",\r\n        \"description\": \"Find any Available Scope\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/availablescopes/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Find Available Scope\",\r\n        \"description\": \"Find any Available Scope\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/validatereservationorder/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Validate Reservation\",\r\n        \"description\": \"Validate any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/revisions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Registers the Capacity Resource Provider.\",\r\n        \"description\": \"Registers the Capacity resource provider and enables the creation of Capacity resources.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/commercialreservationorders/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservation Orders created in any Tenant\",\r\n        \"description\": \"Get Reservation Orders created in any Tenant\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/tenants/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Register Tenant\",\r\n        \"description\": \"Register any Tenant\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/return/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Return Reservation\",\r\n        \"description\": \"Return any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/swap/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Swap Reservation\",\r\n        \"description\": \"Swap any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/split/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Split Reservation\",\r\n        \"description\": \"Split any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/unregister/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Unregister Tenant\",\r\n        \"description\": \"Unregister any Tenant\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/merge/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Merge Reservation\",\r\n        \"description\": \"Merge any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/calculaterefund/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Compute price for refund\",\r\n        \"description\": \"Computes the refund amount and price of new purchase and returns policy Errors.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/calculateexchange/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Compute price for exchange\",\r\n        \"description\": \"Computes the exchange amount and price of new purchase and returns policy Errors.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/exchange/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Exchange Reservation\",\r\n        \"description\": \"Exchange any Reservation\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d3ae48e5-dbb2-4618-afd4-fb1b8559cb80"
+  }
+}

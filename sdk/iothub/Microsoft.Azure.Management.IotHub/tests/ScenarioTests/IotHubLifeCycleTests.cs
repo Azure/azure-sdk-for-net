@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -21,7 +21,7 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public void TestIotHubCreateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -201,7 +201,7 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public void TestIotHubUpdateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -283,7 +283,7 @@ namespace IotHub.Tests.ScenarioTests
         [Fact]
         public void TestIotHubCertificateLifeCycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
 
@@ -428,3 +428,4 @@ namespace IotHub.Tests.ScenarioTests
         }
     }
 }
+

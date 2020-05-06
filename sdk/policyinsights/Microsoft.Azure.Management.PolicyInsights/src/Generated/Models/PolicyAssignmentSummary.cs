@@ -34,15 +34,17 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="policyAssignmentId">Policy assignment ID.</param>
         /// <param name="policySetDefinitionId">Policy set definition ID, if
         /// the policy assignment is for a policy set.</param>
-        /// <param name="results">Non-compliance summary for the policy
+        /// <param name="results">Compliance summary for the policy
         /// assignment.</param>
         /// <param name="policyDefinitions">Policy definitions summary.</param>
-        public PolicyAssignmentSummary(string policyAssignmentId = default(string), string policySetDefinitionId = default(string), SummaryResults results = default(SummaryResults), IList<PolicyDefinitionSummary> policyDefinitions = default(IList<PolicyDefinitionSummary>))
+        /// <param name="policyGroups">Policy definition group summary.</param>
+        public PolicyAssignmentSummary(string policyAssignmentId = default(string), string policySetDefinitionId = default(string), SummaryResults results = default(SummaryResults), IList<PolicyDefinitionSummary> policyDefinitions = default(IList<PolicyDefinitionSummary>), IList<PolicyGroupSummary> policyGroups = default(IList<PolicyGroupSummary>))
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicySetDefinitionId = policySetDefinitionId;
             Results = results;
             PolicyDefinitions = policyDefinitions;
+            PolicyGroups = policyGroups;
             CustomInit();
         }
 
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicySetDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets non-compliance summary for the policy assignment.
+        /// Gets or sets compliance summary for the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
         public SummaryResults Results { get; set; }
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyDefinitions")]
         public IList<PolicyDefinitionSummary> PolicyDefinitions { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy definition group summary.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyGroups")]
+        public IList<PolicyGroupSummary> PolicyGroups { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -95,6 +103,16 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (PolicyGroups != null)
+            {
+                foreach (var element1 in PolicyGroups)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

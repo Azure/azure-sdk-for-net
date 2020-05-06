@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Sku.</param>
         /// <param name="disabledReason">Reason why the Sku is disabled.
         /// Possible values include: 'None', 'Country', 'Region', 'Feature',
-        /// 'OfferType'</param>
+        /// 'OfferType', 'NoSubscriptionInfo'</param>
         /// <param name="disabledReasonMessage">Message for why the Sku is
         /// disabled.</param>
         /// <param name="requiredFeature">Required feature to access the
@@ -106,7 +106,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets reason why the Sku is disabled. Possible values include:
-        /// 'None', 'Country', 'Region', 'Feature', 'OfferType'
+        /// 'None', 'Country', 'Region', 'Feature', 'OfferType',
+        /// 'NoSubscriptionInfo'
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledReason")]
         public SkuDisabledReason? DisabledReason { get; private set; }

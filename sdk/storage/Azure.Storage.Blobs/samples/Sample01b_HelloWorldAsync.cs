@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -31,9 +30,9 @@ namespace Azure.Storage.Blobs.Samples
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
             // or using the Azure CLI with:
-            // 
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
+            //
             // And you can provide the connection string to your application
             // using an environment variable.
             string connectionString = ConnectionString;
@@ -112,12 +111,17 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public async Task DownloadImageAsync()
         {
+            string downloadPath = CreateTempPath();
+            #region Snippet:SampleSnippetsBlob_Async
+            // Get a temporary path on disk where we can download the file
+            //@@ string downloadPath = "hello.jpg";
+
             // Download the public blob at https://aka.ms/bloburl
-            BlobDownloadInfo download = await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadAsync();
-            using (FileStream file = File.OpenWrite("hello.jpg"))
-            {
-                await download.Content.CopyToAsync(file);
-            }
+            await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
+            #endregion
+
+            Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
+            File.Delete("hello.jpg");
         }
 
         /// <summary>
@@ -176,12 +180,12 @@ namespace Azure.Storage.Blobs.Samples
                 // Try to create the container again
                 await container.CreateAsync();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
             {
                 // Ignore any errors if the container already exists
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }

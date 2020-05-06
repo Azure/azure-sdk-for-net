@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "databox/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "databox/resource-manager" -AutoRestVersion "v2"

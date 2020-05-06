@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DeploymentManager
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -188,6 +190,52 @@ namespace Microsoft.Azure.Management.DeploymentManager
             public static async Task DeleteAsync(this IServiceUnitsOperations operations, string resourceGroupName, string serviceTopologyName, string serviceName, string serviceUnitName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceTopologyName, serviceName, serviceUnitName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists the service units under a service in the service topology.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceTopologyName'>
+            /// The name of the service topology .
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the service resource.
+            /// </param>
+            public static IList<ServiceUnitResource> List(this IServiceUnitsOperations operations, string resourceGroupName, string serviceTopologyName, string serviceName)
+            {
+                return operations.ListAsync(resourceGroupName, serviceTopologyName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the service units under a service in the service topology.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceTopologyName'>
+            /// The name of the service topology .
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<ServiceUnitResource>> ListAsync(this IServiceUnitsOperations operations, string resourceGroupName, string serviceTopologyName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceTopologyName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

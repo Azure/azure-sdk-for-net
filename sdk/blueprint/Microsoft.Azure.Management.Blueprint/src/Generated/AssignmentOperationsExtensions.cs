@@ -22,36 +22,36 @@ namespace Microsoft.Azure.Management.Blueprint
     public static partial class AssignmentOperationsExtensions
     {
             /// <summary>
-            /// List operations for given blueprint assignment within a subscription.
+            /// List operations for given blueprint assignment within a subscription or a
+            /// management group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
             /// </param>
-            public static IPage<AssignmentOperation> List(this IAssignmentOperations operations, string scope, string assignmentName)
+            public static IPage<AssignmentOperation> List(this IAssignmentOperations operations, string resourceScope, string assignmentName)
             {
-                return operations.ListAsync(scope, assignmentName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceScope, assignmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List operations for given blueprint assignment within a subscription.
+            /// List operations for given blueprint assignment within a subscription or a
+            /// management group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AssignmentOperation>> ListAsync(this IAssignmentOperations operations, string scope, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AssignmentOperation>> ListAsync(this IAssignmentOperations operations, string resourceScope, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, assignmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceScope, assignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -73,11 +73,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -85,9 +84,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='assignmentOperationName'>
             /// Name of the blueprint assignment operation.
             /// </param>
-            public static AssignmentOperation Get(this IAssignmentOperations operations, string scope, string assignmentName, string assignmentOperationName)
+            public static AssignmentOperation Get(this IAssignmentOperations operations, string resourceScope, string assignmentName, string assignmentOperationName)
             {
-                return operations.GetAsync(scope, assignmentName, assignmentOperationName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceScope, assignmentName, assignmentOperationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,11 +95,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -111,16 +109,17 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AssignmentOperation> GetAsync(this IAssignmentOperations operations, string scope, string assignmentName, string assignmentOperationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AssignmentOperation> GetAsync(this IAssignmentOperations operations, string resourceScope, string assignmentName, string assignmentOperationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, assignmentName, assignmentOperationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceScope, assignmentName, assignmentOperationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List operations for given blueprint assignment within a subscription.
+            /// List operations for given blueprint assignment within a subscription or a
+            /// management group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,7 +133,8 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List operations for given blueprint assignment within a subscription.
+            /// List operations for given blueprint assignment within a subscription or a
+            /// management group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

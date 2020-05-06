@@ -50,6 +50,8 @@ namespace DataFactory.Tests.Utils
         public string CatalogAdminUsername { get; set; }
         [JsonProperty(PropertyName = "catalogAdminPassword")]
         public string CatalogAdminPassword { get; set; }
+        [JsonProperty(PropertyName = "eventsStorageResourceId")]
+        public string EventsStorageResourceId { get; set; }
 
         public string ReplaceSecretsWithExampleStrings(string jsonActual)
         {

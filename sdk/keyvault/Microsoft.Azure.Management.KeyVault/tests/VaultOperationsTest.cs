@@ -20,7 +20,7 @@ namespace KeyVault.Management.Tests
         [Fact]
         public void KeyVaultManagementVaultCreateUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KeyVaultTestBase(context);
                 testBase.vaultProperties.EnableSoftDelete = null;
@@ -47,7 +47,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
-                    null,
+                    true, // enableSoftDelete defaults to true
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
@@ -82,7 +82,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
-                    null,
+                    true,
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
@@ -102,7 +102,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
-                    null,
+                    true,
                     new[] { testBase.accPol },
                     testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
@@ -122,9 +122,38 @@ namespace KeyVault.Management.Tests
         }
 
         [Fact]
+        public void CreateKeyVaultDisableSoftDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KeyVaultTestBase(context);
+                testBase.accPol.ApplicationId = Guid.Parse(testBase.applicationId);
+                testBase.vaultProperties.EnableSoftDelete = false; // <-- disable soft delete
+
+                var vault = testBase.client.Vaults.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName,
+                    parameters: new VaultCreateOrUpdateParameters
+                    {
+                        Location = testBase.location,
+                        Tags = testBase.tags,
+                        Properties = testBase.vaultProperties
+                    }
+                    );
+
+                Assert.False(vault.Properties.EnableSoftDelete);
+
+                // Delete
+                testBase.client.Vaults.Delete(
+                    resourceGroupName: testBase.rgName,
+                    vaultName: testBase.vaultName);
+            }
+        }
+
+        [Fact]
         public void KeyVaultManagementVaultTestCompoundIdentityAccessControlPolicy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KeyVaultTestBase(context);
                 testBase.accPol.ApplicationId = Guid.Parse(testBase.applicationId);
@@ -152,7 +181,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
-                    null,
+                    true,
                     new[] { testBase.accPol },
                     testBase.tags);
 
@@ -172,7 +201,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
-                    null,
+                    true,
                     new[] { testBase.accPol },
                     testBase.tags);
 
@@ -196,7 +225,7 @@ namespace KeyVault.Management.Tests
         {
             int n = 3;
             int top = 2;
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KeyVaultTestBase(context);
                 testBase.vaultProperties.EnableSoftDelete = null;
@@ -256,7 +285,7 @@ namespace KeyVault.Management.Tests
         [Fact]
         public void KeyVaultManagementRecoverDeletedVault()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KeyVaultTestBase(context);
 
@@ -341,7 +370,7 @@ namespace KeyVault.Management.Tests
         public void KeyVaultManagementListDeletedVaults()
         {
             int n = 3;
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new KeyVaultTestBase(context);
 

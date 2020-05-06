@@ -17,11 +17,12 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "kjoshi")]
         public void CreateListDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
 
@@ -55,7 +56,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName);
 
                 Assert.NotNull(listServiceResponse);
-                Assert.True(listServiceResponse.Any());
+                Assert.True(listServiceResponse.Any(), $"Service in rg {testBase.rgName} does not exist");
 
                 var serviceResponse = listServiceResponse.FirstOrDefault();
 
@@ -82,7 +83,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName);
 
-                Assert.Throws<CloudException>(() =>
+                Assert.Throws<ErrorResponseException>(() =>
                 {
                     testBase.client.ApiManagementService.Get(
                         resourceGroupName: testBase.rgName,

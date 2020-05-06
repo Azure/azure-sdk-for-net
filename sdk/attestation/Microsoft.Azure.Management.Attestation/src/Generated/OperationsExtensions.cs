@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Attestation
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -29,7 +27,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<OperationsDefinition> List(this IOperations operations)
+            public static OperationList List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -43,7 +41,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<OperationsDefinition>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationList> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

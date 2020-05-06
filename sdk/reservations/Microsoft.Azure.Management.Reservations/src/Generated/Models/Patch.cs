@@ -36,12 +36,14 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="instanceFlexibility">Possible values include: 'On',
         /// 'Off'</param>
         /// <param name="name">Name of the Reservation</param>
-        public Patch(string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), string instanceFlexibility = default(string), string name = default(string))
+        public Patch(string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), string instanceFlexibility = default(string), string name = default(string), bool? renew = default(bool?), PatchPropertiesRenewProperties renewProperties = default(PatchPropertiesRenewProperties))
         {
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
             InstanceFlexibility = instanceFlexibility;
             Name = name;
+            Renew = renew;
+            RenewProperties = renewProperties;
             CustomInit();
         }
 
@@ -72,6 +74,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.renew")]
+        public bool? Renew { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.renewProperties")]
+        public PatchPropertiesRenewProperties RenewProperties { get; set; }
 
     }
 }

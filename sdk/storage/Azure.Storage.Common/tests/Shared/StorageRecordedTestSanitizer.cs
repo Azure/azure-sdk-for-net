@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -16,6 +15,7 @@ namespace Azure.Storage.Test.Shared
     {
         private const string SignatureQueryName = "sig";
         private const string CopySourceName = "x-ms-copy-source";
+        private const string RenameSource = "x-ms-rename-source";
 
         public override string SanitizeUri(string uri)
         {
@@ -29,6 +29,16 @@ namespace Azure.Storage.Test.Shared
             return builder.Uri.ToString();
         }
 
+        public string SanitizeQueryParameters(string queryParameters)
+        {
+            var query = new UriQueryParamsCollection(queryParameters);
+            if (query.ContainsKey(SignatureQueryName))
+            {
+                query[SignatureQueryName] = SanitizeValue;
+            }
+            return query.ToString();
+        }
+
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             // Remove the Auth header
@@ -37,7 +47,12 @@ namespace Azure.Storage.Test.Shared
             // Santize any copy source
             if (headers.TryGetValue(CopySourceName, out var copySource))
             {
-                headers[CopySourceName] = copySource.Select(c => this.SanitizeUri(c)).ToArray();
+                headers[CopySourceName] = copySource.Select(c => SanitizeUri(c)).ToArray();
+            }
+
+            if (headers.TryGetValue(RenameSource, out var renameSource))
+            {
+                headers[RenameSource] = renameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
             }
         }
 
@@ -49,7 +64,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     // Check for auth calls to readact any access tokens
                     var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(body).AsSpan(), true, new JsonReaderState());
-                    if (JsonDocument.TryParseValue(ref reader, out var doc) &&
+                    if (JsonDocument.TryParseValue(ref reader, out JsonDocument doc) &&
                         doc.RootElement.GetProperty("token_type").GetString() == "Bearer")
                     {
                         // If we found an auth call, sanitize it
@@ -58,7 +73,7 @@ namespace Azure.Storage.Test.Shared
                             using (var writer = new Utf8JsonWriter(stream))
                             {
                                 writer.WriteStartObject();
-                                foreach (var property in doc.RootElement.EnumerateObject())
+                                foreach (JsonProperty property in doc.RootElement.EnumerateObject())
                                 {
                                     switch (doc.RootElement.GetProperty(property.Name).ValueKind)
                                     {

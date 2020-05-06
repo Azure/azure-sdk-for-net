@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The tracking event error info.
+    /// </summary>
     public partial class TrackingEventErrorInfo
     {
         /// <summary>
@@ -26,6 +29,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the TrackingEventErrorInfo class.
         /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="code">The code.</param>
         public TrackingEventErrorInfo(string message = default(string), string code = default(string))
         {
             Message = message;
@@ -39,11 +44,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets or sets the code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

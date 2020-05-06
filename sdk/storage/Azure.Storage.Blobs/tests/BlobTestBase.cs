@@ -1,142 +1,218 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
-using Azure.Identity;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Common;
 using Azure.Storage.Sas;
-using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2019_02_02,
+        BlobClientOptions.ServiceVersion.V2019_07_07)]
     public abstract class BlobTestBase : StorageTestBase
     {
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
 
-        public BlobTestBase(bool async) : this(async, null) { }
+        protected string SecondaryStorageTenantPrimaryHost() =>
+            new Uri(TestConfigSecondary.BlobServiceEndpoint).Host;
 
-        public BlobTestBase(bool async, RecordedTestMode? mode = null)
+        protected string SecondaryStorageTenantSecondaryHost() =>
+            new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
+
+        public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
-        public DateTimeOffset OldDate => this.Recording.Now.AddDays(-1);
-        public DateTimeOffset NewDate => this.Recording.Now.AddDays(1);
+        public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
+        public DateTimeOffset NewDate => Recording.Now.AddDays(1);
 
-        public string GetGarbageLeaseId() => this.Recording.Random.NewGuid().ToString();
-        public string GetNewContainerName() => $"test-container-{this.Recording.Random.NewGuid()}";
-        public string GetNewBlobName() => $"test-blob-{this.Recording.Random.NewGuid()}";
-        public string GetNewBlockName() => $"test-block-{this.Recording.Random.NewGuid()}";
+        public string GetGarbageLeaseId() => Recording.Random.NewGuid().ToString();
+        public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
+        public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
+        public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
 
-        public BlobClientOptions GetOptions()
-            => this.Recording.InstrumentClientOptions(
-                    new BlobClientOptions
-                    {
-                        ResponseClassifier = new TestResponseClassifier(),
-                        Diagnostics = { IsLoggingEnabled = true },
-                        Retry =
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                        }
-                    });
+        public BlobClientOptions GetOptions(bool parallelRange = false)
+        {
+            var options = new BlobClientOptions(_serviceVersion)
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                },
+                Transport = GetTransport()
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
-            Exception raise = default)
+            Exception raise = default,
+            Action onFault = default)
         {
-            raise = raise ?? new Exception("Simulated connection fault");
-            var options = this.GetOptions();
-            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            raise = raise ?? new IOException("Simulated connection fault");
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
 
-        private BlobServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config)
-            => this.InstrumentClient(
+        private BlobServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config, BlobClientOptions options = default)
+            => InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
-                    this.GetOptions()));
+                    options ?? GetOptions()));
+
+        private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        {
+            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            return InstrumentClient(
+                 new BlobServiceClient(
+                    new Uri(config.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
+                    options));
+        }
+
+        private BlobBaseClient GetSecondaryReadBlobBaseClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        {
+            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            return InstrumentClient(
+                 new BlobBaseClient(
+                    new Uri(config.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
+                    options));
+        }
+
+        private BlobContainerClient GetSecondaryReadBlobContainerClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        {
+            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            Uri uri = new Uri(config.BlobServiceEndpoint);
+            string containerName = GetNewContainerName();
+            return InstrumentClient(
+                 new BlobContainerClient(
+                    uri.AppendToPath(containerName),
+                    new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
+                    options));
+        }
+
+        private BlobClientOptions GetSecondaryStorageOptions(
+            TenantConfiguration config,
+            out TestExceptionPolicy testExceptionPolicy,
+            int numberOfReadFailuresToSimulate = 1,
+            bool simulate404 = false,
+            List<RequestMethod> trackedRequestMethods = null)
+        {
+            BlobClientOptions options = GetOptions();
+            options.GeoRedundantSecondaryUri = new Uri(config.BlobServiceSecondaryEndpoint);
+            options.Retry.MaxRetries = 4;
+            testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, trackedRequestMethods);
+            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
+            return options;
+        }
 
         private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
-            this.InstrumentClient(
+            InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    this.GetOAuthCredential(config),
-                    this.GetOptions()));
+                    GetOAuthCredential(config),
+                    GetOptions()));
 
-        public BlobServiceClient GetServiceClient_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigDefault);
+        public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
+            => GetServiceClientFromSharedKeyConfig(TestConfigDefault, options);
+
+        public BlobServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+            => GetSecondaryReadServiceClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+
+        public BlobBaseClient GetBlobBaseClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+    => GetSecondaryReadBlobBaseClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+
+        public BlobContainerClient GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+    => GetSecondaryReadBlobContainerClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
 
         public BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigSecondary);
+            => GetServiceClientFromSharedKeyConfig(TestConfigSecondary);
 
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
-            => this.GetServiceClientFromSharedKeyConfig(this.TestConfigPreviewBlob);
+            => GetServiceClientFromSharedKeyConfig(TestConfigPreviewBlob);
+
+        public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
+            => GetServiceClientFromSharedKeyConfig(TestConfigPremiumBlob);
 
         public BlobServiceClient GetServiceClient_OauthAccount() =>
-            this.GetServiceClientFromOauthConfig(this.TestConfigOAuth);
+            GetServiceClientFromOauthConfig(TestConfigOAuth);
+
+        public BlobServiceClient GetServiceClient_ManagedDisk() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
 
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
             string containerName,
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsContainer(containerName: containerName, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Container(
             string containerName,
             UserDelegationKey userDelegationKey,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, this.TestConfigOAuth.AccountName)}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsContainer(containerName: containerName, userDelegationKey, TestConfigOAuth.AccountName)}"),
+                    GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Blob(
             string containerName,
             string blobName,
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsBlob(containerName: containerName, blobName: blobName, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceIdentitySas_Blob(
             string containerName,
             string blobName,
             UserDelegationKey userDelegationKey,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: this.TestConfigOAuth.AccountName)}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: TestConfigOAuth.AccountName)}"),
+                    GetOptions()));
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Snapshot(
             string containerName,
@@ -144,106 +220,165 @@ namespace Azure.Storage.Test.Shared
             string snapshot,
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
-            => this.InstrumentClient(
+            => InstrumentClient(
                 new BlobServiceClient(
-                    new Uri($"{this.TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? this.GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
-                    this.GetOptions()));
+                    new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    GetOptions()));
 
-        public IDisposable GetNewContainer(
-            out BlobContainerClient container,
+        public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType? publicAccessType = default)
+            PublicAccessType? publicAccessType = default,
+            bool premium = default)
         {
-            containerName ??= this.GetNewContainerName();
-            service ??= this.GetServiceClient_SharedKey();
-            container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
-            return new DisposingContainer(
-                container,
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType ?? PublicAccessType.Container);
+
+            containerName ??= GetNewContainerName();
+            service ??= GetServiceClient_SharedKey();
+
+            if (publicAccessType == default)
+            {
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+            }
+
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            return new DisposingContainer(container);
         }
+
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                    this.TestConfigDefault.AccountName,
-                    this.TestConfigDefault.AccountKey);
+                    TestConfigDefault.AccountName,
+                    TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new AccountSasBuilder
+        {
+            var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Blobs = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { Container = true, Object = true }.ToString(),
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials);
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(
+                AccountSasPermissions.Read |
+                AccountSasPermissions.Add |
+                AccountSasPermissions.Create |
+                AccountSasPermissions.Write |
+                AccountSasPermissions.Delete |
+                AccountSasPermissions.List);
+            return builder.ToSasQueryParameters(sharedKeyCredentials);
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(BlobContainerSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(userDelegationKey, accountName);
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(BlobContainerSasPermissions.All);
+            return builder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 BlobName = blobName,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(
+                BlobSasPermissions.Read |
+                BlobSasPermissions.Add |
+                BlobSasPermissions.Create |
+                BlobSasPermissions.Delete |
+                BlobSasPermissions.Write);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 BlobName = blobName,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(userDelegationKey, accountName);
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(
+                BlobSasPermissions.Read |
+                BlobSasPermissions.Add |
+                BlobSasPermissions.Create |
+                BlobSasPermissions.Delete |
+                BlobSasPermissions.Write);
+            return builder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, StorageSharedKeyCredential sharedKeyCredentials = default)
-            => new BlobSasBuilder
+        {
+            var builder = new BlobSasBuilder
             {
-                ContainerName = containerName,
+                BlobContainerName = containerName,
                 BlobName = blobName,
                 Snapshot = snapshot,
                 Protocol = SasProtocol.None,
-                StartTime = this.Recording.UtcNow.AddHours(-1),
-                ExpiryTime = this.Recording.UtcNow.AddHours(+1),
-                Permissions = new SnapshotSasPermissions { Read = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange(IPAddress.None, IPAddress.None)
-            }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
+            };
+            builder.SetPermissions(SnapshotSasPermissions.All);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
+
+        private static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
+        {
+            switch (serviceVersion)
+            {
+                case BlobClientOptions.ServiceVersion.V2019_02_02:
+                    return "2019-02-02";
+                case BlobClientOptions.ServiceVersion.V2019_07_07:
+                    return "2019-07-07";
+                default:
+                    throw new ArgumentException("Invalid service version");
+            }
+        }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
         {
-            var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
+            PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
             await blob.CreateAsync(size, 0).ConfigureAwait(false);
             return blob;
         }
@@ -254,12 +389,29 @@ namespace Azure.Storage.Test.Shared
             return Convert.ToBase64String(bytes);
         }
 
+        public CustomerProvidedKey GetCustomerProvidedKey()
+        {
+            var bytes = new byte[32];
+            Recording.Random.NextBytes(bytes);
+            return new CustomerProvidedKey(bytes);
+        }
+
+        public Uri GetHttpsUri(Uri uri)
+        {
+            var uriBuilder = new UriBuilder(uri)
+            {
+                Scheme = TestConstants.Https,
+                Port = TestConstants.HttpPort
+            };
+            return uriBuilder.Uri;
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupBlobMatchCondition(BlobBaseClient blob, string match)
         {
-            if (match == this.ReceivedETag)
+            if (match == ReceivedETag)
             {
-                var headers = await blob.GetPropertiesAsync();
+                Response<BlobProperties> headers = await blob.GetPropertiesAsync();
                 return headers.Value.ETag.ToString();
             }
             else
@@ -271,46 +423,80 @@ namespace Azure.Storage.Test.Shared
         //TODO consider removing this.
         public async Task<string> SetupBlobLeaseCondition(BlobBaseClient blob, string leaseId, string garbageLeaseId)
         {
-            Lease lease = null;
-            if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
+            BlobLease lease = null;
+            if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(-1);
+                lease = await InstrumentClient(blob.GetBlobLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(BlobLeaseClient.InfiniteLeaseDuration);
             }
-            return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
+            return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
         //TODO consider removing this.
         public async Task<string> SetupContainerLeaseCondition(BlobContainerClient container, string leaseId, string garbageLeaseId)
         {
-            Lease lease = null;
-            if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
+            BlobLease lease = null;
+            if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await container.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
+                lease = await InstrumentClient(container.GetBlobLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(BlobLeaseClient.InfiniteLeaseDuration);
             }
-            return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
+            return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        public SignedIdentifier[] BuildSignedIdentifiers() =>
+        public BlobSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
-                new SignedIdentifier
+                new BlobSignedIdentifier
                 {
-                    Id = this.GetNewString(),
-                    AccessPolicy =
-                        new AccessPolicy
-                        {
-                            Start = this.Recording.UtcNow.AddHours(-1),
-                            Expiry =  this.Recording.UtcNow.AddHours(1),
-                            Permission = "rw"
-                        }
+                    Id = GetNewString(),
+                    AccessPolicy = new BlobAccessPolicy()
+                    {
+                        StartsOn = Recording.UtcNow.AddHours(-1),
+                        ExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "rw"
+                    }
                 }
             };
 
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true,
+            bool includeTable = false)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            (Uri, Uri) tableUri = default;
+            if (includeTable)
+            {
+                tableUri = StorageConnectionString.ConstructTableEndpoint(
+                    Constants.Https,
+                    TestConfigDefault.AccountName,
+                    default,
+                    default);
+            }
+
+            return new StorageConnectionString(
+                    credentials,
+                    blobStorageUri: blobUri,
+                    tableStorageUri: tableUri);
+        }
+
         public async Task EnableSoftDelete()
         {
-            var service = this.GetServiceClient_SharedKey();
-            var properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new RetentionPolicy
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy()
             {
                 Enabled = true,
                 Days = 2
@@ -319,46 +505,43 @@ namespace Azure.Storage.Test.Shared
 
             do
             {
-                await this.Delay(250);
+                await Delay(250);
                 properties = await service.GetPropertiesAsync();
             } while (!properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
         public async Task DisableSoftDelete()
         {
-            var service = this.GetServiceClient_SharedKey();
-            var properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new RetentionPolicy
-            {
-                Enabled = false
-            };
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy() { Enabled = false };
             await service.SetPropertiesAsync(properties);
 
             do
             {
-                await this.Delay(250);
+                await Delay(250);
                 properties = await service.GetPropertiesAsync();
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
-        class DisposingContainer : IDisposable
+
+        public class DisposingContainer : IAsyncDisposable
         {
-            public BlobContainerClient ContainerClient { get; }
+            public BlobContainerClient Container;
 
-            public DisposingContainer(BlobContainerClient container, IDictionary<string, string> metadata, PublicAccessType publicAccessType)
+            public DisposingContainer(BlobContainerClient client)
             {
-                container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
-
-                this.ContainerClient = container;
+                Container = client;
             }
 
-            public void Dispose()
+            public async ValueTask DisposeAsync()
             {
-                if (this.ContainerClient != null)
+                if (Container != null)
                 {
                     try
                     {
-                        this.ContainerClient.DeleteAsync().Wait();
+                        await Container.DeleteAsync();
+                        Container = null;
                     }
                     catch
                     {

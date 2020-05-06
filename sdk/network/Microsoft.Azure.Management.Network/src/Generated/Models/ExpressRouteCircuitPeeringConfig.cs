@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitPeeringConfig
         /// class.
         /// </summary>
-        /// <param name="advertisedPublicPrefixes">The reference of
+        /// <param name="advertisedPublicPrefixes">The reference to
         /// AdvertisedPublicPrefixes.</param>
         /// <param name="advertisedCommunities">The communities of bgp peering.
         /// Specified for microsoft peering.</param>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of AdvertisedPublicPrefixes.
+        /// Gets or sets the reference to AdvertisedPublicPrefixes.
         /// </summary>
         [JsonProperty(PropertyName = "advertisedPublicPrefixes")]
         public IList<string> AdvertisedPublicPrefixes { get; set; }
@@ -75,12 +75,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> AdvertisedCommunities { get; set; }
 
         /// <summary>
-        /// Gets or sets the advertised public prefix state of the Peering
-        /// resource. Possible values include: 'NotConfigured', 'Configuring',
+        /// Gets the advertised public prefix state of the Peering resource.
+        /// Possible values include: 'NotConfigured', 'Configuring',
         /// 'Configured', 'ValidationNeeded'
         /// </summary>
         [JsonProperty(PropertyName = "advertisedPublicPrefixesState")]
-        public string AdvertisedPublicPrefixesState { get; set; }
+        public string AdvertisedPublicPrefixesState { get; private set; }
 
         /// <summary>
         /// Gets or sets the legacy mode of the peering.

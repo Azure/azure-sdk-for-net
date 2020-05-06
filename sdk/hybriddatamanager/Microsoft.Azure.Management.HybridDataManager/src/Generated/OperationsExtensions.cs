@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.HybridData
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// This method gets all the operations.
+            /// The list of operations for Microsoft.HybridData provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
-            /// This method gets all the operations.
+            /// The list of operations for Microsoft.HybridData provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
-            /// This method gets all the operations.
+            /// The list of operations for Microsoft.HybridData provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
-            /// This method gets all the operations.
+            /// The list of operations for Microsoft.HybridData provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

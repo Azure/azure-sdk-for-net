@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Valid for V1 scenarios.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set Id.</param>
+        /// <param name="recoveryProximityPlacementGroupId">The recovery
+        /// proximity placement group Id.</param>
         /// <param name="vmDisks">The list of vm disk details.</param>
         /// <param name="vmManagedDisks">The list of vm managed disk
         /// details.</param>
@@ -55,13 +57,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAzureNetworkId">The recovery Azure virtual
         /// network ARM id.</param>
         /// <param name="recoverySubnetName">The recovery subnet name.</param>
-        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), string recoveryAzureNetworkId = default(string), string recoverySubnetName = default(string))
+        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string recoveryProximityPlacementGroupId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), string recoveryAzureNetworkId = default(string), string recoverySubnetName = default(string))
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             VmDisks = vmDisks;
             VmManagedDisks = vmManagedDisks;
             MultiVmGroupName = multiVmGroupName;
@@ -108,6 +111,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAvailabilitySetId")]
         public string RecoveryAvailabilitySetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
+        public string RecoveryProximityPlacementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of vm disk details.

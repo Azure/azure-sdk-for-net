@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="target">The ID of the targeted resource, only VM is
         /// currently supported.</param>
-        /// <param name="storageLocation">Describes the storage location for a
-        /// packet capture session.</param>
+        /// <param name="storageLocation">The storage location for a packet
+        /// capture session.</param>
         /// <param name="name">Name of the packet capture session.</param>
         /// <param name="id">ID of the packet capture operation.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets the ID of the targeted resource, only VM is currently
@@ -118,8 +118,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? TimeLimitInSeconds { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the storage location for a packet capture
-        /// session.
+        /// Gets or sets the storage location for a packet capture session.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageLocation")]
         public PacketCaptureStorageLocation StorageLocation { get; set; }
@@ -131,12 +130,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<PacketCaptureFilter> Filters { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the packet capture session.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the packet capture session. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

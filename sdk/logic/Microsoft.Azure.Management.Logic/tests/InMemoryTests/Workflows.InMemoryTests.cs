@@ -148,7 +148,7 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<CloudException>(() => client.Workflows.ListBySubscription());
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ListBySubscription());
         }
 
         [Fact]
@@ -190,7 +190,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.ListBySubscriptionNext(null));
-            Assert.Throws<CloudException>(() => client.Workflows.ListBySubscriptionNext("http://management.azure.com/nextLink"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ListBySubscriptionNext("http://management.azure.com/nextLink"));
         }
 
         [Fact]
@@ -232,7 +232,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.ListByResourceGroup(null));
-            Assert.Throws<CloudException>(() => client.Workflows.ListByResourceGroup("rgName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ListByResourceGroup("rgName"));
         }
 
         [Fact]
@@ -274,7 +274,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.ListByResourceGroupNext(null));
-            Assert.Throws<CloudException>(() => client.Workflows.ListByResourceGroupNext("http://management.azure.com/nextLink"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ListByResourceGroupNext("http://management.azure.com/nextLink"));
         }
 
         [Fact]
@@ -318,7 +318,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.Workflows.CreateOrUpdate(null, "wfName", new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.CreateOrUpdate("rgName", null, new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.CreateOrUpdate("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.CreateOrUpdate("rgName", "wfName", new Workflow()));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.CreateOrUpdate("rgName", "wfName", new Workflow()));
         }
 
         [Fact]
@@ -383,7 +383,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.Delete(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.Workflows.Delete("rgName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Delete("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.Delete("rgName", "wfName"));
         }
 
         [Fact]
@@ -440,7 +440,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.Get(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.Workflows.Get("rgName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Get("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.Get("rgName", "wfName"));
         }
 
         [Fact]
@@ -484,7 +484,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.Workflows.Update(null, "wfName", new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.Update("rgName", null, new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.Update("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Update("rgName", "wfName", new Workflow()));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.Update("rgName", "wfName", new Workflow()));
         }
 
         [Fact]
@@ -532,7 +532,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.Disable(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.Workflows.Disable("rgName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Disable("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.Disable("rgName", "wfName"));
         }
 
         [Fact]
@@ -571,7 +571,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.Enable(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.Workflows.Enable("rgName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Enable("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.Enable("rgName", "wfName"));
         }
 
         [Fact]
@@ -610,7 +610,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.RegenerateAccessKey(null, "wfName", new RegenerateActionParameter()));
             Assert.Throws<ValidationException>(() => client.Workflows.RegenerateAccessKey("rgName", null, new RegenerateActionParameter()));
-            Assert.Throws<CloudException>(() => client.Workflows.RegenerateAccessKey("rgName", "wfName", new RegenerateActionParameter()));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.RegenerateAccessKey("rgName", "wfName", new RegenerateActionParameter()));
         }
 
         [Fact]
@@ -649,7 +649,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.Workflows.ListSwagger(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.Workflows.ListSwagger("rgName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.ListSwagger("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ListSwagger("rgName", "wfName"));
         }
 
         [Fact]
@@ -691,7 +691,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", null, "westus", new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", null, new Workflow()));
             Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", "westus", null));
-            Assert.Throws<CloudException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", "westus", new Workflow()));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", "westus", new Workflow()));
         }
 
         [Fact]
@@ -732,7 +732,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", null, new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
             // The Assert is disabled due to the following bug: https://github.com/Azure/autorest/issues/1288.
             // Assert.Throws<ValidationException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
+            Assert.Throws<ErrorResponseException>(() => client.Workflows.GenerateUpgradedDefinition("rgName", "wfName", new GenerateUpgradedDefinitionParameters("2016-04-01-preview")));
         }
 
         [Fact]

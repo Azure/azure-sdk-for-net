@@ -67,14 +67,12 @@ thing.save()
 
 The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
-```Python
-thing = client.get_thing(id)
-```
+```C# Snippet:GetSecret
+var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
 
-### List the things
+SecretBundle secret = client.GetSecret("TestSecret");
 
-Use [list_things](not-valid-link) to get one or more Thing objects from the service. If there are no Things available, a `404` exception is thrown (see [Troubleshooting](#troubleshooting) for details on handling exceptions).
-
+Console.WriteLine(secret.Value);
 ```Python
 things = client.list_things()
 ```
@@ -101,4 +99,4 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://worldready.cloudapp.net/Styleguide/Read?id=2696&topicid=25357
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2FTemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)

@@ -32,13 +32,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// <summary>
         /// Initializes a new instance of the PredictionRequest class.
         /// </summary>
-        /// <param name="query">The query to predict</param>
+        /// <param name="query">The query to predict.</param>
         /// <param name="options">The custom options defined for this
         /// request.</param>
         /// <param name="externalEntities">The externally predicted entities
-        /// for this request</param>
+        /// for this request.</param>
         /// <param name="dynamicLists">The dynamically created list entities
-        /// for this request</param>
+        /// for this request.</param>
         public PredictionRequest(string query, PredictionRequestOptions options = default(PredictionRequestOptions), IList<ExternalEntity> externalEntities = default(IList<ExternalEntity>), IList<DynamicList> dynamicLists = default(IList<DynamicList>))
         {
             Query = query;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the query to predict
+        /// Gets or sets the query to predict.
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
@@ -66,13 +66,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         public PredictionRequestOptions Options { get; set; }
 
         /// <summary>
-        /// Gets or sets the externally predicted entities for this request
+        /// Gets or sets the externally predicted entities for this request.
         /// </summary>
         [JsonProperty(PropertyName = "externalEntities")]
         public IList<ExternalEntity> ExternalEntities { get; set; }
 
         /// <summary>
-        /// Gets or sets the dynamically created list entities for this request
+        /// Gets or sets the dynamically created list entities for this
+        /// request.
         /// </summary>
         [JsonProperty(PropertyName = "dynamicLists")]
         public IList<DynamicList> DynamicLists { get; set; }

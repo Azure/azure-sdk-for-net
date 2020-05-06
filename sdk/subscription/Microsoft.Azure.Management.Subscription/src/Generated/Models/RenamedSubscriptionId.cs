@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Renamed Subscription Id
+    /// The ID of the subscriptions that is being renamed
     /// </summary>
     public partial class RenamedSubscriptionId
     {
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// <summary>
         /// Initializes a new instance of the RenamedSubscriptionId class.
         /// </summary>
-        /// <param name="value">Renamed Subscription Id</param>
+        /// <param name="value">The ID of the subscriptions that is being
+        /// renamed</param>
         public RenamedSubscriptionId(string value = default(string))
         {
             Value = value;
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets renamed Subscription Id
+        /// Gets the ID of the subscriptions that is being renamed
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; private set; }

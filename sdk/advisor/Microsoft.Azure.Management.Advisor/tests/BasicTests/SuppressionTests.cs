@@ -17,7 +17,7 @@ namespace Advisor.Tests.BasicTests
         [Fact]
         public void SuppressionsTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var client = context.GetServiceClient<AdvisorManagementClient>())
                 {

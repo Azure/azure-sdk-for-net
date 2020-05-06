@@ -40,18 +40,25 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
+        /// <param name="replicasPerMaster">The number of replicas to be
+        /// created per master.</param>
         /// <param name="tenantSettings">A dictionary of tenant
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
         /// Premium Cluster Cache.</param>
+        /// <param name="minimumTlsVersion">Optional: requires clients to use a
+        /// specified TLS version (or higher) to connect (e,g, '1.0', '1.1',
+        /// '1.2'). Possible values include: '1.0', '1.1', '1.2'</param>
         /// <param name="sku">The SKU of the Redis cache to deploy.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisUpdateParameters(IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public RedisUpdateParameters(IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
+            ReplicasPerMaster = replicasPerMaster;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
+            MinimumTlsVersion = minimumTlsVersion;
             Sku = sku;
             Tags = tags;
             CustomInit();
@@ -78,6 +85,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         public bool? EnableNonSslPort { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of replicas to be created per master.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicasPerMaster")]
+        public int? ReplicasPerMaster { get; set; }
+
+        /// <summary>
         /// Gets or sets a dictionary of tenant settings
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantSettings")]
@@ -89,6 +102,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shardCount")]
         public int? ShardCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional: requires clients to use a specified TLS
+        /// version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). Possible
+        /// values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Redis cache to deploy.

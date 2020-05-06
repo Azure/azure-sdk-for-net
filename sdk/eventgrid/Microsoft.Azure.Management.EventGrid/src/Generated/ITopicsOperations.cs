@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicName'>
         /// Name of the topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the resource
+        /// <param name='topicUpdateParameters'>
+        /// Topic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Topic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List topics under an Azure subscription.
         /// </summary>
@@ -378,8 +378,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicName'>
         /// Name of the topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the resource
+        /// <param name='topicUpdateParameters'>
+        /// Topic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -396,7 +396,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Topic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List topics under an Azure subscription.
         /// </summary>

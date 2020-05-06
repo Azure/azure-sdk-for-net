@@ -37,6 +37,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// private link service connection resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateLinkServiceId">The resource id of private link
         /// service.</param>
         /// <param name="groupIds">The ID(s) of the group(s) obtained from the
@@ -51,14 +54,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
-        public PrivateLinkServiceConnection(string id = default(string), string privateLinkServiceId = default(string), IList<string> groupIds = default(IList<string>), string requestMessage = default(string), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string name = default(string))
+        /// <param name="type">The resource type.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public PrivateLinkServiceConnection(string id = default(string), string provisioningState = default(string), string privateLinkServiceId = default(string), IList<string> groupIds = default(IList<string>), string requestMessage = default(string), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string name = default(string), string type = default(string), string etag = default(string))
             : base(id)
         {
+            ProvisioningState = provisioningState;
             PrivateLinkServiceId = privateLinkServiceId;
             GroupIds = groupIds;
             RequestMessage = requestMessage;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             Name = name;
+            Type = type;
+            Etag = etag;
             CustomInit();
         }
 
@@ -66,6 +75,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the provisioning state of the private link service connection
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource id of private link service.
@@ -100,6 +117,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets the resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }

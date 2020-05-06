@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Consumption.Tests.Helpers;
@@ -23,7 +23,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListMarketplacesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -42,7 +42,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListMarketplacesByBillingPeriodTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -61,7 +61,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListMarketplacesByBillingPeriodNextTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -98,3 +98,4 @@ namespace Consumption.Tests.ScenarioTests
         }
     }
 }
+

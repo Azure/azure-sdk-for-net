@@ -37,9 +37,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
+        /// <param name="outputs">The output of a skill is either a field in a
+        /// search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -55,8 +59,8 @@ namespace Microsoft.Azure.Search.Models
         /// 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'</param>
         /// <param name="shouldDetectOrientation">A value indicating to turn
         /// orientation detection on or not. Default is false.</param>
-        public OcrSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage? defaultLanguageCode = default(OcrSkillLanguage?), bool? shouldDetectOrientation = default(bool?))
-            : base(inputs, outputs, description, context)
+        public OcrSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string), TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage? defaultLanguageCode = default(OcrSkillLanguage?), bool? shouldDetectOrientation = default(bool?))
+            : base(inputs, outputs, name, description, context)
         {
             TextExtractionAlgorithm = textExtractionAlgorithm;
             DefaultLanguageCode = defaultLanguageCode;

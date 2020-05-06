@@ -1,45 +1,60 @@
 # Instructions for CODEOWNERS file format and automatic build failure notifications:
-# https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/codeowners.md
+# https://github.com/Azure/azure-sdk/blob/master/docs/policies/opensource.md#codeowners
 
 ###########
 # SDK
 ###########
 
 # Catch all
-/sdk/ @AlexGhiondea
+/sdk/                                           @AlexGhiondea
 
 # Core
-/sdk/core/ @pakrym
+/sdk/core/                                      @pakrym @KrzysztofCwalina
+
+# Extensions
+/sdk/extensions/                                @parkym
 
 # Service teams
-/sdk/appconfiguration/ @annelo-msft
+/sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
-/sdk/batch/ @matthchr 
+/sdk/batch/                                     @bgklein @xingwu1 
 
-/sdk/cognitiveservices/language.textanalytics/ @assafi 
-/sdk/cognitiveservices/vision.computervision/ @toothache
-/sdk/cognitiveservices/vision.face/ @TFR258 
+/sdk/cognitiveservices/language.textanalytics/  @assafi 
+/sdk/cognitiveservices/vision.computervision/   @toothache
+/sdk/cognitiveservices/vision.face/             @TFR258 
 
-/sdk/eventgrid/ @kalyanaj 
+/sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
-/sdk/eventhub/ @serkantkaraca @jsquire @kinelski
-/sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
-/sdk/identity/azure.identity/ @schaabs
+/sdk/identity/                                  @schaabs
 
-/sdk/keyvault/ @schaabs 
-/sdk/keyvault/azure.*/ @schaabs @shahabhijeet 
+/sdk/keyvault/                                  @schaabs @heaths
 
-/sdk/search/ @brjohnstmsft
-/sdk/servicebus/ @nemakam @jsquire
-/sdk/storage/ @kfarmer-msft @seanmcc-msft @tg-msft
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
+
+/sdk/servicebus/                                @nemakam @JoshLove-msft @ShivangiReja @jsquire
+
+/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
+
+/sdk/tables/                                    @christothes
+
+/sdk/textanalytics/                             @annelo-msft @maririos
+
+/sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
+
 # Management Plane
-/**/*Management*/ @erich-wang
+/**/*Management*/                               @isra-fel @erich-wang
+
+# Reviewers to double check any API changes
+/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
 
 ###########
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @erich-wang
+/eng/mgmt/      @isra-fel @erich-wang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny

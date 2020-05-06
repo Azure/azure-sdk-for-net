@@ -53,7 +53,7 @@ namespace Test.Azure.Management.Logic
         }
 
         protected LogicManagementClient GetClient(MockContext context)
-        {
+        {            
             return context.GetServiceClient<LogicManagementClient>();
         }
 

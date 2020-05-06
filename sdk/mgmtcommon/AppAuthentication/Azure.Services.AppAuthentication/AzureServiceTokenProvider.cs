@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// KeyVaultClient keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         /// </code>
         /// </example>
-        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) =>
+        public virtual TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) =>
         {
-            var authResult = await GetAuthResultAsyncImpl(authority, resource, scope).ConfigureAwait(false);
+            var authResult = await GetAuthResultAsyncImpl(resource, authority).ConfigureAwait(false);
             return authResult.AccessToken;
         };
 
         /// <summary>
         /// The principal used to acquire token. This will be of type "User" for local development scenarios, and "App" when client credentials flow is used. 
         /// </summary>
-        public Principal PrincipalUsed => _principalUsed;
+        public virtual Principal PrincipalUsed => _principalUsed;
 
         /// <summary>
         /// Creates an instance of the AzureServiceTokenProvider class.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string authority, string resource, string scope,
+        private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string resource, string authority,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             // Check if the auth result is present in cache, for the given connection string, authority, and resource
@@ -171,8 +171,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     try
                     {
                         // Get the auth result, add to the cache, and return the auth result.
-                        var authResult = await tokenProvider.GetAuthResultAsync(authority, resource,
-                                string.Empty, cancellationToken)
+                        var authResult = await tokenProvider.GetAuthResultAsync(resource, authority, cancellationToken)
                             .ConfigureAwait(false);
 
                         // Set the token provider to the one that worked. 
@@ -241,7 +240,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
+        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var authResult = await GetAuthenticationResultAsync(resource, tenantId, cancellationToken).ConfigureAwait(false);
@@ -249,9 +248,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return authResult.AccessToken;
         }
 
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
+        public virtual Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
+            return GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
         }
 
         /// <summary>
@@ -268,7 +267,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(resource))
@@ -278,12 +277,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
-            return await GetAuthResultAsyncImpl(authority, resource, string.Empty, cancellationToken).ConfigureAwait(false);
+            return GetAuthResultAsyncImpl(resource, authority, cancellationToken);
         }
 
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
-            return await GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
+            return GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
         }
     }
 }

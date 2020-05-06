@@ -10,12 +10,12 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionDescribeTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void DescribeImageInStreamTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "DescribeImageInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
@@ -57,12 +57,12 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void DescribeImageTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageTest");
+                HttpMockServer.Initialize(this.GetType(), "DescribeImageTest");
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 
@@ -106,9 +106,9 @@ namespace ComputerVisionSDK.Tests
         [Fact]
         public void DescribeImageInJapaneseTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageInJapaneseTest");
+                HttpMockServer.Initialize(this.GetType(), "DescribeImageInJapaneseTest");
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 

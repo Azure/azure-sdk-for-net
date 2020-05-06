@@ -69,14 +69,14 @@ namespace Microsoft.Azure.Management.Reservations
 
 
         /// <summary>
-        /// Gets the IReservationOrderOperations.
-        /// </summary>
-        IReservationOrderOperations ReservationOrder { get; }
-
-        /// <summary>
         /// Gets the IReservationOperations.
         /// </summary>
         IReservationOperations Reservation { get; }
+
+        /// <summary>
+        /// Gets the IReservationOrderOperations.
+        /// </summary>
+        IReservationOrderOperations ReservationOrder { get; }
 
         /// <summary>
         /// Gets the IOperationOperations.
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Reservations
         /// Get list of applicable `Reservation`s.
         /// </summary>
         /// <remarks>
-        /// Get applicable `Reservation`s that are applied to this
-        /// subscription.
+        /// Get applicable `Reservation`s that are applied to this subscription
+        /// or a resource group under this subscription.
         /// </remarks>
         /// <param name='subscriptionId'>
         /// Id of the subscription

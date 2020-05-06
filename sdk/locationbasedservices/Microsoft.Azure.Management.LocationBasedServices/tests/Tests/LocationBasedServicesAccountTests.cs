@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using LocationBasedServices.Tests.Helpers;
@@ -30,7 +30,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -61,7 +61,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -99,7 +99,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -130,7 +130,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -158,7 +158,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -190,7 +190,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);
@@ -217,7 +217,7 @@ namespace LBS.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = LocationBasedServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var locationBasedServicesManagementClient = LocationBasedServicesManagementTestUtilities.GetLocationBasedServicesManagementClient(context, handler);

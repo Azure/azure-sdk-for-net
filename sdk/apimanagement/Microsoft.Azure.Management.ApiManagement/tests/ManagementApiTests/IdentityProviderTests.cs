@@ -18,10 +18,11 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class IdentityProviderTests : TestBase
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -32,7 +33,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string clientId = TestUtilities.GenerateName("clientId");
                     string clientSecret = TestUtilities.GenerateName("clientSecret");
 
-                    var identityProviderCreateParameters = new IdentityProviderContract(clientId, clientSecret);
+                    var identityProviderCreateParameters = new IdentityProviderCreateContract(clientId, clientSecret);
 
                     var identityProviderContract = testBase.client.IdentityProvider.CreateOrUpdate(
                         testBase.rgName,
@@ -40,7 +41,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         IdentityProviderType.Facebook,
                         identityProviderCreateParameters);
 
-                    Assert.NotNull(identityProviderContract);                    
+                    Assert.NotNull(identityProviderContract);
                     Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
                     Assert.NotNull(identityProviderContract.ClientId);
                     Assert.NotNull(identityProviderContract.ClientSecret);
@@ -76,13 +77,13 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // get to check it was patched
                     identityProviderContract = await testBase.client.IdentityProvider.GetAsync(
-                        testBase.rgName, 
+                        testBase.rgName,
                         testBase.serviceName,
                         IdentityProviderType.Facebook);
 
                     Assert.NotNull(identityProviderContract);
                     Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
-                    Assert.Equal(patchedSecret, identityProviderContract.ClientSecret);
+                    Assert.Null(identityProviderContract.ClientSecret);
                     Assert.Equal(clientId, identityProviderContract.ClientId);
 
                     // get the tag again
@@ -90,6 +91,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         IdentityProviderType.Facebook);
+
+                    var secret = await testBase.client.IdentityProvider.ListSecretsAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        IdentityProviderType.Facebook);
+                    Assert.Equal(patchedSecret, secret.ClientSecret);
 
                     // delete the identity provider
                     testBase.client.IdentityProvider.Delete(

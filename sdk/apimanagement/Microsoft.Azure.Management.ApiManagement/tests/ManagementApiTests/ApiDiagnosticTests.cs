@@ -18,14 +18,15 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiDiagnosticTests : TestBase
     {
         [Fact]
+        [Trait("owner", "glfeokti")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                
+
                 // list all the APIs
                 IPage<ApiContract> apiResponse = testBase.client.Api.ListByService(
                     testBase.rgName,
@@ -94,7 +95,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiDiagnosticTag.ETag);
 
                     // now update the sampling and other settings of the diagnostic
-                    diagnosticContractParams.EnableHttpCorrelationHeaders = true;
                     diagnosticContractParams.AlwaysLog = "allErrors";
                     diagnosticContractParams.Sampling = new SamplingSettings("fixed", 50);
                     var listOfHeaders = new List<string> { "Content-type" };
@@ -134,7 +134,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         diagnosticContractParams,
                         apiDiagnosticTag.ETag);
                     Assert.NotNull(updatedApiDiagnostic);
-                    Assert.True(updatedApiDiagnostic.Body.EnableHttpCorrelationHeaders.Value);
                     Assert.Equal("allErrors", updatedApiDiagnostic.Body.AlwaysLog);
                     Assert.NotNull(updatedApiDiagnostic.Body.Sampling);
                     Assert.NotNull(updatedApiDiagnostic.Body.Frontend);
@@ -150,7 +149,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.ApiDiagnostic.GetEntityTag(
-                            testBase.rgName, 
+                            testBase.rgName,
                             testBase.serviceName,
                             apiToUse.Name,
                             apiDiagnosticId));
@@ -177,11 +176,24 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.ApiDiagnostic.Delete(
                         testBase.rgName,
-                        testBase.serviceName, 
-                        apiToUse.Name, 
+                        testBase.serviceName,
+                        apiToUse.Name,
                         apiDiagnosticId,
                         "*");
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
+
+                    // clean up all properties
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.NamedValue.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");
+                    }
                 }
             }
         }

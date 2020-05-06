@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.2.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="19.13.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.RecoveryServices" Version="4.2.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.RecoveryServices.Backup" Version="1.2.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />

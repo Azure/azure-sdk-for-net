@@ -267,6 +267,133 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Returns a list of databases that are owned by this cluster and were
+            /// followed by another cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IEnumerable<FollowerDatabaseDefinition> ListFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListFollowerDatabasesAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a list of databases that are owned by this cluster and were
+            /// followed by another cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<FollowerDatabaseDefinition>> ListFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            public static void DetachFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove)
+            {
+                operations.DetachFollowerDatabasesAsync(resourceGroupName, clusterName, followerDatabaseToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, followerDatabaseToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Diagnoses network connectivity status for external resources on which the
+            /// service is dependent on.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static DiagnoseVirtualNetworkResult DiagnoseVirtualNetwork(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.DiagnoseVirtualNetworkAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Diagnoses network connectivity status for external resources on which the
+            /// service is dependent on.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DiagnoseVirtualNetworkResult> DiagnoseVirtualNetworkAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DiagnoseVirtualNetworkWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all Kusto clusters within a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -334,7 +461,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<AzureSku> ListSkus(this IClustersOperations operations)
+            public static IEnumerable<SkuDescription> ListSkus(this IClustersOperations operations)
             {
                 return operations.ListSkusAsync().GetAwaiter().GetResult();
             }
@@ -348,7 +475,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<AzureSku>> ListSkusAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<SkuDescription>> ListSkusAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -434,6 +561,132 @@ namespace Microsoft.Azure.Management.Kusto
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Returns a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IEnumerable<LanguageExtension> ListLanguageExtensions(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListLanguageExtensionsAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<LanguageExtension>> ListLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Add a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToAdd'>
+            /// The language extensions to add.
+            /// </param>
+            public static void AddLanguageExtensions(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd)
+            {
+                operations.AddLanguageExtensionsAsync(resourceGroupName, clusterName, languageExtensionsToAdd).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToAdd'>
+            /// The language extensions to add.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AddLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AddLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, languageExtensionsToAdd, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToRemove'>
+            /// The language extensions to remove.
+            /// </param>
+            public static void RemoveLanguageExtensions(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove)
+            {
+                operations.RemoveLanguageExtensionsAsync(resourceGroupName, clusterName, languageExtensionsToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToRemove'>
+            /// The language extensions to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RemoveLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, languageExtensionsToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -637,6 +890,177 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task BeginStartAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            public static void BeginDetachFollowerDatabases(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove)
+            {
+                operations.BeginDetachFollowerDatabasesAsync(resourceGroupName, clusterName, followerDatabaseToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detaches all followers of a database owned by this cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='followerDatabaseToRemove'>
+            /// The follower databases properties to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDetachFollowerDatabasesAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDetachFollowerDatabasesWithHttpMessagesAsync(resourceGroupName, clusterName, followerDatabaseToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Diagnoses network connectivity status for external resources on which the
+            /// service is dependent on.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static DiagnoseVirtualNetworkResult BeginDiagnoseVirtualNetwork(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.BeginDiagnoseVirtualNetworkAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Diagnoses network connectivity status for external resources on which the
+            /// service is dependent on.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DiagnoseVirtualNetworkResult> BeginDiagnoseVirtualNetworkAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDiagnoseVirtualNetworkWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Add a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToAdd'>
+            /// The language extensions to add.
+            /// </param>
+            public static void BeginAddLanguageExtensions(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd)
+            {
+                operations.BeginAddLanguageExtensionsAsync(resourceGroupName, clusterName, languageExtensionsToAdd).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToAdd'>
+            /// The language extensions to add.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginAddLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginAddLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, languageExtensionsToAdd, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToRemove'>
+            /// The language extensions to remove.
+            /// </param>
+            public static void BeginRemoveLanguageExtensions(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove)
+            {
+                operations.BeginRemoveLanguageExtensionsAsync(resourceGroupName, clusterName, languageExtensionsToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove a list of language extensions that can run within KQL queries.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='languageExtensionsToRemove'>
+            /// The language extensions to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRemoveLanguageExtensionsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRemoveLanguageExtensionsWithHttpMessagesAsync(resourceGroupName, clusterName, languageExtensionsToRemove, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -40,16 +40,33 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <param name="location">The region where the resource is
         /// located.</param>
         /// <param name="tags">List of key-value pairs.</param>
-        /// <param name="fileSystem">Filesystem type.</param>
-        /// <param name="remainingSizeGB">Amount of free space in GB.</param>
-        /// <param name="sizeGB">Total amount of space in GB.</param>
+        /// <param name="totalCapacityGB">Total capacity in GB of the
+        /// volume.</param>
+        /// <param name="remainingCapacityGB">Remaining capacity in GB of the
+        /// volume.</param>
+        /// <param name="healthStatus">Health status of the volume.</param>
+        /// <param name="operationalStatus">Operational status of the
+        /// volume.</param>
+        /// <param name="repairStatus">Repair status of the volume. Empty if no
+        /// repair job running, something like 'Running, 90%' when
+        /// repairing.</param>
+        /// <param name="description">Detailed description for
+        /// HealthStatus/OperationalStatus. Empty if
+        /// HealthStatus/OperationalStatus is Healthy/Ok.</param>
+        /// <param name="action">Detailed recommended action for
+        /// HealthStatus/OperationalStatus. Empty if
+        /// HealthStatus/OperationalStatus is Healthy/Ok.</param>
         /// <param name="volumeLabel">Volume label.</param>
-        public Volume(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystem = default(string), int? remainingSizeGB = default(int?), int? sizeGB = default(int?), string volumeLabel = default(string))
+        public Volume(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? totalCapacityGB = default(int?), int? remainingCapacityGB = default(int?), string healthStatus = default(string), string operationalStatus = default(string), string repairStatus = default(string), string description = default(string), string action = default(string), string volumeLabel = default(string))
             : base(id, name, type, location, tags)
         {
-            FileSystem = fileSystem;
-            RemainingSizeGB = remainingSizeGB;
-            SizeGB = sizeGB;
+            TotalCapacityGB = totalCapacityGB;
+            RemainingCapacityGB = remainingCapacityGB;
+            HealthStatus = healthStatus;
+            OperationalStatus = operationalStatus;
+            RepairStatus = repairStatus;
+            Description = description;
+            Action = action;
             VolumeLabel = volumeLabel;
             CustomInit();
         }
@@ -60,28 +77,56 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets filesystem type.
+        /// Gets total capacity in GB of the volume.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileSystem")]
-        public string FileSystem { get; set; }
+        [JsonProperty(PropertyName = "properties.totalCapacityGB")]
+        public int? TotalCapacityGB { get; private set; }
 
         /// <summary>
-        /// Gets or sets amount of free space in GB.
+        /// Gets remaining capacity in GB of the volume.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.remainingSizeGB")]
-        public int? RemainingSizeGB { get; set; }
+        [JsonProperty(PropertyName = "properties.remainingCapacityGB")]
+        public int? RemainingCapacityGB { get; private set; }
 
         /// <summary>
-        /// Gets or sets total amount of space in GB.
+        /// Gets health status of the volume.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sizeGB")]
-        public int? SizeGB { get; set; }
+        [JsonProperty(PropertyName = "properties.healthStatus")]
+        public string HealthStatus { get; private set; }
 
         /// <summary>
-        /// Gets or sets volume label.
+        /// Gets operational status of the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationalStatus")]
+        public string OperationalStatus { get; private set; }
+
+        /// <summary>
+        /// Gets repair status of the volume. Empty if no repair job running,
+        /// something like 'Running, 90%' when repairing.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.repairStatus")]
+        public string RepairStatus { get; private set; }
+
+        /// <summary>
+        /// Gets detailed description for HealthStatus/OperationalStatus. Empty
+        /// if HealthStatus/OperationalStatus is Healthy/Ok.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets detailed recommended action for
+        /// HealthStatus/OperationalStatus. Empty if
+        /// HealthStatus/OperationalStatus is Healthy/Ok.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.action")]
+        public string Action { get; private set; }
+
+        /// <summary>
+        /// Gets volume label.
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeLabel")]
-        public string VolumeLabel { get; set; }
+        public string VolumeLabel { get; private set; }
 
     }
 }

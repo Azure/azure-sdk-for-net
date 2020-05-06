@@ -1,0 +1,78 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-jcswnkcn.search.windows.net/servicestats?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-5e27e85a33f6b840b12c64fc470528bf-3c7c87d47a636242-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3557d1c80476f1dec2ba685ca5c4ef71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "586",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sat, 25 Apr 2020 01:14:19 GMT",
+        "elapsed-time": "26",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "3557d1c8-0476-f1de-c2ba-685ca5c4ef71",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-jcswnkcn.search.windows.net/$metadata#Microsoft.Azure.Search.V2019_05_06_Preview.ServiceStatistics",
+        "counters": {
+          "documentCount": {
+            "usage": 10,
+            "quota": null
+          },
+          "indexesCount": {
+            "usage": 1,
+            "quota": 3
+          },
+          "indexersCount": {
+            "usage": 0,
+            "quota": 3
+          },
+          "dataSourcesCount": {
+            "usage": 0,
+            "quota": 3
+          },
+          "storageSize": {
+            "usage": 38732,
+            "quota": 52428800
+          },
+          "synonymMaps": {
+            "usage": 0,
+            "quota": 3
+          },
+          "skillsetCount": {
+            "usage": 0,
+            "quota": 3
+          }
+        },
+        "limits": {
+          "maxFieldsPerIndex": 1000,
+          "maxFieldNestingDepthPerIndex": 10,
+          "maxComplexCollectionFieldsPerIndex": 40,
+          "maxComplexObjectsInCollectionsPerDocument": 3000
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "180277775",
+    "SearchIndexName": "mesaejwj",
+    "SearchServiceName": "azs-net-jcswnkcn"
+  }
+}

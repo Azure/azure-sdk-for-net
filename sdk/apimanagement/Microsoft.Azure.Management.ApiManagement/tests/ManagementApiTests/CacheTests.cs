@@ -15,10 +15,11 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class CacheTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -61,7 +62,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(getResponse);
                     Assert.Equal(cacheid, getResponse.Body.Name);
-                    
+
                     // list caches
                     cacheListResponse = testBase.client.Cache.ListByService(
                         testBase.rgName,
@@ -91,12 +92,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.Cache.Delete(testBase.rgName, testBase.serviceName, cacheid, "*");
                     // clean up all properties
-                    var listOfProperties = testBase.client.Property.ListByService(
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
                         testBase.rgName,
                         testBase.serviceName);
                     foreach (var property in listOfProperties)
                     {
-                        testBase.client.Property.Delete(
+                        testBase.client.NamedValue.Delete(
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,

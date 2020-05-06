@@ -43,7 +43,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task Pricings_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var pricings = await securityCenterClient.Pricings.ListAsync();
@@ -54,7 +54,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void Pricings_GetSubscriptionPricing()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var pricing = securityCenterClient.Pricings.Get("VirtualMachines");
@@ -65,7 +65,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public async Task Pricings_UpdateSubscriptionPricing()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var pricing = await securityCenterClient.Pricings.UpdateAsync("VirtualMachines", "Standard");

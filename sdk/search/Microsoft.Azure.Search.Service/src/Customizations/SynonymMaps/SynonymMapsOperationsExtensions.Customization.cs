@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search
     public static partial class SynonymMapsOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search synonym map or updates a synonym map if it
+        /// Creates a new synonym map or updates a synonym map if it
         /// already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Creates a new Azure Search synonym map or updates a synonym map if it
+        /// Creates a new synonym map or updates a synonym map if it
         /// already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given synonym map exists in the Azure Search service.
+        /// Determines whether or not the given synonym map exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Determines whether or not the given synonym map exists in the Azure Search service.
+        /// Determines whether or not the given synonym map exists in the search service.
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

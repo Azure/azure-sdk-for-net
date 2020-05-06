@@ -13,9 +13,9 @@ namespace QnAMaker.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6210")]
         public void QnAMakerEndpointKeysGetEnpointKeys()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "QnAMakerEndpointKeysGetEnpointKeys");
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerEndpointKeysGetEnpointKeys");
 
                 IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
                 var keys = client.EndpointKeys.GetKeysAsync().Result;
@@ -27,9 +27,9 @@ namespace QnAMaker.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6210")]
         public void QnAMakerEndpointKeysRefreshKeys()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "QnAMakerEndpointKeysRefreshKeys");
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerEndpointKeysRefreshKeys");
 
                 IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
                 var keys = client.EndpointKeys.RefreshKeysAsync("SecondaryKey").Result;

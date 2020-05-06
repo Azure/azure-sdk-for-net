@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="certificateSource">Defines the source of the SSL
         /// certificate. Possible values include: 'AzureKeyVault',
         /// 'FrontDoor'</param>
-        /// <param name="protocolType">Defines the TLS extension protocol that
-        /// is used for secure delivery. Possible values include:
-        /// 'ServerNameIndication'</param>
+        /// <param name="minimumTlsVersion">The minimum TLS version required
+        /// from the clients to establish an SSL handshake with Front Door.
+        /// Possible values include: '1.0', '1.2'</param>
         /// <param name="vault">The Key Vault containing the SSL
         /// certificate</param>
         /// <param name="secretName">The name of the Key Vault secret
@@ -47,15 +47,22 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="certificateType">Defines the type of the certificate
         /// used for secure connections to a frontendEndpoint. Possible values
         /// include: 'Dedicated'</param>
-        public CustomHttpsConfiguration(string certificateSource = default(string), string protocolType = default(string), KeyVaultCertificateSourceParametersVault vault = default(KeyVaultCertificateSourceParametersVault), string secretName = default(string), string secretVersion = default(string), string certificateType = default(string))
+        public CustomHttpsConfiguration(string certificateSource, string minimumTlsVersion, KeyVaultCertificateSourceParametersVault vault = default(KeyVaultCertificateSourceParametersVault), string secretName = default(string), string secretVersion = default(string), string certificateType = default(string))
         {
             CertificateSource = certificateSource;
-            ProtocolType = protocolType;
+            MinimumTlsVersion = minimumTlsVersion;
             Vault = vault;
             SecretName = secretName;
             SecretVersion = secretVersion;
             CertificateType = certificateType;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for CustomHttpsConfiguration class.
+        /// </summary>
+        static CustomHttpsConfiguration()
+        {
+            ProtocolType = "ServerNameIndication";
         }
 
         /// <summary>
@@ -71,11 +78,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string CertificateSource { get; set; }
 
         /// <summary>
-        /// Gets or sets defines the TLS extension protocol that is used for
-        /// secure delivery. Possible values include: 'ServerNameIndication'
+        /// Gets or sets the minimum TLS version required from the clients to
+        /// establish an SSL handshake with Front Door. Possible values
+        /// include: '1.0', '1.2'
         /// </summary>
-        [JsonProperty(PropertyName = "protocolType")]
-        public string ProtocolType { get; set; }
+        [JsonProperty(PropertyName = "minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the Key Vault containing the SSL certificate
@@ -105,5 +113,28 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         [JsonProperty(PropertyName = "frontDoorCertificateSourceParameters.certificateType")]
         public string CertificateType { get; set; }
 
+        /// <summary>
+        /// Defines the TLS extension protocol that is used for secure delivery
+        /// </summary>
+        [JsonProperty(PropertyName = "protocolType")]
+        public static string ProtocolType { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CertificateSource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateSource");
+            }
+            if (MinimumTlsVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MinimumTlsVersion");
+            }
+        }
     }
 }

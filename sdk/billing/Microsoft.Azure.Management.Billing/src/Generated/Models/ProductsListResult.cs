@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing products summary. It contains a list of available
-    /// products summaries in reverse chronological order by purchase date.
+    /// Result of listing products. It contains a list of available products
+    /// summaries in reverse chronological order by purchase date.
     /// </summary>
     public partial class ProductsListResult
     {
@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the ProductsListResult class.
         /// </summary>
-        /// <param name="value">The list of products summary.</param>
+        /// <param name="value">The list of products.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public ProductsListResult(IList<ProductSummary> value = default(IList<ProductSummary>), string nextLink = default(string))
+        public ProductsListResult(IList<Product> value = default(IList<Product>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of products summary.
+        /// Gets the list of products.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<ProductSummary> Value { get; private set; }
+        public IList<Product> Value { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.

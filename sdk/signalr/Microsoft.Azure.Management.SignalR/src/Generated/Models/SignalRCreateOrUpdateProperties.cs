@@ -48,10 +48,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// its globally default value.
         /// But keep in mind, the default value doesn't mean "false". It varies
         /// in terms of different FeatureFlags.</param>
-        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>))
+        /// <param name="cors">Cross-Origin Resource Sharing (CORS)
+        /// settings.</param>
+        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings))
         {
             HostNamePrefix = hostNamePrefix;
             Features = features;
+            Cors = cors;
             CustomInit();
         }
 
@@ -83,6 +86,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "features")]
         public IList<SignalRFeature> Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets cross-Origin Resource Sharing (CORS) settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "cors")]
+        public SignalRCorsSettings Cors { get; set; }
 
     }
 }

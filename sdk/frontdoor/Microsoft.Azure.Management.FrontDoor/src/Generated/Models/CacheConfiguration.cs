@@ -32,14 +32,22 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         /// <param name="queryParameterStripDirective">Treatment of URL query
         /// terms when forming the cache key. Possible values include:
-        /// 'StripNone', 'StripAll'</param>
+        /// 'StripNone', 'StripAll', 'StripOnly', 'StripAllExcept'</param>
+        /// <param name="queryParameters">query parameters to include or
+        /// exclude (comma separated).</param>
         /// <param name="dynamicCompression">Whether to use dynamic compression
         /// for cached content. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public CacheConfiguration(string queryParameterStripDirective = default(string), string dynamicCompression = default(string))
+        /// <param name="cacheDuration">The duration for which the content
+        /// needs to be cached. Allowed format is in ISO 8601 format
+        /// (http://en.wikipedia.org/wiki/ISO_8601#Durations). HTTP requires
+        /// the value to be no more than a year</param>
+        public CacheConfiguration(string queryParameterStripDirective = default(string), string queryParameters = default(string), string dynamicCompression = default(string), System.TimeSpan? cacheDuration = default(System.TimeSpan?))
         {
             QueryParameterStripDirective = queryParameterStripDirective;
+            QueryParameters = queryParameters;
             DynamicCompression = dynamicCompression;
+            CacheDuration = cacheDuration;
             CustomInit();
         }
 
@@ -50,10 +58,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 
         /// <summary>
         /// Gets or sets treatment of URL query terms when forming the cache
-        /// key. Possible values include: 'StripNone', 'StripAll'
+        /// key. Possible values include: 'StripNone', 'StripAll', 'StripOnly',
+        /// 'StripAllExcept'
         /// </summary>
         [JsonProperty(PropertyName = "queryParameterStripDirective")]
         public string QueryParameterStripDirective { get; set; }
+
+        /// <summary>
+        /// Gets or sets query parameters to include or exclude (comma
+        /// separated).
+        /// </summary>
+        [JsonProperty(PropertyName = "queryParameters")]
+        public string QueryParameters { get; set; }
 
         /// <summary>
         /// Gets or sets whether to use dynamic compression for cached content.
@@ -61,6 +77,15 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "dynamicCompression")]
         public string DynamicCompression { get; set; }
+
+        /// <summary>
+        /// Gets or sets the duration for which the content needs to be cached.
+        /// Allowed format is in ISO 8601 format
+        /// (http://en.wikipedia.org/wiki/ISO_8601#Durations). HTTP requires
+        /// the value to be no more than a year
+        /// </summary>
+        [JsonProperty(PropertyName = "cacheDuration")]
+        public System.TimeSpan? CacheDuration { get; set; }
 
     }
 }

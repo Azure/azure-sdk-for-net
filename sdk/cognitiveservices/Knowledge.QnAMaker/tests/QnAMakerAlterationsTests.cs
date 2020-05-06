@@ -14,9 +14,9 @@ namespace QnAMaker.Tests
         [Fact(Skip="https://github.com/Azure/azure-sdk-for-net/issues/6210")]
         public void QnAMakerAlterationsReadUpdate()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "QnAMakerAlterationsReadUpdate");
+                HttpMockServer.Initialize(this.GetType(), "QnAMakerAlterationsReadUpdate");
                 IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
 
                 client.Alterations.ReplaceAsync(new WordAlterationsDTO

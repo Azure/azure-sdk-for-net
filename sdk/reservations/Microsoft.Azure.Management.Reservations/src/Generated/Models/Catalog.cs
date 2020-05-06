@@ -31,12 +31,15 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="resourceType">The type of resource the SKU applies
         /// to.</param>
         /// <param name="name">The name of SKU</param>
+        /// <param name="billingPlans">The billing plan options available for
+        /// this SKU.</param>
         /// <param name="terms">Available reservation terms for this
         /// resource</param>
-        public Catalog(string resourceType = default(string), string name = default(string), IList<string> terms = default(IList<string>), IList<string> locations = default(IList<string>), IList<SkuProperty> skuProperties = default(IList<SkuProperty>), IList<SkuRestriction> restrictions = default(IList<SkuRestriction>))
+        public Catalog(string resourceType = default(string), string name = default(string), IDictionary<string, IList<string>> billingPlans = default(IDictionary<string, IList<string>>), IList<string> terms = default(IList<string>), IList<string> locations = default(IList<string>), IList<SkuProperty> skuProperties = default(IList<SkuProperty>), IList<SkuRestriction> restrictions = default(IList<SkuRestriction>))
         {
             ResourceType = resourceType;
             Name = name;
+            BillingPlans = billingPlans;
             Terms = terms;
             Locations = locations;
             SkuProperties = skuProperties;
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the billing plan options available for this SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "billingPlans")]
+        public IDictionary<string, IList<string>> BillingPlans { get; set; }
 
         /// <summary>
         /// Gets available reservation terms for this resource

@@ -1,4 +1,4 @@
-﻿namespace DataShare.Tests.ScenarioTests
+namespace DataShare.Tests.ScenarioTests
 {
     using System;
     using System.Threading.Tasks;
@@ -16,6 +16,7 @@
         private const string dataSetName = "sdktestingdataset";
         private const string triggerName = "sdktestingtrigger";
         private const string dataSetMappingName = "sdktestingdatasetmapping";
+        private const string sourceShareLocationName = "sdktestingsourcesharelocation";
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
@@ -67,7 +68,7 @@
                     this.ResourceGroupName,
                     this.AccountName,
                     DataShareE2EScenarioTests.shareSubscriptionName,
-                    ShareSubscriptionScenarioTests.GetShareSubscription(invitation.InvitationId));
+                    ShareSubscriptionScenarioTests.GetShareSubscription(invitation.InvitationId, DataShareE2EScenarioTests.sourceShareLocationName));
 
                 await TriggerScenarioTests.CreateAsync(
                     client,
@@ -106,3 +107,4 @@
         }
     }
 }
+

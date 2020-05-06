@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
@@ -13,7 +13,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         [Fact]
         public void ListCreateDelete()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.Initialize(context);
                 var testName = "unitTestingDPSSharedAccessPoliciesListCreateDelete";

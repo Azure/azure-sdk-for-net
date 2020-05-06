@@ -28,14 +28,17 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// Azure Billing Account ID.
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
-            public static DownloadUrl Download(this IPriceSheetOperations operations, string billingAccountName, string invoiceName)
+            public static DownloadUrl Download(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
-                return operations.DownloadAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+                return operations.DownloadAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,17 +48,60 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// Azure Billing Account ID.
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> DownloadAsync(this IPriceSheetOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> DownloadAsync(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Download price sheet for a billing profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            public static DownloadUrl DownloadByBillingProfile(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName)
+            {
+                return operations.DownloadByBillingProfileAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Download price sheet for a billing profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> DownloadByBillingProfileAsync(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DownloadByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -68,14 +114,17 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// Azure Billing Account ID.
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
-            public static DownloadUrl BeginDownload(this IPriceSheetOperations operations, string billingAccountName, string invoiceName)
+            public static DownloadUrl BeginDownload(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
-                return operations.BeginDownloadAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+                return operations.BeginDownloadAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,17 +134,60 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// Azure Billing Account ID.
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> BeginDownloadAsync(this IPriceSheetOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> BeginDownloadAsync(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Download price sheet for a billing profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            public static DownloadUrl BeginDownloadByBillingProfile(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName)
+            {
+                return operations.BeginDownloadByBillingProfileAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Download price sheet for a billing profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DownloadUrl> BeginDownloadByBillingProfileAsync(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDownloadByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

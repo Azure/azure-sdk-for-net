@@ -41,17 +41,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// certificate in PKCS 12 (pfx) format (including private
         /// key).</param>
         /// <param name="rentalAndLeaseKeyType">The rental and lease key type.
-        /// Possible values include: 'Unknown', 'Undefined',
+        /// Possible values include: 'Unknown', 'Undefined', 'DualExpiry',
         /// 'PersistentUnlimited', 'PersistentLimited'</param>
         /// <param name="rentalDuration">The rental duration. Must be greater
         /// than or equal to 0.</param>
-        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration)
+        /// <param name="offlineRentalConfiguration">Offline rental
+        /// policy</param>
+        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration, ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration = default(ContentKeyPolicyFairPlayOfflineRentalConfiguration))
         {
             Ask = ask;
             FairPlayPfxPassword = fairPlayPfxPassword;
             FairPlayPfx = fairPlayPfx;
             RentalAndLeaseKeyType = rentalAndLeaseKeyType;
             RentalDuration = rentalDuration;
+            OfflineRentalConfiguration = offlineRentalConfiguration;
             CustomInit();
         }
 
@@ -83,8 +86,8 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets the rental and lease key type. Possible values
-        /// include: 'Unknown', 'Undefined', 'PersistentUnlimited',
-        /// 'PersistentLimited'
+        /// include: 'Unknown', 'Undefined', 'DualExpiry',
+        /// 'PersistentUnlimited', 'PersistentLimited'
         /// </summary>
         [JsonProperty(PropertyName = "rentalAndLeaseKeyType")]
         public ContentKeyPolicyFairPlayRentalAndLeaseKeyType RentalAndLeaseKeyType { get; set; }
@@ -95,6 +98,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "rentalDuration")]
         public long RentalDuration { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline rental policy
+        /// </summary>
+        [JsonProperty(PropertyName = "offlineRentalConfiguration")]
+        public ContentKeyPolicyFairPlayOfflineRentalConfiguration OfflineRentalConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -115,6 +124,10 @@ namespace Microsoft.Azure.Management.Media.Models
             if (FairPlayPfx == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FairPlayPfx");
+            }
+            if (OfflineRentalConfiguration != null)
+            {
+                OfflineRentalConfiguration.Validate();
             }
         }
     }

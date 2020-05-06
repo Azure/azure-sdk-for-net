@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using NUnit;
 using NUnit.Framework;
@@ -15,17 +15,18 @@ namespace Azure.Core.Tests
     public class OperationTests
     {
         [Test]
-        public async Task WaitCompletionAsync()
+        public async Task WaitForCompletionAsync()
         {
             int updateCalled = 0;
             var testResult = 100;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.PollingInterval = TimeSpan.FromMilliseconds(1);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
-            Response<int> operationResult = await operation.WaitCompletionAsync();
+            Response<int> operationResult = await operation.WaitForCompletionAsync();
 
             Assert.Greater(updateCalled, 0);
             Assert.IsTrue(operation.HasCompleted);
@@ -45,8 +46,10 @@ namespace Azure.Core.Tests
             var testResult = 100;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             while (!operation.HasValue)
             {
@@ -69,8 +72,10 @@ namespace Azure.Core.Tests
             var testResult = 10;
             var testResponse = new MockResponse(200);
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(10), testResult, testResponse)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             while (!operation.HasValue)
             {
@@ -94,13 +99,14 @@ namespace Azure.Core.Tests
 
             int updateCalled = 0;
 
-            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(1000), 100, null);
-            operation.PollingInterval = TimeSpan.FromMilliseconds(10);
-            operation.UpdateCalled = () => { updateCalled++; };
+            var operation = new TestOperation<int>("operation-id", TimeSpan.FromMilliseconds(1000), 100, null)
+            {
+                UpdateCalled = () => { updateCalled++; }
+            };
 
             Assert.That(async () =>
             {
-                _ = await operation.WaitCompletionAsync(cancel.Token);
+                _ = await operation.WaitForCompletionAsync(cancel.Token);
             }, Throws.InstanceOf<OperationCanceledException>());
 
             Assert.IsTrue(cancel.IsCancellationRequested);

@@ -47,6 +47,11 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 
 
         /// <summary>
+        /// Gets the IEndpointSettings.
+        /// </summary>
+        IEndpointSettings EndpointSettings { get; }
+
+        /// <summary>
         /// Gets the IEndpointKeys.
         /// </summary>
         IEndpointKeys EndpointKeys { get; }

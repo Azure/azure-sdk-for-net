@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}.</param>
         /// <param name="endpointConfiguration">The configuration for endpoints
         /// on compute nodes in the Batch pool.</param>
-        public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration))
+        /// <param name="publicIPAddressConfiguration">The Public IPAddress
+        /// configuration for Compute Nodes in the Batch Pool.</param>
+        public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
         {
             SubnetId = subnetId;
             EndpointConfiguration = endpointConfiguration;
+            PublicIPAddressConfiguration = publicIPAddressConfiguration;
             CustomInit();
         }
 
@@ -58,8 +61,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// the Azure Batch account. The specified subnet should have enough
         /// free IP addresses to accommodate the number of nodes in the pool.
         /// If the subnet doesn't have enough free IP addresses, the pool will
-        /// partially allocate compute nodes, and a resize error will occur.
-        /// The 'MicrosoftAzureBatch' service principal must have the 'Classic
+        /// partially allocate compute nodes and a resize error will occur. The
+        /// 'MicrosoftAzureBatch' service principal must have the 'Classic
         /// Virtual Machine Contributor' Role-Based Access Control (RBAC) role
         /// for the specified VNet. The specified subnet must allow
         /// communication from the Azure Batch service to be able to schedule
@@ -67,17 +70,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// specified VNet has any associated Network Security Groups (NSG). If
         /// communication to the compute nodes in the specified subnet is
         /// denied by an NSG, then the Batch service will set the state of the
-        /// compute nodes to unusable. For pools created via
-        /// virtualMachineConfiguration the Batch account must have
-        /// poolAllocationMode userSubscription in order to use a VNet. If the
-        /// specified VNet has any associated Network Security Groups (NSG),
-        /// then a few reserved system ports must be enabled for inbound
-        /// communication. For pools created with a virtual machine
-        /// configuration, enable ports 29876 and 29877, as well as port 22 for
-        /// Linux and port 3389 for Windows. For pools created with a cloud
-        /// service configuration, enable ports 10100, 20100, and 30100. Also
-        /// enable outbound connections to Azure Storage on port 443. For more
-        /// details see:
+        /// compute nodes to unusable. If the specified VNet has any associated
+        /// Network Security Groups (NSG), then a few reserved system ports
+        /// must be enabled for inbound communication. For pools created with a
+        /// virtual machine configuration, enable ports 29876 and 29877, as
+        /// well as port 22 for Linux and port 3389 for Windows. For pools
+        /// created with a cloud service configuration, enable ports 10100,
+        /// 20100, and 30100. Also enable outbound connections to Azure Storage
+        /// on port 443. For cloudServiceConfiguration pools, only 'classic'
+        /// VNETs are supported. For more details see:
         /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
         /// </remarks>
         [JsonProperty(PropertyName = "subnetId")]
@@ -93,6 +94,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "endpointConfiguration")]
         public PoolEndpointConfiguration EndpointConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Public IPAddress configuration for Compute Nodes
+        /// in the Batch Pool.
+        /// </summary>
+        /// <remarks>
+        /// This property is only supported on Pools with the
+        /// virtualMachineConfiguration property.
+        /// </remarks>
+        [JsonProperty(PropertyName = "publicIPAddressConfiguration")]
+        public PublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

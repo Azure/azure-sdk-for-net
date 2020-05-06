@@ -123,14 +123,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         {
             var jobStorage = new JobOutputStorage(new Uri("http://example.test/"));
 
-            var taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.JobOutput);
-            Assert.Equal($"${JobOutputKind.JobOutput.ToString()}/", taskLogPath);
+            var path = jobStorage.GetOutputStoragePath(JobOutputKind.JobOutput);
+            Assert.Equal($"${JobOutputKind.JobOutput.ToString()}", path);
 
-            taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.JobPreview);
-            Assert.Equal($"${JobOutputKind.JobPreview.ToString()}/", taskLogPath);
+            path = jobStorage.GetOutputStoragePath(JobOutputKind.JobPreview);
+            Assert.Equal($"${JobOutputKind.JobPreview.ToString()}", path);
 
-            taskLogPath = jobStorage.GetOutputStoragePath(JobOutputKind.Custom("foo"));
-            Assert.Equal($"${JobOutputKind.Custom("foo").ToString()}/", taskLogPath);
+            path = jobStorage.GetOutputStoragePath(JobOutputKind.Custom("foo"));
+            Assert.Equal($"${JobOutputKind.Custom("foo").ToString()}", path);
         }
     }
 }

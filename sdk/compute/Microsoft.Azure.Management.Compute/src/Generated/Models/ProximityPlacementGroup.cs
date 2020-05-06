@@ -52,13 +52,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// group.</param>
         /// <param name="availabilitySets">A list of references to all
         /// availability sets in the proximity placement group.</param>
-        public ProximityPlacementGroup(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string proximityPlacementGroupType = default(string), IList<SubResource> virtualMachines = default(IList<SubResource>), IList<SubResource> virtualMachineScaleSets = default(IList<SubResource>), IList<SubResource> availabilitySets = default(IList<SubResource>))
+        /// <param name="colocationStatus">Describes colocation status of the
+        /// Proximity Placement Group.</param>
+        public ProximityPlacementGroup(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string proximityPlacementGroupType = default(string), IList<SubResourceWithColocationStatus> virtualMachines = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> virtualMachineScaleSets = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> availabilitySets = default(IList<SubResourceWithColocationStatus>), InstanceViewStatus colocationStatus = default(InstanceViewStatus))
             : base(location, id, name, type, tags)
         {
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;
             VirtualMachineScaleSets = virtualMachineScaleSets;
             AvailabilitySets = availabilitySets;
+            ColocationStatus = colocationStatus;
             CustomInit();
         }
 
@@ -83,21 +86,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// placement group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachines")]
-        public IList<SubResource> VirtualMachines { get; private set; }
+        public IList<SubResourceWithColocationStatus> VirtualMachines { get; private set; }
 
         /// <summary>
         /// Gets a list of references to all virtual machine scale sets in the
         /// proximity placement group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineScaleSets")]
-        public IList<SubResource> VirtualMachineScaleSets { get; private set; }
+        public IList<SubResourceWithColocationStatus> VirtualMachineScaleSets { get; private set; }
 
         /// <summary>
         /// Gets a list of references to all availability sets in the proximity
         /// placement group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySets")]
-        public IList<SubResource> AvailabilitySets { get; private set; }
+        public IList<SubResourceWithColocationStatus> AvailabilitySets { get; private set; }
+
+        /// <summary>
+        /// Gets or sets describes colocation status of the Proximity Placement
+        /// Group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.colocationStatus")]
+        public InstanceViewStatus ColocationStatus { get; set; }
 
         /// <summary>
         /// Validate the object.

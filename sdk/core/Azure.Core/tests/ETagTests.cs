@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http;
+using System;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -72,9 +72,31 @@ namespace Azure.Core.Tests
         {
             var eTag = new ETag();
 
-            Assert.True(eTag.Equals(new ETag(null)));;
+            Assert.True(eTag.Equals(new ETag(null)));
 
             Assert.True(eTag.Equals((object)new ETag(null)));
+        }
+
+        [Test]
+        public void ThrowsForEtagsWithoutQuotes()
+        {
+            Assert.Throws<ArgumentException>(() => ETag.Parse("lalala"));
+        }
+
+        [Test]
+        public void ThrowsForParseWeakEtag()
+        {
+            Assert.Throws<NotSupportedException>(() => ETag.Parse("W/\"lalala\""));
+        }
+
+        [Theory]
+        [TestCase("*", "*")]
+        [TestCase("\"A\"", "A")]
+        [TestCase("\"\"", "")]
+        public void ParsesEtag(string value, string expectedValue)
+        {
+            ETag tag = ETag.Parse(value);
+            Assert.AreEqual(expectedValue, tag.ToString());
         }
     }
 }

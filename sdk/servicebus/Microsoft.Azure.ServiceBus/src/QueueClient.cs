@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
             }
             
             this.OwnsConnection = true;
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (string.IsNullOrWhiteSpace(entityPath))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(entityPath));
             }
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
@@ -341,6 +341,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>
         /// Sends a list of messages to Service Bus.
+        /// When called on partitioned entities, messages meant for different partitions cannot be batched together.
         /// </summary>
         public Task SendAsync(IList<Message> messageList)
         {

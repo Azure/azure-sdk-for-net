@@ -1,16 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
-using Azure.Storage.Common;
-using Azure.Storage.Queues.Tests;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
+using Azure.Core;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -31,30 +32,115 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default));
 
-            var queueName = this.GetNewQueueName();
+            var queueName = GetNewQueueName();
 
-            var client = this.InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, this.GetOptions()));
+            QueueClient client1 = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName, GetOptions()));
 
-            var builder = new QueueUriBuilder(client.Uri);
+            QueueClient client2 = InstrumentClient(new QueueClient(connectionString.ToString(true), queueName));
 
-            Assert.AreEqual(queueName, builder.QueueName);
+            var builder1 = new QueueUriBuilder(client1.Uri);
+            var builder2 = new QueueUriBuilder(client2.Uri);
+
+            Assert.AreEqual(queueName, builder1.QueueName);
+            Assert.AreEqual(queueName, builder2.QueueName);
+
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas()
+        {
+            // Arrange
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.All,
+                AccountSasPermissions.All);
+
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
+
+            QueueClient queueClient1 = GetClient(conn1.ToString(exportSecrets: true));
+
+            // Also test with a connection string not containing the blob endpoint.
+            // This should still work provided account name and Sas credential are present.
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
+
+            QueueClient queueClient2 = GetClient(conn2.ToString(exportSecrets: true));
+
+            QueueClient GetClient(string connectionString) =>
+                InstrumentClient(
+                    new QueueClient(
+                        connectionString,
+                        GetNewQueueName(),
+                        GetOptions()));
+
+            try
+            {
+                // Act
+                await queueClient1.CreateAsync();
+                await queueClient2.CreateAsync();
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                Response<QueueProperties> prop1 = await queueClient1.GetPropertiesAsync();
+                Response<QueueProperties> prop2 = await queueClient2.GetPropertiesAsync();
+
+                // Assert
+                Assert.IsNotNull(prop1.Value.Metadata);
+                Assert.IsNotNull(prop2.Value.Metadata);
+            }
+            finally
+            {
+                // Clean up
+                await queueClient1.DeleteAsync();
+                await queueClient2.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            QueueClient queue = InstrumentClient(new QueueClient(queueEndpoint, credentials));
+            var builder = new QueueUriBuilder(queue.Uri);
+
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenCredential_Http()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(uri, tokenCredential),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
         [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -68,13 +154,17 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task CreateAsync_FromService()
         {
-            var name = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
+            var name = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                var result = await service.CreateQueueAsync(name);
-                var properties = await result.Value.GetPropertiesAsync();
+                Response<QueueClient> result = await service.CreateQueueAsync(name);
+                QueueClient queue = result.Value;
+                Response<QueueProperties> properties = await queue.GetPropertiesAsync();
                 Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+                var accountName = new QueueUriBuilder(service.Uri).AccountName;
+                TestHelper.AssertCacheableProperty(accountName, () => queue.AccountName);
+                TestHelper.AssertCacheableProperty(name, () => queue.Name);
             }
             finally
             {
@@ -86,14 +176,14 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_OauthAccount();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OauthAccount();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -108,14 +198,14 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_AccountSas();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_AccountSas();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
                 // Assert
                 Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -130,21 +220,21 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_WithQueueServiceSas()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_QueueServiceSas(queueName);
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_QueueServiceSas(queueName);
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             var pass = false;
 
             try
             {
                 // Act
-                var result = await queue.CreateAsync();
+                Response result = await queue.CreateAsync();
 
 
                 // Assert
                 Assert.Fail("CreateAsync unexpected success: queue service SAS should not be usable to create queue");
             }
-            catch (StorageRequestFailedException ex) when (ex.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing service code
+            catch (RequestFailedException ex) when (ex.ErrorCode == "AuthorizationFailure") // TODO verify if this is a missing service code
             {
                 pass = true;
             }
@@ -161,74 +251,257 @@ namespace Azure.Storage.Queues.Test
         public async Task CreateAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             await queue.CreateAsync();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.CreateAsync(metadata: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { { "key", "value" } }),
                 actualException => Assert.AreEqual("QueueAlreadyExists", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_ExistsDifferentMetadata()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            await queue.CreateAsync(BuildMetadata());
+
+            // Act
+            Response response = await queue.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNull(response);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response<bool> response = await queue.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+
+            // Cleanup
+            await queue.DeleteAsync();
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response<bool> response = await queue.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.ExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            await queue.CreateAsync();
+
+            // Act
+            Response<bool> response = await queue.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_NotExists()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            Response<bool> response = await queue.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            QueueClient unauthorizedQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedQueueClient.DeleteIfExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
-            {
-                // Act
-                var queueProperties = await queue.GetPropertiesAsync();
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Assert
-                Assert.IsNotNull(queueProperties);
-            }
+            // Act
+            Response<Models.QueueProperties> queueProperties = await test.Queue.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(queueProperties);
         }
 
         [Test]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetPropertiesAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
+
+        #region Secondary Storage
+
+        [Test]
+        public async Task GetPropertiesAsync_SecondaryStorage()
+        {
+            QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
+            await queueClient.CreateAsync();
+            Response<QueueProperties> properties = await EnsurePropagatedAsync(
+                async () => await queueClient.GetPropertiesAsync(),
+                properties => properties.GetRawResponse().Status != 404);
+
+            Assert.IsNotNull(properties);
+            Assert.AreEqual(200, properties.GetRawResponse().Status);
+
+            await queueClient.DeleteAsync();
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+        #endregion
 
         [Test]
         public async Task SetMetadataAsync_OnCreate()
         {
             // Arrange
-            var metadata = this.BuildMetadata();
-            using (this.GetNewQueue(out var queue, metadata: metadata))
-            {
-                // Assert
-                var result = await queue.GetPropertiesAsync();
-                Assert.AreEqual("bar", result.Value.Metadata["foo"]);
-                Assert.AreEqual("data", result.Value.Metadata["meta"]);
-            }
+            IDictionary<string, string> metadata = BuildMetadata();
+            await using DisposingQueue test = await GetTestQueueAsync(metadata: metadata);
+
+            // Assert
+            Response<Models.QueueProperties> result = await test.Queue.GetPropertiesAsync();
+            Assert.AreEqual("bar", result.Value.Metadata["foo"]);
+            Assert.AreEqual("data", result.Value.Metadata["meta"]);
         }
 
         [Test]
         public async Task SetMetadataAsync_Metadata()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
-            {
-                // Act
-                var metadata = this.BuildMetadata();
-                await queue.SetMetadataAsync(metadata);
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Assert
-                var result = await queue.GetPropertiesAsync();
-                Assert.AreEqual("bar", result.Value.Metadata["foo"]);
-                Assert.AreEqual("data", result.Value.Metadata["meta"]);
-            }
+            // Act
+            IDictionary<string, string> metadata = BuildMetadata();
+            await test.Queue.SetMetadataAsync(metadata);
+
+            // Assert
+            Response<Models.QueueProperties> result = await test.Queue.GetPropertiesAsync();
+            Assert.AreEqual("bar", result.Value.Metadata["foo"]);
+            Assert.AreEqual("data", result.Value.Metadata["meta"]);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -236,13 +509,13 @@ namespace Azure.Storage.Queues.Test
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
-            var metadata = this.BuildMetadata();
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetMetadataAsync(metadata),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -251,23 +524,22 @@ namespace Azure.Storage.Queues.Test
         public async Task GetAccessPolicyAsync()
         {
             // Arrange
-            using (this.GetNewQueue(out var queue))
-            {
-                var signedIdentifiers = this.BuildSignedIdentifiers();
+            await using DisposingQueue test = await GetTestQueueAsync();
 
-                // Act
-                var setResult = await queue.SetAccessPolicyAsync(signedIdentifiers);
+            QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
-                // Assert
-                var result = await queue.GetAccessPolicyAsync();
-                var acl = result.Value.First();
+            // Act
+            Response setResult = await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
 
-                Assert.AreEqual(1, result.Value.Count());
-                Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Start, acl.AccessPolicy.Start);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Expiry, acl.AccessPolicy.Expiry);
-                Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permission, acl.AccessPolicy.Permission);
-            }
+            // Assert
+            Response<IEnumerable<Models.QueueSignedIdentifier>> result = await test.Queue.GetAccessPolicyAsync();
+            Models.QueueSignedIdentifier acl = result.Value.First();
+
+            Assert.AreEqual(1, result.Value.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.StartsOn, acl.AccessPolicy.StartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.ExpiresOn, acl.AccessPolicy.ExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -275,12 +547,12 @@ namespace Azure.Storage.Queues.Test
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.GetAccessPolicyAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -288,12 +560,11 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task SetAccessPolicyAsync()
         {
-            using (this.GetNewQueue(out var queue))
-            {
-                var signedIdentifiers = this.BuildSignedIdentifiers();
-                var result = await queue.SetAccessPolicyAsync(signedIdentifiers);
-                Assert.IsFalse(String.IsNullOrWhiteSpace(result.Headers.RequestId));
-            }
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            Response result = await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result.Headers.RequestId));
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -301,13 +572,13 @@ namespace Azure.Storage.Queues.Test
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
-            var signedIdentifiers = this.BuildSignedIdentifiers();
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+            Models.QueueSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.SetAccessPolicyAsync(signedIdentifiers),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
@@ -316,13 +587,13 @@ namespace Azure.Storage.Queues.Test
         public async Task DeleteAsync()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
             await queue.CreateAsync();
 
             // Act
-            var result = await queue.DeleteAsync();
+            Response result = await queue.DeleteAsync();
 
             // Assert
             Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
@@ -331,15 +602,15 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public async Task DeleteAsync_FromService()
         {
-            var name = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
+            var name = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                var queue = (await service.CreateQueueAsync(name)).Value;
+                QueueClient queue = (await service.CreateQueueAsync(name)).Value;
                 await service.DeleteQueueAsync(name);
 
                 // Ensure the queue no longer returns values
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await queue.GetPropertiesAsync());
             }
             finally
@@ -347,20 +618,421 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-
         // Note that this test intentionally does not call queue.CreateAsync()
         [Test]
         public async Task DeleteAsync_Error()
         {
             // Arrange
-            var queueName = this.GetNewQueueName();
-            var service = this.GetServiceClient_SharedKey();
-            var queue = this.InstrumentClient(service.GetQueueClient(queueName));
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 queue.DeleteAsync(),
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task SendMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [Test]
+        public async Task SendMessageAsync_SAS()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder
+            {
+                QueueName = test.Queue.Name,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1)
+            };
+            sasBuilder.SetPermissions("a");
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                GetOptions()));
+
+            // Act
+            Response<SendReceipt> response = await queueClient.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [Test]
+        public async Task SendMessageAsync_SasWithIdentifier()
+        {
+            // Arrange
+            string signedIdentifierId = GetNewString();
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSignedIdentifier signedIdentifier = new QueueSignedIdentifier
+            {
+                Id = signedIdentifierId,
+                AccessPolicy = new QueueAccessPolicy
+                {
+                    StartsOn = Recording.UtcNow.AddHours(-1),
+                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    Permissions = "a"
+                }
+            };
+            await test.Queue.SetAccessPolicyAsync(permissions: new QueueSignedIdentifier[] { signedIdentifier });
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder
+            {
+                QueueName = test.Queue.Name,
+                Identifier = signedIdentifierId
+            };
+
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                GetOptions()));
+
+            // Act
+            Response<SendReceipt> response = await queueClient.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [Test]
+        public async Task SendMessageAsync_Min()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            Response<Models.SendReceipt> response = await test.Queue.SendMessageAsync(string.Empty);
+
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task SendMessageAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.SendMessageAsync(string.Empty),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task ReceiveMessagesAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+
+            // Act
+            Response<Models.QueueMessage[]> response = await test.Queue.ReceiveMessagesAsync(
+                maxMessages: 2,
+                visibilityTimeout: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.AreEqual(2, response.Value.Count());
+        }
+
+        [Test]
+        public async Task ReceiveMessagesAsync_Min()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+
+            // Act
+            Response<Models.QueueMessage[]> response = await test.Queue.ReceiveMessagesAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Count());
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task ReceiveMessagesAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.ReceiveMessagesAsync(),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task PeekMessagesAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+
+            // Act
+            Response<Models.PeekedMessage[]> response = await test.Queue.PeekMessagesAsync(maxMessages: 2);
+
+            // Assert
+            Assert.AreEqual(2, response.Value.Count());
+        }
+
+        [Test]
+        public async Task PeekMessagesAsync_Min()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+
+            // Act
+            Response<Models.PeekedMessage[]> response = await test.Queue.PeekMessagesAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Count());
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task PeekMessagesAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.PeekMessagesAsync(),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task ClearMessagesAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+            await test.Queue.SendMessageAsync(GetNewString());
+
+            // Act
+            Response response = await test.Queue.ClearMessagesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        // Note that this test intentionally does not call queue.CreateAsync()
+        [Test]
+        public async Task ClearMessagesAsync_Error()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                queue.ClearMessagesAsync(),
+                actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task DeleteMessageAsync()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(string.Empty)).Value;
+
+            // Act
+            Response result = await test.Queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+
+            // Assert
+            Assert.IsNotNull(result.Headers.RequestId);
+        }
+
+        [Test]
+        public async Task DeleteMessagAsync_Error()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.DeleteMessageAsync(GetNewMessageId(), GetNewString()),
+                actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
+        }
+
+        [Test]
+        public async Task DeleteMessageAsync_DeletePeek()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(string.Empty)).Value;
+
+            // Act
+            Response result = await test.Queue.DeleteMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt);
+
+            // Assert
+            await test.Queue.PeekMessagesAsync();
+            Assert.IsNotNull(result.Headers.RequestId);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_Update()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
+
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                message1,
+                new TimeSpan(100));
+
+            // Assert
+            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_Min()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
+
+            // Act
+            Response<Models.UpdateReceipt> result = await test.Queue.UpdateMessageAsync(
+                enqueuedMessage.MessageId,
+                enqueuedMessage.PopReceipt,
+                message1);
+
+            // Assert
+            Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_UpdateDequeuedMessage()
+        {
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message0 = "foo";
+            var message1 = "bar";
+
+            await test.Queue.SendMessageAsync(message0);
+            Models.QueueMessage message = (await test.Queue.ReceiveMessagesAsync(1)).Value.First();
+
+            Response<Models.UpdateReceipt> update = await test.Queue.UpdateMessageAsync(
+                message.MessageId,
+                message.PopReceipt,
+                message1);
+
+            Assert.AreNotEqual(update.Value.PopReceipt, message.PopReceipt);
+            Assert.AreNotEqual(update.Value.NextVisibleOn, message.NextVisibleOn);
+
+            Models.QueueMessage newMessage = message.Update(update);
+            Assert.AreEqual(message.MessageId, newMessage.MessageId);
+            Assert.AreEqual(message.MessageText, newMessage.MessageText);
+            Assert.AreEqual(message.InsertedOn, newMessage.InsertedOn);
+            Assert.AreEqual(message.ExpiresOn, newMessage.ExpiresOn);
+            Assert.AreEqual(message.DequeueCount, newMessage.DequeueCount);
+            Assert.AreNotEqual(message.PopReceipt, newMessage.PopReceipt);
+            Assert.AreNotEqual(message.NextVisibleOn, newMessage.NextVisibleOn);
+            Assert.AreEqual(update.Value.PopReceipt, newMessage.PopReceipt);
+            Assert.AreEqual(update.Value.NextVisibleOn, newMessage.NextVisibleOn);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_UpdatePeek()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            var message0 = "foo";
+            var message1 = "bar";
+            Models.SendReceipt enqueuedMessage = (await test.Queue.SendMessageAsync(message0)).Value;
+
+            // Act
+            await test.Queue.UpdateMessageAsync(enqueuedMessage.MessageId, enqueuedMessage.PopReceipt, message1);
+
+            // Assert
+            Response<Models.PeekedMessage[]> peekedMessages = await test.Queue.PeekMessagesAsync(1);
+            Models.PeekedMessage peekedMessage = peekedMessages.Value.First();
+
+            Assert.AreEqual(1, peekedMessages.Value.Count());
+            Assert.AreEqual(message1, peekedMessage.MessageText);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsync_Error()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.UpdateMessageAsync(GetNewMessageId(), GetNewString(), string.Empty),
+                actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
     }
 }

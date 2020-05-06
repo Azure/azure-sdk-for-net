@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The tracking events definition.
+    /// </summary>
     public partial class TrackingEventsDefinition
     {
         /// <summary>
@@ -29,8 +32,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the TrackingEventsDefinition class.
         /// </summary>
-        /// <param name="trackEventsOptions">Possible values include: 'None',
-        /// 'DisableSourceInfoEnrich'</param>
+        /// <param name="sourceType">The source type.</param>
+        /// <param name="events">The events.</param>
+        /// <param name="trackEventsOptions">The track events options. Possible
+        /// values include: 'None', 'DisableSourceInfoEnrich'</param>
         public TrackingEventsDefinition(string sourceType, IList<TrackingEvent> events, string trackEventsOptions = default(string))
         {
             SourceType = sourceType;
@@ -45,18 +50,20 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the source type.
         /// </summary>
         [JsonProperty(PropertyName = "sourceType")]
         public string SourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'None',
-        /// 'DisableSourceInfoEnrich'
+        /// Gets or sets the track events options. Possible values include:
+        /// 'None', 'DisableSourceInfoEnrich'
         /// </summary>
         [JsonProperty(PropertyName = "trackEventsOptions")]
         public string TrackEventsOptions { get; set; }
 
         /// <summary>
+        /// Gets or sets the events.
         /// </summary>
         [JsonProperty(PropertyName = "events")]
         public IList<TrackingEvent> Events { get; set; }

@@ -25,7 +25,7 @@ namespace Management.HDInsight.Tests
 
         internal virtual void TestInitialize([System.Runtime.CompilerServices.CallerMemberName] string methodName= "testframework_failed")
         {
-            Context = HDInsightMockContext.Start(this.GetType().FullName, methodName);
+            Context = HDInsightMockContext.Start(this.GetType(), methodName);
             CommonData = new CommonTestFixture();
             HDInsightClient = Context.GetServiceClient<HDInsightManagementClient>();
             HDInsightManagementHelper = new HDInsightManagementHelper(CommonData, Context);

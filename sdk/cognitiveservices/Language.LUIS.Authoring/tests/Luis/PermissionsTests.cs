@@ -4,13 +4,15 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class PermissionsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListPermissions()
         {
             UseClientFor(async client =>
             {
+                //Arrange
                 var collaborators = new CollaboratorsArray
                 {
                     Emails = new string[]
@@ -20,6 +22,7 @@
                     }
                 };
 
+                //Act 
                 await client.Permissions.UpdateAsync(GlobalAppId, collaborators);
                 var result = await client.Permissions.ListAsync(GlobalAppId);
 
@@ -34,12 +37,12 @@
                 };
                 await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
 
-                Assert.Equal("owner.user@microsoft.com", result.Owner);
+                //Assert
                 Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPermission()
         {
             UseClientFor(async client =>
@@ -57,7 +60,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePermission()
         {
             UseClientFor(async client =>
@@ -75,7 +78,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePermission()
         {
             UseClientFor(async client =>

@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-jcswnkcn.search.windows.net/indexes(\u0027mesaejwj\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
+        "api-key": "Sanitized",
+        "Content-Length": "79",
+        "Content-Type": "application/json",
+        "traceparent": "00-6fd4bb2ef5807f4ea4b9c8b67eb92679-4c1ebe38e66e8344-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5ca86594e8d25f20dbb3c61763379935",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "mod",
+        "autocompleteMode": "oneTerm",
+        "fuzzy": true,
+        "suggesterName": "sg"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "177",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Sat, 25 Apr 2020 00:49:14 GMT",
+        "elapsed-time": "6",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "5ca86594-e8d2-5f20-dbb3-c61763379935",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "text": "model",
+            "queryPlusText": "model"
+          },
+          {
+            "text": "modern",
+            "queryPlusText": "modern"
+          },
+          {
+            "text": "morel",
+            "queryPlusText": "morel"
+          },
+          {
+            "text": "motel",
+            "queryPlusText": "motel"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1963046740",
+    "SearchIndexName": "mesaejwj",
+    "SearchServiceName": "azs-net-jcswnkcn"
+  }
+}

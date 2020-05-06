@@ -220,34 +220,6 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ApplicationSecurityGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an application security group's tags.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='applicationSecurityGroupName'>
-        /// The name of the application security group.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to update application security group tags.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApplicationSecurityGroup>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets all application security groups in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
