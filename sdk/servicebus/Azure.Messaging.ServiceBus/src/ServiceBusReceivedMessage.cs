@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
-        public ImmutableDictionary<string, object> Properties => SentMessage.Properties.ToImmutableDictionary();
+        public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object> (SentMessage.Properties);
 
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
