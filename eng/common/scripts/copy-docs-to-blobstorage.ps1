@@ -10,7 +10,7 @@ param (
   $UploadLatest=1
 )
 
-Write-Host $MyInvocation.Line
+Write-Host "> $PSCommandPath $args"
 
 $Language = $Language.ToLower()
 
