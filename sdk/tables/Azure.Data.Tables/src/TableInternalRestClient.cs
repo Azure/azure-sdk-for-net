@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -360,7 +361,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<Dictionary<string, object>, TableInternalInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default) =>
+        public async ValueTask<ResponseWithHeaders<ReadOnlyDictionary<string, object>, TableInternalInsertEntityHeaders>> InsertEntityAsync(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default) =>
             await InsertEntityInternalAsync(true, table, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Insert entity in a table. </summary>
@@ -370,7 +371,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Dictionary<string, object>, TableInternalInsertEntityHeaders> InsertEntity(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default) =>
+        public ResponseWithHeaders<ReadOnlyDictionary<string, object>, TableInternalInsertEntityHeaders> InsertEntity(string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default) =>
             InsertEntityInternalAsync(false, table, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).EnsureCompleted();
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
@@ -378,7 +379,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<List<SignedIdentifier>, TableInternalGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+        public async ValueTask<ResponseWithHeaders<ReadOnlyCollection<SignedIdentifier>, TableInternalGetAccessPolicyHeaders>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             await GetAccessPolicyInternalAsync(true, table, timeout, requestId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
@@ -386,7 +387,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<List<SignedIdentifier>, TableInternalGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+        public ResponseWithHeaders<ReadOnlyCollection<SignedIdentifier>, TableInternalGetAccessPolicyHeaders> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             GetAccessPolicyInternalAsync(false, table, timeout, requestId, cancellationToken).EnsureCompleted();
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
@@ -395,7 +396,7 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async ValueTask<ResponseWithHeaders<List<SignedIdentifier>, TableInternalGetAccessPolicyHeaders>> GetAccessPolicyInternalAsync(bool async, string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        private async ValueTask<ResponseWithHeaders<ReadOnlyCollection<SignedIdentifier>, TableInternalGetAccessPolicyHeaders>> GetAccessPolicyInternalAsync(bool async, string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -432,7 +433,7 @@ namespace Azure.Data.Tables
                                 }
                                 value = array;
                             }
-                            return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                            return ResponseWithHeaders.FromValue(value.AsReadOnly(), headers, message.Response);
                         }
                     default:
                         if (async)
@@ -461,7 +462,7 @@ namespace Azure.Data.Tables
         /// <param name="tableEntityProperties"> The properties for the table entity. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async ValueTask<ResponseWithHeaders<Dictionary<string, object>, TableInternalInsertEntityHeaders>> InsertEntityInternalAsync(bool async, string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        private async ValueTask<ResponseWithHeaders<ReadOnlyDictionary<string, object>, TableInternalInsertEntityHeaders>> InsertEntityInternalAsync(bool async, string table, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
             if (table == null)
             {
@@ -520,7 +521,7 @@ namespace Azure.Data.Tables
                                     }
                                     value = dictionary;
                                 }
-                                return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                                return ResponseWithHeaders.FromValue(new ReadOnlyDictionary<string, object>(value), headers, message.Response);
                             }
                         }
                     default:
