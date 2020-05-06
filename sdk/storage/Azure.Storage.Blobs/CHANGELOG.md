@@ -2,7 +2,7 @@
 
 ## 12.4.2 (2020-05)
 - Fixed bug where blob, file and directory names were not URL encoded.
-- Fixed bug where BlobBaseClient.DownloadAsync() could data incorrectly if intermittent network failure occurs.
+- Fixed bug where BlobBaseClient.DownloadAsync() could download data incorrectly if intermittent network failure occurs.
 
 ## 12.4.1 (2020-04)
 - Fixed bug where BlobContainerClient.DeleteIfExistsAsync() would throw an exception if hierarchical namespace was enabled, and the underlying container didn't exist.
