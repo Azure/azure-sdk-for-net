@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="destinationPorts">List of destination ports.</param>
         /// <param name="sourceIpGroups">List of source IpGroups for this
         /// rule.</param>
-        public NatRuleCondition(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
+        /// <param name="terminateTLS">Terminate TLS connections for this
+        /// rule.</param>
+        public NatRuleCondition(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>), bool? terminateTLS = default(bool?))
             : base(name, description)
         {
             IpProtocols = ipProtocols;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
             SourceIpGroups = sourceIpGroups;
+            TerminateTLS = terminateTLS;
             CustomInit();
         }
 
@@ -88,6 +91,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceIpGroups")]
         public IList<string> SourceIpGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets terminate TLS connections for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "terminateTLS")]
+        public bool? TerminateTLS { get; set; }
 
     }
 }
