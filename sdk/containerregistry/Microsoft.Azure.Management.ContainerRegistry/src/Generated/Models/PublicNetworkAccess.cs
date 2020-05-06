@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TriggerStatus.
+    /// Defines values for PublicNetworkAccess.
     /// </summary>
-    public static class TriggerStatus
+    public static class PublicNetworkAccess
     {
         public const string Enabled = "Enabled";
         public const string Disabled = "Disabled";
