@@ -2,24 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
+    /// The set of options that can be specified when creating a <see cref="FormRecognizerClient" />
+    /// or a <see cref="FormTrainingClient"/> to configure its behavior.
     /// </summary>
     public class FormRecognizerClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_0_Preview;
 
-        private readonly ServiceVersion _version;
-
         /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class.
         /// </summary>
-        /// <param name="version"></param>
+        /// <param name="version">The version of the service to send requests to.</param>
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)
         {
-            _version = version;
+            Version = version;
         }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
+        /// The service version.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -47,6 +50,5 @@ namespace Azure.AI.FormRecognizer
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
-
     }
 }

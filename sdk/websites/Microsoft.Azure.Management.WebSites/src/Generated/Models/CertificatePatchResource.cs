@@ -68,7 +68,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="serverFarmId">Resource ID of the associated App
         /// Service plan, formatted as:
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
-        public CertificatePatchResource(string password, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string))
+        /// <param name="canonicalName">CNAME of the certificate to be issued
+        /// via free certificate</param>
+        public CertificatePatchResource(string password, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string), string canonicalName = default(string))
             : base(id, name, kind, type)
         {
             FriendlyName = friendlyName;
@@ -90,6 +92,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretStatus = keyVaultSecretStatus;
             ServerFarmId = serverFarmId;
+            CanonicalName = canonicalName;
             CustomInit();
         }
 
@@ -219,6 +222,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverFarmId")]
         public string ServerFarmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets CNAME of the certificate to be issued via free
+        /// certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.canonicalName")]
+        public string CanonicalName { get; set; }
 
         /// <summary>
         /// Validate the object.

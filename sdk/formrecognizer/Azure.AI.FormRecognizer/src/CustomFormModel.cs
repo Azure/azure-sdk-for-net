@@ -24,37 +24,37 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Model identifier.
+        /// The unique identifier of this model.
         /// </summary>
         public string ModelId { get; }
 
         /// <summary>
-        /// Status indicating the model's readiness for use.
+        /// A status indicating this model's readiness for use.
         /// </summary>
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// Date and time (UTC) when model training was started.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
-        /// Date and time (UTC) when model training completed.
+        /// The date and time (UTC) when model training completed.
         /// </summary>
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
-        /// A list of submodels, each of which extract fields from a different type of form.
+        /// A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.
         /// </summary>
         public IReadOnlyList<CustomFormSubModel> Models { get; }
 
         /// <summary>
-        ///  Meta-data about each of the documents used to train the model.
+        /// A list of meta-data about each of the documents used to train the model.
         /// </summary>
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
 
         /// <summary>
-        /// Errors ocurred during the training operation.
+        /// A list of errors ocurred during the training operation.
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 

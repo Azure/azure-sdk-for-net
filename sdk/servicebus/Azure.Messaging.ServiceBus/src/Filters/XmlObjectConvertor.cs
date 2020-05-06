@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Management;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-    using System.Xml;
-    using System.Xml.Linq;
-    using Azure.Messaging.ServiceBus.Management;
-
     internal class XmlObjectConvertor
     {
         internal static object ParseValueObject(XElement element)

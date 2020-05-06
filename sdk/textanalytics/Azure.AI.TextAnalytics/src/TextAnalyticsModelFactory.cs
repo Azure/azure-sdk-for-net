@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.TextDocumentStatistics"/> for mocking purposes.
         /// </summary>
-        /// <param name="graphemeCount">Sets the <see cref="TextDocumentStatistics.GraphemeCount"/> property.</param>
+        /// <param name="characterCount">Sets the <see cref="TextDocumentStatistics.CharacterCount"/> property.</param>
         /// <param name="transactionCount">Sets the <see cref="TextDocumentStatistics.TransactionCount"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentStatistics"/> for mocking purposes.</returns>
-        public static TextDocumentStatistics TextDocumentStatistics(int graphemeCount, int transactionCount)
+        public static TextDocumentStatistics TextDocumentStatistics(int characterCount, int transactionCount)
         {
-            return new TextDocumentStatistics(graphemeCount, transactionCount);
+            return new TextDocumentStatistics(characterCount, transactionCount);
         }
 
         /// <summary>
@@ -83,15 +83,14 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.
         /// </summary>
         /// <param name="sentiment">Sets the <see cref="SentenceSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="SentenceSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
-        /// <param name="offset">Sets the <see cref="SentenceSentiment.GraphemeOffset"/> property.</param>
-        /// <param name="length">Sets the <see cref="SentenceSentiment.GraphemeLength"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
-        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore)
         {
-            return new SentenceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore);
         }
 
         /// <summary>
@@ -137,11 +136,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="name">Sets the <see cref="DetectedLanguage.Name"/> property.</param>
         /// <param name="iso6391Name">Sets the <see cref="DetectedLanguage.Iso6391Name"/> property.</param>
-        /// <param name="score">Sets the <see cref="DetectedLanguage.Score"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
-        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double score)
+        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore)
         {
-            return new DetectedLanguage(name, iso6391Name, score);
+            return new DetectedLanguage(name, iso6391Name, confidenceScore);
         }
 
         /// <summary>
@@ -188,13 +187,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
         /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
-        /// <param name="offset">Sets the <see cref="CategorizedEntity.GraphemeOffset"/> property.</param>
-        /// <param name="length">Sets the <see cref="CategorizedEntity.GraphemeLength"/> property.</param>
         /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
-        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, int offset, int length, double score)
+        public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            return new CategorizedEntity(text, category, subCategory, offset, length, score);
+            return new CategorizedEntity(text, category, subCategory, score);
         }
 
         /// <summary>
@@ -293,12 +290,10 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
         /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
-        /// <param name="offset">Sets the <see cref="LinkedEntityMatch.GraphemeOffset"/> property.</param>
-        /// <param name="length">Sets the <see cref="LinkedEntityMatch.GraphemeLength"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
-        public static LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length)
+        public static LinkedEntityMatch LinkedEntityMatch(string text, double score)
         {
-            return new LinkedEntityMatch(text, score, offset, length);
+            return new LinkedEntityMatch(text, score);
         }
 
         /// <summary>

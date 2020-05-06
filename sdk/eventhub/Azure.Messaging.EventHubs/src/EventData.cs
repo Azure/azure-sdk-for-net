@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The set of free-form event properties which may be used for passing metadata associated with the event with the event body
+        ///   The set of free-form event properties which may be used for passing metadata associated with the event body
         ///   during Event Hubs operations.
         /// </summary>
         ///
@@ -276,5 +276,27 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="EventData" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="EventData" />.</returns>
+        ///
+        internal EventData Clone() =>
+            new EventData
+            (
+                Body,
+                new Dictionary<string, object>(Properties),
+                SystemProperties,
+                SequenceNumber,
+                Offset,
+                EnqueuedTime,
+                PartitionKey,
+                LastPartitionSequenceNumber,
+                LastPartitionOffset,
+                LastPartitionEnqueuedTime,
+                LastPartitionPropertiesRetrievalTime
+            );
     }
 }

@@ -13,14 +13,16 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
     public class DataProtectionBlobFunctionalTests
     {
-        private static readonly string StorageAccountName = Environment.GetEnvironmentVariable("BLOB_STORAGE_ACCOUNT_NAME");
-        private static readonly string StorageAccountKey = Environment.GetEnvironmentVariable("BLOB_STORAGE_ACCOUNT_KEY");
-
         [Test]
         [Category("Live")]
         public async Task PersistsKeysToAzureBlob()
         {
-            var client = new BlobServiceClient(new Uri($"https://{StorageAccountName}.blob.core.windows.net/"), new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
+            var client = new BlobServiceClient(
+                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.core.windows.net/"),
+                new StorageSharedKeyCredential(
+                    DataProtectionTestEnvironment.Instance.StorageAccountName,
+                    DataProtectionTestEnvironment.Instance.StorageAccountKey));
+
             var blobContainerClient = client.GetBlobContainerClient("testcontainer");
             await blobContainerClient.CreateIfNotExistsAsync();
 

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType type = default;
             string valueString = default;
             DateTimeOffset? valueDate = default;
-            string valueTime = default;
+            TimeSpan? valueTime = default;
             string valuePhoneNumber = default;
             float? valueNumber = default;
             int? valueInteger = default;
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueTime = property.Value.GetString();
+                    valueTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("valuePhoneNumber"))

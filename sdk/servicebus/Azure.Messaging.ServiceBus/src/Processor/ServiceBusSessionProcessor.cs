@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// A <see cref="ServiceBusSessionProcessor"/> is responsible for processing
-    /// <see cref="ServiceBusReceivedMessage" /> from a specific entity using event handlers.
-    /// It is constructed by calling
-    ///  <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string)"/>.
+    /// The <see cref="ServiceBusSessionProcessor"/> provides an abstraction around a set of <see cref="ServiceBusSessionReceiver"/> that
+    /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
+    /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string[])"/>.
     /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
@@ -95,14 +95,14 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             ServiceBusProcessorOptions options,
-            string sessionId = default)
+            params string[] sessionIds)
         {
             _innerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
                 options,
-                sessionId);
+                sessionIds);
         }
 
         /// <summary>
@@ -150,6 +150,45 @@ namespace Azure.Messaging.ServiceBus
             remove
             {
                 _innerProcessor.ProcessErrorAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Optional event that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionInitializingAsync += value;
+
+            }
+
+            remove
+            {
+                _innerProcessor.SessionInitializingAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Optional event that can be set to be notified when a session is about to be closed for processing.
+        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
+        /// available to be received for the session.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionClosingAsync += value;
+            }
+
+            remove
+            {
+                _innerProcessor.SessionClosingAsync -= value;
             }
         }
 

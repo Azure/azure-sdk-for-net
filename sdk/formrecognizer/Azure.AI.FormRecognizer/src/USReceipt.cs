@@ -4,18 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a receipt recognized from the input document and provides members
+    /// for accessing common fields present in US sales receipts.
     /// </summary>
     public class USReceipt : RecognizedReceipt
     {
         internal USReceipt(RecognizedReceipt receipt)
             : base(receipt)
         {
-            ReceiptType = ConvertUSReceiptType();
+            float receiptTypeConfidence;
+            ReceiptType = ConvertUSReceiptType(out receiptTypeConfidence);
+            ReceiptTypeConfidence = receiptTypeConfidence;
 
             MerchantAddress = ConvertStringField("MerchantAddress", RecognizedForm.Fields);
             MerchantName = ConvertStringField("MerchantName", RecognizedForm.Fields);
@@ -31,10 +34,18 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// The type of receipt the service identified the submitted receipt to be.
         /// </summary>
         public USReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
+        /// Measures the degree of certainty of the <see cref="ReceiptType"/> attribution. Value
+        /// is between [0.0, 1.0].
+        /// </summary>
+        public float ReceiptTypeConfidence { get; internal set; }
+
+        /// <summary>
+        /// A list of purchased items present in the recognized receipt.
         /// </summary>
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
@@ -42,48 +53,60 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<USReceiptItem> Items { get; internal set; }
 
         /// <summary>
+        /// The merchant's address.
         /// </summary>
         public FormField<string> MerchantAddress { get; internal set; }
 
         /// <summary>
+        /// The merchant's name.
         /// </summary>
         public FormField<string> MerchantName { get; internal set; }
 
         /// <summary>
+        /// The merchant's phone number.
         /// </summary>
         public FormField<string> MerchantPhoneNumber { get; internal set; }
 
         /// <summary>
+        /// The subtotal price.
         /// </summary>
         public FormField<float> Subtotal { get; internal set; }
 
         /// <summary>
+        /// The tax price.
         /// </summary>
         public FormField<float> Tax { get; internal set; }
 
         /// <summary>
+        /// The tip price.
         /// </summary>
         public FormField<float> Tip { get; internal set; }
 
         /// <summary>
+        /// The total price.
         /// </summary>
         public FormField<float> Total { get; internal set; }
 
         /// <summary>
+        /// The transaction date.
         /// </summary>
         public FormField<DateTime> TransactionDate { get; internal set; }
 
         /// <summary>
+        /// The transaction time.
         /// </summary>
         public FormField<TimeSpan> TransactionTime { get; internal set; }
 
-        private USReceiptType ConvertUSReceiptType()
+        private USReceiptType ConvertUSReceiptType(out float receiptTypeConfidence)
         {
             USReceiptType receiptType = USReceiptType.Unrecognized;
+            receiptTypeConfidence = Constants.DefaultConfidenceValue;
 
             FormField value;
             if (RecognizedForm.Fields.TryGetValue("ReceiptType", out value))
             {
+                receiptTypeConfidence = value.Confidence;
+
                 receiptType = value.Value.AsString() switch
                 {
                     "Itemized" => USReceiptType.Itemized,

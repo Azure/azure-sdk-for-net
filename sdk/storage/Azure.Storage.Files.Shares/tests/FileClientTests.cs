@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Files.Shares.Tests;
@@ -48,6 +48,33 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shareName, builder.ShareName);
             Assert.AreEqual(filePath, builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        // "Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
+        public async Task Ctor_ConnectionStringEscapePath()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string directoryName = "!#@&=;äÄ";
+            string fileName = "#$=;!öÖ";
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+            ShareFileClient initalFile = InstrumentClient(directory.GetFileClient(fileName));
+            Response<ShareFileInfo> createResponse = await initalFile.CreateAsync(Constants.KB);
+
+            // Act
+            ShareFileClient file = new ShareFileClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                $"{directoryName}/{fileName}",
+                GetOptions());
+            Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
         [Test]
@@ -1986,9 +2013,15 @@ namespace Azure.Storage.Files.Shares.Test
             var data = GetRandomBuffer(dataSize);
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var timesFaulted = 0;
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     range: new HttpRange(offset, dataSize),
@@ -2011,6 +2044,7 @@ namespace Azure.Storage.Files.Shares.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]

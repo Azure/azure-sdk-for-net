@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.0/FormRecognizer.json
+    -  https://github.com/Azure/azure-rest-api-specs/blob/8a4b2b1a8fdf9b5a05d9ba37cae3ad074d4b8859/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.0/FormRecognizer.json
 ```
 
 
@@ -25,4 +25,13 @@ directive:
             }
         }
     }
+```
+
+### Make AnalyzeResult.readResult optional
+This is a temporary work-around
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AnalyzeResult
+  transform: $.required = ["version"];
 ```

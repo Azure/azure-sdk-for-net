@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class ListSynonymMapsResult
+    internal partial class ListSynonymMapsResult
     {
         internal static ListSynonymMapsResult DeserializeListSynonymMapsResult(JsonElement element)
         {

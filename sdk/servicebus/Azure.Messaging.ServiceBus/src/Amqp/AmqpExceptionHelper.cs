@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Net.Sockets;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-
     internal static class AmqpExceptionHelper
     {
         private static readonly Dictionary<string, AmqpResponseStatusCode> s_conditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
@@ -76,9 +76,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
         {
-            AmqpSymbol errorCondition = AmqpExceptionHelper.GetResponseErrorCondition(responseMessage, statusCode);
+            AmqpSymbol errorCondition = GetResponseErrorCondition(responseMessage, statusCode);
             var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
-            return AmqpExceptionHelper.ToMessagingContractException(errorCondition.Value, statusDescription);
+            return ToMessagingContractException(errorCondition.Value, statusDescription);
         }
 
         public static Exception ToMessagingContractException(this Error error, bool connectionError = false)
@@ -239,7 +239,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public static string GetTrackingId(this AmqpLink link)
         {
             if (link.Settings.Properties != null &&
-                link.Settings.Properties.TryGetValue<string>(AmqpClientConstants.TrackingIdName, out var trackingContext))
+                link.Settings.Properties.TryGetValue<string>(
+                    AmqpClientConstants.TrackingIdName,
+                    out var trackingContext))
             {
                 return trackingContext;
             }

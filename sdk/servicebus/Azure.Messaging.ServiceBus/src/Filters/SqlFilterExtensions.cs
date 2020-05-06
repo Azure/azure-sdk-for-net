@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Filters;
+using Azure.Messaging.ServiceBus.Management;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System.Xml.Linq;
-    using Azure.Messaging.ServiceBus.Filters;
-    using Azure.Messaging.ServiceBus.Management;
-
     internal static class SqlFilterExtensions
     {
-        public static Filter ParseFromXElement(XElement xElement)
+        internal static Filter ParseFromXElement(XElement xElement)
         {
             var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace))?.Value;
             if (string.IsNullOrWhiteSpace(expression))

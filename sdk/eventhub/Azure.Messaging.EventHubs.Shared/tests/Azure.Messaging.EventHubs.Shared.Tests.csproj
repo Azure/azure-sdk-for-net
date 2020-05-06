@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->
@@ -61,7 +62,4 @@
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <!-- Import the Azure.Core test framework (shared source) -->
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

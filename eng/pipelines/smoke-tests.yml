@@ -8,7 +8,7 @@ jobs:
       matrix:
         Linux (AzureCloud):
           OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
           CloudType: AzureCloud
           ArmTemplateParameters: $(azureCloudArmParameters)
@@ -101,3 +101,5 @@ jobs:
         displayName: "Run Smoke Tests"
 
       - template: ../common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'

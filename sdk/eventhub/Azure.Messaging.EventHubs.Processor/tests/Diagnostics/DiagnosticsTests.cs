@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public async Task UpdateCheckpointAsyncCreatesScope()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockContext = new Mock<PartitionContext>("65");

@@ -10,7 +10,7 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>

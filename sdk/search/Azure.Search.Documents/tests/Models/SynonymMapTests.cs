@@ -80,5 +80,14 @@ namespace Azure.Search.Documents.Tests.Models
 
             CollectionAssert.AreEqual(expected, actual);
         }
+
+        [TestCase(null, null)]
+        [TestCase("*", "*")]
+        [TestCase("\"0123abcd\"", "\"0123abcd\"")]
+        public void ParsesETag(string value, string expected)
+        {
+            SynonymMap sut = new SynonymMap(null, null, null, null, value);
+            Assert.AreEqual(expected, sut.ETag?.ToString());
+        }
     }
 }

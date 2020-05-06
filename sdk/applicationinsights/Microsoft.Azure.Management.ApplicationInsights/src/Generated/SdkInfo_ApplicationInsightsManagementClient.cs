@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 new Tuple<string, string, string>("Insights", "ComponentCurrentBillingFeatures", "2015-05-01"),
                 new Tuple<string, string, string>("Insights", "ComponentFeatureCapabilities", "2015-05-01"),
                 new Tuple<string, string, string>("Insights", "ComponentQuotaStatus", "2015-05-01"),
-                new Tuple<string, string, string>("Insights", "Components", "2015-05-01"),
+                new Tuple<string, string, string>("Insights", "Components", "2018-05-01-preview"),
                 new Tuple<string, string, string>("Insights", "ExportConfigurations", "2015-05-01"),
                 new Tuple<string, string, string>("Insights", "Favorites", "2015-05-01"),
                 new Tuple<string, string, string>("Insights", "Operations", "2015-05-01"),
@@ -34,9 +34,21 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 new Tuple<string, string, string>("Insights", "WorkItemConfigurations", "2015-05-01"),
                 new Tuple<string, string, string>("Insights", "webTestLocations", "2015-05-01"),
                 new Tuple<string, string, string>("insights", "AnalyticsItems", "2015-05-01"),
+                new Tuple<string, string, string>("insights", "ComponentLinkedStorageAccounts", "2020-03-01-preview"),
                 new Tuple<string, string, string>("insights", "Workbooks", "2015-05-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/resource-manager/readme.md --csharp --version=2.0.4413 --reflect-api-versions --tag=package-2020-04 --csharp.output-folder=C:\\Users\\yabhu\\Documents\\workspace\\azure-sdk-for-net\\sdk\\applicationinsights\\Microsoft.Azure.Management.ApplicationInsights\\src\\Generated";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "9bd8781377f51d576aca18d1f32f8c49c2247184";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

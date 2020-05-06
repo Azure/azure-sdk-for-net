@@ -11,13 +11,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(string text, string category, string subCategory, int offset, int length, double score)
+        internal CategorizedEntity(string text, string category, string subCategory, double score)
         {
             Text = text;
             Category = category;
             SubCategory = subCategory;
-            GraphemeOffset = offset;
-            GraphemeLength = length;
             ConfidenceScore = score;
         }
 
@@ -42,16 +40,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
         public string SubCategory { get; }
-
-        /// <summary>
-        /// Gets the starting position (in Unicode graphemes) for the matching text in the input document.
-        /// </summary>
-        public int GraphemeOffset { get; }
-
-        /// <summary>
-        /// Gets the length (in Unicode graphemes) of the matching text in the input document.
-        /// </summary>
-        public int GraphemeLength { get; }
 
         /// <summary>
         /// Gets a score between 0 and 1, indicating the confidence that the
