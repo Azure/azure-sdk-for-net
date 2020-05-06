@@ -39,8 +39,16 @@ namespace Azure.Core.Pipeline
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
 #endif
+
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            return task.GetAwaiter().GetResult();
+            if (task.IsCompleted)
+            {
+                return task.GetAwaiter().GetResult();
+            }
+            else
+            {
+                return task.AsTask().GetAwaiter().GetResult();
+            }
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -49,8 +57,16 @@ namespace Azure.Core.Pipeline
 #if DEBUG
             VerifyTaskCompleted(task.IsCompleted);
 #endif
+
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            task.GetAwaiter().GetResult();
+            if (task.IsCompleted)
+            {
+                task.GetAwaiter().GetResult();
+            }
+            else
+            {
+                task.AsTask().GetAwaiter().GetResult();
+            }
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -69,7 +85,6 @@ namespace Azure.Core.Pipeline
 
         public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable awaitable, bool async)
         {
-
             if (!async)
             {
 #if DEBUG
