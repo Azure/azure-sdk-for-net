@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,12 +12,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeEntitiesResult : TextAnalyticsResult
     {
-        private readonly IReadOnlyCollection<CategorizedEntity> _entities;
+        private readonly CategorizedEntityCollection _entities;
 
-        internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, IList<CategorizedEntity> entities)
+        internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, CategorizedEntityCollection entities)
             : base(id, statistics)
         {
-            _entities = new ReadOnlyCollection<CategorizedEntity>(entities);
+            _entities = entities;
         }
 
         internal RecognizeEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -27,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of named entities identified in the document.
         /// </summary>
-        public IReadOnlyCollection<CategorizedEntity> Entities
+        public CategorizedEntityCollection Entities
         {
             get
             {

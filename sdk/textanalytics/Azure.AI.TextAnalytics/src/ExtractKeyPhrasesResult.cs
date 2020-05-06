@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -12,12 +10,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class ExtractKeyPhrasesResult : TextAnalyticsResult
     {
-        private readonly IReadOnlyCollection<string> _keyPhrases;
+        private readonly KeyPhraseCollection _keyPhrases;
 
-        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, IList<string> keyPhrases)
+        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
             : base(id, statistics)
         {
-            _keyPhrases = new ReadOnlyCollection<string>(keyPhrases);
+            _keyPhrases = keyPhrases;
         }
 
         internal ExtractKeyPhrasesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -25,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of key phrases identified in the document.
         /// </summary>
-        public IReadOnlyCollection<string> KeyPhrases
+        public KeyPhraseCollection KeyPhrases
         {
             get
             {

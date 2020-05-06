@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -24,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeEntities
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
+            CategorizedEntityCollection entities = client.RecognizeEntities(document);
 
             Console.WriteLine($"Recognized {entities.Count} entities:");
             foreach (CategorizedEntity entity in entities)
