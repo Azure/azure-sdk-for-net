@@ -20,6 +20,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// </summary>
     public class BlobChangeFeedAsyncPagable : AsyncPageable<BlobChangeFeedEvent>
     {
+        private readonly ChangeFeedFactory _changeFeedFactory;
+        private readonly BlobServiceClient _blobServiceClient;
+        private readonly DateTimeOffset? _startTime;
+        private readonly DateTimeOffset? _endTime;
+        private readonly string _continuation;
+
         private ChangeFeed _changeFeed;
 
         /// <summary>
@@ -30,19 +36,19 @@ namespace Azure.Storage.Blobs.ChangeFeed
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default)
         {
-            _changeFeed = new ChangeFeed(
-                blobBerviceClient,
-                startTime,
-                endTime);
+            _changeFeedFactory = new ChangeFeedFactory();
+            _blobServiceClient = blobBerviceClient;
+            _startTime = startTime;
+            _endTime = endTime;
         }
 
         internal BlobChangeFeedAsyncPagable(
             BlobServiceClient blobServiceClient,
             string continuation)
         {
-            _changeFeed = new ChangeFeed(
-                blobServiceClient,
-                continuation);
+            _changeFeedFactory = new ChangeFeedFactory();
+            _blobServiceClient = blobServiceClient;
+            _continuation = continuation;
         }
 
         /// <summary>
@@ -55,6 +61,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
             string continuationToken = null,
             int? pageSizeHint = null)
         {
+            if (_changeFeed == null)
+            {
+                _changeFeed = await _changeFeedFactory.BuildChangeFeed(
+                    async: true,
+                    _blobServiceClient,
+                    _startTime,
+                    _endTime,
+                    _continuation)
+                    .ConfigureAwait(false);
+            }
             while (_changeFeed.HasNext())
             {
                 yield return await _changeFeed.GetPage(

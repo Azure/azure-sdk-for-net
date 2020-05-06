@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -99,6 +102,62 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 minute: 0,
                 second: 0,
                 offset: TimeSpan.Zero);
+        }
+
+        internal static async Task<Queue<string>> GetSegmentsInYear(
+            bool async,
+            BlobContainerClient containerClient,
+            string yearPath,
+            DateTimeOffset? startTime = default,
+            DateTimeOffset? endTime = default)
+        {
+            List<string> list = new List<string>();
+
+            if (async)
+            {
+                await foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchyAsync(
+                    prefix: yearPath)
+                    .ConfigureAwait(false))
+                {
+                    if (blobHierarchyItem.IsPrefix)
+                        continue;
+
+                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    if (startTime.HasValue && segmentDateTime < startTime
+                        || endTime.HasValue && segmentDateTime > endTime)
+                        continue;
+
+                    list.Add(blobHierarchyItem.Blob.Name);
+                }
+            }
+            else
+            {
+                foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchy(
+                    prefix: yearPath))
+                {
+                    if (blobHierarchyItem.IsPrefix)
+                        continue;
+
+                    DateTimeOffset segmentDateTime = blobHierarchyItem.Blob.Name.ToDateTimeOffset().Value;
+                    if (startTime.HasValue && segmentDateTime < startTime
+                        || endTime.HasValue && segmentDateTime > endTime)
+                        continue;
+
+                    list.Add(blobHierarchyItem.Blob.Name);
+                }
+            }
+
+            return new Queue<string>(list);
+        }
+
+        internal static DateTimeOffset MinDateTime(DateTimeOffset lastConsumable, DateTimeOffset? endDate)
+        {
+            if (endDate.HasValue && endDate.Value < lastConsumable)
+            {
+                return endDate.Value;
+            }
+
+            return lastConsumable;
         }
     }
 }

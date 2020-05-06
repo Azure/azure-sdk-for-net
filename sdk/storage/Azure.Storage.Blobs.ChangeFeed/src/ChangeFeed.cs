@@ -3,12 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 using System.Threading;
@@ -23,9 +19,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly BlobContainerClient _containerClient;
 
         /// <summary>
+        /// A <see cref="SegmentFactory"/> for creating new <see cref="Segment"/>s.
+        /// </summary>
+        private readonly SegmentFactory _segmentFactory;
+
+        /// <summary>
         /// Queue of paths to years we haven't processed yet.
         /// </summary>
-        private Queue<string> _years;
+        private readonly Queue<string> _years;
 
         /// <summary>
         /// Paths to segments in the current year we haven't processed yet.
@@ -37,12 +38,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private Segment _currentSegment;
 
-        private readonly SegmentCursor _currentSegmentCursor;
-
         /// <summary>
         /// The latest time the Change Feed can safely be read from.
         /// </summary>
-        //TODO this can advance while we are iterating through the Change Feed.  Figure out how to support this.
         private DateTimeOffset _lastConsumable;
 
         /// <summary>
@@ -57,160 +55,47 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private DateTimeOffset? _endTime;
 
-        /// <summary>
-        /// If this ChangeFeed has been initalized.
-        /// </summary>
-        private bool _isInitalized;
-
-        private readonly SegmentFactory _segmentFactory;
-
-        // Start time will be rounded down to the nearest hour.
         public ChangeFeed(
-            BlobServiceClient blobServiceClient,
-            DateTimeOffset? startTime = default,
-            DateTimeOffset? endTime = default)
-        {
-            _containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
-            _years = new Queue<string>();
-            _segments = new Queue<string>();
-            _isInitalized = false;
-            _startTime = startTime.RoundDownToNearestHour();
-            _endTime = endTime.RoundUpToNearestHour();
-            _segmentFactory = new SegmentFactory(new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory())));
-        }
-
-        public ChangeFeed(
-            BlobServiceClient blobServiceClient,
-            string continutation)
-        {
-            _containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
-            ChangeFeedCursor cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continutation);
-            ValidateCursor(_containerClient, cursor);
-            _years = new Queue<string>();
-            _segments = new Queue<string>();
-            _isInitalized = false;
-            _startTime = cursor.CurrentSegmentCursor.SegmentTime;
-            _endTime = cursor.EndTime;
-            _currentSegmentCursor = cursor.CurrentSegmentCursor;
-            _segmentFactory = new SegmentFactory(new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory())));
-        }
-
-        /// <summary>
-        /// Internal constructor for unit tests.
-        /// </summary>
-        /// <param name="containerClient"></param>
-        internal ChangeFeed(
-            BlobContainerClient containerClient)
+            BlobContainerClient containerClient,
+            SegmentFactory segmentFactory,
+            Queue<string> years,
+            Queue<string> segments,
+            Segment currentSegment,
+            DateTimeOffset lastConsumable,
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime)
         {
             _containerClient = containerClient;
+            _segmentFactory = segmentFactory;
+            _years = years;
+            _segments = segments;
+            _currentSegment = currentSegment;
+            _lastConsumable = lastConsumable;
+            _startTime = startTime;
+            _endTime = endTime;
         }
 
-        private async Task Initalize(bool async)
-        {
-            // Check if Change Feed has been abled for this account.
-            bool changeFeedContainerExists;
+        /// <summary>
+        /// Constructor for mocking, and for creating a Change Feed with no Events.
+        /// </summary>
+        public ChangeFeed() { }
 
-            if (async)
-            {
-                changeFeedContainerExists = await _containerClient.ExistsAsync().ConfigureAwait(false);
-            }
-            else
-            {
-                changeFeedContainerExists = _containerClient.Exists();
-            }
-
-            if (!changeFeedContainerExists)
-            {
-                //TODO improve this error message
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is current being enabled.");
-            }
-
-            // Get last consumable
-            BlobClient blobClient = _containerClient.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath);
-            BlobDownloadInfo blobDownloadInfo;
-            if (async)
-            {
-                blobDownloadInfo = await blobClient.DownloadAsync().ConfigureAwait(false);
-            }
-            else
-            {
-                blobDownloadInfo = blobClient.Download();
-            }
-
-            JsonDocument jsonMetaSegment;
-            if (async)
-            {
-                jsonMetaSegment = await JsonDocument.ParseAsync(blobDownloadInfo.Content).ConfigureAwait(false);
-            }
-            else
-            {
-                jsonMetaSegment = JsonDocument.Parse(blobDownloadInfo.Content);
-            }
-
-            //TODO what happens when _lastConsumable advances an hour?
-            _lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
-
-            // Get year paths
-            _years = await GetYearPaths(async).ConfigureAwait(false);
-
-            // Dequeue any years that occur before start time
-            if (_startTime.HasValue)
-            {
-                while (_years.Count > 0
-                    && _years.Peek().ToDateTimeOffset() < _startTime.RoundDownToNearestYear())
-                {
-                    _years.Dequeue();
-                }
-            }
-
-            if (_years.Count == 0)
-            {
-                return;
-            }
-
-            string firstYearPath = _years.Dequeue();
-
-            // Get Segments for first year
-            _segments = await GetSegmentsInYear(
-                async: async,
-                yearPath: firstYearPath,
-                startTime: _startTime,
-                endTime: MinDateTime(_lastConsumable, _endTime))
-                .ConfigureAwait(false);
-
-            _currentSegment = await _segmentFactory.BuildSegment(
-                async,
-                _containerClient,
-                _segments.Dequeue(),
-                _currentSegmentCursor)
-                .ConfigureAwait(false);
-            _isInitalized = true;
-        }
-
-        //TODO current round robin strategy doesn't work for live streaming!
         // The last segment may still be adding chunks.
         public async Task<Page<BlobChangeFeedEvent>> GetPage(
             bool async,
             int pageSize = 512,
             CancellationToken cancellationToken = default)
         {
-            if (!_isInitalized)
-            {
-                await Initalize(async).ConfigureAwait(false);
-            }
-
             if (!HasNext())
             {
                 throw new InvalidOperationException("Change feed doesn't have any more events");
             }
 
-            //TODO what should we return here?  Also do we really need to check this on every page?
             if (_currentSegment.DateTime > _endTime)
             {
                 return new BlobChangeFeedEventPage();
             }
 
-            //TODO what should we return here?  Also do we really need to check this on every page?
             if (_currentSegment.DateTime > _lastConsumable)
             {
                 return new BlobChangeFeedEventPage();
@@ -240,18 +125,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public bool HasNext()
         {
-            if (!_isInitalized)
-            {
-                return true;
-            }
-
             // We have no more segments, years, and the current segment doesn't have hext.
             if (_segments.Count == 0 && _years.Count == 0  && !_currentSegment.HasNext())
             {
                 return false;
             }
 
-            DateTimeOffset end = MinDateTime(_lastConsumable, _endTime);
+            DateTimeOffset end = BlobChangeFeedExtensions.MinDateTime(_lastConsumable, _endTime);
 
             return _currentSegment.DateTime <= end;
         }
@@ -345,57 +225,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                         _segments.Dequeue())
                         .ConfigureAwait(false);
                 }
-            }
-        }
-
-        internal async Task<Queue<string>> GetYearPaths(bool async)
-        {
-            List<string> list = new List<string>();
-
-            if (async)
-            {
-                await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
-                    prefix: Constants.ChangeFeed.SegmentPrefix,
-                    delimiter: "/").ConfigureAwait(false))
-                {
-                    if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))
-                        continue;
-
-                    list.Add(blobHierarchyItem.Prefix);
-                }
-            }
-            else
-            {
-                foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
-                prefix: Constants.ChangeFeed.SegmentPrefix,
-                delimiter: "/"))
-                {
-                    if (blobHierarchyItem.Prefix.Contains(Constants.ChangeFeed.InitalizationSegment))
-                        continue;
-
-                    list.Add(blobHierarchyItem.Prefix);
-                }
-            }
-            return new Queue<string>(list);
-        }
-
-        private static DateTimeOffset MinDateTime(DateTimeOffset lastConsumable, DateTimeOffset? endDate)
-        {
-            if (endDate.HasValue && endDate.Value < lastConsumable)
-            {
-                return endDate.Value;
-            }
-
-            return lastConsumable;
-        }
-
-        private static void ValidateCursor(
-            BlobContainerClient containerClient,
-            ChangeFeedCursor cursor)
-        {
-            if (containerClient.Uri.ToString().GetHashCode() != cursor.UrlHash)
-            {
-                throw new ArgumentException("Cursor URL does not match container URL");
             }
         }
     }

@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        [Ignore("")]
+        //[Ignore("")]
         public async Task CursorTest()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

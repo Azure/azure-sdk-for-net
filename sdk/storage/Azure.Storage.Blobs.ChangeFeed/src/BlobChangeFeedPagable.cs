@@ -16,26 +16,32 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// </summary>
     public class BlobChangeFeedPagable : Pageable<BlobChangeFeedEvent>
     {
+        private readonly ChangeFeedFactory _changeFeedFactory;
+        private readonly BlobServiceClient _blobServiceClient;
+        private readonly DateTimeOffset? _startTime;
+        private readonly DateTimeOffset? _endTime;
+        private readonly string _continuation;
+
         private ChangeFeed _changeFeed;
 
         internal BlobChangeFeedPagable(
-            BlobServiceClient serviceClient,
+            BlobServiceClient blobBerviceClient,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default)
         {
-            _changeFeed = new ChangeFeed(
-                serviceClient,
-                startTime,
-                endTime);
+            _changeFeedFactory = new ChangeFeedFactory();
+            _blobServiceClient = blobBerviceClient;
+            _startTime = startTime;
+            _endTime = endTime;
         }
 
         internal BlobChangeFeedPagable(
-            BlobServiceClient serviceClient,
+            BlobServiceClient blobBerviceClient,
             string continuation)
         {
-            _changeFeed = new ChangeFeed(
-                serviceClient,
-                continuation);
+            _changeFeedFactory = new ChangeFeedFactory();
+            _blobServiceClient = blobBerviceClient;
+            _continuation = continuation;
         }
 
         /// <summary>
@@ -46,6 +52,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <returns></returns>
         public override IEnumerable<Page<BlobChangeFeedEvent>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
+            if (_changeFeed == null)
+            {
+                _changeFeed = _changeFeedFactory.BuildChangeFeed(
+                    async: false,
+                    _blobServiceClient,
+                    _startTime,
+                    _endTime,
+                    _continuation)
+                    .EnsureCompleted();
+            }
+
             while (_changeFeed.HasNext())
             {
                 yield return _changeFeed.GetPage(
