@@ -18,9 +18,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        /// The path to this Shard.
+        /// ChunkFactory.
         /// </summary>
-        private readonly string _shardPath;
+        private readonly ChunkFactory _chunkFactory;
 
         /// <summary>
         /// Queue of the paths to Chunks we haven't processed.
@@ -38,111 +38,27 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private long _chunkIndex;
 
         /// <summary>
-        /// The byte offset of the beginning of the
-        /// current Avro block.  Only used to initalize a
-        /// Shard from a Sursor.
+        /// Gets the <see cref="ShardCursor"/> for this Shard.
         /// </summary>
-        private readonly long _blockOffset;
-
-        /// <summary>
-        /// Index of the current event within the
-        /// Avro block.  Only used to initalize a
-        /// Shard from a Sursor.
-        /// </summary>
-        private readonly long _eventIndex;
-
-        /// <summary>
-        /// If this Shard has been initalized.
-        /// </summary>
-        private bool _isInitialized;
-
-        public Shard(
-            BlobContainerClient containerClient,
-            string shardPath,
-            ShardCursor shardCursor = default)
-        {
-            _containerClient = containerClient;
-            _shardPath = shardPath;
-            _chunks = new Queue<string>();
-            _isInitialized = false;
-            _chunkIndex = shardCursor?.ChunkIndex ?? 0;
-            _blockOffset = shardCursor?.BlockOffset ?? 0;
-            _eventIndex = shardCursor?.EventIndex ?? 0;
-        }
-
-        private async Task Initalize(bool async)
-        {
-            // Get Chunks
-            if (async)
-            {
-                await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
-                    prefix: _shardPath).ConfigureAwait(false))
-                {
-                    if (blobHierarchyItem.IsPrefix)
-                        continue;
-
-                    //Chunk chunk = new Chunk(_containerClient, blobHierarchyItem.Blob.Name);
-                    _chunks.Enqueue(blobHierarchyItem.Blob.Name);
-                }
-            }
-            else
-            {
-                foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
-                    prefix: _shardPath))
-                {
-                    if (blobHierarchyItem.IsPrefix)
-                        continue;
-
-                    //Chunk chunk = new Chunk(_containerClient, blobHierarchyItem.Blob.Name);
-                    _chunks.Enqueue(blobHierarchyItem.Blob.Name);
-                }
-            }
-
-            // Fast forward to current Chunk
-            if (_chunkIndex > 0)
-            {
-                //TODO possible off by 1 error here.
-                for (int i = 0; i < _chunkIndex; i++)
-                {
-                    _chunks.Dequeue();
-                }
-            }
-
-            _currentChunk = new Chunk(
-                _containerClient,
-                new LazyLoadingBlobStreamFactory(),
-                new AvroReaderFactory(),
-                _chunks.Dequeue(),
-                _blockOffset,
-                _eventIndex);
-            _isInitialized = true;
-        }
-
         public virtual ShardCursor GetCursor()
             => new ShardCursor(
                 _chunkIndex,
                 _currentChunk.BlockOffset,
                 _currentChunk.EventIndex);
 
+        /// <summary>
+        /// If this Shard has a next event.
+        /// </summary>
         public virtual bool HasNext()
-        {
-            if (!_isInitialized)
-            {
-                return true;
-            }
+            => _chunks.Count > 0 || _currentChunk.HasNext();
 
-            return _chunks.Count > 0 || _currentChunk.HasNext();
-        }
-
+        /// <summary>
+        /// Gets the next <see cref="BlobChangeFeedEvent"/>.
+        /// </summary>
         public virtual async Task<BlobChangeFeedEvent> Next(
             bool async,
             CancellationToken cancellationToken = default)
         {
-            if (!_isInitialized)
-            {
-                await Initalize(async).ConfigureAwait(false);
-            }
-
             if (!HasNext())
             {
                 throw new InvalidOperationException("Shard doesn't have any more events");
@@ -155,10 +71,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Remove currentChunk if it doesn't have another event.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
-                _currentChunk = new Chunk(
+                _currentChunk = _chunkFactory.BuildChunk(
                     _containerClient,
-                    new LazyLoadingBlobStreamFactory(),
-                    new AvroReaderFactory(),
                     _chunks.Dequeue());
                 _chunkIndex++;
             }
@@ -169,24 +83,24 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public void Dispose() => _currentChunk.Dispose();
 
         /// <summary>
-        /// Constructor for testing.  Do not use.
+        /// Constructor for use by <see cref="ShardFactory.BuildShard(bool, BlobContainerClient, string, ShardCursor)"/>.
         /// </summary>
-        internal Shard(
-            Chunk chunk = default,
-            long chunkIndex = default,
-            bool isInitalized = default,
-            Queue<string> chunks = default,
-            BlobContainerClient containerClient = default)
+        public Shard(
+            BlobContainerClient containerClient,
+            ChunkFactory chunkFactory,
+            Queue<string> chunks,
+            Chunk currentChunk,
+            long chunkIndex)
         {
-            _currentChunk = chunk;
-            _chunkIndex = chunkIndex;
-            _isInitialized = isInitalized;
-            _chunks = chunks;
             _containerClient = containerClient;
+            _chunkFactory = chunkFactory;
+            _chunks = chunks;
+            _currentChunk = currentChunk;
+            _chunkIndex = chunkIndex;
         }
 
         /// <summary>
-        /// Constructor for mocking.  Do not use.
+        /// Constructor for mocking.
         /// </summary>
         internal Shard() { }
     }

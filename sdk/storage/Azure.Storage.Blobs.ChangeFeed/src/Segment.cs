@@ -102,7 +102,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 //TODO cleanup this line
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
-                Shard shard = new Shard(_containerClient, shardPath, _cursor?.ShardCursors?[i]);
+                ShardFactory shardFactory = new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory()));
+                Shard shard = await shardFactory.BuildShard(
+                    async,
+                    _containerClient,
+                    shardPath,
+                    _cursor?.ShardCursors?[i])
+                    .ConfigureAwait(false);
                 _shards.Add(shard);
                 i++;
             }

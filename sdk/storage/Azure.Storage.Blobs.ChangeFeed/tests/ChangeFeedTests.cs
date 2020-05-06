@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable<BlobHierarchyItem>(GetSegmentsInYearFuncAsync);
+                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYearFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
                     default,
@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             else
             {
                 Pageable<BlobHierarchyItem> pageable =
-                    PageResponseEnumerator.CreateEnumerable<BlobHierarchyItem>(GetSegmentsInYearFunc);
+                    PageResponseEnumerator.CreateEnumerable(GetSegmentsInYearFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
                     default,

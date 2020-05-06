@@ -43,10 +43,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
 
-            Chunk chunk = new Chunk(
-                containerClient.Object,
+            ChunkFactory chunkFactory = new ChunkFactory(
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object,
+                avroReaderFactory.Object);
+            Chunk chunk = chunkFactory.BuildChunk(
+                containerClient.Object,
                 chunkPath);
 
             // Act
@@ -83,13 +84,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>()))
                 .Returns(lazyLoadingBlobStream.Object);
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
-            avroReader.Setup(r => r.HasNext()).Returns(false)
-            ;
+            avroReader.Setup(r => r.HasNext()).Returns(false);
 
-            Chunk chunk = new Chunk(
-                containerClient.Object,
+            ChunkFactory chunkFactory = new ChunkFactory(
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object,
+                avroReaderFactory.Object);
+            Chunk chunk = chunkFactory.BuildChunk(
+                containerClient.Object,
                 chunkPath);
 
             // Act
@@ -194,10 +195,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Setup(r => r.BlockOffset).Returns(blockOffset);
             avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
 
-            Chunk chunk = new Chunk(
-                containerClient.Object,
+            ChunkFactory chunkFactory = new ChunkFactory(
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object,
+                avroReaderFactory.Object);
+            Chunk chunk = chunkFactory.BuildChunk(
+                containerClient.Object,
                 chunkPath,
                 blockOffset,
                 eventIndex);
