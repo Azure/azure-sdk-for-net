@@ -1,5 +1,8 @@
 # Release History
 
+## 12.3.0-preview.1 (Unreleased)
+
+
 ## 12.2.1 (2020-05)
 - Fixed bug where blob, file and directory names were not URL encoded.
 
