@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     });
 
                 // send the message batch
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // create a receiver specifying a particular session

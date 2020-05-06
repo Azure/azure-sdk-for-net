@@ -12,7 +12,7 @@ using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class PartitionedUploaderDataLakeFileClient : PartitionedUploader<UploadFileOptions, PathInfo>.IClient
+    internal class PartitionedUploaderDataLakeFileClient : PartitionedUploader<DataLakeFileUploadOptions, PathInfo>.IClient
     {
         private readonly DataLakeFileClient _client;
 
@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.DataLake
 
         public async Task<Response<PathInfo>> CommitPartitionedUploadInternal(
             List<(long Offset, long Size)> partitions,
-            UploadFileOptions args,
+            DataLakeFileUploadOptions args,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.DataLake
 
         public async Task<Response<PathInfo>> FullUploadInternal(
             Stream contentStream,
-            UploadFileOptions args,
+            DataLakeFileUploadOptions args,
             IProgress<long> progressHandler,
             string operationName,
             bool async,
@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
         }
 
-        public async Task InitializeDestinationInternal(UploadFileOptions args, bool async, CancellationToken cancellationToken)
+        public async Task InitializeDestinationInternal(DataLakeFileUploadOptions args, bool async, CancellationToken cancellationToken)
         {
             await _client.CreateInternal(
                 PathResourceType.File,
@@ -91,7 +91,7 @@ namespace Azure.Storage.Files.DataLake
         public async Task StageUploadPartitionInternal(
             Stream contentStream,
             long offset,
-            UploadFileOptions args,
+            DataLakeFileUploadOptions args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)

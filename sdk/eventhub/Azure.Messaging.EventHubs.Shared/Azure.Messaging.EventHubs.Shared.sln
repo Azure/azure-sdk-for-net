@@ -7,6 +7,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Messaging.EventHubs.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Shared.Tests", "tests\Azure.Messaging.EventHubs.Shared.Tests.csproj", "{2A9A566C-C7AC-453A-B21A-90DD6F941DEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{1AC14D43-837B-412F-BE15-F506B351CE72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,18 @@ Global
 		{2A9A566C-C7AC-453A-B21A-90DD6F941DEF}.Release|x64.Build.0 = Release|Any CPU
 		{2A9A566C-C7AC-453A-B21A-90DD6F941DEF}.Release|x86.ActiveCfg = Release|Any CPU
 		{2A9A566C-C7AC-453A-B21A-90DD6F941DEF}.Release|x86.Build.0 = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|x64.Build.0 = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Debug|x86.Build.0 = Debug|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|x64.ActiveCfg = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|x64.Build.0 = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AC14D43-837B-412F-BE15-F506B351CE72}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

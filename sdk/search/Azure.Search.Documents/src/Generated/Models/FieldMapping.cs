@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the field in the data source. </summary>
-        public string SourceFieldName { get; }
+        public string SourceFieldName { get; set; }
         /// <summary> The name of the target field in the index. Same as the source field name by default. </summary>
         public string TargetFieldName { get; set; }
         /// <summary> A function to apply to each source field value before indexing. </summary>

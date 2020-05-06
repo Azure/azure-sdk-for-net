@@ -315,7 +315,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

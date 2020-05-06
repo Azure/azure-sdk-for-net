@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Models
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
-            IReadOnlyList<TokenInfo> tokens = default;
+            IReadOnlyList<AnalyzedTokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"))
                 {
-                    List<TokenInfo> array = new List<TokenInfo>();
+                    List<AnalyzedTokenInfo> array = new List<AnalyzedTokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            array.Add(TokenInfo.DeserializeTokenInfo(item));
+                            array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
                         }
                     }
                     tokens = array;

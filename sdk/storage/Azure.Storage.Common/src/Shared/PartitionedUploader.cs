@@ -156,7 +156,7 @@ namespace Azure.Storage
 
         private async Task<Response<CompleteUploadReturn>> UploadInSequenceInternal(
             Stream content,
-            long blockSize,
+            long partitionSize,
             ServiceSpecificArgs args,
             IProgress<long> progressHandler,
             bool async,
@@ -183,7 +183,7 @@ namespace Azure.Storage
                 if (async)
                 {
                     await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
-                            content, blockSize, async: true, _arrayPool, cancellationToken).ConfigureAwait(false))
+                            content, partitionSize, async: true, _arrayPool, cancellationToken).ConfigureAwait(false))
                     {
                         await StagePartitionAndDisposeInternal(
                             block,
@@ -199,7 +199,7 @@ namespace Azure.Storage
                 else
                 {
                     foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
-                            content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
+                            content, partitionSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                     {
                         StagePartitionAndDisposeInternal(
                             block,

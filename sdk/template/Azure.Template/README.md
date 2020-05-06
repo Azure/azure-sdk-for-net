@@ -67,14 +67,12 @@ thing.save()
 
 The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
-```Python
-thing = client.get_thing(id)
-```
+```C# Snippet:GetSecret
+var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
 
-### List the things
+SecretBundle secret = client.GetSecret("TestSecret");
 
-Use [list_things](not-valid-link) to get one or more Thing objects from the service. If there are no Things available, a `404` exception is thrown (see [Troubleshooting](#troubleshooting) for details on handling exceptions).
-
+Console.WriteLine(secret.Value);
 ```Python
 things = client.list_things()
 ```

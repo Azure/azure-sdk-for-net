@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Newtonsoft.Json.Linq;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -18,7 +18,7 @@ namespace Azure.Data.AppConfiguration.Tests
             "etag"
         };
 
-        public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
+        public ConfigurationRecordMatcher()
         {
             VolatileResponseHeaders.Add("Sync-Token");
         }

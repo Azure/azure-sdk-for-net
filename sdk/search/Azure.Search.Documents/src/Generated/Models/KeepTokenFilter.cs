@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The list of words to keep. </summary>
-        public IList<string> KeepWords { get; }
+        public IList<string> KeepWords { get; set; }
         /// <summary> A value indicating whether to lower case all words first. Default is false. </summary>
         public bool? LowerCaseKeepWords { get; set; }
     }

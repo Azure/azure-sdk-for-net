@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
-        internal ListDataSourcesResult(IEnumerable<DataSource> dataSources)
+        internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSource> dataSources)
         {
             if (dataSources == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
-        internal ListDataSourcesResult(IReadOnlyList<DataSource> dataSources)
+        internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSource> dataSources)
         {
             DataSources = dataSources;
         }
 
         /// <summary> The datasources in the Search service. </summary>
-        public IReadOnlyList<DataSource> DataSources { get; }
+        public IReadOnlyList<SearchIndexerDataSource> DataSources { get; }
     }
 }

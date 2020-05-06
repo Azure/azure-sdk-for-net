@@ -4,7 +4,7 @@
 using System;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -52,10 +52,10 @@ namespace Azure.Search.Documents.Tests.Samples
             string indexName = "nycjobs";
             string apiKey = "252044BE3886FE4A8E3BAA4F595114BB";
 
-            // Create a SearchIndexClient to send queries
+            // Create a SearchClient to send queries
             Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
+            SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
             SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
@@ -87,8 +87,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchIndexClient client = new SearchIndexClient(endpoint, indexName, credential);
-            /*@@*/ client = InstrumentClient(new SearchIndexClient(endpoint, indexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Dict
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.Tests.Samples
         public async Task QueryStatic()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_StaticQuery
             SearchResults<Hotel> response = client.Search<Hotel>("luxury");
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Tests.Samples
         public async Task Options()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Options
             int stars = 4;
@@ -179,7 +179,7 @@ namespace Azure.Search.Documents.Tests.Samples
         public async Task Index()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             try
             {
                 #region Snippet:Azure_Search_Tests_Samples_Readme_Index
@@ -202,7 +202,7 @@ namespace Azure.Search.Documents.Tests.Samples
         public async Task Troubleshooting()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             LookupHotel();
 
             // We want the sample to have a return but the unit test doesn't

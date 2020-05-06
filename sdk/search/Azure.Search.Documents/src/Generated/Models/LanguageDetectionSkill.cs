@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill that detects the language of input text and reports a single language code for every document submitted on the request. The language code is paired with a score indicating the confidence of the analysis. </summary>
-    public partial class LanguageDetectionSkill : Skill
+    public partial class LanguageDetectionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of LanguageDetectionSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

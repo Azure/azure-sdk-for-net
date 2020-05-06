@@ -8,14 +8,20 @@
 		<Description>Microsoft Azure StorageCache Management Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.StorageCache</AssemblyName>
     <AssemblyTitle>Microsoft Azure HPC StorageCache Management</AssemblyTitle>
-		<Version>1.0.0</Version>
-		<PackageTags>Microsoft Azure Storagecache management;StorageCache;StorageCache management;StorageCache_2019-11-01;</PackageTags>
+		<Version>1.1.0</Version>
+		<PackageTags>Microsoft Azure Storagecache management;StorageCache;StorageCache management;StorageCache_2020-03-01;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public release of Microsoft Azure HPC Storage Cache management .NET SDK.
-				Azure HPC Storage Cache provides scalable caching service for NAS clients,
-				serving data from either NFSv3 or Blob at-rest storage (referred to as \"Storage Targets\").
-				These operations allow you to manage caches.
+      Microsoft Azure HPC Storage Cache management .NET SDK.
+
+			Azure HPC Storage Cache provides scalable caching service for NAS clients,
+			serving data from either NFSv3 or Blob at-rest storage (referred to as \"Storage Targets\").
+			These operations allow you to manage caches.
+
+      Version 1.1.0 relates to API vesrion 2020-03-01.
+      This release contatins changes related to,
+      . Cache managed keys &
+      . Disk encryption
  			]]>
 		</PackageReleaseNotes>
 

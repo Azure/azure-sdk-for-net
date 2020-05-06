@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription.
+            /// Description for Get all deleted apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription.
+            /// Description for Get all deleted apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription at location
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription at location
+            /// Description for Get all deleted apps for a subscription at location
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription at location
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription at location
+            /// Description for Get all deleted apps for a subscription at location
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get deleted app for a subscription at location.
             /// </summary>
             /// <remarks>
-            /// Get deleted app for a subscription at location.
+            /// Description for Get deleted app for a subscription at location.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get deleted app for a subscription at location.
             /// </summary>
             /// <remarks>
-            /// Get deleted app for a subscription at location.
+            /// Description for Get deleted app for a subscription at location.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription.
+            /// Description for Get all deleted apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription.
+            /// Description for Get all deleted apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription at location
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription at location
+            /// Description for Get all deleted apps for a subscription at location
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all deleted apps for a subscription at location
             /// </summary>
             /// <remarks>
-            /// Get all deleted apps for a subscription at location
+            /// Description for Get all deleted apps for a subscription at location
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

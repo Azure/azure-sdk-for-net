@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a field recognized in an input form.
     /// </summary>
     public class FormField
     {
@@ -61,19 +62,22 @@ namespace Azure.AI.FormRecognizer.Models
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Text from the form that labels the form field.
+        /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
         public FieldText LabelText { get; internal set; }
 
         /// <summary>
+        /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
         public FieldText ValueText { get; internal set; }
 
         /// <summary>
+        /// The strongly-typed value of this <see cref="FormField"/>.
         /// </summary>
         public FieldValue Value { get; internal set; }
 
         /// <summary>
+        /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
         /// </summary>
         public float Confidence { get; }
 

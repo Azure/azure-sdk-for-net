@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
 

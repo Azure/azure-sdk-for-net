@@ -1,21 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
+using Azure.Messaging.ServiceBus.Filters;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Amqp.Framing;
+using Azure.Messaging.ServiceBus.Primitives;
+using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using Azure.Core;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-    using Primitives;
-    using SBMessage = ServiceBusMessage;
-
     internal static class AmqpMessageConverter
     {
         private const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
@@ -399,118 +401,118 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        //public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
-        //{
-        //    var ruleDescriptionMap = new AmqpMap();
+        public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
+        {
+            var ruleDescriptionMap = new AmqpMap();
 
-        //    switch (description.Filter)
-        //    {
-        //        case SqlFilter sqlFilter:
-        //            var filterMap = GetSqlFilterMap(sqlFilter);
-        //            ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
-        //            break;
-        //        case CorrelationFilter correlationFilter:
-        //            var correlationFilterMap = GetCorrelationFilterMap(correlationFilter);
-        //            ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
-        //            break;
-        //        default:
-        //            throw new NotSupportedException(
-        //                Resources.RuleFilterNotSupported.FormatForUser(
-        //                    description.Filter.GetType(),
-        //                    nameof(SqlFilter),
-        //                    nameof(CorrelationFilter)));
-        //    }
+            switch (description.Filter)
+            {
+                case SqlFilter sqlFilter:
+                    var filterMap = GetSqlFilterMap(sqlFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
+                    break;
+                case CorrelationFilter correlationFilter:
+                    var correlationFilterMap = GetCorrelationFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Resources.RuleFilterNotSupported.FormatForUser(
+                            description.Filter.GetType(),
+                            nameof(SqlFilter),
+                            nameof(CorrelationFilter)));
+            }
 
-        //    var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
-        //    ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
-        //    ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
+            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
+            ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
 
-        //    return ruleDescriptionMap;
-        //}
+            return ruleDescriptionMap;
+        }
 
-        //public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
-        //{
-        //    var filter = GetFilter(amqpDescription.Filter);
-        //    var ruleAction = GetRuleAction(amqpDescription.Action);
+        public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        {
+            var filter = GetFilter(amqpDescription.Filter);
+            var ruleAction = GetRuleAction(amqpDescription.Action);
 
-        //    var ruleDescription = new RuleDescription(amqpDescription.RuleName, filter)
-        //    {
-        //        Action = ruleAction
-        //    };
+            var ruleDescription = new RuleDescription(amqpDescription.RuleName, filter)
+            {
+                Action = ruleAction
+            };
 
-        //    return ruleDescription;
-        //}
+            return ruleDescription;
+        }
 
-        //public static Filter GetFilter(AmqpFilterCodec amqpFilter)
-        //{
-        //    Filter filter;
+        public static Filter GetFilter(AmqpFilterCodec amqpFilter)
+        {
+            Filter filter;
 
-        //    switch (amqpFilter.DescriptorCode)
-        //    {
-        //        case AmqpSqlFilterCodec.Code:
-        //            var amqpSqlFilter = (AmqpSqlFilterCodec)amqpFilter;
-        //            filter = new SqlFilter(amqpSqlFilter.Expression);
-        //            break;
+            switch (amqpFilter.DescriptorCode)
+            {
+                case AmqpSqlFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlFilterCodec)amqpFilter;
+                    filter = new SqlFilter(amqpSqlFilter.Expression);
+                    break;
 
-        //        case AmqpTrueFilterCodec.Code:
-        //            filter = new TrueFilter();
-        //            break;
+                case AmqpTrueFilterCodec.Code:
+                    filter = new TrueFilter();
+                    break;
 
-        //        case AmqpFalseFilterCodec.Code:
-        //            filter = new FalseFilter();
-        //            break;
+                case AmqpFalseFilterCodec.Code:
+                    filter = new FalseFilter();
+                    break;
 
-        //        case AmqpCorrelationFilterCodec.Code:
-        //            var amqpCorrelationFilter = (AmqpCorrelationFilterCodec)amqpFilter;
-        //            var correlationFilter = new CorrelationFilter
-        //            {
-        //                CorrelationId = amqpCorrelationFilter.CorrelationId,
-        //                MessageId = amqpCorrelationFilter.MessageId,
-        //                To = amqpCorrelationFilter.To,
-        //                ReplyTo = amqpCorrelationFilter.ReplyTo,
-        //                Label = amqpCorrelationFilter.Label,
-        //                SessionId = amqpCorrelationFilter.SessionId,
-        //                ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
-        //                ContentType = amqpCorrelationFilter.ContentType
-        //            };
+                case AmqpCorrelationFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationFilter
+                    {
+                        CorrelationId = amqpCorrelationFilter.CorrelationId,
+                        MessageId = amqpCorrelationFilter.MessageId,
+                        To = amqpCorrelationFilter.To,
+                        ReplyTo = amqpCorrelationFilter.ReplyTo,
+                        Label = amqpCorrelationFilter.Label,
+                        SessionId = amqpCorrelationFilter.SessionId,
+                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
+                        ContentType = amqpCorrelationFilter.ContentType
+                    };
 
-        //            foreach (var property in amqpCorrelationFilter.Properties)
-        //            {
-        //                correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
-        //            }
+                    foreach (var property in amqpCorrelationFilter.Properties)
+                    {
+                        correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
+                    }
 
-        //            filter = correlationFilter;
-        //            break;
+                    filter = correlationFilter;
+                    break;
 
-        //        default:
-        //            throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
-        //    }
+                default:
+                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
+            }
 
-        //    return filter;
-        //}
+            return filter;
+        }
 
-        //static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
-        //{
-        //    RuleAction action;
+        private static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        {
+            RuleAction action;
 
-        //    if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
-        //    {
-        //        action = null;
-        //    }
-        //    else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
-        //    {
-        //        var amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
-        //        var sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
+            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
+            {
+                action = null;
+            }
+            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            {
+                var amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
+                var sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
 
-        //        action = sqlAction;
-        //    }
-        //    else
-        //    {
-        //        throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
-        //    }
+                action = sqlAction;
+            }
+            else
+            {
+                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
+            }
 
-        //    return action;
-        //}
+            return action;
+        }
 
         internal static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
         {
@@ -703,49 +705,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new Data { Value = value };
         }
 
-        //static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
-        //{
-        //    var amqpFilterMap = new AmqpMap
-        //    {
-        //        [ManagementConstants.Properties.Expression] = sqlFilter.SqlExpression
-        //    };
-        //    return amqpFilterMap;
-        //}
+        internal static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
+        {
+            var amqpFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.Expression] = sqlFilter.SqlExpression
+            };
+            return amqpFilterMap;
+        }
 
-        //static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
-        //{
-        //    var correlationFilterMap = new AmqpMap
-        //    {
-        //        [ManagementConstants.Properties.CorrelationId] = correlationFilter.CorrelationId,
-        //        [ManagementConstants.Properties.MessageId] = correlationFilter.MessageId,
-        //        [ManagementConstants.Properties.To] = correlationFilter.To,
-        //        [ManagementConstants.Properties.ReplyTo] = correlationFilter.ReplyTo,
-        //        [ManagementConstants.Properties.Label] = correlationFilter.Label,
-        //        [ManagementConstants.Properties.SessionId] = correlationFilter.SessionId,
-        //        [ManagementConstants.Properties.ReplyToSessionId] = correlationFilter.ReplyToSessionId,
-        //        [ManagementConstants.Properties.ContentType] = correlationFilter.ContentType
-        //    };
+        internal static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
+        {
+            var correlationFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.CorrelationId] = correlationFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationFilter.Label,
+                [ManagementConstants.Properties.SessionId] = correlationFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationFilter.ContentType
+            };
 
-        //    var propertiesMap = new AmqpMap();
-        //    foreach (var property in correlationFilter.Properties)
-        //    {
-        //        propertiesMap[new MapKey(property.Key)] = property.Value;
-        //    }
+            var propertiesMap = new AmqpMap();
+            foreach (var property in correlationFilter.Properties)
+            {
+                propertiesMap[new MapKey(property.Key)] = property.Value;
+            }
 
-        //    correlationFilterMap[ManagementConstants.Properties.CorrelationFilterProperties] = propertiesMap;
+            correlationFilterMap[ManagementConstants.Properties.CorrelationFilterProperties] = propertiesMap;
 
-        //    return correlationFilterMap;
-        //}
+            return correlationFilterMap;
+        }
 
-        //static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
-        //{
-        //    AmqpMap ruleActionMap = null;
-        //    if (sqlRuleAction != null)
-        //    {
-        //        ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
-        //    }
+        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        {
+            AmqpMap ruleActionMap = null;
+            if (sqlRuleAction != null)
+            {
+                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
+            }
 
-        //    return ruleActionMap;
-        //}
+            return ruleActionMap;
+        }
     }
 }

@@ -7,10 +7,10 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   The set of options that can be specified to influence the way in which events
-    ///   are sent to the Event Hubs service.
+    ///   are published to the Event Hubs service.
     /// </summary>
     ///
-    internal class SendEventOptions
+    public class SendEventOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs

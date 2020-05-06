@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -20,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public async Task BackupAndRestoreAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',

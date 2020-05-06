@@ -20,7 +20,7 @@ $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
 # Matches the dev.yyyymmdd portion of the version string
 $DEV_DATE_REGEX = 'dev\.(\d{8})'
 
-$NIGHTLY_FEED_NAME = 'NighlyFeed'
+$NIGHTLY_FEED_NAME = 'NightlyFeed'
 $NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
 
 function Log-Warning($message) {
