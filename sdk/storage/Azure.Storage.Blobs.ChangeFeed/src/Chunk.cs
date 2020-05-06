@@ -49,6 +49,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public Chunk(
             BlobContainerClient containerClient,
+            LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
+            AvroReaderFactory avroReaderFactory,
             string chunkPath,
             long? blockOffset = default,
             long? eventIndex = default)
@@ -57,7 +59,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlockOffset = blockOffset ?? 0;
             EventIndex = eventIndex ?? 0;
 
-            _dataStream = new LazyLoadingBlobStream(
+            _dataStream = lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                 _blobClient,
                 offset: BlockOffset,
                 blockSize: Constants.ChangeFeed.ChunkBlockDownloadSize);
@@ -65,12 +67,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // We aren't starting from the beginning of the Chunk
             if (BlockOffset != 0)
             {
-                _headStream = new LazyLoadingBlobStream(
+                _headStream = lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
                     _blobClient,
                     offset: 0,
                     blockSize: 3 * Constants.KB);
 
-                _avroReader = new AvroReader(
+                _avroReader = avroReaderFactory.BuildAvroReader(
                     _dataStream,
                     _headStream,
                     BlockOffset,
@@ -78,11 +80,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             else
             {
-                _avroReader = new AvroReader(_dataStream);
+                _avroReader = avroReaderFactory.BuildAvroReader(_dataStream);
             }
         }
 
-        //TODO what if the Segment isn't Finalized??
         public virtual bool HasNext()
             => _avroReader.HasNext();
 
@@ -108,14 +109,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _dataStream.Dispose();
             _headStream.Dispose();
             GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Constructor for testing.  Do not use.
-        /// </summary>
-        internal Chunk(AvroReader avroReader)
-        {
-            _avroReader = avroReader;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,15 +26,41 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public void HasNext_True()
         {
             // Arrange
+            string chunkPath = "chunkPath";
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStreamFactory> lazyLoadingBlobStreamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStream> lazyLoadingBlobStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            lazyLoadingBlobStreamFactory.Setup(r => r.BuildLazyLoadingBlobStream(
+                It.IsAny<BlobClient>(),
+                It.IsAny<long>(),
+                It.IsAny<long>()))
+                .Returns(lazyLoadingBlobStream.Object);
+            avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
-            Chunk chunk = new Chunk(avroReader.Object);
+
+            Chunk chunk = new Chunk(
+                containerClient.Object,
+                lazyLoadingBlobStreamFactory.Object,
+                avroReaderFactory.Object,
+                chunkPath);
 
             // Act
             bool hasNext = chunk.HasNext();
 
             // Assert
             Assert.IsTrue(hasNext);
+
+            containerClient.Verify(r => r.GetBlobClient(chunkPath));
+            lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
+                blobClient.Object,
+                0,
+                Constants.ChangeFeed.ChunkBlockDownloadSize));
+            avroReaderFactory.Verify(r => r.BuildAvroReader(lazyLoadingBlobStream.Object));
             avroReader.Verify(r => r.HasNext());
         }
 
@@ -41,15 +68,42 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public void HasNext_False()
         {
             // Arrange
+            string chunkPath = "chunkPath";
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
-            avroReader.Setup(r => r.HasNext()).Returns(false);
-            Chunk chunk = new Chunk(avroReader.Object);
+            Mock<LazyLoadingBlobStreamFactory> lazyLoadingBlobStreamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStream> lazyLoadingBlobStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            lazyLoadingBlobStreamFactory.Setup(r => r.BuildLazyLoadingBlobStream(
+                It.IsAny<BlobClient>(),
+                It.IsAny<long>(),
+                It.IsAny<long>()))
+                .Returns(lazyLoadingBlobStream.Object);
+            avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
+            avroReader.Setup(r => r.HasNext()).Returns(false)
+            ;
+
+            Chunk chunk = new Chunk(
+                containerClient.Object,
+                lazyLoadingBlobStreamFactory.Object,
+                avroReaderFactory.Object,
+                chunkPath);
 
             // Act
             bool hasNext = chunk.HasNext();
 
             // Assert
             Assert.IsFalse(hasNext);
+
+            containerClient.Verify(r => r.GetBlobClient(chunkPath));
+            lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
+                blobClient.Object,
+                0,
+                Constants.ChangeFeed.ChunkBlockDownloadSize));
+            avroReaderFactory.Verify(r => r.BuildAvroReader(lazyLoadingBlobStream.Object));
             avroReader.Verify(r => r.HasNext());
         }
 
@@ -57,8 +111,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public async Task Next()
         {
             // Arrange
+            string chunkPath = "chunkPath";
             long blockOffset = 5;
-            long objectIndex = 10;
+            long eventIndex = 10;
 
             string topic = "topic";
             string subject = "subject";
@@ -110,19 +165,42 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             };
 
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<AvroReaderFactory> avroReaderFactory = new Mock<AvroReaderFactory>(MockBehavior.Strict);
             Mock<AvroReader> avroReader = new Mock<AvroReader>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStreamFactory> lazyLoadingBlobStreamFactory = new Mock<LazyLoadingBlobStreamFactory>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStream> dataStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
+            Mock<LazyLoadingBlobStream> headStream = new Mock<LazyLoadingBlobStream>(MockBehavior.Strict);
 
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+            lazyLoadingBlobStreamFactory.SetupSequence(r => r.BuildLazyLoadingBlobStream(
+                It.IsAny<BlobClient>(),
+                It.IsAny<long>(),
+                It.IsAny<long>()))
+                .Returns(dataStream.Object)
+                .Returns(headStream.Object);
+            avroReaderFactory.Setup(r => r.BuildAvroReader(
+                It.IsAny<Stream>(),
+                It.IsAny<Stream>(),
+                It.IsAny<long>(),
+                It.IsAny<long>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
-
             avroReader.Setup(r => r.Next(
                 It.IsAny<bool>(),
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(record);
 
             avroReader.Setup(r => r.BlockOffset).Returns(blockOffset);
-            avroReader.Setup(r => r.ObjectIndex).Returns(objectIndex);
+            avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
 
-            Chunk chunk = new Chunk(avroReader.Object);
+            Chunk chunk = new Chunk(
+                containerClient.Object,
+                lazyLoadingBlobStreamFactory.Object,
+                avroReaderFactory.Object,
+                chunkPath,
+                blockOffset,
+                eventIndex);
 
             // Act
             BlobChangeFeedEvent changeFeedEvent = await chunk.Next(IsAsync);
@@ -150,6 +228,20 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(recursive, changeFeedEvent.EventData.Recursive);
             Assert.AreEqual(sequencer, changeFeedEvent.EventData.Sequencer);
 
+            containerClient.Verify(r => r.GetBlobClient(chunkPath));
+            lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
+                blobClient.Object,
+                blockOffset,
+                Constants.ChangeFeed.ChunkBlockDownloadSize));
+            lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
+                blobClient.Object,
+                0,
+                3 * Constants.KB));
+            avroReaderFactory.Verify(r => r.BuildAvroReader(
+                dataStream.Object,
+                headStream.Object,
+                blockOffset,
+                eventIndex));
             avroReader.Verify(r => r.HasNext());
             avroReader.Verify(r => r.Next(
                 IsAsync,

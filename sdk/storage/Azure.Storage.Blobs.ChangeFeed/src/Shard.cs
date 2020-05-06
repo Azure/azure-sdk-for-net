@@ -110,6 +110,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             _currentChunk = new Chunk(
                 _containerClient,
+                new LazyLoadingBlobStreamFactory(),
+                new AvroReaderFactory(),
                 _chunks.Dequeue(),
                 _blockOffset,
                 _eventIndex);
@@ -153,7 +155,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Remove currentChunk if it doesn't have another event.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
-                _currentChunk = new Chunk(_containerClient, _chunks.Dequeue());
+                _currentChunk = new Chunk(
+                    _containerClient,
+                    new LazyLoadingBlobStreamFactory(),
+                    new AvroReaderFactory(),
+                    _chunks.Dequeue());
                 _chunkIndex++;
             }
             return changeFeedEvent;

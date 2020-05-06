@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     public class BlobChangeFeedAsyncPagableTests : ChangeFeedTestBase
     {
         public BlobChangeFeedAsyncPagableTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -23,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         //TODO page size tests
 
         [Test]
-        [Ignore("")]
+        //[Ignore("")]
         public async Task Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

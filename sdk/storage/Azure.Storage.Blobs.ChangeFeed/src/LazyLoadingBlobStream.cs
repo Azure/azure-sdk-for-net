@@ -58,6 +58,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _initalized = false;
         }
 
+        /// <summary>
+        /// Constructor for mocking.
+        /// </summary>
+        public LazyLoadingBlobStream() { }
+
         /// <inheritdoc/>
         public override int Read(
             byte[] buffer,
