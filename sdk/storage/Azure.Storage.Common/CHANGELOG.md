@@ -1,7 +1,8 @@
 # Release History
 
-## 12.5.0-preview.1 (Unreleased)
-
+## 12.4.1 (2020-05)
+- Fixed bug where BlobBaseClient.DownloadAsync() could corrupt downloaded data if intermittent network failure occurs.
+- Fixed bug where PathClient.Rename() was not functioning correctly with SAS.
 
 ## 12.4.0 (2020-04)
 - This release contains bug fixes to improve quality.
