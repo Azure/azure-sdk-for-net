@@ -539,6 +539,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteConnectionsOperations ExpressRouteConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IHubRouteTablesOperations.
+        /// </summary>
+        public virtual IHubRouteTablesOperations HubRouteTables { get; private set; }
+
+        /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         public virtual IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; private set; }
@@ -876,6 +881,7 @@ namespace Microsoft.Azure.Management.Network
             VirtualHubRouteTableV2s = new VirtualHubRouteTableV2sOperations(this);
             ExpressRouteGateways = new ExpressRouteGatewaysOperations(this);
             ExpressRouteConnections = new ExpressRouteConnectionsOperations(this);
+            HubRouteTables = new HubRouteTablesOperations(this);
             WebApplicationFirewallPolicies = new WebApplicationFirewallPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
@@ -1018,7 +1024,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1248,7 +1254,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sessionIds");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1451,7 +1457,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1649,7 +1655,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1879,7 +1885,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2085,7 +2091,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bslRequest");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2268,7 +2274,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2473,7 +2479,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnClientParams");
             }
-            string apiVersion = "2020-03-01";
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

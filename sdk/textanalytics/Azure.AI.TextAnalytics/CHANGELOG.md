@@ -1,7 +1,9 @@
 # Release History
 
 ## 1.0.0-preview.5 (Unreleased)
-
+### Breaking changes
+- Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
+- `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
 
 ## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes

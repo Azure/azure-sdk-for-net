@@ -84,6 +84,7 @@ pr:
     - sdk/managementpartner/Microsoft.Azure.Management.ManagementPartner
     - sdk/maps/Microsoft.Azure.Management.Maps
     - sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering
+    - sdk/marketplace/Microsoft.Azure.Management.Marketplace
     - sdk/mediaservices/Microsoft.Azure.Management.Media
     - sdk/mgmtcommon/AppAuthentication
     - sdk/mgmtcommon/Auth

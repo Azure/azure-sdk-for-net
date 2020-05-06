@@ -355,10 +355,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
-                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
-                        a => receiveLink.EndDisposeMessage(a),
-                        this);
+
+                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
                 Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
