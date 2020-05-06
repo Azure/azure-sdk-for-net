@@ -611,6 +611,8 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                    throw new RequestFailedException(400, error.Error.Message, error.Error.Code, default);
                 collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
             }
 
