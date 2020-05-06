@@ -52,6 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         }
 
         [Test]
+        [PremiumOnly]
         public void CreateKey()
         {
             #region Snippet:CreateKey
@@ -81,6 +82,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateKeyAsync()
         {
             #region Snippet:CreateKeyAsync

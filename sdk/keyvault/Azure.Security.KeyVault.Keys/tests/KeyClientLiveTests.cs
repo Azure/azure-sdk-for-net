@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -69,6 +70,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -83,6 +85,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateEcKey()
         {
             string keyName = Recording.GenerateId();
@@ -96,6 +99,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateEcWithCurveKey([EnumValues]KeyCurveName curveName)
         {
             var ecCurveKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false)
@@ -112,6 +116,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -126,6 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateRsaKey()
         {
             var rsaKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: false);
@@ -137,6 +143,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task CreateRsaWithSizeKey()
         {
             var rsaSizeKey = new CreateRsaKeyOptions(name: Recording.GenerateId(), hardwareProtected: false)
@@ -166,6 +173,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -181,6 +189,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -211,6 +220,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateEcHsmKeyEnabled()
         {
             string keyName = Recording.GenerateId();
@@ -227,6 +237,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateRsaHsmKeyEnabled()
         {
             string keyName = Recording.GenerateId();
@@ -270,6 +281,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateEcHsmKeyOps()
         {
             string keyName = Recording.GenerateId();
@@ -297,6 +309,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateRsaHsmKeyOps()
         {
             string keyName = Recording.GenerateId();
@@ -376,6 +389,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateEcHsmKeyTags()
         {
             string keyName = Recording.GenerateId();
@@ -428,6 +442,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task UpdateRsaHsmKeyTags()
         {
             string keyName = Recording.GenerateId();
@@ -492,6 +507,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task GetEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -506,6 +522,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task GetRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -558,6 +575,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task DeleteEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -579,6 +597,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task DeleteRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -630,6 +649,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task GetDeletedEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -655,6 +675,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task GetDeletedRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -714,6 +735,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task RecoverDeletedEcHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -745,6 +767,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [PremiumOnly]
         public async Task RecoverDeletedRsaHsmKey()
         {
             string keyName = Recording.GenerateId();
