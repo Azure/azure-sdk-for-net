@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -13,6 +14,7 @@ namespace Azure.Messaging.EventHubs
     ///
     /// <seealso cref="System.Exception" />
     ///
+    [SuppressMessage("Design", "CA1064:Exceptions should be public", Justification = "This exception is not visible to user code")]
     internal class DeveloperCodeException : Exception
     {
         /// <summary>

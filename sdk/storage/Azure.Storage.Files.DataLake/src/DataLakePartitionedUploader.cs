@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Shared;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -96,12 +97,18 @@ namespace Azure.Storage.Files.DataLake
         public async Task<Response<PathInfo>> UploadAsync(
             Stream content,
             PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
             await _client.CreateAsync(
                 httpHeaders: httpHeaders,
+                metadata: metadata,
+                permissions: permissions,
+                umask: umask,
                 conditions: conditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -150,12 +157,18 @@ namespace Azure.Storage.Files.DataLake
         public Response<PathInfo> Upload(
             Stream content,
             PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
             _client.Create(
                 httpHeaders: httpHeaders,
+                metadata: metadata,
+                permissions: permissions,
+                umask: umask,
                 conditions: conditions,
                 cancellationToken: cancellationToken);
 

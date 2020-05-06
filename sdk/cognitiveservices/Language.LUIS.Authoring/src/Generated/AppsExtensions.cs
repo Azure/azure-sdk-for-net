@@ -492,5 +492,57 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 return _result.Body;
             }
 
+            /// <summary>
+            /// Imports an application to LUIS, the application's structure is included in
+            /// the request body.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='luisAppV2'>
+            /// A LUIS application structure.
+            /// </param>
+            /// <param name='appName'>
+            /// The application name to create. If not specified, the application name will
+            /// be read from the imported object. If the application name already exists,
+            /// an error is returned.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Guid> ImportV2AppAsync(this IApps operations, LuisAppV2 luisAppV2, string appName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportV2AppWithHttpMessagesAsync(luisAppV2, appName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Imports an application to LUIS, the application's structure is included in
+            /// the request body.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='luisAppLu'>
+            /// A LUIS application structure.
+            /// </param>
+            /// <param name='appName'>
+            /// The application name to create. If not specified, the application name will
+            /// be read from the imported object. If the application name already exists,
+            /// an error is returned.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Guid> ImportLuFormatAsync(this IApps operations, string luisAppLu, string appName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportLuFormatWithHttpMessagesAsync(luisAppLu, appName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -75,13 +75,13 @@ stages:
 
           - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
-              displayName: Publish package to Nuget.org
+              displayName: Publish package to Nuget.org and DevOps Feed
               condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
               environment: nuget
               dependsOn: TagRepository
 
               pool:
-                vmImage: ubuntu-16.04
+                vmImage: ubuntu-18.04
 
               strategy:
                 runOnce:
@@ -100,6 +100,13 @@ stages:
                           packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
                           nuGetFeedType: external
                           publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        condition: and(succeeded(), ne(variables['DevOpsFeedID'], ''))
+                        displayName: 'Publish to DevOps Feed'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          publishVstsFeed: $(DevOpsFeedID)
 
           - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
             - deployment: UploadSymbols
@@ -180,7 +187,7 @@ stages:
                     steps:
                       - checkout: self
                       - pwsh: |
-                          eng/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
+                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
                         displayName: Increment package version
                       - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                         parameters:
@@ -204,6 +211,13 @@ stages:
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
+      - task: NuGetCommand@2
+        condition: and(succeeded(), ne(variables['DevOpsFeedID'], ''))
+        displayName: 'Publish to DevOps Feed'
+        inputs:
+          command: push
+          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
+          publishVstsFeed: $(DevOpsFeedID)
       - task: MSBuild@1
         displayName: 'Publish to blobfeed'
         inputs:

@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Models
             string errorMessage = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            IReadOnlyList<ItemError> errors = default;
-            IReadOnlyList<ItemWarning> warnings = default;
+            IReadOnlyList<SearchIndexerError> errors = default;
+            IReadOnlyList<SearchIndexerWarning> warnings = default;
             int itemsProcessed = default;
             int itemsFailed = default;
             string initialTrackingState = default;
@@ -62,20 +62,34 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("errors"))
                 {
-                    List<ItemError> array = new List<ItemError>();
+                    List<SearchIndexerError> array = new List<SearchIndexerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemError.DeserializeItemError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerError.DeserializeSearchIndexerError(item));
+                        }
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("warnings"))
                 {
-                    List<ItemWarning> array = new List<ItemWarning>();
+                    List<SearchIndexerWarning> array = new List<SearchIndexerWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemWarning.DeserializeItemWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerWarning.DeserializeSearchIndexerWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="type">The data type of the field.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public SearchField(string name, DataType type)
+        public SearchField(string name, SearchFieldDataType type)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -45,14 +45,14 @@ namespace Azure.Search.Documents.Models
         /// Ge the data type of the field.
         /// </summary>
         [CodeGenMember("type")]
-        public DataType Type { get; }
+        public SearchFieldDataType Type { get; }
 
         // TODO: Remove "overrides" for boolean properties when https://github.com/Azure/autorest.csharp/issues/558 is fixed.
 
         /// <summary>
         /// Gets or sets a value indicating whether the field is full-text searchable. The default is null.
         /// This means it will undergo analysis such as word-breaking during indexing.
-        /// This property can be true only for <see cref="DataType.String"/> or "Collection(DataType.String)". It must be false for non-string simple fields, and null for complex fields.
+        /// This property can be true only for <see cref="SearchFieldDataType.String"/> or "Collection(DataType.String)". It must be false for non-string simple fields, and null for complex fields.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="DataType.String"/> or "Collection(DataType.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
+        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="SearchFieldDataType.String"/> or "Collection(DataType.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
         /// For example, if you set such a field <c>f</c> to "sunny day", <c>$filter=f eq 'sunny'</c> will find no matches, but <c>$filter=f eq 'sunny day'</c> will.
         /// </para>
         /// <para>
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the field can be referenced in a <c>$orderby</c> expression. The default is null.
-        /// A simple field can be sortable only if it is a single-valued type such as <see cref="DataType.String"/> or <see cref="DataType.Int32"/>.
+        /// A simple field can be sortable only if it is a single-valued type such as <see cref="SearchFieldDataType.String"/> or <see cref="SearchFieldDataType.Int32"/>.
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Gets or sets whether the field is the key field. The default is null.
-        /// A <see cref="SearchIndex"/> must have exactly one key field of type <see cref="DataType.String"/>.
+        /// A <see cref="SearchIndex"/> must have exactly one key field of type <see cref="SearchFieldDataType.String"/>.
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
@@ -154,7 +154,7 @@ namespace Azure.Search.Documents.Models
         public IList<string> SynonymMaps { get; internal set; }
 
         /// <summary>
-        /// Gets a list of nested fields if this field is of type <see cref="DataType.Complex"/> or "Collection(DataType.Complex)".
+        /// Gets a list of nested fields if this field is of type <see cref="SearchFieldDataType.Complex"/> or "Collection(DataType.Complex)".
         /// </summary>
         [CodeGenMember("fields")]
         public IList<SearchField> Fields { get; internal set; }

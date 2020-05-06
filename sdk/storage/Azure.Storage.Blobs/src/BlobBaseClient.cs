@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
-            if (!(range == default))
+            if (range != default || startOffset != 0)
             {
                 pageRange = new HttpRange(
                     range.Offset + startOffset,

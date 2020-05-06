@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -116,6 +116,38 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => new DataLakeFileSystemClient(uri, tokenCredential, new DataLakeClientOptions()),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public async Task GetFileClient()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync();
+            DataLakeFileClient newFileClient = InstrumentClient(test.FileSystem.GetFileClient(fileClient.Name));
+
+            // Act
+            Response<PathProperties> response = await newFileClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetDirectoryClient()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateAsync();
+            DataLakeDirectoryClient newDirectoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryClient.Name));
+
+            // Act
+            Response<PathProperties> response = await newDirectoryClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
         }
 
         [Test]

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Secrets.Samples
 {
@@ -21,7 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void GetSecretsSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:SecretsSample3SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -47,6 +48,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
             foreach (SecretProperties secret in secrets)
             {
+                /*@@*/ if (secret.Managed) continue;
                 // Getting a disabled secret will fail, so skip disabled secrets.
                 if (!secret.Enabled.GetValueOrDefault())
                 {

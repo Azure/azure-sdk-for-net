@@ -10,18 +10,13 @@ namespace Azure.Search.Documents.Models
     /// <summary> Base type for describing any cognitive service resource attached to a skillset. </summary>
     public partial class CognitiveServicesAccount
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
-        public CognitiveServicesAccount()
-        {
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
         /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
         internal CognitiveServicesAccount(string oDataType, string description)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
             Description = description;
         }
 

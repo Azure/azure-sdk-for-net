@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -59,6 +59,30 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
+        public async Task Ctor_ConnectionStringEscapeBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
+
+            BlockBlobClient initalBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            // Act
+            BlobBaseClient blob = new BlobBaseClient(TestConfigDefault.ConnectionString, test.Container.Name, blobName, GetOptions());
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
         [Test]
@@ -249,20 +273,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DownloadAsync_WithUnreliableConnection()
+        [TestCase(10 * Constants.KB, 1 * Constants.KB)]
+        [TestCase(256 * Constants.KB, 255 * Constants.KB)]
+        [TestCase(257 * Constants.KB, 256 * Constants.KB)]
+        [TestCase(1 * Constants.MB, 1 * Constants.KB)]
+        [LiveOnly] // Stream copy uses ArrayPool under the hood. Which brings undeterministic behavior for larger content.
+        public async Task DownloadAsync_WithUnreliableConnection(int dataSize, int faultPoint)
         {
             // Arrange
+            int timesFaulted = 0;
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigDefault.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     GetFaultyBlobConnectionOptions(
-                        raiseAt: 256 * Constants.KB,
-                        raise: new Exception("Unexpected"))));
+                        raiseAt: faultPoint,
+                        raise: new IOException("Manually injected testing fault"),
+                        () => {
+                            timesFaulted++;
+                        })));
 
             await using DisposingContainer test = await GetTestContainerAsync(service: service);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(dataSize);
 
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
@@ -278,6 +311,7 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]

@@ -210,7 +210,6 @@ namespace NetApp.Tests.Helpers
                 snapshot = new Snapshot
                 {
                     Location = location,
-                    FileSystemId = volume?.FileSystemId
                 };
             }
             else

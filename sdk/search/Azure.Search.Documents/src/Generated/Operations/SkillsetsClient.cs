@@ -14,10 +14,11 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The Skillsets service client. </summary>
     internal partial class SkillsetsClient
     {
-        private readonly ClientDiagnostics clientDiagnostics;
-        private readonly HttpPipeline pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         internal SkillsetsRestClient RestClient { get; }
         /// <summary> Initializes a new instance of SkillsetsClient for mocking. </summary>
         protected SkillsetsClient()
@@ -27,8 +28,8 @@ namespace Azure.Search.Documents
         internal SkillsetsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             RestClient = new SkillsetsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Skillset>> CreateOrUpdateAsync(string skillsetName, Skillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateAsync(string skillsetName, SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.CreateOrUpdateAsync(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Skillset> CreateOrUpdate(string skillsetName, Skillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerSkillset> CreateOrUpdate(string skillsetName, SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return RestClient.CreateOrUpdate(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
         }
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Skillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerSkillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(skillsetName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -90,7 +91,7 @@ namespace Azure.Search.Documents
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Skillset> Get(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerSkillset> Get(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Get(skillsetName, xMsClientRequestId, cancellationToken);
         }
@@ -117,7 +118,7 @@ namespace Azure.Search.Documents
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Skillset>> CreateAsync(Skillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateAsync(SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.CreateAsync(skillset, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -126,7 +127,7 @@ namespace Azure.Search.Documents
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Skillset> Create(Skillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerSkillset> Create(SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Create(skillset, xMsClientRequestId, cancellationToken);
         }

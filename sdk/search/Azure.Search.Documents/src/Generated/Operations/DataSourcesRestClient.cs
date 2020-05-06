@@ -20,8 +20,8 @@ namespace Azure.Search.Documents
     {
         private string endpoint;
         private string apiVersion;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of DataSourcesRestClient. </summary>
         public DataSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
@@ -37,13 +37,13 @@ namespace Azure.Search.Documents
 
             this.endpoint = endpoint;
             this.apiVersion = apiVersion;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -66,6 +66,7 @@ namespace Azure.Search.Documents
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
             request.Headers.Add("Prefer", "return=representation");
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
@@ -80,7 +81,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> CreateOrUpdateAsync(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchIndexerDataSource>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -91,24 +92,31 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                     case 201:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -125,7 +133,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> CreateOrUpdate(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSource> CreateOrUpdate(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -136,24 +144,31 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                     case 201:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -165,7 +180,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateDeleteRequest(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -187,6 +202,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
 
@@ -203,19 +219,19 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Delete");
             scope.Start();
             try
             {
                 using var message = CreateDeleteRequest(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 204:
                     case 404:
                         return message.Response;
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -238,19 +254,19 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Delete");
             scope.Start();
             try
             {
                 using var message = CreateDeleteRequest(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 204:
                     case 404:
                         return message.Response;
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -262,7 +278,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateGetRequest(string dataSourceName, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -276,6 +292,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
 
@@ -283,30 +300,37 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchIndexerDataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(dataSourceName, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -320,30 +344,37 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
                 throw new ArgumentNullException(nameof(dataSourceName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(dataSourceName, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -355,7 +386,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateListRequest(string select, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -371,6 +402,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }
 
@@ -380,23 +412,30 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListDataSourcesResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.List");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.List");
             scope.Start();
             try
             {
                 using var message = CreateListRequest(select, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             ListDataSourcesResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -412,23 +451,30 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListDataSourcesResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.List");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.List");
             scope.Start();
             try
             {
                 using var message = CreateListRequest(select, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             ListDataSourcesResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -438,9 +484,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(DataSource dataSource, Guid? xMsClientRequestId)
+        internal HttpMessage CreateCreateRequest(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -452,6 +498,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(dataSource);
@@ -463,30 +510,37 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> CreateAsync(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchIndexerDataSource>> CreateAsync(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Create");
             scope.Start();
             try
             {
                 using var message = CreateCreateRequest(dataSource, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 201:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -500,30 +554,37 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> Create(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerDataSource> Create(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
                 throw new ArgumentNullException(nameof(dataSource));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DataSourcesClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Create");
             scope.Start();
             try
             {
                 using var message = CreateCreateRequest(dataSource, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 201:
                         {
-                            DataSource value = default;
+                            SearchIndexerDataSource value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = DataSource.DeserializeDataSource(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexerDataSource.DeserializeSearchIndexerDataSource(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

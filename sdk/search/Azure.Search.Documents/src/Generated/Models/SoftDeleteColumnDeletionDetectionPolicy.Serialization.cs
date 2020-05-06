@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
         {
             string softDeleteColumnName = default;
             string softDeleteMarkerValue = default;
-            string odatatype = default;
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteColumnName"))
@@ -57,11 +57,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new SoftDeleteColumnDeletionDetectionPolicy(odatatype, softDeleteColumnName, softDeleteMarkerValue);
+            return new SoftDeleteColumnDeletionDetectionPolicy(odataType, softDeleteColumnName, softDeleteMarkerValue);
         }
     }
 }

@@ -10,17 +10,12 @@ namespace Azure.Search.Documents.Models
     /// <summary> Base type for data change detection policies. </summary>
     public partial class DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
-        public DataChangeDetectionPolicy()
-        {
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         internal DataChangeDetectionPolicy(string oDataType)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
         }
 
         /// <summary> Identifies the concrete type of the data change detection policy. </summary>

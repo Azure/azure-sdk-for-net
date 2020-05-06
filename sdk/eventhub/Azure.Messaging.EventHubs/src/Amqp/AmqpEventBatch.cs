@@ -28,8 +28,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The maximum number of bytes that a message may be to be considered small.</summary>
         private const byte MaximumBytesSmallMessage = 255;
 
+        /// <summary>The size of the batch, in bytes, to reserve for the AMQP message overhead.</summary>
+        private readonly long ReservedSize;
+
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
-        private bool _disposed = false;
+        private volatile bool _disposed = false;
 
         /// <summary>The size of the batch, in bytes, as it will be sent via the AMQP transport.</summary>
         private long _sizeBytes = 0;
@@ -93,7 +96,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             // Initialize the size by reserving space for the batch envelope.
 
             using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<EventData>(), options.PartitionKey);
-            _sizeBytes = envelope.SerializedMessageSize;
+            ReservedSize = envelope.SerializedMessageSize;
+            _sizeBytes = ReservedSize;
+
         }
 
         /// <summary>
@@ -140,6 +145,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public override void Clear()
+        {
+            BatchEvents.Clear();
+            _sizeBytes = ReservedSize;
+        }
+
+        /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific
         ///   representations of an event.
         /// </summary>
@@ -165,9 +181,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override void Dispose()
         {
             _disposed = true;
-
-            BatchEvents.Clear();
-            _sizeBytes = 0;
+            Clear();
         }
     }
 }

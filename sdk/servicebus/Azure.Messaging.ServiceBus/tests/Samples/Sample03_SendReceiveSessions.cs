@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a session message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"))
                 {
                     SessionId = "mySessionId"
                 };
@@ -45,15 +45,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // we can also set arbitrary session state using this receiver
                 // the state is specific to the session, and not any particular message
-                await receiver.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+                await receiver.SetSessionStateAsync(Encoding.UTF8.GetBytes("some state"));
 
                 // the state can be retrieved for the session as well
                 byte[] state = await receiver.GetSessionStateAsync();
 
                 #endregion
-                Assert.AreEqual(Encoding.Default.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
-                Assert.AreEqual(Encoding.Default.GetBytes("some state"), state);
+                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     });
 
                 // send the message batch
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // create a receiver specifying a particular session
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Console.WriteLine(receivedMessage.SessionId);
 
                 #endregion
-                Assert.AreEqual(Encoding.Default.GetBytes("Second"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }

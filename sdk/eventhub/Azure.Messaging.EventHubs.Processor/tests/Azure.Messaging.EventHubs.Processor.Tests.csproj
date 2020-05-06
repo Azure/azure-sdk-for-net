@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Processor.Samples.csproj" />
   </ItemGroup>
@@ -32,6 +33,4 @@
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
 
-  <!-- Import the Azure.Core test framework (shared source) -->
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

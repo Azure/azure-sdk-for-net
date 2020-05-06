@@ -7,13 +7,18 @@
 # Assumes steps in deploy-test-resources.yml was run previously. Requires
 # environment variable: AZURE_RESOURCEGROUP_NAME and Az PowerShell module
 
+parameters:
+  ServiceDirectory: ''
+
 steps:
   - pwsh: >
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id)'
+      -SubscriptionId '$(azure-subscription-id)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
+      -ServiceDirectory '${{ parameters.ServiceDirectory }}'
       -Environment 'AzureCloud'
       -Force
       -Verbose
@@ -25,8 +30,10 @@ steps:
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id-gov)'
+      -SubscriptionId '$(azure-subscription-id-gov)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-gov)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-gov)'
+      -ServiceDirectory '${{ parameters.ServiceDirectory }}'
       -Environment 'AzureUSGovernment'
       -Force
       -Verbose
@@ -38,8 +45,10 @@ steps:
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id-cn)'
+      -SubscriptionId '$(azure-subscription-id-cn)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-cn)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-cn)'
+      -ServiceDirectory '${{ parameters.ServiceDirectory }}'
       -Environment 'AzureChinaCloud'
       -Force
       -Verbose

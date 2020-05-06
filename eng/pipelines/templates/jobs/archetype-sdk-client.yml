@@ -99,7 +99,7 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
-          filePath: "eng/CodeChecks.ps1"
+          filePath: "eng/scripts/CodeChecks.ps1"
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
@@ -112,7 +112,7 @@ jobs:
       matrix:
         Linux:
           OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSName: "Windows"
@@ -148,7 +148,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx"
+          dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:

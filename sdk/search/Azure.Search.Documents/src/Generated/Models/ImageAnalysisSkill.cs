@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
-    public partial class ImageAnalysisSkill : Skill
+    public partial class ImageAnalysisSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of ImageAnalysisSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

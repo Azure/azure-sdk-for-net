@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
             if (Group != null)
             {
@@ -40,9 +40,9 @@ namespace Azure.Search.Documents.Models
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
             string pattern = default;
-            RegexFlags? flags = default;
+            string flags = default;
             int? group = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("group"))
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(odatatype, name, pattern, flags, group);
+            return new PatternTokenizer(odataType, name, pattern, flags, group);
         }
     }
 }

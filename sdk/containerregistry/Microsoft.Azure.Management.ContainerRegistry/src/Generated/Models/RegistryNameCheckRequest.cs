@@ -74,6 +74,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
+            if (Name != null)
+            {
+                if (Name.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 50);
+                }
+                if (Name.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[a-zA-Z0-9]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[a-zA-Z0-9]*$");
+                }
+            }
         }
     }
 }

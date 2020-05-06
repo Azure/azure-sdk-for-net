@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,8 +18,8 @@ namespace Azure.AI.FormRecognizer.Models
         {
             FieldValueType type = default;
             string valueString = default;
-            string valueDate = default;
-            string valueTime = default;
+            DateTimeOffset? valueDate = default;
+            TimeSpan? valueTime = default;
             string valuePhoneNumber = default;
             float? valueNumber = default;
             int? valueInteger = default;
@@ -51,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueDate = property.Value.GetString();
+                    valueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("valueTime"))
@@ -60,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueTime = property.Value.GetString();
+                    valueTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("valuePhoneNumber"))
@@ -99,7 +100,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<FieldValue_internal> array = new List<FieldValue_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeFieldValue_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeFieldValue_internal(item));
+                        }
                     }
                     valueArray = array;
                     continue;
@@ -113,7 +121,14 @@ namespace Azure.AI.FormRecognizer.Models
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        }
                     }
                     valueObject = dictionary;
                     continue;
@@ -159,7 +174,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     elements = array;
                     continue;

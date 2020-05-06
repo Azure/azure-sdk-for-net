@@ -80,5 +80,18 @@ namespace Microsoft.Azure.Management.Batch.Models
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PrivateLinkServiceConnectionState != null)
+            {
+                PrivateLinkServiceConnectionState.Validate();
+            }
+        }
     }
 }

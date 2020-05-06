@@ -114,19 +114,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates a producer strongly aligned with the active protocol and transport,
         ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
         /// </summary>
-        /// <param name="entityPath"></param>
         ///
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
-        ///
-        public override TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy)
+        public override TransportSender CreateSender(
+            string entityPath,
+            string viaEntityPath,
+            ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
                 entityPath,
+                viaEntityPath,
                 ConnectionScope,
                 retryPolicy
             );
@@ -168,6 +172,29 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 identifier,
                 sessionId,
                 isSessionReceiver
+            );
+        }
+
+        /// <summary>
+        ///   Creates a rule manager strongly aligned with the active protocol and transport,
+        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
+        /// </summary>
+        ///
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        ///
+        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
+        public override TransportRuleManager CreateRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy)
+        {
+            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+
+            return new AmqpRuleManager
+            (
+                subscriptionPath,
+                ConnectionScope,
+                retryPolicy
             );
         }
 

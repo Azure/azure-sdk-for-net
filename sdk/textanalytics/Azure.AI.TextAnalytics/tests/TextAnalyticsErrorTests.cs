@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
 using System.Text.Json;
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Tests
                       ""id"": ""2"",
                       ""error"": {
                         ""code"": ""InvalidArgument"",
-                        ""innerError"": {
+                        ""innererror"": {
                             ""code"": ""InvalidDocument"",
                             ""message"": ""Document text is empty.""
                             },

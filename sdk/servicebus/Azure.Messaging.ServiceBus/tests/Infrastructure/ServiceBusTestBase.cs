@@ -79,28 +79,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             return text;
         }
 
-        protected TokenCredential GetTokenCredential() =>
-        new ClientSecretCredential(
-            TestEnvironment.ServiceBusTenant,
-            TestEnvironment.ServiceBusClient,
-            TestEnvironment.ServiceBusSecret);
-
-        protected ServiceBusClient GetNoRetryClient()
-        {
-            var options =
-                new ServiceBusClientOptions
-                {
-                    RetryOptions = new ServiceBusRetryOptions
-                    {
-                        TryTimeout = TimeSpan.FromSeconds(5),
-                        MaxRetries = 0
-                    }
-                };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
-        }
-
         internal ServiceBusConnection GetMockedConnection()
         {
             var mockConnection = new Mock<ServiceBusConnection>();
@@ -109,21 +87,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Setup(connection => connection.RetryOptions)
                 .Returns(new ServiceBusRetryOptions());
             return mockConnection.Object;
-        }
-
-        protected ServiceBusClient GetClient(int tryTimeout = 10)
-        {
-            var retryOptions = new ServiceBusRetryOptions();
-            if (tryTimeout != default)
-            {
-                retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
-            }
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                new ServiceBusClientOptions
-                {
-                    RetryOptions = retryOptions
-                });
         }
     }
 }
