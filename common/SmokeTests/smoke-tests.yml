@@ -1,5 +1,5 @@
 variables:
-  - template: ./templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
 
 jobs:
   - job: SmokeTest
