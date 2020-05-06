@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 
