@@ -31,7 +31,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Mock<ShardFactory> shardFactory = new Mock<ShardFactory>(MockBehavior.Strict);
 
             List<Mock<Shard>> shards = new List<Mock<Shard>>();
-            for (int i = 0; i < 5; i++)
+            int shardCount = 3;
+            for (int i = 0; i < shardCount; i++)
             {
                 shards.Add(new Mock<Shard>(MockBehavior.Strict));
             }
@@ -40,13 +41,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 new ShardCursor(1, 2, 3),
                 new ShardCursor(4, 5, 6),
-                new ShardCursor(7, 8, 9),
-                new ShardCursor(10, 11, 12),
-                new ShardCursor(13, 14, 15)
+                new ShardCursor(7, 8, 9)
             };
 
             DateTimeOffset dateTime = new DateTimeOffset(2020, 3, 25, 2, 0, 0, TimeSpan.Zero);
-            int shardIndex = 4;
+            int shardIndex = 1;
 
             SegmentCursor expectedCursor = new SegmentCursor(
                 dateTime,
@@ -75,11 +74,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<ShardCursor>()))
                 .ReturnsAsync(shards[0].Object)
                 .ReturnsAsync(shards[1].Object)
-                .ReturnsAsync(shards[2].Object)
-                .ReturnsAsync(shards[3].Object)
-                .ReturnsAsync(shards[4].Object);
+                .ReturnsAsync(shards[2].Object);
 
-            for (int i = 0; i < shards.Count; i++)
+            for (int i = 0; i < shardCount; i++)
             {
                 shards[i].Setup(r => r.GetCursor()).Returns(shardCursors[i]);
             }
@@ -97,7 +94,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Assert
             Assert.AreEqual(expectedCursor.SegmentTime, cursor.SegmentTime);
             Assert.AreEqual(expectedCursor.ShardCursors.Count, cursor.ShardCursors.Count);
-            for (int i = 0; i < expectedCursor.ShardCursors.Count; i++)
+            for (int i = 0; i < shardCount; i++)
             {
                 Assert.AreEqual(expectedCursor.ShardCursors[i].BlockOffset, cursor.ShardCursors[i].BlockOffset);
                 Assert.AreEqual(expectedCursor.ShardCursors[i].ChunkIndex, cursor.ShardCursors[i].ChunkIndex);
@@ -132,95 +129,139 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We are round-robining the Shards, so we will return the events for
         /// the shards indexes: 0 1 2 0 1.
         /// </summary>
-        //[Test]
-        //public async Task GetPage()
-        //{
-        //    // Arrange
-        //    int eventCount = 5;
-        //    int shardCount = 3;
+        [Test]
+        public async Task GetPage()
+        {
+            // Arrange
+            string manifestPath = "idx/segments/2020/03/25/0200/meta.json";
+            int shardCount = 3;
+            int eventCount = 5;
 
-        //    List<Guid> eventIds = new List<Guid>();
-        //    for (int i = 0; i < eventCount; i++)
-        //    {
-        //        eventIds.Add(Guid.NewGuid());
-        //    }
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<ShardFactory> shardFactory = new Mock<ShardFactory>(MockBehavior.Strict);
 
-        //    List<Mock<Shard>> mockShards = new List<Mock<Shard>>();
+            List<Mock<Shard>> shards = new List<Mock<Shard>>();
 
-        //    for (int i = 0; i <shardCount; i++)
-        //    {
-        //        mockShards.Add(new Mock<Shard>(MockBehavior.Strict));
-        //    }
+            for (int i = 0; i < shardCount; i++)
+            {
+                shards.Add(new Mock<Shard>(MockBehavior.Strict));
+            }
 
-        //    // Set up Shards
-        //    mockShards[0].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
-        //        .Returns(Task.FromResult(new BlobChangeFeedEvent
-        //        {
-        //            Id = eventIds[0]
-        //        }))
-        //        .Returns(Task.FromResult(new BlobChangeFeedEvent
-        //        {
-        //            Id = eventIds[3]
-        //        }));
+            List<Guid> eventIds = new List<Guid>();
+            for (int i = 0; i < eventCount; i++)
+            {
+                eventIds.Add(Guid.NewGuid());
+            }
 
-        //    mockShards[0].SetupSequence(r => r.HasNext())
-        //        .Returns(true)
-        //        .Returns(false);
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
 
-        //    mockShards[1].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
-        //        .Returns(Task.FromResult(new BlobChangeFeedEvent
-        //        {
-        //            Id = eventIds[1]
-        //        }))
-        //        .Returns(Task.FromResult(new BlobChangeFeedEvent
-        //        {
-        //            Id = eventIds[4]
-        //        }));
+            using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
+            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
+            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new ResponseImplementation());
 
-        //    mockShards[1].SetupSequence(r => r.HasNext())
-        //        .Returns(true)
-        //        .Returns(false);
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+            }
 
-        //    mockShards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
-        //        .Returns(Task.FromResult(new BlobChangeFeedEvent
-        //        {
-        //            Id = eventIds[2]
-        //        }));
+            shardFactory.SetupSequence(r => r.BuildShard(
+                It.IsAny<bool>(),
+                It.IsAny<BlobContainerClient>(),
+                It.IsAny<string>(),
+                It.IsAny<ShardCursor>()))
+                .ReturnsAsync(shards[0].Object)
+                .ReturnsAsync(shards[1].Object)
+                .ReturnsAsync(shards[2].Object);
 
-        //    mockShards[2].Setup(r => r.HasNext())
-        //        .Returns(false);
+            // Set up Shards
+            shards[0].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent
+                {
+                    Id = eventIds[0]
+                }))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent
+                {
+                    Id = eventIds[3]
+                }));
 
-        //    List<Shard> shards = new List<Shard>();
-        //    for (int i = 0; i < shardCount; i++)
-        //    {
-        //        shards.Add(mockShards[i].Object);
-        //    }
+            shards[0].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(false);
 
-        //    Segment segment = new Segment(
-        //        isInitalized: true,
-        //        shards: shards);
+            shards[1].SetupSequence(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent
+                {
+                    Id = eventIds[1]
+                }))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent
+                {
+                    Id = eventIds[4]
+                }));
 
-        //    // Act
-        //    List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 25);
+            shards[1].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(false);
 
-        //    // Assert
-        //    Assert.AreEqual(eventCount, events.Count);
-        //    for (int i = 0; i < eventCount; i++)
-        //    {
-        //        Assert.AreEqual(eventIds[i], events[i].Id);
-        //    }
+            shards[2].Setup(r => r.Next(It.IsAny<bool>(), default))
+                .Returns(Task.FromResult(new BlobChangeFeedEvent
+                {
+                    Id = eventIds[2]
+                }));
 
-        //    mockShards[0].Verify(r => r.Next(IsAsync, default));
-        //    mockShards[0].Verify(r => r.HasNext());
-        //    mockShards[1].Verify(r => r.Next(IsAsync, default));
-        //    mockShards[1].Verify(r => r.HasNext());
-        //    mockShards[2].Verify(r => r.Next(IsAsync, default));
-        //    mockShards[2].Verify(r => r.HasNext());
-        //    mockShards[0].Verify(r => r.Next(IsAsync, default));
-        //    mockShards[0].Verify(r => r.HasNext());
-        //    mockShards[1].Verify(r => r.Next(IsAsync, default));
-        //    mockShards[1].Verify(r => r.HasNext());
-        //}
+            shards[2].Setup(r => r.HasNext())
+                .Returns(false);
+
+            SegmentFactory segmentFactory = new SegmentFactory(shardFactory.Object);
+            Segment segment = await segmentFactory.BuildSegment(
+                IsAsync,
+                containerClient.Object,
+                manifestPath);
+
+            // Act
+            List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 25);
+
+            // Assert
+            Assert.AreEqual(eventCount, events.Count);
+            for (int i = 0; i < eventCount; i++)
+            {
+                Assert.AreEqual(eventIds[i], events[i].Id);
+            }
+
+            containerClient.Verify(r => r.GetBlobClient(manifestPath));
+            if (IsAsync)
+            {
+                blobClient.Verify(r => r.DownloadAsync());
+            }
+            else
+            {
+                blobClient.Verify(r => r.Download());
+            }
+
+            for (int i = 0; i < shards.Count; i++)
+            {
+                shardFactory.Verify(r => r.BuildShard(
+                    IsAsync,
+                    containerClient.Object,
+                    $"log/0{i}/2020/03/25/0200/",
+                    default));
+            }
+
+            shards[0].Verify(r => r.Next(IsAsync, default));
+            shards[0].Verify(r => r.HasNext());
+            shards[1].Verify(r => r.Next(IsAsync, default));
+            shards[1].Verify(r => r.HasNext());
+            shards[2].Verify(r => r.Next(IsAsync, default));
+            shards[2].Verify(r => r.HasNext());
+            shards[0].Verify(r => r.Next(IsAsync, default));
+            shards[0].Verify(r => r.HasNext());
+            shards[1].Verify(r => r.Next(IsAsync, default));
+            shards[1].Verify(r => r.HasNext());
+        }
 
         private class ResponseImplementation : Response
         {
