@@ -53,7 +53,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the time to wait for receiving a message.</summary>
+        /// <summary>Gets or sets the time to wait for receiving a message. This is the timeout the session is going to wait for the next available message before closing. This value has an impact on the message throughput.</summary>
         /// <value>The time to wait for receiving the message.</value>
         public TimeSpan MessageWaitTimeout
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the maximum number of existing sessions that the User wants to handle concurrently.</summary>
+        /// <summary>Gets or sets the maximum number of existing sessions that the User wants to handle concurrently. Setting this value to be greater than the max number of active sessions in the service will not increase message throughput.</summary>
         /// <value>The maximum number of sessions that the User wants to handle concurrently.</value>
         public int MaxConcurrentSessions
         {
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets whether the autocomplete option of the session handler is enabled.</summary>
+        /// <summary>Gets or sets whether the autocomplete option for messages in the session handler is enabled.</summary>
         /// <value>true if the autocomplete option of the session handler is enabled; otherwise, false.</value>
         public bool AutoComplete { get; set; }
 
