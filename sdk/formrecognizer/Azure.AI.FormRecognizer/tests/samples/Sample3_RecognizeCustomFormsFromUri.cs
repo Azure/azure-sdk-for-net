@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
             //@@ string modelId = "<modelId>";
 
-            Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+            Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
             foreach (RecognizedForm form in forms.Value)
             {
                 Console.WriteLine($"Form of type: {form.FormType}");

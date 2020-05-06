@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string receiptUri = FormRecognizerTestEnvironment.JpgReceiptUri;
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-            Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+            Response<RecognizedReceiptCollection> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
             foreach (var receipt in receipts.Value)
             {
                 USReceipt usReceipt = receipt.AsUSReceipt();

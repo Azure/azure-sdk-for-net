@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            Operation<IReadOnlyList<FormPage>> operation;
+            Operation<FormPageCollection> operation;
 
             if (useStream)
             {
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            Operation<IReadOnlyList<RecognizedReceipt>> operation;
+            Operation<RecognizedReceiptCollection> operation;
 
             if (useStream)
             {

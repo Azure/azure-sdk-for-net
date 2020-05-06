@@ -245,9 +245,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="sourceModelId"></param>
         /// <param name="targetEndpoint"></param>
         /// <param name="targetCredential"></param>
+        /// <param name="targetResourceId"></param>
+        /// <param name="targetResourceRegion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual CopyModelOperation StartCopyModel(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        public virtual CopyModelOperation StartCopyModel(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, string targetResourceId, string targetResourceRegion, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -257,9 +259,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="sourceModelId"></param>
         /// <param name="targetEndpoint"></param>
         /// <param name="targetCredential"></param>
+        /// <param name="targetResourceId"></param>
+        /// <param name="targetResourceRegion"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, string targetResourceId, string targetResourceRegion, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
