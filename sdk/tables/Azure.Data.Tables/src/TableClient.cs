@@ -46,6 +46,18 @@ namespace Azure.Data.Tables
         {
             return new TableSasBuilder(_table, permissions, expiresOn) { Version = _tableOperations.version };
         }
+
+        /// <summary>
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.
+        /// </summary>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
+        public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
+        {
+            return new TableSasBuilder(_table, rawPermissions, expiresOn) { Version = _tableOperations.version };
+        }
+
         /// <summary>
         /// Creates the table in the storage account.
         /// </summary>
