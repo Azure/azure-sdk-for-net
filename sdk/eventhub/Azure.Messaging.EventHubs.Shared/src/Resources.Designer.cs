@@ -692,16 +692,5 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("AggregateEventProcessingExceptionMessage", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The test `{0}` has been aborted because it exceeded the maximum execution time limit of {1}..
-        /// </summary>
-        internal static string TestAbortTimeoutMask
-        {
-            get
-            {
-                return ResourceManager.GetString("TestAbortTimeoutMask", resourceCulture);
-            }
-        }
     }
 }
