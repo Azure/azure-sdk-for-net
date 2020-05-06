@@ -10,9 +10,9 @@ namespace Azure.Search.Documents.Models
     /// <summary> A string indicating which domain-specific details to return. </summary>
     public enum ImageDetail
     {
-        /// <summary> celebrities. </summary>
+        /// <summary> Details recognized as celebrities. </summary>
         Celebrities,
-        /// <summary> landmarks. </summary>
+        /// <summary> Details recognized as landmarks. </summary>
         Landmarks
     }
 }

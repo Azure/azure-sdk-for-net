@@ -5,7 +5,7 @@ using Azure.Core;
 using System;
 using System.Reflection;
 using NUnit.Framework;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using System.Threading.Tasks;
 

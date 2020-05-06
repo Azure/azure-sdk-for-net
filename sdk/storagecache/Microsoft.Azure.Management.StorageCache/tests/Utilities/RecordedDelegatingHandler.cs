@@ -39,8 +39,14 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
             this.response = response;
         }
 
+        /// <summary>
+        /// Gets or sets HTTP status code.
+        /// </summary>
         public HttpStatusCode StatusCodeToReturn { get; set; }
 
+        /// <summary>
+        /// Gets or sets subsequent HTTP status code.
+        /// </summary>
         public HttpStatusCode SubsequentStatusCodeToReturn { get; set; }
 
         /// <summary>
@@ -68,6 +74,9 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
         /// </summary>
         public Uri Uri { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to IsPassThrough.
+        /// </summary>
         public bool IsPassThrough { get; set; }
 
         /// <inheritdoc/>

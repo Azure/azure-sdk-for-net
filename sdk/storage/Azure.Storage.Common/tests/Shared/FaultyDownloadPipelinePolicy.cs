@@ -16,23 +16,32 @@ namespace Azure.Storage.Test.Shared
     {
         private readonly int _raiseExceptionAt;
         private readonly Exception _exceptionToRaise;
+        private readonly Action _onFault;
+        private bool _injectFault = true;
 
-        public FaultyDownloadPipelinePolicy(int raiseExceptionAt, Exception exceptionToRaise)
+        public FaultyDownloadPipelinePolicy(int raiseExceptionAt, Exception exceptionToRaise, Action onFault)
         {
             _raiseExceptionAt = raiseExceptionAt;
             _exceptionToRaise = exceptionToRaise;
+            _onFault = onFault;
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            await InjectFaultAsync(message, async: true).ConfigureAwait(false);
+            if (_injectFault)
+            {
+                await InjectFaultAsync(message, async: true).ConfigureAwait(false);
+            }
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-            InjectFaultAsync(message, async: false).EnsureCompleted();
+            if (_injectFault)
+            {
+                InjectFaultAsync(message, async: false).EnsureCompleted();
+            }
         }
 
         private async Task InjectFaultAsync(HttpMessage message, bool async)
@@ -61,7 +70,12 @@ namespace Azure.Storage.Test.Shared
                     intermediate,
                     _raiseExceptionAt,
                     1,
-                    _exceptionToRaise);
+                    _exceptionToRaise,
+                    () =>
+                    {
+                        _onFault?.Invoke();
+                        _injectFault = false;
+                    });
             }
         }
     }

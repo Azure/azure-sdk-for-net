@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Primitives;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml.Linq;
-    using Azure.Messaging.ServiceBus.Management;
-    using Azure.Messaging.ServiceBus.Primitives;
-
     internal static class RuleDescriptionExtensions
     {
         public static void ValidateDescriptionName(this RuleDescription description)

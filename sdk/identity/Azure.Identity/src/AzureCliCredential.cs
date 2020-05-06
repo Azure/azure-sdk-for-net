@@ -55,7 +55,7 @@ namespace Azure.Identity
         {
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
-            _processService = processService;
+            _processService = processService ?? ProcessService.Default;
         }
 
         /// <summary>

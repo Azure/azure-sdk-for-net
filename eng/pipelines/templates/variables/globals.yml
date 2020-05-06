@@ -9,3 +9,9 @@ variables:
     BuildConfiguration: 'Debug'
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
+  # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+  ${{ if eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net') }}:
+    DevOpsFeedID: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
+  # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
+  ${{ if eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr') }}:
+    DevOpsFeedID: '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'

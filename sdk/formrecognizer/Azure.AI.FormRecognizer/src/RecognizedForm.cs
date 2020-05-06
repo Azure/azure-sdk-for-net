@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a form that has been recognized by a trained model.
     /// </summary>
     public class RecognizedForm
     {
@@ -32,19 +33,27 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// The type of form the model identified the submitted form to be.
         /// </summary>
         // Convert clusterId to a string (ex. "FormType1").
         public string FormType { get; }
 
         /// <summary>
+        /// The range of pages this form spans.
         /// </summary>
         public FormPageRange PageRange { get; }
 
         /// <summary>
+        /// A dictionary of the fields recognized from the input document. The key is
+        /// the <see cref="FormField.Name"/> of the field. For models trained with labels,
+        /// this is the training-time label of the field. For models trained with forms
+        /// only, a unique name is generated for each field.
         /// </summary>
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
+        /// A list of pages describing the recognized form content elements present in the input
+        /// document.
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
 

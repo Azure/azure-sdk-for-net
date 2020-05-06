@@ -23,6 +23,9 @@ namespace SnippetGenerator
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
             RegexOptions.Compiled | RegexOptions.Singleline);
         private const string _codeOnlyPattern = "/*@@*/";
+        private static readonly Regex _regionRegex = new Regex(
+            @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
+            RegexOptions.Compiled | RegexOptions.Singleline);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -122,7 +125,7 @@ namespace SnippetGenerator
                 var line = lines[index];
                 line = string.IsNullOrWhiteSpace(line) ? string.Empty : line.Substring(minIndent);
                 line = RemoveMarkdownOnlyPrefix(line);
-                if (!IsCodeOnlyLine(line))
+                if (!IsCodeOnlyLine(line) && !IsRegionLine(line))
                 {
                     stringBuilder.AppendLine(line);
                 }
@@ -171,6 +174,15 @@ namespace SnippetGenerator
         /// </returns>
         private static bool IsCodeOnlyLine(string line) =>
             line.IndexOf(_codeOnlyPattern) >= 0;
+
+        /// <summary>
+        /// Detects whether the line being processed is actually the region header or footer.
+        /// These lines should be stripped out in order to support nested regions.
+        /// </summary>
+        /// <param name="line">The line of text.</param>
+        /// <returns>Whether this is a region line.</returns>
+        private static bool IsRegionLine(string line) =>
+            _regionRegex.IsMatch(line);
 
         private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
         {

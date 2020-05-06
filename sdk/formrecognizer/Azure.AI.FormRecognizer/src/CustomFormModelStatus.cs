@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-
     /// <summary>
+    /// Describes the status of a custom model.
     /// </summary>
     [CodeGenModel("ModelStatus")]
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
@@ -14,14 +14,17 @@ namespace Azure.AI.FormRecognizer.Training
 #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
         /// <summary>
+        /// The model cannot be used for form recognition.
         /// </summary>
         Invalid,
 
         /// <summary>
+        /// The model is ready to be used for form recognition.
         /// </summary>
         Ready,
 
         /// <summary>
+        /// The model is being trained. Its status will be updated once it finishes.
         /// </summary>
         [CodeGenMember("creating")]
         Training

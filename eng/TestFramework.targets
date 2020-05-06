@@ -1,0 +1,22 @@
+<Project>
+
+  <!-- Support for test recordings -->
+  <Target Name="UpdateSessionRecords" Condition="'$(IsTestProject)' == 'true'">
+    <PropertyGroup>
+      <SessionRecordsDirectory>SessionRecords</SessionRecordsDirectory>
+    </PropertyGroup>
+    <ItemGroup>
+      <_CopyItems Include="$(OutputPath)\netcoreapp2.1\SessionRecords\**\*.*" />
+    </ItemGroup>
+
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\$(SessionRecordsDirectory)" />
+    <Copy
+      SourceFiles="@(_CopyItems)"
+      DestinationFolder="$(MSBuildProjectDirectory)\$(SessionRecordsDirectory)\%(RecursiveDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true"
+      Retries="3"
+      RetryDelayMilliseconds="300"/>
+  </Target>
+
+</Project>

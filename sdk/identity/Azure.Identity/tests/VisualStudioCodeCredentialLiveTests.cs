@@ -10,13 +10,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class VisualStudioCodeCredentialLiveTests : RecordedTestBase
+    public class VisualStudioCodeCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
@@ -201,8 +201,8 @@ namespace Azure.Identity.Tests
             }
 
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
-            var username = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_USERNAME");
-            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD");
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.Password;
 
             var client = PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(tenantId)
@@ -216,7 +216,7 @@ namespace Azure.Identity.Tests
             return retriever.RefreshToken;
         }
 
-        private string GetTenantId() => Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_TENANTID");
+        private string GetTenantId() => TestEnvironment.TestTenantId;
 
         private sealed class RefreshTokenRetriever
         {

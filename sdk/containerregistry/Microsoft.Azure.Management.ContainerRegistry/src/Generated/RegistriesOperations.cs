@@ -115,6 +115,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
+            if (name != null)
+            {
+                if (name.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 50);
+                }
+                if (name.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "name", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]*$");
+                }
+            }
             string apiVersion = "2019-12-01-preview";
             RegistryNameCheckRequest registryNameCheckRequest = new RegistryNameCheckRequest();
             if (name != null)

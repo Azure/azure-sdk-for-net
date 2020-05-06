@@ -172,7 +172,10 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -212,7 +215,9 @@ namespace Azure.Messaging.EventHubs
             EventHubName = eventHubName;
             Options = connectionOptions;
 
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -427,7 +432,9 @@ namespace Azure.Messaging.EventHubs
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
 
                 default:
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly.  "TransportType" is a reasonable name.  It's the property on the options argument which is invalid.
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
         }
 
@@ -455,7 +462,7 @@ namespace Azure.Messaging.EventHubs
                 UserName = string.Empty,
             };
 
-            if (builder.Path.EndsWith("/"))
+            if (builder.Path.EndsWith("/", StringComparison.Ordinal))
             {
                 builder.Path = builder.Path.TrimEnd('/');
             }

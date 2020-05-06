@@ -9,8 +9,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
-    <ExcludeFromTest>true</ExcludeFromTest>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.AzureStack.Management.Fabric.Admin.csproj" />

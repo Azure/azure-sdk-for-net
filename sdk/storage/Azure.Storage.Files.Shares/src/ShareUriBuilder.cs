@@ -279,7 +279,7 @@ namespace Azure.Storage.Files.Shares
                 path.Append("/").Append(ShareName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
-                    path.Append("/").Append(DirectoryOrFilePath);
+                    path.Append("/").Append(Uri.EscapeDataString(DirectoryOrFilePath));
                 }
             }
 
