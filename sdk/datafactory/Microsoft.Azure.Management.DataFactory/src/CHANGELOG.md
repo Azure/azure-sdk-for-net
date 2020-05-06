@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.0.0
+###  Feature Additions
+- Added GlobalParameters
+- Changed data type of waitTimeInSeconds in WaitActivity to allow expressions
+
 ## Version 4.9.0
 ###  Feature Additions
 - Added support for copying data to and from Snowflake using copy activity
