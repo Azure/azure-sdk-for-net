@@ -60,7 +60,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
+        public virtual async Task<Response<Dictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             await _tableOperations.InsertEntityAsync(_table,
                                                      tableEntityProperties: entity,
                                                      queryOptions: new QueryOptions() { Format = _format },
@@ -73,7 +73,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
+        public virtual Response<Dictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             _tableOperations.InsertEntity(_table,
                                           tableEntityProperties: entity,
                                           queryOptions: new QueryOptions() { Format = _format },
@@ -373,7 +373,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+        public virtual async Task<Response<List<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
@@ -381,7 +381,7 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+        public virtual Response<List<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>

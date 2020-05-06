@@ -130,8 +130,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
-        public virtual TableResponse CreateTable(string tableName, CancellationToken cancellationToken = default) =>
-            _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+        public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
+        {
+            var response = _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Creates a table in the storage account.
@@ -140,8 +143,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
-        public virtual async Task<TableResponse> CreateTableAsync(string tableName, CancellationToken cancellationToken = default) =>
-            await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+        }
 
         /// <summary>
         /// Deletes a table in the storage account.
