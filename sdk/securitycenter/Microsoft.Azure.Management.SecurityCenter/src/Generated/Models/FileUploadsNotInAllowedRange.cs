@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of file uploads is not in allowed range.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FileUploadsNotInAllowedRange")]
     public partial class FileUploadsNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

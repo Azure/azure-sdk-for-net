@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// A custom alert rule that checks if a value (depends on the custom alert
     /// type) is denied.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DenylistCustomAlertRule")]
     public partial class DenylistCustomAlertRule : ListCustomAlertRule
     {
         /// <summary>
