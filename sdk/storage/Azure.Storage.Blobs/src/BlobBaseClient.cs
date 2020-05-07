@@ -2675,6 +2675,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
                     return Response.FromValue(
                         response.Value.ToBlobProperties(),
                         response.GetRawResponse());
