@@ -241,7 +241,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// x-ms-or
         /// </summary>
-        public IDictionary<string, IDictionary<string,string> > ObjectReplicationSourceProperties => BlobExtensions.ParseObjectReplicationIds(_flattened.ObjectReplicationRules);
+        public IDictionary<string, IDictionary<string,string> > ObjectReplicationSourceProperties => BlobExtensions.ToObjectReplicationIds(_flattened.ObjectReplicationRules);
 
         /// <summary>
         /// Object Replication Policy Id. This value is only set when the policy id

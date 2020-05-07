@@ -147,6 +147,20 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetSoftDeleteTenant);
 
         /// <summary>
+        /// Gets the source tenant to use for any tests that uses Object replication.
+        /// </summary>
+        public TenantConfiguration TestConfigObjectReplicationSource => GetTestConfig(
+                "Storage_TestConfigObjectReplicationSource",
+                () => TestConfigurations.DefaultObjectReplicationSourceTenant);
+
+        /// <summary>
+        /// Gets the destination tenant to use for any tests that uses Object replication.
+        /// </summary>
+        public TenantConfiguration TestConfigObjectReplicationDestination => GetTestConfig(
+                "Storage_TestConfigObjectReplicationDestination",
+                () => TestConfigurations.DefaultObjectReplicationDestinationTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>

@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs
                 CreatedOn = properties.CreatedOn,
                 Metadata = properties.Metadata,
                 ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
-                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules),
+                ObjectReplicationSourceProperties = properties.ObjectReplicationRules.ToObjectReplicationIds(),
                 BlobType = properties.BlobType,
                 CopyCompletedOn = properties.CopyCompletedOn,
                 CopyStatusDescription = properties.CopyStatusDescription,
@@ -149,8 +149,13 @@ namespace Azure.Storage.Blobs
         /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID.
         /// </summary>
         /// <returns></returns>
-        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string,string> OrIds)
+
+        internal static IDictionary<string, IDictionary<string, string>> ToObjectReplicationIds(this IDictionary<string,string> OrIds)
         {
+            if (OrIds == null)
+            {
+                return null;
+            }
             if (OrIds.Count == 0 ||
                 (OrIds.Count > 0 &&
                 (OrIds.First().Key == "policy-id")))
