@@ -370,12 +370,12 @@ namespace Azure.Search.Documents.Tests
                     onlyIfUnchanged: true));
             Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
 
-            Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
-            foreach (SynonymMap namedMap in mapsResponse.Value)
+            Response<IReadOnlyList<string>> names = await client.GetSynonymMapNamesAsync();
+            foreach (string name in names.Value)
             {
-                if (string.Equals(updatedMap.Name, namedMap.Name, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(updatedMap.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
-                    SynonymMap fetchedMap = await client.GetSynonymMapAsync(namedMap.Name);
+                    SynonymMap fetchedMap = await client.GetSynonymMapAsync(name);
                     Assert.AreEqual(updatedMap.Synonyms, fetchedMap.Synonyms);
                 }
             }
