@@ -12,21 +12,32 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
-    internal class PartitionedUploader<ServiceSpecificArgs, CompleteUploadReturn>
+    internal class PartitionedUploader<TServiceSpecificArgs, TCompleteUploadReturn>
     {
-        public interface IClient
+        #region Definitions
+        public delegate DiagnosticScope CreateScope(string operationName);
+        public delegate Task InitializeDestinationInternal(TServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+        public delegate Task<Response<TCompleteUploadReturn>> SingleUploadInternal(Stream contentStream, TServiceSpecificArgs args, IProgress<long> progressHandler, string operationName, bool async, CancellationToken cancellationToken);
+        public delegate Task UploadPartitionInternal(Stream contentStream, long offset, TServiceSpecificArgs args, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken);
+        public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(List<(long Offset, long Size)> partitions, TServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+
+        public struct Behaviors
         {
-            Task InitializeDestinationInternal(ServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
-            Task<Response<CompleteUploadReturn>> FullUploadInternal(Stream contentStream, ServiceSpecificArgs args, IProgress<long> progressHandler, string operationName, bool async, CancellationToken cancellationToken);
-            Task StageUploadPartitionInternal(Stream contentStream, long offset, ServiceSpecificArgs args, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken);
-            Task<Response<CompleteUploadReturn>> CommitPartitionedUploadInternal(List<(long Offset, long Size)> partitions, ServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
-            DiagnosticScope CreateScope(string operationName);
+            public InitializeDestinationInternal InitializeDestination { get; set; }
+            public SingleUploadInternal SingleUpload { get; set; }
+            public UploadPartitionInternal UploadPartition { get; set; }
+            public CommitPartitionedUploadInternal CommitPartitionedUpload { get; set; }
+            public CreateScope Scope { get; set; }
         }
 
-        /// <summary>
-        /// The client we use to do the actual uploading.
-        /// </summary>
-        private readonly IClient _client;
+        public static readonly InitializeDestinationInternal InitializeNoOp = (_, _, _) => Task.CompletedTask;
+        #endregion
+
+        private readonly InitializeDestinationInternal _initializeDestinationInternal;
+        private readonly SingleUploadInternal _singleUploadInternal;
+        private readonly UploadPartitionInternal _uploadPartitionInternal;
+        private readonly CommitPartitionedUploadInternal _commitPartitionedUploadInternal;
+        private readonly CreateScope _createScope;
 
         /// <summary>
         /// The maximum number of simultaneous workers.
@@ -56,12 +67,22 @@ namespace Azure.Storage
         private readonly string _operationName;
 
         public PartitionedUploader(
-            IClient client,
+            Behaviors behaviors,
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
-            _client = client;
+            // initialize isn't required for all services and can use a no-op; rest are required
+            _initializeDestinationInternal = behaviors.InitializeDestination ?? InitializeNoOp;
+            _singleUploadInternal = behaviors.SingleUpload
+                ?? throw Errors.ArgumentNull(nameof(behaviors.SingleUpload));
+            _uploadPartitionInternal = behaviors.UploadPartition
+                ?? throw Errors.ArgumentNull(nameof(behaviors.UploadPartition));
+            _commitPartitionedUploadInternal = behaviors.CommitPartitionedUpload
+                ?? throw Errors.ArgumentNull(nameof(behaviors.CommitPartitionedUpload));
+            _createScope = behaviors.Scope
+                ?? throw Errors.ArgumentNull(nameof(behaviors.Scope));
+
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // Set _maxWorkerCount
@@ -98,20 +119,20 @@ namespace Azure.Storage
             _operationName = operationName;
         }
 
-        public async Task<Response<CompleteUploadReturn>> UploadInternal(
+        public async Task<Response<TCompleteUploadReturn>> UploadInternal(
             Stream content,
-            ServiceSpecificArgs args,
+            TServiceSpecificArgs args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken = default)
         {
-            await _client.InitializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
+            await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return await _client.FullUploadInternal(
+                return await _singleUploadInternal(
                     content,
                     args,
                     progressHandler,
@@ -154,17 +175,17 @@ namespace Azure.Storage
             }
         }
 
-        private async Task<Response<CompleteUploadReturn>> UploadInSequenceInternal(
+        private async Task<Response<TCompleteUploadReturn>> UploadInSequenceInternal(
             Stream content,
             long partitionSize,
-            ServiceSpecificArgs args,
+            TServiceSpecificArgs args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.CreateScope(_operationName);
+            DiagnosticScope scope = _createScope(_operationName);
             try
             {
                 scope.Start();
@@ -215,7 +236,7 @@ namespace Azure.Storage
 
                 // Commit the block list after everything has been staged to
                 // complete the upload
-                return await _client.CommitPartitionedUploadInternal(
+                return await _commitPartitionedUploadInternal(
                     partitions,
                     args,
                     async,
@@ -232,16 +253,16 @@ namespace Azure.Storage
             }
         }
 
-        private async Task<Response<CompleteUploadReturn>> UploadInParallelAsync(
+        private async Task<Response<TCompleteUploadReturn>> UploadInParallelAsync(
             Stream content,
             long blockSize,
-            ServiceSpecificArgs args,
+            TServiceSpecificArgs args,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.CreateScope(_operationName);
+            DiagnosticScope scope = _createScope(_operationName);
             try
             {
                 scope.Start();
@@ -308,7 +329,7 @@ namespace Azure.Storage
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
 
                 // Calling internal method for easier mocking in PartitionedUploaderTests
-                return await _client.CommitPartitionedUploadInternal(
+                return await _commitPartitionedUploadInternal(
                     partitions,
                     args,
                     async: true,
@@ -332,14 +353,14 @@ namespace Azure.Storage
         private async Task StagePartitionAndDisposeInternal(
             PooledMemoryStream partition,
             long offset,
-            ServiceSpecificArgs args,
+            TServiceSpecificArgs args,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
             try
             {
-                await _client.StageUploadPartitionInternal(
+                await _uploadPartitionInternal(
                     partition,
                     offset,
                     args,

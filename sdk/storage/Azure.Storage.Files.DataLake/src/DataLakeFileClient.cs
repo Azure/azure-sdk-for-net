@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -3392,14 +3393,78 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion ScheduleDeletion
 
+        #region PartitionedUplaoder
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(this),
+                GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 arrayPool,
                 operationName);
+
+        // static because it makes mocking easier in tests
+        internal static PartitionedUploader<DataLakeFileUploadOptions, PathInfo>.Behaviors GetPartitionedUploaderBehaviors(DataLakeFileClient client)
+            => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>.Behaviors
+            {
+                InitializeDestination = async (args, async, cancellationToken)
+                    => await client.CreateInternal(
+                        PathResourceType.File,
+                        args.HttpHeaders,
+                        args.Metadata,
+                        args.Permissions,
+                        args.Umask,
+                        args.Conditions,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
+                {
+                    // Append data
+                    await client.AppendInternal(
+                        stream,
+                        offset: 0,
+                        contentHash: default,
+                        args.Conditions?.LeaseId,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // Flush data
+                    return await client.FlushInternal(
+                        position: stream.Length,
+                        retainUncommittedData: default,
+                        close: default,
+                        args.HttpHeaders,
+                        args.Conditions,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
+                    => await client.AppendInternal(
+                        stream,
+                        offset,
+                        contentHash: default,
+                        args.Conditions.LeaseId,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
+                {
+                    (var offset, var size) = partitions.LastOrDefault();
+                    return await client.FlushInternal(
+                        offset + size,
+                        retainUncommittedData: default,
+                        close: default,
+                        httpHeaders: args.HttpHeaders,
+                        conditions: args.Conditions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                },
+                Scope = operationName => client.ClientDiagnostics.CreateScope(operationName ??
+                    $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DataLakeFileClient.Upload)}")
+            };
+        #endregion
     }
 }

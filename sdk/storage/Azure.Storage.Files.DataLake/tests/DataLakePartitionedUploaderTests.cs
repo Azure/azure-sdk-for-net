@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -180,7 +180,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 100 },
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -214,7 +214,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -244,7 +244,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions
                 {
                     InitialTransferSize = 1, // forces buffered upload
