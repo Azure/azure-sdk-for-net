@@ -76,7 +76,7 @@ namespace Azure.Data.Tables.Models
                                 entityProperties[annotatedProperties] = typeAnnotations[annotatedProperties] switch
                                 {
                                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entityProperties[annotatedProperties] as string),
-                                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entityProperties[annotatedProperties] as string, CultureInfo.InvariantCulture),
+                                    TableConstants.Odata.EdmDateTime => DateTime.Parse(entityProperties[annotatedProperties] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
                                     TableConstants.Odata.EdmGuid => Guid.Parse(entityProperties[annotatedProperties] as string),
                                     TableConstants.Odata.EdmInt64 => long.Parse(entityProperties[annotatedProperties] as string, CultureInfo.InvariantCulture),
                                     _ => throw new NotSupportedException("Not supported type " + typeAnnotations[annotatedProperties])
