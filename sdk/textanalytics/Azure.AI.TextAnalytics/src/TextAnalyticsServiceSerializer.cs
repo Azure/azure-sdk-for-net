@@ -609,12 +609,24 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            bool invalidBatch = false;
+
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                {
+                    invalidBatch = true;
+                    collection.Clear();
+                    collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
+                    break;
+                }
                 collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
             }
 
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            if (!invalidBatch)
+            {
+                collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            }
 
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);

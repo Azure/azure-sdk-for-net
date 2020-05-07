@@ -1491,7 +1491,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeLinkedEntitiesResultCollection results = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }

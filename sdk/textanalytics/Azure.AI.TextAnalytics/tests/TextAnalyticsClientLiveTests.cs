@@ -767,6 +767,26 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizeLinkedEntitiesBatchWithInvalidDocumentBatch()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "Hello world",
+                "Pike place market is my favorite Seattle attraction.",
+                "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!",
+                "Unfortunately, it rained during my entire trip to Seattle. I didn't even get to visit the Space Needle",
+                "This should fail!"
+            };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
