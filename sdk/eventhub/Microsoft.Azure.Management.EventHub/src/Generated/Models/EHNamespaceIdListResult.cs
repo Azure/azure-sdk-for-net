@@ -11,28 +11,31 @@
 namespace Microsoft.Azure.Management.EventHub.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Properties supplied for Subnet
+    /// The response of the List Namespace IDs operation
     /// </summary>
-    public partial class Subnet
+    public partial class EHNamespaceIdListResult
     {
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the EHNamespaceIdListResult class.
         /// </summary>
-        public Subnet()
+        public EHNamespaceIdListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the EHNamespaceIdListResult class.
         /// </summary>
-        /// <param name="id">Resource ID of Virtual Network Subnet</param>
-        public Subnet(string id = default(string))
+        /// <param name="value">Result of the List Namespace IDs
+        /// operation</param>
+        public EHNamespaceIdListResult(IList<EHNamespaceIdContainer> value = default(IList<EHNamespaceIdContainer>))
         {
-            Id = id;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +45,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of Virtual Network Subnet
+        /// Gets or sets result of the List Namespace IDs operation
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<EHNamespaceIdContainer> Value { get; set; }
 
     }
 }
