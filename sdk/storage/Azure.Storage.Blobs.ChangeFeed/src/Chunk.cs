@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.ChangeFeed.Models;
@@ -17,24 +16,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
     internal class Chunk : IDisposable
     {
         /// <summary>
-        /// Blob Client for downloading the Chunk.
-        /// </summary>
-        private readonly BlobClient _blobClient;
-
-        /// <summary>
         /// Avro Reader to parser the Events.
         /// </summary>
         private readonly AvroReader _avroReader;
-
-        /// <summary>
-        /// Data stream.
-        /// </summary>
-        private readonly Stream _dataStream;
-
-        /// <summary>
-        /// Avro head stream.
-        /// </summary>
-        private readonly Stream _headStream;
 
         /// <summary>
         /// The byte offset of the beginning of the current
@@ -48,40 +32,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public virtual long EventIndex { get; private set; }
 
         public Chunk(
-            BlobContainerClient containerClient,
-            LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
-            AvroReaderFactory avroReaderFactory,
-            string chunkPath,
-            long? blockOffset = default,
-            long? eventIndex = default)
+            AvroReader avroReader,
+            long blockOffset,
+            long eventIndex)
         {
-            _blobClient = containerClient.GetBlobClient(chunkPath);
-            BlockOffset = blockOffset ?? 0;
-            EventIndex = eventIndex ?? 0;
-
-            _dataStream = lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
-                _blobClient,
-                offset: BlockOffset,
-                blockSize: Constants.ChangeFeed.ChunkBlockDownloadSize);
-
-            // We aren't starting from the beginning of the Chunk
-            if (BlockOffset != 0)
-            {
-                _headStream = lazyLoadingBlobStreamFactory.BuildLazyLoadingBlobStream(
-                    _blobClient,
-                    offset: 0,
-                    blockSize: 3 * Constants.KB);
-
-                _avroReader = avroReaderFactory.BuildAvroReader(
-                    _dataStream,
-                    _headStream,
-                    BlockOffset,
-                    EventIndex);
-            }
-            else
-            {
-                _avroReader = avroReaderFactory.BuildAvroReader(_dataStream);
-            }
+            _avroReader = avroReader;
+            BlockOffset = blockOffset;
+            EventIndex = eventIndex;
         }
 
         public virtual bool HasNext()
@@ -106,8 +63,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public void Dispose()
         {
-            _dataStream.Dispose();
-            _headStream.Dispose();
             GC.SuppressFinalize(this);
         }
 
