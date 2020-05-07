@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -97,7 +98,7 @@ namespace Azure.Storage.Blobs
         /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
         /// </summary>
         /// <param name="properties">
-        /// The BlobPropertiesInternal returned with the reques
+        /// The BlobPropertiesInternal returned with the request
         /// </param>
         internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
             new BlobProperties()
@@ -106,6 +107,7 @@ namespace Azure.Storage.Blobs
                 CreatedOn = properties.CreatedOn,
                 Metadata = properties.Metadata,
                 ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
+                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules),
                 BlobType = properties.BlobType,
                 CopyCompletedOn = properties.CopyCompletedOn,
                 CopyStatusDescription = properties.CopyStatusDescription,
@@ -142,5 +144,39 @@ namespace Azure.Storage.Blobs
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,
             };
+
+        /// <summary>
+        /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID.
+        /// </summary>
+        /// <returns></returns>
+        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string, string> OrIds)
+        {
+            if (OrIds == null)
+            {
+                return null;
+            }
+            if (OrIds.Count == 0 ||
+                (OrIds.Count > 0 &&
+                (OrIds.First().Key == "policy-id")))
+            {
+                return default;
+            }
+            IDictionary<string, IDictionary<string, string>> OrProperties = new Dictionary<string, IDictionary<string, string>>();
+            foreach (KeyValuePair<string, string> status in OrIds)
+            {
+                string[] ParsedIds = status.Key.Split('_');
+                if (OrProperties.ContainsKey(ParsedIds[0]))
+                {
+                    OrProperties[ParsedIds[0]].Add(ParsedIds[1], status.Value);
+                }
+                else
+                {
+                    IDictionary<string, string> NewRuleStatus = new Dictionary<string, string>();
+                    NewRuleStatus.Add(ParsedIds[1], status.Value);
+                    OrProperties.Add(ParsedIds[0], NewRuleStatus);
+                }
+            }
+            return OrProperties;
+        }
     }
 }
