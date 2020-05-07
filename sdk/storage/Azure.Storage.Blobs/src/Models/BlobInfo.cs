@@ -78,7 +78,10 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
         {
             _flattened = flattened;
-            Details = new BlobDownloadDetails() { _flattened = flattened };
+            Details = new BlobDownloadDetails() {
+                _flattened = flattened,
+                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
+            };
         }
 
         /// <summary>
@@ -241,7 +244,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// x-ms-or
         /// </summary>
-        public IDictionary<string, IDictionary<string, string>> ObjectReplicationSourceProperties => BlobExtensions.ParseObjectReplicationIds(_flattened.ObjectReplicationRules);
+        public IDictionary<string, IDictionary<string, string>> ObjectReplicationSourceProperties { get; internal set; }
 
         /// <summary>
         /// Object Replication Policy Id. This value is only set when the policy id

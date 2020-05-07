@@ -98,7 +98,7 @@ namespace Azure.Storage.Blobs
         /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
         /// </summary>
         /// <param name="properties">
-        /// The BlobPropertiesInternal returned with the request
+        /// The BlobPropertiesInternal returned with the request.
         /// </param>
         internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
             new BlobProperties()
@@ -146,15 +146,32 @@ namespace Azure.Storage.Blobs
             };
 
         /// <summary>
-        /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID.
+        /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID for source blobs.
         /// </summary>
-        /// <returns></returns>
-        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string, string> OrIds)
+        /// <param name="OrIds">
+        /// Unparsed Object Replication headers.
+        /// For source blobs, the dictionary will contain keys that contain the policy id and rule id separated
+        /// by a underscore (e.g. policyId_ruleId). The value of these keys will be the replication status (e.g. Complete, Failed).
+        /// For destination blobs, the dictionary will contain one entry where the key will be "policy-id"
+        /// and the value will be the destination policy id. No parsing will be required for this.
+        /// </param>
+        /// <returns>
+        /// If the blob has object replication policy(s) applied and is the source blob, this method will return a
+        /// dictionary of policy Ids, with a dictionary of rules and replication status for each policy
+        /// (As each policy id, could have multiple rule ids).
+        /// If the blob has object replication policy applied and is the destination blob,
+        /// this method will return default as the policy id should be set in ObjectReplicationDestinationPolicy
+        /// (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicy"/>,<see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicy"/>).
+        /// Otherwise null will be returned.
+        /// </returns>
+        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
         {
             if (OrIds == null)
             {
                 return null;
             }
+            // If the dictionary is empty or it contains a key with policy id, we are not required to do any parsing since
+            // the policy id should already be stored in the ObjectReplicationDestinationPolicy.
             if (OrIds.Count == 0 ||
                 (OrIds.Count > 0 &&
                 (OrIds.First().Key == "policy-id")))
