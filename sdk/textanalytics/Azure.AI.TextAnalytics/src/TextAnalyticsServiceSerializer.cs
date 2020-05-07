@@ -156,7 +156,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             // Return the innermost error, which should be only one level down.
-            return innerError.Code == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
+            return innerError.ErrorCode == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
         }
 
         private static List<TextAnalyticsWarning> ReadDocumentWarnings(JsonElement documentElement)
