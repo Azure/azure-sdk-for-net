@@ -151,6 +151,10 @@ namespace Azure.Storage.Blobs
         /// <returns></returns>
         internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string,string> OrIds)
         {
+            if (OrIds == null)
+            {
+                return null;
+            }
             if (OrIds.Count == 0 ||
                 (OrIds.Count > 0 &&
                 (OrIds.First().Key == "policy-id")))

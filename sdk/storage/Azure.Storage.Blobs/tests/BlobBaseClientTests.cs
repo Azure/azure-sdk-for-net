@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -489,18 +490,18 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
-            var source_blob = sourceContainer.GetBlobClient(blob_name);
-            var dest_blob = destinationContainer.GetBlobClient(blob_name);
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
 
             //Act
-            var source_response = await source_blob.DownloadAsync();
-            var dest_response = await dest_blob.DownloadAsync();
+            Response<BlobDownloadInfo> sourceResponse = await sourceBlob.DownloadAsync();
+            Response<BlobDownloadInfo> destResponse = await destBlob.DownloadAsync();
 
             //Assert
-            Assert.AreEqual(1, source_response.Value.Details.ObjectReplicationSourceProperties.Count);
-            Assert.IsNull(source_response.Value.Details.ObjectReplicationDestinationPolicy);
-            Assert.IsNotEmpty(dest_response.Value.Details.ObjectReplicationDestinationPolicy);
-            Assert.IsNull(dest_response.Value.Details.ObjectReplicationSourceProperties);
+            Assert.AreEqual(1, sourceResponse.Value.Details.ObjectReplicationSourceProperties.Count);
+            Assert.IsNull(sourceResponse.Value.Details.ObjectReplicationDestinationPolicy);
+            Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicy);
+            Assert.IsNull(destResponse.Value.Details.ObjectReplicationSourceProperties);
         }
         #endregion Sequential Download
 
@@ -2387,17 +2388,17 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
 
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
-            var sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
-            var destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 
             // Arrange
             string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
-            var source_blob = sourceContainer.GetBlobClient(blob_name);
-            var dest_blob = destinationContainer.GetBlobClient(blob_name);
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
 
             // Act
-            var source_response = await source_blob.GetPropertiesAsync();
-            var dest_response = await dest_blob.GetPropertiesAsync();
+            Response<BlobProperties> source_response = await sourceBlob.GetPropertiesAsync();
+            Response<BlobProperties> dest_response = await destBlob.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(1, source_response.Value.ObjectReplicationSourceProperties.Count);
