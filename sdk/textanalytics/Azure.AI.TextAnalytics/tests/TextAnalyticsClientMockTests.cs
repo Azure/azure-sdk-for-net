@@ -187,6 +187,7 @@ namespace Azure.AI.TextAnalytics.Tests
                         json.WriteString("id", result.Id);
                         json.WriteStartObject("error");
                         json.WriteStartObject("innererror");
+                        json.WriteString("code", result.Error.ErrorCode.ToString());
                         json.WriteString("message", result.Error.Message);
                         json.WriteEndObject();
                         json.WriteEndObject();
