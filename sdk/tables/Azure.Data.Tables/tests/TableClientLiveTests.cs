@@ -29,21 +29,19 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ValidateSasCredentials()
         {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+
             // Build a shared access signature with only Read permissions.
 
-            TableSasBuilder sas = new TableSasBuilder(tableName)
-            {
-                ExpiresOn = new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc)
-            };
-            sas.SetPermissions(TableSasPermissions.Read);
-
-            // Create a SharedKeyCredential that we can use to sign the SAS token
-            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string token = sas.Sign(credential);
 
             // Build a SAS URI
             UriBuilder sasUri = new UriBuilder(TestEnvironment.StorageUri)
             {
-                Query = sas.ToSasQueryParameters(credential).ToString()
+                Query = token
             };
 
             // Create the TableServiceClient using the SAS URI.
