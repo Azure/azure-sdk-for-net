@@ -283,13 +283,15 @@ namespace Azure.Core.Tests
 
             recordTransport.Process(message);
 
-            var matcher = new RecordMatcher();
-            var sanitizer = new RecordedTestSanitizer();
-
             request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body."));
 
-            session.Lookup(request, matcher, sanitizer, entry => true);
-            Assert.Throws<InvalidOperationException>(() => session.Lookup(request, matcher, sanitizer, entry => false));
+            var skipRequestBody = true;
+            var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);
+
+            playbackTransport.Process(message);
+
+            skipRequestBody = false;
+            Assert.Throws<InvalidOperationException>(() => playbackTransport.Process(message));
         }
 
         private class TestSanitizer : RecordedTestSanitizer
