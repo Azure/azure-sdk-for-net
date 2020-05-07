@@ -167,8 +167,7 @@ namespace Azure.Data.Tables
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
-                    content.JsonWriter.WritePropertyName(item.Key);
-                    content.JsonWriter.WriteObjectValue(item.Value);
+                    SerializeEntityPropertyItem(content, item);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -354,6 +353,45 @@ namespace Azure.Data.Tables
             return message;
         }
 
+        internal HttpMessage CreateInsertEntityRequest(string table, int? timeout, string requestId, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (requestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", requestId);
+            }
+            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            if (tableEntityProperties != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tableEntityProperties)
+                {
+                    SerializeEntityPropertyItem(content, item);
+                }
+                content.JsonWriter.WriteEndObject();
+                request.Content = content;
+            }
+            return message;
+        }
+
         /// <summary> Insert entity in a table. </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
@@ -510,13 +548,17 @@ namespace Azure.Data.Tables
                                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                                     foreach (var property in document.RootElement.EnumerateObject())
                                     {
-                                        if (property.Value.ValueKind == JsonValueKind.Null)
+                                        // Don't include Odata type annotation properties.
+                                        if (!property.Name.EndsWith(TableConstants.Odata.OdataTypeString, StringComparison.InvariantCulture))
                                         {
-                                            dictionary.Add(property.Name, null);
-                                        }
-                                        else
-                                        {
-                                            dictionary.Add(property.Name, property.Value.GetObject());
+                                            if (property.Value.ValueKind == JsonValueKind.Null)
+                                            {
+                                                dictionary.Add(property.Name, null);
+                                            }
+                                            else
+                                            {
+                                                dictionary.Add(property.Name, property.Value.GetObject());
+                                            }
                                         }
                                     }
                                     value = dictionary;
@@ -541,6 +583,24 @@ namespace Azure.Data.Tables
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static void SerializeEntityPropertyItem(Utf8JsonRequestContent content, KeyValuePair<string, object> item)
+        {
+            content.JsonWriter.WritePropertyName(item.Key);
+
+            // Int64 / long should be serialized as string.
+            if (item.Value is long)
+            {
+                content.JsonWriter.WriteObjectValue(item.Value.ToString());
+            }
+            else
+            {
+                content.JsonWriter.WriteObjectValue(item.Value);
+            }
+
+            // Write the odata.type annotation, if required.
+            content.JsonWriter.WriteOdataTypeAnnotation(item.Key, item.Value);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace Azure.Data.Tables.Tests
         [TestCase(5)]
         public async Task InsertedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
-            List<IDictionary<string, object>> entityResults = new List<IDictionary<string, object>>();
+            List<IDictionary<string, object>> entityResults;
             List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
 
             // Insert the new entities.
@@ -92,7 +93,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task InsertedEntitiesCanBeQueriedWithFilters()
         {
-            List<IDictionary<string, object>> entityResults = new List<IDictionary<string, object>>();
+            List<IDictionary<string, object>> entityResults;
             List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
 
             // Insert the new entities.
@@ -386,6 +387,104 @@ namespace Azure.Data.Tables.Tests
             emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task InsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
+        {
+            List<IDictionary<string, object>> entityResults;
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
+            Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
+            Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
+            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+            Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+            Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task UpsertedEntitiesAreRoundtrippedWithProperOdataAnnoations()
+        {
+            List<IDictionary<string, object>> entityResults;
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.UpsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.First()[StringTypePropertyName], Is.TypeOf<string>(), "The entity property should be of type string");
+            Assert.That(entityResults.First()[DateTypePropertyName], Is.TypeOf<DateTime>(), "The entity property should be of type DateTime");
+            Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
+            Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
+            Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
+            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+            Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
+            Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task InsertReturnsEntitiesWithoutOdataAnnoations()
+        {
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Insert an entity.
+
+            var insertedEntity = (await client.InsertAsync(entitiesToInsert.First()).ConfigureAwait(false)).Value;
+
+            Assert.That(insertedEntity.Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task QueryReturnsEntitiesWithoutOdataAnnoations()
+        {
+            List<IDictionary<string, object>> entityResults;
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 1);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.UpsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.First().Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
         }
 
         /// <summary>
