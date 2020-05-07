@@ -165,7 +165,7 @@ namespace Azure.AI.TextAnalytics.Tests
                         foreach (var warning in result.Entities.Warnings)
                         {
                             json.WriteStartObject();
-                            json.WriteString("code", warning.WarningCode);
+                            json.WriteString("code", warning.WarningCode.ToString());
                             json.WriteString("message", warning.Message);
                             json.WriteEndObject();
                         }
