@@ -58,7 +58,7 @@ namespace Azure.Core.TestFramework
             "x-ms-correlation-request-id"
         };
 
-        public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries, bool skipRequestBody)
+        public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
         {
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;
@@ -96,10 +96,7 @@ namespace Azure.Core.TestFramework
                     score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, ExcludeHeaders);
                 }
 
-                if (!skipRequestBody)
-                {
-                    score += CompareBodies(request.Request.Body, entry.Request.Body);
-                }
+                score += CompareBodies(request.Request.Body, entry.Request.Body);
 
                 if (score == 0)
                 {

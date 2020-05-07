@@ -116,7 +116,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries, false));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            Assert.NotNull(matcher.FindMatch(mockRequest, entries, false));
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
 
             RecordEntry[] entries = { };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries, false));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
@@ -236,7 +236,7 @@ namespace Azure.Core.Tests
             var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
             var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
 
-            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }, false));
+            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
         }
 
         [Test]

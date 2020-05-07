@@ -44,7 +44,14 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer, _skipRequestBodyFilter));
+            var requestEntry = RecordTransport.CreateEntry(message.Request, null);
+
+            if (_skipRequestBodyFilter(requestEntry))
+            {
+                requestEntry.Request.Body = null;
+            }
+
+            message.Response = GetResponse(_session.Lookup(requestEntry, _matcher, _sanitizer));
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message)
@@ -62,7 +69,14 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer, _skipRequestBodyFilter));
+            var requestEntry = RecordTransport.CreateEntry(message.Request, null);
+
+            if (_skipRequestBodyFilter(requestEntry))
+            {
+                requestEntry.Request.Body = null;
+            }
+
+            message.Response = GetResponse(_session.Lookup(requestEntry, _matcher, _sanitizer));
         }
 
         public override Request CreateRequest()
