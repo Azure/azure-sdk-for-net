@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Search
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Client that can be used to manage Azure Search services and API keys.
+    /// Client that can be used to manage Azure Cognitive Search services and
+    /// API keys.
     /// </summary>
     public partial interface ISearchManagementClient : System.IDisposable
     {
