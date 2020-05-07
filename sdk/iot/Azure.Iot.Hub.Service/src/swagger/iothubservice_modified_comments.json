@@ -190,8 +190,7 @@
       },
       "/statistics/devices": {
         "get": {
-          "summary": "Retrieves statistics about device identities in the IoT hub’s identity registry.",
-          "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Get statistics about device identities in the IoT hub’s identity registry, such as total device count.",
           "operationId": "RegistryManager_GetDeviceStatistics",
           "consumes": [],
           "produces": [
@@ -214,8 +213,7 @@
       },
       "/statistics/service": {
         "get": {
-          "summary": "Retrieves service statistics for this IoT hub’s identity registry.",
-          "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Retrieves device statistics for this IoT hub, such as connected device count.",
           "operationId": "RegistryManager_GetServiceStatistics",
           "consumes": [],
           "produces": [
@@ -238,8 +236,7 @@
       },
       "/devices": {
         "get": {
-          "summary": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query language to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-          "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query language to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
           "operationId": "RegistryManager_GetDevices",
           "consumes": [],
           "produces": [
@@ -271,8 +268,7 @@
           }
         },
         "post": {
-          "summary": "Create, update, or delete the identities of multiple devices from the IoT hub identity registry.",
-          "description": "Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
           "operationId": "RegistryManager_BulkDeviceCRUD",
           "consumes": [
             "application/json"
@@ -289,7 +285,8 @@
                 "type": "array",
                 "items": {
                   "$ref": "#/definitions/ExportImportDevice"
-                }
+                },
+                "description": "The set of registry operations to perform."
               }
             },
             {
@@ -315,7 +312,7 @@
       "/devices/query": {
         "post": {
           "summary": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language.",
-          "description": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only.",
           "operationId": "RegistryManager_QueryIotHub",
           "consumes": [
             "application/json"
@@ -330,7 +327,8 @@
               "required": true,
               "schema": {
                 "$ref": "#/definitions/QuerySpecification"
-              }
+              },
+              "description": "The query string to run. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information."
             },
             {
               "$ref": "#/parameters/api-version"
@@ -339,13 +337,15 @@
               "name": "x-ms-continuation",
               "in": "header",
               "required": false,
-              "type": "string"
+              "type": "string",
+              "description": "The continuation token to get the next page of results."
             },
             {
               "name": "x-ms-max-item-count",
               "in": "header",
               "required": false,
-              "type": "string"
+              "type": "string",
+              "description": "The maximum number of items to return per page. The service may use a different value."
             }
           ],
           "responses": {
@@ -373,8 +373,7 @@
       },
       "/devices/{id}": {
         "get": {
-          "summary": "Retrieve a device from the identity registry of an IoT hub.",
-          "description": "Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Retrieve a device from the identity registry of an IoT hub.",
           "operationId": "RegistryManager_GetDevice",
           "consumes": [],
           "produces": [
@@ -384,7 +383,7 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The unique identifier of the device to retrieve.",
               "required": true,
               "type": "string"
             },
@@ -402,8 +401,7 @@
           }
         },
         "put": {
-          "summary": "Create or update the identity of a device in the identity registry of an IoT hub.",
-          "description": "Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation.",
           "operationId": "RegistryManager_CreateOrUpdateDevice",
           "consumes": [
             "application/json"
@@ -415,7 +413,7 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The unique identifier for the device to create",
               "required": true,
               "type": "string"
             },
@@ -425,13 +423,15 @@
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Device"
-              }
+              },
+              "description": "The contents of the device to create."
             },
             {
               "name": "If-Match",
               "in": "header",
               "required": false,
-              "type": "string"
+              "type": "string",
+              "description": "A string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device."
             },
             {
               "$ref": "#/parameters/api-version"
@@ -448,7 +448,7 @@
         },
         "delete": {
           "summary": "Delete the identity of a device from the identity registry of an IoT hub.",
-          "description": "Delete the identity of a device from the identity registry of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+          "description": "Delete the identity of a device from the identity registry of an IoT hub.",
           "operationId": "RegistryManager_DeleteDevice",
           "consumes": [],
           "produces": [
@@ -458,7 +458,7 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The unique identifier for the device to delete.",
               "required": true,
               "type": "string"
             },
@@ -466,7 +466,8 @@
               "name": "If-Match",
               "in": "header",
               "required": false,
-              "type": "string"
+              "type": "string",
+              "description": "A string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
             },
             {
               "$ref": "#/parameters/api-version"
@@ -1914,15 +1915,18 @@
         "properties": {
           "totalDeviceCount": {
             "format": "int64",
-            "type": "integer"
+            "type": "integer",
+            "description": "The total number of devices registered for this hub."
           },
           "enabledDeviceCount": {
             "format": "int64",
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of currently enabled devices."
           },
           "disabledDeviceCount": {
             "format": "int64",
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of currently disabled devices."
           }
         }
       },
@@ -1931,7 +1935,8 @@
         "properties": {
           "connectedDeviceCount": {
             "format": "int64",
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of currently connected devices."
           }
         }
       },
@@ -1939,61 +1944,75 @@
         "type": "object",
         "properties": {
           "deviceId": {
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of this device."
           },
           "generationId": {
-            "type": "string"
+            "type": "string",
+            "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
           },
           "etag": {
-            "type": "string"
+            "type": "string",
+            "description": "A string representing a weak ETag for the device identity, as per RFC7232."
           },
           "connectionState": {
             "enum": [
               "Disconnected",
               "Connected"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "Tells whether the device is connected or not."
           },
           "status": {
             "enum": [
               "enabled",
               "disabled"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint."
           },
           "statusReason": {
-            "type": "string"
+            "type": "string",
+            "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
           },
           "connectionStateUpdatedTime": {
             "format": "date-time",
-            "type": "string"
+            "type": "string",
+            "description": "A temporal indicator, showing the date and last time the connection state was updated."
           },
           "statusUpdatedTime": {
             "format": "date-time",
-            "type": "string"
+            "type": "string",
+            "description": "The last timestamp of when the status field was updated."
           },
           "lastActivityTime": {
             "format": "date-time",
-            "type": "string"
+            "type": "string",
+            "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message."
           },
           "cloudToDeviceMessageCount": {
             "format": "int32",
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of cloud to device messages currently queued to be sent to the device."
           },
           "authentication": {
-            "$ref": "#/definitions/AuthenticationMechanism"
+            "$ref": "#/definitions/AuthenticationMechanism",
+            "description": "The details on what authentication mechanisms are used by this device."
           },
           "capabilities": {
-            "$ref": "#/definitions/DeviceCapabilities"
+            "$ref": "#/definitions/DeviceCapabilities",
+            "description": "The set of capabilities that this device has. For example, if this device is an edge device or not."
           },
           "deviceScope": {
-            "type": "string"
+            "type": "string",
+            "description": "The scope that this device belongs to."
           },
           "parentScopes": {
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "TODO service team needs to explain this"
           }
         }
       },
@@ -2001,10 +2020,12 @@
         "type": "object",
         "properties": {
           "symmetricKey": {
-            "$ref": "#/definitions/SymmetricKey"
+            "$ref": "#/definitions/SymmetricKey",
+            "description": "The primary and secondary keys used for SAS based authentication."
           },
           "x509Thumbprint": {
-            "$ref": "#/definitions/X509Thumbprint"
+            "$ref": "#/definitions/X509Thumbprint",
+            "description": "The primary and secondary x509 thumbprints used for x509 based authentication."
           },
           "type": {
             "enum": [
@@ -2013,7 +2034,8 @@
               "certificateAuthority",
               "none"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The type of authentication used when connecting to the service."
           }
         }
       },
@@ -2022,7 +2044,7 @@
         "type": "object",
         "properties": {
           "iotEdge": {
-            "description": "Gets and sets the IoT Edge capability.",
+            "description": "Whether or not this device is an edge device.",
             "type": "boolean"
           }
         }
@@ -2031,10 +2053,12 @@
         "type": "object",
         "properties": {
           "primaryKey": {
-            "type": "string"
+            "type": "string",
+            "description" : "The base 64 encoded primary key of your device."
           },
           "secondaryKey": {
-            "type": "string"
+            "type": "string",
+            "description" : "The base 64 encoded secondary key of your device."
           }
         }
       },
@@ -2042,11 +2066,11 @@
         "type": "object",
         "properties": {
           "primaryThumbprint": {
-            "description": "Gets and sets the X509 client certificate primary thumbprint",
+            "description": "Gets and sets the X509 client certificate primary thumbprint.",
             "type": "string"
           },
           "secondaryThumbprint": {
-            "description": "Gets and sets the X509 client certificate secondary thumbprint",
+            "description": "Gets and sets the X509 client certificate secondary thumbprint.",
             "type": "string"
           }
         }
@@ -2055,11 +2079,11 @@
         "type": "object",
         "properties": {
           "id": {
-            "description": "Device Id is always required",
+            "description": "Identifier of the device to perform this operation on.",
             "type": "string"
           },
           "moduleId": {
-            "description": "ModuleId is applicable to modules only",
+            "description": "Identifier of the module to perform this operation on, if applicable.",
             "type": "string"
           },
           "eTag": {
@@ -2076,10 +2100,11 @@
               "updateTwin",
               "updateTwinIfMatchETag"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The type of registry operation and if ETag should be ignored or not."
           },
           "status": {
-            "description": "Status is optional and defaults to enabled",
+            "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint.",
             "enum": [
               "enabled",
               "disabled"
@@ -2087,37 +2112,41 @@
             "type": "string"
           },
           "statusReason": {
-            "type": "string"
+            "type": "string",
+            "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
           },
           "authentication": {
             "$ref": "#/definitions/AuthenticationMechanism",
-            "description": "Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys"
+            "description": "Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys."
           },
           "twinETag": {
-            "description": "twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag",
+            "description": "twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag.",
             "type": "string"
           },
           "tags": {
             "type": "object",
             "additionalProperties": {
-              "type": "object"
+              "type": "object",
+              "description": "A JSON document read and written by the solution back end. Tags are not visible to device apps."
             }
           },
           "properties": {
             "$ref": "#/definitions/PropertyContainer",
-            "description": "Properties are optional and defaults to empty object"
+            "description": "Properties are optional and defaults to empty object."
           },
           "capabilities": {
             "$ref": "#/definitions/DeviceCapabilities",
-            "description": "Capabilities param is optional and defaults to no capability"
+            "description": "Capabilities param is optional and defaults to no capability."
           },
           "deviceScope": {
-            "type": "string"
+            "type": "string",
+            "description": "The scope that this identity belongs to."
           },
           "parentScopes": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "description": "TODO service folks need to explain this."
             }
           }
         }
@@ -2171,7 +2200,7 @@
         "type": "object",
         "properties": {
           "deviceId": {
-            "description": "The ID of the device that indicated the error.",
+            "description": "Identifier of the device that indicated the error.",
             "type": "string"
           },
           "errorCode": {
@@ -2400,10 +2429,12 @@
             "type": "string"
           },
           "moduleId": {
-            "type": "string"
+            "type": "string",
+            "description": "Identifier of the module associated with the error, if applicable."
           },
           "operation": {
-            "type": "string"
+            "type": "string",
+            "description": "The type of the operation that failed."
           }
         }
       },
@@ -2412,14 +2443,15 @@
         "type": "object",
         "properties": {
           "deviceId": {
-            "description": "The ID of the device that indicated the warning.",
+            "description": "Identifier of the device that indicated the warning.",
             "type": "string"
           },
           "warningCode": {
             "enum": [
               "DeviceRegisteredWithoutTwin"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "The code associated with the warning."
           },
           "warningStatus": {
             "description": "Additional details associated with the warning.",
@@ -3006,45 +3038,55 @@
         }
       },
       "Module": {
-        "description": "Module identity on a device",
+        "description": "Module identity on a device.",
         "type": "object",
         "properties": {
           "moduleId": {
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of this module."
           },
           "managedBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module."
           },
           "deviceId": {
-            "type": "string"
+            "type": "string",
+            "description": "The unique identifier of the device that has this module."
           },
           "generationId": {
-            "type": "string"
+            "type": "string",
+            "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created."
           },
           "etag": {
-            "type": "string"
+            "type": "string",
+            "description": "A string representing a weak ETag for the module identity, as per RFC7232."
           },
           "connectionState": {
             "enum": [
               "Disconnected",
               "Connected"
             ],
-            "type": "string"
+            "type": "string",
+            "description": "Tells whether the module is connected or not."
           },
           "connectionStateUpdatedTime": {
             "format": "date-time",
-            "type": "string"
+            "type": "string",
+            "description": "A temporal indicator, showing the date and last time the connection state was updated."
           },
           "lastActivityTime": {
             "format": "date-time",
-            "type": "string"
+            "type": "string",
+            "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message."
           },
           "cloudToDeviceMessageCount": {
             "format": "int32",
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of cloud to module messages currently queued to be sent to the module."
           },
           "authentication": {
-            "$ref": "#/definitions/AuthenticationMechanism"
+            "$ref": "#/definitions/AuthenticationMechanism",
+            "description": "The details on what authentication mechanisms are used by this module when connecting to the service and edgehub."
           }
         }
       },
