@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.FrontDoor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EndpointsOperations operations.
+    /// FrontDoorNameAvailabilityWithSubscriptionOperations operations.
     /// </summary>
-    internal partial class EndpointsOperations : IServiceOperations<FrontDoorManagementClient>, IEndpointsOperations
+    internal partial class FrontDoorNameAvailabilityWithSubscriptionOperations : IServiceOperations<FrontDoorManagementClient>, IFrontDoorNameAvailabilityWithSubscriptionOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EndpointsOperations class.
+        /// Initializes a new instance of the FrontDoorNameAvailabilityWithSubscriptionOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EndpointsOperations(FrontDoorManagementClient client)
+        internal FrontDoorNameAvailabilityWithSubscriptionOperations(FrontDoorManagementClient client)
         {
             if (client == null)
             {
@@ -51,47 +51,10 @@ namespace Microsoft.Azure.Management.FrontDoor
         public FrontDoorManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Removes a content from Front Door.
+        /// Check the availability of a Front Door subdomain.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='contentFilePaths'>
-        /// The path to the content to be purged. Path can be a full URL, e.g.
-        /// '/pictures/city.png' which removes a single file, or a directory with a
-        /// wildcard, e.g. '/pictures/*' which removes all folders and files in the
-        /// directory.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> PurgeContentWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, PurgeParameters contentFilePaths, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginPurgeContentWithHttpMessagesAsync(resourceGroupName, frontDoorName, contentFilePaths, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Removes a content from Front Door.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='contentFilePaths'>
-        /// The path to the content to be purged. Path can be a full URL, e.g.
-        /// '/pictures/city.png' which removes a single file, or a directory with a
-        /// wildcard, e.g. '/pictures/*' which removes all folders and files in the
-        /// directory.
+        /// <param name='checkFrontDoorNameAvailabilityInput'>
+        /// Input to check.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -102,6 +65,9 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -111,57 +77,19 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginPurgeContentWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, PurgeParameters contentFilePaths, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckWithHttpMessagesAsync(CheckNameAvailabilityInput checkFrontDoorNameAvailabilityInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (checkFrontDoorNameAvailabilityInput == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "checkFrontDoorNameAvailabilityInput");
+            }
+            if (checkFrontDoorNameAvailabilityInput != null)
+            {
+                checkFrontDoorNameAvailabilityInput.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 80)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
-                }
-            }
-            if (frontDoorName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontDoorName");
-            }
-            if (frontDoorName != null)
-            {
-                if (frontDoorName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontDoorName", 64);
-                }
-                if (frontDoorName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "frontDoorName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontDoorName, "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
-                }
-            }
-            if (contentFilePaths == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "contentFilePaths");
-            }
-            if (contentFilePaths != null)
-            {
-                contentFilePaths.Validate();
             }
             string apiVersion = "2020-05-01";
             // Tracing
@@ -171,19 +99,15 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("contentFilePaths", contentFilePaths);
+                tracingParameters.Add("checkFrontDoorNameAvailabilityInput", checkFrontDoorNameAvailabilityInput);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginPurgeContent", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Check", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/purge").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Network/checkFrontDoorNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -227,9 +151,9 @@ namespace Microsoft.Azure.Management.FrontDoor
 
             // Serialize Request
             string _requestContent = null;
-            if(contentFilePaths != null)
+            if(checkFrontDoorNameAvailabilityInput != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(contentFilePaths, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(checkFrontDoorNameAvailabilityInput, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -253,7 +177,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -283,12 +207,30 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<CheckNameAvailabilityOutput>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckNameAvailabilityOutput>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
