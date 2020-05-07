@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// <summary>
     /// Chunk.
     /// </summary>
-    internal class Chunk : IDisposable
+    internal class Chunk
     {
         /// <summary>
         /// Avro Reader to parser the Events.
@@ -59,11 +59,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlockOffset = _avroReader.BlockOffset;
             EventIndex = _avroReader.ObjectIndex;
             return new BlobChangeFeedEvent(result);
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

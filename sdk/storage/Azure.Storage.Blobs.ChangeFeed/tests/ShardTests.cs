@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             // Arrange
             string shardPath = "shardPath";
-            long chunkIndex = 4;
+            long chunkIndex = 5;
             long blockOffset = 100;
             long eventIndex = 200;
 
@@ -204,7 +204,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Verify(r => r.BuildChunk(
                 containerClient.Object,
-                "chunk4",
+                "chunk5",
                 blockOffset,
                 eventIndex));
 
@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
             // Arrange
             string shardPath = "shardPath";
-            long chunkIndex = 4;
+            long chunkIndex = 5;
             long blockOffset = 100;
             long eventIndex = 200;
 
@@ -386,7 +386,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunkFactory.Verify(r => r.BuildChunk(
                 containerClient.Object,
-                "chunk4",
+                "chunk5",
                 blockOffset,
                 eventIndex));
 
@@ -397,11 +397,21 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public async Task Next()
         {
             // Arrange
-            Guid eventId = Guid.NewGuid();
-            BlobChangeFeedEvent expectedChangeFeedEvent = new BlobChangeFeedEvent
+            int chunkCount = 4;
+            int eventCount = 8;
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<ChunkFactory> chunkFactory = new Mock<ChunkFactory>(MockBehavior.Strict);
+            List<Mock<Chunk>> chunks = new List<Mock<Chunk>>();
+
+            List<BlobChangeFeedEvent> expectedChangeFeedEvents = new List<BlobChangeFeedEvent>();
+            for (int i = 0; i < eventCount; i++)
             {
-                Id = eventId
-            };
+                chunks.Add(new Mock<Chunk>(MockBehavior.Strict));
+                expectedChangeFeedEvents.Add(new BlobChangeFeedEvent
+                {
+                    Id = Guid.NewGuid()
+                });
+            }
 
             string shardPath = "shardPath";
             long chunkIndex = 2;
@@ -412,10 +422,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 chunkIndex,
                 blockOffset,
                 eventIndex);
-
-            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
-            Mock<ChunkFactory> chunkFactory = new Mock<ChunkFactory>(MockBehavior.Strict);
-            Mock<Chunk> chunk = new Mock<Chunk>(MockBehavior.Strict);
 
             if (IsAsync)
             {
@@ -440,24 +446,46 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     default)).Returns(pageable);
             }
 
-            chunkFactory.Setup(r => r.BuildChunk(
+            chunkFactory.SetupSequence(r => r.BuildChunk(
                 It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
-                .Returns(chunk.Object);
+                .Returns(chunks[0].Object)
+                .Returns(chunks[1].Object)
+                .Returns(chunks[2].Object)
+                .Returns(chunks[3].Object);
 
-            chunk.Setup(r => r.Next(
-                It.IsAny<bool>(),
-                default))
-                .Returns(Task.FromResult(expectedChangeFeedEvent));
-
-            chunk.SetupSequence(r => r.HasNext())
+            chunks[0].SetupSequence(r => r.HasNext())
                 .Returns(true)
-                .Returns(true);
+                .Returns(false);
 
-            chunk.Setup(r => r.BlockOffset).Returns(blockOffset);
-            chunk.Setup(r => r.EventIndex).Returns(eventIndex);
+            chunks[1].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(false);
+
+            chunks[2].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(false);
+
+            chunks[3].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(true)
+                .Returns(true)
+                .Returns(false);
+
+            for (int i = 0; i < chunkCount; i++)
+            {
+
+                chunks[i].SetupSequence(r => r.Next(
+                    It.IsAny<bool>(),
+                    default))
+                    .Returns(Task.FromResult(expectedChangeFeedEvents[2 * i]))
+                    .Returns(Task.FromResult(expectedChangeFeedEvents[2 * i + 1]));
+            }
+
+            chunks[2].Setup(r => r.BlockOffset).Returns(blockOffset);
+            chunks[2].Setup(r => r.EventIndex).Returns(eventIndex);
 
             ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
 
@@ -469,12 +497,25 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shardCursor)
                 .ConfigureAwait(false);
 
-            BlobChangeFeedEvent changeFeedEvent = await shard.Next(IsAsync);
+            List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
+            for (int i = 0; i < 4; i++)
+            {
+                changeFeedEvents.Add(await shard.Next(IsAsync));
+            }
             ShardCursor cursor = shard.GetCursor();
+            for (int i = 0; i < 4; i++)
+            {
+                changeFeedEvents.Add(await shard.Next(IsAsync));
+            }
 
             // Assert
-            Assert.AreEqual(eventId, changeFeedEvent.Id);
-            Assert.AreEqual(2, cursor.ChunkIndex);
+            for (int i = 0; i < eventCount; i++)
+            {
+                Assert.AreEqual(expectedChangeFeedEvents[i].Id, changeFeedEvents[i].Id);
+            }
+
+            Assert.AreEqual(4, cursor.ChunkIndex);
+            Assert.AreEqual(eventIndex, cursor.EventIndex);
 
             if (IsAsync)
             {
@@ -500,12 +541,34 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 "chunk2",
                 blockOffset,
                 eventIndex));
+            chunkFactory.Verify(r => r.BuildChunk(
+                containerClient.Object,
+                "chunk3",
+                default,
+                default));
+            chunkFactory.Verify(r => r.BuildChunk(
+                containerClient.Object,
+                "chunk4",
+                default,
+                default));
+            chunkFactory.Verify(r => r.BuildChunk(
+                containerClient.Object,
+                "chunk5",
+                default,
+                default));
 
-            chunk.Verify(r => r.HasNext());
-            chunk.Verify(r => r.Next(IsAsync, default));
-            chunk.Verify(r => r.HasNext());
-            chunk.Verify(r => r.BlockOffset);
-            chunk.Verify(r => r.EventIndex);
+            for (int i = 0; i < chunkCount; i++)
+            {
+                chunks[i].Verify(r => r.Next(IsAsync, default), Times.Exactly(2));
+            }
+
+            chunks[0].Verify(r => r.HasNext(), Times.Exactly(2));
+            chunks[1].Verify(r => r.HasNext(), Times.Exactly(2));
+            chunks[2].Verify(r => r.HasNext(), Times.Exactly(2));
+            chunks[3].Verify(r => r.HasNext(), Times.Exactly(4));
+
+            chunks[2].Verify(r => r.BlockOffset);
+            chunks[2].Verify(r => r.EventIndex);
         }
 
         private static Task<Page<BlobHierarchyItem>> GetChunkPagesFuncAsync(
@@ -533,6 +596,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobsModelFactory.BlobHierarchyItem(
                     null,
                     BlobsModelFactory.BlobItem("chunk4", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("chunk5", false, null))
             });
     }
 }

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
-    internal class Shard : IDisposable
+    internal class Shard
     {
         /// <summary>
         /// Container Client for listing Chunks.
@@ -78,9 +78,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             return changeFeedEvent;
         }
-
-        /// <inheritdoc/>
-        public void Dispose() => _currentChunk.Dispose();
 
         /// <summary>
         /// Constructor for use by <see cref="ShardFactory.BuildShard(bool, BlobContainerClient, string, ShardCursor)"/>.

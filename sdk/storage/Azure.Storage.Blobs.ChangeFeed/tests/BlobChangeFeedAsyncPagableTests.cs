@@ -15,16 +15,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     public class BlobChangeFeedAsyncPagableTests : ChangeFeedTestBase
     {
         public BlobChangeFeedAsyncPagableTests(bool async)
-            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        //TODO better cursor tests
-        //TODO start and end time tests
-        //TODO page size tests
-
         [Test]
-        //[Ignore("")]
+        [Ignore("")]
         public async Task Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -61,7 +57,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        //[Ignore("")]
+        [Ignore("")]
         public async Task CursorTest()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
