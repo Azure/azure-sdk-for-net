@@ -116,7 +116,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries, false));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries, false));
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests
 
             RecordEntry[] entries = { };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries, false));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
@@ -236,7 +236,7 @@ namespace Azure.Core.Tests
             var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
             var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
 
-            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
+            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }, false));
         }
 
         [Test]
@@ -265,6 +265,31 @@ namespace Azure.Core.Tests
 
             StringAssert.DoesNotContain(body, text);
             StringAssert.Contains($"\"RequestBody\": null", text);
+        }
+
+        [Test]
+        public void RecordSessionLookupSkipsRequestBodyWhenFilterIsOn()
+        {
+            var request = new MockRequest();
+            request.Uri.Reset(new Uri("https://mockuri.com"));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A nice and long body."));
+            request.Headers.Add("Content-Type", "text/json");
+
+            HttpMessage message = new HttpMessage(request, null);
+            message.Response = new MockResponse(200);
+
+            var session = new RecordSession();
+            var recordTransport = new RecordTransport(session, Mock.Of<HttpPipelineTransport>(), entry => EntryRecordModel.RecordWithoutRequestBody, Mock.Of<Random>());
+
+            recordTransport.Process(message);
+
+            var matcher = new RecordMatcher();
+            var sanitizer = new RecordedTestSanitizer();
+
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body."));
+
+            session.Lookup(request, matcher, sanitizer, entry => true);
+            Assert.Throws<InvalidOperationException>(() => session.Lookup(request, matcher, sanitizer, entry => false));
         }
 
         private class TestSanitizer : RecordedTestSanitizer

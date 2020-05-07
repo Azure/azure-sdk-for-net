@@ -18,12 +18,15 @@ namespace Azure.Core.TestFramework
 
         private readonly Random _random;
 
-        public PlaybackTransport(RecordSession session, RecordMatcher matcher, RecordedTestSanitizer sanitizer, Random random)
+        private readonly Func<RecordEntry, bool> _skipRequestBodyFilter;
+
+        public PlaybackTransport(RecordSession session, RecordMatcher matcher, RecordedTestSanitizer sanitizer, Random random, Func<RecordEntry, bool> skipRequestBodyFilter)
         {
             _session = session;
             _matcher = matcher;
             _random = random;
             _sanitizer = sanitizer;
+            _skipRequestBodyFilter = skipRequestBodyFilter;
         }
 
         public override void Process(HttpMessage message)
@@ -41,7 +44,7 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer));
+            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer, _skipRequestBodyFilter));
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message)
@@ -59,7 +62,7 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer));
+            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer, _skipRequestBodyFilter));
         }
 
         public override Request CreateRequest()
