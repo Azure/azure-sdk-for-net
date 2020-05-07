@@ -288,7 +288,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/RegistryOperation"
+                  "$ref": "#/definitions/ExportImportDevice"
                 }
               }
             },
@@ -2051,11 +2051,11 @@
           }
         }
       },
-      "RegistryOperation": {
+      "ExportImportDevice": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "The id of the device for this operation",
+            "description": "Device Id is always required",
             "type": "string"
           },
           "moduleId": {
@@ -2120,8 +2120,7 @@
               "type": "string"
             }
           }
-        },
-        "required": ["id"]
+        }
       },
       "PropertyContainer": {
         "description": "Represents Twin properties",
@@ -3034,18 +3033,15 @@
           },
           "connectionStateUpdatedTime": {
             "format": "date-time",
-            "type": "string",
-            "readOnly": true
+            "type": "string"
           },
           "lastActivityTime": {
             "format": "date-time",
-            "type": "string",
-            "readOnly": true
+            "type": "string"
           },
           "cloudToDeviceMessageCount": {
             "format": "int32",
-            "type": "integer",
-            "readOnly": true
+            "type": "integer"
           },
           "authentication": {
             "$ref": "#/definitions/AuthenticationMechanism"
