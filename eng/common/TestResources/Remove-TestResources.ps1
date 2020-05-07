@@ -125,7 +125,7 @@ if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
     if (Test-Path $preRemovalScript) {
         Log "Invoking pre resource removal script '$preRemovalScript'"
 
-        if ($PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
+        if (!$PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
             $PSBoundParameters.Add('ResourceGroupName', $ResourceGroupName);
         }
 
