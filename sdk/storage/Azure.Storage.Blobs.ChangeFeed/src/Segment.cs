@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             Finalized = finalized;
         }
 
-        public SegmentCursor GetCursor()
+        public virtual SegmentCursor GetCursor()
         {
             List<ShardCursor> shardCursors = new List<ShardCursor>();
             foreach (Shard shard in _shards)
@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 shardIndex: _shardIndex);
         }
 
-        public async Task<List<BlobChangeFeedEvent>> GetPage(
+        public virtual async Task<List<BlobChangeFeedEvent>> GetPage(
             bool async,
             int? pageSize,
             CancellationToken cancellationToken = default)
@@ -100,12 +100,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
             }
 
-            //TODO how to get raw response for page?  Does it matter?
             return changeFeedEventList;
         }
 
-        //TODO figure out if this is right.
-        public bool HasNext()
+        public virtual bool HasNext()
             =>  _shards.Count > 0;
 
         /// <summary>

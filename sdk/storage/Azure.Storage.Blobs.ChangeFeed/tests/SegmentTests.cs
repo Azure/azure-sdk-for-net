@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 using Moq;
@@ -56,7 +57,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
             BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new ResponseImplementation());
+            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
@@ -158,7 +159,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
             BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new ResponseImplementation());
+            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
@@ -261,41 +262,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             shards[0].Verify(r => r.HasNext());
             shards[1].Verify(r => r.Next(IsAsync, default));
             shards[1].Verify(r => r.HasNext());
-        }
-
-        private class ResponseImplementation : Response
-        {
-            public override int Status => throw new NotImplementedException();
-
-            public override string ReasonPhrase => throw new NotImplementedException();
-
-            public override Stream ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override string ClientRequestId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool ContainsHeader(string name)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override IEnumerable<HttpHeader> EnumerateHeaders()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

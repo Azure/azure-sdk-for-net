@@ -103,6 +103,54 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
+        public static Task<Page<BlobHierarchyItem>> GetYearsPathFuncAsync(string continuation, int? pageSizeHint)
+            => Task.FromResult(GetYearPathFunc(continuation, pageSizeHint));
+
+        public static Page<BlobHierarchyItem> GetYearPathFunc(
+            string continuation,
+            int? pageSizeHint)
+            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/1601/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2019/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2020/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2022/", null),
+                BlobsModelFactory.BlobHierarchyItem("idx/segments/2023/", null),
+            });
+
+        public static Task<Page<BlobHierarchyItem>> GetSegmentsInYearFuncAsync(
+            string continuation,
+            int? pageSizeHint)
+            => Task.FromResult(GetSegmentsInYearFunc(continuation, pageSizeHint));
+
+        public static Page<BlobHierarchyItem> GetSegmentsInYearFunc(
+            string continuation,
+            int? pageSizeHint)
+            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/01/16/2300/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/02/2300/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/0000/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/1800/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2000/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2200/meta.json", false, null)),
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem("idx/segments/2020/03/05/1700/meta.json", false, null)),
+            });
+
         public class BlobHierarchyItemPage : Page<BlobHierarchyItem>
         {
             private List<BlobHierarchyItem> _items;

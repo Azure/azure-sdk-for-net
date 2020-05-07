@@ -153,38 +153,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Assert.AreEqual(expectedSegmentPaths, segmentPaths);
         }
-
-        private static Task<Page<BlobHierarchyItem>> GetSegmentsInYearFuncAsync(
-            string continuation,
-            int? pageSizeHint)
-            => Task.FromResult(GetSegmentsInYearFunc(continuation, pageSizeHint));
-
-        private static Page<BlobHierarchyItem> GetSegmentsInYearFunc(
-            string continuation,
-            int? pageSizeHint)
-            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
-            {
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/01/16/2300/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/02/2300/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/0000/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/1800/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2000/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/03/2200/meta.json", false, null)),
-                BlobsModelFactory.BlobHierarchyItem(
-                    null,
-                    BlobsModelFactory.BlobItem("idx/segments/2020/03/05/1700/meta.json", false, null)),
-            });
     }
 }

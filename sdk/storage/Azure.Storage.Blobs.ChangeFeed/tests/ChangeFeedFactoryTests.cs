@@ -60,20 +60,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             expectedYears.Enqueue("idx/segments/2023/");
             Assert.AreEqual(expectedYears, years);
         }
-
-        private static Task<Page<BlobHierarchyItem>> GetYearsPathFuncAsync(string continuation, int? pageSizeHint)
-            => Task.FromResult(GetYearPathFunc(continuation, pageSizeHint));
-
-        private static Page<BlobHierarchyItem> GetYearPathFunc(
-            string continuation,
-            int? pageSizeHint)
-            => new BlobHierarchyItemPage(new List<BlobHierarchyItem>
-            {
-                BlobsModelFactory.BlobHierarchyItem("idx/segments/1601/", null),
-                BlobsModelFactory.BlobHierarchyItem("idx/segments/2019/", null),
-                BlobsModelFactory.BlobHierarchyItem("idx/segments/2020/", null),
-                BlobsModelFactory.BlobHierarchyItem("idx/segments/2022/", null),
-                BlobsModelFactory.BlobHierarchyItem("idx/segments/2023/", null),
-            });
     }
 }

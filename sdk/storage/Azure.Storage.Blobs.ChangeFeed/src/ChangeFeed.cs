@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         // The last segment may still be adding chunks.
         public async Task<Page<BlobChangeFeedEvent>> GetPage(
             bool async,
-            int pageSize = 512,
+            int pageSize = Constants.ChangeFeed.DefaultPageSize,
             CancellationToken cancellationToken = default)
         {
             if (!HasNext())
@@ -121,8 +121,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return new BlobChangeFeedEventPage(blobChangeFeedEvents, JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor()));
         }
 
-
-
         public bool HasNext()
         {
             // We have no more segments, years, and the current segment doesn't have hext.
@@ -136,7 +134,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return _currentSegment.DateTime <= end;
         }
 
-        //TODO how do update this?
         public DateTimeOffset LastConsumable()
         {
             return _lastConsumable;
@@ -195,8 +192,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         private async Task AdvanceSegmentIfNecessary(bool async)
         {
+            // If the current segment has more Events, we don't need to do anything.
+            if (_currentSegment.HasNext())
+            {
+                return;
+            }
+
             // If the current segment is completed, remove it
-            if (!_currentSegment.HasNext() && _segments.Count > 0)
+            if (_segments.Count > 0)
             {
                 _currentSegment = await _segmentFactory.BuildSegment(
                     async,

@@ -311,6 +311,7 @@ namespace Azure.Storage
             public const string InitalizationSegment = "1601";
             public const string MetaSegmentsPath = "meta/segments.json";
             public const long ChunkBlockDownloadSize = MB;
+            public const int DefaultPageSize = 512;
 
             internal static class Event
             {
