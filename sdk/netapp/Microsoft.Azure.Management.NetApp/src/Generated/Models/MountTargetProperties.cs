@@ -11,35 +11,26 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Mount Target
+    /// Mount target properties
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class MountTarget
+    public partial class MountTargetProperties
     {
         /// <summary>
-        /// Initializes a new instance of the MountTarget class.
+        /// Initializes a new instance of the MountTargetProperties class.
         /// </summary>
-        public MountTarget()
+        public MountTargetProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MountTarget class.
+        /// Initializes a new instance of the MountTargetProperties class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="fileSystemId">fileSystemId</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="mountTargetId">mountTargetId</param>
         /// <param name="ipAddress">ipAddress</param>
         /// <param name="subnet">subnet</param>
@@ -48,13 +39,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="gateway">gateway</param>
         /// <param name="netmask">netmask</param>
         /// <param name="smbServerFqdn">smbServerFQDN</param>
-        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string))
+        public MountTargetProperties(string fileSystemId, string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string))
         {
-            Location = location;
-            Id = id;
-            Name = name;
-            Type = type;
-            Tags = tags;
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
             IpAddress = ipAddress;
@@ -73,42 +59,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets resource Id
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
         /// Gets mountTargetId
         /// </summary>
         /// <remarks>
         /// UUID v4 used to identify the MountTarget
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.mountTargetId")]
+        [JsonProperty(PropertyName = "mountTargetId")]
         public string MountTargetId { get; private set; }
 
         /// <summary>
@@ -117,7 +73,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// UUID v4 used to identify the MountTarget
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.fileSystemId")]
+        [JsonProperty(PropertyName = "fileSystemId")]
         public string FileSystemId { get; set; }
 
         /// <summary>
@@ -126,7 +82,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// The mount target's IPv4 address
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.ipAddress")]
+        [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; private set; }
 
         /// <summary>
@@ -135,7 +91,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// The subnet
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.subnet")]
+        [JsonProperty(PropertyName = "subnet")]
         public string Subnet { get; set; }
 
         /// <summary>
@@ -145,7 +101,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// The start of IPv4 address range to use when creating a new mount
         /// target
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.startIp")]
+        [JsonProperty(PropertyName = "startIp")]
         public string StartIp { get; set; }
 
         /// <summary>
@@ -155,7 +111,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// The end of IPv4 address range to use when creating a new mount
         /// target
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.endIp")]
+        [JsonProperty(PropertyName = "endIp")]
         public string EndIp { get; set; }
 
         /// <summary>
@@ -165,7 +121,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// The gateway of the IPv4 address range to use when creating a new
         /// mount target
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.gateway")]
+        [JsonProperty(PropertyName = "gateway")]
         public string Gateway { get; set; }
 
         /// <summary>
@@ -175,7 +131,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// The netmask of the IPv4 address range to use when creating a new
         /// mount target
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.netmask")]
+        [JsonProperty(PropertyName = "netmask")]
         public string Netmask { get; set; }
 
         /// <summary>
@@ -184,7 +140,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// The SMB server's Fully Qualified Domain Name, FQDN
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.smbServerFqdn")]
+        [JsonProperty(PropertyName = "smbServerFqdn")]
         public string SmbServerFqdn { get; set; }
 
         /// <summary>
@@ -195,10 +151,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
             if (FileSystemId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FileSystemId");
