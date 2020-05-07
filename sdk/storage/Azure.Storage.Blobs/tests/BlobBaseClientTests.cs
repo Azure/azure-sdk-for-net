@@ -475,6 +475,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Details.VersionId);
         }
 
+        // TODO: Recorded Only
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
@@ -2377,6 +2378,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        // TODO: Recorded Only
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
