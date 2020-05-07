@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -55,7 +56,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
 
-            using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
             BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
             Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
@@ -157,7 +159,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
 
-            using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
             BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
             Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
