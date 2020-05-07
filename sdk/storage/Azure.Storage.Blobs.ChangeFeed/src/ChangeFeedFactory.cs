@@ -71,8 +71,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (!changeFeedContainerExists)
             {
-                //TODO improve this error message
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is current being enabled.");
+                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
             }
 
             // Get last consumable

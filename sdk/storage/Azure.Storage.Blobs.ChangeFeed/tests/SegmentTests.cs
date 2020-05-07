@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Test building a Segment with a SegmentCursor, and then calling Segment.GetCursor().
+        /// </summary>
         [Test]
         public async Task GetCursor()
         {

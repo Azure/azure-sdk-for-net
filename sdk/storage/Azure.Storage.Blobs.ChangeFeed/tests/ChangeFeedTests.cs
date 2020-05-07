@@ -25,6 +25,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests building a ChangeFeed with a ChangeFeedCursor, and then calling ChangeFeed.GetCursor()
+        /// and making sure the cursors match.
+        /// </summary>
         [Test]
         public async Task GetCursor()
         {
@@ -248,10 +252,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
         /// <summary>
         /// This test has 8 total events, 4 segments, and 2 years.
-        /// We call ChangeFeed.GetPage() with a page size of 3, and then no page size,
+        /// We call ChangeFeed.GetPage() with a page size of 3, and then again with no page size,
         /// resulting in two pages with 3 and 5 Events.
         /// </summary>
-        /// <returns></returns>
         [Test]
         public async Task GetPage()
         {

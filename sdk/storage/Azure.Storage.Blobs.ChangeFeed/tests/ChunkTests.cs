@@ -22,6 +22,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns true.
+        /// </summary>
         [Test]
         public void HasNext_True()
         {
@@ -65,6 +68,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Verify(r => r.HasNext());
         }
 
+
+        /// <summary>
+        /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns false.
+        /// </summary>
         [Test]
         public void HasNext_False()
         {
@@ -108,6 +115,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Verify(r => r.HasNext());
         }
 
+        /// <summary>
+        /// Tests Chunk.Next() and the BlobChangeFeedEvent and BlobChangeFeedEventData constructors.
+        /// </summary>
         [Test]
         public async Task Next()
         {

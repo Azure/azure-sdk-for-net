@@ -18,6 +18,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests Read() with various sized Reads().
+        /// </summary>
         [Test]
         public async Task ReadAsync()
         {
@@ -52,6 +55,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             TestHelper.AssertSequenceEqual(exectedData, actualData);
         }
 
+        /// <summary>
+        /// Tests LazyBlobStream parameter validation.
+        /// </summary>
         [Test]
         public async Task ReadAsync_InvalidParameterTests()
         {

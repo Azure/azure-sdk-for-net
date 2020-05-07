@@ -108,7 +108,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             while (blobChangeFeedEvents.Count < pageSize
                 && HasNext())
             {
-                //TODO what if segment doesn't have a page size worth of data?
                 List<BlobChangeFeedEvent> newEvents = await _currentSegment.GetPage(
                     async,
                     remainingEvents,

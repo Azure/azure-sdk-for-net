@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.ChangeFeed.Models
+namespace Azure.Storage.Blobs.ChangeFeed.Models
 {
     /// <summary>
     /// BlobChangeFeedModelFactory for building mock objects.

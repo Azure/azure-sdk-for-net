@@ -150,7 +150,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 if (copiedBytes == 0)
                 {
                     // We hit the end of the blob with the last download call.
-                    //TODO what if the blob is growing?
                     if (_offset == _blobLength)
                     {
                         return totalCopiedBytes;

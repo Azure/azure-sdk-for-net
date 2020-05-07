@@ -21,17 +21,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
             Values = events;
             ContinuationToken = continuationToken;
         }
-
-    //    public BlobChangeFeedEventPage(Response raw, List<GenericRecord> data)
-    //    {
-    //        _raw = raw;
-    //        ContinuationToken = null;
-    //        var changes = new List<BlobChangeFeedEvent>();
-    //        foreach (GenericRecord value in data)
-    //        {
-    //            changes.Add(new BlobChangeFeedEvent(value));
-    //        }
-    //        Values = changes;
-    //    }
     }
 }

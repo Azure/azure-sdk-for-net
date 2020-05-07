@@ -70,7 +70,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             int i = 0;
             foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
             {
-                //TODO cleanup this line
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
                 Shard shard = await _shardFactory.BuildShard(
                     async,

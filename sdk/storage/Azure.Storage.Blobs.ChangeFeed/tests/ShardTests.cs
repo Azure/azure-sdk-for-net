@@ -20,6 +20,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
+        /// <summary>
+        /// Tests creating a Shard with a ShardCursor, and then calling Shard.GetCursor().
+        /// </summary>
         [Test]
         public async Task GetCursor()
         {
@@ -118,6 +121,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunk.Verify(r => r.EventIndex);
         }
 
+        /// <summary>
+        /// Tests Shard.HasNext().
+        /// </summary>
         [Test]
         public async Task HasNext_False()
         {
@@ -211,6 +217,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunk.Verify(r => r.HasNext());
         }
 
+        /// <summary>
+        /// Tests Shard.HasNext().
+        /// </summary>
         [Test]
         public async Task HasNext_ChunksLeft()
         {
@@ -300,6 +309,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 eventIndex));
         }
 
+        /// <summary>
+        /// Tests Shard.HasNext().
+        /// </summary>
         [Test]
         public async Task HasNext_CurrentChunkHasNext()
         {
@@ -393,6 +405,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunk.Verify(r => r.HasNext());
         }
 
+        /// <summary>
+        /// In this test, the Shard has 4 Chunks with 2 Events in each Chunk.
+        /// We call ShardFactory.BuildShard() with a ShardCursor, to create the Shard,
+        /// Shard.Next() 4 times, Shard.GetCursor(), and then Shard.Next 4 times.
+        /// </summary>
         [Test]
         public async Task Next()
         {
