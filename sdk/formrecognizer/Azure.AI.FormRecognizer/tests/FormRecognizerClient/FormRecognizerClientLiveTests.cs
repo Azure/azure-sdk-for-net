@@ -267,7 +267,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
             if (useStream)
             {
@@ -317,7 +317,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels: false);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
 
             if (useStream)
             {
@@ -367,12 +367,12 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useLabels)
+        public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
 
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
             RequestFailedException capturedException = default;
@@ -386,7 +386,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 capturedException = ex;
             }
 
-            string expectedErrorCode = useLabels ? "3003" : "2003";
+            string expectedErrorCode = useTrainingLabels ? "3003" : "2003";
 
             Assert.NotNull(capturedException);
             Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
