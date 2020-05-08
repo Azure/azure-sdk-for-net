@@ -1605,7 +1605,6 @@
     },
     "/twins/{deviceId}/methods": {
       "post": {
-        "summary": "Invoke a direct method on a device.",
         "description": "Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
         "operationId": "DeviceMethod_InvokeDeviceMethod",
         "consumes": [
@@ -1618,14 +1617,14 @@
           {
             "name": "deviceId",
             "in": "path",
-            "description": "The ID of the device on which the direct method is to be invoked",
+            "description": "The Id of the device on which the direct method will be invoked.",
             "required": true,
             "type": "string"
           },
           {
             "name": "directMethodRequest",
             "in": "body",
-            "description": "Parameters to execute a direct method on the device",
+            "description": "Parameters to execute a direct method on the device.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethod"
@@ -1637,7 +1636,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the method response payload",
+            "description": "Returns the direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -1647,8 +1646,7 @@
     },
     "/twins/{deviceId}/modules/{moduleId}/methods": {
       "post": {
-        "summary": "Invoke a direct method on a module of a device.",
-        "description": "Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information",
+        "description": "Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
         "operationId": "DeviceMethod_InvokeModuleMethod",
         "consumes": [
           "application/json"
@@ -1660,21 +1658,21 @@
           {
             "name": "deviceId",
             "in": "path",
-            "description": "The ID of the device on which the direct method is to be invoked",
+            "description": "The Id of the device on whose module the direct method will be invoked.",
             "required": true,
             "type": "string"
           },
           {
             "name": "moduleId",
             "in": "path",
-            "description": "The ID of the module on which the direct method is to be invoked",
+            "description": "The Id of the module on which the direct method will be invoked.",
             "required": true,
             "type": "string"
           },
           {
             "name": "directMethodRequest",
             "in": "body",
-            "description": "Parameters to execute a direct method on the module",
+            "description": "Parameters to execute a direct method on the module.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethod"
@@ -1686,7 +1684,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the method response payload",
+            "description": "Returns the direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -2866,24 +2864,24 @@
       }
     },
     "CloudToDeviceMethod": {
-      "description": "Parameters to execute a direct method on the device",
+      "description": "Parameters to execute a direct method on the device.",
       "type": "object",
       "properties": {
         "methodName": {
-          "description": "Method to run",
+          "description": "Name of the method to be executed.",
           "type": "string"
         },
         "payload": {
-          "description": "Payload",
+          "description": "The JSON-formatted direct method payload, up to 128kb in size.",
           "type": "object"
         },
         "responseTimeoutInSeconds": {
-          "description": "Timeout for the method invocation to return a response",
+          "description": "Time (in seconds) that the service waits for the method invocation to return a response. It defaults to 30 seconds. Minimum allowed value is 5 seconds, maximum allowed value is 300 seconds.",
           "format": "int32",
           "type": "integer"
         },
         "connectTimeoutInSeconds": {
-          "description": "Timeout for the device to come online",
+          "description": "Time (in seconds) that the service waits for the device to come online. It defaults to 0, meaning the device must already be online. Maximum allowed value is 300 seconds.",
           "format": "int32",
           "type": "integer"
         }
@@ -3096,11 +3094,11 @@
       "properties": {
         "status": {
           "format": "int32",
-          "description": "Method invocation result status.",
+          "description": "Method invocation result status, provided by the device.",
           "type": "integer"
         },
         "payload": {
-          "description": "Method invocation result payload.",
+          "description": "The JSON-formatted direct method result payload, up to 128kb in size; provided by the device.",
           "type": "object"
         }
       }
