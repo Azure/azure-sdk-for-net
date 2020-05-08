@@ -1967,7 +1967,7 @@
             "disabled"
           ],
           "type": "string",
-          "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint."
+          "description": "Flags whether a device is enabled or not. If disabled, a device cannot connect to the service."
         },
         "statusReason": {
           "type": "string",
@@ -2102,7 +2102,7 @@
           "description": "The type of registry operation and if ETag should be ignored or not."
         },
         "status": {
-          "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint.",
+          "description": "Flags whether a module is enabled or not. If disabled, a module cannot connect to the service.",
           "enum": [
             "enabled",
             "disabled"
@@ -2130,11 +2130,11 @@
         },
         "properties": {
           "$ref": "#/definitions/PropertyContainer",
-          "description": "Properties are optional and defaults to empty object."
+          "description": "TODO need service folks to explain this."
         },
         "capabilities": {
           "$ref": "#/definitions/DeviceCapabilities",
-          "description": "Capabilities param is optional and defaults to no capability."
+          "description": "Status of capabilities enabled on the device."
         },
         "deviceScope": {
           "type": "string",
