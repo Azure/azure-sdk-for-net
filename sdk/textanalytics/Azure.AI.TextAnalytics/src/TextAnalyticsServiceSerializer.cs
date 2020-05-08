@@ -247,12 +247,24 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            bool invalidBatch = false;
+
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                {
+                    invalidBatch = true;
+                    collection.Clear();
+                    collection.Add(new DetectLanguageResult(error.Id, error.Error));
+                    break;
+                }
                 collection.Add(new DetectLanguageResult(error.Id, error.Error));
             }
 
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            if (!invalidBatch)
+            {
+                collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            }
 
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -326,12 +338,24 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            bool invalidBatch = false;
+
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                {
+                    invalidBatch = true;
+                    collection.Clear();
+                    collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
+                    break;
+                }
                 collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
             }
 
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            if (!invalidBatch)
+            {
+                collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            }
 
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -416,12 +440,24 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            bool invalidBatch = false;
+
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                {
+                    invalidBatch = true;
+                    collection.Clear();
+                    collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
+                    break;
+                }
                 collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
             }
 
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            if (!invalidBatch)
+            {
+                collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            }
 
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -543,12 +579,24 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            bool invalidBatch = false;
+
             foreach (var error in ReadDocumentErrors(root))
             {
+                if (string.IsNullOrEmpty(error.Id))
+                {
+                    invalidBatch = true;
+                    collection.Clear();
+                    collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
+                    break;
+                }
                 collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
             }
 
-            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            if (!invalidBatch)
+            {
+                collection = SortHeterogeneousCollection(collection, idToIndexMap);
+            }
 
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);

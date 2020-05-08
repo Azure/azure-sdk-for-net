@@ -328,7 +328,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        DetectLanguageResultCollection results = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -376,7 +383,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateDetectLanguageResponse(response, map);
+                        DetectLanguageResultCollection results = CreateDetectLanguageResponse(response, map);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -625,7 +639,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -676,7 +697,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateRecognizeEntitiesResponse(response, map);
+                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -910,7 +938,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -958,7 +993,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateAnalyzeSentimentResponse(response, map);
+                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1202,7 +1244,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        ExtractKeyPhrasesResultCollection results = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1252,7 +1301,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateKeyPhraseResponse(response, map);
+                        ExtractKeyPhrasesResultCollection results = CreateKeyPhraseResponse(response, map);
+                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        {
+                            // InvalidDocumentBatch.
+                            TextAnalyticsError error = results[0].Error;
+                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
