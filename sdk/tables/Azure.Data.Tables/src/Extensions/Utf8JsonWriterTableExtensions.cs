@@ -12,6 +12,8 @@ namespace Azure.Data.Tables
     {
         /// <summary>
         /// Writes the appropriate Odata type annotation for a given propertyName value pair.
+        /// The default case is intentionally unhandled as this means that no type annotation for the specified type is required.
+        /// This is because the type is naturally serialized in a way that the table service can interpret without hints.
         /// </summary>
         public static void WriteOdataTypeAnnotation(this Utf8JsonWriter writer, string propertyName, object value)
         {
