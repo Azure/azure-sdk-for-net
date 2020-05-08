@@ -25,13 +25,6 @@ namespace Azure.Data.Tables
         protected TableInternalClient()
         {
         }
-        /// <summary> Initializes a new instance of TableInternalClient. </summary>
-        internal TableInternalClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
-        {
-            RestClient = new TableInternalRestClient(clientDiagnostics, pipeline, url, version);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-        }
 
         /// <summary> Queries tables under the given account. </summary>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>

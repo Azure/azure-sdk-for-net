@@ -35,23 +35,23 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].
         /// </summary>
-        public float TextAngle { get; set; }
+        public float TextAngle { get; }
 
         /// <summary>
         /// The width of the image/PDF in pixels/inches, respectively.
         /// </summary>
-        public float Width { get; set; }
+        public float Width { get; }
 
         /// <summary>
         /// The height of the image/PDF in pixels/inches, respectively.
         /// </summary>
-        public float Height { get; set; }
+        public float Height { get; }
 
         /// <summary>
         /// The unit used by the width, height and <see cref="BoundingBox"/> properties. For images, the unit is
         /// &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;.
         /// </summary>
-        public LengthUnit Unit { get; set; }
+        public LengthUnit Unit { get; }
 
         /// <summary>
         /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of recognized lines of text.
@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across
         /// images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order.
         /// </summary>
-        public IReadOnlyList<FormLine> Lines { get; set; }
+        public IReadOnlyList<FormLine> Lines { get; }
 
         /// <summary>
         /// A list of extracted tables contained in a page.

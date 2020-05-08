@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -22,12 +21,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
 
-            Console.WriteLine($"Extracted {linkedEntities.Value.Count} linked entit{(linkedEntities.Value.Count > 1 ? "ies" : "y")}:");
-            foreach (LinkedEntity linkedEntity in linkedEntities.Value)
+            Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
+            foreach (LinkedEntity linkedEntity in linkedEntities)
             {
-                Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
                 foreach (LinkedEntityMatch match in linkedEntity.Matches)
                 {
                     Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");

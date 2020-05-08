@@ -1,7 +1,13 @@
 # Release History
 
-## 12.2.0-preview.1 (Unreleased)
+## 12.3.0-preview.1 (Unreleased)
 
+
+## 12.2.0 (2020-05)
+- Added DataLakeFileClient.Upload() overload that allows setting metadata, permissions and umask.
+- Fixed bug where PathClient.Rename() was not functioning correctly with SAS.
+- Added DataLakeFileSystemClient.GetPathClient().
+- Fixed bug where data lake errors weren't parsed correctly.
 
 ## 12.1.0 (2020-04)
 - Fixed bug where DataLakeFileSystemClient.DeleteIfExistsAsync() would throw an exception if the underlying File System did not exist.

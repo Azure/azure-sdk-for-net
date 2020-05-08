@@ -19,7 +19,7 @@ To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The
 ```C# Snippet:ExtractKeyPhrases
 string document = "My cat might need to see a veterinarian.";
 
-IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
+KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 
 Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -62,6 +62,7 @@ To see the full example source files, see:
 
 * [Synchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrases.cs)
 * [Asynchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesAsync.cs)
+* [ExtractKeyPhrases with warnings](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesWithWarnings.cs)
 * [Synchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
 * [Asynchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchAsync.cs)
 * [Synchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
