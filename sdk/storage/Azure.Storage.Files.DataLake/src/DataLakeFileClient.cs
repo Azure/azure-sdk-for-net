@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1720,7 +1722,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> AppendInternal(
+        internal virtual async Task<Response> AppendInternal(
             Stream content,
             long? offset,
             byte[] contentHash,
@@ -1984,7 +1986,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> FlushInternal(
+        internal virtual async Task<Response<PathInfo>> FlushInternal(
             long position,
             bool? retainUncommittedData,
             bool? close,
@@ -2633,15 +2635,9 @@ namespace Azure.Storage.Files.DataLake
             Stream content,
             DataLakeFileUploadOptions options,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Permissions,
-                options?.Umask,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
+                options,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2689,18 +2685,16 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            Upload(
                 content,
-                httpHeaders,
-                metadata: default,
-                permissions: default,
-                umask: default,
-                conditions,
-                progressHandler,
-                transferOptions: transferOptions,
-                async: false,
-                cancellationToken: cancellationToken)
-                .EnsureCompleted();
+                new DataLakeFileUploadOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    TransferOptions = transferOptions
+                },
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
@@ -2789,15 +2783,9 @@ namespace Azure.Storage.Files.DataLake
             Stream content,
             DataLakeFileUploadOptions options,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Permissions,
-                options?.Umask,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
+                options,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -2844,15 +2832,15 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                httpHeaders,
-                metadata: default,
-                permissions: default,
-                umask: default,
-                conditions,
-                progressHandler,
-                transferOptions: transferOptions,
+                new DataLakeFileUploadOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    TransferOptions = transferOptions
+                },
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -2943,23 +2931,12 @@ namespace Azure.Storage.Files.DataLake
             string path,
             DataLakeFileUploadOptions options,
             CancellationToken cancellationToken = default)
-        {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
-            {
-                return StagedUploadAsync(
-                    stream,
-                    options?.HttpHeaders,
-                    options?.Metadata,
-                    options?.Permissions,
-                    options?.Umask,
-                    options?.Conditions,
-                    options?.ProgressHandler,
-                    options?.TransferOptions ?? default,
+            => StagedUploadInternal(
+                    path,
+                    options,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
-            }
-        }
 
         /// <summary>
         /// The <see cref="Upload(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
@@ -3007,15 +2984,15 @@ namespace Azure.Storage.Files.DataLake
         {
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                return StagedUploadAsync(
+                return StagedUploadInternal(
                     stream,
-                    httpHeaders,
-                    metadata: default,
-                    permissions: default,
-                    umask: default,
-                    conditions,
-                    progressHandler,
-                    transferOptions: transferOptions,
+                    new DataLakeFileUploadOptions
+                    {
+                        HttpHeaders = httpHeaders,
+                        Conditions = conditions,
+                        ProgressHandler = progressHandler,
+                        TransferOptions = transferOptions
+                    },
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -3112,15 +3089,9 @@ namespace Azure.Storage.Files.DataLake
         {
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                return await StagedUploadAsync(
+                return await StagedUploadInternal(
                     stream,
-                    options?.HttpHeaders,
-                    options?.Metadata,
-                    options?.Permissions,
-                    options?.Umask,
-                    options?.Conditions,
-                    options?.ProgressHandler,
-                    options?.TransferOptions ?? default,
+                    options,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -3170,23 +3141,16 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
-        {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
-            {
-                return await StagedUploadAsync(
-                    stream,
-                    httpHeaders,
-                    metadata: default,
-                    permissions: default,
-                    umask: default,
-                    conditions,
-                    progressHandler,
-                    transferOptions: transferOptions,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-        }
+            => await UploadAsync(
+                path,
+                new DataLakeFileUploadOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    TransferOptions = transferOptions
+                },
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
@@ -3250,42 +3214,13 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// This operation will upload data as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// <paramref name="options"/> <see cref="StorageTransferOptions.InitialTransferSize"/>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the file.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// </param>
@@ -3301,91 +3236,37 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<PathInfo>> StagedUploadAsync(
+        internal async Task<Response<PathInfo>> StagedUploadInternal(
             Stream content,
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
+            DataLakeFileUploadOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             DataLakeFileClient client = new DataLakeFileClient(Uri, Pipeline, Version, ClientDiagnostics);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                client,
-                transferOptions,
+            var uploader = GetPartitionedUploader(
+                options.TransferOptions,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
-            if (async)
-            {
-                return await uploader.UploadAsync(
-                    content,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
-                    conditions,
-                    progressHandler,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                return uploader.Upload(
-                    content,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
-                    conditions,
-                    progressHandler,
-                    cancellationToken);
-            }
+            return await uploader.UploadInternal(
+                content,
+                options,
+                options.ProgressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
         /// This operation will upload data it as individually staged
         /// blocks if it's larger than the
-        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// <paramref name="options"/> <see cref="StorageTransferOptions.InitialTransferSize"/>.
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
         /// </param>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the file.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file.
-        /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// </param>
@@ -3401,29 +3282,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<PathInfo>> StagedUploadAsync(
+        internal async Task<Response<PathInfo>> StagedUploadInternal(
             string path,
-            PathHttpHeaders httpHeaders,
-            DataLakeRequestConditions conditions,
-            Metadata metadata,
-            string permissions,
-            string umask,
-            IProgress<long> progressHandler,
-            StorageTransferOptions transferOptions = default,
+            DataLakeFileUploadOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                return await StagedUploadAsync(
+                return await StagedUploadInternal(
                     stream,
-                    httpHeaders,
-                    metadata,
-                    permissions,
-                    umask,
-                    conditions,
-                    progressHandler,
-                    transferOptions: transferOptions,
+                    options,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -3523,5 +3392,79 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion ScheduleDeletion
+
+        #region PartitionedUplaoder
+        internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
+                GetPartitionedUploaderBehaviors(this),
+                transferOptions,
+                arrayPool,
+                operationName);
+
+        // static because it makes mocking easier in tests
+        internal static PartitionedUploader<DataLakeFileUploadOptions, PathInfo>.Behaviors GetPartitionedUploaderBehaviors(DataLakeFileClient client)
+            => new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>.Behaviors
+            {
+                InitializeDestination = async (args, async, cancellationToken)
+                    => await client.CreateInternal(
+                        PathResourceType.File,
+                        args.HttpHeaders,
+                        args.Metadata,
+                        args.Permissions,
+                        args.Umask,
+                        args.Conditions,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
+                {
+                    // Append data
+                    await client.AppendInternal(
+                        stream,
+                        offset: 0,
+                        contentHash: default,
+                        args.Conditions?.LeaseId,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // Flush data
+                    return await client.FlushInternal(
+                        position: stream.Length,
+                        retainUncommittedData: default,
+                        close: default,
+                        args.HttpHeaders,
+                        args.Conditions,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
+                    => await client.AppendInternal(
+                        stream,
+                        offset,
+                        contentHash: default,
+                        args.Conditions.LeaseId,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
+                {
+                    (var offset, var size) = partitions.LastOrDefault();
+                    return await client.FlushInternal(
+                        offset + size,
+                        retainUncommittedData: default,
+                        close: default,
+                        httpHeaders: args.HttpHeaders,
+                        conditions: args.Conditions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                },
+                Scope = operationName => client.ClientDiagnostics.CreateScope(operationName ??
+                    $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DataLakeFileClient.Upload)}")
+            };
+        #endregion
     }
 }
