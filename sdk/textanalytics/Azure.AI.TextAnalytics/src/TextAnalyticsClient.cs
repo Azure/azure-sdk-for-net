@@ -329,11 +329,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         DetectLanguageResultCollection results = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -384,11 +383,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         DetectLanguageResultCollection results = CreateDetectLanguageResponse(response, map);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -640,11 +638,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -698,11 +695,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -939,11 +935,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -994,11 +989,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -1245,11 +1239,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         ExtractKeyPhrasesResultCollection results = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -1302,11 +1295,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         ExtractKeyPhrasesResultCollection results = CreateKeyPhraseResponse(response, map);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -1548,11 +1540,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         RecognizeLinkedEntitiesResultCollection results = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -1604,11 +1595,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
-                        if (results[0].HasError && string.IsNullOrEmpty(results[0].Id))
+                        if (results[0].HasError && results[0].Id.Length == 0)
                         {
                             // InvalidDocumentBatch.
-                            TextAnalyticsError error = results[0].Error;
-                            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
                         }
                         return Response.FromValue(results, response);
                     default:
@@ -1694,6 +1684,12 @@ namespace Azure.AI.TextAnalytics
                 return null;
             return new Dictionary<string, string> { { "Target", error.Target } };
         }
+
+        private static void ThrowExceptionWhenErrorInBatch(TextAnalyticsError error)
+        {
+            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+        }
+
         #endregion
     }
 }
