@@ -30,7 +30,7 @@ namespace Azure.Storage
             public CreateScope Scope { get; set; }
         }
 
-        public static readonly InitializeDestinationInternal InitializeNoOp = (_, _, _) => Task.CompletedTask;
+        public static readonly InitializeDestinationInternal InitializeNoOp = (args, async, cancellationToken) => Task.CompletedTask;
         #endregion
 
         private readonly InitializeDestinationInternal _initializeDestinationInternal;
