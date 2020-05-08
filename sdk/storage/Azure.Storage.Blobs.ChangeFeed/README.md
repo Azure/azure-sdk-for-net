@@ -43,7 +43,59 @@ Apache Spark can consume logs directly as Avro files, which let you process them
 high-bandwidth, and without having to write a custom application.
 
 ## Examples
-- TODO
+
+### Get all events in the Change Feed
+```C# Snippet:SampleSnippetsChangeFeed_GetAllEvents
+// Get all the events in the change feed.
+List<BlobChangeFeedEvent> changeFeedEvents = new List<BlobChangeFeedEvent>();
+await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync())
+{
+    changeFeedEvents.Add(changeFeedEvent);
+}
+```
+
+### Get events between a start and end time
+```C# Snippet:SampleSnippetsChangeFeed_GetEventsBetweenStartAndEndTime
+// Create the start and end time.  The change feed client will round start time down to
+// the nearest hour, and round endTime up to the next hour if you provide DateTimeOffsets
+// with minutes and seconds.
+DateTimeOffset startTime = new DateTimeOffset(2017, 3, 2, 15, 0, 0, TimeSpan.Zero);
+DateTimeOffset endTime = new DateTimeOffset(2020, 10, 7, 2, 0, 0, TimeSpan.Zero);
+
+// You can also provide just a start or end time.
+await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync(
+    start: startTime,
+    end: endTime))
+{
+    changeFeedEvents.Add(changeFeedEvent);
+}
+```
+
+### Resume with cursor
+```C# Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
+IAsyncEnumerator<Page<BlobChangeFeedEvent>> enumerator = changeFeedClient
+    .GetChangesAsync()
+    .AsPages(pageSizeHint: 10)
+    .GetAsyncEnumerator();
+
+await enumerator.MoveNextAsync();
+
+foreach (BlobChangeFeedEvent changeFeedEvent in enumerator.Current.Values)
+{
+    changeFeedEvents.Add(changeFeedEvent);
+}
+
+// get the change feed cursor.  The cursor is not required to get each page of events,
+// it is intended to be saved and used to resume iterating at a later date.
+string cursor = enumerator.Current.ContinuationToken;
+
+// Resume iterating from the pervious position with the cursor.
+await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChangesAsync(
+    continuation: cursor))
+{
+    changeFeedEvents.Add(changeFeedEvent);
+}
+```
 
 ## Troubleshooting
 All Blob service operations will throw a
