@@ -13,8 +13,10 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.1
+dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.2
 ``` 
+
+**Note:** This package version targets Azure Form Recognizer service API version v2.0-preview.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -177,6 +179,8 @@ foreach (FormPage page in formPages.Value)
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+string modelId = "<modelId>";
+
 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
 {

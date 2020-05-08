@@ -674,9 +674,15 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var timesFaulted = 0;
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
                 await WaitForProgressAsync(progressList, data.LongLength);
@@ -691,6 +697,7 @@ namespace Azure.Storage.Blobs.Test
             await downloadResponse.Value.Content.CopyToAsync(actual);
             Assert.AreEqual(data.Length, actual.Length);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [LiveOnly]

@@ -17,7 +17,7 @@
 # Service teams
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
-/sdk/batch/                                     @matthchr 
+/sdk/batch/                                     @bgklein @xingwu1 
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
@@ -35,9 +35,10 @@
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
-/sdk/servicebus/                                @nemakam @JoshLove-msft @ShivangiReja @jsquire
+/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire
+/sdk/servicebus/Microsoft.*/                    @nemakam
 
-/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
+/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
 /sdk/tables/                                    @christothes
 

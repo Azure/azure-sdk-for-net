@@ -1,6 +1,5 @@
 jobs:
   - job: Build
-
     pool:
       vmImage: windows-2019
     steps:
@@ -9,7 +8,9 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - script: "dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+      - script: |
+          if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
+          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

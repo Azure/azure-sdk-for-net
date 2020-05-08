@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element)
         {
             string odataMetadata = default;
-            IReadOnlyList<TableResponseProperties> value = default;
+            IReadOnlyList<TableItem> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"))
@@ -34,7 +34,7 @@ namespace Azure.Data.Tables.Models
                     {
                         continue;
                     }
-                    List<TableResponseProperties> array = new List<TableResponseProperties>();
+                    List<TableItem> array = new List<TableItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Models
                         }
                         else
                         {
-                            array.Add(TableResponseProperties.DeserializeTableResponseProperties(item));
+                            array.Add(TableItem.DeserializeTableItem(item));
                         }
                     }
                     value = array;

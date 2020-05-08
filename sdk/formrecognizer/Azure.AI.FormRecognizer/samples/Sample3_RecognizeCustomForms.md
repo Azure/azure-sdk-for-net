@@ -22,6 +22,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+string modelId = "<modelId>";
+
 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
 {
@@ -48,6 +50,8 @@ To recognize form fields and other content from your custom forms from a file st
 ```C# Snippet:FormRecognizerRecognizeCustomFormsFromFile
 using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
 {
+    string modelId = "<modelId>";
+
     Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
     /*
      *

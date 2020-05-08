@@ -14,11 +14,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments)
+        internal DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Sentences = new ReadOnlyCollection<SentenceSentiment>(sentenceSentiments);
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         /// <summary>
@@ -37,5 +38,10 @@ namespace Azure.AI.TextAnalytics
         /// document.
         /// </summary>
         public IReadOnlyCollection<SentenceSentiment> Sentences { get; }
+
+        /// <summary>
+        /// Gets the warnings encountered while processing the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
     }
 }

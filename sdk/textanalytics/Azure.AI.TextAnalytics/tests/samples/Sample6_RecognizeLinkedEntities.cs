@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -24,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeLinkedEntities
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
+            LinkedEntityCollection linkedEntities = client.RecognizeLinkedEntities(document);
 
             Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
             foreach (LinkedEntity linkedEntity in linkedEntities)
