@@ -31,6 +31,9 @@ namespace EventHub.Tests.TestHelper
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
         internal const string KeyVaultePrefix = "sdk-KeyVault-";
 
+        internal const string ResourceGroupCluster = "prod-by3-533-rg";
+        internal const string TestClusterName = "PMTestCluster";
+
 
         public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
