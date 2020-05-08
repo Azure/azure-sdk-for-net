@@ -192,7 +192,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
         }
@@ -204,7 +204,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
         }

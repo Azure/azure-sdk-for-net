@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
 
             // List the first ten or fewer models currently stored in the account.
-            Pageable<CustomFormModelInfo> models = client.GetModelInfos();
+            Pageable<CustomFormModelInfo> models = client.GetCustomModels();
 
             foreach (CustomFormModelInfo modelInfo in models.Take(10))
             {

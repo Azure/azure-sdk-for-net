@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            CustomFormModelInfo modelInfo = client.GetModelInfosAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
             Assert.IsNotNull(modelInfo.CreatedOn);
