@@ -26,6 +26,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameter values for the tag scoring function. </summary>
-        public TagScoringParameters Parameters { get; }
+        public TagScoringParameters Parameters { get; set; }
     }
 }

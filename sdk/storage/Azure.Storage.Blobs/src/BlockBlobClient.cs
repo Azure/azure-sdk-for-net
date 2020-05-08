@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -85,15 +86,41 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxUploadBlobLongBytes"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxUploadBlobBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : int.MaxValue; // value is larger than can be represented by an int
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
+        public virtual long BlockBlobMaxUploadBlobLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : Constants.Blob.Block.MaxUploadBytes;
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="StageBlockAsync"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxStageBlockLongBytes"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxStageBlockBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : int.MaxValue; // value is larger than can be represented by an int
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
+        public virtual long BlockBlobMaxStageBlockLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in a block blob.
@@ -376,20 +403,16 @@ namespace Azure.Storage.Blobs.Specialized
             UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
+            var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
-            return uploader.Upload(
+            return uploader.UploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
-                cancellationToken);
+                options,
+                options.ProgressHandler,
+                async: false,
+                cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -428,19 +451,15 @@ namespace Azure.Storage.Blobs.Specialized
             UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
+            var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
-            return await uploader.UploadAsync(
+            return await uploader.UploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
+                options,
+                options.ProgressHandler,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -501,22 +520,17 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
-                transferOptions: default,
-                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
-
-            return uploader.Upload(
+            => Upload(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    AccessTier = accessTier,
+                    ProgressHandler = progressHandler,
+                },
                 cancellationToken);
-        }
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
@@ -574,22 +588,17 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
-                transferOptions: default,
-                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
-
-            return await uploader.UploadAsync(
+            => await UploadAsync(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    AccessTier = accessTier,
+                    ProgressHandler = progressHandler,
+                },
                 cancellationToken).ConfigureAwait(false);
-            }
 
         /// <summary>
         /// The <see cref="UploadInternal"/> operation creates a new block blob,
@@ -895,7 +904,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlockInfo>> StageBlockInternal(
+        internal virtual async Task<Response<BlockInfo>> StageBlockInternal(
             string base64BlockId,
             Stream content,
             byte[] transactionalContentHash,
@@ -2065,6 +2074,69 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Query
+
+        #region PartitionedUploader
+        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            =>  new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+                GetPartitionedUploaderBehaviors(this),
+                transferOptions,
+                arrayPool,
+                operationName);
+
+        internal static PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors GetPartitionedUploaderBehaviors(BlockBlobClient client)
+        {
+            static string GenerateBlockId(long offset)
+            {
+                // TODO #8162 - Add in a random GUID so multiple simultaneous
+                // uploads won't stomp on each other and the first to commit wins.
+                // This will require some changes to our test framework's
+                // RecordedClientRequestIdPolicy.
+                byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
+                BitConverter.GetBytes(offset).CopyTo(id, 0);
+                return Convert.ToBase64String(id);
+            }
+
+            return new PartitionedUploader<UploadBlobOptions, BlobContentInfo>.Behaviors
+            {
+                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
+                    => await client.UploadInternal(
+                        stream,
+                        args.HttpHeaders,
+                        args.Metadata,
+                        args.Tags,
+                        args.Conditions,
+                        args.AccessTier,
+                        progressHandler,
+                        operationName,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
+                    => await client.StageBlockInternal(
+                        GenerateBlockId(offset),
+                        stream,
+                        transactionalContentHash: default,
+                        args.Conditions,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
+                    => await client.CommitBlockListInternal(
+                        partitions.Select(partition => GenerateBlockId(partition.Offset)),
+                        args.HttpHeaders,
+                        args.Metadata,
+                        args.Tags,
+                        args.Conditions,
+                        args.AccessTier,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                Scope = operationName => client.ClientDiagnostics.CreateScope(operationName
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}")
+            };
+        }
+        #endregion
     }
 
     /// <summary>

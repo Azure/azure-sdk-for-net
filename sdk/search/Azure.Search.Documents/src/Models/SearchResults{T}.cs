@@ -77,10 +77,10 @@ namespace Azure.Search.Documents.Models
         internal Response RawResponse { get; private set; }
 
         /// <summary>
-        /// The IndexClient used to fetch the next page of results.  This is
+        /// The SearchClient used to fetch the next page of results.  This is
         /// only used when paging.
         /// </summary>
-        private SearchIndexClient _indexClient;
+        private SearchClient _pagingClient;
 
         /// <summary>
         /// Initializes a new instance of the SearchResults class.
@@ -105,16 +105,16 @@ namespace Azure.Search.Documents.Models
         /// Initialize the state needed to allow paging.
         /// </summary>
         /// <param name="client">
-        /// The SearchIndexClient to make requests.
+        /// The SearchClient to make requests.
         /// </param>
         /// <param name="rawResponse">
         /// The raw response that obtained these results.
         /// </param>
-        internal void ConfigurePaging(SearchIndexClient client, Response rawResponse)
+        internal void ConfigurePaging(SearchClient client, Response rawResponse)
         {
             Debug.Assert(client != null);
             Debug.Assert(rawResponse != null);
-            _indexClient = client;
+            _pagingClient = client;
             RawResponse = rawResponse;
         }
 
@@ -132,15 +132,15 @@ namespace Azure.Search.Documents.Models
         internal async Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken)
         {
             SearchResults<T> next = null;
-            if (_indexClient != null && NextOptions != null)
+            if (_pagingClient != null && NextOptions != null)
             {
                 next = async ?
-                    await _indexClient.SearchAsync<T>(
+                    await _pagingClient.SearchAsync<T>(
                         NextOptions.SearchText,
                         NextOptions,
                         cancellationToken)
                         .ConfigureAwait(false) :
-                    _indexClient.Search<T>(
+                    _pagingClient.Search<T>(
                         NextOptions.SearchText,
                         NextOptions,
                         cancellationToken);

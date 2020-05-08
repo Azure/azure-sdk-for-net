@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task DetectLanguageAsync()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             DetectedLanguage language = await client.DetectLanguageAsync(document);
 
-            Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+            Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
             #endregion
         }
     }

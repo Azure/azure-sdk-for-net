@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 {
     [LiveOnly]
     [NonParallelizable]
-    public class SampleFixture
+    public class SampleFixture: SamplesBase<KeyVaultTestEnvironment>
     {
         private KeyVaultTestEventListener _listener;
 

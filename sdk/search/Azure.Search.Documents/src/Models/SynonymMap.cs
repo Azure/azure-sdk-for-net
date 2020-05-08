@@ -14,6 +14,9 @@ namespace Azure.Search.Documents.Models
     {
         private const string DefaultFormat = "solr";
 
+        [CodeGenMember("etag")]
+        private string _etag;
+
         // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.
 
         /// <summary>
@@ -54,6 +57,15 @@ namespace Azure.Search.Documents.Models
             Name = name;
             Format = DefaultFormat;
             Synonyms = reader.ReadToEnd();
+        }
+
+        /// <summary>
+        /// The <see cref="Azure.ETag"/> of the <see cref="SynonymMap"/>.
+        /// </summary>
+        public ETag? ETag
+        {
+            get => _etag is null ? (ETag?)null : new ETag(_etag);
+            set => _etag = value?.ToString();
         }
 
         /// <summary>

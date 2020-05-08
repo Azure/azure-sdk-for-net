@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -334,9 +334,14 @@ namespace Azure.Storage.Blobs.Test
 
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
-
+            var timesFaulted = 0;
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
 
@@ -351,6 +356,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
             Assert.AreEqual(ToBase64(blockName), blobList.Value.UncommittedBlocks.First().Name);
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]
@@ -1729,9 +1735,15 @@ namespace Azure.Storage.Blobs.Test
 
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var timesFaulted = 0;
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 
@@ -1754,6 +1766,7 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [LiveOnly]

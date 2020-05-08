@@ -42,12 +42,16 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional <see cref="RehydratePriority"/>
         /// Indicates the priority with which to rehydrate an archived blob.
+        ///
+        /// This parameter is not valid for synchronous copies.
         /// </summary>
         public RehydratePriority? RehydratePriority { get; set; }
 
         /// <summary>
         /// If the destination blob should be sealed.
         /// Only applicable for Append Blobs.
+        ///
+        /// This parameter is not valid for synchronous copies.
         /// </summary>
         public bool? IsSealed { get; set; }
     }

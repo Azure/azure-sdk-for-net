@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a receipt recognized from the input document.
     /// </summary>
     public class RecognizedReceipt
     {
@@ -24,10 +25,14 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// A culture name representing the location in which the receipt has been issued. Currently only
+        /// &quot;en-US&quot; is supported.
         /// </summary>
         public string ReceiptLocale { get; internal set; }
 
         /// <summary>
+        /// Contains detailed form information about the recognized receipt, such as fields, form type and
+        /// form content elements.
         /// </summary>
         public RecognizedForm RecognizedForm { get; internal set; }
 

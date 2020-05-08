@@ -6,17 +6,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the latest azure-rest-api-specs apiVersion 2020-03-01,
+        Updating with the latest azure-rest-api-specs,
         Includes: 
-          Changing Throughput to a strong type in Options,
-          Introduces Autoscale,
-          Introduces KeyVaultUri in DatabaseAccount properties to support customer managed keys,
-          Introduces PublicNetworkAccess in DatabaseAccount
+		  Introduces NotebookWorkspacesOperations
+		  Adds OptionsResources to DatabaseGetResults
+		  Adds PrivateEndpointConnections to DatabaseAccountGetResults
+		  Adds GroupId to PrivateEndpointConnection
+		  Adds RequiredZoneNames to PrivateLinkResource
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

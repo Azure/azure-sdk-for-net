@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -30,16 +28,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the SettingResource class.
         /// </summary>
-        /// <param name="kind">the kind of the settings string
-        /// (DataExportSetting). Possible values include: 'DataExportSetting',
-        /// 'AlertSuppressionSetting'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SettingResource(string kind, string id = default(string), string name = default(string), string type = default(string))
+        public SettingResource(string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
-            Kind = kind;
             CustomInit();
         }
 
@@ -48,26 +42,5 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// Gets or sets the kind of the settings string (DataExportSetting).
-        /// Possible values include: 'DataExportSetting',
-        /// 'AlertSuppressionSetting'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Kind == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
-            }
-        }
     }
 }

@@ -8,6 +8,8 @@ using System.Diagnostics;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a receipt recognized from the input document and provides members
+    /// for accessing common fields present in US sales receipts.
     /// </summary>
     public class USReceipt : RecognizedReceipt
     {
@@ -32,14 +34,18 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// The type of receipt the service identified the submitted receipt to be.
         /// </summary>
         public USReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
+        /// Measures the degree of certainty of the <see cref="ReceiptType"/> attribution. Value
+        /// is between [0.0, 1.0].
         /// </summary>
         public float ReceiptTypeConfidence { get; internal set; }
 
         /// <summary>
+        /// A list of purchased items present in the recognized receipt.
         /// </summary>
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
@@ -47,38 +53,47 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<USReceiptItem> Items { get; internal set; }
 
         /// <summary>
+        /// The merchant's address.
         /// </summary>
         public FormField<string> MerchantAddress { get; internal set; }
 
         /// <summary>
+        /// The merchant's name.
         /// </summary>
         public FormField<string> MerchantName { get; internal set; }
 
         /// <summary>
+        /// The merchant's phone number.
         /// </summary>
         public FormField<string> MerchantPhoneNumber { get; internal set; }
 
         /// <summary>
+        /// The subtotal price.
         /// </summary>
         public FormField<float> Subtotal { get; internal set; }
 
         /// <summary>
+        /// The tax price.
         /// </summary>
         public FormField<float> Tax { get; internal set; }
 
         /// <summary>
+        /// The tip price.
         /// </summary>
         public FormField<float> Tip { get; internal set; }
 
         /// <summary>
+        /// The total price.
         /// </summary>
         public FormField<float> Total { get; internal set; }
 
         /// <summary>
+        /// The transaction date.
         /// </summary>
         public FormField<DateTime> TransactionDate { get; internal set; }
 
         /// <summary>
+        /// The transaction time.
         /// </summary>
         public FormField<TimeSpan> TransactionTime { get; internal set; }
 

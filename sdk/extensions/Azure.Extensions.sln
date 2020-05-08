@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.AspNetCore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.AspNetCore.Configuration.Secrets.Tests", "Azure.Extensions.AspNetCore.Configuration.Secrets\tests\Azure.Extensions.AspNetCore.Configuration.Secrets.Tests.csproj", "{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,18 @@ Global
 		{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}.Release|x64.Build.0 = Release|Any CPU
 		{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}.Release|x86.ActiveCfg = Release|Any CPU
 		{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}.Release|x86.Build.0 = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|x64.Build.0 = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1DF6702-2C7C-4A1E-B324-B574BF2BACCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{70DAB56B-C642-480D-9F47-D490959A3431} = {12C39FF8-57E3-4A24-AE05-42A104EC9C69}

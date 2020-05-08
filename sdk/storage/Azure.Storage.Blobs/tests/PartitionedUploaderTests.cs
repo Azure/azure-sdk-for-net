@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Moq;
@@ -47,14 +47,14 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
 
@@ -69,9 +69,9 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
@@ -94,9 +94,9 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
@@ -119,14 +119,14 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
@@ -143,9 +143,9 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(s_response, info);
@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(41, testPool.TotalRents);
             AssertStaged(sink, content);
 
-            foreach (byte[] bytes in sink.Staged.Values)
+            foreach (byte[] bytes in sink.Staged.Values.Select(val => val.Data))
             {
                 Assert.LessOrEqual(bytes.Length, 100);
                 Assert.GreaterOrEqual(bytes.Length, 50);
@@ -173,14 +173,14 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()]);
+            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
@@ -200,9 +200,9 @@ namespace Azure.Storage.Blobs.Test
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
-            SetupAsyncStaging(clientMock, sink);
+            SetupInternalStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions() { MaximumTransferLength = 20});
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20});
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
@@ -238,75 +238,88 @@ namespace Azure.Storage.Blobs.Test
                     .ReturnsAsync(s_response);
             }
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(0, testPool.TotalRents);
         }
 
-        private async Task<Response<BlobContentInfo>> InvokeUploadAsync(PartitionedUploader uploader, TestStream content)
+        [Test]
+        [Explicit]
+        public async Task CanHandleLongBlockBufferedUpload()
         {
-            if (_async)
+            const long blockSize = int.MaxValue + 1024L;
+            const int numBlocks = 2;
+            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
+            TrackingArrayPool testPool = new TrackingArrayPool();
+            StagingSink sink = new StagingSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
+
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            SetupInternalStaging(clientMock, sink);
+
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+                BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions
+                {
+                    InitialTransferSize = 1, // forces buffered upload
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = 2
+                },
+                arrayPool: testPool);
+            Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
+
+            Assert.AreEqual(s_response, info);
+            Assert.AreEqual(numBlocks, sink.Staged.Count);
+            Assert.AreEqual(numBlocks, sink.Blocks.Length);
+            foreach (var block in sink.Staged.Values)
             {
-                return await uploader.UploadAsync(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_progress, s_accessTier, s_cancellationToken);
-            }
-            else
-            {
-                return uploader.Upload(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_progress, s_accessTier, s_cancellationToken);
+                Assert.AreEqual(blockSize, block.StreamLength);
             }
         }
 
-        private void SetupAsyncStaging(Mock<BlockBlobClient> clientMock, StagingSink sink)
+        private async Task<Response<BlobContentInfo>> InvokeUploadAsync(PartitionedUploader<UploadBlobOptions, BlobContentInfo> uploader, Stream content)
         {
-            if (_async)
-            {
-                clientMock.Setup(
-                    c => c.StageBlockAsync(
-                        IsAny<string>(),
-                        IsAny<Stream>(),
-                        IsAny<byte[]>(),
-                        s_conditions,
-                        IsAny<IProgress<long>>(),
-                        s_cancellationToken
-                    )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.StageAsync);
+            return await uploader.UploadInternal(
+                content,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = s_blobHttpHeaders,
+                    Metadata = s_metadata,
+                    Tags = s_tags,
+                    Conditions = s_conditions,
+                    AccessTier = s_accessTier,
+                },
+                s_progress,
+                _async,
+                s_cancellationToken).ConfigureAwait(false);
+        }
 
-                clientMock.Setup(
-                    c => c.CommitBlockListInternal(
-                        IsAny<IEnumerable<string>>(),
-                        s_blobHttpHeaders,
-                        s_metadata,
-                        s_tags,
-                        s_conditions,
-                        s_accessTier,
-                        true,
-                        s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
-            }
-            else
-            {
-                clientMock.Setup(
-                    c => c.StageBlock(
-                        IsAny<string>(),
-                        IsAny<Stream>(),
-                        IsAny<byte[]>(),
-                        s_conditions,
-                        IsAny<IProgress<long>>(),
-                        s_cancellationToken
-                    )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.Stage);
+        private void SetupInternalStaging(Mock<BlockBlobClient> clientMock, StagingSink sink)
+        {
+            clientMock.Setup(
+                c => c.StageBlockInternal(
+                    IsAny<string>(),
+                    IsAny<Stream>(),
+                    IsAny<byte[]>(),
+                    s_conditions,
+                    IsAny<IProgress<long>>(),
+                    _async,
+                    s_cancellationToken
+                )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
 
-                clientMock.Setup(
-                    c => c.CommitBlockListInternal(
-                        IsAny<IEnumerable<string>>(),
-                        s_blobHttpHeaders,
-                        s_metadata,
-                        s_tags,
-                        s_conditions,
-                        s_accessTier,
-                        false,
-                        s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
-            }
+            clientMock.Setup(
+                c => c.CommitBlockListInternal(
+                    IsAny<IEnumerable<string>>(),
+                    s_blobHttpHeaders,
+                    s_metadata,
+                    s_tags,
+                    s_conditions,
+                    s_accessTier,
+                    _async,
+                    s_cancellationToken
+                )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
         }
 
         private static void AssertStaged(StagingSink sink, TestStream stream)
@@ -314,18 +327,21 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(sink.Blocks.Length, sink.Staged.Count);
             CollectionAssert.AreEqual(
                 stream.AllBytes,
-                sink.Blocks.SelectMany(block => sink.Staged[block]));
+                sink.Blocks.SelectMany(block => sink.Staged[block].Data));
         }
 
         private class StagingSink
         {
+            private readonly bool _saveBytes;
+
             public string[] Blocks { get; set; }
 
-            public Dictionary<string, byte[]> Staged { get; }
+            public Dictionary<string, (byte[] Data, long? StreamLength)> Staged { get; }
 
-            public StagingSink()
+            public StagingSink(bool saveBytes = true)
             {
-                Staged = new Dictionary<string, byte[]>();
+                _saveBytes = saveBytes;
+                Staged = new Dictionary<string, (byte[], long?)>();
             }
 
             public async Task<Response<BlobContentInfo>> CommitInternal(
@@ -343,21 +359,29 @@ namespace Azure.Storage.Blobs.Test
                 return s_response;
             }
 
-            public async  Task<Response<BlockInfo>> StageAsync(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
+            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, bool async, CancellationToken cancellationToken)
             {
-                await Task.Delay(25);
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
                 return Stage(s, stream, hash, accessConditions, progress, cancellationToken);
             }
 
             public Response<BlockInfo> Stage(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
             {
                 progress.Report(stream.Length);
-                var memoryStream = new MemoryStream();
-                stream.CopyTo(memoryStream);
-                memoryStream.Position = 0;
+                byte[] data = default;
+                if (_saveBytes)
+                {
+                    var memoryStream = new MemoryStream();
+                    stream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+                    data = memoryStream.ToArray();
+                }
                 lock (Staged)
                 {
-                    Staged.Add(s, memoryStream.ToArray());
+                    Staged.Add(s, (data, stream.Length));
                 }
                 return Response.FromValue(new BlockInfo(), new MockResponse(200));
             }

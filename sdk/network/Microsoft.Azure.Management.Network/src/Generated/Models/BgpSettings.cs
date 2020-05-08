@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -79,5 +80,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "bgpPeeringAddresses")]
         public IList<IPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Asn > 4294967295)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Asn", 4294967295);
+            }
+            if (Asn < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Asn", 0);
+            }
+        }
     }
 }

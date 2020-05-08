@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
@@ -42,6 +42,30 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shareName, builder.ShareName);
             Assert.AreEqual(directoryPath, builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        //Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
+        public async Task Ctor_ConnectionStringEscapePath()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string directoryName = "!#@&=;äÄöÖüÜß";
+            ShareDirectoryClient initalDirectory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            Response<ShareDirectoryInfo> createResponse = await initalDirectory.CreateAsync();
+
+            // Act
+            ShareDirectoryClient directory = new ShareDirectoryClient(
+                TestConfigDefault.ConnectionString,
+                test.Share.Name,
+                directoryName,
+                GetOptions());
+            Response<ShareDirectoryProperties> propertiesResponse = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
         [Test]

@@ -38,6 +38,9 @@ param (
     [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
+    
+    [Parameter()]
+    [string] $ServiceDirectory,
 
     [Parameter()]
     [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
@@ -116,6 +119,20 @@ if (!$ResourceGroupName) {
     $ResourceGroupName = "rg-$BaseName"
 }
 
+if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
+    $root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
+    $preRemovalScript = Join-Path -Path $root -ChildPath 'remove-test-resources-pre.ps1'
+    if (Test-Path $preRemovalScript) {
+        Log "Invoking pre resource removal script '$preRemovalScript'"
+
+        if (!$PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
+            $PSBoundParameters.Add('ResourceGroupName', $ResourceGroupName);
+        }
+
+        &$preRemovalScript @PSBoundParameters
+    }
+}
+
 Log "Deleting resource group '$ResourceGroupName'"
 if (Retry { Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force }) {
     Write-Verbose "Successfully deleted resource group '$ResourceGroupName'"
@@ -156,6 +173,10 @@ A service principal ID to provision test resources when a provisioner is specifi
 
 .PARAMETER ProvisionerApplicationSecret
 A service principal secret (password) to provision test resources when a provisioner is specified.
+
+.PARAMETER ServiceDirectory
+A directory under 'sdk' in the repository root - optionally with subdirectories
+specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud

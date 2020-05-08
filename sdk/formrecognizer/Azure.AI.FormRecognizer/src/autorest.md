@@ -26,3 +26,12 @@ directive:
         }
     }
 ```
+
+### Make AnalyzeResult.readResult optional
+This is a temporary work-around
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.AnalyzeResult
+  transform: $.required = ["version"];
+```

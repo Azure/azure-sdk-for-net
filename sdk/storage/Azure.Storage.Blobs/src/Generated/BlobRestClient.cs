@@ -8005,6 +8005,20 @@ namespace Azure.Storage.Blobs
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
+                    case 304:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.ConditionNotMetError _value = new Azure.Storage.Blobs.Models.ConditionNotMetError();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
+                        {
+                            _value.ErrorCode = _header;
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
                     default:
                     {
                         // Create the result

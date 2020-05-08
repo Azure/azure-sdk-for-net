@@ -9,7 +9,7 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.AutocompleteAsync"/> that
+    /// Options for <see cref="SearchClient.AutocompleteAsync"/> that
     /// allow specifying autocomplete behaviors, like fuzzy matching.
     /// </summary>
     [CodeGenModel("AutocompleteRequest")]

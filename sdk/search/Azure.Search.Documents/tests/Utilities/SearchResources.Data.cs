@@ -31,17 +31,17 @@ namespace Azure.Search.Documents.Tests
             {
                 Fields =
                 {
-                    new SimpleField("hotelId", DataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                    new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
-                    new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
+                    new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("descriptionFr") { Analyzer = LexicalAnalyzerName.FrLucene },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-                    new SimpleField("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
+                    new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("smokingAllowed", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("lastRenovationDate", SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("rating", SearchFieldDataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("location", SearchFieldDataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
                     new ComplexField("address")
                     {
                         Fields =
@@ -57,22 +57,22 @@ namespace Azure.Search.Documents.Tests
                     {
                         Fields =
                         {
-                            new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
-                            new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
+                            new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                            new SearchableField("descriptionFr") { Analyzer = LexicalAnalyzerName.FrLucene },
                             new SearchableField("type") { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("baseRate", DataType.Double) { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("baseRate", SearchFieldDataType.Double) { IsFilterable = true, IsFacetable = true },
                             new SearchableField("bedOptions") { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("sleepsCount", DataType.Int32) { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("sleepsCount", SearchFieldDataType.Int32) { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("smokingAllowed", SearchFieldDataType.Boolean) { IsFilterable = true, IsFacetable = true },
                             new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                         },
                     },
                 },
-                Suggesters = new[]
+                Suggesters =
                 {
                     new Suggester("sg", "description", "hotelName"),
                 },
-                ScoringProfiles = new[]
+                ScoringProfiles =
                 {
                     new ScoringProfile("nearest")
                     {

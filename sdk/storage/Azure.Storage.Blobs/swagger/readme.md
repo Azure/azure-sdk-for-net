@@ -1523,6 +1523,21 @@ directive:
     $.BlobExpiryOptions["x-az-public"] = false;
 ```
 
+### /{containerName}/{blob}?comp=page&update&fromUrl
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=copy&sync"]
+  transform: >
+    $.put.responses["304"] = {
+        "description": "The condition specified using HTTP conditional header(s) is not met.",
+        "x-az-response-name": "ConditionNotMetError",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
