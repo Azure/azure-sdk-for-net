@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity file system source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FileSystemSource")]
     public partial class FileSystemSource : CopySource
     {
         /// <summary>

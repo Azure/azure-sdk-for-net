@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure Data Lake Store sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureDataLakeStoreSink")]
     public partial class AzureDataLakeStoreSink : CopySink
     {
         /// <summary>

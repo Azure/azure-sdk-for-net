@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for a MongoDB database.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MongoDbSource")]
     public partial class MongoDbSource : CopySource
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for an Office 365 service.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Office365Source")]
     public partial class Office365Source : CopySource
     {
         /// <summary>

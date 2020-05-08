@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Ftp read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FtpReadSettings")]
     public partial class FtpReadSettings : StoreReadSettings
     {
         /// <summary>

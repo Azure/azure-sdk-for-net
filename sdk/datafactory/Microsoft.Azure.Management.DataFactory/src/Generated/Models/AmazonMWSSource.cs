@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Amazon Marketplace Web Service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AmazonMWSSource")]
     public partial class AmazonMWSSource : TabularSource
     {
         /// <summary>

@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// is polymorphic based on authenticationType, so not flattened in SDK
     /// models.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("WebLinkedServiceTypeProperties")]
     public partial class WebLinkedServiceTypeProperties
     {
         /// <summary>

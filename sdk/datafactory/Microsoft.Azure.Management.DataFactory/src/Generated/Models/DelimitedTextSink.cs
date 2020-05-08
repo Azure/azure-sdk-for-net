@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity DelimitedText sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DelimitedTextSink")]
     public partial class DelimitedTextSink : CopySink
     {
         /// <summary>
