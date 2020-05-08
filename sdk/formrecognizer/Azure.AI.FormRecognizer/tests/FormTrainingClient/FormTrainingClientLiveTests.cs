@@ -33,13 +33,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartTraining(bool labeled)
         {
             var client = CreateInstrumentedFormTrainingClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();
@@ -111,13 +111,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task TrainingOps(bool labeled)
         {
             var client = CreateInstrumentedFormTrainingClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();

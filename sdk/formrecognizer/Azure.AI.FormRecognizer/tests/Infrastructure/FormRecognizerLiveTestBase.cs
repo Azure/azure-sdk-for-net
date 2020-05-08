@@ -41,14 +41,14 @@ namespace Azure.AI.FormRecognizer.Tests
         protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels)
         {
             var trainingClient = CreateInstrumentedFormTrainingClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             DisposableTrainedModel trainedModel;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFiles, useTrainingLabels);
+                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels);
             }
 
             return trainedModel;
