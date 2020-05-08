@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Models
                 var firstError = errors[0];
 
                 errorMessage = firstError.Message;
-                errorCode = firstError.Code;
+                errorCode = firstError.ErrorCode;
             }
             else
             {
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var error in errors)
             {
-                errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
                 index++;
             }
 

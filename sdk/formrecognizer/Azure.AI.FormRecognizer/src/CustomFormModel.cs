@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Training
             var errors = new List<FormRecognizerError>();
             foreach (var error in trainResult?.Errors)
             {
-                errors.Add(new FormRecognizerError(error.Code, error.Message));
+                errors.Add(new FormRecognizerError(error.ErrorCode, error.Message));
             }
             return errors;
         }

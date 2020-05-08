@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Invalid, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(1, model.Errors.Count);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().Code);
+            Assert.IsNotNull(model.Errors.FirstOrDefault().ErrorCode);
             Assert.IsNotNull(model.Errors.FirstOrDefault().Message);
         }
 
