@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -26,10 +27,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
@@ -61,7 +59,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
+                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
                 _maxAutoRenewDuration = value;
             }
         }
@@ -79,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (value.HasValue)
                 {
-                    TimeoutHelper.ThrowIfNegativeArgument(value.Value, nameof(MaxReceiveWaitTime));
+                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
                 }
 
                 _maxReceiveWaitTime = value;
@@ -95,11 +93,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
-                }
-
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCalls));
                 _maxConcurrentCalls = value;
             }
         }
