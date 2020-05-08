@@ -19,10 +19,13 @@ namespace Microsoft.Azure.Management.EventHub
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("EventHub", "Clusters", "2018-01-01-preview"),
+                new Tuple<string, string, string>("EventHub", "Configuration", "2018-01-01-preview"),
                 new Tuple<string, string, string>("EventHub", "ConsumerGroups", "2017-04-01"),
                 new Tuple<string, string, string>("EventHub", "DisasterRecoveryConfigs", "2017-04-01"),
                 new Tuple<string, string, string>("EventHub", "EventHubs", "2017-04-01"),
                 new Tuple<string, string, string>("EventHub", "Namespaces", "2017-04-01"),
+                new Tuple<string, string, string>("EventHub", "Namespaces", "2018-01-01-preview"),
                 new Tuple<string, string, string>("EventHub", "Operations", "2017-04-01"),
                 new Tuple<string, string, string>("EventHub", "Regions", "2017-04-01"),
               }.AsEnumerable();

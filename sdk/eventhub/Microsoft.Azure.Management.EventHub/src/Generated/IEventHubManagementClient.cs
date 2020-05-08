@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.EventHub
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Event Hubs client
+    /// Azure Event Hubs client for managing Event Hubs Cluster, IPFilter Rules
+    /// and VirtualNetworkRules resources.
     /// </summary>
     public partial interface IEventHubManagementClient : System.IDisposable
     {
@@ -48,11 +49,6 @@ namespace Microsoft.Azure.Management.EventHub
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -72,14 +68,19 @@ namespace Microsoft.Azure.Management.EventHub
 
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IClustersOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IClustersOperations Clusters { get; }
 
         /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationOperations.
+        /// </summary>
+        IConfigurationOperations Configuration { get; }
 
         /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
@@ -95,6 +96,11 @@ namespace Microsoft.Azure.Management.EventHub
         /// Gets the IConsumerGroupsOperations.
         /// </summary>
         IConsumerGroupsOperations ConsumerGroups { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IRegionsOperations.

@@ -10,6 +10,8 @@ namespace EventHub.Tests.TestHelper
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
     using System.Security.Cryptography;
@@ -27,6 +29,7 @@ namespace EventHub.Tests.TestHelper
         internal const string EventHubPrefix = "sdk-EventHub-";
         internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup-";
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
+        internal const string KeyVaultePrefix = "sdk-KeyVault-";
 
 
         public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -35,7 +38,21 @@ namespace EventHub.Tests.TestHelper
             {
                 handler.IsPassThrough = true;
                 EventHubManagementClient nhManagementClient = context.GetServiceClient<EventHubManagementClient>(handlers: handler);
+                
                 return nhManagementClient;
+            }
+
+            return null;
+        }
+        
+
+        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+                KeyVaultManagementClient keyValutManagementClient = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
+                return keyValutManagementClient;
             }
 
             return null;
