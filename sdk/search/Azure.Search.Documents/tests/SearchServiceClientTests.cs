@@ -88,10 +88,7 @@ namespace Azure.Search.Documents.Tests
                 await client.GetServiceStatisticsAsync(
                     new SearchRequestOptions { ClientRequestId = id });
 
-            // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
-            // (Assertion is here to remind us to fix this when we do - just
-            // change to AreEqual and re-record)
-            Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
+            Assert.AreEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
         }
 
         [Test]
@@ -139,7 +136,7 @@ namespace Azure.Search.Documents.Tests
             Assert.IsNotNull(response.Value.Limits);
 
             Assert.NotZero(response.Value.Counters.IndexCounter.Quota ?? 0L);
-            Assert.AreEqual(1, response.Value.Counters.IndexCounter.Usage);
+            Assert.NotZero(response.Value.Counters.IndexCounter.Usage);
         }
 
         [Test]
@@ -158,10 +155,10 @@ namespace Azure.Search.Documents.Tests
         [Test]
         public async Task CreateIndex()
         {
-            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            string indexName = Recording.Random.GetName(8);
-            SearchIndex expectedIndex = SearchResources.GetHotelIndex(indexName);
+            resources.IndexName = Recording.Random.GetName(8);
+            SearchIndex expectedIndex = SearchResources.GetHotelIndex(resources.IndexName);
 
             SearchServiceClient client = resources.GetServiceClient();
             SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
@@ -177,10 +174,10 @@ namespace Azure.Search.Documents.Tests
         [Test]
         public async Task UpdateIndex()
         {
-            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            string indexName = Recording.Random.GetName();
-            SearchIndex initialIndex = SearchResources.GetHotelIndex(indexName);
+            resources.IndexName = Recording.Random.GetName();
+            SearchIndex initialIndex = SearchResources.GetHotelIndex(resources.IndexName);
 
             SearchServiceClient client = resources.GetServiceClient();
             SearchIndex createdIndex = await client.CreateIndexAsync(initialIndex);
@@ -294,7 +291,7 @@ namespace Azure.Search.Documents.Tests
 
             // Create the Azure Blob data source and indexer.
             SearchIndexerDataSource dataSource = new SearchIndexerDataSource(
-                resources.StorageAccountName,
+                Recording.Random.GetName(),
                 SearchIndexerDataSourceType.AzureBlob,
                 resources.StorageAccountConnectionString,
                 new SearchIndexerDataContainer(resources.BlobContainerName));
@@ -304,7 +301,7 @@ namespace Azure.Search.Documents.Tests
                 GetOptions());
 
             SearchIndexer indexer = new SearchIndexer(
-                Recording.Random.GetName(8),
+                Recording.Random.GetName(),
                 dataSource.Name,
                 resources.IndexName);
 
