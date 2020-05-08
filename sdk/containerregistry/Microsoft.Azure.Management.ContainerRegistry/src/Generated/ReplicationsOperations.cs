@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -692,7 +692,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             Replication replication = new Replication();
             if (location != null || tags != null)
             {
@@ -960,7 +960,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1186,7 +1186,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2019-12-01-preview";
             ReplicationUpdateParameters replicationUpdateParameters = new ReplicationUpdateParameters();
             if (tags != null)
             {

@@ -9,10 +9,17 @@
 
 - Add `RecoverableDays` property to `CertificateProperties`.
 
+## 4.0.2 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
 ## 4.0.1 (2020-03-03)
 
 ### Fixed
 
+- Fixed issue that prevented certificate contacts from being created, enumerated, or deleted.
 - Reset challenge cache so tests can be run individually and in any order. ([#9356](https://github.com/Azure/azure-sdk-for-net/issues/9356))
 - Properly import PKCS12 or PEM-encoded certificate. ([#9963](https://github.com/Azure/azure-sdk-for-net/issues/9963))
 - Serialize the `MergeCertificateOptions` in `CertificateClient.MergeCertificate`. ([#9986](https://github.com/Azure/azure-sdk-for-net/issues/9986))

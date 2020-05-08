@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,8 +18,11 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("searchMode");
-            writer.WriteStringValue(SearchMode.ToSerialString());
+            if (SearchMode != null)
+            {
+                writer.WritePropertyName("searchMode");
+                writer.WriteStringValue(SearchMode);
+            }
             writer.WritePropertyName("sourceFields");
             writer.WriteStartArray();
             foreach (var item in SourceFields)
@@ -31,29 +35,44 @@ namespace Azure.Search.Documents.Models
 
         internal static Suggester DeserializeSuggester(JsonElement element)
         {
-            Suggester result = new Suggester();
+            string name = default;
+            string searchMode = default;
+            IList<string> sourceFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("searchMode"))
                 {
-                    result.SearchMode = property.Value.GetString().ToSearchMode();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchMode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceFields"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.SourceFields.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    sourceFields = array;
                     continue;
                 }
             }
-            return result;
+            return new Suggester(name, searchMode, sourceFields);
         }
     }
 }

@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Output field mapping for a skill. </summary>
     public partial class OutputFieldMappingEntry
     {
         /// <summary> Initializes a new instance of OutputFieldMappingEntry. </summary>
-        public OutputFieldMappingEntry()
+        /// <param name="name"> The name of the output defined by the skill. </param>
+        public OutputFieldMappingEntry(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of OutputFieldMappingEntry. </summary>

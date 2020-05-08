@@ -3,13 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
-using Azure.Core.Testing;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
@@ -21,6 +20,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [SyncOnly]
         public async Task CreateClient()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -38,8 +38,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
-            //@@ Response<SearchServiceStatistics> stats = search.GetStatistics();
-            /*@@*/ Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
@@ -47,6 +46,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [AsyncOnly]
         public async Task CreateClientAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
-            Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
@@ -72,6 +72,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [SyncOnly]
         public async Task HandleErrors()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -83,14 +84,13 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-            // Create an invalid SearchIndexClientClient
+            // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
-            SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                //@@ index.GetCount();
-                /*@@*/ await index.GetDocumentCountAsync();
+                client.GetDocumentCount();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -100,6 +100,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [AsyncOnly]
         public async Task HandleErrorsAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -111,13 +112,13 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-            // Create an invalid SearchIndexClientClient
+            // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
-            SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                await index.GetDocumentCountAsync();
+                await client.GetDocumentCountAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -142,7 +143,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Get and report the Search Service statistics
-            Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
         }
@@ -156,16 +157,16 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             #region Snippet:Azure_Search_Tests_Samples_GetCountAsync
-            // Create a SearchIndexClient
+            // Create a SearchClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
-            SearchIndexClient index = new SearchIndexClient(endpoint, indexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, indexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 
             // Get and report the number of documents in the index
-            Response<long> count = await index.GetDocumentCountAsync();
+            Response<long> count = await client.GetDocumentCountAsync();
             Console.WriteLine($"Search index {indexName} has {count.Value} documents.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetCountAsync
         }

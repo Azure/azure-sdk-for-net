@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
         {
             if (timeout <= TimeSpan.Zero)
             {
-                throw Fx.Exception.ArgumentOutOfRange(argumentName, timeout, Resources1.TimeoutMustBePositive.FormatForUser(argumentName, timeout));
+                throw Fx.Exception.ArgumentOutOfRange(argumentName, timeout, Resources.TimeoutMustBePositive.FormatForUser(argumentName, timeout));
             }
         }
 

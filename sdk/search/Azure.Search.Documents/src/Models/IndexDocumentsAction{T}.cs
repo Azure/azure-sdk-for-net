@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped IndexAction
-    [CodeGenSchema("IndexAction")]
+    [CodeGenModel("IndexAction")]
     internal partial class IndexAction { }
 
     /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Creates <see cref="IndexDocumentsAction{T}"/> instances to add to an
     /// <see cref="IndexDocumentsBatch{T}"/> and submit via
-    /// <see cref="SearchIndexClient.IndexDocuments"/>.
+    /// <see cref="SearchClient.IndexDocuments"/>.
     /// </summary>
     public static class IndexDocumentsAction
     {

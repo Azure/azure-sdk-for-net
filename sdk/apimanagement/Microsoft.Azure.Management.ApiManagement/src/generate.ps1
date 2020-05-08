@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "apimanagement/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "apimanagement/resource-manager" -AutoRestVersion "v2"

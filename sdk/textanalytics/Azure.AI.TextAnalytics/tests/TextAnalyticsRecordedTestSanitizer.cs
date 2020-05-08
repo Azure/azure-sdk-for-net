@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Testing
+namespace Azure.Core.TestFramework
 {
     public class TextAnalyticsRecordedTestSanitizer : RecordedTestSanitizer
     {

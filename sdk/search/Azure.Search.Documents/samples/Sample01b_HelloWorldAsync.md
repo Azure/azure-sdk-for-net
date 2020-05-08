@@ -18,7 +18,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
 SearchServiceClient search = new SearchServiceClient(endpoint, credential);
 
 // Perform an operation
-Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
 ```
 
@@ -29,12 +29,12 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-// Create an invalid SearchIndexClientClient
+// Create an invalid SearchClient
 string fakeIndexName = "doesnotexist";
-SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
+SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
 try
 {
-    await index.GetDocumentCountAsync();
+    await client.GetDocumentCountAsync();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

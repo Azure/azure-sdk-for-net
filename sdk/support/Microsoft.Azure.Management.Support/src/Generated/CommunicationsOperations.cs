@@ -51,15 +51,15 @@ namespace Microsoft.Azure.Management.Support
         public MicrosoftSupportClient Client { get; private set; }
 
         /// <summary>
-        /// Check the availability of a resource name. This API should to be used to
-        /// check the uniqueness of the name for adding a new communication to the
-        /// support ticket.
+        /// Check the availability of a resource name. This API should be used to check
+        /// the uniqueness of the name for adding a new communication to the support
+        /// ticket.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='checkNameAvailabilityInput'>
-        /// Input to check
+        /// Input to check.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.Support
         /// than 12 months ago, a request for data might cause an error.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='top'>
         /// The number of values to return in the collection. Default is 10 and max is
@@ -466,10 +466,10 @@ namespace Microsoft.Azure.Management.Support
         /// Returns communication details for a support ticket.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='communicationName'>
-        /// Communication name
+        /// Communication name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -657,13 +657,13 @@ namespace Microsoft.Azure.Management.Support
         /// Adds a new customer communication to an Azure support ticket.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='communicationName'>
-        /// Communication name
+        /// Communication name.
         /// </param>
         /// <param name='createCommunicationParameters'>
-        /// Communication object
+        /// Communication object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -682,13 +682,13 @@ namespace Microsoft.Azure.Management.Support
         /// Adds a new customer communication to an Azure support ticket.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='communicationName'>
-        /// Communication name
+        /// Communication name.
         /// </param>
         /// <param name='createCommunicationParameters'>
-        /// Communication object
+        /// Communication object.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

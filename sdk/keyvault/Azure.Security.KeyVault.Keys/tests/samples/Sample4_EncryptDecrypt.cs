@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -9,20 +8,20 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
     /// This sample demonstrates how to encrypt and decrypt a single block of plain text with an RSA key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
-    [LiveOnly]
     public partial class Sample4_EncryptDecypt
     {
         [Test]
         public void EncryptDecryptSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample4KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

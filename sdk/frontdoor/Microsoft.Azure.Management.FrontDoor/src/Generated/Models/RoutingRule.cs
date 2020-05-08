@@ -47,12 +47,14 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// include: 'Enabled', 'Disabled'</param>
         /// <param name="routeConfiguration">A reference to the routing
         /// configuration.</param>
+        /// <param name="rulesEngine">A reference to a specific Rules Engine
+        /// Configuration to apply to this route.</param>
         /// <param name="resourceState">Resource status. Possible values
         /// include: 'Creating', 'Enabling', 'Enabled', 'Disabling',
         /// 'Disabled', 'Deleting'</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public RoutingRule(string id = default(string), IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration), string resourceState = default(string), string name = default(string), string type = default(string))
+        public RoutingRule(string id = default(string), IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration), SubResource rulesEngine = default(SubResource), string resourceState = default(string), string name = default(string), string type = default(string))
             : base(id)
         {
             FrontendEndpoints = frontendEndpoints;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             PatternsToMatch = patternsToMatch;
             EnabledState = enabledState;
             RouteConfiguration = routeConfiguration;
+            RulesEngine = rulesEngine;
             ResourceState = resourceState;
             Name = name;
             Type = type;
@@ -102,6 +105,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeConfiguration")]
         public RouteConfiguration RouteConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference to a specific Rules Engine Configuration
+        /// to apply to this route.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rulesEngine")]
+        public SubResource RulesEngine { get; set; }
 
         /// <summary>
         /// Gets or sets resource status. Possible values include: 'Creating',

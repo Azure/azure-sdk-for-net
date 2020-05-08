@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -1055,6 +1055,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.IsFalse(response.Value.IsDirectory);
         }
 
         [Test]
@@ -1491,6 +1492,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_EmptyStream()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            // Act
+            using (var stream = new MemoryStream())
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.AppendAsync(stream, 0),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                        Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
+                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                        Assert.AreEqual("0", e.Data["HeaderValue"]);
+                    });
+            }
+        }
+
+        [Test]
         public async Task AppendDataAsync_ProgressReporting()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1858,7 +1883,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(data.Length, response.Value.ContentLength);
-            Assert.IsNotNull(response.Value.Properties.ContentRange);
             Assert.IsNotNull(response.Value.Properties.LastModified);
             Assert.IsNotNull(response.Value.Properties.AcceptRanges);
             Assert.IsNotNull(response.Value.Properties.ETag);
@@ -2582,6 +2606,56 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task UploadAsync_MetadataStream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Metadata = metadata
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, options);
+            }
+            Response<PathProperties> response = await file.GetPropertiesAsync();
+
+            // Assert
+            AssertMetadataEquality(metadata, response.Value.Metadata, isDirectory: false);
+        }
+
+        [Test]
+        public async Task UploadAsync_PermissionsUmaskStream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            var data = GetRandomBuffer(Constants.KB);
+            string permissions = "0777";
+            string umask = "0057";
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, options);
+            }
+            Response<PathAccessControl> response = await file.GetAccessControlAsync();
+
+            // Assert
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+        }
+
+        [Test]
         public async Task UploadAsync_MinStreamNoOverride()
         {
             // Arrange
@@ -2700,6 +2774,82 @@ namespace Azure.Storage.Files.DataLake.Tests
             using var actual = new MemoryStream();
             await file.ReadToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_MetadataFile()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Metadata = metadata
+            };
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    await file.UploadAsync(path, options);
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+            Response<PathProperties> response = await file.GetPropertiesAsync();
+
+            // Assert
+            AssertMetadataEquality(metadata, response.Value.Metadata, isDirectory: false);
+        }
+
+        [Test]
+        public async Task UploadAsync_PermissionsUmaskFile()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            var data = GetRandomBuffer(Constants.KB);
+            string permissions = "0777";
+            string umask = "0057";
+            DataLakeFileUploadOptions options = new DataLakeFileUploadOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    await file.UploadAsync(path, options);
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+            Response<PathAccessControl> response = await file.GetAccessControlAsync();
+
+            // Assert
+            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
         }
 
         [Test]

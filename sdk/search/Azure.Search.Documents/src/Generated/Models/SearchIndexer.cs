@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,27 @@ namespace Azure.Search.Documents.Models
     public partial class SearchIndexer
     {
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
-        public SearchIndexer()
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
+        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (targetIndexName == null)
+            {
+                throw new ArgumentNullException(nameof(targetIndexName));
+            }
+
+            Name = name;
+            DataSourceName = dataSourceName;
+            TargetIndexName = targetIndexName;
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -28,8 +48,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
         /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
         /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
-        /// <param name="eTag"> The ETag of the Indexer. </param>
-        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, string eTag)
+        /// <param name="Etag"> The ETag of the Indexer. </param>
+        internal SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IList<FieldMapping> fieldMappings, IList<FieldMapping> outputFieldMappings, bool? isDisabled, string Etag)
         {
             Name = name;
             Description = description;
@@ -41,7 +61,7 @@ namespace Azure.Search.Documents.Models
             FieldMappings = fieldMappings;
             OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
-            ETag = eTag;
+            _etag = Etag;
         }
 
         /// <summary> The name of the indexer. </summary>
@@ -64,7 +84,5 @@ namespace Azure.Search.Documents.Models
         public IList<FieldMapping> OutputFieldMappings { get; set; }
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
         public bool? IsDisabled { get; set; }
-        /// <summary> The ETag of the Indexer. </summary>
-        public string ETag { get; set; }
     }
 }

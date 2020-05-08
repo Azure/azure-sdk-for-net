@@ -13,8 +13,10 @@ namespace Azure.Search.Documents.Models
     public partial class IndexingSchedule
     {
         /// <summary> Initializes a new instance of IndexingSchedule. </summary>
-        public IndexingSchedule()
+        /// <param name="interval"> The interval of time between indexer executions. </param>
+        public IndexingSchedule(TimeSpan interval)
         {
+            Interval = interval;
         }
 
         /// <summary> Initializes a new instance of IndexingSchedule. </summary>

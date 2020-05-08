@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Support
         /// classification Ids.
         /// </summary>
         /// <param name='serviceName'>
-        /// Name of Azure service for which the problem classifications need to
-        /// be retrieved.
+        /// Name of the Azure service for which the problem classifications
+        /// need to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Support
         /// Get problem classification details for a specific Azure service.
         /// </summary>
         /// <param name='serviceName'>
-        /// Name of Azure service available for support.
+        /// Name of the Azure service available for support.
         /// </param>
         /// <param name='problemClassificationName'>
         /// Name of problem classification.

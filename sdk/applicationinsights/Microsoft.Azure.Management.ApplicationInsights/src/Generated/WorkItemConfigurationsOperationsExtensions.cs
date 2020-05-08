@@ -167,9 +167,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The unique work item configuration Id. This can be either friendly name of
             /// connector as defined in connector configuration
             /// </param>
-            public static object Delete(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId)
+            public static void Delete(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId)
             {
-                return operations.DeleteAsync(resourceGroupName, resourceName, workItemConfigId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, resourceName, workItemConfigId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,12 +191,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteAsync(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, workItemConfigId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, workItemConfigId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

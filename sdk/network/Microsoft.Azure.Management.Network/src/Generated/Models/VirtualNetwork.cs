@@ -63,9 +63,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// associated with the virtual network.</param>
         /// <param name="bgpCommunities">Bgp Communities sent over ExpressRoute
         /// with each route corresponding to a prefix in this VNET.</param>
+        /// <param name="ipAllocations">Array of IpAllocation which reference
+        /// this VNET.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), string etag = default(string))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), VirtualNetworkBgpCommunities bgpCommunities = default(VirtualNetworkBgpCommunities), IList<SubResource> ipAllocations = default(IList<SubResource>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AddressSpace = addressSpace;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EnableVmProtection = enableVmProtection;
             DdosProtectionPlan = ddosProtectionPlan;
             BgpCommunities = bgpCommunities;
+            IpAllocations = ipAllocations;
             Etag = etag;
             CustomInit();
         }
@@ -155,6 +158,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.bgpCommunities")]
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of IpAllocation which reference this VNET.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipAllocations")]
+        public IList<SubResource> IpAllocations { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

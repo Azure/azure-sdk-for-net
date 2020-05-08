@@ -38,16 +38,16 @@ namespace Azure.Messaging.ServiceBus.Core
 
 
         /// <summary>
-        ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
+        ///   Creates a sender strongly aligned with the active protocol and transport,
+        ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
-        /// <param name="entityPath"></param>
-        ///
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
         ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
@@ -72,6 +72,20 @@ namespace Azure.Messaging.ServiceBus.Core
             string identifier,
             string sessionId,
             bool isSessionReceiver);
+
+        /// <summary>
+        ///   Creates a rule manager strongly aligned with the active protocol and transport,
+        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
+        /// </summary>
+        ///
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        ///
+        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
+        ///
+        public abstract TransportRuleManager CreateRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

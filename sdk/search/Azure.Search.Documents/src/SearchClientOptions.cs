@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -37,6 +36,13 @@ namespace Azure.Search.Documents
         /// The Latest service version supported by this client library.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06_Preview;
+
+        /// <summary>
+        /// The service version to use when creating continuation tokens that
+        /// can be passed between different client libraries.  Changing this
+        /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
+        /// </summary>
+        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2019_05_06_Preview;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
@@ -122,6 +128,7 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
+            Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
             Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }

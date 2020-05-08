@@ -26,32 +26,36 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("encryptionKey");
                 writer.WriteObjectValue(EncryptionKey);
             }
-            if (ETag != null)
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }
 
         internal static SynonymMap DeserializeSynonymMap(JsonElement element)
         {
-            SynonymMap result = new SynonymMap();
+            string name = default;
+            string format = default;
+            string synonyms = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("format"))
                 {
-                    result.Format = property.Value.GetString();
+                    format = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("synonyms"))
                 {
-                    result.Synonyms = property.Value.GetString();
+                    synonyms = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("encryptionKey"))
@@ -60,7 +64,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.EncryptionKey = EncryptionKey.DeserializeEncryptionKey(property.Value);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
@@ -69,11 +73,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ETag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new SynonymMap(name, format, synonyms, encryptionKey, odataEtag);
         }
     }
 }

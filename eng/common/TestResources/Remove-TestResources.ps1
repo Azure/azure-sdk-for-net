@@ -25,6 +25,11 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
+    [Parameter(ParameterSetName = 'Default+Provisioner')]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $SubscriptionId,
+
     [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
@@ -33,9 +38,12 @@ param (
     [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
+    
+    [Parameter()]
+    [string] $ServiceDirectory,
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
+    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
@@ -90,8 +98,14 @@ if ($ProvisionerApplicationId) {
     Log "Logging into service principal '$ProvisionerApplicationId'"
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
+
+    # Use the given subscription ID if provided.
+    $subscriptionArgs = if ($SubscriptionId) {
+        @{SubscriptionId = $SubscriptionId}
+    }
+
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment @subscriptionArgs
     }
 
     $exitActions += {
@@ -103,6 +117,20 @@ if ($ProvisionerApplicationId) {
 if (!$ResourceGroupName) {
     # Format the resource group name like in New-TestResources.ps1.
     $ResourceGroupName = "rg-$BaseName"
+}
+
+if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
+    $root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
+    $preRemovalScript = Join-Path -Path $root -ChildPath 'remove-test-resources-pre.ps1'
+    if (Test-Path $preRemovalScript) {
+        Log "Invoking pre resource removal script '$preRemovalScript'"
+
+        if (!$PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
+            $PSBoundParameters.Add('ResourceGroupName', $ResourceGroupName);
+        }
+
+        &$preRemovalScript @PSBoundParameters
+    }
 }
 
 Log "Deleting resource group '$ResourceGroupName'"
@@ -136,11 +164,19 @@ The name of the resource group to delete.
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified.
 
+.PARAMETER SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner. You can also use Set-AzContext if not provisioning.
+
 .PARAMETER ProvisionerApplicationId
 A service principal ID to provision test resources when a provisioner is specified.
 
 .PARAMETER ProvisionerApplicationSecret
 A service principal secret (password) to provision test resources when a provisioner is specified.
+
+.PARAMETER ServiceDirectory
+A directory under 'sdk' in the repository root - optionally with subdirectories
+specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
@@ -150,13 +186,13 @@ Name of the cloud environment. The default is the Azure Public Cloud
 Force removal of resource group without asking for user confirmation
 
 .EXAMPLE
-./Remove-TestResources.ps1 -BaseName uuid123 -Force
+Remove-TestResources.ps1 -BaseName 'uuid123' -Force
 
 Use the currently logged-in account to delete the resource group by the name of
 'rg-uuid123'
 
 .EXAMPLE
-eng/Remove-TestResources.ps1 `
+Remove-TestResources.ps1 `
     -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
     -TenantId '$(TenantId)' `
     -ProvisionerApplicationId '$(AppId)' `

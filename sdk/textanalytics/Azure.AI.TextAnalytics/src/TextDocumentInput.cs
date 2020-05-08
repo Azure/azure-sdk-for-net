@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// The document contains the document's id, the full text of the document,
     /// and the language that the document is written in.
     /// </summary>
-    public class TextDocumentInput
+    public class TextDocumentInput : TextAnalyticsInput
     {
         /// <summary>
         /// </summary>
@@ -17,16 +17,7 @@ namespace Azure.AI.TextAnalytics
         /// The id must be unique within the batch of documents analyzed in a
         /// given operation.</param>
         /// <param name="text">The text of the document.</param>
-        public TextDocumentInput(string id, string text)
-        {
-            Id = id;
-            Text = text;
-        }
-
-        /// <summary>
-        /// Gets the unique, non-empty identifier for this input document.
-        /// </summary>
-        public string Id { get; }
+        public TextDocumentInput(string id, string text) : base(id, text) { }
 
         /// <summary>
         /// Gets or sets the language the input document is written in.  This
@@ -35,9 +26,5 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public string Language { get; set; }
 
-        /// <summary>
-        /// Gets the text of the document.
-        /// </summary>
-        public string Text { get; }
     }
 }

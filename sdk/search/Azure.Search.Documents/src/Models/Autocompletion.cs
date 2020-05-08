@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("AutocompleteItem")]
+    [CodeGenModel("AutocompleteItem")]
     public partial class Autocompletion
     {
     }

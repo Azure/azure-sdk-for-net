@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -56,9 +57,9 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("outputs");
             writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -66,7 +67,15 @@ namespace Azure.Search.Documents.Models
 
         internal static SplitSkill DeserializeSplitSkill(JsonElement element)
         {
-            SplitSkill result = new SplitSkill();
+            SplitSkillLanguage? defaultLanguageCode = default;
+            TextSplitMode? textSplitMode = default;
+            int? maximumPageLength = default;
+            string odataType = default;
+            string name = default;
+            string description = default;
+            string context = default;
+            IList<InputFieldMappingEntry> inputs = default;
+            IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"))
@@ -75,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.DefaultLanguageCode = new SplitSkillLanguage(property.Value.GetString());
+                    defaultLanguageCode = new SplitSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("textSplitMode"))
@@ -84,7 +93,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TextSplitMode = property.Value.GetString().ToTextSplitMode();
+                    textSplitMode = property.Value.GetString().ToTextSplitMode();
                     continue;
                 }
                 if (property.NameEquals("maximumPageLength"))
@@ -93,12 +102,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaximumPageLength = property.Value.GetInt32();
+                    maximumPageLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -107,7 +116,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -116,7 +125,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
@@ -125,27 +134,45 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Context = property.Value.GetString();
+                    context = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inputs"))
                 {
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Inputs.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        }
                     }
+                    inputs = array;
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Outputs.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        }
                     }
+                    outputs = array;
                     continue;
                 }
             }
-            return result;
+            return new SplitSkill(odataType, name, description, context, inputs, outputs, defaultLanguageCode, textSplitMode, maximumPageLength);
         }
     }
 }

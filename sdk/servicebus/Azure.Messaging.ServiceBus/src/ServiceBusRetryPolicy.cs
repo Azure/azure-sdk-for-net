@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -119,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     // We are in a server busy state before we start processing.
                     // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
-                    await Task.Delay(tryTimeout).ConfigureAwait(false);
+                    await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
                     throw new ServiceBusException(
                         ServerBusyExceptionMessage,
                         ServiceBusException.FailureReason.ServiceBusy);
@@ -128,7 +129,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     if (IsServerBusy)
                     {
-                        await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
+                        await Task.Delay(ServerBusyBaseSleepTime, cancellationToken).ConfigureAwait(false);
                     }
 
                     try
@@ -154,7 +155,8 @@ namespace Azure.Messaging.ServiceBus
                         }
                         else
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx)
+                                .Throw();
                         }
                     }
                 }

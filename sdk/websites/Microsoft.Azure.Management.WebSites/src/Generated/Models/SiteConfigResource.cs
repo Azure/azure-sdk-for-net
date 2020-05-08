@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="phpVersion">Version of PHP.</param>
         /// <param name="pythonVersion">Version of Python.</param>
         /// <param name="nodeVersion">Version of Node.js.</param>
+        /// <param name="powerShellVersion">Version of PowerShell.</param>
         /// <param name="linuxFxVersion">Linux App Framework and
         /// version</param>
         /// <param name="windowsFxVersion">Xenon App Framework and
@@ -69,8 +70,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param name="publishingUsername">Publishing user name.</param>
         /// <param name="appSettings">Application settings.</param>
-        /// <param name="azureStorageAccounts">User-provided Azure storage
-        /// accounts.</param>
         /// <param name="connectionStrings">Connection strings.</param>
         /// <param name="machineKey">Site MachineKey.</param>
         /// <param name="handlerMappings">Handler mappings.</param>
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="scmType">SCM type. Possible values include: 'None',
         /// 'Dropbox', 'Tfs', 'LocalGit', 'GitHub', 'CodePlexGit',
         /// 'CodePlexHg', 'BitbucketGit', 'BitbucketHg', 'ExternalGit',
-        /// 'ExternalHg', 'OneDrive', 'VSO'</param>
+        /// 'ExternalHg', 'OneDrive', 'VSO', 'VSTSRM'</param>
         /// <param name="use32BitWorkerProcess">&lt;code&gt;true&lt;/code&gt;
         /// to use 32-bit worker process; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
@@ -110,6 +109,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="push">Push endpoint settings.</param>
         /// <param name="apiDefinition">Information about the formal API
         /// definition for the app.</param>
+        /// <param name="apiManagementConfig">Azure API management settings
+        /// linked to the app.</param>
         /// <param name="autoSwapSlotName">Auto-swap slot name.</param>
         /// <param name="localMySqlEnabled">&lt;code&gt;true&lt;/code&gt; to
         /// enable local MySQL; otherwise,
@@ -131,9 +132,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// '1.0', '1.1', '1.2'</param>
         /// <param name="ftpsState">State of FTP / FTPS service. Possible
         /// values include: 'AllAllowed', 'FtpsOnly', 'Disabled'</param>
-        /// <param name="reservedInstanceCount">Number of reserved instances.
-        /// This setting only applies to the Consumption Plan</param>
-        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IDictionary<string, AzureStorageInfoValue> azureStorageAccounts = default(IDictionary<string, AzureStorageInfoValue>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), IList<IpSecurityRestriction> scmIpSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? scmIpSecurityRestrictionsUseMain = default(bool?), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string ftpsState = default(string), int? reservedInstanceCount = default(int?))
+        /// <param name="preWarmedInstanceCount">Number of preWarmed instances.
+        /// This setting only applies to the Consumption and Elastic
+        /// Plans</param>
+        /// <param name="healthCheckPath">Health check path</param>
+        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string powerShellVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), ApiManagementConfig apiManagementConfig = default(ApiManagementConfig), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), IList<IpSecurityRestriction> scmIpSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? scmIpSecurityRestrictionsUseMain = default(bool?), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string ftpsState = default(string), int? preWarmedInstanceCount = default(int?), string healthCheckPath = default(string))
             : base(id, name, kind, type)
         {
             NumberOfWorkers = numberOfWorkers;
@@ -142,6 +145,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             PhpVersion = phpVersion;
             PythonVersion = pythonVersion;
             NodeVersion = nodeVersion;
+            PowerShellVersion = powerShellVersion;
             LinuxFxVersion = linuxFxVersion;
             WindowsFxVersion = windowsFxVersion;
             RequestTracingEnabled = requestTracingEnabled;
@@ -153,7 +157,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             DetailedErrorLoggingEnabled = detailedErrorLoggingEnabled;
             PublishingUsername = publishingUsername;
             AppSettings = appSettings;
-            AzureStorageAccounts = azureStorageAccounts;
             ConnectionStrings = connectionStrings;
             MachineKey = machineKey;
             HandlerMappings = handlerMappings;
@@ -178,6 +181,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Cors = cors;
             Push = push;
             ApiDefinition = apiDefinition;
+            ApiManagementConfig = apiManagementConfig;
             AutoSwapSlotName = autoSwapSlotName;
             LocalMySqlEnabled = localMySqlEnabled;
             ManagedServiceIdentityId = managedServiceIdentityId;
@@ -188,7 +192,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Http20Enabled = http20Enabled;
             MinTlsVersion = minTlsVersion;
             FtpsState = ftpsState;
-            ReservedInstanceCount = reservedInstanceCount;
+            PreWarmedInstanceCount = preWarmedInstanceCount;
+            HealthCheckPath = healthCheckPath;
             CustomInit();
         }
 
@@ -232,6 +237,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeVersion")]
         public string NodeVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets version of PowerShell.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.powerShellVersion")]
+        public string PowerShellVersion { get; set; }
 
         /// <summary>
         /// Gets or sets linux App Framework and version
@@ -308,12 +319,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<NameValuePair> AppSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets user-provided Azure storage accounts.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.azureStorageAccounts")]
-        public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts { get; set; }
-
-        /// <summary>
         /// Gets or sets connection strings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionStrings")]
@@ -341,7 +346,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets SCM type. Possible values include: 'None', 'Dropbox',
         /// 'Tfs', 'LocalGit', 'GitHub', 'CodePlexGit', 'CodePlexHg',
         /// 'BitbucketGit', 'BitbucketHg', 'ExternalGit', 'ExternalHg',
-        /// 'OneDrive', 'VSO'
+        /// 'OneDrive', 'VSO', 'VSTSRM'
         /// </summary>
         [JsonProperty(PropertyName = "properties.scmType")]
         public string ScmType { get; set; }
@@ -473,6 +478,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public ApiDefinitionInfo ApiDefinition { get; set; }
 
         /// <summary>
+        /// Gets or sets azure API management settings linked to the app.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiManagementConfig")]
+        public ApiManagementConfig ApiManagementConfig { get; set; }
+
+        /// <summary>
         /// Gets or sets auto-swap slot name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoSwapSlotName")]
@@ -539,11 +550,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string FtpsState { get; set; }
 
         /// <summary>
-        /// Gets or sets number of reserved instances.
-        /// This setting only applies to the Consumption Plan
+        /// Gets or sets number of preWarmed instances.
+        /// This setting only applies to the Consumption and Elastic Plans
         /// </summary>
-        [JsonProperty(PropertyName = "properties.reservedInstanceCount")]
-        public int? ReservedInstanceCount { get; set; }
+        [JsonProperty(PropertyName = "properties.preWarmedInstanceCount")]
+        public int? PreWarmedInstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets health check path
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.healthCheckPath")]
+        public string HealthCheckPath { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -557,13 +574,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
             {
                 Push.Validate();
             }
-            if (ReservedInstanceCount > 10)
+            if (PreWarmedInstanceCount > 10)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ReservedInstanceCount", 10);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "PreWarmedInstanceCount", 10);
             }
-            if (ReservedInstanceCount < 0)
+            if (PreWarmedInstanceCount < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ReservedInstanceCount", 0);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PreWarmedInstanceCount", 0);
             }
         }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,15 @@ namespace Azure.Search.Documents.Models
     public partial class InputFieldMappingEntry
     {
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
-        public InputFieldMappingEntry()
+        /// <param name="name"> The name of the input. </param>
+        public InputFieldMappingEntry(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>

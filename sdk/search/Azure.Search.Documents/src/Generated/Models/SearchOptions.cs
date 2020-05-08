@@ -56,7 +56,6 @@ namespace Azure.Search.Documents
             Skip = skip;
             Size = size;
         }
-
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </summary>
         public string HighlightPostTag { get; set; }
         /// <summary> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &amp;lt;em&amp;gt;. </summary>

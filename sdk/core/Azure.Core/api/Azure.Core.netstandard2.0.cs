@@ -14,6 +14,13 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public partial class AzureKeyCredential
+    {
+        public AzureKeyCredential(string key) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Key { get { throw null; } }
+        public void Update(string key) { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
     {
@@ -158,13 +165,6 @@ namespace Azure.Core
         public string Token { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
-    }
-    public partial class AzureKeyCredential
-    {
-        public AzureKeyCredential(string key) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string Key { get { throw null; } }
-        public void Update(string key) { }
     }
     public abstract partial class ClientOptions
     {

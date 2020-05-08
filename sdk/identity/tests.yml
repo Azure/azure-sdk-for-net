@@ -1,0 +1,17 @@
+trigger: none
+
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: identity
+    EnvVars:
+      AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
+      AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
+      AZURE_IDENTITY_TEST_PASSWORD: $(net-identity-password)

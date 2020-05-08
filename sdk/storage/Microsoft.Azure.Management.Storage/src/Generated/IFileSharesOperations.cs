@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. When specified, only share names starting with the filter
         /// will be listed.
         /// </param>
+        /// <param name='expand'>
+        /// Optional, used to expand the properties within share's properties.
+        /// Possible values include: 'deleted'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -58,7 +62,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new share under the specified account as described by
         /// request body. The share resource includes metadata and properties
@@ -81,13 +85,8 @@ namespace Microsoft.Azure.Management.Storage
         /// character must be immediately preceded and followed by a letter or
         /// number.
         /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the share as metadata.
-        /// </param>
-        /// <param name='shareQuota'>
-        /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
-        /// maximum size is 102400.
+        /// <param name='fileShare'>
+        /// Properties of the file share to create.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,7 +103,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates share properties as specified in request body. Properties
         /// not mentioned in the request will not be changed. Update fails if
@@ -126,13 +125,8 @@ namespace Microsoft.Azure.Management.Storage
         /// character must be immediately preceded and followed by a letter or
         /// number.
         /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the share as metadata.
-        /// </param>
-        /// <param name='shareQuota'>
-        /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
-        /// maximum size is 102400.
+        /// <param name='fileShare'>
+        /// Properties to update for the file share.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,7 +143,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileShare>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileShare>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets properties of a specified share.
         /// </summary>
@@ -169,6 +163,10 @@ namespace Microsoft.Azure.Management.Storage
         /// character must be immediately preceded and followed by a letter or
         /// number.
         /// </param>
+        /// <param name='expand'>
+        /// Optional, used to expand the properties within share's properties.
+        /// Possible values include: 'stats'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -184,7 +182,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes specified share under its account.
         /// </summary>
@@ -217,6 +215,47 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Restore a file share within a valid retention days if share soft
+        /// delete is enabled
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='shareName'>
+        /// The name of the file share within the specified storage account.
+        /// File share names must be between 3 and 63 characters in length and
+        /// use numbers, lower-case letters and dash (-) only. Every dash (-)
+        /// character must be immediately preceded and followed by a letter or
+        /// number.
+        /// </param>
+        /// <param name='deletedShareName'>
+        /// Required. Identify the name of the deleted share that will be
+        /// restored.
+        /// </param>
+        /// <param name='deletedShareVersion'>
+        /// Required. Identify the version of the deleted share that will be
+        /// restored.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string deletedShareName, string deletedShareVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all shares.
         /// </summary>

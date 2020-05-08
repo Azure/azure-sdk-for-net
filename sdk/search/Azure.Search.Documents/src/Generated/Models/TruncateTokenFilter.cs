@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Truncates the terms to a specific length. This token filter is implemented using Apache Lucene. </summary>
     public partial class TruncateTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of TruncateTokenFilter. </summary>
-        public TruncateTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public TruncateTokenFilter(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.TruncateTokenFilter";
         }
 
         /// <summary> Initializes a new instance of TruncateTokenFilter. </summary>
-        /// <param name="length"> The length at which terms will be truncated. Default and maximum is 300. </param>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal TruncateTokenFilter(int? length, string oDataType, string name) : base(oDataType, name)
+        /// <param name="length"> The length at which terms will be truncated. Default and maximum is 300. </param>
+        internal TruncateTokenFilter(string oDataType, string name, int? length) : base(oDataType, name)
         {
             Length = length;
-            ODataType = "#Microsoft.Azure.Search.TruncateTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.TruncateTokenFilter";
         }
 
         /// <summary> The length at which terms will be truncated. Default and maximum is 300. </summary>

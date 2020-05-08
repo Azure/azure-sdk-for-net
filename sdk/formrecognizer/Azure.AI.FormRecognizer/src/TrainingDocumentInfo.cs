@@ -3,12 +3,18 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
-    [CodeGenSchema("TrainingDocumentInfo")]
+    /// <summary>
+    /// Represents a document that has been used to train a model.
+    /// </summary>
+    [CodeGenModel("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
-        [CodeGenSchemaMember("pages")]
-        public int PageCount { get; set; }
+        /// <summary>
+        /// The number of pages the document has.
+        /// </summary>
+        [CodeGenMember("pages")]
+        public int PageCount { get; internal set; }
     }
 }

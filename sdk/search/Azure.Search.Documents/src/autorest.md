@@ -28,17 +28,6 @@ directive:
 ## CodeGen hacks
 These should eventually be fixed in the code generator.
 
-### `request` can't be used as a parameter name
-The swagger and the codegen both use the name `request` which is problematic.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.paths["/indexes('{indexName}')/search.analyze"].post.parameters[1]
-  transform: >
-    $["x-ms-client-name"] = "request_todo";
-    return $;
-```
-
 ## Swagger hacks
 These should eventually be fixed in the swagger files.
 
@@ -65,27 +54,32 @@ directive:
     $.additionalProperties = true;
 ```
 
+### Rename one of SearchError definitions
+
+SearchError is duplicated between two swaggers, rename one of them
+
+``` yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.SearchError
+  transform: $["x-ms-client-name"] = "SearchServiceError"
+```
+
+### Rename one of SearchMode definitions
+
+SearchMode is duplicated across swaggers. Rename one of them, even though it will be internalized.
+This prevents the serializer from attempting to use undefined values until [Azure/autorest.csharp#583](https://github.com/Azure/autorest.csharp/issues/583) is fixed.
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.Suggester.properties.searchMode
+  transform: $["x-ms-enum"].name = "SuggesterMode";
+```
+
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
-
-### Add documentation
-Add documentation to nodes that do not have it. These should be fixed in swagger.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions..properties["@odata.type"]
-  transform: $.description = "The model type.";
-- from: swagger-document
-  where: $.definitions.CognitiveServicesAccount.properties.description
-  transform: $.description = "Description of the cognitive resource attached to a skillset.";
-- from: swagger-document
-  where: $.definitions.CognitiveServicesAccountKey.properties.key
-  transform: $.description = "The key used to provision a cognitive resource attached to a skillset.";
-- from: swagger-document
-  where: $.definitions.ScoringFunction.properties.type
-  transform: $.description = "Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case.";
-```
 
 ### Property name changes
 Change the name of some properties so they are properly CamelCased.
@@ -94,4 +88,42 @@ modelerfour:
   naming:
     override:
       "@odata.type": ODataType
+```
+
+### Disable parameter grouping
+
+AutoRest C# supports parameter grouping now, temporary disabling to reduce the change size.
+
+``` yaml
+modelerfour:
+  group-parameters: false
+```
+
+### Set odata.metadata Accept header in operations
+
+searchindex.json needs odata.metadata=none and searchservice.json needs odata.metadata=minimal in the Accept header.
+
+```yaml
+directive:
+- from: swagger-document
+  where: $.paths
+  transform: >
+    for (var path in $) {
+      for (var opName in $[path]) {
+        var accept = "application/json; odata.metadata=";
+        accept += path.startsWith("/docs") ? "none" : "minimal";
+
+        var op = $[path][opName];
+        op.parameters.push({
+          name: "Accept",
+          "in": "header",
+          required: true,
+          type: "string",
+          enum: [ accept ],
+          "x-ms-parameter-location": "method"
+        });
+      }
+    }
+
+    return $;
 ```

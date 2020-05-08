@@ -53,9 +53,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="threatIntelMode">The operation mode for Threat
         /// Intelligence. Possible values include: 'Alert', 'Deny',
         /// 'Off'</param>
+        /// <param name="threatIntelWhitelist">ThreatIntel Whitelist for
+        /// Firewall Policy.</param>
+        /// <param name="intrusionSystemMode">The operation mode for Intrusion
+        /// system. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="transportSecurity">TLS Configuration
+        /// definition.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), string etag = default(string))
+        /// <param name="identity">The identity of the firewall policy.</param>
+        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), string intrusionSystemMode = default(string), FirewallPolicyTransportSecurity transportSecurity = default(FirewallPolicyTransportSecurity), string etag = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(id, name, type, location, tags)
         {
             RuleGroups = ruleGroups;
@@ -64,7 +71,11 @@ namespace Microsoft.Azure.Management.Network.Models
             Firewalls = firewalls;
             ChildPolicies = childPolicies;
             ThreatIntelMode = threatIntelMode;
+            ThreatIntelWhitelist = threatIntelWhitelist;
+            IntrusionSystemMode = intrusionSystemMode;
+            TransportSecurity = transportSecurity;
             Etag = etag;
+            Identity = identity;
             CustomInit();
         }
 
@@ -115,11 +126,36 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ThreatIntelMode { get; set; }
 
         /// <summary>
+        /// Gets or sets threatIntel Whitelist for Firewall Policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.threatIntelWhitelist")]
+        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operation mode for Intrusion system. Possible
+        /// values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intrusionSystemMode")]
+        public string IntrusionSystemMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets TLS Configuration definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.transportSecurity")]
+        public FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
     }
 }

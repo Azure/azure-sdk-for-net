@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -18,14 +18,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(5, true)]
         [TestCase(10, false)]
         [TestCase(20, true)]
-        public async Task ProcessEventNextSession(int numThreads, bool autoComplete)
+        public async Task ProcessEvent(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
@@ -33,14 +33,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageSendCt = numThreads * 2;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
+                    AutoComplete = autoComplete,
+                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -57,11 +58,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     try
                     {
-                        var receiver = args.Receiver;
                         var message = args.Message;
                         if (!autoComplete)
                         {
-                            await receiver.CompleteAsync(message.LockToken);
+                            await args.CompleteAsync(message, args.CancellationToken);
                         }
                         Interlocked.Increment(ref messageCt);
                     }
@@ -90,25 +90,246 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(5)]
         [TestCase(10)]
         [TestCase(20)]
-        public async Task ReceiveStopProcessing(int numThreads)
+        public async Task UserSettlingWithAutoCompleteDoesNotThrow(int numThreads)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // use double the number of threads so we can make sure we test that we don't
+                // retrieve more messages than expected when there are more messages available
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                var messageSendCt = numThreads * 2;
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
+
+                await sender.SendAsync(messageBatch);
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = true,
+                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
+                };
+                var processor = client.CreateProcessor(scope.QueueName, options);
+                int messageCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        switch (numThreads)
+                        {
+                            case 1:
+                                await args.CompleteAsync(message, args.CancellationToken);
+                                break;
+                            case 5:
+                                await args.AbandonAsync(message);
+                                break;
+                            case 10:
+                                await args.DeadLetterAsync(message);
+                                break;
+                            case 20:
+                                await args.DeferAsync(message);
+                                break;
+                        }
+                        Interlocked.Increment(ref messageCt);
+                    }
+                    finally
+                    {
+
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
+                    }
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                await processor.StopProcessingAsync();
+
+                // we complete each task after one message being processed, so the total number of messages
+                // processed should equal the number of threads, but it's possible that we may process a few more per thread.
+                Assert.IsTrue(messageCt >= numThreads);
+                Assert.IsTrue(messageCt < messageSendCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(20)]
+        public async Task AutoLockRenewalWorks(int numThreads)
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                var messageSendCt = numThreads;
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
+
+                await sender.SendAsync(messageBatch);
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = false
+                };
+                var processor = client.CreateProcessor(scope.QueueName, options);
+                int messageCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        var lockedUntil = message.LockedUntil;
+                        await Task.Delay(lockDuration);
+                        Assert.That(message.LockedUntil > lockedUntil, $"{lockedUntil},{DateTime.UtcNow}");
+                        await args.CompleteAsync(message, args.CancellationToken);
+                        Interlocked.Increment(ref messageCt);
+                    }
+                    finally
+                    {
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
+                    }
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                await processor.StopProcessingAsync();
+                Assert.AreEqual(numThreads, messageCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(5, 0)]
+        [TestCase(10, 1)]
+        [TestCase(20, 1)]
+        public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                var messageSendCt = numThreads;
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
+
+                await sender.SendAsync(messageBatch);
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = false,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
+                };
+                var processor = client.CreateProcessor(scope.QueueName, options);
+                int messageCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        var lockedUntil = message.LockedUntil;
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
+                        if (!args.CancellationToken.IsCancellationRequested)
+                        {
+                            // only do the assertion if cancellation wasn't requested as otherwise
+                            // the exception we would get is a TaskCanceledException rather than ServiceBusException
+                            Assert.AreEqual(lockedUntil, message.LockedUntil);
+                            Assert.That(
+                                async () => await args.CompleteAsync(message, args.CancellationToken),
+                                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                            Interlocked.Increment(ref messageCt);
+                        }
+                    }
+                    finally
+                    {
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
+                    }
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                await processor.StopProcessingAsync();
+                Assert.AreEqual(numThreads, messageCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task CanStopProcessingFromHandler(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 int numMessages = 100;
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
                     ReceiveMode = ReceiveMode.ReceiveAndDelete
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageProcessedCt = 0;
 
                 // stop processing halfway through
@@ -133,23 +354,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
                 await tcs.Task;
 
-                var receiver = GetNoRetryClient().GetReceiver(scope.QueueName);
+                var receiver = GetNoRetryClient().CreateReceiver(scope.QueueName);
                 var receivedMessages = await receiver.ReceiveBatchAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages
                 Assert.IsTrue(receivedMessages.Count > 0);
                 Assert.IsTrue(messageProcessedCt < numMessages);
-
             }
         }
 
         [Test]
-        public async Task OnMessageExceptionHandlerCalledTest()
+        public async Task OnMessageExceptionHandlerCalled()
         {
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-            ServiceBusProcessor processor = client.GetProcessor(invalidQueueName);
+            ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
 
             processor.ProcessMessageAsync += ProcessMessage;
             processor.ProcessErrorAsync += ProcessErrors;
@@ -165,12 +385,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.NotNull(args);
                 Assert.NotNull(args.Exception);
                 Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
-                Assert.AreEqual(ExceptionReceivedEventArgsAction.Receive, args.Action);
+                Assert.AreEqual(ServiceBusErrorSource.Receive, args.ErrorSource);
                 Assert.AreEqual(processor.EntityPath, args.EntityPath);
 
                 if (args.Exception is ServiceBusException sbException)
                 {
-                    if (sbException.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                    if (sbException.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound ||
+                        // There is a race condition wherein the service closes the connection when getting
+                        // the request for the non-existant queue. If the connection is closed by the time
+                        // our exception handling kicks in, we throw it as a ServiceCommunicationProblem
+                        // as we cannot be sure the error wasn't due to the connection being closed,
+                        // as opposed to what we know is the true cause in this case,
+                        // MessagingEntityNotFound.
+                        sbException.Reason == ServiceBusException.FailureReason.ServiceCommunicationProblem)
                     {
                         exceptionReceivedHandlerCalled = true;
                         return Task.CompletedTask;
@@ -185,7 +412,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await processor.StartProcessingAsync();
                 var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                while (stopwatch.Elapsed.TotalSeconds <= 20)
                 {
                     if (exceptionReceivedHandlerCalled)
                     {
@@ -203,326 +430,140 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [TestCase(1, true)]
-        [TestCase(5, true)]
-        [TestCase(10, false)]
-        [TestCase(20, false)]
-        public async Task ProcessEvent(int numThreads, bool autoComplete)
+        public async Task CannotAddHandlerWhileProcessorIsRunning()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: true))
+                enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                await using var client = GetClient();
 
-                // send 1 message for each thread and use a different session for each message
-                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                for (int i = 0; i < numThreads; i++)
-                {
-                    var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
-                    sessions.TryAdd(sessionId, true);
-                }
-                var options = new ServiceBusProcessorOptions
-                {
-                    MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
-                };
-                var processor = client.GetSessionProcessor(scope.QueueName, options);
-                int messageCt = 0;
+                var processor = client.CreateProcessor(scope.QueueName);
 
-                TaskCompletionSource<bool>[] completionSources = Enumerable
-                .Range(0, numThreads)
-                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
-                .ToArray();
+                Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+                Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+                processor.ProcessMessageAsync += eventHandler;
+                processor.ProcessErrorAsync += errorHandler;
 
-                var completionSourceIndex = -1;
-
-                processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync();
 
-                async Task ProcessMessage(ProcessMessageEventArgs args)
-                {
-                    try
-                    {
-                        var message = args.Message;
-                        var receiver = args.Receiver;
-                        if (!autoComplete)
-                        {
-                            await receiver.CompleteAsync(message.LockToken);
-                        }
-                        Interlocked.Increment(ref messageCt);
-                        sessions.TryRemove(message.SessionId, out bool _);
-                        var session = receiver.GetSessionManager();
-                        Assert.AreEqual(message.SessionId, session.SessionId);
-                        Assert.IsNotNull(session.LockedUntil);
-                    }
-                    finally
-                    {
-                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        completionSources[setIndex].SetResult(true);
-                    }
-                }
-                await Task.WhenAll(completionSources.Select(source => source.Task));
+                Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
+
                 await processor.StopProcessingAsync();
 
-                // there is only one message for each session, and one
-                // thread for each session, so the total messages processed
-                // should equal the number of threads
-                Assert.AreEqual(numThreads, messageCt);
+                // Once stopped, the processor should allow handlers to be removed, and re-added.
+                Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.Nothing);
+                Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.Nothing);
 
-                // we should have received messages from each of the sessions
-                Assert.AreEqual(0, sessions.Count);
+                Assert.That(() => processor.ProcessMessageAsync += eventHandler, Throws.Nothing);
+                Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
             }
         }
 
         [Test]
-        [TestCase(1, true)]
-        [TestCase(5, false)]
-        [TestCase(10, true)]
-        [TestCase(20, false)]
-        public async Task ProcessEventConsumesAllMessages(int numThreads, bool autoComplete)
+        public async Task StopProcessingDoesNotCancelAutoCompletion()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: true))
+                enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
-
-                // send 1 message for each thread and use a different session for each message
-                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                for (int i = 0; i < numThreads; i++)
+                await using var client = GetClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+                var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    var sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
-                    sessions.TryAdd(sessionId, true);
+                    AutoComplete = true
+                });
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    return Task.CompletedTask;
                 }
-
-                int messageCt = 0;
-
-                TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var options = new ServiceBusProcessorOptions
-                {
-                    MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
-                };
-
-                ServiceBusProcessor processor = GetNoRetryClient().GetSessionProcessor(scope.QueueName, options);
-
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
+
                 await processor.StartProcessingAsync();
-
-                async Task ProcessMessage(ProcessMessageEventArgs args)
-                {
-                    try
-                    {
-                        var receiver = args.Receiver;
-                        var message = args.Message;
-                        if (!autoComplete)
-                        {
-                            await receiver.CompleteAsync(message.LockToken);
-                        }
-                        sessions.TryRemove(message.SessionId, out bool _);
-                        var session = receiver.GetSessionManager();
-                        Assert.AreEqual(message.SessionId, session.SessionId);
-                        Assert.IsNotNull(session.LockedUntil);
-                    }
-                    finally
-                    {
-                        var ct = Interlocked.Increment(ref messageCt);
-                        if (ct == numThreads)
-                        {
-                            taskCompletionSource.SetResult(true);
-                        }
-                    }
-                }
-                await taskCompletionSource.Task;
-                await processor.StopProcessingAsync();
-
-                Assert.AreEqual(numThreads, messageCt);
-
-                // we should have received messages from each of the sessions
-                Assert.AreEqual(0, sessions.Count);
-
-                // try receiving to verify empty
-                // since all the messages are gone and we are using sessions, we won't actually
-                // be able to open the Receive link
-                // only do this assertion when we complete the message ourselves,
-                // otherwise the message completion may have been cancelled if it didn't finish
-                // before calling StopProcessingAsync.
-
-
-                if (!autoComplete)
-                {
-                    Assert.That(async () =>
-                        await GetNoRetryClient().GetSessionReceiverAsync(scope.QueueName),
-                        Throws.Exception);
-                }
-            }
-        }
-
-        [Test]
-        public async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                var exceptionReceivedHandlerCalled = false;
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-
-                var processor = client.GetSessionProcessor(scope.QueueName);
-                processor.ProcessMessageAsync += MessageHandler;
-                processor.ProcessErrorAsync += ErrorHandler;
-
-                Task MessageHandler(ProcessMessageEventArgs args)
-                {
-                    return Task.CompletedTask;
-                }
-
-                Task ErrorHandler(ProcessErrorEventArgs args)
-                {
-                    Assert.NotNull(args);
-                    Assert.NotNull(args.Exception);
-                    if (args.Exception is InvalidOperationException)
-                    {
-                        exceptionReceivedHandlerCalled = true;
-                    }
-                    return Task.CompletedTask;
-                }
-                await processor.StartProcessingAsync();
-                var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
-                {
-                    if (exceptionReceivedHandlerCalled)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                }
-
-                Assert.True(exceptionReceivedHandlerCalled);
-            }
-        }
-
-        [Test]
-        public async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulTopic()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
-            {
-                var exceptionReceivedHandlerCalled = false;
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.GetSessionProcessor(scope.TopicName, scope.SubscriptionNames.First());
-                processor.ProcessMessageAsync += MessageHandler;
-                processor.ProcessErrorAsync += ErrorHandler;
-
-                Task MessageHandler(ProcessMessageEventArgs args)
-                {
-                    return Task.CompletedTask;
-                }
-
-                Task ErrorHandler(ProcessErrorEventArgs args)
-                {
-                    Assert.NotNull(args);
-                    Assert.NotNull(args.Exception);
-                    if (args.Exception is InvalidOperationException)
-                    {
-                        exceptionReceivedHandlerCalled = true;
-                    }
-                    return Task.CompletedTask;
-                }
-                await processor.StartProcessingAsync();
-                var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
-                {
-                    if (exceptionReceivedHandlerCalled)
-                    {
-                        break;
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                }
-
-                Assert.True(exceptionReceivedHandlerCalled);
-            }
-        }
-
-        [Test]
-        [TestCase(1, true)]
-        [TestCase(5, false)]
-        [TestCase(10, true)]
-        [TestCase(20, false)]
-        public async Task Process_Event_SessionId(int numThreads, bool autoComplete)
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
-                enablePartitioning: false,
-                enableSession: true))
-            {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
-
-                // send 1 message for each thread and use a different session for each message
-                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                string sessionId = null;
-                for (int i = 0; i < numThreads; i++)
-                {
-                    sessionId = Guid.NewGuid().ToString();
-                    await sender.SendAsync(GetMessage(sessionId));
-                    sessions.TryAdd(sessionId, true);
-                }
-
-                int messageCt = 0;
-
-                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var options = new ServiceBusProcessorOptions
-                {
-                    MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete,
-                };
-
-                var processor = client.GetSessionProcessor(
-                    scope.QueueName,
-                    options,
-                    sessionId); // using the last sessionId from the loop
-
-                processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
-                await processor.StartProcessingAsync();
-
-                async Task ProcessMessage(ProcessMessageEventArgs args)
-                {
-                    try
-                    {
-                        var receiver = args.Receiver;
-                        var message = args.Message;
-                        if (!autoComplete)
-                        {
-                            await receiver.CompleteAsync(message);
-                        }
-                        sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.AreEqual(sessionId, message.SessionId);
-                        var session = receiver.GetSessionManager();
-                        Assert.AreEqual(sessionId, session.SessionId);
-                        Assert.IsNotNull(session.LockedUntil);
-                    }
-                    finally
-                    {
-                        var ct = Interlocked.Increment(ref messageCt);
-                        tcs.SetResult(true);
-                    }
-                }
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var msg = await receiver.ReceiveAsync();
+                Assert.IsNull(msg);
+            }
+        }
 
-                // only one message has the session id that we
-                // configured the processor with
-                Assert.AreEqual(1, messageCt);
+        [Test]
+        [TestCase("")]
+        [TestCase("Abandon")]
+        [TestCase("Complete")]
+        [TestCase("Defer")]
+        [TestCase("Deadletter")]
+        [TestCase("DeadletterOverload")]
+        public async Task UserCallbackThrowingCausesMessageToBeAbandonedIfNotSettled(string settleMethod)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var client = GetClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+                var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    AutoComplete = true
+                });
+                var tcs = new TaskCompletionSource<bool>();
 
-                // we should have received messages from only the specified session
-                Assert.AreEqual(numThreads - 1, sessions.Count);
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    switch (settleMethod)
+                    {
+                        case "Abandon":
+                            await args.AbandonAsync(args.Message);
+                            break;
+                        case "Complete":
+                            await args.CompleteAsync(args.Message);
+                            break;
+                        case "Defer":
+                            await args.DeferAsync(args.Message);
+                            break;
+                        case "Deadletter":
+                            await args.DeadLetterAsync(args.Message);
+                            break;
+                        case "DeadletterOverload":
+                            await args.DeadLetterAsync(args.Message, "reason");
+                            break;
+                    }
+                    throw new TestException();
+                }
+
+                Task ExceptionHandler(ProcessErrorEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    if (!(args.Exception is TestException))
+                    {
+                        Assert.Fail(args.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                if (settleMethod == "" || settleMethod == "Abandon")
+                {
+                    Assert.IsNotNull(msg);
+                }
+                else
+                {
+                    Assert.IsNull(msg);
+                }
             }
         }
     }

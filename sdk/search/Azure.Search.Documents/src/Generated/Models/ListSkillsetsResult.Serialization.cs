@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,19 +15,28 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListSkillsetsResult DeserializeListSkillsetsResult(JsonElement element)
         {
-            ListSkillsetsResult result = new ListSkillsetsResult();
+            IReadOnlyList<SearchIndexerSkillset> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    List<SearchIndexerSkillset> array = new List<SearchIndexerSkillset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Skillsets.Add(Skillset.DeserializeSkillset(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
+                        }
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new ListSkillsetsResult(value);
         }
     }
 }
