@@ -22,13 +22,7 @@ namespace Azure.Data.Tables.Tests
 
         public override string SanitizeUri(string uri)
         {
-            if (SignatureRegEx.IsMatch(uri))
-            {
-                var match = SignatureRegEx.Replace(uri, $"$1{SanitizeValue}");
-                return match;
-            }
-
-            return uri;
+            return SignatureRegEx.Replace(uri, $"$1{SanitizeValue}");
         }
     }
 }
