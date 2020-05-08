@@ -22,17 +22,19 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Creates a fake <see cref="FormTrainingClient" /> and instruments it to make use of the Azure Core
-        /// Test Framework functionalities.
+        /// Creates a fake <see cref="FormTrainingClient" /> to be used for non-live testing.
         /// </summary>
-        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedClient()
+        /// <param name="instrumentClient">Whether or not to instrument the client to make use of the Azure Core Test Framework functionalities.</param>
+        /// <returns>The fake <see cref="FormTrainingClient" />.</returns>
+        private FormTrainingClient CreateFormTrainingClient(bool instrumentClient = true)
         {
             var fakeEndpoint = new Uri("http://localhost");
             var fakeCredential = new AzureKeyCredential("fakeKey");
             var client = new FormTrainingClient(fakeEndpoint, fakeCredential);
 
-            return InstrumentClient(client);
+            return instrumentClient
+                ? InstrumentClient(client)
+                : client;
         }
 
         [Test]
@@ -48,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartTrainingArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateFormTrainingClient();
 
             Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty)));
             Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null));
@@ -57,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void GetCustomModelArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateFormTrainingClient();
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCustomModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.GetCustomModelAsync(string.Empty));
@@ -67,11 +69,24 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void DeleteModelArgumentValidation()
         {
-            FormTrainingClient client = CreateInstrumentedClient();
+            FormTrainingClient client = CreateFormTrainingClient();
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync(string.Empty));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync("1975-04-04"));
+        }
+
+        [Test]
+        public void CreateFormRecognizerClientFromFormTrainingClient()
+        {
+            // Skip client instrumentation because it makes ServiceClient = null.
+
+            FormTrainingClient trainingClient = CreateFormTrainingClient(instrumentClient: false);
+            FormRecognizerClient formRecognizerClient = trainingClient.GetFormRecognizerClient();
+
+            Assert.IsNotNull(formRecognizerClient);
+            Assert.IsNotNull(formRecognizerClient.Diagnostics);
+            Assert.AreEqual(trainingClient.ServiceClient, formRecognizerClient.ServiceClient);
         }
     }
 }
