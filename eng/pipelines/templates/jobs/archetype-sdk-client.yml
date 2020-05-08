@@ -66,10 +66,10 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion2.1)"
         inputs:
           packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
+          version: "$(DotNetCoreRuntimeVersion2.1)"
       - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
         condition: succeededOrFailed()
