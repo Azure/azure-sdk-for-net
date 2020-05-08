@@ -634,6 +634,26 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizeEntitiesBatchWithInvalidDocumentBatch()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "document 1",
+                "document 2",
+                "document 3",
+                "document 4",
+                "document 5",
+                "document 6"
+            };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.RecognizeEntitiesBatchAsync(documents));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
