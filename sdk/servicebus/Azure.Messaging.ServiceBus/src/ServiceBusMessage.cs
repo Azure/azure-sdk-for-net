@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
             Label = receivedMessage.Label;
             MessageId = receivedMessage.MessageId;
             PartitionKey = receivedMessage.PartitionKey;
-            Properties = new Dictionary<string, object>(receivedMessage.Properties);
+            Properties = new Dictionary<string, object>(receivedMessage.SentMessage.Properties);
             ReplyTo = receivedMessage.ReplyTo;
             ReplyToSessionId = receivedMessage.ReplyToSessionId;
             SessionId = receivedMessage.SessionId;

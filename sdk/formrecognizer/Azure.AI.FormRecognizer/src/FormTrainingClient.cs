@@ -12,12 +12,16 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to connect with the Form Recognizer Azure Cognitive Service to train models from
-    /// custom forms.  It also supports listing and deleting
-    /// trained models, as well as accessing account properties.
+    /// custom forms.  It also supports listing and deleting trained models, as well as accessing account
+    /// properties.
     /// </summary>
     public class FormTrainingClient
     {
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         internal readonly ServiceClient ServiceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
@@ -57,18 +61,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            var diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
-        /// </summary>
-        /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        internal FormTrainingClient(ServiceClient serviceClient)
-        {
-            ServiceClient = serviceClient;
+            ServiceClient = new ServiceClient(_diagnostics, pipeline, endpoint.ToString());
         }
 
         #region Training
@@ -236,5 +231,16 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
+
+        #region Form Recognizer Client
+
+        /// <summary>
+        /// Gets an instance of a <see cref="FormRecognizerClient"/> that shares the same endpoint, the same
+        /// credentials and the same set of <see cref="FormRecognizerClientOptions"/> this client has.
+        /// </summary>
+        /// <returns>A new instance of a <see cref="FormRecognizerClient"/>.</returns>
+        public virtual FormRecognizerClient GetFormRecognizerClient() => new FormRecognizerClient(_diagnostics, ServiceClient);
+
+        #endregion Form Recognizer Client
     }
 }

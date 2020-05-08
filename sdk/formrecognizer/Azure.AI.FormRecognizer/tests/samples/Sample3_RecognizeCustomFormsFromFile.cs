@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -15,16 +16,26 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        [Ignore("Need to revisit how to pass the modelId. Issue https://github.com/Azure/azure-sdk-for-net/issues/11493")]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+
+            // Firstly, create a trained model we can use to recognize the custom form. Please note that
+            // models can also be trained using a graphical user interface such as the Form Recognizer
+            // Labeling Tool found here:
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+            // Proceed with the custom form recognition.
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
-            string modelId = "<your model id>";
+            string modelId = model.ModelId;
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
@@ -46,6 +57,9 @@ namespace Azure.AI.FormRecognizer.Samples
                     }
                 }
             }
+
+            // Delete the model on completion to clean environment.
+            trainingClient.DeleteModel(model.ModelId);
         }
     }
 }

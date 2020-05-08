@@ -27,8 +27,12 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
-        public void Authenticate()
+        public async Task Authenticate()
         {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
+
             #region Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -172,6 +176,56 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task CreateIndex()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+            Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
+
+            #region Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+            string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+
+            // Create a service client
+            AzureKeyCredential credential = new AzureKeyCredential(key);
+            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+            /*@@*/ client = resources.GetServiceClient();
+
+            // Create the index
+            //@@SearchIndex index = new SearchIndex("hotels")
+            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+            {
+                Fields =
+                {
+                    new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+                    new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
+                    new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                    new ComplexField("address")
+                    {
+                        Fields =
+                        {
+                            new SearchableField("streetAddress"),
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+                        }
+                    }
+                },
+                Suggesters =
+                {
+                    // Suggest query terms from both the hotelName and description fields.
+                    new Suggester("sg", "hotelName", "description")
+                }
+            };
+
+            client.CreateIndex(index);
+            #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
         }
 
         [Test]

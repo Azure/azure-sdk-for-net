@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The size of subsequent ranges.
         /// </summary>
-        private readonly int _rangeSize;
+        private readonly long _rangeSize;
 
         public PartitionedDownloader(
             BlobBaseClient client,
@@ -55,10 +55,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _rangeSize
-            if (transferOptions.MaximumTransferLength.HasValue
-                && transferOptions.MaximumTransferLength.Value > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
             {
-                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
@@ -66,10 +66,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitialTransferLength.HasValue
-                && transferOptions.InitialTransferLength.Value > 0)
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = transferOptions.MaximumTransferLength.Value;
+                _initialRangeSize = transferOptions.MaximumTransferSize.Value;
             }
             else
             {

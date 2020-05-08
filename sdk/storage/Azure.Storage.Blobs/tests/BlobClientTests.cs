@@ -567,14 +567,12 @@ namespace Azure.Storage.Blobs.Test
             var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-            await blob.StagedUploadAsync(
+            await blob.StagedUploadInternal(
                 content: stream,
-                blobHttpHeaders: default,
-                metadata: default,
-                tags: default,
-                conditions: default,
-                progressHandler: default,
-                transferOptions: transferOptions,
+                new UploadBlobOptions
+                {
+                    TransferOptions = transferOptions
+                },
                 async: true);
 
             await DownloadAndAssertAsync(stream, blob);
@@ -604,14 +602,12 @@ namespace Azure.Storage.Blobs.Test
                 var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
                 blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-                await blob.StagedUploadAsync(
+                await blob.StagedUploadInternal(
                     path: path,
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    tags: default,
-                    conditions: default,
-                    progressHandler: default,
-                    transferOptions: transferOptions,
+                    new UploadBlobOptions
+                    {
+                        TransferOptions = transferOptions
+                    },
                     async: true);
 
                 await DownloadAndAssertAsync(stream, blob);
@@ -895,7 +891,7 @@ namespace Azure.Storage.Blobs.Test
                 MaximumTransferLength = Constants.MB,
                 MaximumConcurrency = 16
             };
-            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            long size = new Specialized.BlockBlobClient(new Uri("")).BlockBlobMaxUploadBlobBytes + 1; // ensure that the Parallel upload code path is hit
             using var stream = new MemoryStream(GetRandomBuffer(size));
 
             // Act

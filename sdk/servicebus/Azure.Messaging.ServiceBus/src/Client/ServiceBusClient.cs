@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -529,20 +530,20 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default)
+            params string[] sessionIds)
         {
             ValidateEntityName(queueName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                sessionId: sessionId,
+                sessionIds: sessionIds,
                 options: options ?? new ServiceBusProcessorOptions());
         }
 
@@ -556,21 +557,22 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
+        ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default)
+            params string[] sessionIds)
         {
             ValidateEntityName(topicName);
 
             return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                sessionId: sessionId,
+                sessionIds: sessionIds,
                 options: options ?? new ServiceBusProcessorOptions());
         }
 

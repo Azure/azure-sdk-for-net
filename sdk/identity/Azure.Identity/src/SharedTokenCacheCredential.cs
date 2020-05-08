@@ -133,7 +133,14 @@ namespace Azure.Identity
         {
             List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
-            List<IAccount> filteredAccounts = accounts.Where(a => (string.IsNullOrEmpty(_username) || a.Username == _username) && (string.IsNullOrEmpty(_tenantId) || a.HomeAccountId?.TenantId == _tenantId)).ToList();
+            // filter the accounts to those matching the specified user and tenant
+            List<IAccount> filteredAccounts = accounts.Where(a =>
+                // if _username is specified it must match the account
+                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                &&
+                //if _tenantId is specified it must match the account
+                (string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+            ).ToList();
 
             if (filteredAccounts.Count != 1)
             {

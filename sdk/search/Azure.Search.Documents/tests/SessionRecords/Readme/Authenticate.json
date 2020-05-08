@@ -1,4 +1,12 @@
 {
   "Entries": [],
-  "Variables": {}
+  "Variables": {
+    "CLIENT_ID": "34869c6d-312e-406b-8f7a-033302ff3d20",
+    "LOCATION": "westus2",
+    "RESOURCE_GROUP": "rg-heaths2",
+    "SearchIndexName": "ufeloxcq",
+    "SearchServiceName": "azs-net-uqnsxavy",
+    "SUBSCRIPTION_ID": "c649122d-c5c8-40b0-b95c-e09da8dbfdf0",
+    "TENANT_ID": "96be4b7a-defb-4dc2-a31f-49ee6145d5ab"
+  }
 }

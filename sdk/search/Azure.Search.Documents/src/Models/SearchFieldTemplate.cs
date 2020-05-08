@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
         /// Persists class-specific properties into the given <see cref="SearchField"/>.
         /// </summary>
         /// <param name="field">The <see cref="SearchField"/> into which properties are persisted.</param>
-        protected abstract void Save(SearchField field);
+        private protected abstract void Save(SearchField field);
 
         /// <summary>
         /// Casts a <see cref="SearchFieldTemplate"/> or derivative to a <see cref="SearchField"/>.

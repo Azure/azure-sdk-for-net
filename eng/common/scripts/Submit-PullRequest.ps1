@@ -41,7 +41,7 @@ param(
   $PRBody = $PRTitle
 )
 
-Write-Host $MyInvocation.Line
+Write-Host "> $PSCommandPath $args"
 
 $query = "state=open&head=${PROwner}:${PRBranch}&base=${BaseBranch}"
 

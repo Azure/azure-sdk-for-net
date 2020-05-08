@@ -266,7 +266,52 @@ SearchOptions options = new SearchOptions
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
-``` 
+```
+
+### Creating an index
+
+You can use the `SearchServiceClient` to create a search index. Fields can be
+defined using convenient `SimpleField`, `SearchableField`, or `ComplexField`
+classes. Indexes can also define suggesters, lexical analyzers, and more.
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+
+// Create a service client
+AzureKeyCredential credential = new AzureKeyCredential(key);
+SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+
+// Create the index
+SearchIndex index = new SearchIndex("hotels")
+{
+    Fields =
+    {
+        new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+        new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+        new ComplexField("address")
+        {
+            Fields =
+            {
+                new SearchableField("streetAddress"),
+                new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+            }
+        }
+    },
+    Suggesters =
+    {
+        // Suggest query terms from both the hotelName and description fields.
+        new Suggester("sg", "hotelName", "description")
+    }
+};
+
+client.CreateIndex(index);
+```
 
 ### Adding documents to your index
 

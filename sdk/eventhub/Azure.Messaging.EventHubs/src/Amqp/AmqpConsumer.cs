@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private volatile bool _closed = false;
 
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
@@ -411,9 +411,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     trackLastEnqueuedEventProperties,
                     cancellationToken).ConfigureAwait(false);
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-               ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
+                ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
             }
 
             return link;

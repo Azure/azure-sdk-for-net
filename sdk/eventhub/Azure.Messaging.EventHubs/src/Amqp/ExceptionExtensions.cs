@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The <see cref="Exception" /> that corresponds to the <paramref name="instance" /> and which represents the service error.</returns>
         ///
-        public static Exception TranslateConnectionCloseDuringLinkCreationException(this InvalidOperationException instance,
+        public static Exception TranslateConnectionCloseDuringLinkCreationException(this Exception instance,
                                                                                     string eventHubName)
         {
             Argument.AssertNotNull(instance, nameof(instance));
@@ -67,6 +67,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             switch (instance)
             {
                 case InvalidOperationException _ when (instance.Message.IndexOf("when the connection is closing", StringComparison.InvariantCultureIgnoreCase) >= 0):
+                case TaskCanceledException _:
                     return new EventHubsException(true, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ServiceCommunicationProblem, instance);
 
                 default:

@@ -78,7 +78,10 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadInfo(FlattenedDownloadProperties flattened)
         {
             _flattened = flattened;
-            Details = new BlobDownloadDetails() { _flattened = flattened };
+            Details = new BlobDownloadDetails() {
+                _flattened = flattened,
+                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
+            };
         }
 
         /// <summary>
@@ -237,6 +240,16 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob is sealed.
         /// </summary>
         public bool IsSealed => _flattened.IsSealed;
+
+        /// <summary>
+        /// x-ms-or
+        /// </summary>
+        public IDictionary<string, IDictionary<string, string>> ObjectReplicationSourceProperties { get; internal set; }
+
+        /// <summary>
+        /// Object Replication Policy Id. This value is only set when the policy id
+        /// </summary>
+        public string ObjectReplicationDestinationPolicy => _flattened.ObjectReplicationPolicyId;
     }
 
     /// <summary>

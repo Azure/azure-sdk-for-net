@@ -62,6 +62,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
+        public async Task Ctor_ConnectionStringEscapeBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
+
+            BlockBlobClient initalBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            // Act
+            BlobBaseClient blob = new BlobBaseClient(TestConfigDefault.ConnectionString, test.Container.Name, blobName, GetOptions());
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+        }
+
+        [Test]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -271,20 +295,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DownloadAsync_WithUnreliableConnection()
+        [TestCase(10 * Constants.KB, 1 * Constants.KB)]
+        [TestCase(256 * Constants.KB, 255 * Constants.KB)]
+        [TestCase(257 * Constants.KB, 256 * Constants.KB)]
+        [TestCase(1 * Constants.MB, 1 * Constants.KB)]
+        [LiveOnly] // Stream copy uses ArrayPool under the hood. Which brings undeterministic behavior for larger content.
+        public async Task DownloadAsync_WithUnreliableConnection(int dataSize, int faultPoint)
         {
             // Arrange
+            int timesFaulted = 0;
             BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigDefault.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     GetFaultyBlobConnectionOptions(
-                        raiseAt: 256 * Constants.KB,
-                        raise: new Exception("Unexpected"))));
+                        raiseAt: faultPoint,
+                        raise: new IOException("Manually injected testing fault"),
+                        () => {
+                            timesFaulted++;
+                        })));
 
             await using DisposingContainer test = await GetTestContainerAsync(service: service);
 
-            var data = GetRandomBuffer(Constants.KB);
+            var data = GetRandomBuffer(dataSize);
 
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
@@ -300,6 +333,7 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]
@@ -473,6 +507,36 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.Details.VersionId);
+        }
+
+        // TODO: Recorded Only
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+
+            // Arrange
+            string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
+
+            //Act
+            Response<BlobDownloadInfo> sourceResponse = await sourceBlob.DownloadAsync();
+            Response<BlobDownloadInfo> destResponse = await destBlob.DownloadAsync();
+
+            //Assert
+            Assert.AreEqual(1, sourceResponse.Value.Details.ObjectReplicationSourceProperties.Count);
+            Assert.IsNull(sourceResponse.Value.Details.ObjectReplicationDestinationPolicy);
+            Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicy);
+            Assert.IsNull(destResponse.Value.Details.ObjectReplicationSourceProperties);
         }
         #endregion Sequential Download
 
@@ -2346,6 +2410,36 @@ namespace Azure.Storage.Blobs.Test
                             conditions: accessConditions)).Value;
                     });
             }
+        }
+
+        // TODO: Recorded Only
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+
+            // Arrange
+            string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
+            BlobClient sourceBlob = sourceContainer.GetBlobClient(blob_name);
+            BlobClient destBlob = destinationContainer.GetBlobClient(blob_name);
+
+            // Act
+            Response<BlobProperties> source_response = await sourceBlob.GetPropertiesAsync();
+            Response<BlobProperties> dest_response = await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(1, source_response.Value.ObjectReplicationSourceProperties.Count);
+            Assert.IsNull(source_response.Value.ObjectReplicationDestinationPolicy);
+            Assert.IsNotEmpty(dest_response.Value.ObjectReplicationDestinationPolicy);
+            Assert.IsNull(dest_response.Value.ObjectReplicationSourceProperties);
         }
 
         [Test]

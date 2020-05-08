@@ -339,7 +339,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                     {
-                        sbMessage.Properties[pair.Key.ToString()] = netObject;
+                        sbMessage.SentMessage.Properties[pair.Key.ToString()] = netObject;
                     }
                 }
             }
@@ -382,7 +382,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {
-                                sbMessage.Properties[key] = netObject;
+                                sbMessage.SentMessage.Properties[key] = netObject;
                             }
                             break;
                     }

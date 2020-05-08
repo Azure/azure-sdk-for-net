@@ -17,6 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{4A864BCB-6AD7-4F89-8778-C2953379EAAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C7CA6-452C-4041-A66D-78DC6F762C62}"
+	ProjectSection(SolutionItems) = preProject
+		samples\README.md = samples\README.md
+		samples\Sample01_HelloWorld.md = samples\Sample01_HelloWorld.md
+		samples\Sample02_MessageSettlement.md = samples\Sample02_MessageSettlement.md
+		samples\Sample03_SendReceiveSessions.md = samples\Sample03_SendReceiveSessions.md
+		samples\Sample04_Processor.md = samples\Sample04_Processor.md
+		samples\Sample05_SessionProcessor.md = samples\Sample05_SessionProcessor.md
+		samples\Sample06_Transactions.md = samples\Sample06_Transactions.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +49,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B8C7CA6-452C-4041-A66D-78DC6F762C62} = {C066CBDD-BCD3-4F29-9F6E-57AE3DC5D876}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {268B4547-5A22-4E5B-85E9-47AF3F00B421}

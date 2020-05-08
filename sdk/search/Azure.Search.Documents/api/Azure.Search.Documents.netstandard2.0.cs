@@ -278,7 +278,6 @@ namespace Azure.Search.Documents.Models
     {
         public ComplexField(string name, bool collection = false) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchFieldTemplate> Fields { get { throw null; } }
-        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
     }
     public partial class ConditionalSkill : Azure.Search.Documents.Models.SearchIndexerSkill
     {
@@ -1163,7 +1162,6 @@ namespace Azure.Search.Documents.Models
         public Azure.Search.Documents.Models.LexicalAnalyzerName? IndexAnalyzer { get { throw null; } set { } }
         public Azure.Search.Documents.Models.LexicalAnalyzerName? SearchAnalyzer { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } }
-        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
     }
     public partial class SearchDocument : System.Dynamic.DynamicObject, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -1239,7 +1237,6 @@ namespace Azure.Search.Documents.Models
         public string Name { get { throw null; } }
         public Azure.Search.Documents.Models.SearchFieldDataType Type { get { throw null; } }
         public static implicit operator Azure.Search.Documents.Models.SearchField (Azure.Search.Documents.Models.SearchFieldTemplate value) { throw null; }
-        protected abstract void Save(Azure.Search.Documents.Models.SearchField field);
     }
     public partial class SearchIndex
     {
@@ -1516,7 +1513,6 @@ namespace Azure.Search.Documents.Models
         public bool IsHidden { get { throw null; } set { } }
         public bool IsKey { get { throw null; } set { } }
         public bool IsSortable { get { throw null; } set { } }
-        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
     }
     public partial class SnowballTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {

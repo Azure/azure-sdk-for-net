@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -627,15 +628,9 @@ namespace Azure.Storage.Blobs
             Stream content,
             UploadBlobOptions options,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
-                options.TransferOptions,
+                options,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -701,15 +696,17 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
-                transferOptions: transferOptions,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    AccessTier = accessTier,
+                    TransferOptions = transferOptions
+                },
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -752,15 +749,9 @@ namespace Azure.Storage.Blobs
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return StagedUploadAsync(
+                return StagedUploadInternal(
                     stream,
-                    options?.HttpHeaders,
-                    options?.Metadata,
-                    options?.Tags,
-                    options?.Conditions,
-                    options?.ProgressHandler,
-                    options?.AccessTier,
-                    options.TransferOptions,
+                    options,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -831,15 +822,17 @@ namespace Azure.Storage.Blobs
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return StagedUploadAsync(
+                return StagedUploadInternal(
                     stream,
-                    httpHeaders,
-                    metadata,
-                    default,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    transferOptions: transferOptions,
+                    new UploadBlobOptions
+                    {
+                        HttpHeaders = httpHeaders,
+                        Metadata = metadata,
+                        Conditions = conditions,
+                        ProgressHandler = progressHandler,
+                        AccessTier = accessTier,
+                        TransferOptions = transferOptions
+                    },
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -881,15 +874,9 @@ namespace Azure.Storage.Blobs
             Stream content,
             UploadBlobOptions options,
             CancellationToken cancellationToken = default) =>
-            await StagedUploadAsync(
+            await StagedUploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
-                options.TransferOptions,
+                options,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -956,15 +943,17 @@ namespace Azure.Storage.Blobs
             AccessTier? accessTier = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
-            StagedUploadAsync(
+            StagedUploadInternal(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
-                transferOptions: transferOptions,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    AccessTier = accessTier,
+                    TransferOptions = transferOptions
+                },
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -1006,15 +995,9 @@ namespace Azure.Storage.Blobs
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return await StagedUploadAsync(
+                return await StagedUploadInternal(
                     stream,
-                    options?.HttpHeaders,
-                    options?.Metadata,
-                    options?.Tags,
-                    options?.Conditions,
-                    options?.ProgressHandler,
-                    options?.AccessTier,
-                    options.TransferOptions,
+                    options,
                     async: true,
                     cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1086,18 +1069,19 @@ namespace Azure.Storage.Blobs
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return await StagedUploadAsync(
+                return await StagedUploadInternal(
                     stream,
-                    httpHeaders,
-                    metadata,
-                    default,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    transferOptions: transferOptions,
+                    new UploadBlobOptions
+                    {
+                        HttpHeaders = httpHeaders,
+                        Metadata = metadata,
+                        Conditions = conditions,
+                        ProgressHandler = progressHandler,
+                        AccessTier = accessTier,
+                        TransferOptions = transferOptions
+                    },
                     async: true,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                    cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -1105,36 +1089,13 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// <paramref name="options"/> MaximumTransferLength.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="blobHttpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// block blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this block blob.
-        /// </param>
-        /// <param name="tags">
-        /// Optional tags to set for this block blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="accessTier">
-        /// Optional <see cref="AccessTier"/>
-        /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Options for this upload.
         /// </param>
         /// <param name="async">
         /// </param>
@@ -1150,85 +1111,38 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
+        internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
             Stream content,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
-            IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            StorageTransferOptions transferOptions = default,
+            UploadBlobOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
-            PartitionedUploader uploader = new PartitionedUploader(
-                client,
-                transferOptions,
+            var uploader = GetPartitionedUploader(
+                transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
-            if (async)
-            {
-                return await uploader.UploadAsync(
-                    content,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return uploader.Upload(
-                    content,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    cancellationToken);
-            }
+            return await uploader.UploadInternal(
+                content,
+                options,
+                options.ProgressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="transferOptions"/>. MaximumTransferLength.
+        /// <paramref name="options"/>. MaximumTransferLength.
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
         /// </param>
-        /// <param name="blobHttpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// block blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this block blob.
-        /// </param>
-        /// <param name="tags">
-        /// Optional tags to set for this block blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="accessTier">
-        /// Optional <see cref="AccessTier"/>
-        /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Options for this upload.
         /// </param>
         /// <param name="async">
         /// </param>
@@ -1244,35 +1158,30 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
+        internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
             string path,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
-            IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            StorageTransferOptions transferOptions = default,
+            UploadBlobOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                return await StagedUploadAsync(
+                return await StagedUploadInternal(
                     stream,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    transferOptions: transferOptions,
+                    options,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
         }
         #endregion Upload
+
+        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope)
+                .GetPartitionedUploader(transferOptions, arrayPool, operationName);
 
         // NOTE: TransformContent is no longer called by the new implementation
         // of parallel upload.  Leaving the virtual stub in for now to avoid
