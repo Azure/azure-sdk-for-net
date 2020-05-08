@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Data.Tables.Models;
+using Azure.Core.Pipeline;
 
 namespace Azure.Data.Tables
 {
@@ -14,6 +15,16 @@ namespace Azure.Data.Tables
     [CodeGenClient("TableClient")]
     internal partial class TableInternalClient
     {
+        internal string version { get; }
+
+        internal TableInternalClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
+        {
+            RestClient = new TableInternalRestClient(clientDiagnostics, pipeline, url, version);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            this.version = version;
+        }
+
         /// <summary> Insert entity in a table. </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>

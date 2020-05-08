@@ -8,33 +8,33 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp.Models
+namespace Microsoft.Azure.Management.Marketplace.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// List of Mount Targets
+    /// Error response indicates Microsoft.Marketplace service is not able to
+    /// process the incoming request. The reason is provided in the error
+    /// message.
     /// </summary>
-    public partial class MountTargetList
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the MountTargetList class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public MountTargetList()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MountTargetList class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="value">A list of Mount targets</param>
-        public MountTargetList(IList<MountTarget> value = default(IList<MountTarget>))
+        /// <param name="error">The details of the error.</param>
+        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
         {
-            Value = value;
+            Error = error;
             CustomInit();
         }
 
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of Mount targets
+        /// Gets or sets the details of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<MountTarget> Value { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponseError Error { get; set; }
 
     }
 }

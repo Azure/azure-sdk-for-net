@@ -45,6 +45,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Indicates that the document was not successfully processed and an error was returned for this document.
         /// </summary>
-        public bool HasError => Error.Code != default;
+        public bool HasError => Error.ErrorCode != default;
     }
 }

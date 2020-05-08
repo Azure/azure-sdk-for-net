@@ -151,7 +151,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = result[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
@@ -210,7 +210,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = result[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
@@ -439,7 +439,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
@@ -500,7 +500,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
@@ -736,7 +736,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
@@ -794,7 +794,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
@@ -1020,7 +1020,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue((KeyPhraseCollection) results[0].KeyPhrases, response);
                     default:
@@ -1080,7 +1080,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue((KeyPhraseCollection)results[0].KeyPhrases, response);
                     default:
@@ -1313,7 +1313,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:
@@ -1372,7 +1372,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:

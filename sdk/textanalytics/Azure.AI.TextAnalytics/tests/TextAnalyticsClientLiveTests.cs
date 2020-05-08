@@ -447,7 +447,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(keyPhrases.Warnings);
             Assert.GreaterOrEqual(keyPhrases.Warnings.Count, 0);
-            Assert.AreEqual("LongWordsInDocument", keyPhrases.Warnings.FirstOrDefault().WarningCode);
+            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
 
             Assert.GreaterOrEqual(keyPhrases.Count, 1);
         }
