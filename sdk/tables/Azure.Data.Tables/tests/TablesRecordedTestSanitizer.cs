@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
 
 namespace Azure.Data.Tables.Tests
 {
     public class TablesRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private const string SignatureQueryName = "sig";
+        private Regex SignatureRegEx = new Regex(@"([\x0026|&|?]sig=)([\w\d%]+)", RegexOptions.Compiled);
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
         {
@@ -21,19 +22,13 @@ namespace Azure.Data.Tables.Tests
 
         public override string SanitizeUri(string uri)
         {
-            return SanitizeQueryParameters(uri);
-        }
-
-        public string SanitizeQueryParameters(string uri)
-        {
-            var builder = new UriBuilder(base.SanitizeUri(uri));
-            var query = new UriQueryParamsCollection(builder.Query);
-            if (query.ContainsKey(SignatureQueryName))
+            if (SignatureRegEx.IsMatch(uri))
             {
-                query[SignatureQueryName] = SanitizeValue;
-                builder.Query = query.ToString();
+                var match = SignatureRegEx.Replace(uri, $"$1{SanitizeValue}");
+                return match;
             }
-            return builder.Uri.ToString();
+
+            return uri;
         }
     }
 }
