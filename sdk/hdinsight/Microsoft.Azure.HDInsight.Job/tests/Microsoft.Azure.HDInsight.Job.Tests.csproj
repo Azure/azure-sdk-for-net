@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Microsoft.Azure.Management.HDInsight" />
@@ -22,5 +23,11 @@
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Jar\spark-examples.jar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
