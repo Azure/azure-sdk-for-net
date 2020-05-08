@@ -1,5 +1,8 @@
 # Release History
 
+## 5.2.0-preview.1 (Unreleased)
+
+
 ## 5.1.0
 
 ### Acknowledgments
@@ -7,7 +10,7 @@
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Alberto De Natale _([GitHub](https://github.com/albertodenatale))_
-- Daniel Marbach _([GitHub]((https://github.com/danielmarbach)))_
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
 ### Changes
 

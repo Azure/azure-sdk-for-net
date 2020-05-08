@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Security.Models
     /// sends information to an OMS workspace and whose data is displayed by
     /// Azure Security Center.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ExternalSecuritySolution")]
     public partial class ExternalSecuritySolution
     {
         /// <summary>

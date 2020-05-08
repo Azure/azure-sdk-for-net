@@ -123,7 +123,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
             Assert.AreEqual("English", results[1].PrimaryLanguage.Name);
             Assert.IsNotNull(results[0].Statistics);
-            Assert.IsNotNull(results[0].Statistics.GraphemeCount);
+            Assert.IsNotNull(results[0].Statistics.CharacterCount);
             Assert.IsNotNull(results[0].Statistics.TransactionCount);
         }
 
@@ -190,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
             Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
             Assert.IsNotNull(results[0].Statistics);
-            Assert.IsNotNull(results[0].Statistics.GraphemeCount);
+            Assert.IsNotNull(results[0].Statistics.CharacterCount);
             Assert.IsNotNull(results[0].Statistics.TransactionCount);
         }
 
@@ -237,9 +237,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                Assert.IsNotNull(sentence.GraphemeOffset);
-                Assert.IsNotNull(sentence.GraphemeLength);
-                Assert.Greater(sentence.GraphemeLength, 0);
             }
         }
 
@@ -282,8 +279,6 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                    Assert.IsNotNull(sentence.GraphemeOffset);
-                    Assert.IsNotNull(sentence.GraphemeLength);
                 }
             }
         }
@@ -343,8 +338,6 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                    Assert.IsNotNull(sentence.GraphemeOffset);
-                    Assert.IsNotNull(sentence.GraphemeLength);
                 }
             }
         }
@@ -404,8 +397,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "My cat might need to see a veterinarian.";
 
-            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(document);
-            IReadOnlyCollection<string> keyPhrases = response.Value;
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
 
             Assert.AreEqual(2, keyPhrases.Count);
             Assert.IsTrue(keyPhrases.Contains("cat"));
@@ -418,8 +410,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Mi perro está en el veterinario";
 
-            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(document, "es");
-            IReadOnlyCollection<string> keyPhrases = response.Value;
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
 
             Assert.AreEqual(2, keyPhrases.Count);
         }
@@ -444,6 +435,21 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[1].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesWithWarningTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
+
+            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
+
+            Assert.IsNotNull(keyPhrases.Warnings);
+            Assert.GreaterOrEqual(keyPhrases.Warnings.Count, 0);
+            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
+
+            Assert.GreaterOrEqual(keyPhrases.Count, 1);
         }
 
         [Test]
@@ -546,8 +552,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
-            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
             Assert.AreEqual(3, entities.Count);
 
@@ -556,9 +561,6 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
                 Assert.IsNotNull(entity.ConfidenceScore);
-                Assert.IsNotNull(entity.GraphemeOffset);
-                Assert.IsNotNull(entity.GraphemeLength);
-                Assert.Greater(entity.GraphemeLength, 0);
             }
         }
 
@@ -569,8 +571,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document, "es");
-            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "es");
 
             Assert.AreEqual(3, entities.Count);
         }
@@ -581,8 +582,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "I had a wonderful trip to Seattle last week.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
-            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+            CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
             Assert.GreaterOrEqual(entities.Count, 3);
 
@@ -715,8 +715,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(document);
-            IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
 
             Assert.AreEqual(3, linkedEntities.Count);
 
@@ -729,8 +728,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);
-                Assert.IsNotNull(entity.Matches.First().GraphemeLength);
-                Assert.IsNotNull(entity.Matches.First().GraphemeOffset);
                 Assert.IsNotNull(entity.Matches.First().ConfidenceScore);
                 Assert.IsNotNull(entity.Matches.First().Text);
             }
@@ -742,8 +739,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(document, "es");
-            IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document, "es");
 
             Assert.GreaterOrEqual(linkedEntities.Count, 3);
         }

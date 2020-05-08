@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Console.WriteLine($"    Document error: {result.Error.Code}.");
+                    Console.WriteLine($"    Document error: {result.Error.ErrorCode}.");
                     Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
                     Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }

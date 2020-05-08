@@ -64,10 +64,6 @@ namespace Azure.Data.Tables
                 public const string EndRowKey = "endrk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
-                public const string Services = "ss";
-                public const string ServicesUpper = "SS";
-                public const string ResourceTypes = "srt";
-                public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
                 public const string ProtocolUpper = "SPR";
                 public const string StartTime = "st";

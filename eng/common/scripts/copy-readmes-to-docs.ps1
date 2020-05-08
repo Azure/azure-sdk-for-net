@@ -9,7 +9,9 @@ param (
   [String]$TargetServices
 )
 
-$PACKAGE_README_REGEX = ".*[\/\\]sdk[\\\/][^\/\\]+[\\\/][^\/\\]+[\/\\]README\.md" 
+Write-Host "> $PSCommandPath $args"
+
+$PACKAGE_README_REGEX = ".*[\/\\]sdk[\\\/][^\/\\]+[\\\/][^\/\\]+[\/\\]README\.md"
 
 Write-Host "repo is $CodeRepo"
 
@@ -52,10 +54,10 @@ else {
 
 foreach($service in $selectedServices){
   $readmePath = Join-Path -Path $CodeRepo  -ChildPath "sdk/$service"
-  Write-Host "Examining: $readmePath" 
+  Write-Host "Examining: $readmePath"
 
   $libraries = $metadataResponse | Where-Object { $_.RepoPath -eq $service }
-  
+
   foreach($library in $libraries){
 
     $package = $library.Package

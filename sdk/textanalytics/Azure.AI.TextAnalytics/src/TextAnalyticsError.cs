@@ -4,13 +4,13 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Text Analitics Error.
+    /// Text Analytics Error.
     /// </summary>
     public struct TextAnalyticsError
     {
         internal TextAnalyticsError(string code, string message, string target = null)
         {
-            Code = code;
+            ErrorCode = code;
             Message = message;
             Target = target;
         }
@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Error code that serves as an indicator of the HTTP error code.
         /// </summary>
-        public string Code { get; }
+        public TextAnalyticsErrorCode ErrorCode { get; }
 
         /// <summary>
         /// Message that contains more information about the reason of the error.
