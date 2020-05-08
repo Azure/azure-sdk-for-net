@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                Response<RecognizedReceiptCollection> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 foreach (var receipt in receipts.Value)
                 {
                     USReceipt usReceipt = receipt.AsUSReceipt();

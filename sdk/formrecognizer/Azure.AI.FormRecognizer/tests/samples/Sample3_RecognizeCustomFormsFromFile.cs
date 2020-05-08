@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -39,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 foreach (RecognizedForm form in forms.Value)
                 {
                     Console.WriteLine($"Form of type: {form.FormType}");

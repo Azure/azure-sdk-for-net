@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
@@ -25,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 
-            Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+            Response<FormPageCollection> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
             foreach (FormPage page in formPages.Value)
             {
                 Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
