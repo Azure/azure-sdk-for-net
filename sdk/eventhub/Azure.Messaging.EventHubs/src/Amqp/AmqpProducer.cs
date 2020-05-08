@@ -3,11 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
@@ -27,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpProducer : TransportProducer
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private volatile bool _closed = false;
 
         /// <summary>The count of send operations performed by this instance; this is used to tag deliveries for the AMQP link.</summary>
         private int _deliveryCount = 0;
@@ -237,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {
@@ -279,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -324,7 +325,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var failedAttemptCount = 0;
             var logPartition = PartitionId ?? partitionKey;
             var messageHash = default(string);
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             TimeSpan? retryDelay;
             SendingAmqpLink link;
@@ -338,7 +339,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     try
                     {
                         using AmqpMessage batchMessage = messageFactory();
-                        messageHash = batchMessage.GetHashCode().ToString();
+                        messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                         // Creation of the link happens without explicit knowledge of the cancellation token
                         // used for this operation; validate the token state before attempting link creation and
@@ -355,13 +356,13 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
+                            throw new EventHubsException(EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.
 
                         var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         if (outcome.DescriptorCode != Accepted.Code)
@@ -390,11 +391,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch.Reset();
+                            stopWatch = ValueStopwatch.StartNew();
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {
@@ -419,7 +420,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                stopWatch.Stop();
                 EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
             }
         }
@@ -467,7 +467,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     MaximumMessageSize = (long)link.Settings.MaxMessageSize;
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
             }

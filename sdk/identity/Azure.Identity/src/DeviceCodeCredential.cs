@@ -18,9 +18,12 @@ namespace Azure.Identity
     {
         private readonly MsalPublicClient _client = null;
         private readonly CredentialPipeline _pipeline;
-        private IAccount _account = null;
+        private AuthenticationRecord _record = null;
         private readonly string _clientId;
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
+        private bool _disableAutomaticAuthentication = false;
+        private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
+        private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
         /// Protected constructor for mocking
@@ -43,19 +46,31 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
         /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be null for multi-tenanted applications.</param>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, CredentialPipeline.GetInstance(options))
+            : this(deviceCodeCallback, tenantId, clientId, CredentialPipeline.GetInstance(options), false)
         {
         }
 
-        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline)
-            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: "https://login.microsoftonline.com/common/oauth2/nativeclient"))
+        /// <summary>
+        ///  Creates a new DeviceCodeCredential with the specified options, which will authenticate users using the device code flow.
+        /// </summary>
+        /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user.</param>
+        /// <param name="options">The client options for the newly created <see cref="DeviceCodeCredential"/>.</param>
+        public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, DeviceCodeCredentialOptions options = default)
+            : this(deviceCodeCallback, options?.TenantId, options?.ClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
+        {
+            _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+            _record = options?.AuthenticationRecord;
+        }
+
+        internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)
+            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: KnownAuthorityHosts.GetDeviceCodeRedirectUri(pipeline.AuthorityHost).ToString(), attachSharedCache))
         {
         }
 
@@ -69,6 +84,55 @@ namespace Azure.Identity
 
             _client = client;
         }
+
+        /// <summary>
+        /// Interactively authenticates a user via the default browser.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
+        public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
+        {
+            // get the default scope for the authority, throw if no default scope exists
+            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+
+            return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
+        }
+
+        /// <summary>
+        /// Interactively authenticates a user via the default browser.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution if persistent caching was enabled via <see cref="DeviceCodeCredentialOptions.EnablePersistentCache"/> when credential was instantiated.</returns>
+        public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
+        {
+            // get the default scope for the authority, throw if no default scope exists
+            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+
+            return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Interactively authenticates a user via the default browser.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
+        public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        {
+            return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Interactively authenticates a user via the default browser.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
+        public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        {
+            return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
@@ -91,29 +155,58 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DeviceCodeCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(DeviceCodeCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
-                if (_account != null)
+                AccessToken token = await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false);
+
+                scope.Succeeded(token);
+
+                return _record;
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw scope.FailAndWrap(e);
+            }
+        }
+
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(DeviceCodeCredential)}.{nameof(GetToken)}", requestContext);
+
+            try
+            {
+                Exception inner = null;
+
+                if (_record != null)
                 {
                     try
                     {
-                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
-                    catch (MsalUiRequiredException)
+                    catch (MsalUiRequiredException e)
                     {
-                        return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                        inner = e;
                     }
                 }
-                else
+
+                if (_disableAutomaticAuthentication)
                 {
-                    return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                    throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
+
+                return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
             }
             catch (OperationCanceledException e)
             {
@@ -131,7 +224,7 @@ namespace Azure.Identity
         {
             AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
 
-            _account = result.Account;
+            _record = new AuthenticationRecord(result);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

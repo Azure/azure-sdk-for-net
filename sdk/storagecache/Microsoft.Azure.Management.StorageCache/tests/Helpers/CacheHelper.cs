@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit.Abstractions;
+    using Xunit.Sdk;
 
     /// <summary>
     /// Storage cache helper.
@@ -95,11 +96,16 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="name">Name of the cache.</param>
         /// <param name="sku">Name of the SKU.</param>
         /// <param name="cacheSize">Size of cache.</param>
+        /// <param name="identity">Cache identity type.</param>
+        /// <param name="keyVaultResourceId">Describes a resource Id to source Key vault.</param>
+        /// <param name="encryptionKeyURL">The URL referencing a key encryption key in key vault.</param>
         /// <param name="skipGet">Skip get cache before creating it.</param>
         /// <returns>Cache object.</returns>
-        public Cache Create(string name, string sku, int cacheSize, bool skipGet = false)
+        public Cache Create(string name, string sku, int cacheSize, CacheIdentity identity, KeyVaultKeyReferenceSourceVault keyVaultResourceId = null, string encryptionKeyURL = null, bool skipGet = false)
         {
             Cache cache;
+            CacheEncryptionSettings cacheEncryptionSettings;
+            KeyVaultKeyReference keyVaultKeyReference;
             if (!skipGet)
             {
                 try
@@ -127,7 +133,34 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             {
                 var cacheSku = new CacheSku() { Name = sku };
                 var subnetUri = $"/subscriptions/{this.subscriptionId}/resourcegroups/{this.resourceGroup.Name}/providers/Microsoft.Network/virtualNetworks/{this.virtualNetwork.Name}/subnets/{this.subNet.Name}";
-                var cacheParameters = new Cache() { CacheSizeGB = cacheSize, Location = this.resourceGroup.Location, Sku = cacheSku, Subnet = subnetUri };
+                if (encryptionKeyURL is null || keyVaultResourceId is null)
+                {
+                    keyVaultKeyReference = new KeyVaultKeyReference() { };
+                    cacheEncryptionSettings = new CacheEncryptionSettings() { };
+                }
+                else
+                {
+                    keyVaultKeyReference = new KeyVaultKeyReference()
+                    {
+                        KeyUrl = encryptionKeyURL,
+                        SourceVault = keyVaultResourceId,
+                    };
+                    cacheEncryptionSettings = new CacheEncryptionSettings()
+                    {
+                        KeyEncryptionKey = keyVaultKeyReference,
+                    };
+                }
+
+
+                var cacheParameters = new Cache()
+                {
+                    CacheSizeGB = cacheSize,
+                    Location = this.resourceGroup.Location,
+                    Sku = cacheSku,
+                    Subnet = subnetUri,
+                    Identity = identity,
+                    EncryptionSettings = cacheEncryptionSettings,
+                };
                 cache = this.StoragecacheManagementClient.Caches.CreateOrUpdate(this.resourceGroup.Name, name, cacheParameters);
             }
 

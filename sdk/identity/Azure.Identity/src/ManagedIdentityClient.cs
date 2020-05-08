@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -446,7 +446,7 @@ namespace Azure.Identity
             // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
             if (_msiType == MsiType.AppService)
             {
-                if (!DateTimeOffset.TryParse(expiresOnProp.Value.GetString(), out expiresOn))
+                if (!DateTimeOffset.TryParse(expiresOnProp.Value.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out expiresOn))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

@@ -10,9 +10,13 @@ namespace Azure.Storage
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct StorageTransferOptions : System.IEquatable<Azure.Storage.StorageTransferOptions>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? InitialTransferLength { get { throw null; } set { } }
+        public long? InitialTransferSize { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? MaximumTransferLength { get { throw null; } set { } }
+        public long? MaximumTransferSize { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.StorageTransferOptions obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

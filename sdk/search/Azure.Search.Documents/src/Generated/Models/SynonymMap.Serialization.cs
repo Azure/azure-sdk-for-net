@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("encryptionKey");
                 writer.WriteObjectValue(EncryptionKey);
             }
-            if (ETag != null)
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            EncryptionKey encryptionKey = default;
+            SearchResourceEncryptionKey encryptionKey = default;
             string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    encryptionKey = EncryptionKey.DeserializeEncryptionKey(property.Value);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))

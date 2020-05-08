@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -74,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Assert.AreEqual(languages[i].Id, results[i].Id);
                 Assert.AreEqual(languages[i].PrimaryLanguage.Name, results[i].PrimaryLanguage.Name);
                 Assert.AreEqual(languages[i].PrimaryLanguage.Iso6391Name, results[i].PrimaryLanguage.Iso6391Name);
-                Assert.AreEqual(languages[i].PrimaryLanguage.Score, results[i].PrimaryLanguage.Score);
+                Assert.AreEqual(languages[i].PrimaryLanguage.ConfidenceScore, results[i].PrimaryLanguage.ConfidenceScore);
                 i++;
             }
         }
@@ -111,12 +111,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             //language1
             Assert.AreEqual(languages[0].Id, results[0].Id);
-            Assert.AreEqual(languages[0].Statistics.GraphemeCount, results[0].Statistics.GraphemeCount);
+            Assert.AreEqual(languages[0].Statistics.CharacterCount, results[0].Statistics.CharacterCount);
             Assert.AreEqual(languages[0].Statistics.TransactionCount, results[0].Statistics.TransactionCount);
 
             //language2
             Assert.AreEqual(languages[1].Id, results[1].Id);
-            Assert.AreEqual(languages[1].Statistics.GraphemeCount, results[1].Statistics.GraphemeCount);
+            Assert.AreEqual(languages[1].Statistics.CharacterCount, results[1].Statistics.CharacterCount);
             Assert.AreEqual(languages[1].Statistics.TransactionCount, results[1].Statistics.TransactionCount);
 
             //Transaction Stats

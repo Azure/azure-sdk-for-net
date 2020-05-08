@@ -10,9 +10,9 @@ namespace Azure.Search.Documents.Models
     /// <summary> A value indicating which split mode to perform. </summary>
     public enum TextSplitMode
     {
-        /// <summary> pages. </summary>
+        /// <summary> Split the text into individual pages. </summary>
         Pages,
-        /// <summary> sentences. </summary>
+        /// <summary> Split the text into individual sentences. </summary>
         Sentences
     }
 }

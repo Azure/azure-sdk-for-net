@@ -17,7 +17,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             {
                 services
                     .AddDataProtection()
-                    .ProtectKeysWithAzureKeyVault("<Key-ID>", new DefaultAzureCredential());
+                    .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
             }
             #endregion
         }

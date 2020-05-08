@@ -8,7 +8,7 @@
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
-    public partial class DataSourceCredentials
+    internal partial class DataSourceCredentials
     {
         /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
         public DataSourceCredentials()

@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Models
     /// A complex field or collection of complex fields that contain child fields.
     /// Child fields may be <see cref="SimpleField"/> or <see cref="ComplexField"/>.
     /// </summary>
-    public class ComplexField : FieldBase
+    public class ComplexField : SearchFieldTemplate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexField"/> class.
@@ -19,22 +19,22 @@ namespace Azure.Search.Documents.Models
         /// <param name="collection">Whether the field is a collection of strings.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public ComplexField(string name, bool collection = false) : base(name, collection ? DataType.Collection(DataType.Complex) : DataType.Complex)
+        public ComplexField(string name, bool collection = false) : base(name, collection ? SearchFieldDataType.Collection(SearchFieldDataType.Complex) : SearchFieldDataType.Complex)
         {
         }
 
         /// <summary>
         /// Gets a collection of <see cref="SimpleField"/> or <see cref="ComplexField"/> child fields.
         /// </summary>
-        public IList<FieldBase> Fields { get; } = new List<FieldBase>();
+        public IList<SearchFieldTemplate> Fields { get; } = new List<SearchFieldTemplate>();
 
         /// <inheritdoc/>
-        protected override void Save(SearchField field)
+        private protected override void Save(SearchField field)
         {
             // TODO: Remove allocation when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
             IList<SearchField> fields = field.Fields ?? new List<SearchField>();
 
-            foreach (FieldBase child in Fields)
+            foreach (SearchFieldTemplate child in Fields)
             {
                 fields.Add(child);
             }

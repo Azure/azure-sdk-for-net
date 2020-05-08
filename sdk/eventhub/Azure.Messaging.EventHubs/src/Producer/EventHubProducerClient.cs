@@ -47,6 +47,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>Sets how long a dedicated <see cref="TransportProducer" /> would sit in memory before its <see cref="TransportProducerPool" /> would remove and close it.</summary>
         private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
 
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -69,7 +72,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed { get; protected set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            protected set => _closed = value;
+        }
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -370,53 +377,64 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  Because the batch is implicitly created, the size of the event set is not
+        ///   validated until this method is invoked.  The call will fail if the size of the specified set of events exceeds the maximum allowable size of a single batch.
         /// </summary>
         ///
-        /// <param name="events">The set of event data to send.</param>
+        /// <param name="eventBatch">The set of event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)"/>
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
+        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
+        /// </exception>
         ///
-        internal virtual async Task SendAsync(IEnumerable<EventData> events,
-                                              CancellationToken cancellationToken = default) => await SendAsync(events, null, cancellationToken).ConfigureAwait(false);
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CancellationToken)" />
+        ///
+        public virtual async Task SendAsync(IEnumerable<EventData> eventBatch,
+                                            CancellationToken cancellationToken = default) => await SendAsync(eventBatch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  Because the batch is implicitly created, the size of the event set is not
+        ///   validated until this method is invoked.  The call will fail if the size of the specified set of events exceeds the maximum allowable size of a single batch.
         /// </summary>
         ///
-        /// <param name="events">The set of event data to send.</param>
+        /// <param name="eventBatch">The set of event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
+        /// <exception cref="EventHubsException">
+        ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
+        ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
+        /// </exception>
+        ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        internal virtual async Task SendAsync(IEnumerable<EventData> events,
-                                              SendEventOptions options,
-                                              CancellationToken cancellationToken = default)
+        public virtual async Task SendAsync(IEnumerable<EventData> eventBatch,
+                                            SendEventOptions options,
+                                            CancellationToken cancellationToken = default)
         {
             options ??= DefaultSendOptions;
 
-            Argument.AssertNotNull(events, nameof(events));
+            Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             int attempts = 0;
 
-            events = (events as IList<EventData>) ?? events.ToList();
-            InstrumentMessages(events);
+            eventBatch = (eventBatch as IList<EventData>) ?? eventBatch.ToList();
+            InstrumentMessages(eventBatch);
 
             var diagnosticIdentifiers = new List<string>();
 
-            foreach (var eventData in events)
+            foreach (var eventData in eventBatch)
             {
                 if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out var identifier))
                 {
@@ -433,8 +451,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 try
                 {
                     await using var _ = pooledProducer.ConfigureAwait(false);
-
-                    await pooledProducer.TransportProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                    await pooledProducer.TransportProducer.SendAsync(eventBatch, options, cancellationToken).ConfigureAwait(false);
 
                     return;
                 }
@@ -468,10 +485,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         ///
         public virtual async Task SendAsync(EventDataBatch eventBatch,
@@ -480,9 +493,9 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(eventBatch.SendOptions.PartitionId, eventBatch.SendOptions.PartitionKey);
 
-            int attempts = 0;
             using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetEventDiagnosticIdentifiers());
 
+            var attempts = 0;
             var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -535,6 +548,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>An <see cref="EventDataBatch" /> with the default batch options.</returns>
         ///
         /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual async ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => await CreateBatchAsync(null, cancellationToken).ConfigureAwait(false);
 
@@ -552,7 +566,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CancellationToken)" />
+        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
         public virtual async ValueTask<EventDataBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                         CancellationToken cancellationToken = default)
@@ -561,7 +576,7 @@ namespace Azure.Messaging.EventHubs.Producer
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
-            return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options.ToSendOptions());
+            return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options);
         }
 
         /// <summary>
@@ -583,7 +598,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             IsClosed = true;
 
-            var identifier = GetHashCode().ToString();
+            var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
 
             // Attempt to close the pool of producers.  In the event that an exception is encountered,

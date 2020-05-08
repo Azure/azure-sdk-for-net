@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill for reshaping the outputs. It creates a complex type to support composite fields (also known as multipart fields). </summary>
-    public partial class ShaperSkill : Skill
+    public partial class ShaperSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of ShaperSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

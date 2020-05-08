@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Messaging.ServiceBus.Filters;
 using Moq;
 using NUnit.Framework;
 
@@ -154,6 +156,102 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await receiver.CompleteAsync(received);
             };
         }
+
+        //[Test]
+        //public async Task TransactionalRuleManagement()
+        //{
+        //    await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+        //    {
+        //        var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+        //        ServiceBusSender sender = client.CreateSender(scope.TopicName);
+
+        //        var messageId1 = Guid.NewGuid().ToString();
+        //        var messageId2 = Guid.NewGuid().ToString();
+        //        var messageId3 = Guid.NewGuid().ToString();
+        //        await sender.SendAsync(new ServiceBusMessage { MessageId = messageId1, Label = "Blue" });
+
+        //        ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
+        //        IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(1);
+
+        //        ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
+        //        IEnumerable<RuleDescription> rulesDescription = await ruleManager.GetRulesAsync();
+        //        Assert.AreEqual(1, rulesDescription.Count());
+        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
+
+        //        using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        //        {
+        //            await ruleManager.RemoveRuleAsync(RuleDescription.DefaultRuleName);
+        //            await ruleManager.AddRuleAsync(new RuleDescription
+        //            {
+        //                Filter = new CorrelationFilter { Label = "Red" },
+        //                Name = "CorrelationFilter"
+        //            });
+
+        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId2, Label = "Red" });
+        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId3, Label = "Green" });
+        //            await receiver.CompleteAsync(receivedMessages);
+        //            ts.Complete();
+        //        }
+
+        //        rulesDescription = await ruleManager.GetRulesAsync();
+        //        Assert.AreEqual(1, rulesDescription.Count());
+        //        Assert.AreEqual("CorrelationFilter", rulesDescription.First().Name);
+
+        //        receivedMessages = await receiver.ReceiveBatchAsync(3);
+        //        Assert.NotNull(receivedMessages);
+        //        Assert.AreEqual(1, receivedMessages.Count());
+        //        Assert.AreEqual(messageId2, receivedMessages.First().MessageId);
+        //    };
+        //}
+
+        //[Test]
+        //public async Task TransactionalRuleManagementRollback()
+        //{
+        //    await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+        //    {
+        //        var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+        //        ServiceBusSender sender = client.CreateSender(scope.TopicName);
+
+        //        var messageId1 = Guid.NewGuid().ToString();
+        //        var messageId2 = Guid.NewGuid().ToString();
+        //        var messageId3 = Guid.NewGuid().ToString();
+        //        await sender.SendAsync(new ServiceBusMessage { MessageId = messageId1, Label = "Blue" });
+
+        //        ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
+        //        IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(1);
+
+        //        ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
+        //        IEnumerable<RuleDescription> rulesDescription = await ruleManager.GetRulesAsync();
+        //        Assert.AreEqual(1, rulesDescription.Count());
+        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
+
+        //        using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        //        {
+        //            await ruleManager.RemoveRuleAsync(RuleDescription.DefaultRuleName);
+        //            await ruleManager.AddRuleAsync(new RuleDescription
+        //            {
+        //                Filter = new CorrelationFilter { Label = "Red" },
+        //                Name = "CorrelationFilter"
+        //            });
+
+        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId2, Label = "Red" });
+        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId3, Label = "Green" });
+        //            await receiver.CompleteAsync(receivedMessages);
+        //            // not completing the transaction
+        //        }
+
+        //        rulesDescription = await ruleManager.GetRulesAsync();
+        //        Assert.AreEqual(1, rulesDescription.Count());
+        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
+
+        //        receivedMessages = await receiver.ReceiveBatchAsync(3);
+        //        Assert.NotNull(receivedMessages);
+        //        Assert.AreEqual(1, receivedMessages.Count());
+        //        Assert.AreEqual(messageId1, receivedMessages.First().MessageId);
+        //    };
+        //}
 
         [Test]
         [TestCase(false, false)]
@@ -426,8 +524,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             var intermediateSender = client.CreateSender(intermediateQueue.QueueName);
             var intermediateReceiver = client.CreateReceiver(intermediateQueue.QueueName);
             var destination1Sender = client.CreateSender(destination1.TopicName);
-            var destination1ViaSender = client.CreateSender(destination1.TopicName, intermediateQueue.QueueName);
-            var destination2ViaSender = client.CreateSender(destination2.QueueName, intermediateQueue.QueueName);
+            var destination1ViaSender = client.CreateSender(destination1.TopicName, new ServiceBusSenderOptions
+            {
+                ViaQueueOrTopicName = intermediateQueue.QueueName
+            });
+            var destination2ViaSender = client.CreateSender(destination2.QueueName, new ServiceBusSenderOptions
+            {
+                ViaQueueOrTopicName = intermediateQueue.QueueName
+            });
             var destination1Receiver = client.CreateReceiver(destination1.TopicName, destination1.SubscriptionNames.First());
             var destination2Receiver = client.CreateReceiver(destination2.QueueName);
 

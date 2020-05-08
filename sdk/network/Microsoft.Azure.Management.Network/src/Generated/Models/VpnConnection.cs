@@ -68,12 +68,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="vpnLinkConnections">List of all vpn site link
         /// connections to the gateway.</param>
+        /// <param name="routingConfiguration">The Routing Configuration
+        /// indicating the associated and propagated route tables on this
+        /// connection.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), string name = default(string), string etag = default(string))
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
@@ -93,6 +96,7 @@ namespace Microsoft.Azure.Management.Network.Models
             UseLocalAzureIpAddress = useLocalAzureIpAddress;
             ProvisioningState = provisioningState;
             VpnLinkConnections = vpnLinkConnections;
+            RoutingConfiguration = routingConfiguration;
             Name = name;
             Etag = etag;
             CustomInit();
@@ -210,6 +214,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnLinkConnections")]
         public IList<VpnSiteLinkConnection> VpnLinkConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Routing Configuration indicating the associated
+        /// and propagated route tables on this connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a

@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     Location = resourceGroup.Location,
                     AddressSpace = new AddressSpace()
                     {
-                        AddressPrefixes = new List<string> { "10.1.0.0/16" },
+                        AddressPrefixes = new List<string> { "10.0.0.0/16" },
                     },
                 };
                 virtualNetwork = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, virtualNetworkName, vnet);
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 var snet = new Subnet()
                 {
                     Name = subnetName,
-                    AddressPrefix = "10.1.0.0/24",
+                    AddressPrefix = "10.0.0.0/24",
                 };
 
                 subNet = networkManagementClient.Subnets.CreateOrUpdate(resourceGroup.Name, virtualNetwork.Name, subnetName, snet);
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         public Cache GetCacheIfExists(ResourceGroup resourceGroup, string cacheName)
         {
             StorageCacheManagementClient storagecacheManagementClient = this.GetClient<StorageCacheManagementClient>();
-            storagecacheManagementClient.ApiVersion = Constants.DefaultAPIVersion;
+            storagecacheManagementClient.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
             try
             {
                 return storagecacheManagementClient.Caches.Get(resourceGroup.Name, cacheName);

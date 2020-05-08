@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -308,16 +308,6 @@ namespace Azure.AI.FormRecognizer.Tests
             cancellationSource.Cancel();
 
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
-        }
-
-        [Test]
-        public void FormRecognizerClientOptionsClone()
-        {
-            var options = new FormRecognizerClientOptions();
-            FormRecognizerClientOptions clone = options.Clone();
-            Assert.IsNotNull(clone);
-            Assert.AreNotSame(options, clone);
-            Assert.AreEqual(options.Version, clone.Version);
         }
     }
 }

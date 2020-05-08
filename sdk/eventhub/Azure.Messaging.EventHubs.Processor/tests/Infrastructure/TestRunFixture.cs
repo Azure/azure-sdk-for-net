@@ -32,9 +32,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
+                if (EventHubsTestEnvironment.Instance.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
-                    EventHubScope.DeleteNamespaceAsync(TestEnvironment.EventHubsNamespace).GetAwaiter().GetResult();
+                    EventHubScope.DeleteNamespaceAsync(EventHubsTestEnvironment.Instance.EventHubsNamespace).GetAwaiter().GetResult();
                 }
             }
             catch
@@ -43,9 +43,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (StorageTestEnvironment.ShouldRemoveStorageAccountAfterTestRunCompletion)
+                if (StorageTestEnvironment.Instance.ShouldRemoveStorageAccountAfterTestRunCompletion)
                 {
-                    StorageScope.DeleteStorageAccountAsync(StorageTestEnvironment.StorageAccountName).GetAwaiter().GetResult();
+                    StorageScope.DeleteStorageAccountAsync(StorageTestEnvironment.Instance.StorageAccountName).GetAwaiter().GetResult();
                 }
             }
             catch

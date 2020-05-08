@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Tokenizes the input from an edge into n-grams of the given size(s). This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class EdgeNGramTokenizer : Tokenizer
+    public partial class EdgeNGramTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>

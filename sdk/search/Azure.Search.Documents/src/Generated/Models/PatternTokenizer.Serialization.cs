@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
             if (Group != null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
             string pattern = default;
-            RegexFlags? flags = default;
+            string flags = default;
             int? group = default;
             string odataType = default;
             string name = default;
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("group"))

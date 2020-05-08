@@ -3,7 +3,7 @@
 
 using System;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -72,6 +72,17 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync(string.Empty));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync("1975-04-04"));
+        }
+
+        [Test]
+        public void CreateFormRecognizerClientFromFormTrainingClient()
+        {
+            FormTrainingClient trainingClient = CreateInstrumentedClient();
+            FormRecognizerClient formRecognizerClient = trainingClient.GetFormRecognizerClient();
+
+            Assert.IsNotNull(formRecognizerClient);
+            Assert.IsNotNull(formRecognizerClient.Diagnostics);
+            Assert.IsNotNull(formRecognizerClient.ServiceClient);
         }
     }
 }

@@ -231,6 +231,11 @@ namespace Azure.Messaging.ServiceBus
                     sessionId,
                     isSessionReceiver);
 
+        internal virtual TransportRuleManager CreateTransportRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy) =>
+            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy);
+
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the
         ///   requested connection type of the <see cref="ServiceBusClientOptions"/>.

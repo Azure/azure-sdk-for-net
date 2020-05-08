@@ -130,19 +130,14 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 AssertNotLocked();
 
-                bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
-                bool added = InnerBatch.TryAdd(eventData);
+                eventData = eventData.Clone();
+                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
 
-                if (added)
+                var added = InnerBatch.TryAdd(eventData);
+
+                if ((added) && (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId)))
                 {
-                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
-                    {
-                        EventDiagnosticIdentifiers.Add(diagnosticId);
-                    }
-                }
-                else if (instrumented)
-                {
-                    EventDataInstrumentation.ResetEvent(eventData);
+                    EventDiagnosticIdentifiers.Add(diagnosticId);
                 }
 
                 return added;

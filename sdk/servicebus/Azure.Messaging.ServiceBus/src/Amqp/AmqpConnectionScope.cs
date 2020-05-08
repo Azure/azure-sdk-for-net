@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -235,20 +236,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var link = await CreateManagementLinkAsync(
                 entityPath,
                 connection,
-                timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            stopWatch.Stop();
             return link;
         }
 
@@ -278,7 +278,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
             var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 connection,
                 receiverEndpoint,
-                timeout.CalculateRemaining(stopWatch.Elapsed),
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                 prefetchCount,
                 receiveMode,
                 sessionId,
@@ -298,10 +298,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            stopWatch.Stop();
             return link;
         }
 
@@ -323,7 +322,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -332,14 +331,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 viaEntityPath,
                 connection,
-                timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            stopWatch.Stop();
             return link;
         }
 
@@ -394,15 +392,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Create and open the connection, respecting the timeout constraint
             // that was received.
 
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             var initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
             TransportBase transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
 
             var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
-            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
-
-            stopWatch.Stop();
+            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
@@ -448,7 +444,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
@@ -463,7 +459,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Create and open the link.
 
                 var linkSettings = new AmqpLinkSettings();
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
                 entityPath += '/' + AmqpClientConstants.ManagementAddress;
 
@@ -478,7 +474,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ServiceEndpoint,
                     audience,
                     claims,
-                    timeout.CalculateRemaining(stopWatch.Elapsed))
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                     .ConfigureAwait(false);
 
                 var link = new RequestResponseAmqpLink(
@@ -487,7 +483,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     entityPath,
                     linkSettings.Properties);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
-                stopWatch.Stop();
 
                 // Track the link before returning it, so that it can be managed with the scope.
                 var refreshTimer = default(Timer);
@@ -518,11 +513,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -557,7 +555,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
@@ -571,7 +569,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     endpoint,
                     audience,
                     authClaims,
-                    timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
@@ -605,8 +603,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 link.AttachTo(session);
 
-                stopWatch.Stop();
-
                 // Configure refresh for authorization of the link.
 
                 var refreshTimer = default(Timer);
@@ -637,11 +633,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -667,7 +666,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var session = default(AmqpSession);
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
@@ -698,7 +697,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     destinationEndpoint,
                     audience,
                     authClaims,
-                    timeout.CalculateRemaining(stopWatch.Elapsed))
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                     .ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -726,13 +725,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     linkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, entityPath);
                 }
 
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
                 var link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
-
-                stopWatch.Stop();
 
                 // Configure refresh for authorization of the link.
 
@@ -764,11 +761,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 

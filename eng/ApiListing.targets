@@ -20,7 +20,14 @@
       <GenAPIAdditionalParameters>--exclude-attributes-list "$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" $(GenAPIAdditionalParameters)</GenAPIAdditionalParameters>
       <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
     </PropertyGroup>
-    <Delete Files="$(GenAPITargetPath)" />
+    <ItemGroup>
+      <!-- Remove all files that don't start with $(AssemblyName) and the current target -->
+      <_ListingsToRemove Include="$(_RefSourceOutputPath)*" Exclude="$(_RefSourceOutputPath)$(AssemblyName).*.cs" />
+      <_ListingsToRemove Include="$(GenAPITargetPath)" />
+    </ItemGroup>
+    
+    <Delete Files="@(_ListingsToRemove)" />
+    <MakeDir Directories="$(_RefSourceOutputPath)"/>
   </Target>
 
   <Target Name="_CheckGenerateAPIListingValue" AfterTargets="Build">
