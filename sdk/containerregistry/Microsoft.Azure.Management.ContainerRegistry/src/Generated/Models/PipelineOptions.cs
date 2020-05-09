@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TriggerStatus.
+    /// Defines values for PipelineOptions.
     /// </summary>
-    public static class TriggerStatus
+    public static class PipelineOptions
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string OverwriteTags = "OverwriteTags";
+        public const string OverwriteBlobs = "OverwriteBlobs";
+        public const string DeleteSourceBlobOnSuccess = "DeleteSourceBlobOnSuccess";
+        public const string ContinueOnErrors = "ContinueOnErrors";
     }
 }

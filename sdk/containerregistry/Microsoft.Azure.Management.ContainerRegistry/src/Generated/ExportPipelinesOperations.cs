@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Threading;
 
     /// <summary>
-    /// ReplicationsOperations operations.
+    /// ExportPipelinesOperations operations.
     /// </summary>
-    internal partial class ReplicationsOperations : IServiceOperations<ContainerRegistryManagementClient>, IReplicationsOperations
+    internal partial class ExportPipelinesOperations : IServiceOperations<ContainerRegistryManagementClient>, IExportPipelinesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReplicationsOperations class.
+        /// Initializes a new instance of the ExportPipelinesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReplicationsOperations(ContainerRegistryManagementClient client)
+        internal ExportPipelinesOperations(ContainerRegistryManagementClient client)
         {
             if (client == null)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public ContainerRegistryManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the properties of the specified replication.
+        /// Gets the properties of the export pipeline.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
+        /// <param name='exportPipelineName'>
+        /// The name of the export pipeline.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Replication>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ExportPipeline>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string exportPipelineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -118,23 +118,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (replicationName == null)
+            if (exportPipelineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "replicationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "exportPipelineName");
             }
-            if (replicationName != null)
+            if (exportPipelineName != null)
             {
-                if (replicationName.Length > 50)
+                if (exportPipelineName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "replicationName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "exportPipelineName", 50);
                 }
-                if (replicationName.Length < 5)
+                if (exportPipelineName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "replicationName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "exportPipelineName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(replicationName, "^[a-zA-Z0-9]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(exportPipelineName, "^[a-zA-Z0-9]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "exportPipelineName", "^[a-zA-Z0-9]*$");
                 }
             }
             string apiVersion = "2019-12-01-preview";
@@ -148,17 +148,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("replicationName", replicationName);
+                tracingParameters.Add("exportPipelineName", exportPipelineName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications/{replicationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{replicationName}", System.Uri.EscapeDataString(replicationName));
+            _url = _url.Replace("{exportPipelineName}", System.Uri.EscapeDataString(exportPipelineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Replication>();
+            var _result = new AzureOperationResponse<ExportPipeline>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Replication>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ExportPipeline>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a replication for a container registry with the specified
+        /// Creates an export pipeline for a container registry with the specified
         /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -299,11 +299,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
+        /// <param name='exportPipelineName'>
+        /// The name of the export pipeline.
         /// </param>
-        /// <param name='replication'>
-        /// The parameters for creating a replication.
+        /// <param name='exportPipelineCreateParameters'>
+        /// The parameters for creating an export pipeline.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -311,15 +311,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Replication>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Replication replication, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ExportPipeline>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string exportPipelineName, ExportPipeline exportPipelineCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Replication> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, replication, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ExportPipeline> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, exportPipelineName, exportPipelineCreateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes a replication from a container registry.
+        /// Deletes an export pipeline from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -327,8 +327,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
+        /// <param name='exportPipelineName'>
+        /// The name of the export pipeline.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -336,49 +336,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string exportPipelineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, exportPipelineName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates a replication for a container registry with the specified
-        /// parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
-        /// </param>
-        /// <param name='tags'>
-        /// The tags for the replication.
-        /// </param>
-        /// <param name='regionEndpointEnabled'>
-        /// Specifies whether the replication's regional endpoint is enabled. Requests
-        /// will not be routed to a replication whose regional endpoint is disabled,
-        /// however its data will continue to be synced with other replications.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Replication>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Replication> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists all the replications for the specified container registry.
+        /// Lists all export pipelines for the specified container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -407,7 +373,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Replication>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<ExportPipeline>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -459,7 +425,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
@@ -561,7 +527,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Replication>>();
+            var _result = new AzureOperationResponse<IPage<ExportPipeline>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -574,7 +540,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Replication>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ExportPipeline>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -594,7 +560,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a replication for a container registry with the specified
+        /// Creates an export pipeline for a container registry with the specified
         /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -603,11 +569,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
+        /// <param name='exportPipelineName'>
+        /// The name of the export pipeline.
         /// </param>
-        /// <param name='replication'>
-        /// The parameters for creating a replication.
+        /// <param name='exportPipelineCreateParameters'>
+        /// The parameters for creating an export pipeline.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -630,7 +596,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Replication replication, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ExportPipeline>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string exportPipelineName, ExportPipeline exportPipelineCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -666,32 +632,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (replicationName == null)
+            if (exportPipelineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "replicationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "exportPipelineName");
             }
-            if (replicationName != null)
+            if (exportPipelineName != null)
             {
-                if (replicationName.Length > 50)
+                if (exportPipelineName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "replicationName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "exportPipelineName", 50);
                 }
-                if (replicationName.Length < 5)
+                if (exportPipelineName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "replicationName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "exportPipelineName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(replicationName, "^[a-zA-Z0-9]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(exportPipelineName, "^[a-zA-Z0-9]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "exportPipelineName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (replication == null)
+            if (exportPipelineCreateParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "replication");
+                throw new ValidationException(ValidationRules.CannotBeNull, "exportPipelineCreateParameters");
             }
-            if (replication != null)
+            if (exportPipelineCreateParameters != null)
             {
-                replication.Validate();
+                exportPipelineCreateParameters.Validate();
             }
             string apiVersion = "2019-12-01-preview";
             // Tracing
@@ -704,18 +670,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("replicationName", replicationName);
-                tracingParameters.Add("replication", replication);
+                tracingParameters.Add("exportPipelineName", exportPipelineName);
+                tracingParameters.Add("exportPipelineCreateParameters", exportPipelineCreateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications/{replicationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{replicationName}", System.Uri.EscapeDataString(replicationName));
+            _url = _url.Replace("{exportPipelineName}", System.Uri.EscapeDataString(exportPipelineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -759,9 +725,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(replication != null)
+            if(exportPipelineCreateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(replication, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(exportPipelineCreateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -820,7 +786,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Replication>();
+            var _result = new AzureOperationResponse<ExportPipeline>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -833,7 +799,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Replication>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ExportPipeline>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -851,7 +817,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Replication>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ExportPipeline>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -871,7 +837,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Deletes a replication from a container registry.
+        /// Deletes an export pipeline from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -879,8 +845,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
+        /// <param name='exportPipelineName'>
+        /// The name of the export pipeline.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -900,7 +866,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string exportPipelineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -936,23 +902,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (replicationName == null)
+            if (exportPipelineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "replicationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "exportPipelineName");
             }
-            if (replicationName != null)
+            if (exportPipelineName != null)
             {
-                if (replicationName.Length > 50)
+                if (exportPipelineName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "replicationName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "exportPipelineName", 50);
                 }
-                if (replicationName.Length < 5)
+                if (exportPipelineName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "replicationName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "exportPipelineName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(replicationName, "^[a-zA-Z0-9]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(exportPipelineName, "^[a-zA-Z0-9]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "exportPipelineName", "^[a-zA-Z0-9]*$");
                 }
             }
             string apiVersion = "2019-12-01-preview";
@@ -966,17 +932,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("replicationName", replicationName);
+                tracingParameters.Add("exportPipelineName", exportPipelineName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications/{replicationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{replicationName}", System.Uri.EscapeDataString(replicationName));
+            _url = _url.Replace("{exportPipelineName}", System.Uri.EscapeDataString(exportPipelineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1090,287 +1056,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Updates a replication for a container registry with the specified
-        /// parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='replicationName'>
-        /// The name of the replication.
-        /// </param>
-        /// <param name='tags'>
-        /// The tags for the replication.
-        /// </param>
-        /// <param name='regionEndpointEnabled'>
-        /// Specifies whether the replication's regional endpoint is enabled. Requests
-        /// will not be routed to a replication whose regional endpoint is disabled,
-        /// however its data will continue to be synced with other replications.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (registryName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
-            }
-            if (registryName != null)
-            {
-                if (registryName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "registryName", 50);
-                }
-                if (registryName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "registryName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(registryName, "^[a-zA-Z0-9]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
-                }
-            }
-            if (replicationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "replicationName");
-            }
-            if (replicationName != null)
-            {
-                if (replicationName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "replicationName", 50);
-                }
-                if (replicationName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "replicationName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(replicationName, "^[a-zA-Z0-9]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "replicationName", "^[a-zA-Z0-9]*$");
-                }
-            }
-            string apiVersion = "2019-12-01-preview";
-            ReplicationUpdateParameters replicationUpdateParameters = new ReplicationUpdateParameters();
-            if (tags != null || regionEndpointEnabled != null)
-            {
-                replicationUpdateParameters.Tags = tags;
-                replicationUpdateParameters.RegionEndpointEnabled = regionEndpointEnabled;
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("replicationName", replicationName);
-                tracingParameters.Add("replicationUpdateParameters", replicationUpdateParameters);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications/{replicationName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{replicationName}", System.Uri.EscapeDataString(replicationName));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(replicationUpdateParameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(replicationUpdateParameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Replication>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Replication>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 201)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Replication>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Lists all the replications for the specified container registry.
+        /// Lists all export pipelines for the specified container registry.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1396,7 +1082,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Replication>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<ExportPipeline>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1510,7 +1196,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Replication>>();
+            var _result = new AzureOperationResponse<IPage<ExportPipeline>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1523,7 +1209,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Replication>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ExportPipeline>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
