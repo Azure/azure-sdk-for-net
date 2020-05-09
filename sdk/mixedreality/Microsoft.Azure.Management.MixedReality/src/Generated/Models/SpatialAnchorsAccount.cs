@@ -43,8 +43,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="accountId">unique id of certain Spatial Anchors
-        /// Account data contract.</param>
+        /// <param name="accountId">unique id of certain account.</param>
         /// <param name="accountDomain">Correspond domain name of certain
         /// Spatial Anchors Account</param>
         public SpatialAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountId = default(string), string accountDomain = default(string))
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets unique id of certain Spatial Anchors Account data contract.
+        /// Gets unique id of certain account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountId")]
         public string AccountId { get; private set; }
