@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// The JSON object that contains the properties to secure a custom domain.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CustomDomainHttpsParameters")]
     public partial class CustomDomainHttpsParameters
     {
         /// <summary>
