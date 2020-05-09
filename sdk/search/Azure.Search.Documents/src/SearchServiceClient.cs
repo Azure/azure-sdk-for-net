@@ -2421,8 +2421,6 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
-
                 Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
                     Constants.All,
                     options?.ClientRequestId,
@@ -2452,8 +2450,6 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
-
                 Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
                     Constants.All,
                     options?.ClientRequestId,
