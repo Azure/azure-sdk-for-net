@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +32,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TableQueryResponse>> QueryAsync(string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.QueryAsync(requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Query");
+            scope.Start();
+            try
+            {
+                return await RestClient.QueryAsync(requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries tables under the given account. </summary>
@@ -40,7 +51,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableQueryResponse> Query(string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Query(requestId, queryOptions, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Query");
+            scope.Start();
+            try
+            {
+                return RestClient.Query(requestId, queryOptions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new table under the given account. </summary>
@@ -50,7 +71,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TableResponse>> CreateAsync(TableProperties tableProperties, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(tableProperties, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(tableProperties, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new table under the given account. </summary>
@@ -60,7 +91,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableResponse> Create(TableProperties tableProperties, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(tableProperties, requestId, queryOptions, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(tableProperties, requestId, queryOptions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Operation permanently deletes the specified table. </summary>
@@ -69,7 +110,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
-            return (await RestClient.DeleteAsync(table, requestId, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Delete");
+            scope.Start();
+            try
+            {
+                return (await RestClient.DeleteAsync(table, requestId, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Operation permanently deletes the specified table. </summary>
@@ -78,7 +129,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string table, string requestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(table, requestId, cancellationToken).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(table, requestId, cancellationToken).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries entities in a table. </summary>
@@ -89,7 +150,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TableEntityQueryResponse>> QueryEntitiesAsync(string table, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.QueryEntitiesAsync(table, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.QueryEntities");
+            scope.Start();
+            try
+            {
+                return await RestClient.QueryEntitiesAsync(table, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries entities in a table. </summary>
@@ -100,7 +171,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableEntityQueryResponse> QueryEntities(string table, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.QueryEntities(table, timeout, requestId, queryOptions, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.QueryEntities");
+            scope.Start();
+            try
+            {
+                return RestClient.QueryEntities(table, timeout, requestId, queryOptions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries entities in a table. </summary>
@@ -113,7 +194,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TableEntityQueryResponse>> QueryEntitiesWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.QueryEntitiesWithPartitionAndRowKeyAsync(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.QueryEntitiesWithPartitionAndRowKey");
+            scope.Start();
+            try
+            {
+                return await RestClient.QueryEntitiesWithPartitionAndRowKeyAsync(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries entities in a table. </summary>
@@ -126,7 +217,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableEntityQueryResponse> QueryEntitiesWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.QueryEntitiesWithPartitionAndRowKey(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.QueryEntitiesWithPartitionAndRowKey");
+            scope.Start();
+            try
+            {
+                return RestClient.QueryEntitiesWithPartitionAndRowKey(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update entity in a table. </summary>
@@ -140,7 +241,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> UpdateEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return (await RestClient.UpdateEntityAsync(table, partitionKey, rowKey, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.UpdateEntity");
+            scope.Start();
+            try
+            {
+                return (await RestClient.UpdateEntityAsync(table, partitionKey, rowKey, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update entity in a table. </summary>
@@ -154,7 +265,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response UpdateEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, IDictionary<string, object> tableEntityProperties = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.UpdateEntity(table, partitionKey, rowKey, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.UpdateEntity");
+            scope.Start();
+            try
+            {
+                return RestClient.UpdateEntity(table, partitionKey, rowKey, timeout, requestId, tableEntityProperties, queryOptions, cancellationToken).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified entity in a table. </summary>
@@ -167,7 +288,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteEntityAsync(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return (await RestClient.DeleteEntityAsync(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.DeleteEntity");
+            scope.Start();
+            try
+            {
+                return (await RestClient.DeleteEntityAsync(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified entity in a table. </summary>
@@ -180,7 +311,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteEntity(string table, string partitionKey, string rowKey, int? timeout = null, string requestId = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.DeleteEntity(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.DeleteEntity");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteEntity(table, partitionKey, rowKey, timeout, requestId, queryOptions, cancellationToken).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
@@ -191,7 +332,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
-            return (await RestClient.SetAccessPolicyAsync(table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.SetAccessPolicy");
+            scope.Start();
+            try
+            {
+                return (await RestClient.SetAccessPolicyAsync(table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
@@ -202,7 +353,17 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SetAccessPolicy(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.SetAccessPolicy(table, timeout, requestId, tableAcl, cancellationToken).GetRawResponse();
+            using var scope = _clientDiagnostics.CreateScope("TableInternalClient.SetAccessPolicy");
+            scope.Start();
+            try
+            {
+                return RestClient.SetAccessPolicy(table, timeout, requestId, tableAcl, cancellationToken).GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -41,7 +41,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynonymMap>> CreateOrUpdateAsync(string synonymMapName, SynonymMap synonymMap, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new synonym map or updates a synonym map if it already exists. </summary>
@@ -53,7 +63,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynonymMap> CreateOrUpdate(string synonymMapName, SynonymMap synonymMap, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a synonym map. </summary>
@@ -64,7 +84,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string synonymMapName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a synonym map. </summary>
@@ -75,7 +105,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string synonymMapName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a synonym map definition. </summary>
@@ -84,7 +124,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynonymMap>> GetAsync(string synonymMapName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(synonymMapName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(synonymMapName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a synonym map definition. </summary>
@@ -93,7 +143,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynonymMap> Get(string synonymMapName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(synonymMapName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(synonymMapName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -102,7 +162,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListSynonymMapsResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -111,7 +181,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListSynonymMapsResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new synonym map. </summary>
@@ -120,7 +200,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynonymMap>> CreateAsync(SynonymMap synonymMap, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(synonymMap, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(synonymMap, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new synonym map. </summary>
@@ -129,7 +219,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynonymMap> Create(SynonymMap synonymMap, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(synonymMap, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SynonymMapsClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(synonymMap, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

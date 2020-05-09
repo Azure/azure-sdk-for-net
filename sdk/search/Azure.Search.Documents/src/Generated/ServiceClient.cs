@@ -37,7 +37,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetServiceStatisticsAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetServiceStatisticsAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets service level statistics for a search service. </summary>
@@ -45,7 +55,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetServiceStatistics(xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
+            scope.Start();
+            try
+            {
+                return RestClient.GetServiceStatistics(xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
