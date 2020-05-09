@@ -630,8 +630,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var completionSourceIndex = -1;
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
                 await processor.StartProcessingAsync();
+
+                Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
+                {
+                    var exception = (ServiceBusException)eventArgs.Exception;
+                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    {
+                        Assert.AreEqual(ServiceBusErrorSource.Receive, eventArgs.ErrorSource);
+                    }
+                    else
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
@@ -699,6 +713,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
             }
+        }
+
+        [Test]
+        public void DebugAssert()
+        {
+            TestContext.Progress.WriteLine("event output");
+            Debug.Assert(false);
         }
 
         [Test]
@@ -931,6 +952,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     var exception = (ServiceBusException)eventArgs.Exception;
                     if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
                     {
+                        Assert.AreEqual(ServiceBusErrorSource.Receive, eventArgs.ErrorSource);
                         Interlocked.Increment(ref sessionErrorEventCt);
                     }
                     else
@@ -1006,12 +1028,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                int sendMessagesCount = 2;
 
                 var sessionId = Guid.NewGuid().ToString();
-                // sending 2 messages per session
-                var messages = GetMessages(sendMessagesCount, sessionId);
-                await sender.SendAsync(messages);
+                await sender.SendAsync(GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1064,16 +1083,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     finally
                     {
                         var ct = Interlocked.Increment(ref messageCt);
-                        if (ct == sendMessagesCount)
-                        {
-                            tcs.SetResult(true);
-                        }
+                        tcs.SetResult(true);
                     }
                 }
                 await tcs.Task;
                 await processor.StopProcessingAsync();
 
-                Assert.AreEqual(sendMessagesCount, messageCt);
+                Assert.AreEqual(1, messageCt);
 
                 // making sure that session error handler is hitting only once.
                 Assert.AreEqual(1, sessionErrorEventCt);
