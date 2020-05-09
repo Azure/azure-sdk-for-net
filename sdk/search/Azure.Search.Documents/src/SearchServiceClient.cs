@@ -8,6 +8,7 @@ using Azure.Search.Documents.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents
 {
@@ -549,13 +550,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data sources.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexerDataSource>> GetDataSources(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -564,7 +563,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListDataSourcesResult> result = DataSourcesClient.List(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken);
 
@@ -580,13 +579,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data sources.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSource>>> GetDataSourcesAsync(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -595,7 +592,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -607,6 +604,49 @@ namespace Azure.Search.Documents
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all data source names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<string>> GetDataSourceNames(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListDataSourcesResult> result = DataSourcesClient.List(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken);
+
+            IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a list of all data source names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceNamesAsync(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
         #endregion
 
@@ -969,13 +1009,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Pageable<SearchIndex> GetIndexes(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -991,7 +1029,7 @@ namespace Azure.Search.Documents
                     }
 
                     Response<ListIndexesResult> result = IndexesClient.List(
-                        selectProperties.CommaJoin() ?? Constants.All,
+                        Constants.All,
                         options?.ClientRequestId,
                         cancellationToken);
 
@@ -1008,13 +1046,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -1030,7 +1066,7 @@ namespace Azure.Search.Documents
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        selectProperties.CommaJoin() ?? Constants.All,
+                        Constants.All,
                         options?.ClientRequestId,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -1046,12 +1082,65 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
+        /// Gets a list of all index names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Pageable<string> GetIndexNames(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default) => PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+            {
+                if (continuationToken != null)
+                {
+                    throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                }
+
+                Response<ListIndexesResult> result = IndexesClient.List(
+                    Constants.NameKey,
+                    options?.ClientRequestId,
+                    cancellationToken);
+
+                IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
+                return Page<string>.FromValues(names, null, result.GetRawResponse());
+            });
+
+        /// <summary>
+        /// Gets a list of all index names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<string> GetIndexNamesAsync(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default) => PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+            {
+                if (continuationToken != null)
+                {
+                    throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                }
+
+                Response<ListIndexesResult> result = await IndexesClient.ListAsync(
+                    Constants.NameKey,
+                    options?.ClientRequestId,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
+                return Page<string>.FromValues(names, null, result.GetRawResponse());
+            });
+
+        /// <summary>
         /// Gets <see cref="SearchIndexStatistics"/> for the given index, including a document count and storage usage.
         /// </summary>
         /// <param name="indexName">Required. The name of the index.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchIndexStatistics"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchIndexStatistics"/> names.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexStatistics> GetIndexStatistics(
@@ -1377,13 +1466,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexers.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -1392,7 +1479,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListIndexersResult> result = IndexersClient.List(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken);
 
@@ -1408,13 +1495,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexers.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -1423,7 +1508,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListIndexersResult> result = await IndexersClient.ListAsync(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1435,6 +1520,49 @@ namespace Azure.Search.Documents
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all indexer names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<string>> GetIndexerNames(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListIndexersResult> result = IndexersClient.List(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken);
+
+            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a list of all indexer names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListIndexersResult> result = await IndexersClient.ListAsync(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1891,13 +2019,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillsets.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -1906,7 +2032,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListSkillsetsResult> result = SkillsetsClient.List(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken);
 
@@ -1922,13 +2048,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillsets.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -1937,7 +2061,7 @@ namespace Azure.Search.Documents
             try
             {
                 Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
-                    selectProperties.CommaJoin() ?? Constants.All,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1949,6 +2073,49 @@ namespace Azure.Search.Documents
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all skillset names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListSkillsetsResult> result = SkillsetsClient.List(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken);
+
+            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a list of all skillset names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
         #endregion
 
@@ -2242,13 +2409,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym maps.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -2259,7 +2424,7 @@ namespace Azure.Search.Documents
                 string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
 
                 Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
-                    select,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken);
 
@@ -2275,13 +2440,11 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym maps.
         /// </summary>
-        /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
-            IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
@@ -2292,7 +2455,7 @@ namespace Azure.Search.Documents
                 string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
 
                 Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
-                    select,
+                    Constants.All,
                     options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2304,6 +2467,49 @@ namespace Azure.Search.Documents
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all synonym map names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken);
+
+            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a list of all synonym map names.
+        /// </summary>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
+                Constants.NameKey,
+                options?.ClientRequestId,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
         #endregion
     }
