@@ -182,7 +182,12 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>
             /// The user doesn't have access to the entity.
             /// </summary>
-            Unauthorized
+            Unauthorized,
+
+            /// <summary>
+            /// An entity with the same name exists under the same namespace.
+            /// </summary>
+            MessagingEntityAlreadyExists
         }
     }
 }

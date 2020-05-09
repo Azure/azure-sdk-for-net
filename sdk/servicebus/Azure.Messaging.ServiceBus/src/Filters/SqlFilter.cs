@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators,
     /// numeric arithmetic, and simple text pattern matching with LIKE.
     /// </remarks>
-    internal class SqlFilter : Filter
+    public class SqlFilter : Filter
     {
         internal PropertyDictionary parameters;
 
