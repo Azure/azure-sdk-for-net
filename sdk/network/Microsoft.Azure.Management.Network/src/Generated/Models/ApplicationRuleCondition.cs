@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Rule condition of type application.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ApplicationRuleCondition")]
     public partial class ApplicationRuleCondition : FirewallPolicyRuleCondition
     {
         /// <summary>

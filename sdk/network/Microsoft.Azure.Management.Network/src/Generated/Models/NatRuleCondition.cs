@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Rule condition of type nat.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("NatRuleCondition")]
     public partial class NatRuleCondition : FirewallPolicyRuleCondition
     {
         /// <summary>
