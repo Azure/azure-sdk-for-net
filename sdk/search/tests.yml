@@ -14,3 +14,4 @@ jobs:
     MaxParallel: 2
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
+      AZURE_SEARCH_TEST_VERBOSE: 1
