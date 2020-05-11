@@ -24,8 +24,8 @@ To recognize form fields and other content from your custom forms from a given f
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
-Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
-foreach (RecognizedForm form in forms.Value)
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
     foreach (FormField field in form.Fields.Values)
@@ -52,7 +52,7 @@ using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
 {
     string modelId = "<modelId>";
 
-    Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+    RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
     /*
      *
      */

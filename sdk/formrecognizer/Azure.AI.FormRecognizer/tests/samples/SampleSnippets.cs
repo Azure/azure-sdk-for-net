@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerBadRequest
             try
             {
-                Response<RecognizedReceiptCollection> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeFormContentFromFile
             using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
             {
-                Response<FormPageCollection> formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -102,7 +102,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<RecognizedReceiptCollection> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -135,7 +135,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 //@@ string modelId = "<modelId>";
 
-                Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 /*
                  *
                  */

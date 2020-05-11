@@ -38,8 +38,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                Response<RecognizedFormCollection> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
-                foreach (RecognizedForm form in forms.Value)
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                foreach (RecognizedForm form in forms)
                 {
                     Console.WriteLine($"Form of type: {form.FormType}");
                     foreach (FormField field in form.Fields.Values)
