@@ -212,7 +212,8 @@ namespace Azure.Search.Documents.Tests
             SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
                 createdIndex,
                 allowIndexDowntime: true,
-                options: new SearchConditionalOptions { IfMatch = createdIndex.ETag });
+                onlyIfUnchanged: true,
+                options: new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
             Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
@@ -298,7 +299,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexerDataSource actualSource = await serviceClient.CreateDataSourceAsync(
                 dataSource,
-                GetOptions());
+                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             SearchIndexer indexer = new SearchIndexer(
                 Recording.Random.GetName(),
@@ -307,20 +308,21 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
                 indexer,
-                GetOptions());
+                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                GetOptions(ifMatch: actualIndexer.ETag));
+                onlyIfUnchanged: true,
+                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
                 indexer.Name,
-                GetOptions());
+                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
@@ -329,7 +331,7 @@ namespace Azure.Search.Documents.Tests
                 resources.IndexName);
 
             long count = await client.GetDocumentCountAsync(
-                GetOptions());
+                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             Assert.AreEqual(SearchResources.TestDocuments.Length, count);
         }
@@ -381,18 +383,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Gets a new <see cref="SearchRequestOptions"/>.
-        /// </summary>
-        /// <returns>
-        /// A new <see cref="SearchRequestOptions"/> with a new <see cref="SearchRequestOptions.ClientRequestId"/>.
-        /// </returns>
-        private SearchConditionalOptions GetOptions(ETag? ifMatch = default) => new SearchConditionalOptions
-        {
-            ClientRequestId = Recording.Random.NewGuid(),
-            IfMatch = ifMatch,
-        };
-
-        /// <summary>
         /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
         /// </summary>
         /// <param name="client">The <see cref="SearchServiceClient"/> to use for requests.</param>
@@ -415,7 +405,7 @@ namespace Azure.Search.Documents.Tests
 
                 SearchIndexerStatus status = await client.GetIndexerStatusAsync(
                     indexerName,
-                    GetOptions(),
+                    new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() },
                     cts.Token);
 
                 if (status.Status == IndexerStatus.Running &&
