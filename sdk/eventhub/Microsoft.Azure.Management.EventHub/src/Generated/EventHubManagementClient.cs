@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Management.EventHub
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Event Hubs client for managing Event Hubs Cluster, IPFilter Rules
-    /// and VirtualNetworkRules resources.
-    /// </summary>
     public partial class EventHubManagementClient : ServiceClient<EventHubManagementClient>, IEventHubManagementClient, IAzureClient
     {
         /// <summary>

@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.EventHub
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Event Hubs client for managing Event Hubs Cluster, IPFilter Rules
-    /// and VirtualNetworkRules resources.
     /// </summary>
     public partial interface IEventHubManagementClient : System.IDisposable
     {
