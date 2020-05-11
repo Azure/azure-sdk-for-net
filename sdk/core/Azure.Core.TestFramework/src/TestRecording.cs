@@ -201,7 +201,8 @@ namespace Azure.Core.TestFramework
             {
                 RecordedTestMode.Live => currentTransport,
                 RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => _disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random,
+                    entry => _disableRecording.Value == EntryRecordModel.RecordWithoutRequestBody),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
         }

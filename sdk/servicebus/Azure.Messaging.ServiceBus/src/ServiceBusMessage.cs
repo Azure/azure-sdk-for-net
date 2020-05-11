@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
+using System.Xml.Schema;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
@@ -56,7 +58,7 @@ namespace Azure.Messaging.ServiceBus
             Label = receivedMessage.Label;
             MessageId = receivedMessage.MessageId;
             PartitionKey = receivedMessage.PartitionKey;
-            Properties = new Dictionary<string, object>(receivedMessage.Properties);
+            Properties = new Dictionary<string, object>(receivedMessage.SentMessage.Properties);
             ReplyTo = receivedMessage.ReplyTo;
             ReplyToSessionId = receivedMessage.ReplyToSessionId;
             SessionId = receivedMessage.SessionId;
@@ -199,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                TimeoutHelper.ThrowIfNonPositiveArgument(value);
+                Argument.AssertPositive(value, nameof(TimeToLive));
                 _timeToLive = value;
             }
         }

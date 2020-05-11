@@ -149,6 +149,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            if (maxWaitTime.HasValue)
+            {
+                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.ReceiveMessageStart(Identifier, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;

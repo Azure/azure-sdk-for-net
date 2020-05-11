@@ -76,10 +76,10 @@ namespace Azure.Core
                     writer.WriteStringValue(g);
                     break;
                 case DateTimeOffset dateTimeOffset:
-                    writer.WriteStringValue(dateTimeOffset,"S");
+                    writer.WriteStringValue(dateTimeOffset,"O");
                     break;
                 case DateTime dateTime:
-                    writer.WriteStringValue(dateTime, "S");
+                    writer.WriteStringValue(dateTime, "O");
                     break;
                 case IEnumerable<KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();
