@@ -740,6 +740,46 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal HttpMessage CreateInsertEntityRequest(string table, int? timeout, string requestId, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (requestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", requestId);
+            }
+            request.Headers.Add("DataServiceVersion", "3.0");
+            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
+            if (tableEntityProperties != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tableEntityProperties)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+                request.Content = content;
+            }
+            return message;
+        }
+
         internal HttpMessage CreateGetAccessPolicyRequest(string table, int? timeout, string requestId)
         {
             var message = _pipeline.CreateMessage();
