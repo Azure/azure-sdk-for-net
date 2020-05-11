@@ -77,7 +77,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -98,6 +98,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("resourceProviderNamespace"));
 
             e = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
@@ -128,7 +129,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -161,7 +162,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -186,12 +187,12 @@ namespace Azure.Core.Tests
         public async Task ContentIsNotLoggedAsTextWhenDisabled()
         {
             var response = new MockResponse(500);
-            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+            response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -208,11 +209,11 @@ namespace Azure.Core.Tests
         public async Task ContentIsNotLoggedWhenDisabled()
         {
             var response = new MockResponse(500);
-            response.ContentStream = new NonSeekableMemoryStream(new byte[] {1, 2, 3});
+            response.ContentStream = new NonSeekableMemoryStream(new byte[] { 1, 2, 3 });
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -229,11 +230,11 @@ namespace Azure.Core.Tests
         public async Task RequestContentIsNotLoggedWhenDisabled()
         {
             var response = new MockResponse(500);
-            response.ContentStream = new MemoryStream(new byte[] {1, 2, 3});
+            response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
 
             await SendRequestAsync(pipeline, request =>
             {
@@ -422,7 +423,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -476,10 +477,11 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
             string requestId = null;
 
-            await SendRequestAsync(pipeline, request => {
+            await SendRequestAsync(pipeline, request =>
+            {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
                 request.Headers.Add("Date", "3/26/2019");
@@ -498,6 +500,7 @@ namespace Azure.Core.Tests
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("resourceProviderNamespace"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -518,7 +521,7 @@ namespace Azure.Core.Tests
 
             MockTransport mockTransport = CreateMockTransport(response);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new[] {"*"}, new[] {"*"}) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new[] { "*" }, new[] { "*" }, "Test-SDK") });
             string requestId = null;
 
             await SendRequestAsync(pipeline, request =>
@@ -541,6 +544,7 @@ namespace Azure.Core.Tests
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("resourceProviderNamespace"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -553,7 +557,7 @@ namespace Azure.Core.Tests
 
         private async Task<Response> SendRequest(bool isSeekable, bool isError, Action<MockResponse> setupRequest = null, int maxLength = int.MaxValue)
         {
-            var mockResponse = new MockResponse(isError ? 500: 200);
+            var mockResponse = new MockResponse(isError ? 500 : 200);
             byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
             if (isSeekable)
             {
@@ -566,7 +570,7 @@ namespace Azure.Core.Tests
             setupRequest?.Invoke(mockResponse);
 
             MockTransport mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, s_allowedHeaders, s_allowedQueryParameters) });
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
 
             Response response = await SendRequestAsync(pipeline, request =>
             {

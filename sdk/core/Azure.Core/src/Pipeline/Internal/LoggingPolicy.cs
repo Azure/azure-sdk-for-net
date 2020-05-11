@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,11 +15,12 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
+        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters, string? resourceProviderNamespace)
         {
             _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
             _logContent = logContent;
             _maxLength = maxLength;
+            _resourceProviderNamespace = resourceProviderNamespace;
         }
 
         private const double RequestTooLongTime = 3.0; // sec
@@ -30,6 +30,7 @@ namespace Azure.Core.Pipeline
         private readonly bool _logContent;
         private readonly int _maxLength;
         private HttpMessageSanitizer _sanitizer;
+        private readonly string? _resourceProviderNamespace;
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -53,7 +54,7 @@ namespace Azure.Core.Pipeline
 
             Request request = message.Request;
 
-            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers));
+            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _resourceProviderNamespace);
 
             Encoding? requestTextEncoding = null;
 

@@ -31,10 +31,10 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}")]
-        public void Request(string requestId, string method, string uri, string headers)
+        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}, resource provider namespace: {4}")]
+        public void Request(string requestId, string method, string uri, string headers, string? resourceProviderNamespace)
         {
-            WriteEvent(RequestEvent, requestId, method, uri, headers);
+            WriteEvent(RequestEvent, requestId, method, uri, headers, resourceProviderNamespace);
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
@@ -109,10 +109,10 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number: {1}")]
-        public void RequestRetrying(string requestId, int retryNumber)
+        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number {1}, reason: {2}, retry took {3:00.0}s")]
+        public void RequestRetrying(string requestId, int retryNumber, string? retryReason, double seconds)
         {
-            WriteEvent(RequestRetryingEvent, requestId, retryNumber);
+            WriteEvent(RequestRetryingEvent, requestId, retryNumber, retryReason, seconds);
         }
 
         [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]

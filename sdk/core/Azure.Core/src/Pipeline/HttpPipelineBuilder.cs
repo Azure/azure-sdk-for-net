@@ -72,7 +72,7 @@ namespace Azure.Core.Pipeline
             if (diagnostics.IsLoggingEnabled)
             {
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
