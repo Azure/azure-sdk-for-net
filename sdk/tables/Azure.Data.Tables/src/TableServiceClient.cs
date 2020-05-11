@@ -83,6 +83,7 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.RestClient.QueryAsync(
                     null,
+                    null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
@@ -90,7 +91,8 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.RestClient.QueryAsync(
                        null,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       nextTableName: nextLink,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                        cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -110,6 +112,7 @@ namespace Azure.Data.Tables
             {
                 var response = _tableOperations.RestClient.Query(
                     null,
+                    null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
@@ -117,7 +120,8 @@ namespace Azure.Data.Tables
             {
                 var response = _tableOperations.RestClient.Query(
                        null,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       nextTableName: nextLink,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                        cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -132,7 +136,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
         {
-            var response = _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
 
@@ -145,7 +149,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
 

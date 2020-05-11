@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class RequestMetrics : IXmlSerializable
+    public partial class TableMetrics : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,7 +38,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static RequestMetrics DeserializeRequestMetrics(XElement element)
+        internal static TableMetrics DeserializeTableMetrics(XElement element)
         {
             string version = default;
             bool enabled = default;
@@ -60,7 +60,7 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
-            return new RequestMetrics(version, enabled, includeAPIs, retentionPolicy);
+            return new TableMetrics(version, enabled, includeAPIs, retentionPolicy);
         }
     }
 }

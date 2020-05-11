@@ -18,5 +18,7 @@ namespace Azure.Data.Tables
             _response = response;
         }
         public string XMsVersion => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        public string PreferenceApplied => _response.Headers.TryGetValue("Preference-Applied", out string value) ? value : null;
+        public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
     }
 }

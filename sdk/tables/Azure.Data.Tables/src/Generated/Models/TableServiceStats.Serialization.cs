@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class StorageServiceStats
+    public partial class TableServiceStats
     {
-        internal static StorageServiceStats DeserializeStorageServiceStats(XElement element)
+        internal static TableServiceStats DeserializeTableServiceStats(XElement element)
         {
             GeoReplication geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)
             {
                 geoReplication = GeoReplication.DeserializeGeoReplication(geoReplicationElement);
             }
-            return new StorageServiceStats(geoReplication);
+            return new TableServiceStats(geoReplication);
         }
     }
 }

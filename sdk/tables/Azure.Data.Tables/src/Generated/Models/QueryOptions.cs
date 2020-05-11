@@ -8,7 +8,7 @@
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Parameter group. </summary>
-    internal partial class QueryOptions
+    public partial class QueryOptions
     {
         /// <summary> Initializes a new instance of QueryOptions. </summary>
         public QueryOptions()

@@ -4,7 +4,7 @@
 namespace Azure.Data.Tables.Models
 {
     ///<inheritdoc/>
-    internal partial class QueryOptions
+    internal partial class QueryOptionstest
     {
         /// <summary> The continuation token for a Tables request. </summary>
         public string NextTableName { get; set; }
