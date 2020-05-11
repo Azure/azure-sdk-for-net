@@ -1213,7 +1213,7 @@ namespace Azure.Search.Documents
                 {
                     if (continuationToken != null)
                     {
-                        throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                        throw new NotSupportedException("A continuation token is unsupported.");
                     }
 
                     Response<ListIndexesResult> result = IndexesClient.List(
@@ -1250,7 +1250,7 @@ namespace Azure.Search.Documents
                 {
                     if (continuationToken != null)
                     {
-                        throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                        throw new NotSupportedException("A continuation token is unsupported.");
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
@@ -1288,7 +1288,7 @@ namespace Azure.Search.Documents
                 {
                     if (continuationToken != null)
                     {
-                        throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                        throw new NotSupportedException("A continuation token is unsupported.");
                     }
 
                     Response<ListIndexesResult> result = IndexesClient.List(
@@ -1326,7 +1326,7 @@ namespace Azure.Search.Documents
                 {
                     if (continuationToken != null)
                     {
-                        throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                        throw new NotSupportedException("A continuation token is unsupported.");
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
