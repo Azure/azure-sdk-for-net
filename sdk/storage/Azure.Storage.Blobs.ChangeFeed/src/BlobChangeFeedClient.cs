@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 
@@ -25,6 +26,104 @@ namespace Azure.Storage.Blobs.ChangeFeed
         internal BlobChangeFeedClient(BlobServiceClient blobServiceClient)
         {
             _blobServiceClient = blobServiceClient;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        public BlobChangeFeedClient(string connectionString)
+        {
+            _blobServiceClient = new BlobServiceClient(connectionString);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobChangeFeedClient(string connectionString, BlobClientOptions options)
+
+        {
+            _blobServiceClient = new BlobServiceClient(connectionString, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobChangeFeedClient(Uri serviceUri, BlobClientOptions options = default)
+        {
+            _blobServiceClient = new BlobServiceClient(serviceUri, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobChangeFeedClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+        {
+            _blobServiceClient = new BlobServiceClient(serviceUri, credential, options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobChangeFeedClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
+        {
+            _blobServiceClient = new BlobServiceClient(serviceUri, credential, options);
         }
 
         /// <summary>

@@ -34,8 +34,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 return default;
             }
-            segmentPath = segmentPath.Trim('/');
-            string[] splitPath = segmentPath.Split('/');
+            string[] splitPath = segmentPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (splitPath.Length < 3)
+            {
+                throw new ArgumentException($"{nameof(segmentPath)} is not a valid segment path.");
+            }
+
             return new DateTimeOffset(
                 year: int.Parse(splitPath[2], CultureInfo.InvariantCulture),
                 month: splitPath.Length >= 4
