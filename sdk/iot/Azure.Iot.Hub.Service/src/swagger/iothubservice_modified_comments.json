@@ -11,8 +11,7 @@
   "paths": {
     "/configurations/{id}": {
       "get": {
-        "summary": "Retrieve a configuration for Iot Hub devices and modules by it identifier.",
-        "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Get a configuration on IoT Hub for automatic device/module management.",
         "operationId": "Configuration_Get",
         "consumes": [],
         "produces": [
@@ -21,6 +20,7 @@
         "parameters": [
           {
             "name": "id",
+            "description": "The unique identifier of the configuration.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -31,80 +31,83 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the Configuration object",
+            "description": "Returns the Configuration.",
             "schema": {
               "$ref": "#/definitions/Configuration"
             }
           }
         }
       },
-      "put": {
-        "summary": "Create or update the configuration for devices or modules of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that configuration Id and Content cannot be updated by the user.",
-        "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
-        "operationId": "Configuration_CreateOrUpdate",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "configuration",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Configuration"
+        "put": {
+            "description": "Create or update a configuration on IoT Hub for automatic device/module management. Configuration Id and Content cannot be updated.",
+            "operationId": "Configuration_CreateOrUpdate",
+            "consumes": [
+                "application/json"
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "The unique identifier of the configuration.",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "configuration",
+                    "description": "The configuration to be created or updated.",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Configuration"
+                    }
+                },
+                {
+                    "name": "If-Match",
+                    "description": "A string representing a weak ETag for configuration, as per RFC7232. Should not be set when creating a configuration, but may be set when updating a configuration.",
+                    "in": "header",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/parameters/api-version"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Returns the updated configuration object",
+                    "schema": {
+                        "$ref": "#/definitions/Configuration"
+                    }
+                },
+                "201": {
+                    "description": "Returns the created configuration object",
+                    "schema": {
+                        "$ref": "#/definitions/Configuration"
+                    }
+                }
             }
-          },
-          {
-            "name": "If-Match",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "$ref": "#/parameters/api-version"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the updated Configuration object",
-            "schema": {
-              "$ref": "#/definitions/Configuration"
-            }
-          },
-          "201": {
-            "description": "Returns the created Configuration object",
-            "schema": {
-              "$ref": "#/definitions/Configuration"
-            }
-          }
-        }
-      },
+        },
       "delete": {
-        "summary": "Delete the configuration for devices or modules of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*).",
-        "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Delete a configuration on IoT Hub for automatic device/module management",
         "operationId": "Configuration_Delete",
         "consumes": [],
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+            {
+                "name": "id",
+                "description": "The unique identifier of the configuration.",
+                "in": "path",
+                "required": true,
+                "type": "string"
+            },
           {
             "name": "If-Match",
+            "description": "A string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*).",
             "in": "header",
             "required": false,
             "type": "string"
@@ -122,8 +125,7 @@
     },
     "/configurations": {
       "get": {
-        "summary": "Get multiple configurations for devices or modules of an IoT Hub. Returns the specified number of configurations for Iot Hub. Pagination is not supported.",
-        "description": " For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Get multiple configurations on IoT Hub for automatic device/module management",
         "operationId": "Configuration_GetConfigurations",
         "consumes": [],
         "produces": [
@@ -132,6 +134,8 @@
         "parameters": [
           {
             "name": "top",
+            // TODO: Ask service team if this value can be overriden if too large
+            "description": "Number of configurations to retrieve",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -143,7 +147,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the list of Configuration objects",
+            "description": "Returns the list of configuration objects. Pagination is not supported.",
             "schema": {
               "type": "array",
               "items": {
@@ -156,8 +160,7 @@
     },
     "/configurations/testQueries": {
       "post": {
-        "summary": "Validates the target condition query and custom metric queries for a configuration.",
-        "description": "Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Validate the target condition and custom metric queries for a configuration on IoT Hub.",
         "operationId": "Configuration_TestQueries",
         "consumes": [
           "application/json"
@@ -168,6 +171,7 @@
         "parameters": [
           {
             "name": "input",
+            "description": "Configuration query for target condition or custom metrics.",
             "in": "body",
             "required": true,
             "schema": {
@@ -482,8 +486,7 @@
     },
     "/devices/{id}/applyConfigurationContent": {
       "post": {
-        "summary": "Applies the provided configuration content to the specified edge device.",
-        "description": "Applies the provided configuration content to the specified edge device. Configuration content must have modules content For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Apply the provided configuration content to specified edge device.",
         "operationId": "Configuration_ApplyOnEdgeDevice",
         "consumes": [
           "application/json"
@@ -494,8 +497,8 @@
         "parameters": [
           {
             "name": "id",
+            "description": "The device Id.",
             "in": "path",
-            "description": "Device ID.",
             "required": true,
             "type": "string"
           },
@@ -1776,7 +1779,7 @@
   },
   "definitions": {
     "ConfigurationMetrics": {
-      "description": "Configuration Metrics",
+      "description": "Configuration Metrics for IotHub devices and modules.",
       "type": "object",
       "properties": {
         "results": {
@@ -1799,15 +1802,15 @@
       "type": "object",
       "properties": {
         "id": {
-          "description": "Gets Identifier for the configuration",
+          "description": "The unique identifier of the configuration.",
           "type": "string"
         },
         "schemaVersion": {
-          "description": "Gets Schema version for the configuration",
+          "description": "Schema version of the configuration",
           "type": "string"
         },
         "labels": {
-          "description": "Gets or sets labels for the configuration",
+          "description": "Key-value pairs used to describe a configuration",
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -1815,37 +1818,37 @@
         },
         "content": {
           "$ref": "#/definitions/ConfigurationContent",
-          "description": "Gets or sets Content for the configuration"
+          "description": "Content of the configuration."
         },
         "targetCondition": {
-          "description": "Gets or sets Target Condition for the configuration",
+          "description": "The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties",
           "type": "string"
         },
         "createdTimeUtc": {
           "format": "date-time",
-          "description": "Gets creation time for the configuration",
+          "description": "Creation time of the configuration.",
           "type": "string"
         },
         "lastUpdatedTimeUtc": {
           "format": "date-time",
-          "description": "Gets last update time for the configuration",
+          "description": "Update time of the configuration.",
           "type": "string"
         },
         "priority": {
           "format": "int32",
-          "description": "Gets or sets Priority for the configuration",
+          "description": "The priority number assigned to the configuration.",
           "type": "integer"
         },
         "systemMetrics": {
           "$ref": "#/definitions/ConfigurationMetrics",
-          "description": "System Configuration Metrics"
+          "description": "Metrics calculated by IoT Hub that cannot be customized."
         },
         "metrics": {
           "$ref": "#/definitions/ConfigurationMetrics",
-          "description": "Custom Configuration Metrics"
+          "description": "Custom metrics specified by developer as queries against twin reported properties"
         },
         "etag": {
-          "description": "Gets or sets configuration's ETag",
+          "description": "ETag of the configuration",
           "type": "string"
         }
       }
@@ -1855,14 +1858,14 @@
       "type": "object",
       "properties": {
         "deviceContent": {
-          "description": "Gets or sets device Configurations",
+          "description": "Device Configurations",
           "type": "object",
           "additionalProperties": {
             "type": "object"
           }
         },
         "modulesContent": {
-          "description": "Gets or sets Modules Configurations",
+          "description": "Modules configuration content",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -1872,7 +1875,7 @@
           }
         },
         "moduleContent": {
-          "description": "Gets or sets Module Configurations",
+          "description": "Module configuration content",
           "type": "object",
           "additionalProperties": {
             "type": "object"
@@ -1884,10 +1887,12 @@
       "type": "object",
       "properties": {
         "targetCondition": {
-          "type": "string"
+          "type": "string",
+          "description": "The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties"
         },
         "customMetricQueries": {
-          "type": "object",
+          "type": "string",
+          "description": "Queries on twin reported properties",
           "additionalProperties": {
             "type": "string"
           }
@@ -1898,12 +1903,14 @@
       "type": "object",
       "properties": {
         "targetConditionError": {
-          "type": "string"
+          "type": "string",
+          "description": "Errors running the target condition query."
         },
         "customMetricQueryErrors": {
           "type": "object",
           "additionalProperties": {
-            "type": "string"
+            "type": "string",
+            "description": "Errors running the custom metric query."
           }
         }
       }
