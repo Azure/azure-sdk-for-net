@@ -239,6 +239,18 @@ namespace Azure.AI.TextAnalytics
         private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<DetectLanguageResult>();
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new DetectLanguageResult(error.Id, error.Error));
+                if (error.Id.Length == 0)
+                {
+                    return new DetectLanguageResultCollection(collection, statistics, modelVersion);
+                }
+            }
+
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -247,15 +259,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new DetectLanguageResult(error.Id, error.Error));
-            }
-
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
 
             return new DetectLanguageResultCollection(collection, statistics, modelVersion);
         }
@@ -318,6 +322,19 @@ namespace Azure.AI.TextAnalytics
         private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<RecognizeEntitiesResult>();
+
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
+                if (error.Id.Length == 0)
+                {
+                    return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
+                }
+            }
+
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -326,15 +343,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
-            }
-
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
 
             return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
         }
@@ -408,6 +417,19 @@ namespace Azure.AI.TextAnalytics
         private static AnalyzeSentimentResultCollection ReadSentimentResult(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<AnalyzeSentimentResult>();
+
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
+                if (error.Id.Length == 0)
+                {
+                    return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
+                }
+            }
+
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -416,15 +438,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
-            }
-
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
 
             return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
         }
@@ -535,6 +549,19 @@ namespace Azure.AI.TextAnalytics
         private static ExtractKeyPhrasesResultCollection ReadKeyPhraseResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<ExtractKeyPhrasesResult>();
+
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
+                if (error.Id.Length == 0)
+                {
+                    return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
+                }
+            }
+
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -543,15 +570,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
-            }
-
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
 
             return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
         }
@@ -601,6 +620,19 @@ namespace Azure.AI.TextAnalytics
         private static RecognizeLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<RecognizeLinkedEntitiesResult>();
+
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
+                if (error.Id.Length == 0)
+                {
+                    return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
+                }
+            }
+
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -609,15 +641,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            foreach (var error in ReadDocumentErrors(root))
-            {
-                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
-            }
-
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
-
-            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
-            string modelVersion = ReadModelVersion(root);
 
             return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
         }

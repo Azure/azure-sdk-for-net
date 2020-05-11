@@ -27,10 +27,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }

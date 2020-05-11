@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Tests.Samples
         [SyncOnly]
         public async Task CreateIndex()
         {
-            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
