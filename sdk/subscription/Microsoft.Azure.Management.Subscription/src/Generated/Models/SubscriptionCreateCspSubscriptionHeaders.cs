@@ -14,31 +14,29 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateSubscriptionInEnrollmentAccount operation.
+    /// Defines headers for CreateCspSubscription operation.
     /// </summary>
-    public partial class SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders
+    public partial class SubscriptionCreateCspSubscriptionHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders
-        /// class.
+        /// SubscriptionCreateCspSubscriptionHeaders class.
         /// </summary>
-        public SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders()
+        public SubscriptionCreateCspSubscriptionHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders
-        /// class.
+        /// SubscriptionCreateCspSubscriptionHeaders class.
         /// </summary>
         /// <param name="location">GET this URL to retrieve the status of the
         /// asynchronous operation.</param>
         /// <param name="retryAfter">The amount of delay to use while the
         /// status of the operation is checked. The value is expressed in
         /// seconds.</param>
-        public SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders(string location = default(string), string retryAfter = default(string))
+        public SubscriptionCreateCspSubscriptionHeaders(string location = default(string), int? retryAfter = default(int?))
         {
             Location = location;
             RetryAfter = retryAfter;
@@ -62,7 +60,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// operation is checked. The value is expressed in seconds.
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
-        public string RetryAfter { get; set; }
+        public int? RetryAfter { get; set; }
 
     }
 }
