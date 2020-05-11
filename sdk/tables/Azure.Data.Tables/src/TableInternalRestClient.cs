@@ -510,13 +510,17 @@ namespace Azure.Data.Tables
                                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                                     foreach (var property in document.RootElement.EnumerateObject())
                                     {
-                                        if (property.Value.ValueKind == JsonValueKind.Null)
+                                        // Don't include Odata type annotation properties.
+                                        if (!property.Name.EndsWith(TableConstants.Odata.OdataTypeString, StringComparison.InvariantCulture))
                                         {
-                                            dictionary.Add(property.Name, null);
-                                        }
-                                        else
-                                        {
-                                            dictionary.Add(property.Name, property.Value.GetObject());
+                                            if (property.Value.ValueKind == JsonValueKind.Null)
+                                            {
+                                                dictionary.Add(property.Name, null);
+                                            }
+                                            else
+                                            {
+                                                dictionary.Add(property.Name, property.Value.GetObject());
+                                            }
                                         }
                                     }
                                     value = dictionary;

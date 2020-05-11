@@ -27,8 +27,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Microsoft.Azure.Management.Search" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" />
 
     <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->
     <PackageReference Include="Microsoft.Spatial" />

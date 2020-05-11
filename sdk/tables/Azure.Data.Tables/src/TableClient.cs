@@ -91,7 +91,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             await _tableOperations.InsertEntityAsync(_table,
-                                                     tableEntityProperties: entity,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -104,7 +104,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<ReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             _tableOperations.InsertEntity(_table,
-                                          tableEntityProperties: entity,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
 
@@ -131,7 +131,7 @@ namespace Azure.Data.Tables
             return await _tableOperations.UpdateEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
-                                                     tableEntityProperties: entity,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -159,7 +159,7 @@ namespace Azure.Data.Tables
             return _tableOperations.UpdateEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
-                                          tableEntityProperties: entity,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
         }
@@ -190,7 +190,7 @@ namespace Azure.Data.Tables
             return await _tableOperations.UpdateEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
-                                                     tableEntityProperties: entity,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -221,7 +221,7 @@ namespace Azure.Data.Tables
             return _tableOperations.UpdateEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
-                                          tableEntityProperties: entity,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                           cancellationToken: cancellationToken);
         }
@@ -250,7 +250,7 @@ namespace Azure.Data.Tables
             return (await _tableOperations.RestClient.MergeEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
-                                                     tableEntityProperties: entity,
+                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -279,7 +279,7 @@ namespace Azure.Data.Tables
             return _tableOperations.RestClient.MergeEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
-                                          tableEntityProperties: entity,
+                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                           cancellationToken: cancellationToken).GetRawResponse();
         }
@@ -302,6 +302,8 @@ namespace Azure.Data.Tables
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
+                response.Value.Value.CastAndRemoveAnnotations();
+
                 return Page.FromValues(response.Value.Value,
                                        CreateContinuationTokenFromHeaders(response.Headers),
                                        response.GetRawResponse());
@@ -313,6 +315,8 @@ namespace Azure.Data.Tables
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select, NextPartitionKey = NextPartitionKey, NextRowKey = NextRowKey },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                response.Value.Value.CastAndRemoveAnnotations();
 
                 return Page.FromValues(response.Value.Value,
                                        CreateContinuationTokenFromHeaders(response.Headers),
@@ -336,6 +340,9 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.RestClient.QueryEntities(_table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken);
+
+                response.Value.Value.CastAndRemoveAnnotations();
+
                 return Page.FromValues(
                     response.Value.Value,
                     CreateContinuationTokenFromHeaders(response.Headers),
@@ -348,6 +355,8 @@ namespace Azure.Data.Tables
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select, NextPartitionKey = NextPartitionKey, NextRowKey = NextRowKey },
                     cancellationToken: cancellationToken);
+
+                response.Value.Value.CastAndRemoveAnnotations();
 
                 return Page.FromValues(response.Value.Value,
                                        CreateContinuationTokenFromHeaders(response.Headers),

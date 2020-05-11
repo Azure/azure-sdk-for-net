@@ -12,6 +12,9 @@
 ### Other breaking changes
 
 - `FormPageRange` is now a `struct`.
+- `RecognizeContentOperation` now returns a `FormPageCollection`.
+- `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
+- `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 
 ## 1.0.0-preview.2 (05-06-2020)
 

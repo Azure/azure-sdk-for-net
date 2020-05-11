@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing values from receipts.
     /// </summary>
-    public class RecognizeReceiptsOperation : Operation<IReadOnlyList<RecognizedReceipt>>
+    public class RecognizeReceiptsOperation : Operation<RecognizedReceiptCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private IReadOnlyList<RecognizedReceipt> _value;
+        private RecognizedReceiptCollection _value;
 
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<RecognizedReceipt> Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedReceiptCollection Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -78,11 +78,11 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedReceiptCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedReceiptCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <inheritdoc/>
@@ -124,14 +124,14 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
+        private static RecognizedReceiptCollection ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
                 receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
-            return receipts;
+            return new RecognizedReceiptCollection(receipts);
         }
     }
 }
