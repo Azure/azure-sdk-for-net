@@ -76,6 +76,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ManagedInstanceTdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceVulnerabilityAssessments", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstances", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedServerSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
