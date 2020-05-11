@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional error handler.
         /// </summary>
-        public IBlobQueryErrorHandler ErrorHandler { get; set; }
+        public BlobQueryErrorHandler ErrorHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on the query.

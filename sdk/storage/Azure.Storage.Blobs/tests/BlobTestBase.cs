@@ -567,7 +567,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        public class ErrorReceiver : IBlobQueryErrorHandler
+        public class ErrorReceiver : BlobQueryErrorHandler
         {
             private readonly BlobQueryError _expectedBlobQueryError;
 
@@ -576,12 +576,17 @@ namespace Azure.Storage.Test.Shared
                 _expectedBlobQueryError = expected;
             }
 
-            public void ReportError(BlobQueryError blobQueryError)
+            public override void Handle(BlobQueryError blobQueryError)
             {
                 Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
                 Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);
                 Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
+            }
+
+            public override Task HandleAsync(BlobQueryError blobQueryError)
+            {
+                throw new NotImplementedException();
             }
         }
     }
