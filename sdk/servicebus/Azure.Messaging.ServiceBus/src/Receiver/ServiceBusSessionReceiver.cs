@@ -124,7 +124,6 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
-            Argument.AssertNotNullOrEmpty(sessionState, nameof(sessionState));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SetSessionStateStart(Identifier, SessionId);
 
