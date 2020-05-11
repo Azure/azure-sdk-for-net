@@ -2,8 +2,16 @@
 
 ## 1.0.0-preview.3 (Unreleased)
 
-### Breaking changes
+### Renames
 
+- `FormRecognizerError.Code` renamed to `FormRecognizerError.ErrorCode`.
+- `FormTrainingClient.GetModelInfos` renamed to `FormTrainingClient.GetCustomModels`.
+- Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
+- Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
+
+### Other breaking changes
+
+- `FormPageRange` is now a `struct`.
 - `RecognizeContentOperation` now returns a `FormPageCollection`.
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
