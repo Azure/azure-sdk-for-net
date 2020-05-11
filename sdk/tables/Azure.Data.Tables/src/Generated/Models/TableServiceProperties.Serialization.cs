@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class StorageServiceProperties : IXmlSerializable
+    public partial class TableServiceProperties : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
+            writer.WriteStartElement(nameHint ?? "TableServiceProperties");
             if (Logging != null)
             {
                 writer.WriteObjectValue(Logging, "Logging");
@@ -41,11 +41,11 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static StorageServiceProperties DeserializeStorageServiceProperties(XElement element)
+        internal static TableServiceProperties DeserializeTableServiceProperties(XElement element)
         {
             LoggingSettings logging = default;
-            RequestMetrics hourMetrics = default;
-            RequestMetrics minuteMetrics = default;
+            TableMetrics hourMetrics = default;
+            TableMetrics minuteMetrics = default;
             IList<CorsRule> cors = default;
             if (element.Element("Logging") is XElement loggingElement)
             {
@@ -53,11 +53,11 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("HourMetrics") is XElement hourMetricsElement)
             {
-                hourMetrics = RequestMetrics.DeserializeRequestMetrics(hourMetricsElement);
+                hourMetrics = TableMetrics.DeserializeTableMetrics(hourMetricsElement);
             }
             if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
             {
-                minuteMetrics = RequestMetrics.DeserializeRequestMetrics(minuteMetricsElement);
+                minuteMetrics = TableMetrics.DeserializeTableMetrics(minuteMetricsElement);
             }
             if (element.Element("Cors") is XElement corsElement)
             {
@@ -68,7 +68,7 @@ namespace Azure.Data.Tables.Models
                 }
                 cors = array;
             }
-            return new StorageServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+            return new TableServiceProperties(logging, hourMetrics, minuteMetrics, cors);
         }
     }
 }
