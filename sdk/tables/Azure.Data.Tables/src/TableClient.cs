@@ -97,9 +97,10 @@ namespace Azure.Data.Tables
                                                                      queryOptions: new QueryOptions() { Format = _format },
                                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            ((IDictionary<string, object>)response.Value).CastAndRemoveAnnotations();
+            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+            dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>((IDictionary<string, object>)response.Value), response.GetRawResponse());
+            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
         }
 
         /// <summary>
@@ -116,9 +117,10 @@ namespace Azure.Data.Tables
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
 
-            ((IDictionary<string, object>)response.Value).CastAndRemoveAnnotations();
+            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+            dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>((IDictionary<string, object>)response.Value), response.GetRawResponse());
+            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
         }
 
         /// <summary>

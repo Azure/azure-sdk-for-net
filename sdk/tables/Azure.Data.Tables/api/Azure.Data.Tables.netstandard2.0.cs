@@ -125,13 +125,23 @@ namespace Azure.Data.Tables.Models
         public static bool operator !=(Azure.Data.Tables.Models.OdataMetadataFormat left, Azure.Data.Tables.Models.OdataMetadataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestMetrics
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResponseFormat : System.IEquatable<Azure.Data.Tables.Models.ResponseFormat>
     {
-        public RequestMetrics(bool enabled) { }
-        public bool Enabled { get { throw null; } set { } }
-        public bool? IncludeAPIs { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResponseFormat(string value) { throw null; }
+        public static Azure.Data.Tables.Models.ResponseFormat ReturnContent { get { throw null; } }
+        public static Azure.Data.Tables.Models.ResponseFormat ReturnNoContent { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.Models.ResponseFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Models.ResponseFormat left, Azure.Data.Tables.Models.ResponseFormat right) { throw null; }
+        public static implicit operator Azure.Data.Tables.Models.ResponseFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Models.ResponseFormat left, Azure.Data.Tables.Models.ResponseFormat right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RetentionPolicy
     {
@@ -144,24 +154,6 @@ namespace Azure.Data.Tables.Models
         public SignedIdentifier(string id, Azure.Data.Tables.Models.AccessPolicy accessPolicy) { }
         public Azure.Data.Tables.Models.AccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-    }
-    public partial class StorageError
-    {
-        internal StorageError() { }
-        public string Message { get { throw null; } }
-    }
-    public partial class StorageServiceProperties
-    {
-        public StorageServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.RequestMetrics HourMetrics { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.LoggingSettings Logging { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.RequestMetrics MinuteMetrics { get { throw null; } set { } }
-    }
-    public partial class StorageServiceStats
-    {
-        internal StorageServiceStats() { }
-        public Azure.Data.Tables.Models.GeoReplication GeoReplication { get { throw null; } }
     }
     public partial class TableEntityQueryResponse
     {
@@ -177,6 +169,14 @@ namespace Azure.Data.Tables.Models
         public string OdataType { get { throw null; } }
         public string TableName { get { throw null; } }
     }
+    public partial class TableMetrics
+    {
+        public TableMetrics(bool enabled) { }
+        public bool Enabled { get { throw null; } set { } }
+        public bool? IncludeAPIs { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
     public partial class TableProperties
     {
         public TableProperties() { }
@@ -187,6 +187,24 @@ namespace Azure.Data.Tables.Models
         internal TableQueryResponse() { }
         public string OdataMetadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.TableItem> Value { get { throw null; } }
+    }
+    public partial class TableServiceError
+    {
+        internal TableServiceError() { }
+        public string Message { get { throw null; } }
+    }
+    public partial class TableServiceProperties
+    {
+        public TableServiceProperties() { }
+        public System.Collections.Generic.IList<Azure.Data.Tables.Models.CorsRule> Cors { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.TableMetrics HourMetrics { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.LoggingSettings Logging { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.TableMetrics MinuteMetrics { get { throw null; } set { } }
+    }
+    public partial class TableServiceStats
+    {
+        internal TableServiceStats() { }
+        public Azure.Data.Tables.Models.GeoReplication GeoReplication { get { throw null; } }
     }
 }
 namespace Azure.Data.Tables.Sas
