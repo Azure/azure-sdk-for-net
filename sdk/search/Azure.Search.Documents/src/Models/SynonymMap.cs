@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
@@ -67,42 +65,5 @@ namespace Azure.Search.Documents.Models
             get => _etag is null ? (ETag?)null : new ETag(_etag);
             set => _etag = value?.ToString();
         }
-
-        /// <summary>
-        /// Canonicalizes property names from how they appear on <see cref="SynonymMap"/> to those expected by the Search service.
-        /// </summary>
-        /// <param name="names">The given property names.</param>
-        /// <returns>Canonicalized property names expected by the Search service, or null if <paramref name="names"/> is null.</returns>
-        internal static IEnumerable<string> CanonicalizePropertyNames(IEnumerable<string> names) =>
-            // TODO: Replace when https://github.com/Azure/azure-sdk-for-net/issues/11393 is resolved.
-            names?.Select(name =>
-            {
-                if (string.Equals("name", name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return "name";
-                }
-
-                if (string.Equals("format", name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return "format";
-                }
-
-                if (string.Equals("synonyms", name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return "synonyms";
-                }
-
-                if (string.Equals("encryptionKey", name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return "encryptionKey";
-                }
-
-                if (string.Equals("etag", name, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return "@odata.etag";
-                }
-
-                return name;
-            });
     }
 }

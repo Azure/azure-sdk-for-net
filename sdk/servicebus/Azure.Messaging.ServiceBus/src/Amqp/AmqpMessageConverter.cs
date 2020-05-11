@@ -221,10 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
-            if (amqpMessage == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(amqpMessage));
-            }
+            Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
             ServiceBusReceivedMessage sbMessage;
 
@@ -567,7 +564,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName));
                     }
                     else if (netObject is byte[] netObjectAsByteArray)
                     {
@@ -656,7 +653,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName));
                     }
                     else if (amqpObject is AmqpMap map)
                     {

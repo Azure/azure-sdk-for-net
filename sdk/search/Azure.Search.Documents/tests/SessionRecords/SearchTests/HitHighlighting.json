@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-jcswnkcn.search.windows.net/indexes(\u0027mesaejwj\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "188",
         "Content-Type": "application/json",
-        "traceparent": "00-097aac930cd0474db1e9d144502bfe7e-50667916495b714c-00",
+        "traceparent": "00-4b46832c6a26824a883c1a1436020491-5dbaebd0369b6646-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "158d50b0f88f6f2d22874a374cb4873b",
         "x-ms-return-client-request-id": "true"
@@ -28,10 +28,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1050",
+        "Content-Length": "1049",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 25 Apr 2020 01:19:53 GMT",
-        "elapsed-time": "15",
+        "Date": "Fri, 08 May 2020 07:06:09 GMT",
+        "elapsed-time": "16",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -42,7 +42,7 @@
       "ResponseBody": {
         "value": [
           {
-            "@search.score": 0.6247139,
+            "@search.score": 0.624714,
             "@search.highlights": {
               "category": [
                 "\u003Cb\u003ELuxury\u003C/b\u003E"
@@ -77,7 +77,8 @@
   ],
   "Variables": {
     "RandomSeed": "2066752673",
-    "SearchIndexName": "mesaejwj",
-    "SearchServiceName": "azs-net-jcswnkcn"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }
