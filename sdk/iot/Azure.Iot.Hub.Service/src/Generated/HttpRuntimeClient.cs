@@ -9,67 +9,37 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Iot.Hub.Service
 {
-    internal partial class HttpRuntimeRestClient
+    /// <summary> The HttpRuntime service client. </summary>
+    public partial class HttpRuntimeClient
     {
-        private string host;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
-
-        /// <summary> Initializes a new instance of HttpRuntimeRestClient. </summary>
-        public HttpRuntimeRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://fully-qualified-iothubname.azure-devices.net", string apiVersion = "2020-03-13")
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
+        internal HttpRuntimeRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of HttpRuntimeClient for mocking. </summary>
+        protected HttpRuntimeClient()
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.host = host;
-            this.apiVersion = apiVersion;
+        }
+        /// <summary> Initializes a new instance of HttpRuntimeClient. </summary>
+        internal HttpRuntimeClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://fully-qualified-iothubname.azure-devices.net", string apiVersion = "2020-03-13")
+        {
+            RestClient = new HttpRuntimeRestClient(clientDiagnostics, pipeline, host, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateReceiveFeedbackNotificationRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendPath("/messages/serviceBound/feedback", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
         /// <summary> This method is used to retrieve feedback of a cloud-to-device message See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ReceiveFeedbackNotificationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReceiveFeedbackNotificationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.ReceiveFeedbackNotification");
             scope.Start();
             try
             {
-                using var message = CreateReceiveFeedbackNotificationRequest();
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
+                return await RestClient.ReceiveFeedbackNotificationAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -80,67 +50,13 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> This method is used to retrieve feedback of a cloud-to-device message See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response ReceiveFeedbackNotification(CancellationToken cancellationToken = default)
+        public virtual Response ReceiveFeedbackNotification(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.ReceiveFeedbackNotification");
             scope.Start();
             try
             {
-                using var message = CreateReceiveFeedbackNotificationRequest();
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateCompleteFeedbackNotificationRequest(string lockToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendPath("/messages/serviceBound/feedback/", false);
-            uri.AppendPath(lockToken, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> This method completes a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when completing, a feedback message. A completed message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="lockToken"> Lock token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CompleteFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
-        {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.CompleteFeedbackNotification");
-            scope.Start();
-            try
-            {
-                using var message = CreateCompleteFeedbackNotificationRequest(lockToken);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
+                return RestClient.ReceiveFeedbackNotification(cancellationToken);
             }
             catch (Exception e)
             {
@@ -152,26 +68,13 @@ namespace Azure.Iot.Hub.Service
         /// <summary> This method completes a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when completing, a feedback message. A completed message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="lockToken"> Lock token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response CompleteFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CompleteFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
         {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.CompleteFeedbackNotification");
             scope.Start();
             try
             {
-                using var message = CreateCompleteFeedbackNotificationRequest(lockToken);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
+                return await RestClient.CompleteFeedbackNotificationAsync(lockToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -180,44 +83,16 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateAbandonFeedbackNotificationRequest(string lockToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendPath("/messages/serviceBound/feedback/", false);
-            uri.AppendPath(lockToken, true);
-            uri.AppendPath("/abandon", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> This method abandons a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when abandoning, a feedback message. A abandoned message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="lockToken"> Lock Token. </param>
+        /// <summary> This method completes a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when completing, a feedback message. A completed message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="lockToken"> Lock token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> AbandonFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
+        public virtual Response CompleteFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
         {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.AbandonFeedbackNotification");
+            using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.CompleteFeedbackNotification");
             scope.Start();
             try
             {
-                using var message = CreateAbandonFeedbackNotificationRequest(lockToken);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
+                return RestClient.CompleteFeedbackNotification(lockToken, cancellationToken);
             }
             catch (Exception e)
             {
@@ -229,26 +104,31 @@ namespace Azure.Iot.Hub.Service
         /// <summary> This method abandons a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when abandoning, a feedback message. A abandoned message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="lockToken"> Lock Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response AbandonFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AbandonFeedbackNotificationAsync(string lockToken, CancellationToken cancellationToken = default)
         {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.AbandonFeedbackNotification");
             scope.Start();
             try
             {
-                using var message = CreateAbandonFeedbackNotificationRequest(lockToken);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
+                return await RestClient.AbandonFeedbackNotificationAsync(lockToken, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This method abandons a feedback message. The lockToken obtained when the message was received must be provided to resolve race conditions when abandoning, a feedback message. A abandoned message is deleted from the feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="lockToken"> Lock Token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response AbandonFeedbackNotification(string lockToken, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("HttpRuntimeClient.AbandonFeedbackNotification");
+            scope.Start();
+            try
+            {
+                return RestClient.AbandonFeedbackNotification(lockToken, cancellationToken);
             }
             catch (Exception e)
             {

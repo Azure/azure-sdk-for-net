@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,44 +37,104 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetDeviceStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDeviceStatistics");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDeviceStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
-            return RestClient.GetDeviceStatistics(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDeviceStatistics");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDeviceStatistics(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetServiceStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetServiceStatistics");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetServiceStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
-            return RestClient.GetServiceStatistics(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetServiceStatistics");
+            scope.Start();
+            try
+            {
+                return RestClient.GetServiceStatistics(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<Device>>> GetDevicesAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<DeviceIdentity>>> GetDevicesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetDevicesAsync(top, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevices");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDevicesAsync(top, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Device>> GetDevices(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DeviceIdentity>> GetDevices(int? top = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetDevices(top, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevices");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDevices(top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -81,7 +142,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BulkRegistryOperationResult>> BulkDeviceCrudAsync(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
         {
-            return await RestClient.BulkDeviceCrudAsync(devices, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.BulkDeviceCrud");
+            scope.Start();
+            try
+            {
+                return await RestClient.BulkDeviceCrudAsync(devices, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -89,7 +160,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BulkRegistryOperationResult> BulkDeviceCrud(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
         {
-            return RestClient.BulkDeviceCrud(devices, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.BulkDeviceCrud");
+            scope.Start();
+            try
+            {
+                return RestClient.BulkDeviceCrud(devices, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -97,9 +178,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="xMsContinuation"> The String to use. </param>
         /// <param name="xMsMaxItemCount"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<Twin>>> QueryIotHubAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TwinData>>> QueryIotHubAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.QueryIotHubAsync(querySpecification, xMsContinuation, xMsMaxItemCount, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.QueryIotHub");
+            scope.Start();
+            try
+            {
+                return await RestClient.QueryIotHubAsync(querySpecification, xMsContinuation, xMsMaxItemCount, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -107,25 +198,55 @@ namespace Azure.Iot.Hub.Service
         /// <param name="xMsContinuation"> The String to use. </param>
         /// <param name="xMsMaxItemCount"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Twin>> QueryIotHub(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TwinData>> QueryIotHub(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.QueryIotHub(querySpecification, xMsContinuation, xMsMaxItemCount, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.QueryIotHub");
+            scope.Start();
+            try
+            {
+                return RestClient.QueryIotHub(querySpecification, xMsContinuation, xMsMaxItemCount, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Device>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceIdentity>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetDeviceAsync(id, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevice");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDeviceAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Device> GetDevice(string id, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceIdentity> GetDevice(string id, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetDevice(id, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevice");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDevice(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -133,9 +254,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="device"> The Device to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Device>> CreateOrUpdateDeviceAsync(string id, Device device, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceIdentity>> CreateOrUpdateDeviceAsync(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateDeviceAsync(id, device, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.CreateOrUpdateDevice");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateDeviceAsync(id, device, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -143,9 +274,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="device"> The Device to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Device> CreateOrUpdateDevice(string id, Device device, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceIdentity> CreateOrUpdateDevice(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdateDevice(id, device, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.CreateOrUpdateDevice");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdateDevice(id, device, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the identity of a device from the identity registry of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -154,7 +295,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteDeviceAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteDeviceAsync(id, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.DeleteDevice");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteDeviceAsync(id, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the identity of a device from the identity registry of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -163,7 +314,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteDevice(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.DeleteDevice(id, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.DeleteDevice");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteDevice(id, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes all the pending commands for this device from the IoT hub For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -171,7 +332,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurgeMessageQueueResult>> PurgeCommandQueueAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await RestClient.PurgeCommandQueueAsync(id, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.PurgeCommandQueue");
+            scope.Start();
+            try
+            {
+                return await RestClient.PurgeCommandQueueAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes all the pending commands for this device from the IoT hub For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -179,41 +350,91 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurgeMessageQueueResult> PurgeCommandQueue(string id, CancellationToken cancellationToken = default)
         {
-            return RestClient.PurgeCommandQueue(id, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.PurgeCommandQueue");
+            scope.Start();
+            try
+            {
+                return RestClient.PurgeCommandQueue(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<Module>>> GetModulesOnDeviceAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ModuleIdentity>>> GetModulesOnDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetModulesOnDeviceAsync(id, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetModulesOnDevice");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetModulesOnDeviceAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Module>> GetModulesOnDevice(string id, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ModuleIdentity>> GetModulesOnDevice(string id, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetModulesOnDevice(id, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetModulesOnDevice");
+            scope.Start();
+            try
+            {
+                return RestClient.GetModulesOnDevice(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Module>> GetModuleAsync(string id, string mid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModuleIdentity>> GetModuleAsync(string id, string mid, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetModuleAsync(id, mid, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetModule");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetModuleAsync(id, mid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Module> GetModule(string id, string mid, CancellationToken cancellationToken = default)
+        public virtual Response<ModuleIdentity> GetModule(string id, string mid, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetModule(id, mid, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetModule");
+            scope.Start();
+            try
+            {
+                return RestClient.GetModule(id, mid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -222,9 +443,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="module"> The Module to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Module>> CreateOrUpdateModuleAsync(string id, string mid, Module module, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModuleIdentity>> CreateOrUpdateModuleAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateModuleAsync(id, mid, module, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.CreateOrUpdateModule");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateModuleAsync(id, mid, module, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -233,9 +464,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="module"> The Module to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Module> CreateOrUpdateModule(string id, string mid, Module module, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<ModuleIdentity> CreateOrUpdateModule(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdateModule(id, mid, module, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.CreateOrUpdateModule");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdateModule(id, mid, module, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -245,7 +486,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteModuleAsync(string id, string mid, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteModuleAsync(id, mid, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.DeleteModule");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteModuleAsync(id, mid, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -255,7 +506,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteModule(string id, string mid, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.DeleteModule(id, mid, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.DeleteModule");
+            scope.Start();
+            try
+            {
+                return RestClient.DeleteModule(id, mid, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

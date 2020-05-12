@@ -18,26 +18,24 @@ namespace Azure.Iot.Hub.Service
 {
     internal partial class DigitalTwinRestClient
     {
-        private Uri endpoint;
+        private string host;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of DigitalTwinRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public DigitalTwinRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
+        public DigitalTwinRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://fully-qualified-iothubname.azure-devices.net", string apiVersion = "2020-03-13")
         {
-            endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
             }
 
-            this.endpoint = endpoint;
+            this.host = host;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -49,7 +47,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/digitalTwins/", false);
             uri.AppendPath(digitalTwinId, true);
             uri.AppendPath("/interfaces", false);
@@ -61,7 +59,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DigitalTwinInterfaces>> GetComponentsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DigitalTwinInterfaces>> GetComponentsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
@@ -130,7 +128,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/digitalTwins/", false);
             uri.AppendPath(digitalTwinId, true);
             uri.AppendPath("/interfaces", false);
@@ -141,7 +139,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(interfacesPatchInfo);
             request.Content = content;
             return message;
@@ -152,7 +150,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="interfacesPatchInfo"> Multiple interfaces desired properties to update. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DigitalTwinInterfaces>> UpdateComponentAsync(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DigitalTwinInterfaces>> UpdateComponentAsync(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
@@ -231,7 +229,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/digitalTwins/", false);
             uri.AppendPath(digitalTwinId, true);
             uri.AppendPath("/interfaces/", false);
@@ -245,7 +243,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="interfaceName"> The interface name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DigitalTwinInterfaces>> GetComponentAsync(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DigitalTwinInterfaces>> GetComponentAsync(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
@@ -323,7 +321,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/digitalTwins/models/", false);
             uri.AppendPath(modelId, true);
             if (expand != null)
@@ -343,7 +341,7 @@ namespace Azure.Iot.Hub.Service
         /// This query parameter ONLY applies to Capability model.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<object, DigitalTwinGetDigitalTwinModelHeaders>> GetDigitalTwinModelAsync(string modelId, bool? expand = null, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<object, DigitalTwinGetDigitalTwinModelHeaders>> GetDigitalTwinModelAsync(string modelId, bool? expand = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -423,7 +421,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/digitalTwins/", false);
             uri.AppendPath(digitalTwinId, true);
             uri.AppendPath("/interfaces/", false);
@@ -441,7 +439,7 @@ namespace Azure.Iot.Hub.Service
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(payload);
             request.Content = content;
             return message;
@@ -455,7 +453,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="connectTimeoutInSeconds"> Connect timeout in seconds. </param>
         /// <param name="responseTimeoutInSeconds"> Response timeout in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<object, DigitalTwinInvokeComponentCommandHeaders>> InvokeComponentCommandAsync(string digitalTwinId, string interfaceName, string commandName, object payload, int? connectTimeoutInSeconds = null, int? responseTimeoutInSeconds = null, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<object, DigitalTwinInvokeComponentCommandHeaders>> InvokeComponentCommandAsync(string digitalTwinId, string interfaceName, string commandName, object payload, int? connectTimeoutInSeconds = null, int? responseTimeoutInSeconds = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {

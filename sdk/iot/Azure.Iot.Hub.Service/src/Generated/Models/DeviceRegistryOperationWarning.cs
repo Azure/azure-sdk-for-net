@@ -13,6 +13,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
         internal DeviceRegistryOperationWarning()
         {
+            WarningCode = "DeviceRegisteredWithoutTwin";
         }
 
         /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>

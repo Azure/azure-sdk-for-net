@@ -18,26 +18,24 @@ namespace Azure.Iot.Hub.Service
 {
     internal partial class TwinRestClient
     {
-        private Uri endpoint;
+        private string host;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of TwinRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public TwinRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
+        public TwinRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://fully-qualified-iothubname.azure-devices.net", string apiVersion = "2020-03-13")
         {
-            endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
             }
 
-            this.endpoint = endpoint;
+            this.host = host;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -49,7 +47,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -60,7 +58,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Gets a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> GetDeviceTwinAsync(string id, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> GetDeviceTwinAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -129,7 +127,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -139,7 +137,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
@@ -150,7 +148,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> Device twin info. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> ReplaceDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> ReplaceDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -229,7 +227,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -239,7 +237,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
@@ -250,7 +248,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> Device twin info. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> UpdateDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> UpdateDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -329,7 +327,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/modules/", false);
@@ -343,7 +341,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> GetModuleTwinAsync(string id, string mid, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> GetModuleTwinAsync(string id, string mid, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -421,7 +419,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/modules/", false);
@@ -433,7 +431,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
@@ -445,7 +443,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> Device twin info. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> ReplaceModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> ReplaceModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -533,7 +531,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.AppendRaw(host, false);
             uri.AppendPath("/twins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/modules/", false);
@@ -545,7 +543,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            using var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
@@ -557,7 +555,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceTwinInfo"> Device twin information. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TwinData>> UpdateModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<TwinData>> UpdateModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {

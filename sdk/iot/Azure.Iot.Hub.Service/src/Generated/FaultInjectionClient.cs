@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -35,14 +36,34 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FaultInjectionProperties>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("FaultInjectionClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FaultInjectionProperties> Get(CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("FaultInjectionClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -50,7 +71,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SetAsync(value, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("FaultInjectionClient.Set");
+            scope.Start();
+            try
+            {
+                return await RestClient.SetAsync(value, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -58,7 +89,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Set(FaultInjectionProperties value, CancellationToken cancellationToken = default)
         {
-            return RestClient.Set(value, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("FaultInjectionClient.Set");
+            scope.Start();
+            try
+            {
+                return RestClient.Set(value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,17 +36,37 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Configuration>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TwinConfiguration>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(id, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Configuration> Get(string id, CancellationToken cancellationToken = default)
+        public virtual Response<TwinConfiguration> Get(string id, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(id, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -53,9 +74,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="configuration"> The Configuration to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Configuration>> CreateOrUpdateAsync(string id, Configuration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(id, configuration, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(id, configuration, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -63,9 +94,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="configuration"> The Configuration to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Configuration> CreateOrUpdate(string id, Configuration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(id, configuration, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(id, configuration, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -74,7 +115,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(id, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(id, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -83,23 +134,53 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(id, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(id, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<Configuration>>> GetConfigurationsAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetConfigurationsAsync(top, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurations");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetConfigurationsAsync(top, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<Configuration>> GetConfigurations(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TwinConfiguration>> GetConfigurations(int? top = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetConfigurations(top, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurations");
+            scope.Start();
+            try
+            {
+                return RestClient.GetConfigurations(top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -107,7 +188,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
-            return await RestClient.TestQueriesAsync(input, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.TestQueries");
+            scope.Start();
+            try
+            {
+                return await RestClient.TestQueriesAsync(input, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -115,7 +206,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationQueriesTestResponse> TestQueries(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
-            return RestClient.TestQueries(input, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.TestQueries");
+            scope.Start();
+            try
+            {
+                return RestClient.TestQueries(input, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Applies the provided configuration content to the specified edge device. Configuration content must have modules content For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -124,7 +225,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<object>> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ApplyOnEdgeDeviceAsync(id, content, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.ApplyOnEdgeDevice");
+            scope.Start();
+            try
+            {
+                return await RestClient.ApplyOnEdgeDeviceAsync(id, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Applies the provided configuration content to the specified edge device. Configuration content must have modules content For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -133,7 +244,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<object> ApplyOnEdgeDevice(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return RestClient.ApplyOnEdgeDevice(id, content, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("ConfigurationClient.ApplyOnEdgeDevice");
+            scope.Start();
+            try
+            {
+                return RestClient.ApplyOnEdgeDevice(id, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

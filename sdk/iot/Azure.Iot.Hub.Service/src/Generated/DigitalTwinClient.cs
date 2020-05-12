@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,7 +37,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DigitalTwinInterfaces>> GetComponentsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetComponentsAsync(digitalTwinId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetComponents");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetComponentsAsync(digitalTwinId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -44,7 +55,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DigitalTwinInterfaces> GetComponents(string digitalTwinId, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetComponents(digitalTwinId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetComponents");
+            scope.Start();
+            try
+            {
+                return RestClient.GetComponents(digitalTwinId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -54,7 +75,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DigitalTwinInterfaces>> UpdateComponentAsync(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.UpdateComponentAsync(digitalTwinId, interfacesPatchInfo, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.UpdateComponent");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateComponentAsync(digitalTwinId, interfacesPatchInfo, ifMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -64,7 +95,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DigitalTwinInterfaces> UpdateComponent(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.UpdateComponent(digitalTwinId, interfacesPatchInfo, ifMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.UpdateComponent");
+            scope.Start();
+            try
+            {
+                return RestClient.UpdateComponent(digitalTwinId, interfacesPatchInfo, ifMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -73,7 +114,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DigitalTwinInterfaces>> GetComponentAsync(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetComponentAsync(digitalTwinId, interfaceName, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetComponent");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetComponentAsync(digitalTwinId, interfaceName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -82,7 +133,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DigitalTwinInterfaces> GetComponent(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetComponent(digitalTwinId, interfaceName, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetComponent");
+            scope.Start();
+            try
+            {
+                return RestClient.GetComponent(digitalTwinId, interfaceName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -95,7 +156,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<object>> GetDigitalTwinModelAsync(string modelId, bool? expand = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetDigitalTwinModelAsync(modelId, expand, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetDigitalTwinModel");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetDigitalTwinModelAsync(modelId, expand, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
@@ -108,7 +179,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<object> GetDigitalTwinModel(string modelId, bool? expand = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetDigitalTwinModel(modelId, expand, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.GetDigitalTwinModel");
+            scope.Start();
+            try
+            {
+                return RestClient.GetDigitalTwinModel(modelId, expand, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Invoke a digital twin interface command. </summary>
@@ -121,7 +202,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<object>> InvokeComponentCommandAsync(string digitalTwinId, string interfaceName, string commandName, object payload, int? connectTimeoutInSeconds = null, int? responseTimeoutInSeconds = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.InvokeComponentCommandAsync(digitalTwinId, interfaceName, commandName, payload, connectTimeoutInSeconds, responseTimeoutInSeconds, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.InvokeComponentCommand");
+            scope.Start();
+            try
+            {
+                return await RestClient.InvokeComponentCommandAsync(digitalTwinId, interfaceName, commandName, payload, connectTimeoutInSeconds, responseTimeoutInSeconds, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Invoke a digital twin interface command. </summary>
@@ -134,7 +225,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<object> InvokeComponentCommand(string digitalTwinId, string interfaceName, string commandName, object payload, int? connectTimeoutInSeconds = null, int? responseTimeoutInSeconds = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.InvokeComponentCommand(digitalTwinId, interfaceName, commandName, payload, connectTimeoutInSeconds, responseTimeoutInSeconds, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DigitalTwinClient.InvokeComponentCommand");
+            scope.Start();
+            try
+            {
+                return RestClient.InvokeComponentCommand(digitalTwinId, interfaceName, commandName, payload, connectTimeoutInSeconds, responseTimeoutInSeconds, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

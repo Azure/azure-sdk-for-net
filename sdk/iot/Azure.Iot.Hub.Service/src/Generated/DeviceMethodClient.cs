@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -37,7 +38,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudToDeviceMethodResult>> InvokeDeviceMethodAsync(string deviceId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return await RestClient.InvokeDeviceMethodAsync(deviceId, directMethodRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DeviceMethodClient.InvokeDeviceMethod");
+            scope.Start();
+            try
+            {
+                return await RestClient.InvokeDeviceMethodAsync(deviceId, directMethodRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
@@ -46,7 +57,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudToDeviceMethodResult> InvokeDeviceMethod(string deviceId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return RestClient.InvokeDeviceMethod(deviceId, directMethodRequest, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DeviceMethodClient.InvokeDeviceMethod");
+            scope.Start();
+            try
+            {
+                return RestClient.InvokeDeviceMethod(deviceId, directMethodRequest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
@@ -56,7 +77,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudToDeviceMethodResult>> InvokeModuleMethodAsync(string deviceId, string moduleId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return await RestClient.InvokeModuleMethodAsync(deviceId, moduleId, directMethodRequest, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DeviceMethodClient.InvokeModuleMethod");
+            scope.Start();
+            try
+            {
+                return await RestClient.InvokeModuleMethodAsync(deviceId, moduleId, directMethodRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
@@ -66,7 +97,17 @@ namespace Azure.Iot.Hub.Service
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudToDeviceMethodResult> InvokeModuleMethod(string deviceId, string moduleId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
-            return RestClient.InvokeModuleMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DeviceMethodClient.InvokeModuleMethod");
+            scope.Start();
+            try
+            {
+                return RestClient.InvokeModuleMethod(deviceId, moduleId, directMethodRequest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
