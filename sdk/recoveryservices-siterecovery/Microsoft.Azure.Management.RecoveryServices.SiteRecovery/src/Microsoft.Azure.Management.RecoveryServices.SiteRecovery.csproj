@@ -13,7 +13,7 @@
       <![CDATA[
 		  Updates in this release:
 			 * Incremental changes:
-			 ** Azure Site Recovery (ASR) service now supports protecting proximity placement group virtual machines for Azure to Azure provider.
+			 ** Azure Site Recovery (ASR) service supports zone to zone replication for Azure to Azure provider.
 		    ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
