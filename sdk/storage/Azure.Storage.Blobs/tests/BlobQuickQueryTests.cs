@@ -263,10 +263,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobQueryErrorHandler errorHandler = new BlobQueryErrorHandler(expectedBlobQueryError);
 
-            BlobQueryOptions options = new BlobQueryOptions
-            {
-                ErrorHandler = errorHandler.Handle
-            };
+            BlobQueryOptions options = new BlobQueryOptions();
+            options.ErrorHandler += errorHandler.Handle;
 
             response = await blockBlobClient.QueryAsync(
                 query,
@@ -315,8 +313,8 @@ namespace Azure.Storage.Blobs.Test
             options = new BlobQueryOptions
             {
                 InputTextConfiguration = jsonTextConfiguration,
-                ErrorHandler = errorHandler.Handle
             };
+            options.ErrorHandler += errorHandler.Handle;
 
             response = await blockBlobClient.QueryAsync(
                 query,

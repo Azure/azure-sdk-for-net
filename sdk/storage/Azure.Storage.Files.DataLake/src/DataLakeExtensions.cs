@@ -380,9 +380,9 @@ namespace Azure.Storage.Files.DataLake
                 ProgressHandler = options.ProgressHandler
             };
 
-            if (options.ErrorHandler != null)
+            if (options._errorHandler != null)
             {
-                blobQueryOptions.ErrorHandler = (BlobQueryError error) => { options.ErrorHandler(error.ToDataLakeQueryError()); };
+                blobQueryOptions.ErrorHandler += (BlobQueryError error) => { options._errorHandler(error.ToDataLakeQueryError()); };
             }
 
             return blobQueryOptions;

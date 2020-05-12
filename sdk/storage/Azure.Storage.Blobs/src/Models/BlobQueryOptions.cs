@@ -24,9 +24,35 @@ namespace Azure.Storage.Blobs.Models
         public BlobQueryTextConfiguration OutputTextConfiguration { get; set; }
 
         /// <summary>
+        /// Lock for ErrorHandler add and remove.
+        /// </summary>
+        private readonly object _objectLock = new object();
+
+        /// <summary>
         /// Optional callback for error handling.
         /// </summary>
-        public Action<BlobQueryError> ErrorHandler { get; set; }
+        public event Action<BlobQueryError> ErrorHandler
+        {
+            add
+            {
+                lock (_objectLock)
+                {
+                    _errorHandler += value;
+                }
+            }
+            remove
+            {
+                lock (_objectLock)
+                {
+                    _errorHandler -= value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Internal error handler.
+        /// </summary>
+        internal Action<BlobQueryError> _errorHandler;
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on the query.

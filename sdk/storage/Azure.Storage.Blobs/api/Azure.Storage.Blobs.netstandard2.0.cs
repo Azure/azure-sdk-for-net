@@ -707,10 +707,10 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobQueryOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration InputTextConfiguration { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public event System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { add { } remove { } }
     }
     public abstract partial class BlobQueryTextConfiguration
     {

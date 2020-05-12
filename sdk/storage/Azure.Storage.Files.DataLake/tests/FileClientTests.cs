@@ -3175,10 +3175,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             ErrorHandler errorHandler = new ErrorHandler(expectedBlobQueryError);
 
-            DataLakeQueryOptions options = new DataLakeQueryOptions
-            {
-                ErrorHandler = errorHandler.Handle
-            };
+            DataLakeQueryOptions options = new DataLakeQueryOptions();
+            options.ErrorHandler += errorHandler.Handle;
 
             response = await file.QueryAsync(
                 query,
@@ -3224,9 +3222,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             ErrorHandler errorHandler = new ErrorHandler(expectedBlobQueryError);
             options = new DataLakeQueryOptions
             {
-                InputTextConfiguration = jsonTextConfiguration,
-                ErrorHandler = errorHandler.Handle
+                InputTextConfiguration = jsonTextConfiguration
             };
+            options.ErrorHandler += errorHandler.Handle;
 
             response = await file.QueryAsync(
                 query,

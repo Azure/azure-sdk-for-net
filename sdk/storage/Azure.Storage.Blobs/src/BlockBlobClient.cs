@@ -2057,7 +2057,8 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, options?.ErrorHandler);
+                    Action<BlobQueryError> errorHandler = options?._errorHandler;
+                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, errorHandler);
                     result.Value.Body = parsedStream;
 
                     return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());

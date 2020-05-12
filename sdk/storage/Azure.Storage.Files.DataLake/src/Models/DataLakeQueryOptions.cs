@@ -23,9 +23,32 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeQueryTextConfiguration OutputTextConfiguration { get; set; }
 
         /// <summary>
+        /// Lock for ErrorHandler add and remove.
+        /// </summary>
+        private readonly object _objectLock = new object();
+
+        /// <summary>
         /// Optional error handler.
         /// </summary>
-        public Action<DataLakeQueryError> ErrorHandler { get; set; }
+        public event Action<DataLakeQueryError> ErrorHandler
+        {
+            add
+            {
+                lock (_objectLock)
+                {
+                    _errorHandler += value;
+                }
+            }
+            remove
+            {
+                lock (_objectLock)
+                {
+                    _errorHandler -= value;
+                }
+            }
+        }
+
+        internal Action<DataLakeQueryError> _errorHandler;
 
         /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on the query.

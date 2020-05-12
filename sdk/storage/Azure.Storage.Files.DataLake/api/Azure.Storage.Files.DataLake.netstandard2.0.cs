@@ -386,10 +386,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeQueryOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
-        public System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextConfiguration InputTextConfiguration { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextConfiguration OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
     }
     public abstract partial class DataLakeQueryTextConfiguration
     {
