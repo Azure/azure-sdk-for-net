@@ -57,19 +57,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// stored procedure parameters. Example: "{Parameter1: {value: "1",
         /// type: "int"}}". Type: object (or Expression with resultType
         /// object), itemType: StoredProcedureParameter.</param>
-        /// <param name="partitionOption">The partition mechanism that will be
-        /// used for Sql read in parallel. Possible values include: 'None',
-        /// 'PhysicalPartitionsOfTable', 'DynamicRange'</param>
-        /// <param name="partitionSettings">The settings that will be leveraged
-        /// for Sql source partitioning.</param>
-        public SqlDWSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), object storedProcedureParameters = default(object), string partitionOption = default(string), SqlPartitionSettings partitionSettings = default(SqlPartitionSettings))
+        public SqlDWSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), object storedProcedureParameters = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             SqlReaderQuery = sqlReaderQuery;
             SqlReaderStoredProcedureName = sqlReaderStoredProcedureName;
             StoredProcedureParameters = storedProcedureParameters;
-            PartitionOption = partitionOption;
-            PartitionSettings = partitionSettings;
             CustomInit();
         }
 
@@ -101,21 +94,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "storedProcedureParameters")]
         public object StoredProcedureParameters { get; set; }
-
-        /// <summary>
-        /// Gets or sets the partition mechanism that will be used for Sql read
-        /// in parallel. Possible values include: 'None',
-        /// 'PhysicalPartitionsOfTable', 'DynamicRange'
-        /// </summary>
-        [JsonProperty(PropertyName = "partitionOption")]
-        public string PartitionOption { get; set; }
-
-        /// <summary>
-        /// Gets or sets the settings that will be leveraged for Sql source
-        /// partitioning.
-        /// </summary>
-        [JsonProperty(PropertyName = "partitionSettings")]
-        public SqlPartitionSettings PartitionSettings { get; set; }
 
     }
 }
