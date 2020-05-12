@@ -22,11 +22,6 @@ namespace Azure.Search.Documents.Tests
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
-        /// The maximum number of retries for service requests.
-        /// </summary>
-        private const int MaxRetries = 5;
-
-        /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
         /// gratuitously long for the sake of live tests in a hammered
         /// environment.
@@ -73,9 +68,9 @@ namespace Azure.Search.Documents.Tests
             options ??= new SearchClientOptions(ServiceVersion);
             options.Diagnostics.IsLoggingEnabled = true;
             options.Retry.Mode = RetryMode.Exponential;
-            options.Retry.MaxRetries = MaxRetries;
-            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5);
-            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10);
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
             return Recording.InstrumentClientOptions(options);
         }
