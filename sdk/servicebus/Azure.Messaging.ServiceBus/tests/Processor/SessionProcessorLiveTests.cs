@@ -732,15 +732,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: true))
+                enableSession: true,
+                lockDuration: TimeSpan.FromSeconds(5)))
             {
                 await using var client = GetClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage("sessionId"));
-                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusProcessorOptions
-                {
-                    AutoComplete = true
-                });
+                var processor = client.CreateSessionProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -1198,7 +1196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-                        tcs.SetResult(true);
+                        tcs.TrySetResult(true);
                     }
                 }
 
@@ -1245,8 +1243,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         {
                             tcs.SetResult(true);
                         }
-                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession ||
-                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession)
+                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession)
                         {
                             // add small delay to prevent race condition that can result in error handler
                             // being called twice as the processor will immediately try to accept the session again.

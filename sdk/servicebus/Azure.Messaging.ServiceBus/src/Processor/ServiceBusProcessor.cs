@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -73,44 +71,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
         private Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="receiver"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        private async Task OnSessionInitializingAsync(
-            ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken)
-        {
-            // Handlers cannot be changed while the processor is running; it is safe to check and call
-            // without capturing a local reference.
-            if (_sessionInitializingAsync != null)
-            {
-                var args = new ProcessSessionEventArgs(receiver, cancellationToken);
-                await _sessionInitializingAsync(args).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="receiver"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        private async Task OnSessionClosingAsync(
-            ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken)
-        {
-            // Handlers cannot be changed while the processor is running; it is safe to check and call
-            // without capturing a local reference.
-            if (_sessionClosingAsync != null)
-            {
-                var args = new ProcessSessionEventArgs(receiver, cancellationToken);
-                await _sessionClosingAsync(args).ConfigureAwait(false);
-            }
-        }
 
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
@@ -211,9 +171,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
 
-        private ConcurrentDictionary<string, SessionReceiverInfo> _sessionIdsReceiverMap = new ConcurrentDictionary<string, SessionReceiverInfo>();
-
-        private ConcurrentDictionary<string, SemaphoreSlim> _receiverCreationLockMap = new ConcurrentDictionary<string, SemaphoreSlim>();
+        private readonly IList<SessionLifeCycleManager> _sessionLifeCycles = new List<SessionLifeCycleManager>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -246,19 +204,17 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = options.MaxConcurrentCalls;
+            if (MaxConcurrentCalls == 0)
+            {
+                MaxConcurrentCalls = isSessionEntity ? DefaultMaxConcurrentSessions : DefaultMaxConcurrentCalls;
+            }
+
             MaxReceiveWaitTime = options.MaxReceiveWaitTime;
             AutoComplete = options.AutoComplete;
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _sessionIds = sessionIds;
-
-            foreach (var sessionId in sessionIds)
-            {
-                // Instantiating a Singleton of the Semaphore with a value of 1.
-                // This means that only 1 thread can be granted access at a time.
-                _receiverCreationLockMap.TryAdd(sessionId, new SemaphoreSlim(1, 1));
-            }
         }
 
         /// <summary>
@@ -485,17 +441,10 @@ namespace Azure.Messaging.ServiceBus
 
                     if (IsSessionProcessor)
                     {
-                        if (MaxConcurrentCalls == 0)
-                        {
-                            MaxConcurrentCalls = DefaultMaxConcurrentSessions;
-                        }
+                        InitializeSessionLifeCycles();
                     }
                     else
                     {
-                        if (MaxConcurrentCalls == 0)
-                        {
-                            MaxConcurrentCalls = DefaultMaxConcurrentCalls;
-                        }
                         // even when not using sessions, we create a new receiver
                         // in case processing options have been changed
                         Receiver = new ServiceBusReceiver(
@@ -538,6 +487,28 @@ namespace Azure.Messaging.ServiceBus
             {
                 throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
+        }
+
+        private void InitializeSessionLifeCycles()
+        {
+            var numLifeCycles = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentCalls;
+
+            for (int i = 0; i < numLifeCycles; i++)
+            {
+                var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
+                _sessionLifeCycles.Add(
+                    new SessionLifeCycleManager(
+                        _connection,
+                        FullyQualifiedNamespace,
+                        EntityPath,
+                        Identifier,
+                        MaxAutoLockRenewalDuration,
+                        _sessionInitializingAsync,
+                        _sessionClosingAsync,
+                        _processErrorAsync,
+                        sessionId));
+            }
+
         }
 
         private void ValidateErrorHandler()
@@ -611,16 +582,10 @@ namespace Azure.Messaging.ServiceBus
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
                     // Calling SessionClosingAsync event on each receiver close
-                    foreach (var receiverMap in _sessionIdsReceiverMap)
+
+                    foreach (SessionLifeCycleManager lifeCycle in _sessionLifeCycles)
                     {
-                        ServiceBusSessionReceiver receiver = receiverMap.Value.GetReceiver();
-                        if (!receiver.IsDisposed)
-                        {
-                            await CloseSession(
-                                receiver,
-                                cancellationToken)
-                                .ConfigureAwait(false);
-                        }
+                        await lifeCycle.CloseSession(cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
@@ -648,7 +613,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 int sessionIndex = 0;
-                string sessionId = null;
+                SessionLifeCycleManager sessionLifeCycle = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -656,16 +621,16 @@ namespace Azure.Messaging.ServiceBus
                     // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                     // other than TaskCanceledExceptions
 
-                    if (IsSessionProcessor && _sessionIds.Length > 0)
+                    if (_sessionLifeCycles.Count > 0)
                     {
-                        sessionId = _sessionIds.ElementAt(sessionIndex);
+                        sessionLifeCycle = _sessionLifeCycles[sessionIndex];
                         sessionIndex++;
-                        if (sessionIndex == _sessionIds.Length)
+                        if (sessionIndex == _sessionLifeCycles.Count)
                         {
                             sessionIndex = 0;
                         }
                     }
-                    tasks.Add(ReceiveAndProcessMessagesAsync(cancellationToken, sessionId));
+                    tasks.Add(ReceiveAndProcessMessagesAsync(cancellationToken, sessionLifeCycle));
                 }
             }
             finally
@@ -676,7 +641,7 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task ReceiveAndProcessMessagesAsync(
             CancellationToken cancellationToken,
-            string sessionId = default)
+            SessionLifeCycleManager sessionLifeCycle = default)
         {
             ServiceBusReceiver receiver = null;
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
@@ -703,8 +668,7 @@ namespace Azure.Messaging.ServiceBus
                         }
                         try
                         {
-                            receiver = await GetOrCreateSessionReceiver(
-                                sessionId,
+                            receiver = await sessionLifeCycle.GetOrCreateSessionReceiver(
                                 receiverOptions,
                                 cancellationToken).ConfigureAwait(false);
                         }
@@ -769,264 +733,155 @@ namespace Azure.Messaging.ServiceBus
                     {
                         errorSource = sbException.ProcessorErrorSource.Value;
                     }
-                    await RaiseExceptionReceived(
-                            new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                    await ProcessorUtils.RaiseExceptionReceived(
+                        _processErrorAsync,
+                        new ProcessErrorEventArgs(
+                            ex,
+                            errorSource,
+                            FullyQualifiedNamespace,
+                            EntityPath))
+                        .ConfigureAwait(false);
                 }
             }
             finally
             {
                 if (receiver != null && IsSessionProcessor)
                 {
-                    await CloseSessionIfNeeded(sessionId, receiver, cancellationToken).ConfigureAwait(false);
+                    await CloseSessionIfNeeded(sessionLifeCycle, cancellationToken).ConfigureAwait(false);
                 }
                 MessageHandlerSemaphore.Release();
             }
         }
 
-        private async Task CloseSessionIfNeeded(string sessionId, ServiceBusReceiver receiver, CancellationToken cancellationToken)
+        private async Task CloseSessionIfNeeded(SessionLifeCycleManager sessionLifeCycle, CancellationToken cancellationToken)
         {
-
-            if (sessionId != null)
+            try
             {
-                if (_sessionIdsReceiverMap[sessionId].Decrement() == 0)
-                {
-                    await _receiverCreationLockMap[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
-                    if (_sessionIdsReceiverMap[sessionId].ThreadCount == 0)
-                    {
-                        _sessionIdsReceiverMap.TryRemove(sessionId, out _);
-                        await CloseSession(
-                            receiver,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    _receiverCreationLockMap[sessionId].Release();
-                }
+                await sessionLifeCycle.CloseSessionIfNeeded(cancellationToken).ConfigureAwait(false);
             }
-            else
+            catch (Exception exception)
             {
-                await CloseSession(receiver, cancellationToken).ConfigureAwait(false);
-            }
-    }
-
-    private async Task CloseSession(ServiceBusReceiver receiver, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await OnSessionClosingAsync(
-                (ServiceBusSessionReceiver)receiver,
-                cancellationToken)
-            .ConfigureAwait(false);
-            await receiver.DisposeAsync().ConfigureAwait(false);
-
-        }
-
-        catch (Exception exception)
-        {
-            await RaiseExceptionReceived(
-                new ProcessErrorEventArgs(
-                    exception,
-                    ServiceBusErrorSource.CloseMessageSession,
-                    FullyQualifiedNamespace,
-                    EntityPath))
-                .ConfigureAwait(false);
-        }
-
-    }
-
-    /// <summary>
-    /// Cancels the specified cancellation source and awaits the specified task.
-    /// </summary>
-    /// <param name="cancellationSource">CancellationTokenSource to cancel</param>
-    /// <param name="task">Associated task to await</param>
-    private static async Task CancelTask(
-            CancellationTokenSource cancellationSource,
-            Task task)
-    {
-        try
-        {
-            if (cancellationSource != null)
-            {
-                cancellationSource.Cancel();
-                await task.ConfigureAwait(false);
-            }
-        }
-        catch (Exception ex) when (ex is TaskCanceledException)
-        {
-            // Nothing to do here.  These exceptions are expected.
-        }
-    }
-
-    private async Task<ServiceBusReceiver> GetOrCreateSessionReceiver(
-        string sessionId,
-        ServiceBusReceiverOptions receiverOptions,
-        CancellationToken cancellationToken)
-    {
-        bool releaseSemaphore = false;
-        try
-        {
-            if (sessionId == null)
-            {
-                return await CreateAndInitializeSessionReceiver(
-                    receiverOptions,
-                    cancellationToken,
-                    sessionId)
+                await ProcessorUtils.RaiseExceptionReceived(
+                    _processErrorAsync,
+                    new ProcessErrorEventArgs(
+                        exception,
+                        ServiceBusErrorSource.CloseMessageSession,
+                        FullyQualifiedNamespace,
+                        EntityPath))
                     .ConfigureAwait(false);
             }
+        }
 
-            // Adding double-checked locking, which checks whether sessionIdsReceiverMap contains sessionId or not.
-            // This is efficient because it avoids creating a receiver for the same session Ids for multiple threads.
-            // Otherwise, we will get session lock lost error whenever multiple threads will try to create a receiver for
-            // the same session id.
-            if (!_sessionIdsReceiverMap.ContainsKey(sessionId))
+        /// <summary>
+        /// Cancels the specified cancellation source and awaits the specified task.
+        /// </summary>
+        /// <param name="cancellationSource">CancellationTokenSource to cancel</param>
+        /// <param name="task">Associated task to await</param>
+        private static async Task CancelTask(
+                CancellationTokenSource cancellationSource,
+                Task task)
+        {
+            try
             {
-                await _receiverCreationLockMap[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
-                releaseSemaphore = true;
-
-                if (!_sessionIdsReceiverMap.ContainsKey(sessionId))
+                if (cancellationSource != null)
                 {
-                    return await CreateAndInitializeSessionReceiver(
-                        receiverOptions,
-                        cancellationToken,
-                        sessionId)
-                        .ConfigureAwait(false);
+                    cancellationSource.Cancel();
+                    await task.ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex) when (ex is TaskCanceledException)
+            {
+                // Nothing to do here.  These exceptions are expected.
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="receiver"></param>
+        /// <param name="message"></param>
+        /// <param name="processorCancellationToken"></param>
+        /// <returns></returns>
+        private async Task ProcessOneMessage(
+            ServiceBusReceiver receiver,
+            ServiceBusReceivedMessage message,
+            CancellationToken processorCancellationToken)
+        {
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
+            CancellationTokenSource renewLockCancellationTokenSource = null;
+            Task renewLock = null;
+            bool userSettled = false;
+
+            try
+            {
+                if (!IsSessionProcessor && ReceiveMode == ReceiveMode.PeekLock && AutoRenewLock)
+                {
+                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
+                    renewLock = RenewMessageLock(
+                        receiver,
+                        message,
+                        renewLockCancellationTokenSource);
+                }
+
+                errorSource = ServiceBusErrorSource.UserCallback;
+
+                if (IsSessionProcessor)
+                {
+                    var args = new ProcessSessionMessageEventArgs(
+                        message,
+                        (ServiceBusSessionReceiver)receiver,
+                        processorCancellationToken);
+                    try
+                    {
+                        await OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        userSettled = args.IsMessageSettled;
+                    }
                 }
                 else
                 {
-                    return _sessionIdsReceiverMap[sessionId].GetReceiver();
+                    var args = new ProcessMessageEventArgs(
+                        message,
+                        receiver,
+                        processorCancellationToken);
+                    try
+                    {
+                        await OnProcessMessageAsync(args).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        userSettled = args.IsMessageSettled;
+                    }
                 }
-            }
-            else
-            {
-                return _sessionIdsReceiverMap[sessionId].GetReceiver();
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            // propagate as TCE so it will be handled by the outer catch block
-            throw new TaskCanceledException();
-        }
-        finally
-        {
-            if (releaseSemaphore)
-            {
-                _receiverCreationLockMap[sessionId].Release();
-            }
-        }
-    }
 
-    private async Task<ServiceBusSessionReceiver> CreateAndInitializeSessionReceiver(
-        ServiceBusReceiverOptions receiverOptions,
-        CancellationToken cancellationToken,
-        string sessionId = default)
-    {
-        ServiceBusSessionReceiver receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-            entityPath: EntityPath,
-            connection: _connection,
-            sessionId: sessionId,
-            options: receiverOptions,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        if (sessionId != null)
-        {
-            _sessionIdsReceiverMap.TryAdd(sessionId, new SessionReceiverInfo(receiver));
-        }
-
-        if (AutoRenewLock)
-        {
-            var renewSessionLockCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task _ = RenewSessionLock(
-                receiver: (ServiceBusSessionReceiver)receiver,
-                renewSessionLockCancellationSource);
-        }
-        await OnSessionInitializingAsync(
-            receiver,
-            cancellationToken).
-            ConfigureAwait(false);
-
-        return receiver;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="receiver"></param>
-    /// <param name="message"></param>
-    /// <param name="processorCancellationToken"></param>
-    /// <returns></returns>
-    private async Task ProcessOneMessage(
-        ServiceBusReceiver receiver,
-        ServiceBusReceivedMessage message,
-        CancellationToken processorCancellationToken)
-    {
-        ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-        CancellationTokenSource renewLockCancellationTokenSource = null;
-        Task renewLock = null;
-        bool userSettled = false;
-
-        try
-        {
-            if (!IsSessionProcessor && ReceiveMode == ReceiveMode.PeekLock && AutoRenewLock)
-            {
-                renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
-                renewLock = RenewMessageLock(
-                    receiver,
-                    message,
-                    renewLockCancellationTokenSource);
-            }
-
-            errorSource = ServiceBusErrorSource.UserCallback;
-
-            if (IsSessionProcessor)
-            {
-                var args = new ProcessSessionMessageEventArgs(
-                    message,
-                    (ServiceBusSessionReceiver)receiver,
-                    processorCancellationToken);
-                try
+                if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete && !userSettled)
                 {
-                    await OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+                    errorSource = ServiceBusErrorSource.Complete;
+                    // don't pass the processor cancellation token
+                    // as we want in flight autocompletion to be able
+                    // to finish
+                    await receiver.CompleteAsync(
+                        message.LockToken,
+                        CancellationToken.None)
+                        .ConfigureAwait(false);
                 }
-                finally
-                {
-                    userSettled = args.IsMessageSettled;
-                }
-            }
-            else
-            {
-                var args = new ProcessMessageEventArgs(
-                    message,
-                    receiver,
-                    processorCancellationToken);
-                try
-                {
-                    await OnProcessMessageAsync(args).ConfigureAwait(false);
-                }
-                finally
-                {
-                    userSettled = args.IsMessageSettled;
-                }
-            }
 
-            if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete && !userSettled)
-            {
-                errorSource = ServiceBusErrorSource.Complete;
-                // don't pass the processor cancellation token
-                // as we want in flight autocompletion to be able
-                // to finish
-                await receiver.CompleteAsync(
-                    message.LockToken,
-                    CancellationToken.None)
-                    .ConfigureAwait(false);
+                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
-
-            await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
-        }
-        catch (Exception ex)
+            catch (Exception ex)
             {
                 ThrowIfSessionLockLost(ex, errorSource);
                 processorCancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                await ProcessorUtils.RaiseExceptionReceived(
+                    _processErrorAsync,
+                    new ProcessErrorEventArgs(
+                        ex,
+                        errorSource,
+                        FullyQualifiedNamespace,
+                        EntityPath))
+                    .ConfigureAwait(false);
 
                 // if the user settled the message, or if the message or session lock was lost,
                 // do not attempt to abandon the message
@@ -1044,22 +899,23 @@ namespace Azure.Messaging.ServiceBus
                     {
                         ThrowIfSessionLockLost(exception, ServiceBusErrorSource.Abandon);
 
-                        await RaiseExceptionReceived(
-                        new ProcessErrorEventArgs(
-                            exception,
-                            ServiceBusErrorSource.Abandon,
-                            FullyQualifiedNamespace,
-                            EntityPath))
+                        await ProcessorUtils.RaiseExceptionReceived(
+                            _processErrorAsync,
+                            new ProcessErrorEventArgs(
+                                exception,
+                                ServiceBusErrorSource.Abandon,
+                                FullyQualifiedNamespace,
+                                EntityPath))
                         .ConfigureAwait(false);
                     }
                 }
             }
             finally
-        {
-            renewLockCancellationTokenSource?.Cancel();
-            renewLockCancellationTokenSource?.Dispose();
+            {
+                renewLockCancellationTokenSource?.Cancel();
+                renewLockCancellationTokenSource?.Dispose();
+            }
         }
-    }
 
         private void ThrowIfSessionLockLost(
             Exception exception,
@@ -1086,213 +942,92 @@ namespace Azure.Messaging.ServiceBus
         ServiceBusReceiver receiver,
         ServiceBusReceivedMessage message,
         CancellationTokenSource cancellationTokenSource)
-    {
-        cancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
-        CancellationToken cancellationToken = cancellationTokenSource.Token;
-        while (!cancellationToken.IsCancellationRequested)
         {
-            try
+            cancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+            while (!cancellationToken.IsCancellationRequested)
             {
-                ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Identifier, 1, message.LockToken);
-                TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
-
-                // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
-                // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
-                Task delayTask = await Task.Delay(delay, cancellationToken)
-                    .ContinueWith(t => t, TaskContinuationOptions.ExecuteSynchronously)
-                    .ConfigureAwait(false);
-                if (delayTask.IsCanceled)
+                try
                 {
-                    break;
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Identifier, 1, message.LockToken);
+                    TimeSpan delay = ProcessorUtils.CalculateRenewDelay(message.LockedUntil);
+
+                    // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
+                    // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
+                    Task delayTask = await Task.Delay(delay, cancellationToken)
+                        .ContinueWith(t => t, TaskContinuationOptions.ExecuteSynchronously)
+                        .ConfigureAwait(false);
+                    if (delayTask.IsCanceled)
+                    {
+                        break;
+                    }
+
+                    await receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Identifier);
                 }
 
-                await receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Identifier);
-            }
-
-            catch (Exception exception)
-            {
-                // if the renewLock token was cancelled, throw a TaskCanceledException as we don't want
-                // to propagate to user error handler. This will be handled by the caller.
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                ServiceBusEventSource.Log.ProcesserRenewMessageLockException(Identifier, exception);
-
-                // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
-                // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                if (!(exception is ObjectDisposedException))
+                catch (Exception exception)
                 {
-                    await RaiseExceptionReceived(
-                        new ProcessErrorEventArgs(
-                            exception,
-                            ServiceBusErrorSource.RenewLock,
-                            FullyQualifiedNamespace,
-                            EntityPath)).ConfigureAwait(false);
-                }
+                    // if the renewLock token was cancelled, throw a TaskCanceledException as we don't want
+                    // to propagate to user error handler. This will be handled by the caller.
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                // if the error was not transient, break out of the loop
-                if (!(exception as ServiceBusException)?.IsTransient == true)
-                {
-                    break;
-                }
-            }
-        }
-    }
+                    ServiceBusEventSource.Log.ProcesserRenewMessageLockException(Identifier, exception);
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="receiver"></param>
-    /// <param name="cancellationTokenSource"></param>
-    /// <returns></returns>
-    private async Task RenewSessionLock(
-        ServiceBusSessionReceiver receiver,
-        CancellationTokenSource cancellationTokenSource)
-    {
-        cancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
-        CancellationToken cancellationToken = cancellationTokenSource.Token;
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            try
-            {
-                ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(Identifier, receiver.SessionId);
-                TimeSpan delay = CalculateRenewDelay(receiver.SessionLockedUntil);
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
+                    // this renew exception is not relevant anymore. Lets not bother user with this exception.
+                    if (!(exception is ObjectDisposedException))
+                    {
+                        await ProcessorUtils.RaiseExceptionReceived(
+                            _processErrorAsync,
+                            new ProcessErrorEventArgs(
+                                exception,
+                                ServiceBusErrorSource.RenewLock,
+                                FullyQualifiedNamespace,
+                                EntityPath)).ConfigureAwait(false);
+                    }
 
-                // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
-                // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
-                Task delayTask = await Task.Delay(delay, cancellationToken)
-                    .ContinueWith(t => t, TaskContinuationOptions.ExecuteSynchronously)
-                    .ConfigureAwait(false);
-                if (delayTask.IsCanceled || receiver.IsDisposed)
-                {
-                    break;
-                }
-                await receiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
-                ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Identifier);
-            }
-
-            catch (Exception exception)
-            {
-                // if the renewLock token was cancelled, throw a TaskCanceledException as we don't want
-                // to propagate to user error handler. This will be handled by the caller.
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Identifier, exception);
-
-                // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
-                // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                if (!(exception is ObjectDisposedException))
-                {
-                    await RaiseExceptionReceived(
-                        new ProcessErrorEventArgs(
-                            exception,
-                            ServiceBusErrorSource.RenewLock,
-                            FullyQualifiedNamespace,
-                            EntityPath)).ConfigureAwait(false);
-                }
-
-                // if the error was not transient, break out of the loop
-                if (!(exception as ServiceBusException)?.IsTransient == true)
-                {
-                    break;
+                    // if the error was not transient, break out of the loop
+                    if (!(exception as ServiceBusException)?.IsTransient == true)
+                    {
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="lockedUntil"></param>
-    /// <returns></returns>
-    private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
-    {
-        var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
-
-        if (remainingTime < TimeSpan.FromMilliseconds(400))
+        /// <summary>
+        /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
+        /// </summary>
+        ///
+        /// <param name="action">The action to invoke.</param>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        internal void EnsureNotRunningAndInvoke(Action action)
         {
-            return TimeSpan.Zero;
-        }
-
-        var buffer = TimeSpan.FromTicks(Math.Min(remainingTime.Ticks / 2, Constants.MaximumRenewBufferDuration.Ticks));
-        var renewAfter = remainingTime - buffer;
-
-        return renewAfter;
-    }
-
-    /// <summary>
-    /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
-    /// </summary>
-    ///
-    /// <param name="action">The action to invoke.</param>
-    ///
-    /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
-    internal void EnsureNotRunningAndInvoke(Action action)
-    {
-        if (ActiveReceiveTask == null)
-        {
-            try
+            if (ActiveReceiveTask == null)
             {
-                ProcessingStartStopSemaphore.Wait();
-                if (ActiveReceiveTask == null)
+                try
                 {
-                    action?.Invoke();
+                    ProcessingStartStopSemaphore.Wait();
+                    if (ActiveReceiveTask == null)
+                    {
+                        action?.Invoke();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
+                    }
                 }
-                else
+                finally
                 {
-                    throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
+                    ProcessingStartStopSemaphore.Release();
                 }
             }
-            finally
+            else
             {
-                ProcessingStartStopSemaphore.Release();
+                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
-        else
-        {
-            throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
-        }
     }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="eventArgs"></param>
-    /// <returns></returns>
-    private async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
-    {
-        try
-        {
-            await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
-        }
-        catch (Exception exception)
-        {
-            // don't bubble up exceptions raised from customer exception handler
-            MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
-        }
-
-    }
-
-    private class SessionReceiverInfo
-    {
-        private int _threadCount;
-        public int ThreadCount => _threadCount;
-        private readonly ServiceBusSessionReceiver _receiver;
-
-        public SessionReceiverInfo(ServiceBusSessionReceiver receiver)
-        {
-            _threadCount = 1;
-            _receiver = receiver;
-        }
-
-        public ServiceBusSessionReceiver GetReceiver()
-        {
-            Interlocked.Increment(ref _threadCount);
-            return _receiver;
-        }
-        public int Decrement() =>
-            Interlocked.Decrement(ref _threadCount);
-
-    }
-}
 }
