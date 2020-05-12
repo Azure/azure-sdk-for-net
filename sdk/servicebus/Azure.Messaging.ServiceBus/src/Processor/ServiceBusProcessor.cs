@@ -761,14 +761,17 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                await ProcessorUtils.RaiseExceptionReceived(
-                    _processErrorAsync,
-                    new ProcessErrorEventArgs(
-                        exception,
-                        ServiceBusErrorSource.CloseMessageSession,
-                        FullyQualifiedNamespace,
-                        EntityPath))
+                if (!(exception is TaskCanceledException))
+                {
+                    await ProcessorUtils.RaiseExceptionReceived(
+                        _processErrorAsync,
+                        new ProcessErrorEventArgs(
+                            exception,
+                            ServiceBusErrorSource.CloseMessageSession,
+                            FullyQualifiedNamespace,
+                            EntityPath))
                     .ConfigureAwait(false);
+                }
             }
         }
 
