@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using static Moq.It;
@@ -81,7 +82,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public async Task UploadsStreamInBlocksIfLengthIsOverTheLimit()
         {
-            TestStream content = new TestStream(_async, 30, TestStream.Read(0, 10));
+            PredictableStream content = new PredictableStream(30);
             TrackingArrayPool testPool = new TrackingArrayPool();
             AppendSink sink = new AppendSink();
 
@@ -97,11 +98,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
-            Assert.AreEqual(1, sink.Appended.Count);
+            Assert.AreEqual(2, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
-            AssertAppended(sink, content);
         }
 
         [Test]

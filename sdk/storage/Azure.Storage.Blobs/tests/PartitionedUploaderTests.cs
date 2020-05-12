@@ -83,7 +83,6 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(2, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-
         }
 
         [Test]
