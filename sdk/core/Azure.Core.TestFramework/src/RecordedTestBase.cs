@@ -81,21 +81,6 @@ namespace Azure.Core.TestFramework
             Logger = null;
         }
 
-        /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// This will run prior to the start of each test.
-        /// </summary>
-        [SetUp]
-        public void SetupEventsForTest() => Logger?.SetupEventsForTest();
-
-        /// <summary>
-        /// Output the Events to the console in the case of test failure.
-        /// This will include the HTTP requests and responses.
-        /// This will run after each test finishes.
-        /// </summary>
-        [TearDown]
-        public void OutputEventsForTest() => Logger?.OutputEventsForTest();
-
         [SetUp]
         public virtual void StartTestRecording()
         {
