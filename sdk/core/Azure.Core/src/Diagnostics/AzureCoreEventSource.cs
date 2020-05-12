@@ -26,6 +26,7 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentBlockEvent = 12;
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
+        private const int ExceptionResponseEvent = 18;
 
         private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
@@ -109,16 +110,22 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number {1}, reason: {2}, retry took {3:00.0}s")]
-        public void RequestRetrying(string requestId, int retryNumber, string? retryReason, double seconds)
+        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number {1} took {2:00.0}s")]
+        public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
-            WriteEvent(RequestRetryingEvent, requestId, retryNumber, retryReason, seconds);
+            WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);
         }
 
         [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]
         public void ResponseDelay(string requestId, double seconds)
         {
             WriteEvent(ResponseDelayEvent, requestId, seconds);
+        }
+
+        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Request [{0}] exception {1}")]
+        public void ExceptionResponse(string requestId, string exception)
+        {
+            WriteEvent(ExceptionResponseEvent, requestId, exception);
         }
     }
 }

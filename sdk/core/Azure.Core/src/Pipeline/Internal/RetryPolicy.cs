@@ -127,12 +127,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
 
-                string? retryReason = null;
-                if (message.HasResponse)
-                {
-                    retryReason = message.Response.ToString();
-                }
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, retryReason, elapsed);
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt, elapsed);
             }
         }
 

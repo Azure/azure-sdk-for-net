@@ -293,7 +293,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("RequestRetrying", e.EventName);
             Assert.AreEqual(request.ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("Status: 500, ReasonPhrase: ", e.GetProperty<string>("retryReason"));
             Assert.IsTrue(e.GetProperty<double>("seconds") > 0);
         }
 

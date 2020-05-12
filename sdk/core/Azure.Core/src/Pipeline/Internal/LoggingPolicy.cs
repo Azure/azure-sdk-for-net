@@ -69,13 +69,21 @@ namespace Azure.Core.Pipeline
 
             var before = Stopwatch.GetTimestamp();
 
-            if (async)
+            try
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ProcessNext(message, pipeline);
+                s_eventSource.ExceptionResponse(request.ClientRequestId, ex.ToString());
+                throw;
             }
 
             var after = Stopwatch.GetTimestamp();
