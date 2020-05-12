@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-ooottint.search.windows.net/indexes(\u0027oiaggubm\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027sckqgtxr\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "77",
         "Content-Type": "application/json",
-        "traceparent": "00-10c2cdb99d0f244eb4ab5b573003085e-b636f7d3a9ebc44c-00",
+        "traceparent": "00-ce4567ddd75ab840b2ff0146e8ea504d-d667e6100da3f548-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "eb3f3216b0de1bf6125f047abab79f2a",
         "x-ms-return-client-request-id": "true"
@@ -30,8 +30,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 25 Apr 2020 00:54:20 GMT",
-        "elapsed-time": "127",
+        "Date": "Fri, 08 May 2020 06:45:35 GMT",
+        "elapsed-time": "142",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -51,15 +51,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-ooottint.search.windows.net/indexes(\u0027oiaggubm\u0027)/docs(\u00274\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027sckqgtxr\u0027)/docs(\u00274\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-85cf3353e525204ca8f5757c701892c0-6e516c910bbc1d43-00",
+        "traceparent": "00-54eecef9d554d048a609058bd2f69606-58bb24b60f3c4944-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "616d0353a8077dbe8775e6cb950c62f3",
         "x-ms-return-client-request-id": "true"
@@ -70,7 +70,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "232",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 25 Apr 2020 00:54:23 GMT",
+        "Date": "Fri, 08 May 2020 06:45:37 GMT",
         "elapsed-time": "6",
         "Expires": "-1",
         "OData-Version": "4.0",
@@ -94,16 +94,40 @@
         "address": null,
         "rooms": []
       }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027sckqgtxr\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-92e2398c67942a43a6f608248601a026-4874d9a77f499d41-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "1445617c8ef38333059250742aeea463",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Fri, 08 May 2020 06:45:37 GMT",
+        "elapsed-time": "252",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "1445617c-8ef3-8333-0592-50742aeea463",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
-    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
-    "LOCATION": "westus2",
     "RandomSeed": "10321260",
-    "RESOURCE_GROUP": "heaths-search",
-    "SearchIndexName": "oiaggubm",
-    "SearchServiceName": "azs-net-ooottint",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
-    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    "SearchIndexName": "sckqgtxr",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

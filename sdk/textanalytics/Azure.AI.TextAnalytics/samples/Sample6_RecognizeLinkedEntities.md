@@ -18,7 +18,7 @@ To recognize linked entities in a document, use the `RecognizeLinkedEntities` me
 ```C# Snippet:RecognizeLinkedEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
+LinkedEntityCollection linkedEntities = client.RecognizeLinkedEntities(document);
 
 Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)

@@ -564,15 +564,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string deadLetterReason,
             string deadLetterErrorDescription)
         {
-            if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
-
-            if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
+            Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
+            Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
             Guid lockTokenGuid = new Guid(lockToken);
             var lockTokenGuids = new[] { lockTokenGuid };

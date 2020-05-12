@@ -151,7 +151,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = result[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
@@ -210,7 +210,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = result[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
@@ -328,7 +328,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        DetectLanguageResultCollection results = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -376,7 +382,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateDetectLanguageResponse(response, map);
+                        DetectLanguageResultCollection results = CreateDetectLanguageResponse(response, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -416,7 +428,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<CategorizedEntity>>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CategorizedEntityCollection>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -439,9 +451,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
+                        return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -477,7 +489,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<CategorizedEntity>> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<CategorizedEntityCollection> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -500,9 +512,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
+                        return Response.FromValue((CategorizedEntityCollection)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -625,7 +637,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -676,7 +694,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateRecognizeEntitiesResponse(response, map);
+                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -736,7 +760,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
@@ -794,7 +818,7 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
                         return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
@@ -910,7 +934,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -958,7 +988,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateAnalyzeSentimentResponse(response, map);
+                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -997,7 +1033,7 @@ namespace Azure.AI.TextAnalytics
         /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyPhraseCollection>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -1020,9 +1056,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
+                        return Response.FromValue((KeyPhraseCollection) results[0].KeyPhrases, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1057,7 +1093,7 @@ namespace Azure.AI.TextAnalytics
         /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<KeyPhraseCollection> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -1080,9 +1116,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
+                        return Response.FromValue((KeyPhraseCollection)results[0].KeyPhrases, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1202,7 +1238,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        ExtractKeyPhrasesResultCollection results = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1252,7 +1294,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateKeyPhraseResponse(response, map);
+                        ExtractKeyPhrasesResultCollection results = CreateKeyPhraseResponse(response, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1290,7 +1338,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkedEntityCollection>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -1313,9 +1361,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
+                        return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1349,7 +1397,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<LinkedEntity>> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<LinkedEntityCollection> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
@@ -1372,9 +1420,9 @@ namespace Azure.AI.TextAnalytics
                         {
                             // only one document, so we can ignore the id and grab the first error message.
                             TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
+                        return Response.FromValue((LinkedEntityCollection)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1491,7 +1539,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeLinkedEntitiesResultCollection results = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1540,7 +1594,13 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateLinkedEntityResponse(response, map);
+                        RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
+                        if (results[0].HasError && results[0].Id.Length == 0)
+                        {
+                            // InvalidDocumentBatch.
+                            ThrowExceptionWhenErrorInBatch(results[0].Error);
+                        }
+                        return Response.FromValue(results, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1624,6 +1684,12 @@ namespace Azure.AI.TextAnalytics
                 return null;
             return new Dictionary<string, string> { { "Target", error.Target } };
         }
+
+        private static void ThrowExceptionWhenErrorInBatch(TextAnalyticsError error)
+        {
+            throw new RequestFailedException(400, error.Message, error.ErrorCode.ToString(), default);
+        }
+
         #endregion
     }
 }
