@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// </remarks>
     public class MessageReceiver : ClientEntity, IMessageReceiver
     {
-        private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
+        private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(200);
 
         readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
         readonly bool isSessionReceiver;
