@@ -561,7 +561,50 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
                 e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+        }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UndeleteBlobContainerAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync();
+            await container.DeleteAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            // It takes some time for the Container to be deleted.
+            await Delay(30000);
+
+            // Act
+            Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
+                containerItem.Name,
+                containerItem.Version,
+                GetNewContainerName());
+
+            // Assert
+            await response.Value.GetPropertiesAsync();
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UndeleteBlobContainerAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.UndeleteBlobContainerAsync(GetNewBlobName(), "01D60F8BB59A4652"),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
     }
 }

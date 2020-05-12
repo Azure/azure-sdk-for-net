@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seansoftdeletecanary.blob.core.windows.net/test-container-0b43b26d-6eb4-b7f5-90ed-f958cb34a38c?restype=container\u0026comp=undelete",
+      "RequestUri": "http://seansoftdeletecanary.blob.core.windows.net/test-blob-c2008cf6-a89c-de6f-0915-d0297983fa48?restype=container\u0026comp=undelete",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-0d436544f1407f4b93f34e247efdae22-4610f688f23bdf42-00",
+        "traceparent": "00-e83c056b9a416443bbcbee9cb7ce9069-030d5293f6e43145-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200410.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200512.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "61790e86-3905-93cb-ba91-816d0d8e4bf4",
-        "x-ms-date": "Fri, 10 Apr 2020 23:12:21 GMT",
-        "x-ms-deleted-container-name": "test-blob-64c8ba4a-daee-b2f8-8947-61666c9c5964",
+        "x-ms-client-request-id": "6574872f-9964-3943-bfee-bb5215ae263c",
+        "x-ms-date": "Tue, 12 May 2020 19:01:35 GMT",
+        "x-ms-deleted-container-name": "test-blob-c2008cf6-a89c-de6f-0915-d0297983fa48",
         "x-ms-deleted-container-version": "01D60F8BB59A4652",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
@@ -22,26 +22,26 @@
       "ResponseHeaders": {
         "Content-Length": "226",
         "Content-Type": "application/xml",
-        "Date": "Fri, 10 Apr 2020 23:12:20 GMT",
+        "Date": "Tue, 12 May 2020 19:01:33 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "61790e86-3905-93cb-ba91-816d0d8e4bf4",
+        "x-ms-client-request-id": "6574872f-9964-3943-bfee-bb5215ae263c",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "62ec60fc-001e-0039-318d-0f0d3d000000",
+        "x-ms-request-id": "036baa7a-a01e-0052-3f8f-288ac9000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
         "\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:62ec60fc-001e-0039-318d-0f0d3d000000\n",
-        "Time:2020-04-10T23:12:20.5374406Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:036baa7a-a01e-0052-3f8f-288ac9000000\n",
+        "Time:2020-05-12T19:01:34.5686804Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "1304710445",
+    "RandomSeed": "1260119715",
     "Storage_TestConfigSoftDelete": "SoftDeleteTenant\nseansoftdeletecanary\nU2FuaXRpemVk\nhttp://seansoftdeletecanary.blob.core.windows.net\nhttp://seansoftdeletecanary.file.core.windows.net\nhttp://seansoftdeletecanary.queue.core.windows.net\nhttp://seansoftdeletecanary.table.core.windows.net\n\n\n\n\nhttp://seansoftdeletecanary-secondary.blob.core.windows.net\nhttp://seansoftdeletecanary-secondary.file.core.windows.net\nhttp://seansoftdeletecanary-secondary.queue.core.windows.net\nhttp://seansoftdeletecanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seansoftdeletecanary.blob.core.windows.net/;QueueEndpoint=http://seansoftdeletecanary.queue.core.windows.net/;FileEndpoint=http://seansoftdeletecanary.file.core.windows.net/;BlobSecondaryEndpoint=http://seansoftdeletecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seansoftdeletecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seansoftdeletecanary-secondary.file.core.windows.net/;AccountName=seansoftdeletecanary;AccountKey=Sanitized\n"
   }
 }
