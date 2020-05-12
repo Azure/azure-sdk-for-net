@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the script action task details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ScriptActionTaskDetails")]
     public partial class ScriptActionTaskDetails : TaskTypeDetails
     {
         /// <summary>

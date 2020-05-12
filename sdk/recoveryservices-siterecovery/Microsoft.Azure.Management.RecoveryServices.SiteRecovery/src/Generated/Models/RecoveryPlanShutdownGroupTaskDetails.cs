@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the recovery plan shutdown group task details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RecoveryPlanShutdownGroupTaskDetails")]
     public partial class RecoveryPlanShutdownGroupTaskDetails : GroupTaskDetails
     {
         /// <summary>

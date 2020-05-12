@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// Base class for the policies of providers using InMage replication.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("InMageBasePolicyDetails")]
     public partial class InMageBasePolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary>

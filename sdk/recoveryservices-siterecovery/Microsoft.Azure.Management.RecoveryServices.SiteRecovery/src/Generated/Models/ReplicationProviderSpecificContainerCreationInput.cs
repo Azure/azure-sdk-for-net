@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Provider specific input for container creation operation.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ReplicationProviderSpecificContainerCreationInput")]
     public partial class ReplicationProviderSpecificContainerCreationInput
     {
         /// <summary>

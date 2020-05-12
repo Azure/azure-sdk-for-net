@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for provider specific input
     /// </summary>
+    [Newtonsoft.Json.JsonObject("PolicyProviderSpecificInput")]
     public partial class PolicyProviderSpecificInput
     {
         /// <summary>

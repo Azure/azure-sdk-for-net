@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// This class contains monitoring details of all the inconsistent
     /// Protected Entities in Vmm.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ConsistencyCheckTaskDetails")]
     public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
     {
         /// <summary>

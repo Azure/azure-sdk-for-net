@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the virtual machine task details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("VirtualMachineTaskDetails")]
     public partial class VirtualMachineTaskDetails : TaskTypeDetails
     {
         /// <summary>

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the vm NicUpdates task details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("VmNicUpdatesTaskDetails")]
     public partial class VmNicUpdatesTaskDetails : TaskTypeDetails
     {
         /// <summary>
