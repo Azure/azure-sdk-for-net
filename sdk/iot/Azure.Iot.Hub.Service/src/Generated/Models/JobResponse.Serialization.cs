@@ -23,7 +23,7 @@ namespace Azure.Iot.Hub.Service.Models
             long? maxExecutionTimeInSeconds = default;
             JobResponseType? type = default;
             CloudToDeviceMethod cloudToDeviceMethod = default;
-            Twin updateTwin = default;
+            TwinData updateTwin = default;
             JobResponseStatus? status = default;
             string failureReason = default;
             string statusMessage = default;
@@ -54,7 +54,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset("S");
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("S");
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -72,7 +72,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("S");
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("maxExecutionTimeInSeconds"))
@@ -108,7 +108,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    updateTwin = Twin.DeserializeTwin(property.Value);
+                    updateTwin = TwinData.DeserializeTwinData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))
