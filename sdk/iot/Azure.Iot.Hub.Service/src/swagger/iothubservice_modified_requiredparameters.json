@@ -1986,7 +1986,8 @@
                         "type": "string"
                     }
                 }
-            }
+            },
+            "required": ["id"]
         },
         "AuthenticationMechanism": {
             "type": "object",
@@ -2006,7 +2007,7 @@
                     ],
                     "type": "string"
                 }
-            }
+            }        
         },
         "DeviceCapabilities": {
             "description": "Status of Capabilities enabled on the device",
@@ -2108,7 +2109,8 @@
                         "type": "string"
                     }
                 }
-            }
+            },
+            "required": ["id"]
         },
         "PropertyContainer": {
             "description": "Represents Twin properties",
@@ -3031,7 +3033,8 @@
                 "authentication": {
                     "$ref": "#/definitions/AuthenticationMechanism"
                 }
-            }
+            },
+            "required": ["moduleId", "deviceId"]
         },
         "CloudToDeviceMethodResult": {
             "description": "Represents the Device Method Invocation Results.",
