@@ -2007,8 +2007,7 @@
                     ],
                     "type": "string"
                 }
-            },
-            "required": ["type"]
+            }        
         },
         "DeviceCapabilities": {
             "description": "Status of Capabilities enabled on the device",
