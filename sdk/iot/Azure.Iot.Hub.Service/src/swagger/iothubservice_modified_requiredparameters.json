@@ -2839,7 +2839,8 @@
                     "format": "int32",
                     "type": "integer"
                 }
-            }
+            },
+            "required": ["methodName"]
         },
         "JobResponse": {
             "type": "object",
