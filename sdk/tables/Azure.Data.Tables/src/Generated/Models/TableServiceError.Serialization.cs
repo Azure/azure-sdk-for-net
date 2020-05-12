@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class StorageError
+    public partial class TableServiceError
     {
-        internal static StorageError DeserializeStorageError(JsonElement element)
+        internal static TableServiceError DeserializeTableServiceError(JsonElement element)
         {
             string message = default;
             foreach (var property in element.EnumerateObject())
@@ -28,17 +28,17 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new StorageError(message);
+            return new TableServiceError(message);
         }
 
-        internal static StorageError DeserializeStorageError(XElement element)
+        internal static TableServiceError DeserializeTableServiceError(XElement element)
         {
             string message = default;
             if (element.Element("Message") is XElement messageElement)
             {
                 message = (string)messageElement;
             }
-            return new StorageError(message);
+            return new TableServiceError(message);
         }
     }
 }

@@ -8,41 +8,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-8b004915320df04eb40c822b829bfccd-636faee227bcfa4d-00",
+        "traceparent": "00-c6c7427dc173544d93ca17a9895808ff-187795ecc385984e-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "08e8ad35b36cc23bc6e7d8b888a681b6",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "ebf767f0829a82fb0e6b8d26f16f54a5",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable158269"
+        "TableName": "testtable159928"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable158269\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable159928\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "08e8ad35b36cc23bc6e7d8b888a681b6",
-        "x-ms-request-id": "2de36dad-f002-0071-43e2-23b6d1000000",
+        "x-ms-client-request-id": "ebf767f0829a82fb0e6b8d26f16f54a5",
+        "x-ms-request-id": "a5f1507e-3002-0089-6aa1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable158269\u0027)",
-        "odata.editLink": "Tables(\u0027testtable158269\u0027)",
-        "TableName": "testtable158269"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable159928\u0027)",
+        "odata.editLink": "Tables(\u0027testtable159928\u0027)",
+        "TableName": "testtable159928"
       }
     },
     {
@@ -53,41 +53,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-5e3a6f3ea5493f4997f0cdcd8cfed82b-f45aad5eefe7ab4c-00",
+        "traceparent": "00-570e5d6ce81cc14b8df1325b6aff1405-993dce223c665d4f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "af9841af4b033aa69aaf30df2bdefb95",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "6dca04ddc0f880b7388b21a98932d389",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable500630"
+        "TableName": "testtable933060"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable500630\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable933060\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "af9841af4b033aa69aaf30df2bdefb95",
-        "x-ms-request-id": "2de36dbc-f002-0071-51e2-23b6d1000000",
+        "x-ms-client-request-id": "6dca04ddc0f880b7388b21a98932d389",
+        "x-ms-request-id": "a5f1508b-3002-0089-75a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable500630\u0027)",
-        "odata.editLink": "Tables(\u0027testtable500630\u0027)",
-        "TableName": "testtable500630"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable933060\u0027)",
+        "odata.editLink": "Tables(\u0027testtable933060\u0027)",
+        "TableName": "testtable933060"
       }
     },
     {
@@ -98,41 +98,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-50c9fe9558b3854dbf32ff29e9b07e83-b30f243416934e41-00",
+        "traceparent": "00-12065751d829cc4b8da8ec124a533718-8b162690963b6947-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "bd20f5332250b1a41b857f84bd292e59",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "e5ec14cba7735ebd13357b234fa5ae46",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable194709"
+        "TableName": "testtable735772"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable194709\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable735772\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "bd20f5332250b1a41b857f84bd292e59",
-        "x-ms-request-id": "2de36dcc-f002-0071-5fe2-23b6d1000000",
+        "x-ms-client-request-id": "e5ec14cba7735ebd13357b234fa5ae46",
+        "x-ms-request-id": "a5f15096-3002-0089-7fa1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable194709\u0027)",
-        "odata.editLink": "Tables(\u0027testtable194709\u0027)",
-        "TableName": "testtable194709"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable735772\u0027)",
+        "odata.editLink": "Tables(\u0027testtable735772\u0027)",
+        "TableName": "testtable735772"
       }
     },
     {
@@ -143,41 +143,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-39fb5a46fee7db43b719078c90244db0-5e85e785577a1b46-00",
+        "traceparent": "00-9493ad24c87159448c5b03a7aadfe713-a70d679bee5bc547-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "3fa1fce86131cd41d1030ae39b08dc23",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "7a2b9d51a6f86b4062f7d9d98439b99d",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable208083"
+        "TableName": "testtable119030"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable208083\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable119030\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3fa1fce86131cd41d1030ae39b08dc23",
-        "x-ms-request-id": "2de36dd8-f002-0071-6ae2-23b6d1000000",
+        "x-ms-client-request-id": "7a2b9d51a6f86b4062f7d9d98439b99d",
+        "x-ms-request-id": "a5f150a2-3002-0089-09a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable208083\u0027)",
-        "odata.editLink": "Tables(\u0027testtable208083\u0027)",
-        "TableName": "testtable208083"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable119030\u0027)",
+        "odata.editLink": "Tables(\u0027testtable119030\u0027)",
+        "TableName": "testtable119030"
       }
     },
     {
@@ -188,41 +188,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-c6cdddb15b3b4142a93e44aeb76ddd93-2fe26e2367c00e4c-00",
+        "traceparent": "00-99e63963a619ef48825b725225758177-07e4c03f2520a14f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "36958c731f5ffef4e8c527b5dd860185",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "ffb940a35d6a0f0de48b3c5ce8e57362",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable299098"
+        "TableName": "testtable202808"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable299098\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable202808\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "36958c731f5ffef4e8c527b5dd860185",
-        "x-ms-request-id": "2de36ddf-f002-0071-70e2-23b6d1000000",
+        "x-ms-client-request-id": "ffb940a35d6a0f0de48b3c5ce8e57362",
+        "x-ms-request-id": "a5f150ac-3002-0089-12a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable299098\u0027)",
-        "odata.editLink": "Tables(\u0027testtable299098\u0027)",
-        "TableName": "testtable299098"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable202808\u0027)",
+        "odata.editLink": "Tables(\u0027testtable202808\u0027)",
+        "TableName": "testtable202808"
       }
     },
     {
@@ -233,41 +233,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-a49b40d842d107469c56a9d88d1c9d6d-4a39dccb00ea9149-00",
+        "traceparent": "00-d51cebb1a44a5f408bf37fb268f4b542-a50436c508069944-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "97f3fff59301efde7e1e99ce7f7da360",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "635d36e16ed37aab10afe3848efcc285",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable311184"
+        "TableName": "testtable186625"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable311184\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable186625\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "97f3fff59301efde7e1e99ce7f7da360",
-        "x-ms-request-id": "2de36dee-f002-0071-7ee2-23b6d1000000",
+        "x-ms-client-request-id": "635d36e16ed37aab10afe3848efcc285",
+        "x-ms-request-id": "a5f150b5-3002-0089-1aa1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable311184\u0027)",
-        "odata.editLink": "Tables(\u0027testtable311184\u0027)",
-        "TableName": "testtable311184"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable186625\u0027)",
+        "odata.editLink": "Tables(\u0027testtable186625\u0027)",
+        "TableName": "testtable186625"
       }
     },
     {
@@ -278,41 +278,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-cfec1aaea187324d96557a1c9b31c1d4-577009e5996cad4d-00",
+        "traceparent": "00-2cda4c8109332b459eee44af4408b26c-108cd335ceb49645-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "8dc3a2b6dd8941ad499c1a17f37d095d",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "578d6e0240e66b1e131b040e79126676",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable212487"
+        "TableName": "testtable114655"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable212487\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable114655\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "8dc3a2b6dd8941ad499c1a17f37d095d",
-        "x-ms-request-id": "2de36dfe-f002-0071-0de2-23b6d1000000",
+        "x-ms-client-request-id": "578d6e0240e66b1e131b040e79126676",
+        "x-ms-request-id": "a5f150bd-3002-0089-21a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable212487\u0027)",
-        "odata.editLink": "Tables(\u0027testtable212487\u0027)",
-        "TableName": "testtable212487"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable114655\u0027)",
+        "odata.editLink": "Tables(\u0027testtable114655\u0027)",
+        "TableName": "testtable114655"
       }
     },
     {
@@ -323,41 +323,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-e70d735f2db16d47941a7cf5cf9534f7-d1307c25adf23a4f-00",
+        "traceparent": "00-d6d2d4403a4eb949b50aa24a9b87de5f-d2dfd3ea029e1d42-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "1930dc12f97146b7e0005a3068488354",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "b0408358d1cf840d59ae298a568e79d7",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable782705"
+        "TableName": "testtable193903"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable782705\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable193903\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1930dc12f97146b7e0005a3068488354",
-        "x-ms-request-id": "2de36e0b-f002-0071-19e2-23b6d1000000",
+        "x-ms-client-request-id": "b0408358d1cf840d59ae298a568e79d7",
+        "x-ms-request-id": "a5f150c1-3002-0089-24a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable782705\u0027)",
-        "odata.editLink": "Tables(\u0027testtable782705\u0027)",
-        "TableName": "testtable782705"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable193903\u0027)",
+        "odata.editLink": "Tables(\u0027testtable193903\u0027)",
+        "TableName": "testtable193903"
       }
     },
     {
@@ -368,41 +368,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-e2bcbab2e7a89047b2be53859014b8c1-c3b344df8379d740-00",
+        "traceparent": "00-f9567d385a78f34fb73ea16942bdecbd-b3738e93241c3242-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d9c25fcf226c5546b8f7c4d78aa19070",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "dad504e3f5faf73ebf53a76b979d7d0e",
+        "x-ms-date": "Mon, 11 May 2020 14:34:42 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable146922"
+        "TableName": "testtable690782"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable146922\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:41 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable690782\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d9c25fcf226c5546b8f7c4d78aa19070",
-        "x-ms-request-id": "2de36e16-f002-0071-23e2-23b6d1000000",
+        "x-ms-client-request-id": "dad504e3f5faf73ebf53a76b979d7d0e",
+        "x-ms-request-id": "a5f150d0-3002-0089-32a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable146922\u0027)",
-        "odata.editLink": "Tables(\u0027testtable146922\u0027)",
-        "TableName": "testtable146922"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable690782\u0027)",
+        "odata.editLink": "Tables(\u0027testtable690782\u0027)",
+        "TableName": "testtable690782"
       }
     },
     {
@@ -413,41 +413,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-9081c1debdb2b440a9c8056de676c97f-7a6778eef00bfc4b-00",
+        "traceparent": "00-e2edab7d274f504ba1e3b99627dbc3c8-dcc9b7eed0beb949-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "f230c66aa844460ca9dc5211e05396c2",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "8a453fa49c32d37f8d91f5e1bd8c8a37",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable615793"
+        "TableName": "testtable439893"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable615793\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable439893\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f230c66aa844460ca9dc5211e05396c2",
-        "x-ms-request-id": "2de36e24-f002-0071-2ee2-23b6d1000000",
+        "x-ms-client-request-id": "8a453fa49c32d37f8d91f5e1bd8c8a37",
+        "x-ms-request-id": "a5f150d3-3002-0089-34a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable615793\u0027)",
-        "odata.editLink": "Tables(\u0027testtable615793\u0027)",
-        "TableName": "testtable615793"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable439893\u0027)",
+        "odata.editLink": "Tables(\u0027testtable439893\u0027)",
+        "TableName": "testtable439893"
       }
     },
     {
@@ -458,41 +458,41 @@
         "Content-Length": "31",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-d2a86852d4c9bf4998934221c461f400-d89c3b300db89842-00",
+        "traceparent": "00-2b51be28e7e0e54b8d26472604f921cd-c7db7dc75113bf43-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "5a9ba9adbaa6c4eab902f26f555fcabf",
-        "x-ms-date": "Wed, 06 May 2020 20:08:18 GMT",
+        "x-ms-client-request-id": "77a1622f8d5db9010f7e6618c211ab7b",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable413609"
+        "TableName": "testtable602657"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable413609\u0027)",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
+        "Location": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable602657\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5a9ba9adbaa6c4eab902f26f555fcabf",
-        "x-ms-request-id": "2de36e36-f002-0071-3de2-23b6d1000000",
+        "x-ms-client-request-id": "77a1622f8d5db9010f7e6618c211ab7b",
+        "x-ms-request-id": "a5f150dd-3002-0089-3da1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissscratch.Tables",
-        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable413609\u0027)",
-        "odata.editLink": "Tables(\u0027testtable413609\u0027)",
-        "TableName": "testtable413609"
+        "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable602657\u0027)",
+        "odata.editLink": "Tables(\u0027testtable602657\u0027)",
+        "TableName": "testtable602657"
       }
     },
     {
@@ -502,11 +502,11 @@
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "24bdde1d8bdfb5b692c245f343d7a32e",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "913aea1ab0225667076c63481602c61c",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -515,16 +515,16 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "24bdde1d8bdfb5b692c245f343d7a32e",
-        "x-ms-continuation-NextTableName": "1!44!dGVzdHRhYmxlMTQ4MTgxATAxZDYyM2UyMGQ4MjUwMzk-",
-        "x-ms-request-id": "2de36e44-f002-0071-4ae2-23b6d1000000",
+        "x-ms-client-request-id": "913aea1ab0225667076c63481602c61c",
+        "x-ms-continuation-NextTableName": "1!44!dGVzdHRhYmxlMTYxNDkxATAxZDYyN2ExM2U3NmU1ZGM-",
+        "x-ms-request-id": "a5f150e6-3002-0089-43a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -544,37 +544,37 @@
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable1112423088\u0027)",
-            "odata.editLink": "Tables(\u0027testtable1112423088\u0027)",
-            "TableName": "testtable1112423088"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable114655\u0027)",
+            "odata.editLink": "Tables(\u0027testtable114655\u0027)",
+            "TableName": "testtable114655"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable111703\u0027)",
-            "odata.editLink": "Tables(\u0027testtable111703\u0027)",
-            "TableName": "testtable111703"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable119030\u0027)",
+            "odata.editLink": "Tables(\u0027testtable119030\u0027)",
+            "TableName": "testtable119030"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable146922\u0027)",
-            "odata.editLink": "Tables(\u0027testtable146922\u0027)",
-            "TableName": "testtable146922"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable159928\u0027)",
+            "odata.editLink": "Tables(\u0027testtable159928\u0027)",
+            "TableName": "testtable159928"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$top=5\u0026NextTableName=1%2144%21dGVzdHRhYmxlMTQ4MTgxATAxZDYyM2UyMGQ4MjUwMzk-",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$top=5\u0026NextTableName=1%2144%21dGVzdHRhYmxlMTYxNDkxATAxZDYyN2ExM2U3NmU1ZGM-",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "e6f36814f0d50cc4462d8aa61ad7547d",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "1b6dcb34c46db14643d1221e18bacb80",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -583,16 +583,16 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e6f36814f0d50cc4462d8aa61ad7547d",
-        "x-ms-continuation-NextTableName": "1!44!dGVzdHRhYmxlMjEyNzQ2ATAxZDYyM2UyMDZiY2IyYWI-",
-        "x-ms-request-id": "2de36e48-f002-0071-4ee2-23b6d1000000",
+        "x-ms-client-request-id": "1b6dcb34c46db14643d1221e18bacb80",
+        "x-ms-continuation-NextTableName": "1!44!dGVzdHRhYmxlNjA0MDIyATAxZDYyN2ExM2Y1MDM1Yjg-",
+        "x-ms-request-id": "a5f150ec-3002-0089-49a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -600,49 +600,49 @@
         "value": [
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable158269\u0027)",
-            "odata.editLink": "Tables(\u0027testtable158269\u0027)",
-            "TableName": "testtable158269"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable186625\u0027)",
+            "odata.editLink": "Tables(\u0027testtable186625\u0027)",
+            "TableName": "testtable186625"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable176756\u0027)",
-            "odata.editLink": "Tables(\u0027testtable176756\u0027)",
-            "TableName": "testtable176756"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable193903\u0027)",
+            "odata.editLink": "Tables(\u0027testtable193903\u0027)",
+            "TableName": "testtable193903"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable194709\u0027)",
-            "odata.editLink": "Tables(\u0027testtable194709\u0027)",
-            "TableName": "testtable194709"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable202808\u0027)",
+            "odata.editLink": "Tables(\u0027testtable202808\u0027)",
+            "TableName": "testtable202808"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable208083\u0027)",
-            "odata.editLink": "Tables(\u0027testtable208083\u0027)",
-            "TableName": "testtable208083"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable439893\u0027)",
+            "odata.editLink": "Tables(\u0027testtable439893\u0027)",
+            "TableName": "testtable439893"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable212487\u0027)",
-            "odata.editLink": "Tables(\u0027testtable212487\u0027)",
-            "TableName": "testtable212487"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable602657\u0027)",
+            "odata.editLink": "Tables(\u0027testtable602657\u0027)",
+            "TableName": "testtable602657"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$top=5\u0026NextTableName=1%2144%21dGVzdHRhYmxlMjEyNzQ2ATAxZDYyM2UyMDZiY2IyYWI-",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$top=5\u0026NextTableName=1%2144%21dGVzdHRhYmxlNjA0MDIyATAxZDYyN2ExM2Y1MDM1Yjg-",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "DataServiceVersion": "3.0",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "75c352889ed92142f2e5c8e375f680e2",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "a2a26549a5507ea9fa4a6ff029b8a20d",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -651,16 +651,15 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "75c352889ed92142f2e5c8e375f680e2",
-        "x-ms-continuation-NextTableName": "1!44!dGVzdHRhYmxlNTQwNTc2ATAxZDYyM2UyMTE4NTc4YTA-",
-        "x-ms-request-id": "2de36e52-f002-0071-58e2-23b6d1000000",
+        "x-ms-client-request-id": "a2a26549a5507ea9fa4a6ff029b8a20d",
+        "x-ms-request-id": "a5f150f2-3002-0089-4fa1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -668,105 +667,38 @@
         "value": [
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable299098\u0027)",
-            "odata.editLink": "Tables(\u0027testtable299098\u0027)",
-            "TableName": "testtable299098"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable690782\u0027)",
+            "odata.editLink": "Tables(\u0027testtable690782\u0027)",
+            "TableName": "testtable690782"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable304027901\u0027)",
-            "odata.editLink": "Tables(\u0027testtable304027901\u0027)",
-            "TableName": "testtable304027901"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable735772\u0027)",
+            "odata.editLink": "Tables(\u0027testtable735772\u0027)",
+            "TableName": "testtable735772"
           },
           {
             "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable311184\u0027)",
-            "odata.editLink": "Tables(\u0027testtable311184\u0027)",
-            "TableName": "testtable311184"
-          },
-          {
-            "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable413609\u0027)",
-            "odata.editLink": "Tables(\u0027testtable413609\u0027)",
-            "TableName": "testtable413609"
-          },
-          {
-            "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable500630\u0027)",
-            "odata.editLink": "Tables(\u0027testtable500630\u0027)",
-            "TableName": "testtable500630"
+            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable933060\u0027)",
+            "odata.editLink": "Tables(\u0027testtable933060\u0027)",
+            "TableName": "testtable933060"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$top=5\u0026NextTableName=1%2144%21dGVzdHRhYmxlNTQwNTc2ATAxZDYyM2UyMTE4NTc4YTA-",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "DataServiceVersion": "3.0",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "ec5ac45ee46b2de91ab0ddb201109bba",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
-        "Server": [
-          "Windows-Azure-Table/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ec5ac45ee46b2de91ab0ddb201109bba",
-        "x-ms-request-id": "2de36e58-f002-0071-5de2-23b6d1000000",
-        "x-ms-version": "2019-02-02"
-      },
-      "ResponseBody": {
-        "odata.metadata": "https://chrissscratch.table.core.windows.net/$metadata#Tables",
-        "value": [
-          {
-            "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable551281\u0027)",
-            "odata.editLink": "Tables(\u0027testtable551281\u0027)",
-            "TableName": "testtable551281"
-          },
-          {
-            "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable615793\u0027)",
-            "odata.editLink": "Tables(\u0027testtable615793\u0027)",
-            "TableName": "testtable615793"
-          },
-          {
-            "odata.type": "chrissscratch.Tables",
-            "odata.id": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable782705\u0027)",
-            "odata.editLink": "Tables(\u0027testtable782705\u0027)",
-            "TableName": "testtable782705"
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable500630\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable933060\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fb965a4ace0911439c7438f0b49d77d9-cef7029107c4bc43-00",
+        "traceparent": "00-3845c2af2c5e18478d11ba5a3ad24d40-b8029090bc28f242-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "f16bc76e2e14755426d2f3ef27e09750",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "f7e34ab790a3550ea3884e518e483d4c",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -775,31 +707,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f16bc76e2e14755426d2f3ef27e09750",
-        "x-ms-request-id": "2de36e65-f002-0071-6ae2-23b6d1000000",
+        "x-ms-client-request-id": "f7e34ab790a3550ea3884e518e483d4c",
+        "x-ms-request-id": "a5f150f7-3002-0089-53a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable194709\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable735772\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dd3cfc0382f1ea489eb24feb6a75a5ee-ccf9bf4efbbe3b4c-00",
+        "traceparent": "00-15cafafdd41034428a91f25e1584b81b-15e1401dcac52440-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "5547a8ac677da41268965a28c19020e2",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "b1ffe3a124608fcc21ef20225555888a",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -808,31 +740,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5547a8ac677da41268965a28c19020e2",
-        "x-ms-request-id": "2de36e71-f002-0071-76e2-23b6d1000000",
+        "x-ms-client-request-id": "b1ffe3a124608fcc21ef20225555888a",
+        "x-ms-request-id": "a5f15102-3002-0089-5ea1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable208083\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable119030\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ecd358f6e9ab3d4292dbac9fba7a0490-1d86e8ede6640b46-00",
+        "traceparent": "00-3c11dd7e21d96a4a8f26e824bdcf101a-47aeb08deb474c4d-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "ad750d4a8f8b2fce6fe4c698f0f90539",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "ce67152fd4d6b9dd564dfec75758f0b1",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -841,31 +773,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ad750d4a8f8b2fce6fe4c698f0f90539",
-        "x-ms-request-id": "2de36e82-f002-0071-06e2-23b6d1000000",
+        "x-ms-client-request-id": "ce67152fd4d6b9dd564dfec75758f0b1",
+        "x-ms-request-id": "a5f15110-3002-0089-6aa1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable299098\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable202808\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a07f86089194104789d3b5185650e23d-6b8f842c52691949-00",
+        "traceparent": "00-04e3e1ddd0f1bb4ca576bc27e5d6173f-f942a9c416af5f4a-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "58058d1945c9073db5c6887dd32cb495",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "464f230df0b992ac7d54d5b36fec004e",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -874,31 +806,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "58058d1945c9073db5c6887dd32cb495",
-        "x-ms-request-id": "2de36e89-f002-0071-0ce2-23b6d1000000",
+        "x-ms-client-request-id": "464f230df0b992ac7d54d5b36fec004e",
+        "x-ms-request-id": "a5f1511a-3002-0089-74a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable311184\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable186625\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d1243b5a2016aa4d98b5bfc3f4c0f7e2-e444f8494ebc6441-00",
+        "traceparent": "00-f6ee32cdc604c647b3e7b675f9a15214-231061f8aa8e6047-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "1aa511b1ea6b1dc4da17e598a179b36f",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "7822c3006ee1cd7505455b12260438c9",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -907,31 +839,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1aa511b1ea6b1dc4da17e598a179b36f",
-        "x-ms-request-id": "2de36ea0-f002-0071-22e2-23b6d1000000",
+        "x-ms-client-request-id": "7822c3006ee1cd7505455b12260438c9",
+        "x-ms-request-id": "a5f15129-3002-0089-02a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable212487\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable114655\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-545e0382010154408d6145cf6edcf11f-16bc6957c05c3f45-00",
+        "traceparent": "00-01703135477c7640a1b6674b250e7f3c-8a693c31d8b00a45-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "340e2091c78b0418d06ef7c406505c43",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "31146efe42063ed168d55082fe294969",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -940,31 +872,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:18 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "340e2091c78b0418d06ef7c406505c43",
-        "x-ms-request-id": "2de36eac-f002-0071-2ee2-23b6d1000000",
+        "x-ms-client-request-id": "31146efe42063ed168d55082fe294969",
+        "x-ms-request-id": "a5f15130-3002-0089-09a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable782705\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable193903\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-148698965d755947ab1c94302864ef85-6c784200b639a344-00",
+        "traceparent": "00-985ddb75af402548919dc0e28879f798-a26c999cf930464f-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "dfe73030eb542fcec8e77eb15fa5653b",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "94c7b04d78369ed0ad82407395996c79",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -973,31 +905,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:19 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "dfe73030eb542fcec8e77eb15fa5653b",
-        "x-ms-request-id": "2de36eb2-f002-0071-34e2-23b6d1000000",
+        "x-ms-client-request-id": "94c7b04d78369ed0ad82407395996c79",
+        "x-ms-request-id": "a5f1513a-3002-0089-11a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable146922\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable690782\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-aa7c2aaf3e6b604caa7e7a56c4a68768-298f478a51741744-00",
+        "traceparent": "00-49dc7feb53075441824bdc6e3553ac15-d09b231538697343-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "b2ec1913801dea0af8a049fcf2001689",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "00b40c1cced7bd48f1e30f0c1df3cedc",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1006,31 +938,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:19 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b2ec1913801dea0af8a049fcf2001689",
-        "x-ms-request-id": "2de36ebc-f002-0071-3de2-23b6d1000000",
+        "x-ms-client-request-id": "00b40c1cced7bd48f1e30f0c1df3cedc",
+        "x-ms-request-id": "a5f15143-3002-0089-19a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable615793\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable439893\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1ef151155d86af4ab9a1bac291af9c65-e31278c8e8acfc41-00",
+        "traceparent": "00-00a02866730df846a2ef2914238ad251-4c6530a309558340-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "7068a2bbd492a51a52df6ba34866a52b",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "75c5f2fca33d86929e768483025da9ce",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1039,31 +971,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:19 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7068a2bbd492a51a52df6ba34866a52b",
-        "x-ms-request-id": "2de36ec5-f002-0071-46e2-23b6d1000000",
+        "x-ms-client-request-id": "75c5f2fca33d86929e768483025da9ce",
+        "x-ms-request-id": "a5f1514c-3002-0089-22a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable413609\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable602657\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4ab677e76a0d25489ea7946dc9b9705e-d1ec4252fae9e64e-00",
+        "traceparent": "00-a599efdee03fb2498ef3ec8477ed9344-1702e7f915631f47-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "edb1bc08a963af2525fde6b4a1d13dc8",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "f265d76848747e91680aa25268c480ba",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1072,31 +1004,31 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:19 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "edb1bc08a963af2525fde6b4a1d13dc8",
-        "x-ms-request-id": "2de36ece-f002-0071-4fe2-23b6d1000000",
+        "x-ms-client-request-id": "f265d76848747e91680aa25268c480ba",
+        "x-ms-request-id": "a5f15152-3002-0089-28a1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable158269\u0027)",
+      "RequestUri": "https://chrissscratch.table.core.windows.net/Tables(\u0027testtable159928\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ab58b6cdf0893f49bc73204c643647e4-cbb6251b38e3c440-00",
+        "traceparent": "00-de845665a0da034fb6ce1b37e0e759de-17407086228fe141-00",
         "User-Agent": [
-          "azsdk-net-Data.Tables/1.0.0-dev.20200506.1",
+          "azsdk-net-Data.Tables/1.0.0-dev.20200511.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "bdf6f5d1f53c3fa9ff46603e1467a192",
-        "x-ms-date": "Wed, 06 May 2020 20:08:19 GMT",
+        "x-ms-client-request-id": "a37663b4f6d4783c792e626149c4bb94",
+        "x-ms-date": "Mon, 11 May 2020 14:34:43 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -1105,21 +1037,21 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 06 May 2020 20:08:19 GMT",
+        "Date": "Mon, 11 May 2020 14:34:42 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "bdf6f5d1f53c3fa9ff46603e1467a192",
-        "x-ms-request-id": "2de36ed9-f002-0071-5ae2-23b6d1000000",
+        "x-ms-client-request-id": "a37663b4f6d4783c792e626149c4bb94",
+        "x-ms-request-id": "a5f15156-3002-0089-2ca1-277dcc000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "1425794306",
+    "RandomSeed": "812534882",
     "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "",
     "TABLES_STORAGE_ACCOUNT_NAME": "chrissscratch"
   }

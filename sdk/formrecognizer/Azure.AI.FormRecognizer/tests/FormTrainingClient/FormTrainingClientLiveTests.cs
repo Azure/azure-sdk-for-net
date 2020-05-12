@@ -33,13 +33,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartTraining(bool labeled)
         {
             var client = CreateInstrumentedFormTrainingClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(CustomFormModelStatus.Invalid, model.Status);
             Assert.IsNotNull(model.Errors);
             Assert.AreEqual(1, model.Errors.Count);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().Code);
+            Assert.IsNotNull(model.Errors.FirstOrDefault().ErrorCode);
             Assert.IsNotNull(model.Errors.FirstOrDefault().Message);
         }
 
@@ -111,13 +111,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task TrainingOps(bool labeled)
         {
             var client = CreateInstrumentedFormTrainingClient();
-            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+                operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
             }
 
             await operation.WaitForCompletionAsync();
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
             }
 
-            CustomFormModelInfo modelInfo = client.GetModelInfosAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            CustomFormModelInfo modelInfo = client.GetCustomModelsAsync().ToEnumerableAsync().Result.FirstOrDefault();
 
             Assert.IsNotNull(modelInfo.ModelId);
             Assert.IsNotNull(modelInfo.CreatedOn);
