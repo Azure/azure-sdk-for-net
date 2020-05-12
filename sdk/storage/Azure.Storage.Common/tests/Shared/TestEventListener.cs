@@ -47,10 +47,7 @@ namespace Azure.Storage.Test
         /// </summary>
         public void OutputEventsForTest()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                TestContext.Out.WriteLine(_eventBuffer.ToString());
-            }
+            TestContext.Out.WriteLine(_eventBuffer.ToString());
         }
 
         /// <summary>
