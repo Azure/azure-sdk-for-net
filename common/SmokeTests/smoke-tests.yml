@@ -97,3 +97,4 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
