@@ -308,9 +308,18 @@ namespace Peering.Tests
 
                 try
                 {
-                    var prefix = new PeeringServicePrefix { Prefix = "10.10.10.0/24", PeeringServicePrefixKey = TestUtilities.GenerateGuid().ToString() };
+                    var prefix = new PeeringServicePrefix
+                        {
+                            Prefix = "34.56.10.0/24",
+                            PeeringServicePrefixKey = TestUtilities.GenerateGuid().ToString()
+                        };
 
-                    var peeringServicePrefix = this.Client.Prefixes.CreateOrUpdate(rgname, name, prefixName, prefix.Prefix, prefix.PeeringServicePrefixKey);
+                    var peeringServicePrefix = this.Client.Prefixes.CreateOrUpdate(
+                        rgname,
+                        name,
+                        prefixName,
+                        prefix.Prefix,
+                        prefix.PeeringServicePrefixKey);
                     Assert.NotNull(peeringServicePrefix);
                     Assert.Equal(prefixName, peeringServicePrefix.Name);
 
@@ -319,7 +328,11 @@ namespace Peering.Tests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("BadRequest", ex.Message);
+                }
+                finally
+                {
+                    Assert.True(this.DeletePeeringService(name, rgname));
                 }
             }
         }
@@ -386,7 +399,7 @@ namespace Peering.Tests
                     var rgname = this.CreateResourceGroup().Name;
 
                     // Create Asn 
-                    var subId = this.CreatePeerAsn(asn, $"AS{asn}", isApproved: true);
+                    var subId = this.CreatePeerAsn(asn, $"AS{asn}", isApproved: true, peerName: "FooBar");
 
                     // Set prefix
                     var prefix = new PeeringRegisteredPrefix { Prefix = CreateIpv4Address(true) };
@@ -440,6 +453,7 @@ namespace Peering.Tests
                     var resourceGroupName = this.GetResourceGroup(peering?.Id);
                     var peeringName = this.GetPeeringName(peering?.Id);
                     var registeredPrefixName = $"{peering?.Name}{prefixName}";
+                    
                     var resource = this.Client.RegisteredPrefixes.CreateOrUpdate(
                         resourceGroupName,
                         peeringName,

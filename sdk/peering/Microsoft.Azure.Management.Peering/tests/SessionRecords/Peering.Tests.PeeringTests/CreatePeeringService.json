@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res9477?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3Jlczk0Nzc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res4548?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczQ1NDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d7fba035-7c09-476d-be85-0cbdbba84398"
+          "239125da-3198-421c-80a3-6e7bbcb8a51f"
         ],
         "Accept-Language": [
           "en-US"
@@ -33,16 +33,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "341b3d59-6d39-486a-97da-cba9afea1cb9"
+          "12d761c2-f423-46ff-8bd1-e2eaf509c08f"
         ],
         "x-ms-correlation-request-id": [
-          "341b3d59-6d39-486a-97da-cba9afea1cb9"
+          "12d761c2-f423-46ff-8bd1-e2eaf509c08f"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200512T174130Z:341b3d59-6d39-486a-97da-cba9afea1cb9"
+          "NORTHEUROPE:20200512T190740Z:12d761c2-f423-46ff-8bd1-e2eaf509c08f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:39 GMT"
         ],
         "Content-Length": [
           "170"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9477\",\r\n  \"name\": \"res9477\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res4548\",\r\n  \"name\": \"res4548\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -73,7 +73,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c5ead8cb-74f4-4185-b508-71d6d41142c1"
+          "0f40051b-1ad2-4ce6-a2b1-7f1ebbf7bf0e"
         ],
         "Accept-Language": [
           "en-US"
@@ -93,10 +93,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "af0c31c4-66db-4e72-b490-60ad96b52763"
+          "5495fe8a-dfe3-471a-8ed2-6a1d7453d977"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:40 GMT"
         ],
         "Content-Length": [
           "139276"
@@ -115,7 +115,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "acdc1445-e609-47c9-955e-3eef3bc8916f"
+          "31bd60c0-957a-44ae-8110-109cdc5d55f1"
         ],
         "Accept-Language": [
           "en-US"
@@ -135,19 +135,19 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "e20c0d44-5021-4fa9-9a8d-bf32e7105f46"
+          "58ea7dbe-1ebe-492c-8a0d-38f220f3629c"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:40 GMT"
         ],
         "Content-Length": [
-          "14388"
+          "1536"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Cogent Communications Inc.\"\r\n      },\r\n      \"name\": \"Cogent Communications Inc.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"CenturyLink\"\r\n      },\r\n      \"name\": \"CenturyLink\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Verizon Communications Inc.\"\r\n      },\r\n      \"name\": \"Verizon Communications Inc.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Level 3 Communications LLC\"\r\n      },\r\n      \"name\": \"Level 3 Communications LLC\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AT T\"\r\n      },\r\n      \"name\": \"AT T\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Akami Int.\"\r\n      },\r\n      \"name\": \"Akami Int.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"KyleTestPeer\"\r\n      },\r\n      \"name\": \"KyleTestPeer\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"BgpSpeakerProvider\"\r\n      },\r\n      \"name\": \"BgpSpeakerProvider\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"test1\"\r\n      },\r\n      \"name\": \"test1\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"peer\"\r\n      },\r\n      \"name\": \"peer\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"DE-CIX\"\r\n      },\r\n      \"name\": \"DE-CIX\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Telecom Malaysia\"\r\n      },\r\n      \"name\": \"Telecom Malaysia\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS4172-Global3654\"\r\n      },\r\n      \"name\": \"AS4172-Global3654\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS1759-Global7632\"\r\n      },\r\n      \"name\": \"AS1759-Global7632\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS61372-Global9776\"\r\n      },\r\n      \"name\": \"AS61372-Global9776\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS64358-Global8812\"\r\n      },\r\n      \"name\": \"AS64358-Global8812\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS521-Global7377\"\r\n      },\r\n      \"name\": \"AS521-Global7377\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS48389-Global7872\"\r\n      },\r\n      \"name\": \"AS48389-Global7872\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS16629-Global8951\"\r\n      },\r\n      \"name\": \"AS16629-Global8951\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS48365-Global3780\"\r\n      },\r\n      \"name\": \"AS48365-Global3780\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS30993-Global3689\"\r\n      },\r\n      \"name\": \"AS30993-Global3689\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS33374-Global870\"\r\n      },\r\n      \"name\": \"AS33374-Global870\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS36732-Global4729\"\r\n      },\r\n      \"name\": \"AS36732-Global4729\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS43327-Global3285\"\r\n      },\r\n      \"name\": \"AS43327-Global3285\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS35192-Global6072\"\r\n      },\r\n      \"name\": \"AS35192-Global6072\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS33492-Global5609\"\r\n      },\r\n      \"name\": \"AS33492-Global5609\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS25643-Global5908\"\r\n      },\r\n      \"name\": \"AS25643-Global5908\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS52215-Global6727\"\r\n      },\r\n      \"name\": \"AS52215-Global6727\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS64565-Global2647\"\r\n      },\r\n      \"name\": \"AS64565-Global2647\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS43069-Global4679\"\r\n      },\r\n      \"name\": \"AS43069-Global4679\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS37426-Global1320\"\r\n      },\r\n      \"name\": \"AS37426-Global1320\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS6484-Global1709\"\r\n      },\r\n      \"name\": \"AS6484-Global1709\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS61270-Global2211\"\r\n      },\r\n      \"name\": \"AS61270-Global2211\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS44252-Global9725\"\r\n      },\r\n      \"name\": \"AS44252-Global9725\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS47911-Global8264\"\r\n      },\r\n      \"name\": \"AS47911-Global8264\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS16245-Global5017\"\r\n      },\r\n      \"name\": \"AS16245-Global5017\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS58378-Global8751\"\r\n      },\r\n      \"name\": \"AS58378-Global8751\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS441-Global3654\"\r\n      },\r\n      \"name\": \"AS441-Global3654\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS11382-Global1420\"\r\n      },\r\n      \"name\": \"AS11382-Global1420\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS12311-Global3621\"\r\n      },\r\n      \"name\": \"AS12311-Global3621\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS20615-Global7666\"\r\n      },\r\n      \"name\": \"AS20615-Global7666\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS390-Global2087\"\r\n      },\r\n      \"name\": \"AS390-Global2087\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS31505-Global7341\"\r\n      },\r\n      \"name\": \"AS31505-Global7341\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS54154-Global1729\"\r\n      },\r\n      \"name\": \"AS54154-Global1729\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS34375-Global6949\"\r\n      },\r\n      \"name\": \"AS34375-Global6949\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS28032-Global3301\"\r\n      },\r\n      \"name\": \"AS28032-Global3301\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS35097-Global6429\"\r\n      },\r\n      \"name\": \"AS35097-Global6429\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS55166-Global1628\"\r\n      },\r\n      \"name\": \"AS55166-Global1628\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS37187-Global8226\"\r\n      },\r\n      \"name\": \"AS37187-Global8226\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS47809-Global7981\"\r\n      },\r\n      \"name\": \"AS47809-Global7981\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS37039-Global9104\"\r\n      },\r\n      \"name\": \"AS37039-Global9104\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS40728-Global8769\"\r\n      },\r\n      \"name\": \"AS40728-Global8769\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS61073-Global2241\"\r\n      },\r\n      \"name\": \"AS61073-Global2241\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS16446-Global4573\"\r\n      },\r\n      \"name\": \"AS16446-Global4573\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS1992-Global4799\"\r\n      },\r\n      \"name\": \"AS1992-Global4799\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS37229-Global5602\"\r\n      },\r\n      \"name\": \"AS37229-Global5602\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS40995-Global6458\"\r\n      },\r\n      \"name\": \"AS40995-Global6458\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS8269-Global6191\"\r\n      },\r\n      \"name\": \"AS8269-Global6191\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS6465-Global3440\"\r\n      },\r\n      \"name\": \"AS6465-Global3440\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS27794-Global3454\"\r\n      },\r\n      \"name\": \"AS27794-Global3454\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS17729-Global5421\"\r\n      },\r\n      \"name\": \"AS17729-Global5421\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS31877-Global4451\"\r\n      },\r\n      \"name\": \"AS31877-Global4451\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS56490-Global9905\"\r\n      },\r\n      \"name\": \"AS56490-Global9905\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS61533-Global3329\"\r\n      },\r\n      \"name\": \"AS61533-Global3329\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS36238-Global4600\"\r\n      },\r\n      \"name\": \"AS36238-Global4600\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS1634-Global9058\"\r\n      },\r\n      \"name\": \"AS1634-Global9058\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS26487-Global8152\"\r\n      },\r\n      \"name\": \"AS26487-Global8152\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS47073-Global3506\"\r\n      },\r\n      \"name\": \"AS47073-Global3506\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS51679-Global8189\"\r\n      },\r\n      \"name\": \"AS51679-Global8189\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS518-Global3905\"\r\n      },\r\n      \"name\": \"AS518-Global3905\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AS40192-Global1343\"\r\n      },\r\n      \"name\": \"AS40192-Global1343\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Akamai\"\r\n      },\r\n      \"name\": \"Akamai\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"TestIx\"\r\n      },\r\n      \"name\": \"TestIx\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"NTT\"\r\n      },\r\n      \"name\": \"NTT\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Cogent Communications Inc.\"\r\n      },\r\n      \"name\": \"Cogent Communications Inc.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"CenturyLink\"\r\n      },\r\n      \"name\": \"CenturyLink\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Verizon Communications Inc.\"\r\n      },\r\n      \"name\": \"Verizon Communications Inc.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Level 3 Communications LLC\"\r\n      },\r\n      \"name\": \"Level 3 Communications LLC\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"AT T\"\r\n      },\r\n      \"name\": \"AT T\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"Akami Int.\"\r\n      },\r\n      \"name\": \"Akami Int.\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"FooBar\"\r\n      },\r\n      \"name\": \"FooBar\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"serviceProviderName\": \"NTT\"\r\n      },\r\n      \"name\": \"NTT\",\r\n      \"type\": \"Microsoft.Peering/peeringServiceProviders\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -157,7 +157,7 @@
       "RequestBody": "{\r\n  \"peeringServiceLocation\": \"Washington\",\r\n  \"peeringServiceProvider\": \"Cogent Communications Inc.\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1bc5d55e-2d7d-44fd-82ff-425c8efc509f"
+          "d3077203-bc06-4ff1-bee4-845c5621d682"
         ],
         "Accept-Language": [
           "en-US"
@@ -183,10 +183,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "42f18e0e-d143-43ee-a13a-eb29e6d50384"
+          "59f6972d-1052-4512-b24e-7aeaf7422c11"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:40 GMT"
         ],
         "Content-Length": [
           "11"
@@ -199,13 +199,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9477/providers/Microsoft.Peering/peeringServices/myPeeringService8832?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczk0NzcvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdTZXJ2aWNlcy9teVBlZXJpbmdTZXJ2aWNlODgzMj9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res4548/providers/Microsoft.Peering/peeringServices/myPeeringService3175?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczQ1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdTZXJ2aWNlcy9teVBlZXJpbmdTZXJ2aWNlMzE3NT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"peeringServiceLocation\": \"Washington\",\r\n    \"peeringServiceProvider\": \"Cogent Communications Inc.\"\r\n  },\r\n  \"location\": \"local\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b0719b97-1ecc-4090-9de1-148d660a3f0a"
+          "eda2e0f8-5382-40a4-8715-501e62f159c8"
         ],
         "Accept-Language": [
           "en-US"
@@ -231,10 +231,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "3646875d-24ca-4fee-9338-a27b61420bcc"
+          "f34693db-40d8-4dc5-8dda-ce8596aceb3b"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:40 GMT"
         ],
         "Content-Length": [
           "482"
@@ -243,17 +243,17 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peeringServiceLocation\": \"Washington\",\r\n    \"peeringServiceProvider\": \"Cogent Communications Inc.\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"local\",\r\n  \"eTag\": \"9342b5e4-a07b-4c40-860d-760f5f08e510\",\r\n  \"name\": \"myPeeringService8832\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9477/providers/Microsoft.Peering/peeringServices/myPeeringService8832\",\r\n  \"type\": \"Microsoft.Peering/peeringServices\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peeringServiceLocation\": \"Washington\",\r\n    \"peeringServiceProvider\": \"Cogent Communications Inc.\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"local\",\r\n  \"eTag\": \"2f8ae0e6-7f0d-4628-aeb1-c217226e9219\",\r\n  \"name\": \"myPeeringService3175\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res4548/providers/Microsoft.Peering/peeringServices/myPeeringService3175\",\r\n  \"type\": \"Microsoft.Peering/peeringServices\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res9477/providers/Microsoft.Peering/peeringServices/myPeeringService8832/prefixes/AS54733Prefix?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3Jlczk0NzcvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdTZXJ2aWNlcy9teVBlZXJpbmdTZXJ2aWNlODgzMi9wcmVmaXhlcy9BUzU0NzMzUHJlZml4P2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res4548/providers/Microsoft.Peering/peeringServices/myPeeringService3175/prefixes/AS54733Prefix?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczQ1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdTZXJ2aWNlcy9teVBlZXJpbmdTZXJ2aWNlMzE3NS9wcmVmaXhlcy9BUzU0NzMzUHJlZml4P2FwaS12ZXJzaW9uPTIwMjAtMDQtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"10.10.10.0/24\",\r\n    \"peeringServicePrefixKey\": \"1440cc78-ab21-4629-95d4-d271d67e3485\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"34.56.10.0/24\",\r\n    \"peeringServicePrefixKey\": \"d612cc68-f784-4964-b54d-12cee5e5ed1d\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3aeca709-6c9a-4b31-8f26-51708f9c2ea5"
+          "a21c7803-3e12-4f65-a956-ee612d420461"
         ],
         "Accept-Language": [
           "en-US"
@@ -279,27 +279,66 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "ba1f16dc-0648-4de7-b3f1-daaa3f544319"
+          "863c7e12-c725-4055-b551-a85d827bda63"
         ],
         "Date": [
-          "Tue, 12 May 2020 17:41:30 GMT"
+          "Tue, 12 May 2020 19:07:40 GMT"
         ],
         "Content-Length": [
-          "78"
+          "74"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"BadArgument\",\r\n  \"message\": \"Invalid IP prefix 10.10.10.0/24\"\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"BadArgument\",\r\n  \"message\": \"Invalid peering service key\"\r\n}",
       "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res4548/providers/Microsoft.Peering/peeringServices/myPeeringService3175?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczQ1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdTZXJ2aWNlcy9teVBlZXJpbmdTZXJ2aWNlMzE3NT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5ff55b02-5b80-4af7-946b-0e757f864599"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28619.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "1407915f-34e6-4436-bca6-30b8a60e1de1"
+        ],
+        "Date": [
+          "Tue, 12 May 2020 19:07:40 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
     }
   ],
   "Names": {
     "CreatePeeringService": [
-      "res9477",
-      "myPeeringService8832",
-      "1440cc78-ab21-4629-95d4-d271d67e3485"
+      "res4548",
+      "myPeeringService3175",
+      "d612cc68-f784-4964-b54d-12cee5e5ed1d"
     ]
   },
   "Variables": {
