@@ -530,8 +530,7 @@
     },
     "/jobs/create": {
       "post": {
-        "summary": "Create a new import/export job on an IoT hub.",
-        "description": "Create a new import/export job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Create a new import or export job on an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_CreateImportExportJob",
         "consumes": [
           "application/json"
@@ -565,8 +564,7 @@
     },
     "/jobs": {
       "get": {
-        "summary": "Gets the status of all import/export jobs in an iot hub",
-        "description": "Gets the status of all import/export jobs in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Gets the status of all import or export jobs in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_GetImportExportJobs",
         "consumes": [],
         "produces": [
@@ -592,8 +590,7 @@
     },
     "/jobs/{id}": {
       "get": {
-        "summary": "Gets the status of an import or export job in an iot hub",
-        "description": "Gets the status of an import or export job in an iot hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Gets the status of an import or export job in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_GetImportExportJob",
         "consumes": [],
         "produces": [
@@ -603,7 +600,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Job ID.",
+            "description": "The unique identifier of the job.",
             "required": true,
             "type": "string"
           },
@@ -621,8 +618,7 @@
         }
       },
       "delete": {
-        "summary": "Cancels an import or export job in an IoT hub.",
-        "description": "Cancels an import or export job in an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Cancels an import or export job in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_CancelImportExportJob",
         "consumes": [],
         "produces": [
@@ -632,7 +628,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Job ID.",
+            "description": "The unique identifier of the job.",
             "required": true,
             "type": "string"
           },
@@ -1220,8 +1216,7 @@
     },
     "/jobs/v2/{id}": {
       "get": {
-        "summary": "Retrieves details of a scheduled job from an IoT hub.",
-        "description": "Retrieves details of a scheduled job from an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Retrieves details of a scheduled job from an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_GetJob",
         "consumes": [],
         "produces": [
@@ -1231,7 +1226,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Job ID.",
+            "description": "The unique identifier of the job.",
             "required": true,
             "type": "string"
           },
@@ -1241,7 +1236,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the Job response object",
+            "description": "Returns the job details.",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
@@ -1249,8 +1244,7 @@
         }
       },
       "put": {
-        "summary": "Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time.",
-        "description": "Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_CreateJob",
         "consumes": [
           "application/json"
@@ -1262,13 +1256,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Job ID.",
+            "description": "The unique identifier of the job.",
             "required": true,
             "type": "string"
           },
           {
             "name": "jobRequest",
             "in": "body",
+            "description": "The job to be created.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/JobRequest"
@@ -1280,7 +1275,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the Job response object",
+            "description": "Returns the job response.",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
@@ -1290,8 +1285,7 @@
     },
     "/jobs/v2/{id}/cancel": {
       "post": {
-        "summary": "Cancels a scheduled job on an IoT hub.",
-        "description": "Cancels a scheduled job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Cancels a scheduled job on an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_CancelJob",
         "consumes": [],
         "produces": [
@@ -1301,7 +1295,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Job ID.",
+            "description": "The unique identifier of the job.",
             "required": true,
             "type": "string"
           },
@@ -1311,7 +1305,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the Job response object",
+            "description": "Returns the job response",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
@@ -1321,8 +1315,7 @@
     },
     "/jobs/v2/query": {
       "get": {
-        "summary": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language",
-        "description": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about jobs only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
         "operationId": "JobClient_QueryJobs",
         "consumes": [],
         "produces": [
@@ -1332,14 +1325,14 @@
           {
             "name": "jobType",
             "in": "query",
-            "description": "Job Type.",
+            "description": "The job type.",
             "required": false,
             "type": "string"
           },
           {
             "name": "jobStatus",
             "in": "query",
-            "description": "Job Status.",
+            "description": "The job status.",
             "required": false,
             "type": "string"
           },
@@ -2056,11 +2049,11 @@
       "properties": {
         "primaryKey": {
           "type": "string",
-          "description" : "The base 64 encoded primary key of your device."
+          "description": "The base 64 encoded primary key of your device."
         },
         "secondaryKey": {
           "type": "string",
-          "description" : "The base 64 encoded secondary key of your device."
+          "description": "The base 64 encoded secondary key of your device."
         }
       }
     },
@@ -2606,11 +2599,11 @@
         },
         "endTimeUtc": {
           "format": "date-time",
-          "description": "System generated.  Ignored at creation.\r\nRepresents the time the job stopped processing.",
+          "description": "System generated.  Ignored at creation. Represents the time the job stopped processing.",
           "type": "string"
         },
         "type": {
-          "description": "Required.\r\nThe type of job to execute.",
+          "description": "Required. The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2645,7 +2638,7 @@
         },
         "progress": {
           "format": "int32",
-          "description": "System generated.  Ignored at creation.\r\nRepresents the percentage of completion.",
+          "description": "System generated.  Ignored at creation. Represents the percentage of completion.",
           "type": "integer"
         },
         "inputBlobContainerUri": {
@@ -2661,11 +2654,11 @@
           "type": "string"
         },
         "outputBlobName": {
-          "description": "The name of the blob that will be created in the provided output blob container.  This blob will contain\r\nthe exported device registry information for the IoT Hub.",
+          "description": "The name of the blob that will be created in the provided output blob container.  This blob will contain the exported device registry information for the IoT Hub.",
           "type": "string"
         },
         "excludeKeysInExport": {
-          "description": "Optional for export jobs; ignored for other jobs.  Default: false.  If false, authorization keys are included\r\nin export output.  Keys are exported as null otherwise.",
+          "description": "Optional for export jobs; ignored for other jobs.  Default: false.  If false, authorization keys are included in export output.  Keys are exported as null otherwise.",
           "type": "boolean"
         },
         "storageAuthenticationType": {
@@ -2677,7 +2670,7 @@
           "type": "string"
         },
         "failureReason": {
-          "description": "System genereated.  Ignored at creation.\r\nIf status == failure, this represents a string containing the reason.",
+          "description": "System genereated.  Ignored at creation. If status == failure, this represents a string containing the reason.",
           "type": "string"
         }
       }
@@ -2825,7 +2818,7 @@
           "type": "string"
         },
         "type": {
-          "description": "Required.\r\nThe type of job to execute.",
+          "description": "Required. The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2846,13 +2839,13 @@
         },
         "cloudToDeviceMethod": {
           "$ref": "#/definitions/CloudToDeviceMethod",
-          "description": "Required if jobType is cloudToDeviceMethod.\r\nThe method type and parameters."
+          "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters."
         },
         "updateTwin": {
           "$ref": "#/definitions/Twin"
         },
         "queryCondition": {
-          "description": "Required if jobType is updateTwin or cloudToDeviceMethod.\r\nCondition for device query to get devices to execute the job on",
+          "description": "Required if jobType is updateTwin or cloudToDeviceMethod. Condition for device query to get devices to execute the job on.",
           "type": "string"
         },
         "startTime": {
@@ -2914,7 +2907,7 @@
         },
         "endTime": {
           "format": "date-time",
-          "description": "System generated.  Ignored at creation.\r\nRepresents the time the job stopped processing.",
+          "description": "System generated. Ignored at creation. Represents the time the job stopped processing.",
           "type": "string"
         },
         "maxExecutionTimeInSeconds": {
@@ -2923,7 +2916,7 @@
           "type": "integer"
         },
         "type": {
-          "description": "Required.\r\nThe type of job to execute.",
+          "description": "Required. The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2944,7 +2937,7 @@
         },
         "cloudToDeviceMethod": {
           "$ref": "#/definitions/CloudToDeviceMethod",
-          "description": "Required if jobType is cloudToDeviceMethod.\r\nThe method type and parameters."
+          "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters."
         },
         "updateTwin": {
           "$ref": "#/definitions/Twin"
@@ -2964,7 +2957,7 @@
           "type": "string"
         },
         "failureReason": {
-          "description": "System generated.  Ignored at creation.\r\nIf status == failure, this represents a string containing the reason.",
+          "description": "System generated.  Ignored at creation. If status == failure, this represents a string containing the reason.",
           "type": "string"
         },
         "statusMessage": {
