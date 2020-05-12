@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.IO;
 using NUnit.Framework;
 
@@ -16,6 +17,12 @@ namespace Azure.Core.TestFramework
         public TestRecording Recording { get; private set; }
 
         public RecordedTestMode Mode { get; }
+
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to NUnit's TestContext.Out for easy debugging.
+        /// </summary>
+        private static TestEventListener s_listener;
 
 #if DEBUG
         /// <summary>
@@ -50,6 +57,51 @@ namespace Azure.Core.TestFramework
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to Console.Out for easy debugging.
+        /// </summary>
+        private static TestLogger Logger { get; set; }
+
+        /// <summary>
+        /// Start logging events to the console if debugging or in Live mode.
+        /// This will run once before any tests.
+        /// </summary>
+        [OneTimeSetUp]
+        public void StartLoggingEvents()
+        {
+            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
+            {
+                Logger = new TestLogger();
+            }
+        }
+
+        /// <summary>
+        /// Stop logging events and do necessary cleanup.
+        /// This will run once after all tests have finished.
+        /// </summary>
+        [OneTimeTearDown]
+        public void StopLoggingEvents()
+        {
+            Logger?.Dispose();
+            Logger = null;
+        }
+
+        /// <summary>
+        /// Sets up the Event listener buffer for the test about to run.
+        /// This will run prior to the start of each test.
+        /// </summary>
+        [SetUp]
+        public void SetupEventsForTest() => Logger?.SetupEventsForTest();
+
+        /// <summary>
+        /// Output the Events to the console in the case of test failure.
+        /// This will include the HTTP requests and responses.
+        /// This will run after each test finishes.
+        /// </summary>
+        [TearDown]
+        public void OutputEventsForTest() => Logger?.OutputEventsForTest();
+
         [SetUp]
         public virtual void StartTestRecording()
         {
@@ -61,6 +113,7 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            Logger?.SetupEventsForTest();
         }
 
         [TearDown]
@@ -71,6 +124,7 @@ namespace Azure.Core.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+            Logger?.OutputEventsForTest();
         }
     }
 }

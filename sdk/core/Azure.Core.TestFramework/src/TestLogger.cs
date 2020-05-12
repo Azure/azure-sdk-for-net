@@ -11,24 +11,35 @@ using Azure.Core.Diagnostics;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
-namespace Azure.Storage.Test
+namespace Azure.Core.TestFramework
 {
     /// <summary>
-    /// The TestEventListener listens for the AzureSDK logging event source
-    /// and traces the output so it's easy to view the logs when testing.
+    /// The TestLogger listens for the AzureSDK logging event source and traces
+    /// the output so it's easy to view the logs when testing.
     ///
-    /// Simply create an instance of the TestEventListener before you start
-    /// running your tests.
+    /// We create an instance in SearchTestBase when we want to log test
+    /// output.
     /// </summary>
-    internal class TestEventListener : IDisposable
+    internal class TestLogger : IDisposable
     {
-        private StringBuilder _eventBuffer;
+        /// <summary>
+        /// EventSource listener for AzureSDK events.
+        /// </summary>
+        private AzureEventSourceListener Listener { get; }
 
-        private readonly AzureEventSourceListener _eventSourceListener;
+        /// <summary>
+        /// A buffer containing the logs collected thus far.  It is initialized
+        /// in SetupEventsForTest and (optionally) written out in
+        /// OutputEventsForTest.
+        /// </summary>
+        private StringBuilder _log;
 
-        public TestEventListener()
+        /// <summary>
+        /// Start collecting AzureSDK events to log.
+        /// </summary>
+        public TestLogger()
         {
-            _eventSourceListener = new AzureEventSourceListener(
+            Listener = new AzureEventSourceListener(
                 (e, _) => LogEvent(e),
                 EventLevel.Verbose);
         }
@@ -36,18 +47,20 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Sets up the Event listener buffer for the test about to run.
         /// </summary>
-        public void SetupEventsForTest()
-        {
-            _eventBuffer = new StringBuilder();
-        }
+        public void SetupEventsForTest() =>
+            _log = new StringBuilder();
 
         /// <summary>
-        /// Output the Events to the console in the case of test failure.
+        /// Output the Events to the NUnit TestContext. For failed tests,
+        /// the output will be available in the individual tests attachment in
+        /// Azure Dev Ops. For passed tests, you will need to download the parent test run
+        /// attachments which will give you the trx files for all tests. These files
+        /// can be opened in VS to review the logs.
         /// This will include the HTTP requests and responses.
         /// </summary>
         public void OutputEventsForTest()
         {
-            TestContext.Out.WriteLine(_eventBuffer.ToString());
+            TestContext.Out.WriteLine(_log.ToString());
         }
 
         /// <summary>
@@ -102,10 +115,10 @@ namespace Azure.Storage.Test
 
             // Add the message to event buffer
             Assert.IsNotNull(
-                _eventBuffer,
-                "SetupEventsForTest needs to be called before each test when using TestEventListener.");
-            _eventBuffer.Append(message);
-            _eventBuffer.AppendLine();
+                _log,
+                $"{nameof(SetupEventsForTest)} needs to be called before each test when using {nameof(TestLogger)}.");
+            _log.Append(message);
+            _log.AppendLine();
         }
 
         /// <summary>
@@ -145,6 +158,6 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Cleans up the <see cref="AzureEventSourceListener"/> instance.
         /// </summary>
-        public void Dispose() => _eventSourceListener.Dispose();
+        public void Dispose() => Listener?.Dispose();
     }
 }
