@@ -64,7 +64,7 @@ namespace Azure.Core.TestFramework
         [OneTimeSetUp]
         public void StartLoggingEvents()
         {
-            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
+            if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
             {
                 Logger = new TestLogger();
             }
@@ -92,7 +92,6 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
-            Logger?.SetupEventsForTest();
         }
 
         [TearDown]
@@ -103,7 +102,6 @@ namespace Azure.Core.TestFramework
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
-            Logger?.OutputEventsForTest();
         }
     }
 }

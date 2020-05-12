@@ -28,13 +28,6 @@ namespace Azure.Core.TestFramework
         private AzureEventSourceListener Listener { get; }
 
         /// <summary>
-        /// A buffer containing the logs collected thus far.  It is initialized
-        /// in SetupEventsForTest and (optionally) written out in
-        /// OutputEventsForTest.
-        /// </summary>
-        private StringBuilder _log;
-
-        /// <summary>
         /// Start collecting AzureSDK events to log.
         /// </summary>
         public TestLogger()
@@ -42,25 +35,6 @@ namespace Azure.Core.TestFramework
             Listener = new AzureEventSourceListener(
                 (e, _) => LogEvent(e),
                 EventLevel.Verbose);
-        }
-
-        /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// </summary>
-        public void SetupEventsForTest() =>
-            _log = new StringBuilder();
-
-        /// <summary>
-        /// Output the Events to the NUnit TestContext. For failed tests,
-        /// the output will be available in the individual tests attachment in
-        /// Azure Dev Ops. For passed tests, you will need to download the parent test run
-        /// attachments which will give you the trx files for all tests. These files
-        /// can be opened in VS to review the logs.
-        /// This will include the HTTP requests and responses.
-        /// </summary>
-        public void OutputEventsForTest()
-        {
-            TestContext.Out.WriteLine(_log.ToString());
         }
 
         /// <summary>
@@ -113,12 +87,10 @@ namespace Azure.Core.TestFramework
             // Dump the message and category
             Trace.WriteLine(message, category);
 
-            // Add the message to event buffer
-            Assert.IsNotNull(
-                _log,
-                $"{nameof(SetupEventsForTest)} needs to be called before each test when using {nameof(TestLogger)}.");
-            _log.Append(message);
-            _log.AppendLine();
+            // Add a line to separate requests/responses within a single test
+            message.AppendLine();
+            // Output the request/response
+            TestContext.Out.WriteLine(message.ToString());
         }
 
         /// <summary>
