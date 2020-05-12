@@ -31,10 +31,10 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}, resource provider namespace: {4}")]
-        public void Request(string requestId, string method, string uri, string headers, string? resourceProviderNamespace)
+        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}, client assembly name: {4}")]
+        public void Request(string requestId, string method, string uri, string headers, string? assemblyName)
         {
-            WriteEvent(RequestEvent, requestId, method, uri, headers, resourceProviderNamespace);
+            WriteEvent(RequestEvent, requestId, method, uri, headers, assemblyName);
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
