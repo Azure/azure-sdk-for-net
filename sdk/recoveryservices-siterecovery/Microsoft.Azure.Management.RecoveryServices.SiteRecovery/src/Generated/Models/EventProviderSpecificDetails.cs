@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Model class for provider specific details for an event.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("EventProviderSpecificDetails")]
     public partial class EventProviderSpecificDetails
     {
         /// <summary>

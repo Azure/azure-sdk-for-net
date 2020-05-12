@@ -54,9 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// ARM Id.</param>
         /// <param name="targetBootDiagnosticsStorageAccountId">The target boot
         /// diagnostics storage account ARM Id.</param>
-        /// <param name="performAutoResync">A value indicating whether auto
-        /// resync is to be done.</param>
-        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), string performAutoResync = default(string))
+        public VMwareCbtEnableMigrationInput(string vmwareMachineId, IList<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId, string licenseType = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetSubnetName = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string))
         {
             VmwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude;
@@ -70,7 +68,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetSubnetName = targetSubnetName;
             TargetAvailabilitySetId = targetAvailabilitySetId;
             TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
-            PerformAutoResync = performAutoResync;
             CustomInit();
         }
 
@@ -151,12 +148,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetBootDiagnosticsStorageAccountId")]
         public string TargetBootDiagnosticsStorageAccountId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether auto resync is to be done.
-        /// </summary>
-        [JsonProperty(PropertyName = "performAutoResync")]
-        public string PerformAutoResync { get; set; }
 
         /// <summary>
         /// Validate the object.

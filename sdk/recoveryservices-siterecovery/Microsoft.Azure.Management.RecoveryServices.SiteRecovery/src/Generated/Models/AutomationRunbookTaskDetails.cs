@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the task details for an automation runbook.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AutomationRunbookTaskDetails")]
     public partial class AutomationRunbookTaskDetails : TaskTypeDetails
     {
         /// <summary>

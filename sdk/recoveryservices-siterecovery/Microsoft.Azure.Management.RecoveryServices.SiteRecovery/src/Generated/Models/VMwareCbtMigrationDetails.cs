@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMwareCbt provider specific settings.
+    /// VMwareCbt provider specific settings
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareCbt")]
     public partial class VMwareCbtMigrationDetails : MigrationProviderSpecificSettings
@@ -57,22 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// which the VM was migrated.</param>
         /// <param name="lastRecoveryPointReceived">The last recovery point
         /// received time.</param>
-        /// <param name="lastRecoveryPointId">The last recovery point
-        /// Id.</param>
-        /// <param name="initialSeedingProgressPercentage">The initial seeding
-        /// progress percentage.</param>
-        /// <param name="migrationProgressPercentage">The migration progress
-        /// percentage.</param>
-        /// <param name="resyncProgressPercentage">The resync progress
-        /// percentage.</param>
-        /// <param name="resyncRequired">A value indicating whether resync is
-        /// required.</param>
-        /// <param name="resyncState">The resync state. Possible values
-        /// include: 'None', 'PreparedForResynchronization',
-        /// 'StartedResynchronization'</param>
-        /// <param name="performAutoResync">A value indicating whether auto
-        /// resync is to be done.</param>
-        public VMwareCbtMigrationDetails(string vmwareMachineId = default(string), string osType = default(string), string licenseType = default(string), string dataMoverRunAsAccountId = default(string), string snapshotRunAsAccountId = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetLocation = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), IList<VMwareCbtProtectedDiskDetails> protectedDisks = default(IList<VMwareCbtProtectedDiskDetails>), string targetNetworkId = default(string), IList<VMwareCbtNicDetails> vmNics = default(IList<VMwareCbtNicDetails>), string migrationRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?), string lastRecoveryPointId = default(string), int? initialSeedingProgressPercentage = default(int?), int? migrationProgressPercentage = default(int?), int? resyncProgressPercentage = default(int?), string resyncRequired = default(string), string resyncState = default(string), string performAutoResync = default(string))
+        public VMwareCbtMigrationDetails(string vmwareMachineId = default(string), string osType = default(string), string licenseType = default(string), string dataMoverRunAsAccountId = default(string), string snapshotRunAsAccountId = default(string), string targetVmName = default(string), string targetVmSize = default(string), string targetLocation = default(string), string targetResourceGroupId = default(string), string targetAvailabilitySetId = default(string), string targetBootDiagnosticsStorageAccountId = default(string), IList<VMwareCbtProtectedDiskDetails> protectedDisks = default(IList<VMwareCbtProtectedDiskDetails>), string targetNetworkId = default(string), IList<VMwareCbtNicDetails> vmNics = default(IList<VMwareCbtNicDetails>), string migrationRecoveryPointId = default(string), System.DateTime? lastRecoveryPointReceived = default(System.DateTime?))
         {
             VmwareMachineId = vmwareMachineId;
             OsType = osType;
@@ -90,13 +75,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             VmNics = vmNics;
             MigrationRecoveryPointId = migrationRecoveryPointId;
             LastRecoveryPointReceived = lastRecoveryPointReceived;
-            LastRecoveryPointId = lastRecoveryPointId;
-            InitialSeedingProgressPercentage = initialSeedingProgressPercentage;
-            MigrationProgressPercentage = migrationProgressPercentage;
-            ResyncProgressPercentage = resyncProgressPercentage;
-            ResyncRequired = resyncRequired;
-            ResyncState = resyncState;
-            PerformAutoResync = performAutoResync;
             CustomInit();
         }
 
@@ -200,49 +178,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastRecoveryPointReceived")]
         public System.DateTime? LastRecoveryPointReceived { get; private set; }
-
-        /// <summary>
-        /// Gets the last recovery point Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "lastRecoveryPointId")]
-        public string LastRecoveryPointId { get; private set; }
-
-        /// <summary>
-        /// Gets the initial seeding progress percentage.
-        /// </summary>
-        [JsonProperty(PropertyName = "initialSeedingProgressPercentage")]
-        public int? InitialSeedingProgressPercentage { get; private set; }
-
-        /// <summary>
-        /// Gets the migration progress percentage.
-        /// </summary>
-        [JsonProperty(PropertyName = "migrationProgressPercentage")]
-        public int? MigrationProgressPercentage { get; private set; }
-
-        /// <summary>
-        /// Gets the resync progress percentage.
-        /// </summary>
-        [JsonProperty(PropertyName = "resyncProgressPercentage")]
-        public int? ResyncProgressPercentage { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether resync is required.
-        /// </summary>
-        [JsonProperty(PropertyName = "resyncRequired")]
-        public string ResyncRequired { get; private set; }
-
-        /// <summary>
-        /// Gets the resync state. Possible values include: 'None',
-        /// 'PreparedForResynchronization', 'StartedResynchronization'
-        /// </summary>
-        [JsonProperty(PropertyName = "resyncState")]
-        public string ResyncState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether auto resync is to be done.
-        /// </summary>
-        [JsonProperty(PropertyName = "performAutoResync")]
-        public string PerformAutoResync { get; set; }
 
     }
 }

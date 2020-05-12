@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Disable protection provider specific input.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DisableProtectionProviderSpecificInput")]
     public partial class DisableProtectionProviderSpecificInput
     {
         /// <summary>

@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Provider specific input for update pairing operations.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ReplicationProviderSpecificUpdateContainerMappingInput")]
     public partial class ReplicationProviderSpecificUpdateContainerMappingInput
     {
         /// <summary>

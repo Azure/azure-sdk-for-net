@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Fabric provider specific settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FabricSpecificCreationInput")]
     public partial class FabricSpecificCreationInput
     {
         /// <summary>

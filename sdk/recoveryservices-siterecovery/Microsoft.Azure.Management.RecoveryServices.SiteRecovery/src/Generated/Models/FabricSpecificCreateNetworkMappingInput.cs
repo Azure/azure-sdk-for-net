@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Input details specific to fabrics during Network Mapping.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FabricSpecificCreateNetworkMappingInput")]
     public partial class FabricSpecificCreateNetworkMappingInput
     {
         /// <summary>

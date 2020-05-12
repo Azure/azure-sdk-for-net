@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// Hyper V replica provider specific settings base class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HyperVReplicaBaseReplicationDetails")]
     public partial class HyperVReplicaBaseReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary>

@@ -344,64 +344,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Resynchronizes replication.
-            /// </summary>
-            /// <remarks>
-            /// The operation to resynchronize replication of an ASR migration item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='migrationItemName'>
-            /// Migration item name.
-            /// </param>
-            /// <param name='input'>
-            /// Resync input.
-            /// </param>
-            public static MigrationItem Resync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input)
-            {
-                return operations.ResyncAsync(fabricName, protectionContainerName, migrationItemName, input).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resynchronizes replication.
-            /// </summary>
-            /// <remarks>
-            /// The operation to resynchronize replication of an ASR migration item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='migrationItemName'>
-            /// Migration item name.
-            /// </param>
-            /// <param name='input'>
-            /// Resync input.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<MigrationItem> ResyncAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ResyncWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, input, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Test migrate item.
             /// </summary>
             /// <remarks>
@@ -781,64 +723,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<MigrationItem> BeginMigrateAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, MigrateInput migrateInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, migrateInput, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Resynchronizes replication.
-            /// </summary>
-            /// <remarks>
-            /// The operation to resynchronize replication of an ASR migration item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='migrationItemName'>
-            /// Migration item name.
-            /// </param>
-            /// <param name='input'>
-            /// Resync input.
-            /// </param>
-            public static MigrationItem BeginResync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input)
-            {
-                return operations.BeginResyncAsync(fabricName, protectionContainerName, migrationItemName, input).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resynchronizes replication.
-            /// </summary>
-            /// <remarks>
-            /// The operation to resynchronize replication of an ASR migration item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='migrationItemName'>
-            /// Migration item name.
-            /// </param>
-            /// <param name='input'>
-            /// Resync input.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<MigrationItem> BeginResyncAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginResyncWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, input, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
