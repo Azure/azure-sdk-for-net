@@ -699,12 +699,6 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get { throw null; } }
         public long Position { get { throw null; } }
     }
-    public abstract partial class BlobQueryErrorHandler
-    {
-        protected BlobQueryErrorHandler() { }
-        public abstract void Handle(Azure.Storage.Blobs.Models.BlobQueryError blobQueryError);
-        public abstract System.Threading.Tasks.Task HandleAsync(Azure.Storage.Blobs.Models.BlobQueryError blobQueryError);
-    }
     public partial class BlobQueryJsonTextConfiguration : Azure.Storage.Blobs.Models.BlobQueryTextConfiguration
     {
         public BlobQueryJsonTextConfiguration() { }
@@ -713,7 +707,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobQueryOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobQueryErrorHandler ErrorHandler { get { throw null; } set { } }
+        public System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration InputTextConfiguration { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }

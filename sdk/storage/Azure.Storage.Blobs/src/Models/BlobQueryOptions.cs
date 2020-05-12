@@ -24,9 +24,9 @@ namespace Azure.Storage.Blobs.Models
         public BlobQueryTextConfiguration OutputTextConfiguration { get; set; }
 
         /// <summary>
-        /// Optional error handler.
+        /// Optional callback for error handling.
         /// </summary>
-        public BlobQueryErrorHandler ErrorHandler { get; set; }
+        public Action<BlobQueryError> ErrorHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on the query.

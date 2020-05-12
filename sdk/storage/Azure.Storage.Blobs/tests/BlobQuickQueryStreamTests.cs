@@ -60,10 +60,12 @@ namespace Azure.Storage.Blobs.Test
                 Position = position
             };
 
+            BlobQueryErrorHandler errorHandler = new BlobQueryErrorHandler(expectedError);
+
             BlobQuickQueryStream quickQueryStream = new BlobQuickQueryStream(
                 new MemoryStream(),
                 default,
-                new ErrorReceiver(expectedError));
+                errorHandler.Handle);
 
             // Act
             quickQueryStream.ProcessErrorRecord(record);

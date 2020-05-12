@@ -372,14 +372,20 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            return new BlobQueryOptions
+            BlobQueryOptions blobQueryOptions = new BlobQueryOptions
             {
                 InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(),
                 OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(),
-                ErrorHandler = options.ErrorHandler == null ? null : new DataLakeQueryErrorHandler(options.ErrorHandler),
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 ProgressHandler = options.ProgressHandler
             };
+
+            if (options.ErrorHandler != null)
+            {
+                blobQueryOptions.ErrorHandler = (BlobQueryError error) => { options.ErrorHandler(error.ToDataLakeQueryError()); };
+            }
+
+            return blobQueryOptions;
         }
 
         internal static BlobQueryTextConfiguration ToBlobQueryTextConfiguration(this DataLakeQueryTextConfiguration textConfiguration)

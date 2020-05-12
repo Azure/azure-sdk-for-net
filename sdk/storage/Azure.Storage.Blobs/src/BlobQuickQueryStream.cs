@@ -49,12 +49,12 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Error handler.
         /// </summary>
-        internal BlobQueryErrorHandler _errorHandler;
+        internal Action<BlobQueryError> _errorHandler;
 
         public BlobQuickQueryStream(
             Stream avroStream,
             IProgress<long> progressHandler = default,
-            BlobQueryErrorHandler nonFatalErrorHandler = default)
+            Action<BlobQueryError> errorHandler = default)
         {
             _avroStream = avroStream;
             _avroReader = new AvroReader(_avroStream);
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
             _bufferOffset = 0;
             _bufferLength = 0;
             _progressHandler = progressHandler;
-            _errorHandler = nonFatalErrorHandler;
+            _errorHandler = errorHandler;
         }
 
         /// <inheritdoc/>
@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs
                     Description = (string)description,
                     Position = (long)position
                 };
-                _errorHandler.Handle(blobQueryError);
+                _errorHandler(blobQueryError);
             }
         }
 

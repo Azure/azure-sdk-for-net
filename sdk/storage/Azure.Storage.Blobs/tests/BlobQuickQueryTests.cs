@@ -261,9 +261,11 @@ namespace Azure.Storage.Blobs.Test
                 Position = 0
             };
 
+            BlobQueryErrorHandler errorHandler = new BlobQueryErrorHandler(expectedBlobQueryError);
+
             BlobQueryOptions options = new BlobQueryOptions
             {
-                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+                ErrorHandler = errorHandler.Handle
             };
 
             response = await blockBlobClient.QueryAsync(
@@ -307,10 +309,13 @@ namespace Azure.Storage.Blobs.Test
                 Description = "Unexpected token ',' at [byte: 3]. Expecting tokens '{', or '['.",
                 Position = 0
             };
+
+            BlobQueryErrorHandler errorHandler = new BlobQueryErrorHandler(expectedBlobQueryError);
+
             options = new BlobQueryOptions
             {
                 InputTextConfiguration = jsonTextConfiguration,
-                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+                ErrorHandler = errorHandler.Handle
             };
 
             response = await blockBlobClient.QueryAsync(

@@ -3173,9 +3173,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Position = 0
             };
 
+            ErrorHandler errorHandler = new ErrorHandler(expectedBlobQueryError);
+
             DataLakeQueryOptions options = new DataLakeQueryOptions
             {
-                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+                ErrorHandler = errorHandler.Handle
             };
 
             response = await file.QueryAsync(
@@ -3219,10 +3221,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Description = "Unexpected token ',' at [byte: 3]. Expecting tokens '{', or '['.",
                 Position = 0
             };
+            ErrorHandler errorHandler = new ErrorHandler(expectedBlobQueryError);
             options = new DataLakeQueryOptions
             {
                 InputTextConfiguration = jsonTextConfiguration,
-                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+                ErrorHandler = errorHandler.Handle
             };
 
             response = await file.QueryAsync(
@@ -3313,16 +3316,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             return stream;
         }
 
-        private class ErrorReceiver : IDataLakeQueryErrorHandler
+        private class ErrorHandler
         {
             private readonly DataLakeQueryError _expectedBlobQueryError;
 
-            public ErrorReceiver(DataLakeQueryError expected)
+            public ErrorHandler(DataLakeQueryError expected)
             {
                 _expectedBlobQueryError = expected;
             }
 
-            public void ReportError(DataLakeQueryError blobQueryError)
+            public void Handle(DataLakeQueryError blobQueryError)
             {
                 Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
                 Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);

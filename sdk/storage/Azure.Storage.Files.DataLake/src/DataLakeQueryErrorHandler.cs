@@ -1,28 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
 {
-    internal class DataLakeQueryErrorHandler : BlobQueryErrorHandler
+    internal class DataLakeQueryErrorHandler
     {
-        private IDataLakeQueryErrorHandler _errorHandler;
+        private Action<DataLakeQueryError> _errorHandler;
 
-        public DataLakeQueryErrorHandler(IDataLakeQueryErrorHandler errorHandler)
+        public DataLakeQueryErrorHandler(Action<DataLakeQueryError> errorHandler)
         {
             _errorHandler = errorHandler;
         }
 
-        public override void Handle(BlobQueryError blobQueryError)
-            => _errorHandler.ReportError(blobQueryError.ToDataLakeQueryError());
+        public void Handle(BlobQueryError blobQueryError)
+            => _errorHandler(blobQueryError.ToDataLakeQueryError());
 
-
-        public override Task HandleAsync(BlobQueryError blobQueryError)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

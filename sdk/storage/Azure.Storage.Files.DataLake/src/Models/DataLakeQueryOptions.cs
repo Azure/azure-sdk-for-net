@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Optional error handler.
         /// </summary>
-        public IDataLakeQueryErrorHandler ErrorHandler { get; set; }
+        public Action<DataLakeQueryError> ErrorHandler { get; set; }
 
         /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on the query.
