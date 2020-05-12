@@ -78,7 +78,7 @@ namespace Peering.Tests
         /// <summary>
         /// The api version latest.
         /// </summary>
-        public const string ApiVersionLatest = "2020-01-01-preview";
+        public const string ApiVersionLatest = "2020-04-01";
 
         /// <summary>
         /// The peering operations test.
@@ -321,9 +321,6 @@ namespace Peering.Tests
                 {
                     Assert.Contains("NotFound", ex.Message);
                 }
-                finally
-                {
-                }
             }
         }
 
@@ -405,21 +402,20 @@ namespace Peering.Tests
 
                     // Create Direct Peering
                     var directConnection = new DirectConnection
-                    {
-                        ConnectionIdentifier = Guid.NewGuid().ToString(),
-                        BandwidthInMbps = 10000,
-                        PeeringDBFacilityId =
-                                                       loc.Direct.PeeringFacilities
-                                                           .FirstOrDefault(x => x.PeeringDBFacilityId == 99999)
-                                                           ?.PeeringDBFacilityId,
-                        SessionAddressProvider = SessionAddressProvider.Peer,
-                        BgpSession = new BgpSession
                         {
-                            SessionPrefixV4 = prefix.Prefix,
-                            MaxPrefixesAdvertisedV4 = 20000
-                        },
-                        UseForPeeringService = true
-                    };
+                            ConnectionIdentifier = Guid.NewGuid().ToString(),
+                            BandwidthInMbps = 10000,
+                            PeeringDBFacilityId =
+                                loc.Direct.PeeringFacilities.FirstOrDefault(x => x.PeeringDBFacilityId == 99999)
+                                    ?.PeeringDBFacilityId,
+                            SessionAddressProvider = SessionAddressProvider.Peer,
+                            BgpSession = new BgpSession
+                                {
+                                    SessionPrefixV4 = prefix.Prefix, MaxPrefixesAdvertisedV4 = 20000
+                                },
+                            UseForPeeringService = true
+                        };
+
                     directPeeringProperties.Connections.Add(directConnection);
                     var peeringModel = new PeeringModel
                     {
@@ -470,7 +466,6 @@ namespace Peering.Tests
                     }
                     catch (Exception ex)
                     {
-
                         Assert.NotNull(ex.Message);
                     }
                 }
@@ -486,7 +481,7 @@ namespace Peering.Tests
         /// The create get list and delete registered ans.
         /// </summary>
         [Fact]
-        public void CreateGetListAndDeleteRegisteredAns()
+        public void CreateGetListAndDeleteRegisteredAsns()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
