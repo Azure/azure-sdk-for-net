@@ -73,7 +73,7 @@ jobs:
       - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx"
+          --logger "trx;LogFileName=$(OSName)-$(TestTargetFramework).trx"
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false
@@ -96,7 +96,7 @@ jobs:
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testResultsFiles: "**/$(OSName)-$(TestTargetFramework)*.trx"
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
