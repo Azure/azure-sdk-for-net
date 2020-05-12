@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal readonly ServiceRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
-        private readonly ClientDiagnostics _diagnostics;
+        internal readonly ClientDiagnostics Diagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
@@ -62,9 +62,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
         }
 
         /// <summary>
@@ -288,6 +288,91 @@ namespace Azure.AI.FormRecognizer.Training
 
         #endregion
 
+        #region Copy
+        /// <summary>
+        /// Copy a custom model stored in this resource (the source) to the user specified
+        /// target Form Recognizer resource.
+        /// </summary>
+        /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation"/>.Value upon successful
+        /// completion will contain meta-data about the model copied.</returns>
+        [ForwardsClientCalls]
+        public virtual CopyModelOperation StartCopyModel(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(target, nameof(target));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            var request = new CopyRequest(target._resourceId,
+                                          target._region,
+                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+
+            ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
+            return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
+        }
+
+        /// <summary>
+        /// Copy a custom model stored in this resource (the source) to the user specified
+        /// target Form Recognizer resource.
+        /// </summary>
+        /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
+        /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation"/>.Value upon successful
+        /// completion will contain meta-data about the model copied.</returns>
+        [ForwardsClientCalls]
+        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(target, nameof(target));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+            var request = new CopyRequest(target._resourceId,
+                                          target._region,
+                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+            ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
+            return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
+        }
+
+        /// <summary>
+        /// Generate authorization for copying a custom model into the target Form Recognizer resource.
+        /// </summary>
+        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
+        /// <param name="region">Location of the target Form Recognizer resource</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
+        [ForwardsClientCalls]
+        public virtual Response<CopyAuthorization> GetCopyAuthorization(string resourceId, string region, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            Response<CopyAuthorizationResult> response = ServiceClient.GenerateModelCopyAuthorization(cancellationToken);
+            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, region), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Generate authorization for copying a custom model into the target Form Recognizer resource.
+        /// </summary>
+        /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
+        /// <param name="region">Location of the target Form Recognizer resource</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
+        /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string resourceId, string region, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            Response<CopyAuthorizationResult> response = await ServiceClient.GenerateModelCopyAuthorizationAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, region), response.GetRawResponse());
+        }
+        #endregion Copy
+
         #region Form Recognizer Client
 
         /// <summary>
@@ -295,7 +380,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// credentials and the same set of <see cref="FormRecognizerClientOptions"/> this client has.
         /// </summary>
         /// <returns>A new instance of a <see cref="FormRecognizerClient"/>.</returns>
-        public virtual FormRecognizerClient GetFormRecognizerClient() => new FormRecognizerClient(_diagnostics, ServiceClient);
+        public virtual FormRecognizerClient GetFormRecognizerClient() => new FormRecognizerClient(Diagnostics, ServiceClient);
 
         #endregion Form Recognizer Client
     }

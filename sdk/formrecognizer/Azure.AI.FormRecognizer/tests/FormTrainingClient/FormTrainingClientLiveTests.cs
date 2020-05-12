@@ -199,5 +199,84 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(() => client.GetCustomModelAsync(trainedModel.ModelId));
         }
+
+        [Test]
+        public async Task CopyModel()
+        {
+            var sourceClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            CopyModelOperation operation;
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            }
+
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasValue);
+
+            CustomFormModelInfo modelCopied = operation.Value;
+
+            Assert.IsNotNull(modelCopied.LastModified);
+            Assert.IsNotNull(modelCopied.CreatedOn);
+            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
+            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+        }
+
+        [Test]
+        public async Task CopyModelError()
+        {
+            var sourceClient = CreateInstrumentedFormTrainingClient();
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync("00000000-0000-0000-0000-000000000000", targetAuth));
+        }
+
+        [Test]
+        public async Task GetCopyAuthorization()
+        {
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            Assert.IsNotNull(targetAuth.ModelId);
+            Assert.IsNotNull(targetAuth._accessToken);
+            Assert.IsNotNull(targetAuth.ExpiresOn);
+            Assert.AreEqual(resourceID, targetAuth._resourceId);
+            Assert.AreEqual(region, targetAuth._region);
+        }
+
+        [Test]
+        public async Task SerializedDesirializedCopyAuthorizationAsync()
+        {
+            var targetClient = CreateInstrumentedFormTrainingClient();
+            var resourceID = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
+
+            string jsonTargetAuth = targetAuth.ToJson();
+
+            CopyAuthorization targetAuthFromJson = CopyAuthorization.FromJson(jsonTargetAuth);
+
+            Assert.AreEqual(targetAuth.ModelId, targetAuthFromJson.ModelId);
+            Assert.AreEqual(targetAuth.ExpiresOn, targetAuthFromJson.ExpiresOn);
+            Assert.AreEqual(targetAuth._accessToken, targetAuthFromJson._accessToken);
+            Assert.AreEqual(targetAuth._resourceId, targetAuthFromJson._resourceId);
+            Assert.AreEqual(targetAuth._region, targetAuthFromJson._region);
+        }
     }
 }
