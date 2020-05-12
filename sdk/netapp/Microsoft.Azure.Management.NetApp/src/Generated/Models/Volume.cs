@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="volumeType">What type of volume is this</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isRestoring">Restoring</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?))
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), IList<MountTarget> mountTargets = default(IList<MountTarget>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?))
         {
             Location = location;
             Id = id;
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// List of mount targets
         /// </remarks>
         [JsonProperty(PropertyName = "properties.mountTargets")]
-        public IList<MountTargetProperties> MountTargets { get; set; }
+        public IList<MountTarget> MountTargets { get; set; }
 
         /// <summary>
         /// Gets or sets what type of volume is this
