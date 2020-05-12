@@ -1202,8 +1202,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
                 {
-                    TestContext.Out.WriteLine(eventArgs.ErrorSource);
-                    TestContext.Out.WriteLine(eventArgs.Exception.Message);
                     try
                     {
                         if (eventArgs.Exception is TestException)
@@ -1243,7 +1241,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         {
                             tcs.SetResult(true);
                         }
-                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession)
+                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession ||
+                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession)
                         {
                             // add small delay to prevent race condition that can result in error handler
                             // being called twice as the processor will immediately try to accept the session again.
