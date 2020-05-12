@@ -224,7 +224,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
             };
 
-            client.CreateIndex(index);
+            client.GetSearchIndexClient().CreateIndex(index);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
         }
 

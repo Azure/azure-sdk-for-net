@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -85,7 +86,7 @@ namespace Azure.Search.Documents.Tests
             SearchServiceClient client = resources.GetServiceClient();
             Guid id = Recording.Random.NewGuid();
             Response<SearchServiceStatistics> response =
-                await client.GetServiceStatisticsAsync(
+                await client.GetStatisticsAsync(
                     new SearchRequestOptions { ClientRequestId = id });
 
             Assert.AreEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
@@ -123,7 +124,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchServiceClient client = resources.GetServiceClient();
-            Response<SearchServiceStatistics> response = await client.GetServiceStatisticsAsync();
+            Response<SearchServiceStatistics> response = await client.GetStatisticsAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
@@ -143,7 +144,7 @@ namespace Azure.Search.Documents.Tests
         public void CreateIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
-            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake")).GetSearchIndexClient();
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateIndex(null));
             Assert.AreEqual("index", ex.ParamName);
@@ -161,7 +162,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndex expectedIndex = SearchResources.GetHotelIndex(resources.IndexName);
 
             SearchServiceClient client = resources.GetServiceClient();
-            SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
+            SearchIndex actualIndex = await client.GetSearchIndexClient().CreateIndexAsync(expectedIndex);
 
             Assert.AreEqual(expectedIndex.Name, actualIndex.Name);
             Assert.That(actualIndex.Fields, Is.EqualTo(expectedIndex.Fields).Using(SearchFieldComparer.Shared));
@@ -180,7 +181,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndex initialIndex = SearchResources.GetHotelIndex(resources.IndexName);
 
             SearchServiceClient client = resources.GetServiceClient();
-            SearchIndex createdIndex = await client.CreateIndexAsync(initialIndex);
+            SearchIndex createdIndex = await client.GetSearchIndexClient().CreateIndexAsync(initialIndex);
 
             string analyzerName = "asciiTags";
 
@@ -209,7 +210,7 @@ namespace Azure.Search.Documents.Tests
                     IsFilterable = true,
                 });
 
-            SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
+            SearchIndex updatedIndex = await client.GetSearchIndexClient().CreateOrUpdateIndexAsync(
                 createdIndex,
                 allowIndexDowntime: true,
                 onlyIfUnchanged: true,
@@ -229,7 +230,7 @@ namespace Azure.Search.Documents.Tests
         public void GetIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
-            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake")).GetSearchIndexClient();
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndex(null));
             Assert.AreEqual("indexName", ex.ParamName);
@@ -244,7 +245,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
             SearchServiceClient client = resources.GetServiceClient();
-            SearchIndex index = await client.GetIndexAsync(resources.IndexName);
+            SearchIndex index = await client.GetSearchIndexClient().GetIndexAsync(resources.IndexName);
 
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
             Assert.AreEqual(resources.IndexName, index.Name);
@@ -259,7 +260,7 @@ namespace Azure.Search.Documents.Tests
             SearchServiceClient client = resources.GetServiceClient();
 
             bool found = false;
-            await foreach (SearchIndex index in client.GetIndexesAsync())
+            await foreach (SearchIndex index in client.GetSearchIndexClient().GetIndexesAsync())
             {
                 found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
             }
@@ -274,7 +275,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchServiceClient client = resources.GetServiceClient();
-            AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync();
+            AsyncPageable<SearchIndex> pageable = client.GetSearchIndexClient().GetIndexesAsync();
 
             string continuationToken = Recording.GenerateId();
             IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
@@ -297,7 +298,7 @@ namespace Azure.Search.Documents.Tests
                 resources.StorageAccountConnectionString,
                 new SearchIndexerDataContainer(resources.BlobContainerName));
 
-            SearchIndexerDataSource actualSource = await serviceClient.CreateDataSourceAsync(
+            SearchIndexerDataSource actualSource = await serviceClient.GetSearchIndexerDataSourceClient().CreateDataSourceAsync(
                 dataSource,
                 new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
@@ -306,13 +307,14 @@ namespace Azure.Search.Documents.Tests
                 dataSource.Name,
                 resources.IndexName);
 
-            SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
+            SearchIndexerClient indexerClient = serviceClient.GetSearchIndexerClient();
+            SearchIndexer actualIndexer = await indexerClient.CreateIndexerAsync(
                 indexer,
                 new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
-            await serviceClient.CreateOrUpdateIndexerAsync(
+            await indexerClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
                 onlyIfUnchanged: true,
                 new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
@@ -320,7 +322,7 @@ namespace Azure.Search.Documents.Tests
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
-            await serviceClient.RunIndexerAsync(
+            await indexerClient.RunIndexerAsync(
                 indexer.Name,
                 new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
 
@@ -343,7 +345,7 @@ namespace Azure.Search.Documents.Tests
 
             string synonymMapName = Recording.Random.GetName();
 
-            SearchServiceClient client = resources.GetServiceClient();
+            SynonymMapClient client = resources.GetServiceClient().GetSynonymMapClient();
 
             SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
             Assert.AreEqual(synonymMapName, createdMap.Name);
@@ -403,7 +405,7 @@ namespace Azure.Search.Documents.Tests
             {
                 await DelayAsync(delay, cancellationToken: cts.Token);
 
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
+                SearchIndexerStatus status = await client.GetSearchIndexerClient().GetIndexerStatusAsync(
                     indexerName,
                     new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() },
                     cts.Token);

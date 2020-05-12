@@ -310,7 +310,7 @@ SearchIndex index = new SearchIndex("hotels")
     }
 };
 
-client.CreateIndex(index);
+client.GetSearchIndexClient().CreateIndex(index);
 ```
 
 ### Adding documents to your index

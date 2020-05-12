@@ -20,6 +20,6 @@ AzureKeyCredential credential = new AzureKeyCredential(
 SearchServiceClient search = new SearchServiceClient(endpoint, credential);
 
 // Get and report the Search Service statistics
-Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
+Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
 ```

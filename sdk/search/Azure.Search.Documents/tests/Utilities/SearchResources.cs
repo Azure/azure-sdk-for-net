@@ -10,10 +10,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -283,7 +283,7 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
-                SearchServiceClient client = GetServiceClient();
+                SearchIndexClient client = GetServiceClient().GetSearchIndexClient();
                 await client.DeleteIndexAsync(IndexName);
                 RequiresCleanup = false;
             }
@@ -315,7 +315,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Random.GetName(8);
 
-                SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                SearchIndexClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey)).GetSearchIndexClient();
                 await client.CreateIndexAsync(GetHotelIndex(IndexName));
 
                 RequiresCleanup = true;

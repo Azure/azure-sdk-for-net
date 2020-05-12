@@ -2,6 +2,10 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Breaking Changes
+
+- Moved data source, index, indexer, skillset, and synonym map operations to separate clients obtained from `SearchServiceClient`.
+- Renamed `SearchServiceClient.GetServiceStatistics` and `SearchServiceClient.GetServiceStatisticsAsync` to `SearchServiceClient.GetStatistics` and `SearchServiceClient.GetStatisticsAsync`, respectively.
 
 ## 1.0.0-preview.3 (2020-05-05)
 

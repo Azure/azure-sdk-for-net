@@ -18,7 +18,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
 SearchServiceClient search = new SearchServiceClient(endpoint, credential);
 
 // Perform an operation
-Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
+Response<SearchServiceStatistics> stats = search.GetStatistics();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
 ```
 
