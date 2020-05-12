@@ -37,7 +37,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// </param>
         /// <param name="startTime"> ISO 8601 date time to start the job. </param>
         /// <param name="maxExecutionTimeInSeconds"> Max execution time in secounds (ttl duration). </param>
-        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethod cloudToDeviceMethod, Twin updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds)
+        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethod cloudToDeviceMethod, TwinData updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds)
         {
             JobId = jobId;
             Type = type;
@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// </summary>
         public CloudToDeviceMethod CloudToDeviceMethod { get; set; }
         /// <summary> Twin Representation. </summary>
-        public Twin UpdateTwin { get; set; }
+        public TwinData UpdateTwin { get; set; }
         /// <summary>
         /// Required if jobType is updateTwin or cloudToDeviceMethod.
         /// 

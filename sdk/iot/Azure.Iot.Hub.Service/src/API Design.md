@@ -1,6 +1,20 @@
 ﻿# Azure Iot Hub Service API Design Doc
 This document outlines the APIs for the Azure Iot Hub Service SDK
 
+<details><summary><b>Type definition names</b></summary>
+    
+```
+Configuration - TwinConfiguration
+Module - ModuleIdentity
+Device - DeviceIdentity
+Twin - TwinData
+Interface - PnpInterface
+Property - PnpProperty
+Reported - PnpReported
+Desired - PnpDesired
+```
+</details>
+
 <details><summary><b>Constructors</b></summary>
     
 ```csharp
