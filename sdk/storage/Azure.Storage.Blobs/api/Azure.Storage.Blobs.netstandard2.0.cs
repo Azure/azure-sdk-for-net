@@ -683,6 +683,40 @@ namespace Azure.Storage.Blobs.Models
         public long TagCount { get { throw null; } }
         public string VersionId { get { throw null; } }
     }
+    public partial class BlobQueryCsvTextConfiguration : Azure.Storage.Blobs.Models.BlobQueryTextConfiguration
+    {
+        public BlobQueryCsvTextConfiguration() { }
+        public string ColumnSeparator { get { throw null; } set { } }
+        public char? EscapeCharacter { get { throw null; } set { } }
+        public char? FieldQuote { get { throw null; } set { } }
+        public bool HasHeaders { get { throw null; } set { } }
+    }
+    public partial class BlobQueryError
+    {
+        internal BlobQueryError() { }
+        public string Description { get { throw null; } }
+        public bool IsFatal { get { throw null; } }
+        public string Name { get { throw null; } }
+        public long Position { get { throw null; } }
+    }
+    public partial class BlobQueryJsonTextConfiguration : Azure.Storage.Blobs.Models.BlobQueryTextConfiguration
+    {
+        public BlobQueryJsonTextConfiguration() { }
+    }
+    public partial class BlobQueryOptions
+    {
+        public BlobQueryOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration InputTextConfiguration { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobQueryTextConfiguration OutputTextConfiguration { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public event System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { add { } remove { } }
+    }
+    public abstract partial class BlobQueryTextConfiguration
+    {
+        protected BlobQueryTextConfiguration() { }
+        public string RecordSeparator { get { throw null; } set { } }
+    }
     public partial class BlobRequestConditions : Azure.RequestConditions
     {
         public BlobRequestConditions() { }
@@ -768,6 +802,7 @@ namespace Azure.Storage.Blobs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobProperties BlobProperties(System.DateTimeOffset lastModified, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, Azure.Storage.Blobs.Models.LeaseState leaseState, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, long contentLength, string destinationSnapshot, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, bool isIncrementalCopy, string cacheControl, Azure.Storage.Blobs.Models.CopyStatus copyStatus, long blobSequenceNumber, System.Uri copySource, string acceptRanges, string copyProgress, int blobCommittedBlockCount, string copyId, bool isServerEncrypted, string copyStatusDescription, string encryptionKeySha256, System.DateTimeOffset copyCompletedOn, string accessTier, Azure.Storage.Blobs.Models.BlobType blobType, bool accessTierInferred, System.Collections.Generic.IDictionary<string, string> metadata, string archiveStatus, System.DateTimeOffset createdOn, System.DateTimeOffset accessTierChangedOn, string contentType) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobProperties BlobProperties(System.DateTimeOffset lastModified, Azure.Storage.Blobs.Models.LeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, Azure.Storage.Blobs.Models.LeaseState leaseState, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, long blobSequenceNumber, Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration, string acceptRanges, string destinationSnapshot, int blobCommittedBlockCount, bool isIncrementalCopy, bool isServerEncrypted, Azure.Storage.Blobs.Models.CopyStatus copyStatus, string encryptionKeySha256, System.Uri copySource, string encryptionScope, string copyProgress, string accessTier, string copyId, bool accessTierInferred, string copyStatusDescription, string archiveStatus, System.DateTimeOffset copyCompletedOn, System.DateTimeOffset accessTierChangedOn, Azure.Storage.Blobs.Models.BlobType blobType, string versionId, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, string>> objectReplicationSourceProperties, bool isCurrentVersion, string objectReplicationDestinationPolicy, long tagCount, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset expiresOn, System.DateTimeOffset createdOn, bool isSealed, byte[] contentHash) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobQueryError BlobQueryError(string name = null, string description = null, bool isFatal = false, long position = (long)0) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobServiceStatistics BlobServiceStatistics(Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobSnapshotInfo BlobSnapshotInfo(string snapshot, Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted) { throw null; }
@@ -939,15 +974,6 @@ namespace Azure.Storage.Blobs.Models
         IncludeSnapshots = 1,
         OnlySnapshots = 2,
     }
-    public partial class DelimitedTextConfiguration
-    {
-        public DelimitedTextConfiguration() { }
-        public string ColumnSeparator { get { throw null; } set { } }
-        public string EscapeChar { get { throw null; } set { } }
-        public string FieldQuote { get { throw null; } set { } }
-        public bool HeadersPresent { get { throw null; } set { } }
-        public string RecordSeparator { get { throw null; } set { } }
-    }
     public enum EncryptionAlgorithmType
     {
         Aes256 = 0,
@@ -966,11 +992,6 @@ namespace Azure.Storage.Blobs.Models
         public string NextMarker { get { throw null; } }
         public string ServiceEndpoint { get { throw null; } }
         public string Where { get { throw null; } }
-    }
-    public partial class JsonTextConfiguration
-    {
-        public JsonTextConfiguration() { }
-        public string RecordSeparator { get { throw null; } set { } }
     }
     public enum LeaseDurationType
     {
@@ -1052,31 +1073,6 @@ namespace Azure.Storage.Blobs.Models
         None = 0,
         BlobContainer = 1,
         Blob = 2,
-    }
-    public partial class QueryRequest
-    {
-        public QueryRequest() { }
-        public string Expression { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.QuickQuerySerialization InputSerialization { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.QuickQuerySerialization OutputSerialization { get { throw null; } set { } }
-        public string QueryType { get { throw null; } set { } }
-    }
-    public partial class QuickQueryFormat
-    {
-        public QuickQueryFormat() { }
-        public Azure.Storage.Blobs.Models.DelimitedTextConfiguration DelimitedTextConfiguration { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.JsonTextConfiguration JsonTextConfiguration { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.QuickQueryFormatType? Type { get { throw null; } set { } }
-    }
-    public enum QuickQueryFormatType
-    {
-        Delimited = 0,
-        Json = 1,
-    }
-    public partial class QuickQuerySerialization
-    {
-        public QuickQuerySerialization() { }
-        public Azure.Storage.Blobs.Models.QuickQueryFormat Format { get { throw null; } set { } }
     }
     public enum RehydratePriority
     {
@@ -1279,6 +1275,8 @@ namespace Azure.Storage.Blobs.Specialized
         protected static Azure.Storage.Blobs.Specialized.BlockBlobClient CreateClient(System.Uri blobUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipeline pipeline) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockList> GetBlockList(Azure.Storage.Blobs.Models.BlockListTypes blockListTypes = Azure.Storage.Blobs.Models.BlockListTypes.All, string snapshot = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockList>> GetBlockListAsync(Azure.Storage.Blobs.Models.BlockListTypes blockListTypes = Azure.Storage.Blobs.Models.BlockListTypes.All, string snapshot = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobDownloadInfo> Query(string query, Azure.Storage.Blobs.Models.BlobQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobDownloadInfo>> QueryAsync(string query, Azure.Storage.Blobs.Models.BlobQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ScheduleDeletion(Azure.Storage.Blobs.Models.BlobScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ScheduleDeletionAsync(Azure.Storage.Blobs.Models.BlobScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlock(string base64BlockId, System.IO.Stream content, byte[] transactionalContentHash = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -494,5 +494,21 @@ namespace Azure.Storage.Blobs.Models
                 HasLegalHold = hasLegalHold,
             };
         }
+
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static BlobQueryError BlobQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new BlobQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
+            };
     }
 }
