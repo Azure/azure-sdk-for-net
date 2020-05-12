@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ReceivedRoutesOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<PeeringManagementClient>, IOperations
+    internal partial class ReceivedRoutesOperations : IServiceOperations<PeeringManagementClient>, IReceivedRoutesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the ReceivedRoutesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(PeeringManagementClient client)
+        internal ReceivedRoutesOperations(PeeringManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,32 @@ namespace Microsoft.Azure.Management.Peering
         public PeeringManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available API operations for peering resources.
+        /// Lists the prefixes received over the specified peering under the given
+        /// subscription and resource group.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='peeringName'>
+        /// The name of the peering.
+        /// </param>
+        /// <param name='prefix'>
+        /// The optional prefix that can be used to filter the routes.
+        /// </param>
+        /// <param name='asPath'>
+        /// The optional AS path that can be used to filter the routes.
+        /// </param>
+        /// <param name='originAsValidationState'>
+        /// The optional origin AS validation state that can be used to filter the
+        /// routes.
+        /// </param>
+        /// <param name='rpkiValidationState'>
+        /// The optional RPKI validation state that can be used to filter the routes.
+        /// </param>
+        /// <param name='skipToken'>
+        /// The optional page continuation token that is used in the event of paginated
+        /// result.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,8 +98,20 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringReceivedRoute>>> ListByPeeringWithHttpMessagesAsync(string resourceGroupName, string peeringName, string prefix = default(string), string asPath = default(string), string originAsValidationState = default(string), string rpkiValidationState = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (peeringName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -87,13 +123,43 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("prefix", prefix);
+                tracingParameters.Add("asPath", asPath);
+                tracingParameters.Add("originAsValidationState", originAsValidationState);
+                tracingParameters.Add("rpkiValidationState", rpkiValidationState);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeering", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Peering/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (prefix != null)
+            {
+                _queryParameters.Add(string.Format("prefix={0}", System.Uri.EscapeDataString(prefix)));
+            }
+            if (asPath != null)
+            {
+                _queryParameters.Add(string.Format("asPath={0}", System.Uri.EscapeDataString(asPath)));
+            }
+            if (originAsValidationState != null)
+            {
+                _queryParameters.Add(string.Format("originAsValidationState={0}", System.Uri.EscapeDataString(originAsValidationState)));
+            }
+            if (rpkiValidationState != null)
+            {
+                _queryParameters.Add(string.Format("rpkiValidationState={0}", System.Uri.EscapeDataString(rpkiValidationState)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -186,7 +252,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<PeeringReceivedRoute>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +265,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringReceivedRoute>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,7 +285,8 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Lists all of the available API operations for peering resources.
+        /// Lists the prefixes received over the specified peering under the given
+        /// subscription and resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -245,7 +312,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringReceivedRoute>>> ListByPeeringNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -260,7 +327,7 @@ namespace Microsoft.Azure.Management.Peering
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -354,7 +421,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<PeeringReceivedRoute>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -367,7 +434,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringReceivedRoute>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
