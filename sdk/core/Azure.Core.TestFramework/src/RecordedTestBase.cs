@@ -18,12 +18,6 @@ namespace Azure.Core.TestFramework
 
         public RecordedTestMode Mode { get; }
 
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to NUnit's TestContext.Out for easy debugging.
-        /// </summary>
-        private static TestEventListener s_listener;
-
 #if DEBUG
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
