@@ -3393,6 +3393,109 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion ScheduleDeletion
 
+        #region Query
+        /// <summary>
+        /// The <see cref="Query"/> API returns the
+        /// result of a query against the file.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{FileDownloadInfo}"/>.
+        /// </returns>
+        public virtual Response<FileDownloadInfo> Query(
+            string query,
+            DataLakeQueryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Query)}");
+            try
+            {
+                scope.Start();
+                Response<BlobDownloadInfo> response = _blockBlobClient.Query(
+                    query,
+                    options.ToBlobQueryOptions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToFileDownloadInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Query"/> API returns the
+        /// result of a query against the file.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{FileDownloadInfo}"/>.
+        /// </returns>
+        public virtual async Task<Response<FileDownloadInfo>> QueryAsync(
+            string query,
+            DataLakeQueryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Query)}");
+            try
+            {
+                scope.Start();
+                Response<BlobDownloadInfo> response = await _blockBlobClient.QueryAsync(
+                    query,
+                    options.ToBlobQueryOptions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToFileDownloadInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Query
+
         #region PartitionedUplaoder
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,

@@ -14,6 +14,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -623,6 +624,24 @@ namespace Azure.Storage.Test.Shared
                         // swallow the exception to avoid hiding another test failure
                     }
                 }
+            }
+        }
+
+        public class BlobQueryErrorHandler
+        {
+            private readonly BlobQueryError _expectedBlobQueryError;
+
+            public BlobQueryErrorHandler(BlobQueryError expected)
+            {
+                _expectedBlobQueryError = expected;
+            }
+
+            public void Handle(BlobQueryError blobQueryError)
+            {
+                Assert.AreEqual(_expectedBlobQueryError.IsFatal, blobQueryError.IsFatal);
+                Assert.AreEqual(_expectedBlobQueryError.Name, blobQueryError.Name);
+                Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
+                Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
         }
     }

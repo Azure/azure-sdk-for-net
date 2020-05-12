@@ -303,6 +303,33 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Quick Query constant values.
+        /// </summary>
+        internal static class QuickQuery
+        {
+            public const string SqlQueryType = "SQL";
+
+            public const string Data = "data";
+            public const string BytesScanned = "bytesScanned";
+            public const string TotalBytes = "totalBytes";
+            public const string Fatal = "fatal";
+            public const string Name = "name";
+            public const string Description = "description";
+            public const string Position = "position";
+
+            public const string DataRecordName = "com.microsoft.azure.storage.queryBlobContents.resultData";
+            public const string ProgressRecordName = "com.microsoft.azure.storage.queryBlobContents.progress";
+            public const string ErrorRecordName = "com.microsoft.azure.storage.queryBlobContents.error";
+            public const string EndRecordName = "com.microsoft.azure.storage.queryBlobContents.end";
+
+            internal static class Errors
+            {
+                public const string InvalidTextConfigurationType
+                    = "Invalid text configuration type.  Must be CvsTextConfiguration or JsonTextConfiguration.";
+            }
+        }
+
+        /// <summary>
         /// Sas constant values.
         /// </summary>
         internal static class Sas
