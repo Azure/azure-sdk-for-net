@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using static Moq.It;
@@ -63,22 +64,25 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task UploadsStreamInBlocksIfLengthIsOverTheLimit()
         {
-            TestStream content = new TestStream(_async, 30, TestStream.Read(0, 10));
-            TrackingArrayPool testPool = new TrackingArrayPool();
+            PredictableStream content = new PredictableStream(30);
             StagingSink sink = new StagingSink();
 
             Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+                BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions
+                {
+                    MaximumTransferLength = 20,
+                    InitialTransferSize = 20,
+                    MaximumConcurrency = 1 // forces us through same code path
+                });
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
-            Assert.AreEqual(1, sink.Staged.Count);
+            Assert.AreEqual(2, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
-            AssertStaged(sink, content);
 
         }
 
@@ -246,12 +250,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Explicit]
+        [Ignore("Generates multiple GB of data")]
         public async Task CanHandleLongBlockBufferedUpload()
         {
             const long blockSize = int.MaxValue + 1024L;
             const int numBlocks = 2;
-            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
+            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize, revealsLength: false); // lack of Stream.Length forces buffered upload
             TrackingArrayPool testPool = new TrackingArrayPool();
             StagingSink sink = new StagingSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
 
@@ -263,9 +267,8 @@ namespace Azure.Storage.Blobs.Test
                 BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions
                 {
-                    InitialTransferSize = 1, // forces buffered upload
+                    InitialTransferSize = 1,
                     MaximumTransferSize = blockSize,
-                    MaximumConcurrency = 2
                 },
                 arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
@@ -277,6 +280,43 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.AreEqual(blockSize, block.StreamLength);
             }
+        }
+
+        [Test]
+        public async Task NoBufferWhenUploadInSequenceOnKnownLengthStream()
+        {
+            const int blockSize = 10;
+
+            TestStream content = new TestStream(
+                _async,
+                2 * blockSize, // stream needs length to avoid buffered upload
+                TestStream.Read(0, blockSize),
+                TestStream.Read(1, blockSize)
+            );
+            TrackingArrayPool testPool = new TrackingArrayPool();
+            StagingSink sink = new StagingSink();
+
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            SetupInternalStaging(clientMock, sink);
+
+            var uploader = new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+                BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object),
+                new StorageTransferOptions()
+                {
+                    MaximumTransferSize = blockSize,
+                    InitialTransferSize = blockSize, // known stream length means we need to specify this to force paritioned upload
+                    MaximumConcurrency = 1 // concurrency=1 puts us into upload from sequence
+                },
+                arrayPool: testPool);
+            Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
+
+            Assert.AreEqual(2, sink.Staged.Count);
+            Assert.AreEqual(s_response, info);
+            AssertStaged(sink, content);
+
+            Assert.AreEqual(0, testPool.TotalRents); // if we rented, we did a buffered upload
+            Assert.AreEqual(0, testPool.CurrentCount);
         }
 
         private async Task<Response<BlobContentInfo>> InvokeUploadAsync(PartitionedUploader<UploadBlobOptions, BlobContentInfo> uploader, Stream content)
@@ -365,17 +405,19 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await Task.Delay(25);
                 }
-                return Stage(s, stream, hash, accessConditions, progress, cancellationToken);
-            }
-
-            public Response<BlockInfo> Stage(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
-            {
                 progress.Report(stream.Length);
                 byte[] data = default;
                 if (_saveBytes)
                 {
                     var memoryStream = new MemoryStream();
-                    stream.CopyTo(memoryStream);
+                    if (async)
+                    {
+                        await stream.CopyToAsync(memoryStream).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        stream.CopyTo(memoryStream);
+                    }
                     memoryStream.Position = 0;
                     data = memoryStream.ToArray();
                 }

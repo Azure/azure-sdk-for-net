@@ -18,14 +18,18 @@ namespace Azure.Storage.Tests.Shared
 
         public override bool CanWrite => false;
 
+        private readonly bool _revealsLength;
         private readonly long? _length;
-        public override long Length => _length ?? throw new NotSupportedException();
+        public override long Length => _revealsLength
+            ? _length ?? throw new NotSupportedException()
+            : throw new NotSupportedException();
 
         public override long Position { get; set; } = 0;
 
-        public PredictableStream(long? length = default)
+        public PredictableStream(long? length = default, bool revealsLength = true)
         {
             _length = length;
+            _revealsLength = revealsLength;
         }
 
         public override void Flush()
