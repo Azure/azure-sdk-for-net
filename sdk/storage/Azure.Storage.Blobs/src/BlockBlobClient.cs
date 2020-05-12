@@ -1930,6 +1930,152 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion ScheduleDeletion
 
+        #region Query
+        /// <summary>
+        /// The <see cref="Query"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
+        /// </returns>
+        public virtual Response<BlobDownloadInfo> Query(
+            string query,
+            BlobQueryOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            QueryInternal(
+                query,
+                options,
+                async: false,
+                cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="QueryAsync"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
+        /// </returns>
+        public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
+            string query,
+            BlobQueryOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await QueryInternal(
+                query,
+                options,
+                async: true,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="QueryInternal"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
+        /// </returns>
+        private async Task<Response<BlobDownloadInfo>> QueryInternal(
+            string query,
+            BlobQueryOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    QueryRequest queryRequest = new QueryRequest()
+                    {
+                        QueryType = Constants.QuickQuery.SqlQueryType,
+                        Expression = query,
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                    };
+                    Response<BlobQuickQueryResult> result = await BlobRestClient.Blob.QuickQueryAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        version: Version.ToVersionString(),
+                        queryRequest: queryRequest,
+                        leaseId: options?.Conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                        ifMatch: options?.Conditions?.IfMatch,
+                        ifNoneMatch: options?.Conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    Action<BlobQueryError> errorHandler = options?._errorHandler;
+                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, errorHandler);
+                    result.Value.Body = parsedStream;
+
+                    return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                }
+            }
+        }
+        #endregion Query
+
         #region PartitionedUploader
         internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,

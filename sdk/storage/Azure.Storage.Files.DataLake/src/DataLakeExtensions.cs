@@ -364,5 +364,79 @@ namespace Azure.Storage.Files.DataLake
                     options.SetExpiryRelativeTo.Value.ToBlobExpirationOffset());
             }
         }
+
+        internal static BlobQueryOptions ToBlobQueryOptions(this DataLakeQueryOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            BlobQueryOptions blobQueryOptions = new BlobQueryOptions
+            {
+                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(),
+                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(),
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                ProgressHandler = options.ProgressHandler
+            };
+
+            if (options._errorHandler != null)
+            {
+                blobQueryOptions.ErrorHandler += (BlobQueryError error) => { options._errorHandler(error.ToDataLakeQueryError()); };
+            }
+
+            return blobQueryOptions;
+        }
+
+        internal static BlobQueryTextConfiguration ToBlobQueryTextConfiguration(this DataLakeQueryTextConfiguration textConfiguration)
+        {
+            if (textConfiguration == null)
+            {
+                return null;
+            }
+
+            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextConfiguration))
+            {
+                return ((DataLakeQueryJsonTextConfiguration)textConfiguration).ToBlobQueryJsonTextConfiguration();
+            }
+
+            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextConfiguration))
+            {
+                return ((DataLakeQueryCsvTextConfiguration)textConfiguration).ToBlobQueryCsvTextConfiguration();
+            }
+
+            throw new ArgumentException("Invalid text configuration type");
+        }
+
+        internal static BlobQueryJsonTextConfiguration ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextConfiguration textConfiguration)
+            => new BlobQueryJsonTextConfiguration
+            {
+                RecordSeparator = textConfiguration.RecordSeparator
+            };
+
+        internal static BlobQueryCsvTextConfiguration ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextConfiguration textConfiguration)
+            => new BlobQueryCsvTextConfiguration
+            {
+                ColumnSeparator = textConfiguration.ColumnSeparator,
+                FieldQuote = textConfiguration.FieldQuote,
+                EscapeCharacter = textConfiguration.EscapeCharacter,
+                HasHeaders = textConfiguration.HasHeaders
+            };
+
+        internal static DataLakeQueryError ToDataLakeQueryError(this BlobQueryError error)
+        {
+            if (error == null)
+            {
+                return null;
+            }
+
+            return new DataLakeQueryError
+            {
+                Name = error.Name,
+                Description = error.Description,
+                IsFatal = error.IsFatal,
+                Position = error.Position
+            };
+        }
     }
 }

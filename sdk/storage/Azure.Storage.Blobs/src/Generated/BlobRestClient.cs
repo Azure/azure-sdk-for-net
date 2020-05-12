@@ -8605,7 +8605,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-type", out _header))
                         {
-                            _value.BlobType = (Azure.Storage.Blobs.Models.BlobType)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.BlobType), _header, false);
+                            _value.BlobType = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseBlobType(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-completion-time", out _header))
                         {
@@ -8806,8 +8806,14 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+                        Azure.Storage.Blobs.Models.FailureNoContent _value = new Azure.Storage.Blobs.Models.FailureNoContent();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-error-code", out _header))
+                        {
+                            _value.ErrorCode = _header;
+                        }
 
                         throw _value.CreateException(clientDiagnostics, response);
                     }
@@ -20447,13 +20453,13 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum DeleteSnapshotsOption
 
-#region class DelimitedTextConfiguration
+#region class DelimitedTextConfigurationInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// delimited text configuration
     /// </summary>
-    public partial class DelimitedTextConfiguration
+    internal partial class DelimitedTextConfigurationInternal
     {
         /// <summary>
         /// column separator
@@ -20481,18 +20487,18 @@ namespace Azure.Storage.Blobs.Models
         public bool HeadersPresent { get; set; }
 
         /// <summary>
-        /// Creates a new DelimitedTextConfiguration instance
+        /// Creates a new DelimitedTextConfigurationInternal instance
         /// </summary>
-        public DelimitedTextConfiguration() { }
+        public DelimitedTextConfigurationInternal() { }
 
         /// <summary>
-        /// Serialize a DelimitedTextConfiguration instance as XML.
+        /// Serialize a DelimitedTextConfigurationInternal instance as XML.
         /// </summary>
-        /// <param name="value">The DelimitedTextConfiguration instance to serialize.</param>
+        /// <param name="value">The DelimitedTextConfigurationInternal instance to serialize.</param>
         /// <param name="name">An optional name to use for the root element instead of "DelimitedTextConfiguration".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.DelimitedTextConfiguration value, string name = "DelimitedTextConfiguration", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal value, string name = "DelimitedTextConfiguration", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
@@ -20517,7 +20523,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class DelimitedTextConfiguration
+#endregion class DelimitedTextConfigurationInternal
 
 #region class DirectoryCreateResult
 namespace Azure.Storage.Blobs.Models
@@ -20726,6 +20732,28 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum EncryptionAlgorithmType
+
+#region class FailureNoContent
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// FailureNoContent
+    /// </summary>
+    internal partial class FailureNoContent
+    {
+        /// <summary>
+        /// x-ms-error-code
+        /// </summary>
+        public string ErrorCode { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FailureNoContent instances.
+        /// You can use BlobsModelFactory.FailureNoContent instead.
+        /// </summary>
+        internal FailureNoContent() { }
+    }
+}
+#endregion class FailureNoContent
 
 #region class FilterBlobItem
 namespace Azure.Storage.Blobs.Models
@@ -21250,13 +21278,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class GetBlockListOperation
 
-#region class JsonTextConfiguration
+#region class JsonTextConfigurationInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// json text configuration
     /// </summary>
-    public partial class JsonTextConfiguration
+    internal partial class JsonTextConfigurationInternal
     {
         /// <summary>
         /// record separator
@@ -21264,18 +21292,18 @@ namespace Azure.Storage.Blobs.Models
         public string RecordSeparator { get; set; }
 
         /// <summary>
-        /// Creates a new JsonTextConfiguration instance
+        /// Creates a new JsonTextConfigurationInternal instance
         /// </summary>
-        public JsonTextConfiguration() { }
+        public JsonTextConfigurationInternal() { }
 
         /// <summary>
-        /// Serialize a JsonTextConfiguration instance as XML.
+        /// Serialize a JsonTextConfigurationInternal instance as XML.
         /// </summary>
-        /// <param name="value">The JsonTextConfiguration instance to serialize.</param>
+        /// <param name="value">The JsonTextConfigurationInternal instance to serialize.</param>
         /// <param name="name">An optional name to use for the root element instead of "JsonTextConfiguration".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.JsonTextConfiguration value, string name = "JsonTextConfiguration", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.JsonTextConfigurationInternal value, string name = "JsonTextConfiguration", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
@@ -21286,7 +21314,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class JsonTextConfiguration
+#endregion class JsonTextConfigurationInternal
 
 #region class KeyInfo
 namespace Azure.Storage.Blobs.Models
@@ -22225,7 +22253,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// the quick query body
     /// </summary>
-    public partial class QueryRequest
+    internal partial class QueryRequest
     {
         /// <summary>
         /// the query type
@@ -22293,7 +22321,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// QuickQueryFormat
     /// </summary>
-    public partial class QuickQueryFormat
+    internal partial class QuickQueryFormat
     {
         /// <summary>
         /// The quick query format type.
@@ -22303,20 +22331,20 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// delimited text configuration
         /// </summary>
-        public Azure.Storage.Blobs.Models.DelimitedTextConfiguration DelimitedTextConfiguration { get; set; }
+        public Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
 
         /// <summary>
         /// json text configuration
         /// </summary>
-        public Azure.Storage.Blobs.Models.JsonTextConfiguration JsonTextConfiguration { get; set; }
+        public Azure.Storage.Blobs.Models.JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
 
         /// <summary>
         /// Creates a new QuickQueryFormat instance
         /// </summary>
         public QuickQueryFormat()
         {
-            DelimitedTextConfiguration = new Azure.Storage.Blobs.Models.DelimitedTextConfiguration();
-            JsonTextConfiguration = new Azure.Storage.Blobs.Models.JsonTextConfiguration();
+            DelimitedTextConfiguration = new Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal();
+            JsonTextConfiguration = new Azure.Storage.Blobs.Models.JsonTextConfigurationInternal();
         }
 
         /// <summary>
@@ -22338,11 +22366,11 @@ namespace Azure.Storage.Blobs.Models
             }
             if (value.DelimitedTextConfiguration != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.DelimitedTextConfiguration.ToXml(value.DelimitedTextConfiguration, "DelimitedTextConfiguration", ""));
+                _element.Add(Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal.ToXml(value.DelimitedTextConfiguration, "DelimitedTextConfiguration", ""));
             }
             if (value.JsonTextConfiguration != null)
             {
-                _element.Add(Azure.Storage.Blobs.Models.JsonTextConfiguration.ToXml(value.JsonTextConfiguration, "JsonTextConfiguration", ""));
+                _element.Add(Azure.Storage.Blobs.Models.JsonTextConfigurationInternal.ToXml(value.JsonTextConfiguration, "JsonTextConfiguration", ""));
             }
             return _element;
         }
@@ -22356,7 +22384,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The quick query format type.
     /// </summary>
-    public enum QuickQueryFormatType
+    internal enum QuickQueryFormatType
     {
         /// <summary>
         /// delimited
@@ -22406,7 +22434,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// QuickQuerySerialization
     /// </summary>
-    public partial class QuickQuerySerialization
+    internal partial class QuickQuerySerialization
     {
         /// <summary>
         /// Format
