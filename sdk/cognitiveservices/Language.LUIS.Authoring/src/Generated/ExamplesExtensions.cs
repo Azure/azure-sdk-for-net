@@ -36,12 +36,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='exampleLabelObject'>
             /// A labeled example utterance with the expected intent and entities.
             /// </param>
+            /// <param name='enableNestedChildren'>
+            /// Toggles nested/flat format
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LabelExampleResponse> AddAsync(this IExamples operations, System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LabelExampleResponse> AddAsync(this IExamples operations, System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, bool? enableNestedChildren = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddWithHttpMessagesAsync(appId, versionId, exampleLabelObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddWithHttpMessagesAsync(appId, versionId, exampleLabelObject, enableNestedChildren, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -62,12 +65,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='exampleLabelObjectArray'>
             /// Array of example utterances.
             /// </param>
+            /// <param name='enableNestedChildren'>
+            /// Toggles nested/flat format
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<BatchLabelExample>> BatchAsync(this IExamples operations, System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<BatchLabelExample>> BatchAsync(this IExamples operations, System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, bool? enableNestedChildren = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchWithHttpMessagesAsync(appId, versionId, exampleLabelObjectArray, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BatchWithHttpMessagesAsync(appId, versionId, exampleLabelObjectArray, enableNestedChildren, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,12 +98,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='take'>
             /// The number of entries to return. Maximum page size is 500. Default is 100.
             /// </param>
+            /// <param name='enableNestedChildren'>
+            /// Toggles nested/flat format
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LabeledUtterance>> ListAsync(this IExamples operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LabeledUtterance>> ListAsync(this IExamples operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, bool? enableNestedChildren = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, skip, take, enableNestedChildren, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
