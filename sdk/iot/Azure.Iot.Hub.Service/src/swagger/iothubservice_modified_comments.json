@@ -739,8 +739,7 @@
     },
     "/twins/{id}": {
       "get": {
-        "summary": "Gets a device twin.",
-        "description": "Gets a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Gets the device state information for a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetDeviceTwin",
         "consumes": [],
         "produces": [
@@ -750,7 +749,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose device twin is to be retrieved",
+            "description": "The unique identifier of the device whose twin is to be retrieved.",
             "required": true,
             "type": "string"
           },
@@ -760,7 +759,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the device twin object",
+            "description": "Returns the device twin object.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -768,8 +767,7 @@
         }
       },
       "put": {
-        "summary": "Replaces tags and desired properties of a device twin.",
-        "description": "Replaces a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Replaces the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_ReplaceDeviceTwin",
         "consumes": [
           "application/json"
@@ -781,14 +779,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose device twin is to be replaced",
+            "description": "The unique identifier of the device whose twin is to be replaced.",
             "required": true,
             "type": "string"
           },
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The twin object that will replace the current device twin",
+            "description": "The twin object that will replace the current device twin.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Twin"
@@ -797,7 +795,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The Etag to be used to determine if the replace operation should be carried out",
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out.",
             "required": false,
             "type": "string"
           },
@@ -807,7 +805,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin object",
+            "description": "Returns the updated device twin object.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -815,8 +813,7 @@
         }
       },
       "patch": {
-        "summary": "Updates tags and desired properties of a device twin.",
-        "description": "Updates a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Updates the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_UpdateDeviceTwin",
         "consumes": [
           "application/json"
@@ -828,14 +825,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose device twin is to be updated",
+            "description": "The unique identifier of the device whose twin is to be updated.",
             "required": true,
             "type": "string"
           },
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The twin object containing the tags and desired properties to be updated",
+            "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Twin"
@@ -844,7 +841,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The Etag to be used to determine if the update operation should be carried out",
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out.",
             "required": false,
             "type": "string"
           },
@@ -854,7 +851,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin object",
+            "description": "Returns the updated device twin object.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -864,8 +861,7 @@
     },
     "/twins/{id}/modules/{mid}": {
       "get": {
-        "summary": "Gets a module twin.",
-        "description": "Gets a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Gets the module state information for a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetModuleTwin",
         "consumes": [],
         "produces": [
@@ -875,14 +871,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose module twin is to be retrieved",
+            "description": "The unique identifier of the device whose module twin is to be retrieved.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The ID of the module whose module twin is to be retrieved",
+            "description": "The unique identifier of the module whose twin is to be retrieved.",
             "required": true,
             "type": "string"
           },
@@ -892,7 +888,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the module twin object",
+            "description": "Returns the module twin object.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -900,8 +896,7 @@
         }
       },
       "put": {
-        "summary": "Replaces tags and desired properties of a module twin.",
-        "description": "Replaces a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Replaces the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_ReplaceModuleTwin",
         "consumes": [
           "application/json"
@@ -913,21 +908,21 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose module twin is to be replaced",
+            "description": "The unique identifier of the device whose module twin is to be replaced.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The ID of the module whose module twin is to be replaced",
+            "description": "The unique identifier of the module whose twin is to be replaced.",
             "required": true,
             "type": "string"
           },
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The twin object that will replace the current module twin",
+            "description": "The twin object that will replace the current module twin.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Twin"
@@ -936,7 +931,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The Etag to be used to determine if the replace operation should be carried out",
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out.",
             "required": false,
             "type": "string"
           },
@@ -946,7 +941,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated module twin object",
+            "description": "Returns the updated module twin object.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -954,8 +949,7 @@
         }
       },
       "patch": {
-        "summary": "Updates tags and desired properties of a module twin.",
-        "description": "Updates a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version '2020-03-13'.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version '2019-10-01'",
+        "description": "Updates the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_UpdateModuleTwin",
         "consumes": [
           "application/json"
@@ -967,21 +961,21 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The ID of the device whose module twin is to be updated",
+            "description": "The unique identifier of the device whose module twin is to be updated.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The ID of the module whose module twin is to be updated",
+            "description": "The unique identifier of the module whose twin is to be updated.",
             "required": true,
             "type": "string"
           },
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The twin object containing the tags and desired properties to be updated",
+            "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Twin"
@@ -990,7 +984,7 @@
           {
             "name": "If-Match",
             "in": "header",
-            "description": "The Etag to be used to determine if the update operation should be carried out",
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out.",
             "required": false,
             "type": "string"
           },
@@ -2472,30 +2466,31 @@
       }
     },
     "Twin": {
-      "description": "Twin Representation",
+      "description": "Twin Representation of the device/ module state information. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub.",
       "type": "object",
       "properties": {
         "deviceId": {
-          "description": "The deviceId uniquely identifies the device in the IoT hub's identity registry. A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
+          "description": "The unique identifier of the device in the IoT hub's identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
           "type": "string"
         },
         "moduleId": {
-          "description": "Gets and sets the Module Id.",
+          "description": "The unique identifier of the module in the IoT hub's identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
           "type": "string"
         },
         "tags": {
-          "description": "A JSON document read and written by the solution back end. Tags are not visible to device apps.",
+          "description": "A JSON document read and written by the solution back end. They are not visible to device apps.",
           "type": "object",
           "additionalProperties": {
+            "description": "The collection of the twin's tags as key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The values are JSON objects, up-to 4KB in length.",
             "type": "object"
           }
         },
         "properties": {
           "$ref": "#/definitions/TwinProperties",
-          "description": "Gets and sets the Twin properties."
+          "description": "Represents twin's desired and reported properties."
         },
         "etag": {
-          "description": "Twin's ETag",
+          "description": "TODO - which operation does this affect - update tags/ properties etc?",
           "type": "string"
         },
         "version": {
@@ -2504,11 +2499,11 @@
           "type": "integer"
         },
         "deviceEtag": {
-          "description": "Device's ETag",
+          "description": "TODO - which operation does this affect?",
           "type": "string"
         },
         "status": {
-          "description": "Gets the corresponding Device's Status.",
+          "description": "Gets the device's status.",
           "enum": [
             "enabled",
             "disabled"
@@ -2516,16 +2511,16 @@
           "type": "string"
         },
         "statusReason": {
-          "description": "Reason, if any, for the corresponding Device to be in specified Status",
+          "description": "Reason, if any, for the device to be in specified status.",
           "type": "string"
         },
         "statusUpdateTime": {
           "format": "date-time",
-          "description": "Time when the corresponding Device's Status was last updated",
+          "description": "Time when the corresponding device's status was last updated.",
           "type": "string"
         },
         "connectionState": {
-          "description": "Corresponding Device's ConnectionState",
+          "description": "The device's connection state.",
           "enum": [
             "Disconnected",
             "Connected"
@@ -2573,20 +2568,22 @@
       }
     },
     "TwinProperties": {
-      "description": "Represents Twin properties",
+      "description": "Represents twin's desired and reported properties. The maximum depth of twin property objects is 10.",
       "type": "object",
       "properties": {
         "desired": {
-          "description": "Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties.",
+          "description": "Properties that set by the solution back end and read by the device.",
           "type": "object",
           "additionalProperties": {
+            "description": "The collection of desired property key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length.",
             "type": "object"
           }
         },
         "reported": {
-          "description": "Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end.",
+          "description": "Properties that are set by the device, and read and queried by the solution back end.",
           "type": "object",
           "additionalProperties": {
+            "description": "The collection of reported property key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The reported property values are JSON objects, up-to 4KB in length.",
             "type": "object"
           }
         }
