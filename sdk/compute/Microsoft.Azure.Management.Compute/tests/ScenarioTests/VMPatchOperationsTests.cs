@@ -29,7 +29,7 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true, sku: "2016-Datacenter");
 
                 // Create resource group
                 string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;

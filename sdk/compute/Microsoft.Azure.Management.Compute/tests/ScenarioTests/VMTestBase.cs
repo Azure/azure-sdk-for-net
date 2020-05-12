@@ -81,21 +81,14 @@ namespace Compute.Tests
             };
         }
 
-        protected ImageReference GetPlatformVMImage(bool useWindowsImage, bool smallDisk = false)
+        protected ImageReference GetPlatformVMImage(bool useWindowsImage, string sku = null)
         {
             if (useWindowsImage)
             {
                 if (m_windowsImageReference == null)
                 {
                     Trace.TraceInformation("Querying available Windows Server image from PIR...");
-                    if (smallDisk)
-                    {
-                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2019-Datacenter-smalldisk");
-                    }
-                    else
-                    {
-                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
-                    }                    
+                    m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", sku ?? "2012-R2-Datacenter");
                 }
                 return m_windowsImageReference;
             }
@@ -103,9 +96,9 @@ namespace Compute.Tests
             if (m_linuxImageReference == null)
             {
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
-                // If this sku disappears, query latest with 
+                // If this sku disappears, query latest with
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "19.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", sku ?? "19.04");
             }
             return m_linuxImageReference;
         }
@@ -269,7 +262,7 @@ namespace Compute.Tests
 
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType, 
+                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType,
                     dataDiskStorageAccountType, writeAcceleratorEnabled, diskEncryptionSetId);
 
                 if (hasDiffDisks)
@@ -293,7 +286,7 @@ namespace Compute.Tests
                 if (zones != null)
                 {
                     inputVM.AvailabilitySet = null;
-                    // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.                    
+                    // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.
                     if(vmSize == VirtualMachineSizeTypes.StandardA0)
                     {
                         vmSize = VirtualMachineSizeTypes.StandardA1V2;
@@ -834,7 +827,7 @@ namespace Compute.Tests
         {
             return CreateProximityPlacementGroup(m_subId, rgName, ppgName, m_CrpClient, m_location);
         }
-        
+
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
             string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
@@ -1178,7 +1171,7 @@ namespace Compute.Tests
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false,
             string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
         {
-            ValidateVMInstanceView(vmInstanceView, hasManagedDisks, 
+            ValidateVMInstanceView(vmInstanceView, hasManagedDisks,
                 !hasManagedDisks ? vmIn.StorageProfile.OsDisk.Name : null,
                 expectedComputerName, expectedOSName, expectedOSVersion);
         }
