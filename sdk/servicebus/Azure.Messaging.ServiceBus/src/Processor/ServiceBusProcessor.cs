@@ -616,7 +616,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 int sessionIndex = 0;
                 SessionLifeCycleManager sessionLifeCycle = null;
-                int maxTasks = IsSessionProcessor ? _sessionLifeCycles.Count : MaxConcurrentCalls;
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -634,7 +633,7 @@ namespace Azure.Messaging.ServiceBus
                         }
                     }
                     tasks.Add(ReceiveAndProcessMessagesAsync(cancellationToken, sessionLifeCycle));
-                    if (tasks.Count > maxTasks)
+                    if (tasks.Count > MaxConcurrentCalls)
                     {
                         tasks.RemoveAll(t => t.IsCompleted || t.IsCanceled || t.IsFaulted);
                     }
