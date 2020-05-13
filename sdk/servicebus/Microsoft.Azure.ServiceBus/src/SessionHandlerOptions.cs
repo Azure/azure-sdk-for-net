@@ -40,9 +40,9 @@ namespace Microsoft.Azure.ServiceBus
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
         public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
 
-        /// <summary>Gets or sets the duration for which the session lock will be renewed automatically. If a session lock is going to expire and 
-        /// there are still active messages in the session or operations are not yet complete in the current session, this value is the max duration 
-        /// for the session lock to be automatically renewed after the current session lock expires. </summary>
+        /// <summary>Gets or sets the duration for which the session lock will be renewed automatically. If a session lock is going to expire,
+        /// this value is the max duration for the session lock to be automatically renewed. </summary>
+        /// <remarks>If this auto renewal fails, clients will receive an exception in the exceptionHandler. </remarks>
         /// <value>The duration for which the session renew its state. Default is 5 min.</value>
         public TimeSpan MaxAutoRenewDuration
         {
@@ -55,11 +55,11 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the timeout to wait for receiving a message. If a session is running out of active messages, it will wait up 
-        /// to this value to close the current session. Once the session is closed, the session lock will be lost and can no longer receive new messages. 
-        /// This value has an impact on the message throughput. If the value is very large, then every time when the traffic in a session is slowing down, 
-        /// it needs to wait for this amount of time before closing to make sure that no more messages will arrive. If users are using session in a 
-        /// high-throughput scenario, try setting this to be a relative smaller value based on how frequent new messages arrive in the session. </summary>
+        /// <summary>Gets or sets the timeout to wait for receiving a message. This is the time the session-pump waits before closing down the current 
+        /// session and switching to a different session. </summary>
+        /// <remarks>This value has an impact on the message throughput. If the value is very large, then every time the SDK waits for this duration 
+        /// before closing to make sure that all the messages have been received. If users are having a lot of sessions and fewer messages per session, 
+        /// try setting this to be a relative smaller value based on how frequent new messages arrive in the session. </remarks>
         /// <value>The time to wait for receiving the message. Default is 1 min.</value>
         public TimeSpan MessageWaitTimeout
         {
@@ -73,9 +73,10 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>Gets or sets the maximum number of existing sessions that the User wants to handle concurrently. Setting this value to be 
-        /// greater than the max number of active sessions in the service will not increase message throughput. The backend implementation is once the 
-        /// SessionHandler is created, there will be this number of tasks created in parallel and which gets the lock for a session will start executing 
-        /// the operations in the session until the session is closed. </summary>
+        /// greater than the max number of active sessions in the service will not increase message throughput. </summary>
+        /// <remarks>The session-pump (SDK) will accept MaxConcurrentSessions number of sessions in parallel and dispatch the messages. The messages 
+        /// within a session are delivered sequentially. If more than <see cref="MaxConcurrentSessions"/> number of sessions are present in the 
+        /// entity, they will be accepted one-by-one after closing the existing sessions.</remarks>
         /// <value>The maximum number of sessions that the User wants to handle concurrently. Default is 2000.</value>
         public int MaxConcurrentSessions
         {
@@ -97,8 +98,7 @@ namespace Microsoft.Azure.ServiceBus
         /// If this value is true, if the handler returns without any failure, then the message is completed and will not show up in the session; if any 
         /// exception is thrown from the handler, the message is abandoned and the DeliveryCount of this message will increase by one. 
         /// If this value is false, if the handler returns without any failure, then user has to write the logic to explicitly complete the message, 
-        /// otherwise the message is not considered 'completed' and will reappear in the session; if any exception is thrown from the handler, the message
-        /// is abandoned and the DeliveryCount of this message will increase by one.  </summary>
+        /// otherwise the message is not considered 'completed' and will reappear in the session.  </summary>
         /// <value>true if the autocomplete option of the session handler is enabled; otherwise, false. Default is ture. </value>
         public bool AutoComplete { get; set; }
 
