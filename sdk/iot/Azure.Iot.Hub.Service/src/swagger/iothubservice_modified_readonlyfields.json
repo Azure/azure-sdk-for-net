@@ -2450,16 +2450,19 @@
                 },
                 "etag": {
                     "description": "Twin's ETag",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "version": {
                     "format": "int64",
                     "description": "Version for device twin, including tags and desired properties",
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "deviceEtag": {
                     "description": "Device's ETag",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "status": {
                     "description": "Gets the corresponding Device's Status.",
@@ -2476,7 +2479,8 @@
                 "statusUpdateTime": {
                     "format": "date-time",
                     "description": "Time when the corresponding Device's Status was last updated",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "connectionState": {
                     "description": "Corresponding Device's ConnectionState",
@@ -2484,17 +2488,20 @@
                         "Disconnected",
                         "Connected"
                     ],
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "lastActivityTime": {
                     "format": "date-time",
                     "description": "The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "cloudToDeviceMessageCount": {
                     "format": "int32",
                     "description": "Number of messages sent to the corresponding Device from the Cloud",
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "authenticationType": {
                     "description": "Corresponding Device's authentication type",
@@ -2538,6 +2545,7 @@
                 "reported": {
                     "description": "Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end.",
                     "type": "object",
+                    "readOnly": true,
                     "additionalProperties": {
                         "type": "object"
                     }
