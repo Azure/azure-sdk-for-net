@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class DigitalTwinInterfaces
+    internal partial class DigitalTwinInterfaces
     {
         internal static DigitalTwinInterfaces DeserializeDigitalTwinInterfaces(JsonElement element)
         {
