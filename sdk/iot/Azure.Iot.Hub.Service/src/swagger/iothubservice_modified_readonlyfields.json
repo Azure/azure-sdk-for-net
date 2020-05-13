@@ -3058,11 +3058,13 @@
                 "status": {
                     "format": "int32",
                     "description": "Method invocation result status.",
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "payload": {
                     "description": "Method invocation result payload.",
-                    "type": "object"
+                    "type": "object",
+                    "readOnly": true
                 }
             }
         },

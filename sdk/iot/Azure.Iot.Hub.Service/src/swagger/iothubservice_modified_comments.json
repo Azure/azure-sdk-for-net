@@ -530,7 +530,7 @@
     },
     "/jobs/create": {
       "post": {
-        "description": "Create a new import or export job on your IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "description": "Create a new import or export job on IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_CreateImportExportJob",
         "consumes": [
           "application/json"
@@ -564,7 +564,7 @@
     },
     "/jobs": {
       "get": {
-        "description": "Gets the status of all import and export jobs in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "description": "Gets the status of all import and export jobs in IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_GetImportExportJobs",
         "consumes": [],
         "produces": [
@@ -590,7 +590,7 @@
     },
     "/jobs/{id}": {
       "get": {
-        "description": "Gets the status of an import or export job in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "description": "Gets the status of an import or export job in IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_GetImportExportJob",
         "consumes": [],
         "produces": [
@@ -618,7 +618,7 @@
         }
       },
       "delete": {
-        "description": "Cancels an import or export job in an IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "description": "Cancels an import or export job in IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
         "operationId": "JobClient_CancelImportExportJob",
         "consumes": [],
         "produces": [
@@ -1216,7 +1216,7 @@
     },
     "/jobs/v2/{id}": {
       "get": {
-        "description": "Retrieves details of a scheduled job from an IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "description": "Retrieves details of a scheduled job from IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_GetJob",
         "consumes": [],
         "produces": [
@@ -1244,7 +1244,7 @@
         }
       },
       "put": {
-        "description": "Creates a new job to schedule twin updates or direct methods on your IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "description": "Creates a new job to schedule twin updates or direct methods on IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_CreateJob",
         "consumes": [
           "application/json"
@@ -1285,7 +1285,7 @@
     },
     "/jobs/v2/{id}/cancel": {
       "post": {
-        "description": "Cancels a scheduled job on your IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "description": "Cancels a scheduled job on IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
         "operationId": "JobClient_CancelJob",
         "consumes": [],
         "produces": [
@@ -1315,7 +1315,7 @@
     },
     "/jobs/v2/query": {
       "get": {
-        "description": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
+        "description": "Query IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
         "operationId": "JobClient_QueryJobs",
         "consumes": [],
         "produces": [
@@ -2599,7 +2599,7 @@
         },
         "endTimeUtc": {
           "format": "date-time",
-          "description": "Represents the time the job stopped processing.",
+          "description": "The time the job stopped.",
           "type": "string"
         },
         "type": {
@@ -2650,7 +2650,7 @@
           "type": "string"
         },
         "outputBlobContainerUri": {
-          "description": "URI containing SAS token to a blob container. This is used to output the status of the job and the results.",
+          "description": "SAS token to access a blob container. This is used to output the status of the job and the results.",
           "type": "string"
         },
         "outputBlobName": {
@@ -2907,7 +2907,7 @@
         },
         "endTime": {
           "format": "date-time",
-          "description": "Represents the time the job stopped processing.",
+          "description": "The time the job stopped.",
           "type": "string"
         },
         "maxExecutionTimeInSeconds": {
