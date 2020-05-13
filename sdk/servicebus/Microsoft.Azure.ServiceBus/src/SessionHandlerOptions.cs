@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Gets or sets the duration for which the session lock will be renewed automatically. If a session lock is going to expire,
         /// this value is the max duration for the session lock to be automatically renewed. </summary>
-        /// <remarks>If this auto renewal fails, clients will receive an exception in the exceptionHandler. </remarks>
+        /// <remarks>If this auto renewal fails, clients will receive an exception in the ExceptionReceivedHandler. </remarks>
         /// <value>The duration for which the session renew its state. Default is 5 min.</value>
         public TimeSpan MaxAutoRenewDuration
         {
