@@ -3,6 +3,7 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
     using System.IO;
     using Xunit;
 
@@ -53,6 +54,33 @@
 
                 await client.Features.DeletePhraseListAsync(GlobalAppId, versionId, featureEntity.Value);
                 await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void AddModelAsRequiredFeatureForEntity()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = "0.1";
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "flat entity"
+                });
+
+                var featureEntityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "feature entity"
+                });
+
+                var featureToAdd = await client.Features.AddEntityFeatureAsync(GlobalAppId, versionId, entityId, new ModelFeatureInformation
+                {
+                    ModelName = "feature entity",
+                    IsRequired = true
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, featureEntityId);
             });
         }
 
