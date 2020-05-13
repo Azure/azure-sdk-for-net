@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.MixedReality.Models
     using System.Linq;
 
     /// <summary>
-    /// Spatial Anchors Account Regenerate Key
+    /// Request for account key regeneration
     /// </summary>
-    public partial class SpatialAnchorsAccountKeyRegenerateRequest
+    public partial class AccountKeyRegenerateRequest
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SpatialAnchorsAccountKeyRegenerateRequest class.
+        /// Initializes a new instance of the AccountKeyRegenerateRequest
+        /// class.
         /// </summary>
-        public SpatialAnchorsAccountKeyRegenerateRequest()
+        public AccountKeyRegenerateRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SpatialAnchorsAccountKeyRegenerateRequest class.
+        /// Initializes a new instance of the AccountKeyRegenerateRequest
+        /// class.
         /// </summary>
         /// <param name="serial">serial of key to be regenerated</param>
-        public SpatialAnchorsAccountKeyRegenerateRequest(int? serial = default(int?))
+        public AccountKeyRegenerateRequest(int? serial = default(int?))
         {
             Serial = serial;
             CustomInit();
