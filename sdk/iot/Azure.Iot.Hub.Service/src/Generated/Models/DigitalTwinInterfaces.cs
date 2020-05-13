@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The DigitalTwinInterfaces. </summary>
-    public partial class DigitalTwinInterfaces
+    internal partial class DigitalTwinInterfaces
     {
         /// <summary> Initializes a new instance of DigitalTwinInterfaces. </summary>
         internal DigitalTwinInterfaces()
@@ -25,6 +25,9 @@ namespace Azure.Iot.Hub.Service.Models
             Interfaces = interfaces;
             Version = version;
         }
+
+        /// <summary> Interface(s) data on the digital twin. </summary>
+        public IReadOnlyDictionary<string, PnpInterface> Interfaces { get; }
         /// <summary> Version of digital twin. </summary>
         public long? Version { get; }
     }

@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.Iot.Hub.Service
 {
     /// <summary>
-    /// The DigitalTwinInterfaces.
+    /// The DigitalTwin service client.
     /// </summary>
-    internal partial class DigitalTwinInterfaces
+    internal partial class DigitalTwinClient
     {
     }
 }
