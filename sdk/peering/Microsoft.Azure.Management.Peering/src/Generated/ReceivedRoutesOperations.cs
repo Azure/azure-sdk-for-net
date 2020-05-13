@@ -112,7 +112,10 @@ namespace Microsoft.Azure.Management.Peering
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -127,7 +130,6 @@ namespace Microsoft.Azure.Management.Peering
                 tracingParameters.Add("originAsValidationState", originAsValidationState);
                 tracingParameters.Add("rpkiValidationState", rpkiValidationState);
                 tracingParameters.Add("skipToken", skipToken);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByPeering", tracingParameters);
             }
@@ -158,9 +160,9 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
