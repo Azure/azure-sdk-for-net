@@ -484,7 +484,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
 
         /// <summary>
-        /// Deletes a workspace instance.
+        /// Deletes a workspace resource. To recover the workspace, create it again
+        /// with the same name, in the same subscription, resource group and location.
+        /// The name is kept for 14 days and cannot be used for another workspace. To
+        /// remove the workspace completely and release the name, use the force flag.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -492,16 +495,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
+        /// <param name='force'>
+        /// Deletes the workspace without the recovery option. A workspace that was
+        /// deleted with this flag cannot be recovered.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, force, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1516,13 +1523,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
 
         /// <summary>
-        /// Deletes a workspace instance.
+        /// Deletes a workspace resource. To recover the workspace, create it again
+        /// with the same name, in the same subscription, resource group and location.
+        /// The name is kept for 14 days and cannot be used for another workspace. To
+        /// remove the workspace completely and release the name, use the force flag.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
+        /// </param>
+        /// <param name='force'>
+        /// Deletes the workspace without the recovery option. A workspace that was
+        /// deleted with this flag cannot be recovered.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1542,7 +1556,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1613,6 +1627,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
+                tracingParameters.Add("force", force);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -1626,6 +1641,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (force != null)
+            {
+                _queryParameters.Add(string.Format("force={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(force, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
