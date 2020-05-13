@@ -108,7 +108,7 @@ namespace Azure.Core
         }
 
         public static DateTimeOffset ParseDateTimeOffset(string value) =>
-            DateTimeOffset.Parse(value, CultureInfo.InvariantCulture);
+            DateTimeOffset.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
 
         public static TimeSpan ParseTimeSpan(string value, string format) => format switch
         {
