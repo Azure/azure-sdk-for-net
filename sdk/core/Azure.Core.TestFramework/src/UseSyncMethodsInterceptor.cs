@@ -80,6 +80,7 @@ namespace Azure.Core.TestFramework
                 if (methodInfo.ContainsGenericParameters)
                 {
                     methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
+                    returnType = methodInfo.ReturnType;
                 }
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
@@ -89,13 +90,6 @@ namespace Azure.Core.TestFramework
                     Type[] modelType = returnType.GenericTypeArguments;
                     Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
 
-                    Type resultType = result.GetType();
-
-                    // Check if wrapperType still contains generic paramters, requiring that we resolve the generic type arguments.
-                    if (wrapperType.ContainsGenericParameters && resultType.IsGenericType && resultType.GenericTypeArguments.Length > 0)
-                    {
-                        wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(resultType.GenericTypeArguments);
-                    }
                     invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
                 }
                 else
@@ -193,12 +187,13 @@ namespace Azure.Core.TestFramework
             // only comparing the generic type or count and it's only enough
             // for the cases we have today.
             static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
-            static bool AssignableFromGenericOrEqual(Type t1, Type t2) => t1.IsGenericParameter ? t1.GetGenericParameterConstraints().Any(c => c.IsAssignableFrom(t2)) : t1 == t2;// t.IsAssignableFrom(t2);
+            //static bool AssignableFromGenericOrEqual(Type t1, Type t2) => t1.IsGenericParameter ? t1.GetGenericParameterConstraints().Any(c => c.IsAssignableFrom(t2)) : t1 == t2;// t.IsAssignableFrom(t2);
             MethodInfo GetMethodSlow()
             {
                 var methods = invocation.TargetType
                 // Start with all methods that have the right name
                 .GetMethods(flags).Where(m => m.Name == nonAsyncMethodName);
+
                 // Check if their type parameters have the same generic
                 // type definitions (i.e., if I invoked
                 // GetAsync<Model>(Wrapper<Model>) we want that to match
@@ -210,14 +205,16 @@ namespace Azure.Core.TestFramework
                 // If the previous check has any results, check if they have the same number of type arguments
                 // (all of our cases today either specialize on 0 or 1 type
                 // argument for the static or dynamic user schema approach)
-                // Else, take the method list and filter to one where all args are assignable from their generic constraints
-                // or the types are equal.
+                // Else, close each GenericMethodDefinition and compare its paramter types.
                 var withSimilarGenericArguments = genericDefs.Any() ?
                     genericDefs.Where(m =>
                         m.GetGenericArguments().Length ==
                         invocation.Method.GetGenericArguments().Length) :
-                    methods.Where(m =>
-                        m.GetParameters().All(p => AssignableFromGenericOrEqual(p.ParameterType, types[p.Position])));
+                    methods
+                        .Where(m => m.IsGenericMethodDefinition)
+                        .Select(m => m.MakeGenericMethod(invocation.GenericArguments))
+                        .Where(gm => gm.GetParameters().Select(p => p.ParameterType)
+                            .SequenceEqual(invocation.Method.GetParameters().Select(p => p.ParameterType)));
 
                 // Hopefully we're down to 1.  If you arrive here in the
                 // future because SingleOrDefault threw, we need to make

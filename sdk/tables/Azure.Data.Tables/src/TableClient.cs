@@ -130,10 +130,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
         [ForwardsClientCalls]
-//TODO: https://github.com/Azure/azure-sdk-tools/issues/608
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual async Task<Response<T>> InsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             var response = await _tableOperations.InsertEntityAsync(_table,
                                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -227,10 +224,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         [ForwardsClientCalls]
-//TODO: https://github.com/Azure/azure-sdk-tools/issues/608
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
