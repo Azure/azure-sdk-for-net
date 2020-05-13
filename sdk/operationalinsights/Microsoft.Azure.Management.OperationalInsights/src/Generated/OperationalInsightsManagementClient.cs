@@ -130,6 +130,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IWorkspacesOperations Workspaces { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        public virtual IDeletedWorkspacesOperations DeletedWorkspaces { get; private set; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
@@ -411,6 +416,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             SharedKeys = new SharedKeysOperations(this);
             Usages = new UsagesOperations(this);
             Workspaces = new WorkspacesOperations(this);
+            DeletedWorkspaces = new DeletedWorkspacesOperations(this);
             Clusters = new ClustersOperations(this);
             StorageInsightConfigs = new StorageInsightConfigsOperations(this);
             SavedSearches = new SavedSearchesOperations(this);
