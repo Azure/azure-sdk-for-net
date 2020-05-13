@@ -739,7 +739,7 @@
     },
     "/twins/{id}": {
       "get": {
-        "description": "Gets the device state information for a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "description": "Gets the device state information. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetDeviceTwin",
         "consumes": [],
         "produces": [
@@ -749,7 +749,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin is to be retrieved.",
+            "description": "The unique identifier of the device whose twin will be retrieved.",
             "required": true,
             "type": "string"
           },
@@ -759,7 +759,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the device twin object.",
+            "description": "Returns the device twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -779,7 +779,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin is to be replaced.",
+            "description": "The unique identifier of the device whose twin will be replaced.",
             "required": true,
             "type": "string"
           },
@@ -805,7 +805,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin object.",
+            "description": "Returns the updated device twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -825,7 +825,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin is to be updated.",
+            "description": "The unique identifier of the device whose twin will be updated.",
             "required": true,
             "type": "string"
           },
@@ -851,7 +851,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin object.",
+            "description": "Returns the updated device twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -861,7 +861,7 @@
     },
     "/twins/{id}/modules/{mid}": {
       "get": {
-        "description": "Gets the module state information for a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "description": "Gets the module state information. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetModuleTwin",
         "consumes": [],
         "produces": [
@@ -871,14 +871,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin is to be retrieved.",
+            "description": "The unique identifier of the device whose module twin will be retrieved.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin is to be retrieved.",
+            "description": "The unique identifier of the module whose twin will be retrieved.",
             "required": true,
             "type": "string"
           },
@@ -888,7 +888,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the module twin object.",
+            "description": "Returns the module twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -908,14 +908,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin is to be replaced.",
+            "description": "The unique identifier of the device whose module twin will be replaced.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin is to be replaced.",
+            "description": "The unique identifier of the module whose twin will be replaced.",
             "required": true,
             "type": "string"
           },
@@ -941,7 +941,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated module twin object.",
+            "description": "Returns the updated module twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -961,14 +961,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin is to be updated.",
+            "description": "The unique identifier of the device whose module twin will be updated.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin is to be updated.",
+            "description": "The unique identifier of the module whose twin will be updated.",
             "required": true,
             "type": "string"
           },
@@ -994,7 +994,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated module twin object",
+            "description": "Returns the updated module twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -2478,7 +2478,7 @@
           "type": "string"
         },
         "tags": {
-          "description": "A JSON document read and written by the solution back end. They are not visible to device apps.",
+          "description": "A collection of key-value pairs read and written by the solution back end. They are not visible to device apps.",
           "type": "object",
           "additionalProperties": {
             "description": "The collection of the twin's tags as key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The values are JSON objects, up-to 4KB in length.",
@@ -2487,7 +2487,7 @@
         },
         "properties": {
           "$ref": "#/definitions/TwinProperties",
-          "description": "Represents twin's desired and reported properties."
+          "description": "The twin's desired and reported properties."
         },
         "etag": {
           "description": "TODO - which operation does this affect - update tags/ properties etc?",
@@ -2503,7 +2503,7 @@
           "type": "string"
         },
         "status": {
-          "description": "Gets the device's status.",
+          "description": "The device's status.",
           "enum": [
             "enabled",
             "disabled"
@@ -2511,7 +2511,7 @@
           "type": "string"
         },
         "statusReason": {
-          "description": "Reason, if any, for the device to be in specified status.",
+          "description": "Reason, if any, for the device's current status.",
           "type": "string"
         },
         "statusUpdateTime": {
@@ -2568,11 +2568,11 @@
       }
     },
     "TwinProperties": {
-      "description": "Represents twin's desired and reported properties. The maximum depth of twin property objects is 10.",
+      "description": "The twin's desired and reported properties. The maximum depth of twin property objects is 10.",
       "type": "object",
       "properties": {
         "desired": {
-          "description": "Properties that set by the solution back end and read by the device.",
+          "description": "Properties that are set by the solution back end and read by the device.",
           "type": "object",
           "additionalProperties": {
             "description": "The collection of desired property key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length.",
