@@ -2650,7 +2650,7 @@
           "type": "string"
         },
         "outputBlobContainerUri": {
-          "description": "URI containing SAS token to a blob container. This is used to output the status of the job and the results.",
+          "description": "SAS token to access a blob container. This is used to output the status of the job and the results.",
           "type": "string"
         },
         "outputBlobName": {
