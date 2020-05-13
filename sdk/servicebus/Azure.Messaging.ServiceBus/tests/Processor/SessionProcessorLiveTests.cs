@@ -257,9 +257,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
-                        if (completionSourceIndex < numThreads)
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < completionSources.Length)
                         {
-                            var setIndex = Interlocked.Increment(ref completionSourceIndex);
                             completionSources[setIndex].SetResult(true);
                         }
                     }
