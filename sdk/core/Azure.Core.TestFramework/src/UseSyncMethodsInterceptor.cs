@@ -187,7 +187,6 @@ namespace Azure.Core.TestFramework
             // only comparing the generic type or count and it's only enough
             // for the cases we have today.
             static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
-            //static bool AssignableFromGenericOrEqual(Type t1, Type t2) => t1.IsGenericParameter ? t1.GetGenericParameterConstraints().Any(c => c.IsAssignableFrom(t2)) : t1 == t2;// t.IsAssignableFrom(t2);
             MethodInfo GetMethodSlow()
             {
                 var methods = invocation.TargetType
