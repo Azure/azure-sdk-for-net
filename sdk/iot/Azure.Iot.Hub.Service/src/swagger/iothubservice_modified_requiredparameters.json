@@ -2545,7 +2545,8 @@
                         "type": "string"
                     }
                 }
-            }
+            },
+            "required": ["deviceId"]
         },
         "TwinProperties": {
             "description": "Represents Twin properties",
