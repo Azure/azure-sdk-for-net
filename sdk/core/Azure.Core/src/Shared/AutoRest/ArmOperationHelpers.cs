@@ -125,6 +125,7 @@ namespace Azure.Core
                 switch (finalResponse.Status)
                 {
                     case 200:
+                    case 201 when _requestMethod == RequestMethod.Put:
                     case 204 when !(_requestMethod == RequestMethod.Put || _requestMethod == RequestMethod.Patch):
                     {
                         _value = async
