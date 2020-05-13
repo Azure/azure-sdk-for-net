@@ -143,7 +143,8 @@ namespace Azure.Core.Tests
             EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual(exception.ToString().Split('\r')[0], e.GetProperty<string>("exception").Split('\r')[0]);
+            Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
+                e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
         }
 
         [Test]
