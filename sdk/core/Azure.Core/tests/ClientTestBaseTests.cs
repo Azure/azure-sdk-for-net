@@ -35,6 +35,15 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task CallsCorrectGenericParameterMethodBasedOnCtorArgument()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+            var result = await client.MethodGenericAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
         public async Task WorksWithCancellationToken()
         {
             TestClient client = InstrumentClient(new TestClient());
@@ -93,10 +102,15 @@ namespace Azure.Core.Tests
         {
             TestClient client = InstrumentClient(new TestClient());
             string responseDataPrefix = IsAsync ? "async" : "sync";
+            const string arg = "genericArg";
 
             // Static schema
             Response<string> staticData = await client.GetDataAsync<string>();
             Assert.AreEqual($"{responseDataPrefix} - static", staticData.GetRawResponse().ReasonPhrase);
+
+            // Static schema with generic arg
+            Response<string> staticGenericData = await client.GetDataAsync<string>(arg);
+            Assert.AreEqual($"{responseDataPrefix} - static {arg}", staticGenericData.GetRawResponse().ReasonPhrase);
 
             // Dynamic schema
             Response<object> dynamicData = await client.GetDataAsync();
@@ -135,6 +149,16 @@ namespace Azure.Core.Tests
                 return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
             }
 
+            public virtual Task<string> MethodGenericAsync<T>(T i, CancellationToken cancellationToken = default)
+            {
+                return Task.FromResult($"Async {i} {cancellationToken.CanBeCanceled}");
+            }
+
+            public virtual string MethodGeneric<T>(T i, CancellationToken cancellationToken = default)
+            {
+                return $"Sync {i} {cancellationToken.CanBeCanceled}";
+            }
+
             public virtual Task<string> NoAlternativeAsync(int i, CancellationToken cancellationToken = default)
             {
                 return Task.FromResult("I don't have sync alternative");
@@ -153,6 +177,10 @@ namespace Azure.Core.Tests
             // These four follow the new pattern for custom users schemas
             public virtual Task<Response<T>> GetDataAsync<T>() =>
                 Task.FromResult(Response.FromValue(default(T), new MockResponse(200, "async - static")));
+            public virtual Response<T> GetData<T>(T arg) =>
+                Response.FromValue(default(T), new MockResponse(200, $"sync - static {arg}"));
+            public virtual Task<Response<T>> GetDataAsync<T>(T arg) =>
+                Task.FromResult(Response.FromValue(default(T), new MockResponse(200, $"async - static {arg}")));
             public virtual Response<T> GetData<T>() =>
                 Response.FromValue(default(T), new MockResponse(200, "sync - static"));
             public virtual Task<Response<object>> GetDataAsync() =>
