@@ -225,7 +225,7 @@ namespace Azure.Messaging.ServiceBus
 
                     // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                    if (!(ex is ObjectDisposedException))
+                    if (!(ex is ObjectDisposedException) && !cancellationToken.IsCancellationRequested)
                     {
                         await ProcessorUtils.RaiseExceptionReceived(
                             _errorHandler,
