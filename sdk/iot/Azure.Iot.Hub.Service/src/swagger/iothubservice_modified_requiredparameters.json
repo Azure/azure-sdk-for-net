@@ -2655,7 +2655,10 @@
                     "description": "System genereated.  Ignored at creation.\r\nIf status == failure, this represents a string containing the reason.",
                     "type": "string"
                 }
-            }
+            },
+            "required": [
+                "type"
+            ]
         },
         "PurgeMessageQueueResult": {
             "description": "Result of a device message queue purge operation.",
@@ -2843,7 +2846,10 @@
                     "description": "Max execution time in secounds (ttl duration)",
                     "type": "integer"
                 }
-            }
+            },
+            "required": [
+                "type"
+            ]
         },
         "CloudToDeviceMethod": {
             "description": "Parameters to execute a direct method on the device",
@@ -2952,7 +2958,10 @@
                     "$ref": "#/definitions/DeviceJobStatistics",
                     "description": "Job details"
                 }
-            }
+            },
+            "required": [
+                "type"
+            ]
         },
         "DeviceJobStatistics": {
             "description": "The job counts, e.g., number of failed/succeeded devices",
