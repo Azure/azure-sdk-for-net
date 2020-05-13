@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Models
         private const string ItValue = "it";
         private const string NoValue = "no";
         private const string PlValue = "pl";
-        private const string PtValue = "pt-PT";
+        private const string PtPTValue = "pt-PT";
         private const string RuValue = "ru";
         private const string EsValue = "es";
         private const string SvValue = "sv";
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Polish. </summary>
         public static SentimentSkillLanguage Pl { get; } = new SentimentSkillLanguage(PlValue);
         /// <summary> Portuguese (Portugal). </summary>
-        public static SentimentSkillLanguage Pt { get; } = new SentimentSkillLanguage(PtValue);
+        public static SentimentSkillLanguage PtPT { get; } = new SentimentSkillLanguage(PtPTValue);
         /// <summary> Russian. </summary>
         public static SentimentSkillLanguage Ru { get; } = new SentimentSkillLanguage(RuValue);
         /// <summary> Spanish. </summary>

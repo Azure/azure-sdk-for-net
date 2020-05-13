@@ -8,10 +8,8 @@ using System;
 namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    internal class CodeGenMemberAttribute : Attribute
+    internal class CodeGenMemberAttribute : CodeGenTypeAttribute
     {
-        public string? OriginalName { get; }
-
         /// <summary>
         /// For collection properties. When set to true empty collection would be treated as undefined and not serialized.
         /// </summary>
@@ -23,13 +21,12 @@ namespace Azure.Core
         /// </summary>
         public bool Initialize { get; set; }
 
-        public CodeGenMemberAttribute()
+        public CodeGenMemberAttribute() : base(null)
         {
         }
 
-        public CodeGenMemberAttribute(string originalName)
+        public CodeGenMemberAttribute(string originalName) : base(originalName)
         {
-            OriginalName = originalName;
         }
     }
 }
