@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
             bool releaseSemaphore = false;
             try
             {
-                await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
                 _threadCount++;
                 if (_receiver != null)
@@ -77,6 +77,20 @@ namespace Azure.Messaging.ServiceBus
                 {
                     _semaphore.Release();
                 }
+            }
+        }
+
+        private async Task WaitSemaphore(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // propagate as TCE so can be handled by
+                // caller
+                throw new TaskCanceledException();
             }
         }
 
@@ -114,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
             bool releaseSemaphore = false;
             try
             {
-                await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
                 if (_receiver == null)
                 {
