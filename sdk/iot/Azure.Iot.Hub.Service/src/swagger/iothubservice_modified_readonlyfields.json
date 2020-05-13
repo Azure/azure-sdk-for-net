@@ -2549,17 +2549,20 @@
             "properties": {
                 "jobId": {
                     "description": "System generated.  Ignored at creation.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "startTimeUtc": {
                     "format": "date-time",
                     "description": "System generated.  Ignored at creation.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "endTimeUtc": {
                     "format": "date-time",
                     "description": "System generated.  Ignored at creation.\r\nRepresents the time the job stopped processing.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "type": {
                     "description": "Required.\r\nThe type of job to execute.",
@@ -2593,12 +2596,14 @@
                         "scheduled",
                         "queued"
                     ],
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "progress": {
                     "format": "int32",
                     "description": "System generated.  Ignored at creation.\r\nRepresents the percentage of completion.",
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "inputBlobContainerUri": {
                     "description": "URI containing SAS token to a blob container that contains registry data to sync.",
@@ -2630,7 +2635,8 @@
                 },
                 "failureReason": {
                     "description": "System genereated.  Ignored at creation.\r\nIf status == failure, this represents a string containing the reason.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 }
             }
         },
@@ -2846,31 +2852,37 @@
             "properties": {
                 "jobId": {
                     "description": "System generated.  Ignored at creation.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "queryCondition": {
                     "description": "Device query condition.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "createdTime": {
                     "format": "date-time",
                     "description": "System generated.  Ignored at creation.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "startTime": {
                     "format": "date-time",
                     "description": "Scheduled job start time in UTC.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "endTime": {
                     "format": "date-time",
                     "description": "System generated.  Ignored at creation.\r\nRepresents the time the job stopped processing.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "maxExecutionTimeInSeconds": {
                     "format": "int64",
                     "description": "Max execution time in secounds (ttl duration)",
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "type": {
                     "description": "Required.\r\nThe type of job to execute.",
@@ -2890,14 +2902,17 @@
                         "restoreFromBackup",
                         "failoverDataCopy"
                     ],
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "cloudToDeviceMethod": {
                     "$ref": "#/definitions/CloudToDeviceMethod",
-                    "description": "Required if jobType is cloudToDeviceMethod.\r\nThe method type and parameters."
+                    "description": "Required if jobType is cloudToDeviceMethod.\r\nThe method type and parameters.",
+                    "readOnly": true
                 },
                 "updateTwin": {
-                    "$ref": "#/definitions/Twin"
+                    "$ref": "#/definitions/Twin",
+                    "readOnly": true
                 },
                 "status": {
                     "description": "System generated.  Ignored at creation.",
@@ -2911,19 +2926,23 @@
                         "scheduled",
                         "queued"
                     ],
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "failureReason": {
                     "description": "System generated.  Ignored at creation.\r\nIf status == failure, this represents a string containing the reason.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "statusMessage": {
                     "description": "Status message for the job",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "deviceJobStatistics": {
                     "$ref": "#/definitions/DeviceJobStatistics",
-                    "description": "Job details"
+                    "description": "Job details",
+                    "readOnly": true
                 }
             }
         },
