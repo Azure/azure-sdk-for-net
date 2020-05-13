@@ -739,7 +739,7 @@
     },
     "/twins/{id}": {
       "get": {
-        "description": "Gets the device state information. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "description": "Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetDeviceTwin",
         "consumes": [],
         "produces": [
@@ -759,7 +759,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the device twin.",
+            "description": "The device state information.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -805,7 +805,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin.",
+            "description": "The updated device twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -851,7 +851,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated device twin.",
+            "description": "The updated device twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -861,7 +861,7 @@
     },
     "/twins/{id}/modules/{mid}": {
       "get": {
-        "description": "Gets the module state information. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "description": "Gets the module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
         "operationId": "Twin_GetModuleTwin",
         "consumes": [],
         "produces": [
@@ -888,7 +888,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the module twin.",
+            "description": "The module state information.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -941,7 +941,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated module twin.",
+            "description": "The updated module twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -994,7 +994,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated module twin.",
+            "description": "The updated module twin.",
             "schema": {
               "$ref": "#/definitions/Twin"
             }
@@ -1630,7 +1630,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the direct method response payload.",
+            "description": "The direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -1678,7 +1678,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the direct method response payload.",
+            "description": "The direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -2466,7 +2466,7 @@
       }
     },
     "Twin": {
-      "description": "Twin Representation of the device/ module state information. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub.",
+      "description": "The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub.",
       "type": "object",
       "properties": {
         "deviceId": {
