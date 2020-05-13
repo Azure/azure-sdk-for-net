@@ -6,7 +6,6 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -32,6 +31,7 @@ namespace Azure.Core.Tests
         private const int ResponseContentTextBlockEvent = 15;
         private const int ErrorResponseContentTextEvent = 14;
         private const int ErrorResponseContentTextBlockEvent = 16;
+        private const int ExceptionResponseEvent = 18;
 
         private TestEventListener _listener;
 
@@ -118,6 +118,32 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ResponseContent", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+        }
+
+        [Test]
+        public void GettingExceptionResponseProducesEvents()
+        {
+            var exception = new InvalidOperationException();
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                throw exception;
+            });
+
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, s_allowedHeaders, s_allowedQueryParameters, "Test-SDK") });
+            string requestId = null;
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await SendRequestAsync(pipeline, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("User-Agent", "agent");
+                requestId = request.ClientRequestId;
+            }));
+
+            EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
+            Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual(exception.ToString().Split('\r')[0], e.GetProperty<string>("exception").Split('\r')[0]);
         }
 
         [Test]
