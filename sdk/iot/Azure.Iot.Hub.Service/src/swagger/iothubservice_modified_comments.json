@@ -749,7 +749,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin will be retrieved.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
@@ -779,7 +779,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin will be replaced.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
@@ -825,7 +825,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose twin will be updated.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
@@ -871,14 +871,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin will be retrieved.",
+            "description": "The unique identifier of the device",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin will be retrieved.",
+            "description": "The unique identifier of the module",
             "required": true,
             "type": "string"
           },
@@ -908,14 +908,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin will be replaced.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin will be replaced.",
+            "description": "The unique identifier of the module.",
             "required": true,
             "type": "string"
           },
@@ -961,14 +961,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device whose module twin will be updated.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module whose twin will be updated.",
+            "description": "The unique identifier of the module.",
             "required": true,
             "type": "string"
           },
@@ -1611,7 +1611,7 @@
           {
             "name": "deviceId",
             "in": "path",
-            "description": "The Id of the device on which the direct method will be invoked.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
@@ -1652,14 +1652,14 @@
           {
             "name": "deviceId",
             "in": "path",
-            "description": "The Id of the device on whose module the direct method will be invoked.",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
           {
             "name": "moduleId",
             "in": "path",
-            "description": "The Id of the module on which the direct method will be invoked.",
+            "description": "The unique identifier of the module.",
             "required": true,
             "type": "string"
           },
@@ -2503,7 +2503,7 @@
           "type": "string"
         },
         "status": {
-          "description": "The device's status.",
+          "description": "Flags whether a device is enabled or not. If disabled, a device cannot connect to the service.",
           "enum": [
             "enabled",
             "disabled"
@@ -2575,7 +2575,7 @@
           "description": "Properties that are set by the solution back end and read by the device.",
           "type": "object",
           "additionalProperties": {
-            "description": "The collection of desired property key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length.",
+            "description": "The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length.",
             "type": "object"
           }
         },
@@ -2583,7 +2583,7 @@
           "description": "Properties that are set by the device, and read and queried by the solution back end.",
           "type": "object",
           "additionalProperties": {
-            "description": "The collection of reported property key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The reported property values are JSON objects, up-to 4KB in length.",
+            "description": "The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The reported property values are JSON objects, up-to 4KB in length.",
             "type": "object"
           }
         }
