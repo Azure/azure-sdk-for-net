@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Subscription.Models
+namespace Microsoft.Azure.Management.EventHub.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -16,26 +16,24 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of pending subscription operations.
+    /// The response of the List Available Clusters operation.
     /// </summary>
-    public partial class SubscriptionOperationListResult
+    public partial class AvailableClustersList
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
-        /// class.
+        /// Initializes a new instance of the AvailableClustersList class.
         /// </summary>
-        public SubscriptionOperationListResult()
+        public AvailableClustersList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
-        /// class.
+        /// Initializes a new instance of the AvailableClustersList class.
         /// </summary>
-        /// <param name="value">A list of pending
-        /// SubscriptionOperations</param>
-        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
+        /// <param name="value">The count of readily available and
+        /// pre-provisioned Event Hubs Clusters per region.</param>
+        public AvailableClustersList(IList<AvailableCluster> value = default(IList<AvailableCluster>))
         {
             Value = value;
             CustomInit();
@@ -47,10 +45,11 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of pending SubscriptionOperations
+        /// Gets or sets the count of readily available and pre-provisioned
+        /// Event Hubs Clusters per region.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SubscriptionOperation> Value { get; set; }
+        public IList<AvailableCluster> Value { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Subscription
+namespace Microsoft.Azure.Management.EventHub
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Subscription
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriptionFactoryOperations operations.
+    /// ConfigurationOperations operations.
     /// </summary>
-    internal partial class SubscriptionFactoryOperations : IServiceOperations<SubscriptionClient>, ISubscriptionFactoryOperations
+    internal partial class ConfigurationOperations : IServiceOperations<EventHubManagementClient>, IConfigurationOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionFactoryOperations class.
+        /// Initializes a new instance of the ConfigurationOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SubscriptionFactoryOperations(SubscriptionClient client)
+        internal ConfigurationOperations(EventHubManagementClient client)
         {
             if (client == null)
             {
@@ -46,73 +46,23 @@ namespace Microsoft.Azure.Management.Subscription
         }
 
         /// <summary>
-        /// Gets a reference to the SubscriptionClient
+        /// Gets a reference to the EventHubManagementClient
         /// </summary>
-        public SubscriptionClient Client { get; private set; }
+        public EventHubManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to create a new Azure subscription
+        /// Replace all specified Event Hubs Cluster settings with those contained in
+        /// the request body. Leaves the settings not specified in the request body
+        /// unmodified.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// The name of the Microsoft Customer Agreement billing account for which you
-        /// want to create the subscription.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
         /// </param>
-        /// <param name='invoiceSectionName'>
-        /// The name of the invoice section in the billing account for which you want
-        /// to create the subscription.
+        /// <param name='clusterName'>
+        /// The name of the Event Hubs Cluster.
         /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> CreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, ModernSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders> _response = await BeginCreateSubscriptionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates an Azure subscription
-        /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
-        /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders> _response = await BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to create a new Azure subscription
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// The name of the Microsoft Customer Agreement billing account for which you
-        /// want to create the subscription.
-        /// </param>
-        /// <param name='invoiceSectionName'>
-        /// The name of the invoice section in the billing account for which you want
-        /// to create the subscription.
-        /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
+        /// <param name='parameters'>
+        /// Parameters for creating an Event Hubs Cluster resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -135,25 +85,47 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> BeginCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, ModernSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountName == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (invoiceSectionName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (body == null)
+            if (resourceGroupName != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
-            if (body != null)
+            if (clusterName == null)
             {
-                body.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            string apiVersion = "2018-11-01-preview";
+            if (clusterName != null)
+            {
+                if (clusterName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "clusterName", 50);
+                }
+                if (clusterName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "clusterName", 6);
+                }
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -161,18 +133,19 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscription", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Patch", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Subscription/createSubscription").ToString();
-            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
-            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/quotaConfiguration/default").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -185,7 +158,7 @@ namespace Microsoft.Azure.Management.Subscription
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -216,9 +189,9 @@ namespace Microsoft.Azure.Management.Subscription
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -242,7 +215,7 @@ namespace Microsoft.Azure.Management.Subscription
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -272,7 +245,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>();
+            var _result = new AzureOperationResponse<ClusterQuotaConfigurationProperties>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -285,7 +258,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionCreationResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ClusterQuotaConfigurationProperties>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -297,18 +270,23 @@ namespace Microsoft.Azure.Management.Subscription
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
+            // Deserialize Response
+            if ((int)_statusCode == 201)
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
                 {
-                    _httpResponse.Dispose();
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ClusterQuotaConfigurationProperties>(_responseContent, Client.DeserializationSettings);
                 }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -318,14 +296,14 @@ namespace Microsoft.Azure.Management.Subscription
         }
 
         /// <summary>
-        /// Creates an Azure subscription
+        /// Get all Event Hubs Cluster settings - a collection of key/value pairs which
+        /// represent the quotas and settings imposed on the cluster.
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
         /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
+        /// <param name='clusterName'>
+        /// The name of the Event Hubs Cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -348,17 +326,43 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (enrollmentAccountName == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enrollmentAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (body == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2018-03-01-preview";
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (clusterName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
+            }
+            if (clusterName != null)
+            {
+                if (clusterName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "clusterName", 50);
+                }
+                if (clusterName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "clusterName", 6);
+                }
+            }
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -366,16 +370,18 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("enrollmentAccountName", enrollmentAccountName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscriptionInEnrollmentAccount", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountName}/providers/Microsoft.Subscription/createSubscription").ToString();
-            _url = _url.Replace("{enrollmentAccountName}", System.Uri.EscapeDataString(enrollmentAccountName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/quotaConfiguration/default").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -388,7 +394,7 @@ namespace Microsoft.Azure.Management.Subscription
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -419,12 +425,6 @@ namespace Microsoft.Azure.Management.Subscription
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.Subscription
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>();
+            var _result = new AzureOperationResponse<ClusterQuotaConfigurationProperties>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionCreationResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ClusterQuotaConfigurationProperties>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -499,19 +499,6 @@ namespace Microsoft.Azure.Management.Subscription
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

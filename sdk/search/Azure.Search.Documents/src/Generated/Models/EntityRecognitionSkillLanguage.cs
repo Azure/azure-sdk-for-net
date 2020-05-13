@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         private const string KoValue = "ko";
         private const string NoValue = "no";
         private const string PlValue = "pl";
-        private const string PtValue = "pt-PT";
+        private const string PtPTValue = "pt-PT";
         private const string PtBRValue = "pt-BR";
         private const string RuValue = "ru";
         private const string EsValue = "es";
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Polish. </summary>
         public static EntityRecognitionSkillLanguage Pl { get; } = new EntityRecognitionSkillLanguage(PlValue);
         /// <summary> Portuguese (Portugal). </summary>
-        public static EntityRecognitionSkillLanguage Pt { get; } = new EntityRecognitionSkillLanguage(PtValue);
+        public static EntityRecognitionSkillLanguage PtPT { get; } = new EntityRecognitionSkillLanguage(PtPTValue);
         /// <summary> Portuguese (Brazil). </summary>
         public static EntityRecognitionSkillLanguage PtBR { get; } = new EntityRecognitionSkillLanguage(PtBRValue);
         /// <summary> Russian. </summary>
