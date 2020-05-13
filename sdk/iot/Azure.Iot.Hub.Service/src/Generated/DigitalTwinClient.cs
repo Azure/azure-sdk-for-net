@@ -15,7 +15,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary> The DigitalTwin service client. </summary>
-    public partial class DigitalTwinClient
+    internal partial class DigitalTwinClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
