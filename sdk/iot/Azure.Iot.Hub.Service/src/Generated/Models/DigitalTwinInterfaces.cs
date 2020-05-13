@@ -25,9 +25,6 @@ namespace Azure.Iot.Hub.Service.Models
             Interfaces = interfaces;
             Version = version;
         }
-
-        /// <summary> Interface(s) data on the digital twin. </summary>
-        public IReadOnlyDictionary<string, PnpInterface> Interfaces { get; }
         /// <summary> Version of digital twin. </summary>
         public long? Version { get; }
     }
