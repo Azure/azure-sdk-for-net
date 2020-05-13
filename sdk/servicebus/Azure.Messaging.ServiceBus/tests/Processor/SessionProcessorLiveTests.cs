@@ -1237,9 +1237,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     finally
                     {
+
                         if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseMessageSession)
                         {
-                            tcs.SetResult(true);
+                            if (errorSource != ServiceBusErrorSource.Abandon ||
+                                sessionErrorEventCt == 2)
+                            {
+                                tcs.SetResult(true);
+                            }
                         }
                         if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession ||
                             eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession)

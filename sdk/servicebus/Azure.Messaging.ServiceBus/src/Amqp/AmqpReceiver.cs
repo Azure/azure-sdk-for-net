@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -1284,5 +1284,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             }
         }
+
+        private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }
