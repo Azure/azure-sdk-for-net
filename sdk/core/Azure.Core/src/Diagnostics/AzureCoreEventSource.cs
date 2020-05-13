@@ -32,10 +32,10 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}, client assembly: {4}")]
-        public void Request(string requestId, string method, string uri, string headers, string? assemblyName)
+        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
+        public void Request(string requestId, string method, string uri, string headers, string? clientAssembly)
         {
-            WriteEvent(RequestEvent, requestId, method, uri, headers, assemblyName);
+            WriteEvent(RequestEvent, requestId, method, uri, headers, clientAssembly);
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]

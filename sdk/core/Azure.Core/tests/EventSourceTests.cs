@@ -98,7 +98,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("assemblyName"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
@@ -500,7 +500,7 @@ namespace Azure.Core.Tests
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("assemblyName"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -544,7 +544,7 @@ namespace Azure.Core.Tests
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("assemblyName"));
+            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
