@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/enrollmentAccounts/465c11a0-38c3-4ecc-92e9-996c69ae9e76/providers/Microsoft.Subscription/createSubscription?api-version=2018-03-01-preview",
+      "RequestUri": "/providers/Microsoft.Billing/enrollmentAccounts/465c11a0-38c3-4ecc-92e9-996c69ae9e76/providers/Microsoft.Subscription/createSubscription?api-version=2019-10-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9lbnJvbGxtZW50QWNjb3VudHMvNDY1YzExYTAtMzhjMy00ZWNjLTkyZTktOTk2YzY5YWU5ZTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NyZWF0ZVN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"displayName\": \"TestSubscription_AzureSDK\",\r\n  \"offerType\": \"MS-AZR-0017P\"\r\n}",
@@ -43,7 +43,7 @@
           "10"
         ],
         "api-supported-versions": [
-          "2018-03-01-preview"
+          "2019-10-01-preview"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -70,7 +70,7 @@
           "Mon, 26 Mar 2018 22:24:38 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2018-03-01-preview"
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2019-10-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -85,7 +85,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2018-03-01-preview",
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2019-10-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvNTk5Zjg1MDAtYzJiOC00YjRiLTkyOTUtZDU2M2UzYjU1NGRkP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -112,7 +112,7 @@
           "no-cache"
         ],
         "api-supported-versions": [
-          "2018-03-01-preview"
+          "2019-10-01-preview"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -151,7 +151,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2018-03-01-preview",
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/599f8500-c2b8-4b4b-9295-d563e3b554dd?api-version=2019-10-01-preview",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvNTk5Zjg1MDAtYzJiOC00YjRiLTkyOTUtZDU2M2UzYjU1NGRkP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -178,7 +178,7 @@
           "no-cache"
         ],
         "api-supported-versions": [
-          "2018-03-01-preview"
+          "2019-10-01-preview"
         ],
         "X-Content-Type-Options": [
           "nosniff"
