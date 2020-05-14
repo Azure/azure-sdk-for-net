@@ -128,6 +128,17 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public async Task GetClientCallsAreAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            TestClient subClient = client.GetAnotherTestClient();
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
         public class TestClient
         {
             public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
@@ -170,6 +181,11 @@ namespace Azure.Core.Tests
                 throw new InvalidOperationException("async - dynamic");
             public virtual Response<object> GetFailure() =>
                 throw new InvalidOperationException("sync - dynamic");
+
+            public virtual TestClient GetAnotherTestClient()
+            {
+                return new TestClient();
+            }
         }
 
         public class InvalidTestClient
