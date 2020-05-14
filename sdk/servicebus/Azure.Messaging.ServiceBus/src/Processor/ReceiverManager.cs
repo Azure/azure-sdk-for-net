@@ -222,8 +222,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationTokenSource"></param>
         /// <returns></returns>
         private async Task RenewMessageLock(
-        ServiceBusReceivedMessage message,
-        CancellationTokenSource cancellationTokenSource)
+            ServiceBusReceivedMessage message,
+            CancellationTokenSource cancellationTokenSource)
         {
             cancellationTokenSource.CancelAfter(_processorOptions.MaxAutoLockRenewalDuration);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
