@@ -153,7 +153,6 @@
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\tests\TestFramework.props" Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'"/>  
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="nunit" />
