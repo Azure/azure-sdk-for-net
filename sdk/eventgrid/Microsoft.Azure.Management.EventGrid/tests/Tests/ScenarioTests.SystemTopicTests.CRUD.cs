@@ -24,13 +24,7 @@ namespace EventGrid.Tests.ScenarioTests
 
                 var location = this.ResourceManagementClient.GetLocationFromProvider();
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
-
+                string resourceGroup = "testtobedeleted";
                 var systemTopicName = TestUtilities.GenerateName(EventGridManagementHelper.SystemTopicPrefix);
 
                 // Temporarily commenting this out as this is not yet enabled for the new API version
@@ -47,7 +41,7 @@ namespace EventGrid.Tests.ScenarioTests
                     Location = location,
                     Tags = originalTagsDictionary,
                     TopicType = "microsoft.storage.storageaccounts",
-                    Source = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testtobedeleted/providers/Microsoft.Storage/storageAccounts/trackedsource2stg" // "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Storage/storageAccounts/devexpstg"
+                    Source = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testtobedeleted/providers/Microsoft.Storage/storageAccounts/testtrackedsourcev2",
                 };
 
                 try
@@ -138,10 +132,10 @@ namespace EventGrid.Tests.ScenarioTests
                     Assert.Contains(systemTopicsInAzureSubscriptionList, t => t.Name == systemTopicName);
 
                     var replaceSystemTopicTagsDictionary = new Dictionary<string, string>()
-                {
-                    { "replacedTag1", "replacedValue1" },
-                    { "replacedTag2", "replacedValue2" }
-                };
+                    {
+                        { "replacedTag1", "replacedValue1" },
+                        { "replacedTag2", "replacedValue2" }
+                    };
 
                     // Replace the systemTopic
                     systemTopic.Tags = replaceSystemTopicTagsDictionary;
@@ -153,10 +147,10 @@ namespace EventGrid.Tests.ScenarioTests
                     // Update the systemTopic with tags & allow traffic from all ips
                     SystemTopicUpdateParameters systemTopicUpdateParameters = new SystemTopicUpdateParameters();
                     systemTopicUpdateParameters.Tags = new Dictionary<string, string>()
-                {
-                    { "updatedTag1", "updatedValue1" },
-                    { "updatedTag2", "updatedValue2" }
-                };
+                    {
+                        { "updatedTag1", "updatedValue1" },
+                        { "updatedTag2", "updatedValue2" }
+                    };
 
                     var updateSystemTopicResponse = this.EventGridManagementClient.SystemTopics.UpdateAsync(resourceGroup, systemTopicName, systemTopicUpdateParameters.Tags).Result;
                     Assert.Contains(updateSystemTopicResponse.Tags, tag => tag.Key == "updatedTag1");
