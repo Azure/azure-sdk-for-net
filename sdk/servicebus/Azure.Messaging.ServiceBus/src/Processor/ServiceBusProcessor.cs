@@ -631,29 +631,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Cancels the specified cancellation source and awaits the specified task.
-        /// </summary>
-        /// <param name="cancellationSource">CancellationTokenSource to cancel</param>
-        /// <param name="task">Associated task to await</param>
-        private static async Task CancelTask(
-                CancellationTokenSource cancellationSource,
-                Task task)
-        {
-            try
-            {
-                if (cancellationSource != null)
-                {
-                    cancellationSource.Cancel();
-                    await task.ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex) when (ex is TaskCanceledException)
-            {
-                // Nothing to do here.  These exceptions are expected.
-            }
-        }
-
-        /// <summary>
         /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
         /// </summary>
         ///
