@@ -136,7 +136,6 @@ namespace Azure.Messaging.ServiceBus
                 {
                     renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
                     renewLock = RenewMessageLock(
-                        Receiver,
                         message,
                         renewLockCancellationTokenSource);
                 }
@@ -218,12 +217,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="receiver"></param>
         /// <param name="message"></param>
         /// <param name="cancellationTokenSource"></param>
         /// <returns></returns>
         private async Task RenewMessageLock(
-        ServiceBusReceiver receiver,
         ServiceBusReceivedMessage message,
         CancellationTokenSource cancellationTokenSource)
         {
@@ -244,12 +241,12 @@ namespace Azure.Messaging.ServiceBus
                     {
                         break;
                     }
-                    if (receiver.IsDisposed)
+                    if (Receiver.IsDisposed)
                     {
                         break;
                     }
 
-                    await receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+                    await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(_identifier);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
