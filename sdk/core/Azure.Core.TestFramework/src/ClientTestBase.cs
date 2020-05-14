@@ -29,12 +29,14 @@ namespace Azure.Core.TestFramework
             IsAsync = isAsync;
         }
 
-        public TClient CreateClient<TClient>(params object[] args) where TClient : class
+        protected TClient CreateClient<TClient>(params object[] args) where TClient : class
         {
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
         public TClient InstrumentClient<TClient>(TClient client) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, null);
+
+        protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
 
         internal object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
