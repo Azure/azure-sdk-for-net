@@ -407,7 +407,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareInfo>> CreateInternal(
+        internal async Task<Response<ShareInfo>> CreateInternal(
             Metadata metadata,
             int? quotaInGB,
             bool async,
@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> DeleteInternal(
+        internal async Task<Response> DeleteInternal(
             bool includeSnapshots,
             bool async,
             CancellationToken cancellationToken,
@@ -1948,147 +1948,6 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion CreatePermission
-
-        #region RestoreShare
-        /// <summary>
-        /// Restores a previously created share.  The restored share
-        /// will be renamed to the name of this <see cref="ShareServiceClient"/>.
-        /// If the container associated with this <see cref="ShareServiceClient"/>
-        /// already exists, this call will result in a 409 (conflict).
-        /// This API is only functional is Share Soft Delete is enabled
-        /// for the storage account associated with the share.
-        /// </summary>
-        /// <param name="deletedShareName">
-        /// The name of the share to restore.
-        /// </param>
-        /// <param name="deletedShareVersion">
-        /// The version of the share to restore.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/>.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<ShareInfo> Restore(
-            string deletedShareName,
-            string deletedShareVersion,
-            CancellationToken cancellationToken = default)
-            => RestoreInternal(
-                deletedShareName,
-                deletedShareVersion,
-                async: false,
-                cancellationToken).EnsureCompleted();
-
-        /// <summary>
-        /// Restores a previously created share.  The restored share
-        /// will be renamed to the name of this <see cref="ShareServiceClient"/>.
-        /// If the container associated with this <see cref="ShareServiceClient"/>
-        /// already exists, this call will result in a 409 (conflict).
-        /// This API is only functional is Share Soft Delete is enabled
-        /// for the storage account associated with the share.
-        /// </summary>
-        /// <param name="deletedShareName">
-        /// The name of the share to restore.
-        /// </param>
-        /// <param name="deletedShareVersion">
-        /// The version of the share to restore.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/>.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs
-        /// </remarks>
-        public virtual async Task<Response<ShareInfo>> RestoreAsync(
-            string deletedShareName,
-            string deletedShareVersion,
-            CancellationToken cancellationToken = default)
-            => await RestoreInternal(
-                deletedShareName,
-                deletedShareVersion,
-                async: true,
-                cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Restores a previously created share.  The restored share
-        /// will be renamed to the name of this <see cref="ShareServiceClient"/>.
-        /// If the container associated with this <see cref="ShareServiceClient"/>
-        /// already exists, this call will result in a 409 (conflict).
-        /// This API is only functional is Share Soft Delete is enabled
-        /// for the storage account associated with the share.
-        /// </summary>
-        /// <param name="deletedShareName">
-        /// The name of the share to restore.
-        /// </param>
-        /// <param name="deletedShareVersion">
-        /// The version of the share to restore.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/>.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<Response<ShareInfo>> RestoreInternal(
-            string deletedShareName,
-            string deletedShareVersion,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            using (Pipeline.BeginLoggingScope(nameof(ShareServiceClient)))
-            {
-                Pipeline.LogMethodEnter(
-                    nameof(ShareServiceClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(deletedShareName)}: {deletedShareName}\n" +
-                    $"{nameof(deletedShareVersion)}: {deletedShareVersion}");
-
-                try
-                {
-                    return await FileRestClient.Share.RestoreAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        Version.ToVersionString(),
-                        deletedShareName: deletedShareName,
-                        deletedShareVersion: deletedShareVersion,
-                        async: async,
-                        operationName: $"{nameof(ShareClient)}.{nameof(Restore)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    Pipeline.LogMethodExit(nameof(ShareServiceClient));
-                }
-            }
-        }
-        #endregion RestoreShare
 
         #region CreateDirectory
         /// <summary>
