@@ -9,10 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Execution;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
