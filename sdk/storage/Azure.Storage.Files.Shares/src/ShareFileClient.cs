@@ -3316,6 +3316,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
             Uri sourceUri,
             HttpRange range,
