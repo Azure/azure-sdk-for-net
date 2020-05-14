@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
 
-        private readonly IList<ReceiverLifeCycleManager> _receiverLifeCycles = new List<ReceiverLifeCycleManager>();
+        private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -447,7 +447,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    InitializeReceiverLifeCycles();
+                    InitializeReceiverManagers();
 
                     // We expect the token source to be null, but we are playing safe.
 
@@ -475,7 +475,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private void InitializeReceiverLifeCycles()
+        private void InitializeReceiverManagers()
         {
             if (IsSessionProcessor)
             {
@@ -483,8 +483,8 @@ namespace Azure.Messaging.ServiceBus
                 for (int i = 0; i < numReceivers; i++)
                 {
                     var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
-                    _receiverLifeCycles.Add(
-                        new SessionReceiverLifeCycleManager(
+                    _receiverManagers.Add(
+                        new SessionReceiverManager(
                             _connection,
                             FullyQualifiedNamespace,
                             EntityPath,
@@ -501,8 +501,8 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                _receiverLifeCycles.Add(
-                    new ReceiverLifeCycleManager(
+                _receiverManagers.Add(
+                    new ReceiverManager(
                         _connection,
                         FullyQualifiedNamespace,
                         EntityPath,
@@ -576,9 +576,9 @@ namespace Azure.Messaging.ServiceBus
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
 
-                    foreach (ReceiverLifeCycleManager lifeCycle in _receiverLifeCycles)
+                    foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        await lifeCycle.CloseReceiverIfNeeded(
+                        await receiverManager.CloseReceiverIfNeeded(
                             cancellationToken,
                             forceClose: true)
                             .ConfigureAwait(false);
@@ -610,13 +610,13 @@ namespace Azure.Messaging.ServiceBus
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    foreach (ReceiverLifeCycleManager receiverLifeCycle in _receiverLifeCycles)
+                    foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
                         await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        tasks.Add(receiverLifeCycle.ReceiveAndProcessMessagesAsync(cancellationToken));
+                        tasks.Add(receiverManager.ReceiveAndProcessMessagesAsync(cancellationToken));
                     }
                     if (tasks.Count > MaxConcurrentCalls)
                     {

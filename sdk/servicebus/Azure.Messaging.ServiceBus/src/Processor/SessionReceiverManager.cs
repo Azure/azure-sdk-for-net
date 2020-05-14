@@ -5,28 +5,32 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Core;
-using System.IO;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
-
-    internal class SessionReceiverLifeCycleManager : ReceiverLifeCycleManager
+    /// <summary>
+    /// Represents a thread-safe abstraction around a single session receiver that threads
+    /// spawned by the ServiceBusProcessor use to receive and process messages. Depending on how the
+    /// MaxConcurrentCalls and SessionIds options are configured, there may be multiple threads using the same
+    /// SessionReceiverManager (i.e. if MaxConcurrentCalls is greater than the number of specified sessions).
+    /// The manager will delegate to the user provided callbacks and handle automatic locking of sessions.
+    /// The receiver instance will only be closed when no other threads are using it, or when the user has
+    /// called StopProcessingAsync.
+    /// </summary>
+    internal class SessionReceiverManager : ReceiverManager
     {
         private int _threadCount = 0;
         private readonly string _sessionId;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
-        private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
         private ServiceBusSessionReceiver _receiver;
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
-        public SessionReceiverLifeCycleManager(
+        public SessionReceiverManager(
             ServiceBusConnection connection,
             string fullyQualifiedNamespace,
             string entityPath,
@@ -45,7 +49,6 @@ namespace Azure.Messaging.ServiceBus
             _sessionInitHandler = sessionInitHandler;
             _sessionCloseHandler = sessionCloseHandler;
             _messageHandler = messageHandler;
-            _errorHandler = errorHandler;
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
         }
 
@@ -156,8 +159,7 @@ namespace Azure.Messaging.ServiceBus
 
             catch (Exception exception)
             {
-                await ProcessorUtils.RaiseExceptionReceived(
-                    _errorHandler,
+                await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         exception,
                         ServiceBusErrorSource.CloseMessageSession,
@@ -242,8 +244,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = sbException.ProcessorErrorSource.Value;
                 }
-                await ProcessorUtils.RaiseExceptionReceived(
-                    _errorHandler,
+                await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         ex,
                         errorSource,
@@ -272,7 +273,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(_identifier, _receiver.SessionId);
-                    TimeSpan delay = ProcessorUtils.CalculateRenewDelay(_receiver.SessionLockedUntil);
+                    TimeSpan delay = CalculateRenewDelay(_receiver.SessionLockedUntil);
 
                     try
                     {
@@ -293,19 +294,7 @@ namespace Azure.Messaging.ServiceBus
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockException(_identifier, ex);
-
-                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
-                    // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                    if (!(ex is ObjectDisposedException) && !cancellationToken.IsCancellationRequested)
-                    {
-                        await ProcessorUtils.RaiseExceptionReceived(
-                            _errorHandler,
-                            new ProcessErrorEventArgs(
-                                ex,
-                                ServiceBusErrorSource.RenewLock,
-                                _fullyQualifiedNamespace,
-                                _entityPath)).ConfigureAwait(false);
-                    }
+                    await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
                     if (!(ex as ServiceBusException)?.IsTransient == true)
@@ -316,7 +305,9 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task OnMessageHandler(ServiceBusReceivedMessage message, CancellationToken processorCancellationToken)
+        public override async Task OnMessageHandler(
+            ServiceBusReceivedMessage message,
+            CancellationToken processorCancellationToken)
         {
             var args = new ProcessSessionMessageEventArgs(
                 message,

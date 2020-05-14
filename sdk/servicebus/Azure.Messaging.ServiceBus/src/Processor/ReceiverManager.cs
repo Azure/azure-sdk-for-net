@@ -8,8 +8,12 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
-
-    internal class ReceiverLifeCycleManager
+    /// <summary>
+    /// Represents a single receiver instance that multiple threads spawned by the ServiceBusProcessor
+    /// may be using to receive and process messages. The manager will delegate to the user provided
+    /// callbacks and handle automatic locking of messages.
+    /// </summary>
+    internal class ReceiverManager
     {
         protected virtual ServiceBusReceiver Receiver { get; set; }
         protected readonly ServiceBusConnection _connection;
@@ -25,7 +29,7 @@ namespace Azure.Messaging.ServiceBus
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
 
-        public ReceiverLifeCycleManager(
+        public ReceiverManager(
             ServiceBusConnection connection,
             string fullyQualifiedNamespace,
             string entityPath,
@@ -69,6 +73,7 @@ namespace Azure.Messaging.ServiceBus
                 Receiver = null;
             }
         }
+
         public virtual async Task ReceiveAndProcessMessagesAsync(CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
@@ -98,8 +103,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = sbException.ProcessorErrorSource.Value;
                 }
-                await ProcessorUtils.RaiseExceptionReceived(
-                    _errorHandler,
+                await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         ex,
                         errorSource,
@@ -163,8 +167,7 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception ex) when (!(ex is TaskCanceledException))
             {
                 ThrowIfSessionLockLost(ex, errorSource);
-                await ProcessorUtils.RaiseExceptionReceived(
-                    _errorHandler,
+                await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         ex,
                         errorSource,
@@ -187,8 +190,7 @@ namespace Azure.Messaging.ServiceBus
                     catch (Exception exception)
                     {
                         ThrowIfSessionLockLost(exception, ServiceBusErrorSource.Abandon);
-                        await ProcessorUtils.RaiseExceptionReceived(
-                            _errorHandler,
+                        await RaiseExceptionReceived(
                             new ProcessErrorEventArgs(
                                 exception,
                                 ServiceBusErrorSource.Abandon,
@@ -231,7 +233,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(_identifier, 1, message.LockToken);
-                    TimeSpan delay = ProcessorUtils.CalculateRenewDelay(message.LockedUntil);
+                    TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     try
                     {
@@ -252,19 +254,7 @@ namespace Azure.Messaging.ServiceBus
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
                     ServiceBusEventSource.Log.ProcesserRenewMessageLockException(_identifier, ex);
-
-                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
-                    // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                    if (!(ex is ObjectDisposedException) && !cancellationToken.IsCancellationRequested)
-                    {
-                        await ProcessorUtils.RaiseExceptionReceived(
-                            _errorHandler,
-                            new ProcessErrorEventArgs(
-                                ex,
-                                ServiceBusErrorSource.RenewLock,
-                                _fullyQualifiedNamespace,
-                                _entityPath)).ConfigureAwait(false);
-                    }
+                    await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
                     if (!(ex as ServiceBusException)?.IsTransient == true)
@@ -310,6 +300,59 @@ namespace Azure.Messaging.ServiceBus
                 sbException.ProcessorErrorSource = errorSource;
                 throw sbException;
             }
+        }
+
+        protected async Task HandleRenewLockException(Exception ex, CancellationToken cancellationToken)
+        {
+            // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
+            // this renew exception is not relevant anymore. Lets not bother user with this exception.
+            if (!(ex is ObjectDisposedException) && !cancellationToken.IsCancellationRequested)
+            {
+                await RaiseExceptionReceived(
+                    new ProcessErrorEventArgs(
+                        ex,
+                        ServiceBusErrorSource.RenewLock,
+                        _fullyQualifiedNamespace,
+                        _entityPath)).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
+        protected async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
+        {
+            try
+            {
+                await _errorHandler(eventArgs).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                // don't bubble up exceptions raised from customer exception handler
+                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lockedUntil"></param>
+        /// <returns></returns>
+        protected TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
+        {
+            var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
+
+            if (remainingTime < TimeSpan.FromMilliseconds(400))
+            {
+                return TimeSpan.Zero;
+            }
+
+            var buffer = TimeSpan.FromTicks(Math.Min(remainingTime.Ticks / 2, Constants.MaximumRenewBufferDuration.Ticks));
+            var renewAfter = remainingTime - buffer;
+
+            return renewAfter;
         }
     }
 }
