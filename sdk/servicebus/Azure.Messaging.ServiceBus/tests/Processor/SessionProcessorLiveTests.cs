@@ -1088,14 +1088,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
                 {
-                    var exception = (ServiceBusException)eventArgs.Exception;
-                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    try
                     {
-                        Interlocked.Increment(ref sessionErrorEventCt);
+                        var exception = (ServiceBusException)eventArgs.Exception;
+                        if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                        {
+                            Interlocked.Increment(ref sessionErrorEventCt);
+                        }
+                        else
+                        {
+                            Assert.Fail(eventArgs.Exception.ToString());
+                        }
                     }
-                    else
+                    finally
                     {
-                        Assert.Fail(eventArgs.Exception.ToString());
+                        tcs.SetResult(true);
                     }
                     return Task.CompletedTask;
                 }
@@ -1117,7 +1124,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     finally
                     {
                         var ct = Interlocked.Increment(ref messageCt);
-                        tcs.SetResult(true);
                     }
                 }
                 await tcs.Task;

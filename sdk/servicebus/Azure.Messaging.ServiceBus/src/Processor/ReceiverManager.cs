@@ -234,14 +234,7 @@ namespace Azure.Messaging.ServiceBus
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(_identifier, 1, message.LockToken);
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
-                    try
-                    {
                         await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        break;
-                    }
                     if (Receiver.IsDisposed)
                     {
                         break;

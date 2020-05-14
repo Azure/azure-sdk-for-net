@@ -592,7 +592,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     if (tasks.Count > MaxConcurrentCalls)
                     {
-                        tasks.RemoveAll(t => t.IsCompleted || t.IsCanceled || t.IsFaulted);
+                        tasks.RemoveAll(t => t.IsCompleted);
                     }
                 }
             }
