@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizesClient. </summary>
-        public VirtualMachineSizesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public VirtualMachineSizesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of VirtualMachineSizesClient. </summary>
+        public VirtualMachineSizesClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new VirtualMachineSizesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new VirtualMachineSizesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list). </summary>

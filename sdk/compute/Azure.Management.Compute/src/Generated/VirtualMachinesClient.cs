@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of VirtualMachinesClient. </summary>
-        public VirtualMachinesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public VirtualMachinesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of VirtualMachinesClient. </summary>
+        public VirtualMachinesClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new VirtualMachinesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new VirtualMachinesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Retrieves information about the model view or the instance view of a virtual machine. </summary>

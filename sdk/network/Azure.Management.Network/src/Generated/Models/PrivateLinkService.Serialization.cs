@@ -146,8 +146,8 @@ namespace Azure.Management.Network.Models
             IList<NetworkInterface> networkInterfaces = default;
             ProvisioningState? provisioningState = default;
             IList<PrivateEndpointConnection> privateEndpointConnections = default;
-            PrivateLinkServicePropertiesVisibility visibility = default;
-            PrivateLinkServicePropertiesAutoApproval autoApproval = default;
+            ResourceSet visibility = default;
+            ResourceSet autoApproval = default;
             IList<string> fqdns = default;
             string @alias = default;
             bool? enableProxyProtocol = default;
@@ -322,7 +322,7 @@ namespace Azure.Management.Network.Models
                             {
                                 continue;
                             }
-                            visibility = PrivateLinkServicePropertiesVisibility.DeserializePrivateLinkServicePropertiesVisibility(property0.Value);
+                            visibility = ResourceSet.DeserializeResourceSet(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoApproval"))
@@ -331,7 +331,7 @@ namespace Azure.Management.Network.Models
                             {
                                 continue;
                             }
-                            autoApproval = PrivateLinkServicePropertiesAutoApproval.DeserializePrivateLinkServicePropertiesAutoApproval(property0.Value);
+                            autoApproval = ResourceSet.DeserializeResourceSet(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fqdns"))

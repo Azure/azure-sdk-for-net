@@ -74,7 +74,7 @@ namespace Azure.Management.Network.Models
             string etag = default;
             string id = default;
             ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
-            Container container = default;
+            SubResource container = default;
             IList<ContainerNetworkInterfaceIpConfiguration> ipConfigurations = default;
             ProvisioningState? provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.Management.Network.Models
                             {
                                 continue;
                             }
-                            container = Container.DeserializeContainer(property0.Value);
+                            container = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"))

@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of ResourceGroupsClient. </summary>
-        public ResourceGroupsClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public ResourceGroupsClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ResourceGroupsClient. </summary>
+        public ResourceGroupsClient(string subscriptionId, string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new ResourceGroupsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new ResourceGroupsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Checks whether a resource group exists. </summary>

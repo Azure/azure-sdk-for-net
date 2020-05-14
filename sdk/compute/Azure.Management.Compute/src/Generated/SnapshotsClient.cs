@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of SnapshotsClient. </summary>
-        public SnapshotsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public SnapshotsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of SnapshotsClient. </summary>
+        public SnapshotsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new SnapshotsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new SnapshotsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Gets information about a snapshot. </summary>

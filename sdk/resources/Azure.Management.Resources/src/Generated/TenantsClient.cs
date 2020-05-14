@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of TenantsClient. </summary>
-        public TenantsClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public TenantsClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of TenantsClient. </summary>
+        public TenantsClient(string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new TenantsRestClient(_clientDiagnostics, _pipeline);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new TenantsRestClient(_clientDiagnostics, _pipeline, host: host);
         }
 
         /// <summary> Gets the tenants for your account. </summary>

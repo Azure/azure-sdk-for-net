@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of ResourceLinksClient. </summary>
-        public ResourceLinksClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public ResourceLinksClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ResourceLinksClient. </summary>
+        public ResourceLinksClient(string subscriptionId, string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new ResourceLinksRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new ResourceLinksRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Deletes a resource link with the specified ID. </summary>

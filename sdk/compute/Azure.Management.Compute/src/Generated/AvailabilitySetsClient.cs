@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetsClient. </summary>
-        public AvailabilitySetsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public AvailabilitySetsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AvailabilitySetsClient. </summary>
+        public AvailabilitySetsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new AvailabilitySetsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new AvailabilitySetsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Create or update an availability set. </summary>

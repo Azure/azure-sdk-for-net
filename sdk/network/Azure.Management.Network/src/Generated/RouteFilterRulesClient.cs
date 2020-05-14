@@ -27,12 +27,17 @@ namespace Azure.Management.Network
         }
 
         /// <summary> Initializes a new instance of RouteFilterRulesClient. </summary>
-        public RouteFilterRulesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
+        public RouteFilterRulesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of RouteFilterRulesClient. </summary>
+        public RouteFilterRulesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             options ??= new NetworkManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new RouteFilterRulesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new RouteFilterRulesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Gets the specified rule from a route filter. </summary>

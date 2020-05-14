@@ -27,12 +27,17 @@ namespace Azure.Management.Network
         }
 
         /// <summary> Initializes a new instance of PacketCapturesClient. </summary>
-        public PacketCapturesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
+        public PacketCapturesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of PacketCapturesClient. </summary>
+        public PacketCapturesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             options ??= new NetworkManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new PacketCapturesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new PacketCapturesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Gets a packet capture session by name. </summary>

@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of ImagesClient. </summary>
-        public ImagesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public ImagesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ImagesClient. </summary>
+        public ImagesClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new ImagesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new ImagesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Gets an image. </summary>

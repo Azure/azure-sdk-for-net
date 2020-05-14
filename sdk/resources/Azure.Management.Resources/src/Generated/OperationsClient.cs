@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public OperationsClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of OperationsClient. </summary>
+        public OperationsClient(string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline, host: host);
         }
 
         /// <summary> Lists all of the available Microsoft.Resources REST API operations. </summary>

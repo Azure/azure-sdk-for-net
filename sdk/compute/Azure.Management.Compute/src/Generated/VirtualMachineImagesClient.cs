@@ -28,12 +28,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImagesClient. </summary>
-        public VirtualMachineImagesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public VirtualMachineImagesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of VirtualMachineImagesClient. </summary>
+        public VirtualMachineImagesClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new VirtualMachineImagesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new VirtualMachineImagesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Gets a virtual machine image. </summary>

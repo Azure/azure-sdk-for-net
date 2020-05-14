@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of ProvidersClient. </summary>
-        public ProvidersClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public ProvidersClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ProvidersClient. </summary>
+        public ProvidersClient(string subscriptionId, string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new ProvidersRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new ProvidersRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Unregisters a subscription from a resource provider. </summary>

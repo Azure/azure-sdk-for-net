@@ -16,6 +16,7 @@ namespace Azure.Management.Resources
         private readonly ResourcesManagementClientOptions _options;
         private readonly TokenCredential _tokenCredential;
         private readonly string _subscriptionId;
+        private readonly string _host;
 
         /// <summary> Initializes a new instance of ResourcesManagementClient for mocking. </summary>
         protected ResourcesManagementClient()
@@ -23,17 +24,22 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of ResourcesManagementClient. </summary>
-        public ResourcesManagementClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public ResourcesManagementClient(string subscriptionId, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+        /// <summary> Initializes a new instance of ResourcesManagementClient. </summary>
+        public ResourcesManagementClient(string subscriptionId, string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             _options = options ?? new ResourcesManagementClientOptions();
             _tokenCredential = tokenCredential;
             _subscriptionId = subscriptionId;
+            _host = host;
         }
 
         /// <summary> Creates a new instance of DeploymentScriptsClient. </summary>
-        public DeploymentScriptsClient GetDeploymentScriptsClient()
+        public virtual DeploymentScriptsClient GetDeploymentScriptsClient()
         {
-            return new DeploymentScriptsClient(_subscriptionId, _tokenCredential, _options);
+            return new DeploymentScriptsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
     }
 }

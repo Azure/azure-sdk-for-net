@@ -15,6 +15,7 @@ namespace Azure.Management.Compute
     {
         private readonly ComputeManagementClientOptions _options;
         private readonly TokenCredential _tokenCredential;
+        private readonly string _host;
         private readonly string _subscriptionId;
 
         /// <summary> Initializes a new instance of ComputeManagementClient for mocking. </summary>
@@ -23,191 +24,196 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of ComputeManagementClient. </summary>
-        public ComputeManagementClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public ComputeManagementClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this("https://management.azure.com", subscriptionId, tokenCredential, options)
+        {
+        }
+        /// <summary> Initializes a new instance of ComputeManagementClient. </summary>
+        public ComputeManagementClient(string host, string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             _options = options ?? new ComputeManagementClientOptions();
             _tokenCredential = tokenCredential;
+            _host = host;
             _subscriptionId = subscriptionId;
         }
 
         /// <summary> Creates a new instance of OperationsClient. </summary>
-        public OperationsClient GetOperationsClient()
+        public virtual OperationsClient GetOperationsClient()
         {
-            return new OperationsClient(_tokenCredential, _options);
+            return new OperationsClient(_host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailabilitySetsClient. </summary>
-        public AvailabilitySetsClient GetAvailabilitySetsClient()
+        public virtual AvailabilitySetsClient GetAvailabilitySetsClient()
         {
-            return new AvailabilitySetsClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailabilitySetsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ProximityPlacementGroupsClient. </summary>
-        public ProximityPlacementGroupsClient GetProximityPlacementGroupsClient()
+        public virtual ProximityPlacementGroupsClient GetProximityPlacementGroupsClient()
         {
-            return new ProximityPlacementGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new ProximityPlacementGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DedicatedHostGroupsClient. </summary>
-        public DedicatedHostGroupsClient GetDedicatedHostGroupsClient()
+        public virtual DedicatedHostGroupsClient GetDedicatedHostGroupsClient()
         {
-            return new DedicatedHostGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new DedicatedHostGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DedicatedHostsClient. </summary>
-        public DedicatedHostsClient GetDedicatedHostsClient()
+        public virtual DedicatedHostsClient GetDedicatedHostsClient()
         {
-            return new DedicatedHostsClient(_subscriptionId, _tokenCredential, _options);
+            return new DedicatedHostsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of SshPublicKeysClient. </summary>
-        public SshPublicKeysClient GetSshPublicKeysClient()
+        public virtual SshPublicKeysClient GetSshPublicKeysClient()
         {
-            return new SshPublicKeysClient(_subscriptionId, _tokenCredential, _options);
+            return new SshPublicKeysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineExtensionImagesClient. </summary>
-        public VirtualMachineExtensionImagesClient GetVirtualMachineExtensionImagesClient()
+        public virtual VirtualMachineExtensionImagesClient GetVirtualMachineExtensionImagesClient()
         {
-            return new VirtualMachineExtensionImagesClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineExtensionImagesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineExtensionsClient. </summary>
-        public VirtualMachineExtensionsClient GetVirtualMachineExtensionsClient()
+        public virtual VirtualMachineExtensionsClient GetVirtualMachineExtensionsClient()
         {
-            return new VirtualMachineExtensionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineImagesClient. </summary>
-        public VirtualMachineImagesClient GetVirtualMachineImagesClient()
+        public virtual VirtualMachineImagesClient GetVirtualMachineImagesClient()
         {
-            return new VirtualMachineImagesClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineImagesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of UsageClient. </summary>
-        public UsageClient GetUsageClient()
+        public virtual UsageClient GetUsageClient()
         {
-            return new UsageClient(_subscriptionId, _tokenCredential, _options);
+            return new UsageClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachinesClient. </summary>
-        public VirtualMachinesClient GetVirtualMachinesClient()
+        public virtual VirtualMachinesClient GetVirtualMachinesClient()
         {
-            return new VirtualMachinesClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachinesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineSizesClient. </summary>
-        public VirtualMachineSizesClient GetVirtualMachineSizesClient()
+        public virtual VirtualMachineSizesClient GetVirtualMachineSizesClient()
         {
-            return new VirtualMachineSizesClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineSizesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ImagesClient. </summary>
-        public ImagesClient GetImagesClient()
+        public virtual ImagesClient GetImagesClient()
         {
-            return new ImagesClient(_subscriptionId, _tokenCredential, _options);
+            return new ImagesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetsClient. </summary>
-        public VirtualMachineScaleSetsClient GetVirtualMachineScaleSetsClient()
+        public virtual VirtualMachineScaleSetsClient GetVirtualMachineScaleSetsClient()
         {
-            return new VirtualMachineScaleSetsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineScaleSetsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetExtensionsClient. </summary>
-        public VirtualMachineScaleSetExtensionsClient GetVirtualMachineScaleSetExtensionsClient()
+        public virtual VirtualMachineScaleSetExtensionsClient GetVirtualMachineScaleSetExtensionsClient()
         {
-            return new VirtualMachineScaleSetExtensionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineScaleSetExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetRollingUpgradesClient. </summary>
-        public VirtualMachineScaleSetRollingUpgradesClient GetVirtualMachineScaleSetRollingUpgradesClient()
+        public virtual VirtualMachineScaleSetRollingUpgradesClient GetVirtualMachineScaleSetRollingUpgradesClient()
         {
-            return new VirtualMachineScaleSetRollingUpgradesClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineScaleSetRollingUpgradesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetVMExtensionsClient. </summary>
-        public VirtualMachineScaleSetVMExtensionsClient GetVirtualMachineScaleSetVMExtensionsClient()
+        public virtual VirtualMachineScaleSetVMExtensionsClient GetVirtualMachineScaleSetVMExtensionsClient()
         {
-            return new VirtualMachineScaleSetVMExtensionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineScaleSetVMExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetVMsClient. </summary>
-        public VirtualMachineScaleSetVMsClient GetVirtualMachineScaleSetVMsClient()
+        public virtual VirtualMachineScaleSetVMsClient GetVirtualMachineScaleSetVMsClient()
         {
-            return new VirtualMachineScaleSetVMsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineScaleSetVMsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LogAnalyticsClient. </summary>
-        public LogAnalyticsClient GetLogAnalyticsClient()
+        public virtual LogAnalyticsClient GetLogAnalyticsClient()
         {
-            return new LogAnalyticsClient(_subscriptionId, _tokenCredential, _options);
+            return new LogAnalyticsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualMachineRunCommandsClient. </summary>
-        public VirtualMachineRunCommandsClient GetVirtualMachineRunCommandsClient()
+        public virtual VirtualMachineRunCommandsClient GetVirtualMachineRunCommandsClient()
         {
-            return new VirtualMachineRunCommandsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualMachineRunCommandsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ResourceSkusClient. </summary>
-        public ResourceSkusClient GetResourceSkusClient()
+        public virtual ResourceSkusClient GetResourceSkusClient()
         {
-            return new ResourceSkusClient(_subscriptionId, _tokenCredential, _options);
+            return new ResourceSkusClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DisksClient. </summary>
-        public DisksClient GetDisksClient()
+        public virtual DisksClient GetDisksClient()
         {
-            return new DisksClient(_subscriptionId, _tokenCredential, _options);
+            return new DisksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of SnapshotsClient. </summary>
-        public SnapshotsClient GetSnapshotsClient()
+        public virtual SnapshotsClient GetSnapshotsClient()
         {
-            return new SnapshotsClient(_subscriptionId, _tokenCredential, _options);
+            return new SnapshotsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DiskEncryptionSetsClient. </summary>
-        public DiskEncryptionSetsClient GetDiskEncryptionSetsClient()
+        public virtual DiskEncryptionSetsClient GetDiskEncryptionSetsClient()
         {
-            return new DiskEncryptionSetsClient(_subscriptionId, _tokenCredential, _options);
+            return new DiskEncryptionSetsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of GalleriesClient. </summary>
-        public GalleriesClient GetGalleriesClient()
+        public virtual GalleriesClient GetGalleriesClient()
         {
-            return new GalleriesClient(_subscriptionId, _tokenCredential, _options);
+            return new GalleriesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of GalleryImagesClient. </summary>
-        public GalleryImagesClient GetGalleryImagesClient()
+        public virtual GalleryImagesClient GetGalleryImagesClient()
         {
-            return new GalleryImagesClient(_subscriptionId, _tokenCredential, _options);
+            return new GalleryImagesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of GalleryImageVersionsClient. </summary>
-        public GalleryImageVersionsClient GetGalleryImageVersionsClient()
+        public virtual GalleryImageVersionsClient GetGalleryImageVersionsClient()
         {
-            return new GalleryImageVersionsClient(_subscriptionId, _tokenCredential, _options);
+            return new GalleryImageVersionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of GalleryApplicationsClient. </summary>
-        public GalleryApplicationsClient GetGalleryApplicationsClient()
+        public virtual GalleryApplicationsClient GetGalleryApplicationsClient()
         {
-            return new GalleryApplicationsClient(_subscriptionId, _tokenCredential, _options);
+            return new GalleryApplicationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of GalleryApplicationVersionsClient. </summary>
-        public GalleryApplicationVersionsClient GetGalleryApplicationVersionsClient()
+        public virtual GalleryApplicationVersionsClient GetGalleryApplicationVersionsClient()
         {
-            return new GalleryApplicationVersionsClient(_subscriptionId, _tokenCredential, _options);
+            return new GalleryApplicationVersionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ContainerServicesClient. </summary>
-        public ContainerServicesClient GetContainerServicesClient()
+        public virtual ContainerServicesClient GetContainerServicesClient()
         {
-            return new ContainerServicesClient(_subscriptionId, _tokenCredential, _options);
+            return new ContainerServicesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.Management.Resources
 
         async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            return await new ValueTask<Response>(response);
+            return await new ValueTask<Response>(response).ConfigureAwait(false);
         }
     }
 }

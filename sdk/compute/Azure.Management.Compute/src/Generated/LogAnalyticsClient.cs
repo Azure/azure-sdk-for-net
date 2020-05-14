@@ -26,12 +26,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsClient. </summary>
-        public LogAnalyticsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public LogAnalyticsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of LogAnalyticsClient. </summary>
+        public LogAnalyticsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new LogAnalyticsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new LogAnalyticsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>

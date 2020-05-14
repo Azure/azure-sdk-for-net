@@ -61,7 +61,7 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ResourceSkusResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
@@ -89,7 +89,7 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ResourceSkusResult> List(string filter = null, CancellationToken cancellationToken = default)
         {
@@ -130,7 +130,7 @@ namespace Azure.Management.Compute
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ResourceSkusResult>> ListNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -164,7 +164,7 @@ namespace Azure.Management.Compute
 
         /// <summary> Gets the list of Microsoft.Compute SKUs available for your Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ResourceSkusResult> ListNextPage(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {

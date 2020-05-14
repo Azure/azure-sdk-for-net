@@ -27,12 +27,17 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public OperationsClient(TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of OperationsClient. </summary>
+        public OperationsClient(string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
             options ??= new ComputeManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline, host: host);
         }
 
         /// <summary> Gets a list of compute operations. </summary>

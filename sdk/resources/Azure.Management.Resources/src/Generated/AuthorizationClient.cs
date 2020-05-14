@@ -27,12 +27,17 @@ namespace Azure.Management.Resources
         }
 
         /// <summary> Initializes a new instance of AuthorizationClient. </summary>
-        public AuthorizationClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
+        public AuthorizationClient(TokenCredential tokenCredential, ResourcesManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AuthorizationClient. </summary>
+        public AuthorizationClient(string host, TokenCredential tokenCredential, ResourcesManagementClientOptions options = null)
         {
             options ??= new ResourcesManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new AuthorizationRestClient(_clientDiagnostics, _pipeline);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new AuthorizationRestClient(_clientDiagnostics, _pipeline, host: host);
         }
 
         /// <summary> Lists all of the available Microsoft.Authorization REST API operations. </summary>

@@ -22,13 +22,13 @@ namespace Azure.Management.Network.Models
         }
 
         private const string TLSv10Value = "TLSv1_0";
-        private const string TLSv1Value = "TLSv1_1";
+        private const string TLSv11Value = "TLSv1_1";
         private const string TLSv12Value = "TLSv1_2";
 
         /// <summary> TLSv1_0. </summary>
         public static ApplicationGatewaySslProtocol TLSv10 { get; } = new ApplicationGatewaySslProtocol(TLSv10Value);
         /// <summary> TLSv1_1. </summary>
-        public static ApplicationGatewaySslProtocol TLSv1 { get; } = new ApplicationGatewaySslProtocol(TLSv1Value);
+        public static ApplicationGatewaySslProtocol TLSv11 { get; } = new ApplicationGatewaySslProtocol(TLSv11Value);
         /// <summary> TLSv1_2. </summary>
         public static ApplicationGatewaySslProtocol TLSv12 { get; } = new ApplicationGatewaySslProtocol(TLSv12Value);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are the same. </summary>

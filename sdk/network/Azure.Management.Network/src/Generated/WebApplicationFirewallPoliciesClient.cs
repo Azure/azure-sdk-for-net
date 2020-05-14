@@ -27,12 +27,17 @@ namespace Azure.Management.Network
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPoliciesClient. </summary>
-        public WebApplicationFirewallPoliciesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
+        public WebApplicationFirewallPoliciesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of WebApplicationFirewallPoliciesClient. </summary>
+        public WebApplicationFirewallPoliciesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             options ??= new NetworkManagementClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, options);
-            RestClient = new WebApplicationFirewallPoliciesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
+            RestClient = new WebApplicationFirewallPoliciesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
         }
 
         /// <summary> Retrieve protection policy with specified name within a resource group. </summary>

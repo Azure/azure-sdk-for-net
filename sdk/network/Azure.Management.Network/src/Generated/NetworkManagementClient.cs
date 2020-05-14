@@ -16,6 +16,7 @@ namespace Azure.Management.Network
         private readonly NetworkManagementClientOptions _options;
         private readonly TokenCredential _tokenCredential;
         private readonly string _subscriptionId;
+        private readonly string _host;
 
         /// <summary> Initializes a new instance of NetworkManagementClient for mocking. </summary>
         protected NetworkManagementClient()
@@ -23,581 +24,586 @@ namespace Azure.Management.Network
         }
 
         /// <summary> Initializes a new instance of NetworkManagementClient. </summary>
-        public NetworkManagementClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
+        public NetworkManagementClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        {
+        }
+        /// <summary> Initializes a new instance of NetworkManagementClient. </summary>
+        public NetworkManagementClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             _options = options ?? new NetworkManagementClientOptions();
             _tokenCredential = tokenCredential;
             _subscriptionId = subscriptionId;
+            _host = host;
         }
 
         /// <summary> Creates a new instance of ApplicationGatewaysClient. </summary>
-        public ApplicationGatewaysClient GetApplicationGatewaysClient()
+        public virtual ApplicationGatewaysClient GetApplicationGatewaysClient()
         {
-            return new ApplicationGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new ApplicationGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ApplicationSecurityGroupsClient. </summary>
-        public ApplicationSecurityGroupsClient GetApplicationSecurityGroupsClient()
+        public virtual ApplicationSecurityGroupsClient GetApplicationSecurityGroupsClient()
         {
-            return new ApplicationSecurityGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new ApplicationSecurityGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailableDelegationsClient. </summary>
-        public AvailableDelegationsClient GetAvailableDelegationsClient()
+        public virtual AvailableDelegationsClient GetAvailableDelegationsClient()
         {
-            return new AvailableDelegationsClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailableDelegationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailableResourceGroupDelegationsClient. </summary>
-        public AvailableResourceGroupDelegationsClient GetAvailableResourceGroupDelegationsClient()
+        public virtual AvailableResourceGroupDelegationsClient GetAvailableResourceGroupDelegationsClient()
         {
-            return new AvailableResourceGroupDelegationsClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailableResourceGroupDelegationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailableServiceAliasesClient. </summary>
-        public AvailableServiceAliasesClient GetAvailableServiceAliasesClient()
+        public virtual AvailableServiceAliasesClient GetAvailableServiceAliasesClient()
         {
-            return new AvailableServiceAliasesClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailableServiceAliasesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AzureFirewallsClient. </summary>
-        public AzureFirewallsClient GetAzureFirewallsClient()
+        public virtual AzureFirewallsClient GetAzureFirewallsClient()
         {
-            return new AzureFirewallsClient(_subscriptionId, _tokenCredential, _options);
+            return new AzureFirewallsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AzureFirewallFqdnTagsClient. </summary>
-        public AzureFirewallFqdnTagsClient GetAzureFirewallFqdnTagsClient()
+        public virtual AzureFirewallFqdnTagsClient GetAzureFirewallFqdnTagsClient()
         {
-            return new AzureFirewallFqdnTagsClient(_subscriptionId, _tokenCredential, _options);
+            return new AzureFirewallFqdnTagsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of BastionHostsClient. </summary>
-        public BastionHostsClient GetBastionHostsClient()
+        public virtual BastionHostsClient GetBastionHostsClient()
         {
-            return new BastionHostsClient(_subscriptionId, _tokenCredential, _options);
+            return new BastionHostsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ServiceClient. </summary>
-        public ServiceClient GetServiceClient()
+        public virtual ServiceClient GetServiceClient()
         {
-            return new ServiceClient(_subscriptionId, _tokenCredential, _options);
+            return new ServiceClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DdosCustomPoliciesClient. </summary>
-        public DdosCustomPoliciesClient GetDdosCustomPoliciesClient()
+        public virtual DdosCustomPoliciesClient GetDdosCustomPoliciesClient()
         {
-            return new DdosCustomPoliciesClient(_subscriptionId, _tokenCredential, _options);
+            return new DdosCustomPoliciesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DdosProtectionPlansClient. </summary>
-        public DdosProtectionPlansClient GetDdosProtectionPlansClient()
+        public virtual DdosProtectionPlansClient GetDdosProtectionPlansClient()
         {
-            return new DdosProtectionPlansClient(_subscriptionId, _tokenCredential, _options);
+            return new DdosProtectionPlansClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailableEndpointServicesClient. </summary>
-        public AvailableEndpointServicesClient GetAvailableEndpointServicesClient()
+        public virtual AvailableEndpointServicesClient GetAvailableEndpointServicesClient()
         {
-            return new AvailableEndpointServicesClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailableEndpointServicesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCircuitAuthorizationsClient. </summary>
-        public ExpressRouteCircuitAuthorizationsClient GetExpressRouteCircuitAuthorizationsClient()
+        public virtual ExpressRouteCircuitAuthorizationsClient GetExpressRouteCircuitAuthorizationsClient()
         {
-            return new ExpressRouteCircuitAuthorizationsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCircuitAuthorizationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCircuitPeeringsClient. </summary>
-        public ExpressRouteCircuitPeeringsClient GetExpressRouteCircuitPeeringsClient()
+        public virtual ExpressRouteCircuitPeeringsClient GetExpressRouteCircuitPeeringsClient()
         {
-            return new ExpressRouteCircuitPeeringsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCircuitPeeringsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCircuitConnectionsClient. </summary>
-        public ExpressRouteCircuitConnectionsClient GetExpressRouteCircuitConnectionsClient()
+        public virtual ExpressRouteCircuitConnectionsClient GetExpressRouteCircuitConnectionsClient()
         {
-            return new ExpressRouteCircuitConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCircuitConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PeerExpressRouteCircuitConnectionsClient. </summary>
-        public PeerExpressRouteCircuitConnectionsClient GetPeerExpressRouteCircuitConnectionsClient()
+        public virtual PeerExpressRouteCircuitConnectionsClient GetPeerExpressRouteCircuitConnectionsClient()
         {
-            return new PeerExpressRouteCircuitConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new PeerExpressRouteCircuitConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCircuitsClient. </summary>
-        public ExpressRouteCircuitsClient GetExpressRouteCircuitsClient()
+        public virtual ExpressRouteCircuitsClient GetExpressRouteCircuitsClient()
         {
-            return new ExpressRouteCircuitsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCircuitsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteServiceProvidersClient. </summary>
-        public ExpressRouteServiceProvidersClient GetExpressRouteServiceProvidersClient()
+        public virtual ExpressRouteServiceProvidersClient GetExpressRouteServiceProvidersClient()
         {
-            return new ExpressRouteServiceProvidersClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteServiceProvidersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCrossConnectionsClient. </summary>
-        public ExpressRouteCrossConnectionsClient GetExpressRouteCrossConnectionsClient()
+        public virtual ExpressRouteCrossConnectionsClient GetExpressRouteCrossConnectionsClient()
         {
-            return new ExpressRouteCrossConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCrossConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteCrossConnectionPeeringsClient. </summary>
-        public ExpressRouteCrossConnectionPeeringsClient GetExpressRouteCrossConnectionPeeringsClient()
+        public virtual ExpressRouteCrossConnectionPeeringsClient GetExpressRouteCrossConnectionPeeringsClient()
         {
-            return new ExpressRouteCrossConnectionPeeringsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteCrossConnectionPeeringsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRoutePortsLocationsClient. </summary>
-        public ExpressRoutePortsLocationsClient GetExpressRoutePortsLocationsClient()
+        public virtual ExpressRoutePortsLocationsClient GetExpressRoutePortsLocationsClient()
         {
-            return new ExpressRoutePortsLocationsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRoutePortsLocationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRoutePortsClient. </summary>
-        public ExpressRoutePortsClient GetExpressRoutePortsClient()
+        public virtual ExpressRoutePortsClient GetExpressRoutePortsClient()
         {
-            return new ExpressRoutePortsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRoutePortsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteLinksClient. </summary>
-        public ExpressRouteLinksClient GetExpressRouteLinksClient()
+        public virtual ExpressRouteLinksClient GetExpressRouteLinksClient()
         {
-            return new ExpressRouteLinksClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteLinksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of FirewallPoliciesClient. </summary>
-        public FirewallPoliciesClient GetFirewallPoliciesClient()
+        public virtual FirewallPoliciesClient GetFirewallPoliciesClient()
         {
-            return new FirewallPoliciesClient(_subscriptionId, _tokenCredential, _options);
+            return new FirewallPoliciesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of FirewallPolicyRuleGroupsClient. </summary>
-        public FirewallPolicyRuleGroupsClient GetFirewallPolicyRuleGroupsClient()
+        public virtual FirewallPolicyRuleGroupsClient GetFirewallPolicyRuleGroupsClient()
         {
-            return new FirewallPolicyRuleGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new FirewallPolicyRuleGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of IpAllocationsClient. </summary>
-        public IpAllocationsClient GetIpAllocationsClient()
+        public virtual IpAllocationsClient GetIpAllocationsClient()
         {
-            return new IpAllocationsClient(_subscriptionId, _tokenCredential, _options);
+            return new IpAllocationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of IpGroupsClient. </summary>
-        public IpGroupsClient GetIpGroupsClient()
+        public virtual IpGroupsClient GetIpGroupsClient()
         {
-            return new IpGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new IpGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancersClient. </summary>
-        public LoadBalancersClient GetLoadBalancersClient()
+        public virtual LoadBalancersClient GetLoadBalancersClient()
         {
-            return new LoadBalancersClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerBackendAddressPoolsClient. </summary>
-        public LoadBalancerBackendAddressPoolsClient GetLoadBalancerBackendAddressPoolsClient()
+        public virtual LoadBalancerBackendAddressPoolsClient GetLoadBalancerBackendAddressPoolsClient()
         {
-            return new LoadBalancerBackendAddressPoolsClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerBackendAddressPoolsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerFrontendIPConfigurationsClient. </summary>
-        public LoadBalancerFrontendIPConfigurationsClient GetLoadBalancerFrontendIPConfigurationsClient()
+        public virtual LoadBalancerFrontendIPConfigurationsClient GetLoadBalancerFrontendIPConfigurationsClient()
         {
-            return new LoadBalancerFrontendIPConfigurationsClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerFrontendIPConfigurationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of InboundNatRulesClient. </summary>
-        public InboundNatRulesClient GetInboundNatRulesClient()
+        public virtual InboundNatRulesClient GetInboundNatRulesClient()
         {
-            return new InboundNatRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new InboundNatRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerLoadBalancingRulesClient. </summary>
-        public LoadBalancerLoadBalancingRulesClient GetLoadBalancerLoadBalancingRulesClient()
+        public virtual LoadBalancerLoadBalancingRulesClient GetLoadBalancerLoadBalancingRulesClient()
         {
-            return new LoadBalancerLoadBalancingRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerLoadBalancingRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerOutboundRulesClient. </summary>
-        public LoadBalancerOutboundRulesClient GetLoadBalancerOutboundRulesClient()
+        public virtual LoadBalancerOutboundRulesClient GetLoadBalancerOutboundRulesClient()
         {
-            return new LoadBalancerOutboundRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerOutboundRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerNetworkInterfacesClient. </summary>
-        public LoadBalancerNetworkInterfacesClient GetLoadBalancerNetworkInterfacesClient()
+        public virtual LoadBalancerNetworkInterfacesClient GetLoadBalancerNetworkInterfacesClient()
         {
-            return new LoadBalancerNetworkInterfacesClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerNetworkInterfacesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LoadBalancerProbesClient. </summary>
-        public LoadBalancerProbesClient GetLoadBalancerProbesClient()
+        public virtual LoadBalancerProbesClient GetLoadBalancerProbesClient()
         {
-            return new LoadBalancerProbesClient(_subscriptionId, _tokenCredential, _options);
+            return new LoadBalancerProbesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NatGatewaysClient. </summary>
-        public NatGatewaysClient GetNatGatewaysClient()
+        public virtual NatGatewaysClient GetNatGatewaysClient()
         {
-            return new NatGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new NatGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkInterfacesClient. </summary>
-        public NetworkInterfacesClient GetNetworkInterfacesClient()
+        public virtual NetworkInterfacesClient GetNetworkInterfacesClient()
         {
-            return new NetworkInterfacesClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkInterfacesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkInterfaceIPConfigurationsClient. </summary>
-        public NetworkInterfaceIPConfigurationsClient GetNetworkInterfaceIPConfigurationsClient()
+        public virtual NetworkInterfaceIPConfigurationsClient GetNetworkInterfaceIPConfigurationsClient()
         {
-            return new NetworkInterfaceIPConfigurationsClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkInterfaceIPConfigurationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkInterfaceLoadBalancersClient. </summary>
-        public NetworkInterfaceLoadBalancersClient GetNetworkInterfaceLoadBalancersClient()
+        public virtual NetworkInterfaceLoadBalancersClient GetNetworkInterfaceLoadBalancersClient()
         {
-            return new NetworkInterfaceLoadBalancersClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkInterfaceLoadBalancersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkInterfaceTapConfigurationsClient. </summary>
-        public NetworkInterfaceTapConfigurationsClient GetNetworkInterfaceTapConfigurationsClient()
+        public virtual NetworkInterfaceTapConfigurationsClient GetNetworkInterfaceTapConfigurationsClient()
         {
-            return new NetworkInterfaceTapConfigurationsClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkInterfaceTapConfigurationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkProfilesClient. </summary>
-        public NetworkProfilesClient GetNetworkProfilesClient()
+        public virtual NetworkProfilesClient GetNetworkProfilesClient()
         {
-            return new NetworkProfilesClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkProfilesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkSecurityGroupsClient. </summary>
-        public NetworkSecurityGroupsClient GetNetworkSecurityGroupsClient()
+        public virtual NetworkSecurityGroupsClient GetNetworkSecurityGroupsClient()
         {
-            return new NetworkSecurityGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkSecurityGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of SecurityRulesClient. </summary>
-        public SecurityRulesClient GetSecurityRulesClient()
+        public virtual SecurityRulesClient GetSecurityRulesClient()
         {
-            return new SecurityRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new SecurityRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of DefaultSecurityRulesClient. </summary>
-        public DefaultSecurityRulesClient GetDefaultSecurityRulesClient()
+        public virtual DefaultSecurityRulesClient GetDefaultSecurityRulesClient()
         {
-            return new DefaultSecurityRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new DefaultSecurityRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkVirtualAppliancesClient. </summary>
-        public NetworkVirtualAppliancesClient GetNetworkVirtualAppliancesClient()
+        public virtual NetworkVirtualAppliancesClient GetNetworkVirtualAppliancesClient()
         {
-            return new NetworkVirtualAppliancesClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkVirtualAppliancesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of NetworkWatchersClient. </summary>
-        public NetworkWatchersClient GetNetworkWatchersClient()
+        public virtual NetworkWatchersClient GetNetworkWatchersClient()
         {
-            return new NetworkWatchersClient(_subscriptionId, _tokenCredential, _options);
+            return new NetworkWatchersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PacketCapturesClient. </summary>
-        public PacketCapturesClient GetPacketCapturesClient()
+        public virtual PacketCapturesClient GetPacketCapturesClient()
         {
-            return new PacketCapturesClient(_subscriptionId, _tokenCredential, _options);
+            return new PacketCapturesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ConnectionMonitorsClient. </summary>
-        public ConnectionMonitorsClient GetConnectionMonitorsClient()
+        public virtual ConnectionMonitorsClient GetConnectionMonitorsClient()
         {
-            return new ConnectionMonitorsClient(_subscriptionId, _tokenCredential, _options);
+            return new ConnectionMonitorsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of FlowLogsClient. </summary>
-        public FlowLogsClient GetFlowLogsClient()
+        public virtual FlowLogsClient GetFlowLogsClient()
         {
-            return new FlowLogsClient(_subscriptionId, _tokenCredential, _options);
+            return new FlowLogsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of OperationsClient. </summary>
-        public OperationsClient GetOperationsClient()
+        public virtual OperationsClient GetOperationsClient()
         {
-            return new OperationsClient(_tokenCredential, _options);
+            return new OperationsClient(_host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PrivateEndpointsClient. </summary>
-        public PrivateEndpointsClient GetPrivateEndpointsClient()
+        public virtual PrivateEndpointsClient GetPrivateEndpointsClient()
         {
-            return new PrivateEndpointsClient(_subscriptionId, _tokenCredential, _options);
+            return new PrivateEndpointsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of AvailablePrivateEndpointTypesClient. </summary>
-        public AvailablePrivateEndpointTypesClient GetAvailablePrivateEndpointTypesClient()
+        public virtual AvailablePrivateEndpointTypesClient GetAvailablePrivateEndpointTypesClient()
         {
-            return new AvailablePrivateEndpointTypesClient(_subscriptionId, _tokenCredential, _options);
+            return new AvailablePrivateEndpointTypesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PrivateDnsZoneGroupsClient. </summary>
-        public PrivateDnsZoneGroupsClient GetPrivateDnsZoneGroupsClient()
+        public virtual PrivateDnsZoneGroupsClient GetPrivateDnsZoneGroupsClient()
         {
-            return new PrivateDnsZoneGroupsClient(_subscriptionId, _tokenCredential, _options);
+            return new PrivateDnsZoneGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PrivateLinkServicesClient. </summary>
-        public PrivateLinkServicesClient GetPrivateLinkServicesClient()
+        public virtual PrivateLinkServicesClient GetPrivateLinkServicesClient()
         {
-            return new PrivateLinkServicesClient(_subscriptionId, _tokenCredential, _options);
+            return new PrivateLinkServicesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PublicIPAddressesClient. </summary>
-        public PublicIPAddressesClient GetPublicIPAddressesClient()
+        public virtual PublicIPAddressesClient GetPublicIPAddressesClient()
         {
-            return new PublicIPAddressesClient(_subscriptionId, _tokenCredential, _options);
+            return new PublicIPAddressesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of PublicIPPrefixesClient. </summary>
-        public PublicIPPrefixesClient GetPublicIPPrefixesClient()
+        public virtual PublicIPPrefixesClient GetPublicIPPrefixesClient()
         {
-            return new PublicIPPrefixesClient(_subscriptionId, _tokenCredential, _options);
+            return new PublicIPPrefixesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of RouteFiltersClient. </summary>
-        public RouteFiltersClient GetRouteFiltersClient()
+        public virtual RouteFiltersClient GetRouteFiltersClient()
         {
-            return new RouteFiltersClient(_subscriptionId, _tokenCredential, _options);
+            return new RouteFiltersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of RouteFilterRulesClient. </summary>
-        public RouteFilterRulesClient GetRouteFilterRulesClient()
+        public virtual RouteFilterRulesClient GetRouteFilterRulesClient()
         {
-            return new RouteFilterRulesClient(_subscriptionId, _tokenCredential, _options);
+            return new RouteFilterRulesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of RouteTablesClient. </summary>
-        public RouteTablesClient GetRouteTablesClient()
+        public virtual RouteTablesClient GetRouteTablesClient()
         {
-            return new RouteTablesClient(_subscriptionId, _tokenCredential, _options);
+            return new RouteTablesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of RoutesClient. </summary>
-        public RoutesClient GetRoutesClient()
+        public virtual RoutesClient GetRoutesClient()
         {
-            return new RoutesClient(_subscriptionId, _tokenCredential, _options);
+            return new RoutesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of SecurityPartnerProvidersClient. </summary>
-        public SecurityPartnerProvidersClient GetSecurityPartnerProvidersClient()
+        public virtual SecurityPartnerProvidersClient GetSecurityPartnerProvidersClient()
         {
-            return new SecurityPartnerProvidersClient(_subscriptionId, _tokenCredential, _options);
+            return new SecurityPartnerProvidersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of BgpServiceCommunitiesClient. </summary>
-        public BgpServiceCommunitiesClient GetBgpServiceCommunitiesClient()
+        public virtual BgpServiceCommunitiesClient GetBgpServiceCommunitiesClient()
         {
-            return new BgpServiceCommunitiesClient(_subscriptionId, _tokenCredential, _options);
+            return new BgpServiceCommunitiesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ServiceEndpointPoliciesClient. </summary>
-        public ServiceEndpointPoliciesClient GetServiceEndpointPoliciesClient()
+        public virtual ServiceEndpointPoliciesClient GetServiceEndpointPoliciesClient()
         {
-            return new ServiceEndpointPoliciesClient(_subscriptionId, _tokenCredential, _options);
+            return new ServiceEndpointPoliciesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ServiceEndpointPolicyDefinitionsClient. </summary>
-        public ServiceEndpointPolicyDefinitionsClient GetServiceEndpointPolicyDefinitionsClient()
+        public virtual ServiceEndpointPolicyDefinitionsClient GetServiceEndpointPolicyDefinitionsClient()
         {
-            return new ServiceEndpointPolicyDefinitionsClient(_subscriptionId, _tokenCredential, _options);
+            return new ServiceEndpointPolicyDefinitionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ServiceTagsClient. </summary>
-        public ServiceTagsClient GetServiceTagsClient()
+        public virtual ServiceTagsClient GetServiceTagsClient()
         {
-            return new ServiceTagsClient(_subscriptionId, _tokenCredential, _options);
+            return new ServiceTagsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of UsagesClient. </summary>
-        public UsagesClient GetUsagesClient()
+        public virtual UsagesClient GetUsagesClient()
         {
-            return new UsagesClient(_subscriptionId, _tokenCredential, _options);
+            return new UsagesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualNetworksClient. </summary>
-        public VirtualNetworksClient GetVirtualNetworksClient()
+        public virtual VirtualNetworksClient GetVirtualNetworksClient()
         {
-            return new VirtualNetworksClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualNetworksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of SubnetsClient. </summary>
-        public SubnetsClient GetSubnetsClient()
+        public virtual SubnetsClient GetSubnetsClient()
         {
-            return new SubnetsClient(_subscriptionId, _tokenCredential, _options);
+            return new SubnetsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ResourceNavigationLinksClient. </summary>
-        public ResourceNavigationLinksClient GetResourceNavigationLinksClient()
+        public virtual ResourceNavigationLinksClient GetResourceNavigationLinksClient()
         {
-            return new ResourceNavigationLinksClient(_subscriptionId, _tokenCredential, _options);
+            return new ResourceNavigationLinksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ServiceAssociationLinksClient. </summary>
-        public ServiceAssociationLinksClient GetServiceAssociationLinksClient()
+        public virtual ServiceAssociationLinksClient GetServiceAssociationLinksClient()
         {
-            return new ServiceAssociationLinksClient(_subscriptionId, _tokenCredential, _options);
+            return new ServiceAssociationLinksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualNetworkPeeringsClient. </summary>
-        public VirtualNetworkPeeringsClient GetVirtualNetworkPeeringsClient()
+        public virtual VirtualNetworkPeeringsClient GetVirtualNetworkPeeringsClient()
         {
-            return new VirtualNetworkPeeringsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualNetworkPeeringsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualNetworkGatewaysClient. </summary>
-        public VirtualNetworkGatewaysClient GetVirtualNetworkGatewaysClient()
+        public virtual VirtualNetworkGatewaysClient GetVirtualNetworkGatewaysClient()
         {
-            return new VirtualNetworkGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualNetworkGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualNetworkGatewayConnectionsClient. </summary>
-        public VirtualNetworkGatewayConnectionsClient GetVirtualNetworkGatewayConnectionsClient()
+        public virtual VirtualNetworkGatewayConnectionsClient GetVirtualNetworkGatewayConnectionsClient()
         {
-            return new VirtualNetworkGatewayConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualNetworkGatewayConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of LocalNetworkGatewaysClient. </summary>
-        public LocalNetworkGatewaysClient GetLocalNetworkGatewaysClient()
+        public virtual LocalNetworkGatewaysClient GetLocalNetworkGatewaysClient()
         {
-            return new LocalNetworkGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new LocalNetworkGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualNetworkTapsClient. </summary>
-        public VirtualNetworkTapsClient GetVirtualNetworkTapsClient()
+        public virtual VirtualNetworkTapsClient GetVirtualNetworkTapsClient()
         {
-            return new VirtualNetworkTapsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualNetworkTapsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualRoutersClient. </summary>
-        public VirtualRoutersClient GetVirtualRoutersClient()
+        public virtual VirtualRoutersClient GetVirtualRoutersClient()
         {
-            return new VirtualRoutersClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualRoutersClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualRouterPeeringsClient. </summary>
-        public VirtualRouterPeeringsClient GetVirtualRouterPeeringsClient()
+        public virtual VirtualRouterPeeringsClient GetVirtualRouterPeeringsClient()
         {
-            return new VirtualRouterPeeringsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualRouterPeeringsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualWansClient. </summary>
-        public VirtualWansClient GetVirtualWansClient()
+        public virtual VirtualWansClient GetVirtualWansClient()
         {
-            return new VirtualWansClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualWansClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnSitesClient. </summary>
-        public VpnSitesClient GetVpnSitesClient()
+        public virtual VpnSitesClient GetVpnSitesClient()
         {
-            return new VpnSitesClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnSitesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnSiteLinksClient. </summary>
-        public VpnSiteLinksClient GetVpnSiteLinksClient()
+        public virtual VpnSiteLinksClient GetVpnSiteLinksClient()
         {
-            return new VpnSiteLinksClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnSiteLinksClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnSitesConfigurationClient. </summary>
-        public VpnSitesConfigurationClient GetVpnSitesConfigurationClient()
+        public virtual VpnSitesConfigurationClient GetVpnSitesConfigurationClient()
         {
-            return new VpnSitesConfigurationClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnSitesConfigurationClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnServerConfigurationsClient. </summary>
-        public VpnServerConfigurationsClient GetVpnServerConfigurationsClient()
+        public virtual VpnServerConfigurationsClient GetVpnServerConfigurationsClient()
         {
-            return new VpnServerConfigurationsClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnServerConfigurationsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualHubsClient. </summary>
-        public VirtualHubsClient GetVirtualHubsClient()
+        public virtual VirtualHubsClient GetVirtualHubsClient()
         {
-            return new VirtualHubsClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualHubsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of HubVirtualNetworkConnectionsClient. </summary>
-        public HubVirtualNetworkConnectionsClient GetHubVirtualNetworkConnectionsClient()
+        public virtual HubVirtualNetworkConnectionsClient GetHubVirtualNetworkConnectionsClient()
         {
-            return new HubVirtualNetworkConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new HubVirtualNetworkConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnGatewaysClient. </summary>
-        public VpnGatewaysClient GetVpnGatewaysClient()
+        public virtual VpnGatewaysClient GetVpnGatewaysClient()
         {
-            return new VpnGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnConnectionsClient. </summary>
-        public VpnConnectionsClient GetVpnConnectionsClient()
+        public virtual VpnConnectionsClient GetVpnConnectionsClient()
         {
-            return new VpnConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnSiteLinkConnectionsClient. </summary>
-        public VpnSiteLinkConnectionsClient GetVpnSiteLinkConnectionsClient()
+        public virtual VpnSiteLinkConnectionsClient GetVpnSiteLinkConnectionsClient()
         {
-            return new VpnSiteLinkConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnSiteLinkConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnLinkConnectionsClient. </summary>
-        public VpnLinkConnectionsClient GetVpnLinkConnectionsClient()
+        public virtual VpnLinkConnectionsClient GetVpnLinkConnectionsClient()
         {
-            return new VpnLinkConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnLinkConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of P2SVpnGatewaysClient. </summary>
-        public P2SVpnGatewaysClient GetP2SVpnGatewaysClient()
+        public virtual P2SVpnGatewaysClient GetP2SVpnGatewaysClient()
         {
-            return new P2SVpnGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new P2SVpnGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient. </summary>
-        public VpnServerConfigurationsAssociatedWithVirtualWanClient GetVpnServerConfigurationsAssociatedWithVirtualWanClient()
+        public virtual VpnServerConfigurationsAssociatedWithVirtualWanClient GetVpnServerConfigurationsAssociatedWithVirtualWanClient()
         {
-            return new VpnServerConfigurationsAssociatedWithVirtualWanClient(_subscriptionId, _tokenCredential, _options);
+            return new VpnServerConfigurationsAssociatedWithVirtualWanClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of VirtualHubRouteTableV2SClient. </summary>
-        public VirtualHubRouteTableV2SClient GetVirtualHubRouteTableV2SClient()
+        public virtual VirtualHubRouteTableV2SClient GetVirtualHubRouteTableV2SClient()
         {
-            return new VirtualHubRouteTableV2SClient(_subscriptionId, _tokenCredential, _options);
+            return new VirtualHubRouteTableV2SClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteGatewaysClient. </summary>
-        public ExpressRouteGatewaysClient GetExpressRouteGatewaysClient()
+        public virtual ExpressRouteGatewaysClient GetExpressRouteGatewaysClient()
         {
-            return new ExpressRouteGatewaysClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteGatewaysClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of ExpressRouteConnectionsClient. </summary>
-        public ExpressRouteConnectionsClient GetExpressRouteConnectionsClient()
+        public virtual ExpressRouteConnectionsClient GetExpressRouteConnectionsClient()
         {
-            return new ExpressRouteConnectionsClient(_subscriptionId, _tokenCredential, _options);
+            return new ExpressRouteConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of HubRouteTablesClient. </summary>
-        public HubRouteTablesClient GetHubRouteTablesClient()
+        public virtual HubRouteTablesClient GetHubRouteTablesClient()
         {
-            return new HubRouteTablesClient(_subscriptionId, _tokenCredential, _options);
+            return new HubRouteTablesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
 
         /// <summary> Creates a new instance of WebApplicationFirewallPoliciesClient. </summary>
-        public WebApplicationFirewallPoliciesClient GetWebApplicationFirewallPoliciesClient()
+        public virtual WebApplicationFirewallPoliciesClient GetWebApplicationFirewallPoliciesClient()
         {
-            return new WebApplicationFirewallPoliciesClient(_subscriptionId, _tokenCredential, _options);
+            return new WebApplicationFirewallPoliciesClient(_subscriptionId, _host, _tokenCredential, _options);
         }
     }
 }
