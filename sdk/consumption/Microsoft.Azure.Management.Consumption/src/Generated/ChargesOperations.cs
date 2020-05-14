@@ -55,15 +55,30 @@ namespace Microsoft.Azure.Management.Consumption
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='scope'>
-        /// The scope associated with usage details operations. This includes
+        /// The scope associated with charges operations. This includes
         /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-        /// for Department scope and
+        /// for Department scope, and
         /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
         /// for EnrollmentAccount scope. For department and enrollment accounts, you
         /// can also add billing period to the scope using
         /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
         /// to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+        /// Also, Modern Commerce Account scopes are
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+        /// billingAccount scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for billingProfile scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
+        /// for invoiceSection scope, and
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}'
+        /// specific for partners.
+        /// </param>
+        /// <param name='startDate'>
+        /// Start date
+        /// </param>
+        /// <param name='endDate'>
+        /// End date
         /// </param>
         /// <param name='filter'>
         /// May be used to filter charges by properties/usageEnd (Utc time),
@@ -71,6 +86,12 @@ namespace Microsoft.Azure.Management.Consumption
         /// 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
         /// Tag filter is a key value pair string where key and value is separated by a
         /// colon (:).
+        /// </param>
+        /// <param name='apply'>
+        /// May be used to group charges for billingAccount scope by
+        /// properties/billingProfileId, properties/invoiceSectionId,
+        /// properties/customerId (specific for Partner Led), or for billingProfile
+        /// scope by properties/invoiceSectionId.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -93,7 +114,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ChargeSummary>> ListByScopeWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ChargesListResult>> ListWithHttpMessagesAsync(string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string apply = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -111,9 +132,12 @@ namespace Microsoft.Azure.Management.Consumption
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
+                tracingParameters.Add("startDate", startDate);
+                tracingParameters.Add("endDate", endDate);
                 tracingParameters.Add("filter", filter);
+                tracingParameters.Add("apply", apply);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByScope", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -124,9 +148,21 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
+            if (startDate != null)
+            {
+                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+            }
+            if (endDate != null)
+            {
+                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
+            }
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (apply != null)
+            {
+                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -216,7 +252,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ChargeSummary>();
+            var _result = new AzureOperationResponse<ChargesListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -229,7 +265,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ChargeSummary>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ChargesListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

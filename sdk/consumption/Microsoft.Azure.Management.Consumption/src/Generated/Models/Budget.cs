@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// budget</param>
         /// <param name="timeGrain">The time covered by a budget. Tracking of
         /// the amount will be reset based on the time grain. Possible values
-        /// include: 'Monthly', 'Quarterly', 'Annually'</param>
+        /// include: 'Monthly', 'Quarterly', 'Annually', 'BillingMonth',
+        /// 'BillingQuarter', 'BillingAnnual'</param>
         /// <param name="timePeriod">Has start and end date of the budget. The
         /// start date must be first of the month and should be less than the
         /// end date. Budget start date must be on or after June 1, 2017.
@@ -94,7 +95,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Gets or sets the time covered by a budget. Tracking of the amount
         /// will be reset based on the time grain. Possible values include:
-        /// 'Monthly', 'Quarterly', 'Annually'
+        /// 'Monthly', 'Quarterly', 'Annually', 'BillingMonth',
+        /// 'BillingQuarter', 'BillingAnnual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeGrain")]
         public string TimeGrain { get; set; }
