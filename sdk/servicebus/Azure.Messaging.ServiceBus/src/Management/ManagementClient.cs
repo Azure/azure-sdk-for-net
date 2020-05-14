@@ -29,7 +29,6 @@ namespace Azure.Messaging.ServiceBus.Management
         private readonly TokenCredential _tokenCredential;
         private readonly int _port;
         private readonly string _clientId;
-        internal bool usingAAD;
 
         /// <summary>
         /// Parameterless constructor to allow mocking.
@@ -83,7 +82,6 @@ namespace Azure.Messaging.ServiceBus.Management
             _pipeline = HttpPipelineBuilder.Build(new ManagementClientOptions());
             _port = GetPort(_fullyQualifiedNamespace);
             _clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
-            usingAAD = false;
         }
 
         /// <summary>
@@ -137,17 +135,12 @@ namespace Azure.Messaging.ServiceBus.Management
                     credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(fullyQualifiedNamespace));
                     break;
             }
-
-            _tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
-
-
             _tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
 
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _pipeline = HttpPipelineBuilder.Build(new ManagementClientOptions());
             _port = GetPort(_fullyQualifiedNamespace);
             _clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
-            usingAAD = true;
         }
 
         /// <summary>
@@ -1163,11 +1156,12 @@ namespace Azure.Messaging.ServiceBus.Management
         private async Task<string> GetToken(string requestUri)
         {
             var scope = requestUri;
-            if (usingAAD)
+            var credential = (ServiceBusTokenCredential)_tokenCredential;
+            if (!credential.IsSharedAccessSignatureCredential)
             {
                 scope = "https://servicebus.azure.net/.default";
             }
-            var token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 
@@ -1270,14 +1264,16 @@ namespace Azure.Messaging.ServiceBus.Management
 
         private async Task<Response> SendHttpRequest(Request request, CancellationToken cancellationToken)
         {
+
             var token = await GetToken(request.Uri.ToUri()).ConfigureAwait(false);
-            if (usingAAD)
+            var credential = (ServiceBusTokenCredential)_tokenCredential;
+            if (credential.IsSharedAccessSignatureCredential)
             {
-                request.Headers.Add("Authorization", $"Bearer { token }");
+                request.Headers.Add("Authorization", token);
             }
             else
             {
-                request.Headers.Add("Authorization", token);
+                request.Headers.Add("Authorization", $"Bearer { token }");
             }
             request.Headers.Add("UserAgent", $"SERVICEBUS/{ManagementClientConstants.ApiVersion}(api-origin={ClientInfo.Framework};os={ClientInfo.Platform};version={ClientInfo.Version};product={ClientInfo.Product})");
 
