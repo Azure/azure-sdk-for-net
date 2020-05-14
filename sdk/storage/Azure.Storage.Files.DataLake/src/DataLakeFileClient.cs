@@ -2752,6 +2752,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -2785,6 +2786,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             DataLakeFileUploadOptions options,
