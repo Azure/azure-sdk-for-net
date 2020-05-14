@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Tests
             // Create the TableServiceClient using the SAS URI.
 
             var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasTableclient = InstrumentClient(sasAuthedService.GetTableClient(tableName));
+            var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Validate that we are able to query the table from the service.
 

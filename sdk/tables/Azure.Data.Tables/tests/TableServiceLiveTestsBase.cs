@@ -55,7 +55,7 @@ namespace Azure.Data.Tables.Tests
                                                               Recording.InstrumentClientOptions(new TableClientOptions())));
             tableName = Recording.GenerateId("testtable", 15);
             await service.CreateTableAsync(tableName).ConfigureAwait(false);
-            client = InstrumentClient(service.GetTableClient(tableName));
+            client = service.GetTableClient(tableName);
         }
 
         [TearDown]
