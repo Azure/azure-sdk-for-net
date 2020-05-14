@@ -51,7 +51,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "88",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-0073539b1af21247b2ff5df3ee1375c4-a283d722405ce846-00",
         "User-Agent": [
@@ -139,7 +139,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "540",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "If-Match": "*",
         "traceparent": "00-89d498f3cc3f3d4f88b16156cafe5f2f-ed18ecb4c34e0141-00",
@@ -234,7 +234,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "550",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "If-Match": "W/\u0022datetime\u00272020-05-11T14%3A34%3A27.0315799Z\u0027\u0022",
         "traceparent": "00-e1921256f9c05842b87f12db390de0f1-cb79e7d672174e4b-00",
@@ -289,7 +289,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "550",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "If-Match": "W/\u0022datetime\u00272020-05-11T14%3A34%3A27.1156507Z\u0027\u0022",
         "traceparent": "00-19e6532fe8b61a4cb27db48cf62bf2aa-26b2c11322c7f34e-00",
