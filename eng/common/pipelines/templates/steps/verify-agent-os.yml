@@ -23,7 +23,7 @@ steps:
         elif os_parameter.startswith('vs') or os_parameter.startswith('win'):
             os_parameter = 'Windows'
         else:
-            raise Exception('Variable OSVmImage is empty or has an unexpected value')
+            raise Exception('Variable OSVmImage is empty or has an unexpected value [${{ parameters.OSVmImage }}]')
 
 
         print("Job requested to run on OS: %s" % (os_parameter))
