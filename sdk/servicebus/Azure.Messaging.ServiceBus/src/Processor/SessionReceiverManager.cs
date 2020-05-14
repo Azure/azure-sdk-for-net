@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly string _sessionId;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
-        private Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
+        private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
         private ServiceBusSessionReceiver _receiver;
         protected override ServiceBusReceiver Receiver => _receiver;
@@ -41,9 +41,8 @@ namespace Azure.Messaging.ServiceBus
             Func<ProcessSessionEventArgs, Task> sessionCloseHandler,
             Func<ProcessSessionMessageEventArgs, Task> messageHandler,
             Func<ProcessErrorEventArgs, Task> errorHandler,
-            SemaphoreSlim concurrentCallsSemaphore,
             SemaphoreSlim concurrentAcceptSessionsSemaphore)
-            : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler, concurrentCallsSemaphore)
+            : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler)
         {
             _sessionId = sessionId;
             _sessionInitHandler = sessionInitHandler;
@@ -255,7 +254,6 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 await CloseReceiverIfNeeded(cancellationToken).ConfigureAwait(false);
-                _concurrentCallsSemaphore.Release();
             }
         }
 
@@ -305,7 +303,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task OnMessageHandler(
+        protected override async Task OnMessageHandler(
             ServiceBusReceivedMessage message,
             CancellationToken processorCancellationToken)
         {

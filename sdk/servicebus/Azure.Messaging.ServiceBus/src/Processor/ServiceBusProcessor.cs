@@ -47,31 +47,7 @@ namespace Azure.Messaging.ServiceBus
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
-        internal virtual ServiceBusReceiver Receiver { get; set; }
-
         private Task ActiveReceiveTask { get; set; }
-
-        /// <summary>
-        /// Called when a 'process message' event is triggered.
-        /// </summary>
-        ///
-        /// <param name="args">The set of arguments to identify the context of the event to be processed.</param>
-        private Task OnProcessMessageAsync(ProcessMessageEventArgs args) =>
-            _processMessageAsync(args);
-
-        /// <summary>
-        /// Called when a 'process message' event is triggered.
-        /// </summary>
-        ///
-        /// <param name="args">The set of arguments to identify the context of the event to be processed.</param>
-        private Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args) => _processSessionMessageAsync(args);
-
-        /// <summary>
-        /// Called when a 'process error' event is triggered.
-        /// </summary>
-        ///
-        /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
-        private Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
 
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
@@ -170,8 +146,6 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration { get; }
 
-        internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
-
         private readonly string[] _sessionIds;
 
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
@@ -203,10 +177,10 @@ namespace Azure.Messaging.ServiceBus
             EntityPath = entityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
-            ReceiveMode = options.ReceiveMode;
-            PrefetchCount = options.PrefetchCount;
-            MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
-            MaxConcurrentCalls = options.MaxConcurrentCalls;
+            ReceiveMode = _options.ReceiveMode;
+            PrefetchCount = _options.PrefetchCount;
+            MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
+            MaxConcurrentCalls = _options.MaxConcurrentCalls;
             if (MaxConcurrentCalls == 0)
             {
                 MaxConcurrentCalls = isSessionEntity ? DefaultMaxConcurrentSessions : DefaultMaxConcurrentCalls;
@@ -219,8 +193,8 @@ namespace Azure.Messaging.ServiceBus
                 _maxConcurrentAcceptSessions,
                 _maxConcurrentAcceptSessions);
 
-            MaxReceiveWaitTime = options.MaxReceiveWaitTime;
-            AutoComplete = options.AutoComplete;
+            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
+            AutoComplete = _options.AutoComplete;
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
@@ -495,7 +469,6 @@ namespace Azure.Messaging.ServiceBus
                             _sessionClosingAsync,
                             _processSessionMessageAsync,
                             _processErrorAsync,
-                            MessageHandlerSemaphore,
                             MaxConcurrentAcceptSessionsSemaphore));
                 }
             }
@@ -509,8 +482,7 @@ namespace Azure.Messaging.ServiceBus
                         Identifier,
                         _options,
                         _processMessageAsync,
-                        _processErrorAsync,
-                        MessageHandlerSemaphore));
+                        _processErrorAsync));
             }
         }
 
@@ -616,7 +588,7 @@ namespace Azure.Messaging.ServiceBus
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        tasks.Add(receiverManager.ReceiveAndProcessMessagesAsync(cancellationToken));
+                        tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
                     }
                     if (tasks.Count > MaxConcurrentCalls)
                     {
@@ -627,6 +599,20 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 await Task.WhenAll(tasks).ConfigureAwait(false);
+            }
+        }
+
+        private async Task ReceiveAndProcessMessagesAsync(
+            ReceiverManager receiverManager,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await receiverManager.ReceiveAndProcessMessagesAsync(cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                MessageHandlerSemaphore.Release();
             }
         }
 

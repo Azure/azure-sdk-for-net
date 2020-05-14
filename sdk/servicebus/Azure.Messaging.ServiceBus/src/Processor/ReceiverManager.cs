@@ -25,7 +25,6 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions _processorOptions;
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private Func<ProcessMessageEventArgs, Task> _messageHandler;
-        protected readonly SemaphoreSlim _concurrentCallsSemaphore;
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
 
@@ -36,8 +35,7 @@ namespace Azure.Messaging.ServiceBus
             string identifier,
             ServiceBusProcessorOptions processorOptions,
             Func<ProcessMessageEventArgs, Task> messageHandler,
-            Func<ProcessErrorEventArgs, Task> errorHandler,
-            SemaphoreSlim concurrentCallsSemaphore)
+            Func<ProcessErrorEventArgs, Task> errorHandler)
         {
             _connection = connection;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
@@ -56,7 +54,6 @@ namespace Azure.Messaging.ServiceBus
                 isSessionEntity: false,
                 options: _receiverOptions);
             _errorHandler = errorHandler;
-            _concurrentCallsSemaphore = concurrentCallsSemaphore;
             _messageHandler = messageHandler;
         }
 
@@ -111,10 +108,6 @@ namespace Azure.Messaging.ServiceBus
                         _entityPath))
                     .ConfigureAwait(false);
 
-            }
-            finally
-            {
-                _concurrentCallsSemaphore.Release();
             }
         }
 
@@ -185,7 +178,13 @@ namespace Azure.Messaging.ServiceBus
                 {
                     try
                     {
-                        await Receiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
+                        // don't pass the processor cancellation token
+                        // as we want in flight abandon to be able
+                        // to finish even if user stopped processing
+                        await Receiver.AbandonAsync(
+                            message.LockToken,
+                            cancellationToken: CancellationToken.None)
+                            .ConfigureAwait(false);
                     }
                     catch (Exception exception)
                     {
@@ -207,7 +206,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public virtual async Task OnMessageHandler(ServiceBusReceivedMessage message, CancellationToken processorCancellationToken)
+        protected virtual async Task OnMessageHandler(ServiceBusReceivedMessage message, CancellationToken processorCancellationToken)
         {
             var args = new ProcessMessageEventArgs(
                 message,
