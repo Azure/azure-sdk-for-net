@@ -739,11 +739,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.NotNull(valueText.TextContent);
 
-                if (includeTextContent)
-                {
-                    Assert.Greater(valueText.TextContent.Count, 0);
-                }
-                else
+                if (!includeTextContent)
                 {
                     Assert.AreEqual(0, valueText.TextContent.Count);
                 }
