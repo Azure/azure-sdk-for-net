@@ -38,8 +38,16 @@ APIs for getting statistics about devices and modules, as well as service statis
 ```
 </details>
 
-<details><summary><b>Registry</b></summary>
-APIs for managing device and module identities
+<details><summary><b>Devices</b></summary>
+APIs for managing device identities, device twins, and querying devices
+
+```csharp
+
+```
+</details>
+
+<details><summary><b>Modules</b></summary>
+APIs for managing module identities, module twins, and querying modules
 
 ```csharp
 
@@ -47,55 +55,30 @@ APIs for managing device and module identities
 </details>
 
 <details><summary><b>Jobs</b></summary>
-APIs for using IotHub jobs
+APIs for using IotHub v2 jobs
 
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>V2 Jobs</b></summary>
-(maybe combine with job APIs, or maybe don't expose v1 job APIs. Talk with service about this)
+<details><summary><b>Messages</b></summary>
+Feedback messages, sending cloud to device messages (missing from current swagger), and purging cloud to device message queue
+```csharp
+
+```
+</details>
+
+<details><summary><b>Files</b></summary>
+APIs for getting file upload notifications (missing from current swagger)
 
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Twin</b></summary>
-Device and module twin operations
-
-```csharp
-
-```
-</details>
-
-<details><summary><b>Methods</b></summary>
-Device and module direct methods
-
-```csharp
-
-```
-</details>
-
-<details><summary><b>Cloud to Device Messaging</b></summary>
-No sign of this in the swagger
-
-```csharp
-
-```
-</details>
-
-<details><summary><b>Feedback Message</b></summary>
-APIs for getting feedback messages
-
-```csharp
-
-```
-</details>
-
-<details><summary><b>File Upload Notifications</b></summary>
-No sign of this in the swagger
+<details><summary><b>Fault Injection</b></summary>
+Not sure if we'll expose these
 
 ```csharp
 
