@@ -125,30 +125,29 @@ namespace Azure.Data.Tables.Tests
                 };
             }).ToList();
         }
+
+        public class TestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
+
+            public DateTime DatetimeTypeProperty { get; set; }
+
+            public DateTimeOffset DatetimeOffsetTypeProperty { get; set; }
+
+            public Guid GuidTypeProperty { get; set; }
+
+            public byte[] BinaryTypeProperty { get; set; }
+
+            public long Int64TypeProperty { get; set; }
+
+            public double DoubleTypeProperty { get; set; }
+
+            public int IntTypeProperty { get; set; }
+        }
+
+        public class SimpleTestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
+        }
     }
-#pragma warning disable SA1402 // File may only contain a single type
-    public class TestEntity : TableEntity
-    {
-        public string StringTypeProperty { get; set; }
-
-        public DateTime DatetimeTypeProperty { get; set; }
-
-        public DateTimeOffset DatetimeOffsetTypeProperty { get; set; }
-
-        public Guid GuidTypeProperty { get; set; }
-
-        public byte[] BinaryTypeProperty { get; set; }
-
-        public long Int64TypeProperty { get; set; }
-
-        public double DoubleTypeProperty { get; set; }
-
-        public int IntTypeProperty { get; set; }
-    }
-
-    public class SimpleTestEntity : TableEntity
-    {
-        public string StringTypeProperty { get; set; }
-    }
-#pragma warning restore SA1402 // File may only contain a single type
 }
