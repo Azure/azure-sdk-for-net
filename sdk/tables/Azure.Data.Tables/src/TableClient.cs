@@ -124,6 +124,44 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// Inserts a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to insert.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The inserted Table entity.</returns>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<T>> InsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            var response = await _tableOperations.InsertEntityAsync(_table,
+                                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+            return Response.FromValue(result, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Inserts a Table Entity into the Table.
+        /// </summary>
+        /// <param name="entity">The entity to insert.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The inserted Table entity.</returns>
+        [ForwardsClientCalls]
+        public virtual Response<T> Insert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            var response = _tableOperations.InsertEntity(_table,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken);
+
+            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+            return Response.FromValue(result, response.GetRawResponse());
+        }
+
+
+
+        /// <summary>
         /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
         /// <param name="entity">The entity to upsert.</param>
@@ -144,11 +182,11 @@ namespace Azure.Data.Tables
             }
 
             return await _tableOperations.UpdateEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+                                                            partitionKey as string,
+                                                            rowKey as string,
+                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                            queryOptions: new QueryOptions() { Format = _format },
+                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -172,11 +210,51 @@ namespace Azure.Data.Tables
             }
 
             return _tableOperations.UpdateEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
-                                          tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                                          queryOptions: new QueryOptions() { Format = _format },
-                                          cancellationToken: cancellationToken);
+                                                 partitionKey as string,
+                                                 rowKey as string,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to upsert.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
+
+            return await _tableOperations.UpdateEntityAsync(_table,
+                                                            entity.PartitionKey,
+                                                            entity.RowKey,
+                                                            tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                            queryOptions: new QueryOptions() { Format = _format },
+                                                            cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to upsert.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
+        public virtual Response Upsert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
+
+            return _tableOperations.UpdateEntity(_table,
+                                                 entity.PartitionKey,
+                                                 entity.RowKey,
+                                                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                                                 queryOptions: new QueryOptions() { Format = _format },
+                                                 cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -382,6 +460,82 @@ namespace Azure.Data.Tables
                 response.Value.Value.CastAndRemoveAnnotations();
 
                 return Page.FromValues(response.Value.Value,
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            });
+        }
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
+        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<T> QueryAsync<T>(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            }, async (continuationToken, _) =>
+            {
+                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                    nextPartitionKey: NextPartitionKey,
+                    nextRowKey: NextRowKey,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            });
+        }
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
+        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+
+        [ForwardsClientCalls]
+        public virtual Pageable<T> Query<T>(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            return PageableHelpers.CreateEnumerable(_ =>
+            {
+                var response = _tableOperations.RestClient.QueryEntities(_table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                    cancellationToken: cancellationToken);
+
+                return Page.FromValues(
+                    response.Value.Value.ToTableEntityList<T>(),
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
+            }, (continuationToken, _) =>
+            {
+                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                var response = _tableOperations.RestClient.QueryEntities(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                    nextPartitionKey: NextPartitionKey,
+                    nextRowKey: NextRowKey,
+                    cancellationToken: cancellationToken);
+
+                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                                        CreateContinuationTokenFromHeaders(response.Headers),
                                        response.GetRawResponse());
             });

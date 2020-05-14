@@ -96,5 +96,58 @@ namespace Azure.Data.Tables.Tests
                     };
             }).ToList();
         }
+
+        /// <summary>
+        /// Creates a list of strongly typed table entities.
+        /// </summary>
+        /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
+        /// <param name="count">The number of entities to create</param>
+        /// <returns></returns>
+        protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
+        {
+
+            // Create some entities.
+            return Enumerable.Range(1, count).Select(n =>
+            {
+                string number = n.ToString();
+                return new TestEntity
+                {
+                    PartitionKey = partitionKeyValue,
+                    RowKey = n.ToString("D2"),
+                    StringTypeProperty = $"This is table entity number {n:D2}",
+                    DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                    DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                    GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
+                    BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
+                    Int64TypeProperty = long.Parse(number),
+                    DoubleTypeProperty = (double)n,
+                    IntTypeProperty = n,
+                };
+            }).ToList();
+        }
+
+        public class TestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
+
+            public DateTime DatetimeTypeProperty { get; set; }
+
+            public DateTimeOffset DatetimeOffsetTypeProperty { get; set; }
+
+            public Guid GuidTypeProperty { get; set; }
+
+            public byte[] BinaryTypeProperty { get; set; }
+
+            public long Int64TypeProperty { get; set; }
+
+            public double DoubleTypeProperty { get; set; }
+
+            public int IntTypeProperty { get; set; }
+        }
+
+        public class SimpleTestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
+        }
     }
 }
