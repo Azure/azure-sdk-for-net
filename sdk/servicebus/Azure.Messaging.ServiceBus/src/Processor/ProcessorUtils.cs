@@ -28,7 +28,6 @@ namespace Azure.Messaging.ServiceBus
             return renewAfter;
         }
 
-
         /// <summary>
         ///
         /// </summary>
