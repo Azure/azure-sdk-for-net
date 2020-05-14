@@ -659,7 +659,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         var lockedUntil = args.SessionLockedUntil;
-                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
+                        // wait 2x lock duration in case the
+                        // lock was renewed already
+                        await Task.Delay(lockDuration.Add(lockDuration));
                         if (!args.CancellationToken.IsCancellationRequested)
                         {
                             // only do the assertion if cancellation wasn't requested as otherwise
