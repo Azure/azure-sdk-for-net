@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,11 +15,12 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
+        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters, string? assemblyName)
         {
             _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
             _logContent = logContent;
             _maxLength = maxLength;
+            _assemblyName = assemblyName;
         }
 
         private const double RequestTooLongTime = 3.0; // sec
@@ -30,6 +30,7 @@ namespace Azure.Core.Pipeline
         private readonly bool _logContent;
         private readonly int _maxLength;
         private HttpMessageSanitizer _sanitizer;
+        private readonly string? _assemblyName;
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -53,7 +54,7 @@ namespace Azure.Core.Pipeline
 
             Request request = message.Request;
 
-            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers));
+            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
 
             Encoding? requestTextEncoding = null;
 
@@ -68,13 +69,21 @@ namespace Azure.Core.Pipeline
 
             var before = Stopwatch.GetTimestamp();
 
-            if (async)
+            try
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ProcessNext(message, pipeline);
+                s_eventSource.ExceptionResponse(request.ClientRequestId, ex.ToString());
+                throw;
             }
 
             var after = Stopwatch.GetTimestamp();

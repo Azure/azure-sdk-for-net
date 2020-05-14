@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         /// <param name="displayName">The display name of the
         /// subscription.</param>
+        /// <param name="managementGroupId">The Management Group Id.</param>
         /// <param name="owners">The list of principals that should be granted
         /// Owner access on the subscription. Principals should be of type
         /// User, Service Principal or Security Group.</param>
@@ -46,9 +47,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// values include: 'MS-AZR-0017P', 'MS-AZR-0148P'</param>
         /// <param name="additionalParameters">Additional, untyped parameters
         /// to support custom subscription creation scenarios.</param>
-        public SubscriptionCreationParameters(string displayName = default(string), IList<AdPrincipal> owners = default(IList<AdPrincipal>), string offerType = default(string), IDictionary<string, object> additionalParameters = default(IDictionary<string, object>))
+        public SubscriptionCreationParameters(string displayName = default(string), string managementGroupId = default(string), IList<AdPrincipal> owners = default(IList<AdPrincipal>), string offerType = default(string), IDictionary<string, object> additionalParameters = default(IDictionary<string, object>))
         {
             DisplayName = displayName;
+            ManagementGroupId = managementGroupId;
             Owners = owners;
             OfferType = offerType;
             AdditionalParameters = additionalParameters;
@@ -65,6 +67,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Management Group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "managementGroupId")]
+        public string ManagementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of principals that should be granted Owner

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Subscription.Models
+namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -16,26 +16,25 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of pending subscription operations.
+    /// A list of private link resources
     /// </summary>
-    public partial class SubscriptionOperationListResult
+    public partial class PrivateLinkResourceListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// Initializes a new instance of the PrivateLinkResourceListResult
         /// class.
         /// </summary>
-        public SubscriptionOperationListResult()
+        public PrivateLinkResourceListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// Initializes a new instance of the PrivateLinkResourceListResult
         /// class.
         /// </summary>
-        /// <param name="value">A list of pending
-        /// SubscriptionOperations</param>
-        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
+        /// <param name="value">Array of private link resources</param>
+        public PrivateLinkResourceListResult(IList<PrivateLinkResource> value = default(IList<PrivateLinkResource>))
         {
             Value = value;
             CustomInit();
@@ -47,10 +46,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of pending SubscriptionOperations
+        /// Gets or sets array of private link resources
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SubscriptionOperation> Value { get; set; }
+        public IList<PrivateLinkResource> Value { get; set; }
 
     }
 }

@@ -413,8 +413,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Nl { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage No { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Pl { get { throw null; } }
-        public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Pt { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage PtBR { get { throw null; } }
+        public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage PtPT { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Ru { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Sv { get { throw null; } }
         public static Azure.Search.Documents.Models.EntityRecognitionSkillLanguage Tr { get { throw null; } }
@@ -639,8 +639,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage Nl { get { throw null; } }
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage No { get { throw null; } }
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage Pl { get { throw null; } }
-        public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage Pt { get { throw null; } }
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage PtBR { get { throw null; } }
+        public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage PtPT { get { throw null; } }
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage Ru { get { throw null; } }
         public static Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage Sv { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage other) { throw null; }
@@ -753,8 +753,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.LexicalAnalyzerName PlMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.LexicalAnalyzerName PtBrLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.LexicalAnalyzerName PtBrMicrosoft { get { throw null; } }
-        public static Azure.Search.Documents.Models.LexicalAnalyzerName PtLucene { get { throw null; } }
-        public static Azure.Search.Documents.Models.LexicalAnalyzerName PtMicrosoft { get { throw null; } }
+        public static Azure.Search.Documents.Models.LexicalAnalyzerName PtPtLucene { get { throw null; } }
+        public static Azure.Search.Documents.Models.LexicalAnalyzerName PtPtMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.LexicalAnalyzerName RoLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.LexicalAnalyzerName RoMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.LexicalAnalyzerName RuLucene { get { throw null; } }
@@ -1487,7 +1487,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SentimentSkillLanguage Nl { get { throw null; } }
         public static Azure.Search.Documents.Models.SentimentSkillLanguage No { get { throw null; } }
         public static Azure.Search.Documents.Models.SentimentSkillLanguage Pl { get { throw null; } }
-        public static Azure.Search.Documents.Models.SentimentSkillLanguage Pt { get { throw null; } }
+        public static Azure.Search.Documents.Models.SentimentSkillLanguage PtPT { get { throw null; } }
         public static Azure.Search.Documents.Models.SentimentSkillLanguage Ru { get { throw null; } }
         public static Azure.Search.Documents.Models.SentimentSkillLanguage Sv { get { throw null; } }
         public static Azure.Search.Documents.Models.SentimentSkillLanguage Tr { get { throw null; } }

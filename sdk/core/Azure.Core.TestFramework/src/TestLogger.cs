@@ -11,7 +11,7 @@ using Azure.Core.Diagnostics;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
-namespace Azure.Search.Documents.Tests
+namespace Azure.Core.TestFramework
 {
     /// <summary>
     /// The TestLogger listens for the AzureSDK logging event source and traces
@@ -28,43 +28,13 @@ namespace Azure.Search.Documents.Tests
         private AzureEventSourceListener Listener { get; }
 
         /// <summary>
-        /// A buffer containing the logs collected thus far.  It is initialized
-        /// in SetupEventsForTest and (optionally) written out in
-        /// OutputEventsForTest.
-        /// </summary>
-        private StringBuilder _log;
-
-        /// <summary>
-        /// Gets a value indicating whether or not to log output for successful tests.
-        /// This could be treated as a numeric level in the future if we wanted different
-        /// levels of verbosity, but for now is only boolean.
-        /// </summary>
-        private readonly bool _verbose = Environment.GetEnvironmentVariable("AZURE_SEARCH_TEST_VERBOSE") != null;
-
-        /// <summary>
         /// Start collecting AzureSDK events to log.
         /// </summary>
-        public TestLogger() =>
+        public TestLogger()
+        {
             Listener = new AzureEventSourceListener(
                 (e, _) => LogEvent(e),
                 EventLevel.Verbose);
-
-        /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// </summary>
-        public void SetupEventsForTest() =>
-            _log = new StringBuilder();
-
-        /// <summary>
-        /// Output the Events to the console in the case of test failure.
-        /// This will include the HTTP requests and responses.
-        /// </summary>
-        public void OutputEventsForTest()
-        {
-            if (_verbose || TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                TestContext.Out.WriteLine(_log.ToString());
-            }
         }
 
         /// <summary>
@@ -117,12 +87,10 @@ namespace Azure.Search.Documents.Tests
             // Dump the message and category
             Trace.WriteLine(message, category);
 
-            // Add the message to event buffer
-            Assert.IsNotNull(
-                _log,
-                $"{nameof(SetupEventsForTest)} needs to be called before each test when using {nameof(TestLogger)}.");
-            _log.Append(message);
-            _log.AppendLine();
+            // Add a line to separate requests/responses within a single test
+            message.AppendLine();
+            // Output the request/response
+            TestContext.Out.WriteLine(message.ToString());
         }
 
         /// <summary>

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Subscription
+namespace Microsoft.Azure.Management.Peering
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Subscription
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriptionFactoryOperations operations.
+    /// ReceivedRoutesOperations operations.
     /// </summary>
-    internal partial class SubscriptionFactoryOperations : IServiceOperations<SubscriptionClient>, ISubscriptionFactoryOperations
+    internal partial class ReceivedRoutesOperations : IServiceOperations<PeeringManagementClient>, IReceivedRoutesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionFactoryOperations class.
+        /// Initializes a new instance of the ReceivedRoutesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SubscriptionFactoryOperations(SubscriptionClient client)
+        internal ReceivedRoutesOperations(PeeringManagementClient client)
         {
             if (client == null)
             {
@@ -46,73 +46,36 @@ namespace Microsoft.Azure.Management.Subscription
         }
 
         /// <summary>
-        /// Gets a reference to the SubscriptionClient
+        /// Gets a reference to the PeeringManagementClient
         /// </summary>
-        public SubscriptionClient Client { get; private set; }
+        public PeeringManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to create a new Azure subscription
+        /// Lists the prefixes received over the specified peering under the given
+        /// subscription and resource group.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// The name of the Microsoft Customer Agreement billing account for which you
-        /// want to create the subscription.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
-        /// <param name='invoiceSectionName'>
-        /// The name of the invoice section in the billing account for which you want
-        /// to create the subscription.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
+        /// <param name='prefix'>
+        /// The optional prefix that can be used to filter the routes.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// <param name='asPath'>
+        /// The optional AS path that can be used to filter the routes.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
+        /// <param name='originAsValidationState'>
+        /// The optional origin AS validation state that can be used to filter the
+        /// routes.
         /// </param>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> CreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, ModernSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders> _response = await BeginCreateSubscriptionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates an Azure subscription
-        /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
+        /// <param name='rpkiValidationState'>
+        /// The optional RPKI validation state that can be used to filter the routes.
         /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders> _response = await BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to create a new Azure subscription
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// The name of the Microsoft Customer Agreement billing account for which you
-        /// want to create the subscription.
-        /// </param>
-        /// <param name='invoiceSectionName'>
-        /// The name of the invoice section in the billing account for which you want
-        /// to create the subscription.
-        /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
+        /// <param name='skipToken'>
+        /// The optional page continuation token that is used in the event of paginated
+        /// result.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -135,25 +98,24 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> BeginCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, ModernSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringReceivedRoute>>> ListByPeeringWithHttpMessagesAsync(string resourceGroupName, string peeringName, string prefix = default(string), string asPath = default(string), string originAsValidationState = default(string), string rpkiValidationState = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (invoiceSectionName == null)
+            if (peeringName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
             }
-            if (body == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (body != null)
+            if (Client.ApiVersion == null)
             {
-                body.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            string apiVersion = "2018-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -161,22 +123,46 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("prefix", prefix);
+                tracingParameters.Add("asPath", asPath);
+                tracingParameters.Add("originAsValidationState", originAsValidationState);
+                tracingParameters.Add("rpkiValidationState", rpkiValidationState);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscription", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeering", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Subscription/createSubscription").ToString();
-            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
-            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (prefix != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("prefix={0}", System.Uri.EscapeDataString(prefix)));
+            }
+            if (asPath != null)
+            {
+                _queryParameters.Add(string.Format("asPath={0}", System.Uri.EscapeDataString(asPath)));
+            }
+            if (originAsValidationState != null)
+            {
+                _queryParameters.Add(string.Format("originAsValidationState={0}", System.Uri.EscapeDataString(originAsValidationState)));
+            }
+            if (rpkiValidationState != null)
+            {
+                _queryParameters.Add(string.Format("rpkiValidationState={0}", System.Uri.EscapeDataString(rpkiValidationState)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
+            }
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -185,7 +171,7 @@ namespace Microsoft.Azure.Management.Subscription
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -216,12 +202,6 @@ namespace Microsoft.Azure.Management.Subscription
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -242,7 +222,7 @@ namespace Microsoft.Azure.Management.Subscription
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -272,7 +252,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>();
+            var _result = new AzureOperationResponse<IPage<PeeringReceivedRoute>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -285,7 +265,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionCreationResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringReceivedRoute>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -296,19 +276,6 @@ namespace Microsoft.Azure.Management.Subscription
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -318,14 +285,11 @@ namespace Microsoft.Azure.Management.Subscription
         }
 
         /// <summary>
-        /// Creates an Azure subscription
+        /// Lists the prefixes received over the specified peering under the given
+        /// subscription and resource group.
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
-        /// </param>
-        /// <param name='body'>
-        /// The subscription creation parameters.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -348,17 +312,12 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringReceivedRoute>>> ListByPeeringNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (enrollmentAccountName == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enrollmentAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (body == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
-            }
-            string apiVersion = "2018-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -366,21 +325,14 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("enrollmentAccountName", enrollmentAccountName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscriptionInEnrollmentAccount", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountName}/providers/Microsoft.Subscription/createSubscription").ToString();
-            _url = _url.Replace("{enrollmentAccountName}", System.Uri.EscapeDataString(enrollmentAccountName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -388,7 +340,7 @@ namespace Microsoft.Azure.Management.Subscription
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -419,12 +371,6 @@ namespace Microsoft.Azure.Management.Subscription
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -445,7 +391,7 @@ namespace Microsoft.Azure.Management.Subscription
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -475,7 +421,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>();
+            var _result = new AzureOperationResponse<IPage<PeeringReceivedRoute>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -488,7 +434,7 @@ namespace Microsoft.Azure.Management.Subscription
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SubscriptionCreationResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringReceivedRoute>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -499,19 +445,6 @@ namespace Microsoft.Azure.Management.Subscription
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
