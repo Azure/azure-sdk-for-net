@@ -17,9 +17,17 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
         public TableServiceClient(Uri endpoint)
-                : this(endpoint, options: null) { }
+                : this(endpoint, options: null)
+        { }
+
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-            : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
+            : this(endpoint, default(TableSharedKeyPipelinePolicy), options)
+        {
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+            }
+        }
 
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
@@ -36,10 +44,7 @@ namespace Azure.Data.Tables
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            if (endpoint.Scheme != "https")
-            {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
-            }
+
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
             HttpPipeline pipeline;
@@ -61,11 +66,22 @@ namespace Azure.Data.Tables
         /// Initializes a new instance of the <see cref="TableServiceClient"/>
         /// class for mocking.
         /// </summary>
+        internal TableServiceClient(TableInternalClient internalClient)
+        {
+            _tableOperations = internalClient;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>
+        /// class for mocking.
+        /// </summary>
         protected TableServiceClient()
         { }
 
         public virtual TableClient GetTableClient(string tableName)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
             return new TableClient(tableName, _tableOperations);
         }
 
@@ -136,6 +152,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
             var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
@@ -149,6 +167,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
             var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
