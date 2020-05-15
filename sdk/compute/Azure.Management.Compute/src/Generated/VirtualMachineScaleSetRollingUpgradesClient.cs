@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Management.Compute.Models;
 
@@ -25,19 +24,12 @@ namespace Azure.Management.Compute
         protected VirtualMachineScaleSetRollingUpgradesClient()
         {
         }
-
         /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradesClient. </summary>
-        public VirtualMachineScaleSetRollingUpgradesClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VirtualMachineScaleSetRollingUpgradesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradesClient. </summary>
-        public VirtualMachineScaleSetRollingUpgradesClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
-        {
-            options ??= new ComputeManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VirtualMachineScaleSetRollingUpgradesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VirtualMachineScaleSetRollingUpgradesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the status of the latest virtual machine scale set rolling upgrade. </summary>

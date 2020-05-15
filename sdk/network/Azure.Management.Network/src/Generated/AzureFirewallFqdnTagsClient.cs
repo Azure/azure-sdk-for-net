@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected AzureFirewallFqdnTagsClient()
         {
         }
-
         /// <summary> Initializes a new instance of AzureFirewallFqdnTagsClient. </summary>
-        public AzureFirewallFqdnTagsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal AzureFirewallFqdnTagsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTagsClient. </summary>
-        public AzureFirewallFqdnTagsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new AzureFirewallFqdnTagsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new AzureFirewallFqdnTagsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets all the Azure Firewall FQDN Tags in a subscription. </summary>

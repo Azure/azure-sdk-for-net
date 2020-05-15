@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected VirtualHubRouteTableV2SClient()
         {
         }
-
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2SClient. </summary>
-        public VirtualHubRouteTableV2SClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VirtualHubRouteTableV2SClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2SClient. </summary>
-        public VirtualHubRouteTableV2SClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VirtualHubRouteTableV2SRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VirtualHubRouteTableV2SRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>

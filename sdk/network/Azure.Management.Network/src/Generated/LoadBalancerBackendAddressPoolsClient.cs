@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected LoadBalancerBackendAddressPoolsClient()
         {
         }
-
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolsClient. </summary>
-        public LoadBalancerBackendAddressPoolsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal LoadBalancerBackendAddressPoolsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolsClient. </summary>
-        public LoadBalancerBackendAddressPoolsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new LoadBalancerBackendAddressPoolsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new LoadBalancerBackendAddressPoolsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets load balancer backend address pool. </summary>

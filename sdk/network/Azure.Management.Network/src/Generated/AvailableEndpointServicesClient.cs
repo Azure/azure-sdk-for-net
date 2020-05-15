@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected AvailableEndpointServicesClient()
         {
         }
-
         /// <summary> Initializes a new instance of AvailableEndpointServicesClient. </summary>
-        public AvailableEndpointServicesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal AvailableEndpointServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of AvailableEndpointServicesClient. </summary>
-        public AvailableEndpointServicesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new AvailableEndpointServicesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new AvailableEndpointServicesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> List what values of endpoint services are available for use. </summary>
