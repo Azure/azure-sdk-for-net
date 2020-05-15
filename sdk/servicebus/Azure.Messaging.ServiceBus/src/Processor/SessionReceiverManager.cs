@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return;
                 }
-                _receiver = await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
+                await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
             }
             finally
             {
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private async Task<ServiceBusSessionReceiver> CreateAndInitializeSessionReceiver(
+        private async Task CreateAndInitializeSessionReceiver(
             CancellationToken cancellationToken)
         {
             _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
@@ -109,8 +109,6 @@ namespace Azure.Messaging.ServiceBus
                 var args = new ProcessSessionEventArgs(_receiver, cancellationToken);
                 await _sessionInitHandler(args).ConfigureAwait(false);
             }
-
-            return _receiver;
         }
 
         public override async Task CloseReceiverIfNeeded(
