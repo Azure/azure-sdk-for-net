@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Code indicating the type of warning.
         /// </summary>
-        public string WarningCode { get; }
+        public TextAnalyticsWarningCode WarningCode { get; }
 
         /// <summary>
         /// Message that contains more information about the reason of the warning.

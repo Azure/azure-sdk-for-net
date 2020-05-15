@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -58,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerBadRequest
             try
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -81,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeFormContentFromFile
             using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
             {
-                Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -103,7 +102,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -136,7 +135,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 //@@ string modelId = "<modelId>";
 
-                Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 /*
                  *
                  */

@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// Tracks the status of a long-running operation for recognizing fields and other content from forms by using custom
     /// trained models.
     /// </summary>
-    public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
+    public class RecognizeCustomFormsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private IReadOnlyList<RecognizedForm> _value;
+        private RecognizedFormCollection _value;
 
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<RecognizedForm> Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedFormCollection Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -54,11 +54,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.Models
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = new List<RecognizedForm>();
+                    _value = new RecognizedFormCollection(new List<RecognizedForm>());
 
                     throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
                 }
@@ -164,31 +164,31 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<RecognizedForm> ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?
                 ConvertUnsupervisedResult(analyzeResult) :
                 ConvertSupervisedResult(analyzeResult);
         }
 
-        private static IReadOnlyList<RecognizedForm> ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
-            foreach (var pageResult in analyzeResult.PageResults)
+            for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
             {
-                forms.Add(new RecognizedForm(pageResult, analyzeResult.ReadResults));
+                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex));
             }
-            return forms;
+            return new RecognizedFormCollection(forms);
         }
 
-        private static IReadOnlyList<RecognizedForm> ConvertSupervisedResult(AnalyzeResult_internal analyzeResult)
+        private static RecognizedFormCollection ConvertSupervisedResult(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var documentResult in analyzeResult.DocumentResults)
             {
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
-            return forms;
+            return new RecognizedFormCollection(forms);
         }
 
         private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Models
                 var firstError = errors[0];
 
                 errorMessage = firstError.Message;
-                errorCode = firstError.Code;
+                errorCode = firstError.ErrorCode;
             }
             else
             {
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var error in errors)
             {
-                errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
                 index++;
             }
 

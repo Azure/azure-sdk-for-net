@@ -40,20 +40,15 @@ jobs:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
-          OSName: "Linux"
           OSVmImage: "ubuntu-18.04"
         Windows:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
         MacOs:
-          OSName: "MacOS"
           OSVmImage: "macOS-10.15"
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
