@@ -19,7 +19,7 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
-
+        private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;
@@ -29,35 +29,54 @@ namespace Azure.Core.TestFramework
             IsAsync = isAsync;
         }
 
-        public virtual TClient CreateClient<TClient>(params object[] args) where TClient : class
+        protected TClient CreateClient<TClient>(params object[] args) where TClient : class
         {
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class => InstrumentClient(client, null);
+        public TClient InstrumentClient<TClient>(TClient client) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, null);
 
-        public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
+        protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
+
+        internal object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
-            Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
-
-            if (ClientValidation<TClient>.Validated == false)
+            if (client is IProxyTargetAccessor)
             {
-                foreach (MethodInfo methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
-                {
-                    if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
-                    {
-                        ClientValidation<TClient>.ValidationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
-
-                        break;
-                    }
-                }
-
-                ClientValidation<TClient>.Validated = true;
+                // Already instrumented
+                return client;
             }
 
-            if (ClientValidation<TClient>.ValidationException != null)
+            lock (s_clientValidation)
             {
-                throw ClientValidation<TClient>.ValidationException;
+                if (!s_clientValidation.TryGetValue(clientType, out var validationException))
+                {
+                    foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                    {
+                        if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
+                        {
+                            validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+
+                            break;
+                        }
+
+
+                        if (methodInfo.Name.EndsWith("Client") &&
+                            methodInfo.Name.StartsWith("Get") &&
+                            !methodInfo.IsVirtual)
+                        {
+                            validationException = new InvalidOperationException($"Client type contains public non-virtual Get*Client method {methodInfo.Name}");
+
+                            break;
+                        }
+                    }
+
+                    s_clientValidation[clientType] = validationException;
+                }
+
+                if (validationException != null)
+                {
+                    throw validationException;
+                }
             }
 
             List<IInterceptor> interceptors = new List<IInterceptor>();
@@ -80,15 +99,9 @@ namespace Azure.Core.TestFramework
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
 
-            return s_proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
-        }
+            interceptors.Add(new InstrumentClientInterceptor(this));
 
-
-        private static class ClientValidation<TClient>
-        {
-            public static bool Validated;
-
-            public static Exception ValidationException;
+            return s_proxyGenerator.CreateClassProxyWithTarget(clientType, client, interceptors.ToArray());
         }
     }
 }

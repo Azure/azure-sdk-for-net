@@ -4,6 +4,7 @@
 using System;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -77,7 +78,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void CreateFormRecognizerClientFromFormTrainingClient()
         {
-            FormTrainingClient trainingClient = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri("http://localhost"), new AzureKeyCredential("key"));
             FormRecognizerClient formRecognizerClient = trainingClient.GetFormRecognizerClient();
 
             Assert.IsNotNull(formRecognizerClient);

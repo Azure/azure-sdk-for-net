@@ -18,8 +18,9 @@ class AzureEngSemanticVersion {
     [int] $PrereleaseNumber
     [bool] $IsPrerelease
     [string] $RawVersion
+    # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+    static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*)))?"
 
-    
     static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
     {
         try {
@@ -31,10 +32,7 @@ class AzureEngSemanticVersion {
     }
     
     AzureEngSemanticVersion([string] $versionString){
-        # Regex inspired but simplifie from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-        $SEMVER_REGEX = "^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-?(?<prelabel>[a-zA-Z-]*)(?:\.?(?<prenumber>0|[1-9]\d*)))?$"
-        
-        if ($versionString -match $SEMVER_REGEX) {
+        if ($versionString -match "^$([AzureEngSemanticVersion]::SEMVER_REGEX)$") {
             if ($null -eq $matches['prelabel']) {
                 # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
                 $prelabel = "zzz"

@@ -51,7 +51,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "624",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-1368a0812fb47c4caaa427fef3251546-ee0ecf078dfe5d40-00",
         "User-Agent": [

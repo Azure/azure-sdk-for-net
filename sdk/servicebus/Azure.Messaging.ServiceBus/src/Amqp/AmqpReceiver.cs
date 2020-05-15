@@ -215,6 +215,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
+            if (_isSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
+
             try
             {
                 link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
@@ -257,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -936,7 +941,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<AmqpResponseMessage> ExecuteRequest(TimeSpan timeout, AmqpRequestMessage amqpRequestMessage)
         {
-            ThrowIfSessionLockLost();
+            if (_isSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
             AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,
                 _managementLink,
@@ -1276,5 +1284,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             }
         }
+
+        private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

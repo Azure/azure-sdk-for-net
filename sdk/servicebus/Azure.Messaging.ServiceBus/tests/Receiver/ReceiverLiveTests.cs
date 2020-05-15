@@ -270,6 +270,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task CanPeekADeferredMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var receivedMsg = await receiver.ReceiveAsync();
+
+                await receiver.DeferAsync(receivedMsg);
+                var peekedMsg = await receiver.PeekAsync();
+                Assert.AreEqual(receivedMsg.MessageId, peekedMsg.MessageId);
+                Assert.AreEqual(receivedMsg.SequenceNumber, peekedMsg.SequenceNumber);
+
+                var deferredMsg = await receiver.ReceiveDeferredMessageAsync(peekedMsg.SequenceNumber);
+                Assert.AreEqual(peekedMsg.MessageId, deferredMsg.MessageId);
+                Assert.AreEqual(peekedMsg.SequenceNumber, deferredMsg.SequenceNumber);
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesInReceiveAndDeleteMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

@@ -174,9 +174,9 @@ namespace Azure.AI.FormRecognizer.Models
         private static RecognizedFormCollection ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedForm> forms = new List<RecognizedForm>();
-            foreach (var pageResult in analyzeResult.PageResults)
+            for (int pageIndex = 0; pageIndex < analyzeResult.PageResults.Count; pageIndex++)
             {
-                forms.Add(new RecognizedForm(pageResult, analyzeResult.ReadResults));
+                forms.Add(new RecognizedForm(analyzeResult.PageResults[pageIndex], analyzeResult.ReadResults, pageIndex));
             }
             return new RecognizedFormCollection(forms);
         }

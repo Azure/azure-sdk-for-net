@@ -7,10 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>2.0.1-preview</Version>
+		<Version>2.1.0</Version>
 		<PackageTags></PackageTags>
     <PackageReleaseNotes><![CDATA[
-- Made microsoft session address non-readonly
+- Add receivedRoutes functionality for peerings
+- Add Escalation contact role for peerAsns
+- Update error response model according to Resource Provider Contract
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
