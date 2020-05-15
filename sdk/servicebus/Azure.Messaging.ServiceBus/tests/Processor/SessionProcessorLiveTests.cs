@@ -1066,7 +1066,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessages(2, sessionId));
+                await sender.SendAsync(GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1333,7 +1333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
 
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(GetMessages(2, sessionId));
+                await sender.SendAsync(GetMessage(sessionId));
                 sessions.TryAdd(sessionId, true);
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
