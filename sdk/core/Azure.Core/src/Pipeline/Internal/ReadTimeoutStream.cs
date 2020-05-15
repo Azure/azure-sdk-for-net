@@ -80,7 +80,6 @@ namespace Azure.Core.Pipeline
 
         private void DisposeStream()
         {
-            Console.WriteLine("Disposing stream");
             _stream.Dispose();
         }
 

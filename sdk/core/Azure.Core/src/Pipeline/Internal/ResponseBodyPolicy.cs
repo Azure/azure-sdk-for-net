@@ -41,7 +41,6 @@ namespace Azure.Core.Pipeline
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
             cts.CancelAfter(_networkTimeout);
-
             try
             {
                 message.CancellationToken = cts.Token;
@@ -68,19 +67,32 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                var bufferedStream = new MemoryStream();
-                if (async)
+                if (_networkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
-                }
-                else
-                {
-                    CopyTo(responseContentStream, bufferedStream, message.CancellationToken);
+                    cts.Token.Register(state => ((Stream)state)?.Dispose(), responseContentStream);
                 }
 
-                responseContentStream.Dispose();
-                bufferedStream.Position = 0;
-                message.Response.ContentStream = bufferedStream;
+                try
+                {
+                    var bufferedStream = new MemoryStream();
+                    if (async)
+                    {
+                        await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        CopyTo(responseContentStream, bufferedStream, message.CancellationToken);
+                    }
+
+                    responseContentStream.Dispose();
+                    bufferedStream.Position = 0;
+                    message.Response.ContentStream = bufferedStream;
+                }
+                catch (ObjectDisposedException)
+                {
+                    cts.Token.ThrowIfCancellationRequested();
+                    throw;
+                }
             }
             else if (_networkTimeout != Timeout.InfiniteTimeSpan)
             {
