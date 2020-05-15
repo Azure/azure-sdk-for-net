@@ -17,6 +17,8 @@ namespace Azure.Core.TestFramework
     public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
+        private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
@@ -210,6 +212,33 @@ namespace Azure.Core.TestFramework
         public string GenerateId()
         {
             return Random.Next().ToString();
+        }
+
+        public string GenerateAlphaNumericId(string prefix, int? maxLength = null, bool useOnlyLowercase = false)
+        {
+            var stringChars = new char[8];
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                if (useOnlyLowercase)
+                {
+                    stringChars[i] = charsLower[Random.Next(charsLower.Length)];
+                }
+                else
+                {
+                    stringChars[i] = chars[Random.Next(chars.Length)];
+                }
+            }
+
+            var finalString = new string(stringChars);
+            if (maxLength.HasValue)
+            {
+                return $"{prefix}{finalString}".Substring(0, maxLength.Value);
+            }
+            else
+            {
+                return $"{prefix}{finalString}";
+            }
         }
 
         public string GenerateId(string prefix, int maxLength)
