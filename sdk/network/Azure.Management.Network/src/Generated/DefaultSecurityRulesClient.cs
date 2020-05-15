@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected DefaultSecurityRulesClient()
         {
         }
-
         /// <summary> Initializes a new instance of DefaultSecurityRulesClient. </summary>
-        public DefaultSecurityRulesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal DefaultSecurityRulesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of DefaultSecurityRulesClient. </summary>
-        public DefaultSecurityRulesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new DefaultSecurityRulesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new DefaultSecurityRulesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Get the specified default network security rule. </summary>

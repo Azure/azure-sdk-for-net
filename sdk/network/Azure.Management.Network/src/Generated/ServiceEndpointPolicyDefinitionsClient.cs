@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected ServiceEndpointPolicyDefinitionsClient()
         {
         }
-
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionsClient. </summary>
-        public ServiceEndpointPolicyDefinitionsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal ServiceEndpointPolicyDefinitionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionsClient. </summary>
-        public ServiceEndpointPolicyDefinitionsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ServiceEndpointPolicyDefinitionsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ServiceEndpointPolicyDefinitionsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Get the specified service endpoint policy definitions from service endpoint policy. </summary>

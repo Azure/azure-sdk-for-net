@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Management.Compute;
 
 namespace Azure.Management.Compute
@@ -13,9 +15,9 @@ namespace Azure.Management.Compute
     /// <summary> Compute service management client. </summary>
     public class ComputeManagementClient
     {
-        private readonly ComputeManagementClientOptions _options;
-        private readonly TokenCredential _tokenCredential;
-        private readonly string _host;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _subscriptionId;
 
         /// <summary> Initializes a new instance of ComputeManagementClient for mocking. </summary>
@@ -24,196 +26,203 @@ namespace Azure.Management.Compute
         }
 
         /// <summary> Initializes a new instance of ComputeManagementClient. </summary>
-        public ComputeManagementClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this("https://management.azure.com", subscriptionId, tokenCredential, options)
+        public ComputeManagementClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
         /// <summary> Initializes a new instance of ComputeManagementClient. </summary>
-        public ComputeManagementClient(string host, string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
+        public ComputeManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
         {
-            _options = options ?? new ComputeManagementClientOptions();
-            _tokenCredential = tokenCredential;
-            _host = host;
+            endpoint ??= new Uri("https://management.azure.com");
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            options ??= new ComputeManagementClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
+            _endpoint = endpoint;
             _subscriptionId = subscriptionId;
         }
 
         /// <summary> Creates a new instance of OperationsClient. </summary>
         public virtual OperationsClient GetOperationsClient()
         {
-            return new OperationsClient(_host, _tokenCredential, _options);
+            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
         }
 
         /// <summary> Creates a new instance of AvailabilitySetsClient. </summary>
         public virtual AvailabilitySetsClient GetAvailabilitySetsClient()
         {
-            return new AvailabilitySetsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new AvailabilitySetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of ProximityPlacementGroupsClient. </summary>
         public virtual ProximityPlacementGroupsClient GetProximityPlacementGroupsClient()
         {
-            return new ProximityPlacementGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new ProximityPlacementGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of DedicatedHostGroupsClient. </summary>
         public virtual DedicatedHostGroupsClient GetDedicatedHostGroupsClient()
         {
-            return new DedicatedHostGroupsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new DedicatedHostGroupsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of DedicatedHostsClient. </summary>
         public virtual DedicatedHostsClient GetDedicatedHostsClient()
         {
-            return new DedicatedHostsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new DedicatedHostsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of SshPublicKeysClient. </summary>
         public virtual SshPublicKeysClient GetSshPublicKeysClient()
         {
-            return new SshPublicKeysClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new SshPublicKeysClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineExtensionImagesClient. </summary>
         public virtual VirtualMachineExtensionImagesClient GetVirtualMachineExtensionImagesClient()
         {
-            return new VirtualMachineExtensionImagesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineExtensionImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineExtensionsClient. </summary>
         public virtual VirtualMachineExtensionsClient GetVirtualMachineExtensionsClient()
         {
-            return new VirtualMachineExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineImagesClient. </summary>
         public virtual VirtualMachineImagesClient GetVirtualMachineImagesClient()
         {
-            return new VirtualMachineImagesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of UsageClient. </summary>
         public virtual UsageClient GetUsageClient()
         {
-            return new UsageClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new UsageClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachinesClient. </summary>
         public virtual VirtualMachinesClient GetVirtualMachinesClient()
         {
-            return new VirtualMachinesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachinesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineSizesClient. </summary>
         public virtual VirtualMachineSizesClient GetVirtualMachineSizesClient()
         {
-            return new VirtualMachineSizesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineSizesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of ImagesClient. </summary>
         public virtual ImagesClient GetImagesClient()
         {
-            return new ImagesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new ImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetsClient. </summary>
         public virtual VirtualMachineScaleSetsClient GetVirtualMachineScaleSetsClient()
         {
-            return new VirtualMachineScaleSetsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineScaleSetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetExtensionsClient. </summary>
         public virtual VirtualMachineScaleSetExtensionsClient GetVirtualMachineScaleSetExtensionsClient()
         {
-            return new VirtualMachineScaleSetExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineScaleSetExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetRollingUpgradesClient. </summary>
         public virtual VirtualMachineScaleSetRollingUpgradesClient GetVirtualMachineScaleSetRollingUpgradesClient()
         {
-            return new VirtualMachineScaleSetRollingUpgradesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineScaleSetRollingUpgradesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetVMExtensionsClient. </summary>
         public virtual VirtualMachineScaleSetVMExtensionsClient GetVirtualMachineScaleSetVMExtensionsClient()
         {
-            return new VirtualMachineScaleSetVMExtensionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineScaleSetVMExtensionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineScaleSetVMsClient. </summary>
         public virtual VirtualMachineScaleSetVMsClient GetVirtualMachineScaleSetVMsClient()
         {
-            return new VirtualMachineScaleSetVMsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineScaleSetVMsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of LogAnalyticsClient. </summary>
         public virtual LogAnalyticsClient GetLogAnalyticsClient()
         {
-            return new LogAnalyticsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new LogAnalyticsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of VirtualMachineRunCommandsClient. </summary>
         public virtual VirtualMachineRunCommandsClient GetVirtualMachineRunCommandsClient()
         {
-            return new VirtualMachineRunCommandsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new VirtualMachineRunCommandsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of ResourceSkusClient. </summary>
         public virtual ResourceSkusClient GetResourceSkusClient()
         {
-            return new ResourceSkusClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new ResourceSkusClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of DisksClient. </summary>
         public virtual DisksClient GetDisksClient()
         {
-            return new DisksClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new DisksClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of SnapshotsClient. </summary>
         public virtual SnapshotsClient GetSnapshotsClient()
         {
-            return new SnapshotsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new SnapshotsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of DiskEncryptionSetsClient. </summary>
         public virtual DiskEncryptionSetsClient GetDiskEncryptionSetsClient()
         {
-            return new DiskEncryptionSetsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new DiskEncryptionSetsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of GalleriesClient. </summary>
         public virtual GalleriesClient GetGalleriesClient()
         {
-            return new GalleriesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new GalleriesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of GalleryImagesClient. </summary>
         public virtual GalleryImagesClient GetGalleryImagesClient()
         {
-            return new GalleryImagesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new GalleryImagesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of GalleryImageVersionsClient. </summary>
         public virtual GalleryImageVersionsClient GetGalleryImageVersionsClient()
         {
-            return new GalleryImageVersionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new GalleryImageVersionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of GalleryApplicationsClient. </summary>
         public virtual GalleryApplicationsClient GetGalleryApplicationsClient()
         {
-            return new GalleryApplicationsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new GalleryApplicationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of GalleryApplicationVersionsClient. </summary>
         public virtual GalleryApplicationVersionsClient GetGalleryApplicationVersionsClient()
         {
-            return new GalleryApplicationVersionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new GalleryApplicationVersionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of ContainerServicesClient. </summary>
         public virtual ContainerServicesClient GetContainerServicesClient()
         {
-            return new ContainerServicesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new ContainerServicesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
     }
 }

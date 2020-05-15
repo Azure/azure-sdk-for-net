@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected P2SVpnGatewaysClient()
         {
         }
-
         /// <summary> Initializes a new instance of P2SVpnGatewaysClient. </summary>
-        public P2SVpnGatewaysClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal P2SVpnGatewaysClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of P2SVpnGatewaysClient. </summary>
-        public P2SVpnGatewaysClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new P2SVpnGatewaysRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new P2SVpnGatewaysRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>

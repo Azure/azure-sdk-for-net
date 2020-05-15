@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected HubVirtualNetworkConnectionsClient()
         {
         }
-
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionsClient. </summary>
-        public HubVirtualNetworkConnectionsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal HubVirtualNetworkConnectionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of HubVirtualNetworkConnectionsClient. </summary>
-        public HubVirtualNetworkConnectionsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new HubVirtualNetworkConnectionsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new HubVirtualNetworkConnectionsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>

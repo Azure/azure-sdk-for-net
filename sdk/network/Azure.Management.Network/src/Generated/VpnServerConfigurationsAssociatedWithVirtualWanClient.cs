@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Management.Network
@@ -23,19 +22,12 @@ namespace Azure.Management.Network
         protected VpnServerConfigurationsAssociatedWithVirtualWanClient()
         {
         }
-
         /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient. </summary>
-        public VpnServerConfigurationsAssociatedWithVirtualWanClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VpnServerConfigurationsAssociatedWithVirtualWanClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanClient. </summary>
-        public VpnServerConfigurationsAssociatedWithVirtualWanClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
