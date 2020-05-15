@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests
         /// environment.
         /// </summary>
         private static readonly HttpClient s_httpClient =
-            new HttpClient() { Timeout = TimeSpan.FromSeconds(1000) };
+            new HttpClient() { Timeout = TimeSpan.FromMinutes(5) };
 
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
