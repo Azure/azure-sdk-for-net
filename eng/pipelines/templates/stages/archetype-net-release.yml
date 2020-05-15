@@ -89,7 +89,6 @@ stages:
                   deploy:
                     steps:
                       - checkout: none
-                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
                       - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
