@@ -358,7 +358,7 @@ function GetExistingTags($apiUrl) {
 }
 
 # Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha, $exitOnError = $True) {
+function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
   $pkgList = [array]@()
   $ParsePkgInfoFn = ""
   $packagePattern = ""
@@ -404,7 +404,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         continue
       }
 
-      if ($parsedPackage.Deployable -ne $True -and $exitOnError) {
+      if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
         Write-Host "Maybe a pkg version wasn't updated properly?"
         exit(1)
@@ -430,8 +430,8 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
   
   $intersect = $results | % { $_.Tag } | ? { $existingTags -contains $_ }
 
-  if ($intersect.Length -gt 0 -and $exitOnError) {
-    CheckArtifactShaAgainstTagsList -priorExistingTagList $intersect -releaseSha $releaseSha -apiUrl $apiUrl -exitOnError $exitOnError
+  if ($intersect.Length -gt 0 -and !$continueOnError) {
+    CheckArtifactShaAgainstTagsList -priorExistingTagList $intersect -releaseSha $releaseSha -apiUrl $apiUrl -continueOnError $continueOnError
 
     # all the tags are clean. remove them from the list of releases we will publish.
     $results = $results | ? { -not ($intersect -contains $_.Tag ) }
@@ -443,7 +443,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
 # given a set of tags that we want to release, we need to ensure that if they already DO exist.
 # if they DO exist, quietly exit if the commit sha of the artifact matches that of the tag
 # if the commit sha does not match, exit with error and report both problem shas
-function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $exitOnError) {
+function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $continueOnError) {
   $headers = @{
     "Content-Type"  = "application/json"
     "Authorization" = "token $($env:GH_TOKEN)"
@@ -465,7 +465,7 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
     }
   }
 
-  if ($unmatchedTags.Length -gt 0 -and $exitOnError) {
+  if ($unmatchedTags.Length -gt 0 -and !$continueOnError) {
     Write-Host "Tags already existing with different SHA versions. Exiting."
     exit(1)
   }
