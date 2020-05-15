@@ -142,6 +142,7 @@ resources:
     type: github
     name: Azure/azure-sdk-tools
     endpoint: azure
+    ref: refs/tags/azure-sdk-tools_20200514.1
 variables:
   DotNetCoreSDKVersion: '2.2.202'
   skipComponentGovernanceDetection: true
