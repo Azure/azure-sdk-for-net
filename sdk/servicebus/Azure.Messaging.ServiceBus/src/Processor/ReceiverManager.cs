@@ -24,9 +24,8 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions _processorOptions;
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
-        private Func<ProcessMessageEventArgs, Task> _messageHandler;
+        private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
-
 
         public ReceiverManager(
             ServiceBusConnection connection,
@@ -107,7 +106,6 @@ namespace Azure.Messaging.ServiceBus
                         _fullyQualifiedNamespace,
                         _entityPath))
                     .ConfigureAwait(false);
-
             }
         }
 
@@ -234,7 +232,7 @@ namespace Azure.Messaging.ServiceBus
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(_identifier, 1, message.LockToken);
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
-                        await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
                     if (Receiver.IsDisposed)
                     {
                         break;

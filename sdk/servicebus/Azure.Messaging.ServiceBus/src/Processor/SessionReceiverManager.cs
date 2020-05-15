@@ -155,7 +155,6 @@ namespace Azure.Messaging.ServiceBus
                     await _sessionCloseHandler(args).ConfigureAwait(false);
                 }
             }
-
             catch (Exception exception)
             {
                 await RaiseExceptionReceived(
@@ -166,7 +165,6 @@ namespace Azure.Messaging.ServiceBus
                         _entityPath))
                     .ConfigureAwait(false);
             }
-
             finally
             {
                 // Always at least attempt to dispose. If this fails, it won't be retried.
