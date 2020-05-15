@@ -2017,6 +2017,35 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task UploadPagesFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            using (var stream = new MemoryStream(data))
+            {
+                PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewNonAsciiBlobName()));
+                await sourceBlob.CreateAsync(Constants.KB);
+                await sourceBlob.UploadPagesAsync(stream, 0);
+
+                PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync(Constants.KB);
+                var range = new HttpRange(0, Constants.KB);
+
+                // Act
+                await destBlob.UploadPagesFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    sourceRange: range,
+                    range: range);
+            }
+        }
+
         public IEnumerable<AccessConditionParameters> GetUploadPagesFromUriAsync_AccessConditionsFail_Data(string garbageLeaseId)
             => new[]
             {
