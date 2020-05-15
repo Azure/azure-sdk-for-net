@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// The URI string to the PDF file which contains the multipage form to be used for tests.
         /// </summary>
         /// <value>The URI string to the PDF file.</value>
-        public static string MultipageFormUri => CreateUri(MultipageFormUri);
+        public static string MultipageFormUri => CreateUri(MultipageFormFilename);
 
         /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.
