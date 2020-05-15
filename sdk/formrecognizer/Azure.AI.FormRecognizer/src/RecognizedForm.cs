@@ -10,15 +10,17 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizedForm
     {
-        internal RecognizedForm(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal RecognizedForm(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
         {
-            PageResult_internal pageResult = pageResults[pageIndex];
-
             // Recognized form from a model trained without labels.
             FormType = $"form-{pageResult.ClusterId}";
             PageRange = new FormPageRange(pageResult.Page, pageResult.Page);
             Fields = ConvertUnsupervisedFields(pageResult.Page, pageResult.KeyValuePairs, readResults);
-            Pages = ConvertUnsupervisedPages(pageResult, readResults, pageIndex);
+
+            // For models trained without labels, the service treats every page as a separate form, so
+            // we end up with a single page per form.
+
+            Pages = new List<FormPage> { new FormPage(pageResult, readResults, pageIndex) };
         }
 
         internal RecognizedForm(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
@@ -85,15 +87,15 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private static IReadOnlyList<FormPage> ConvertUnsupervisedPages(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
-            => new List<FormPage> { new FormPage(pageResult, readResults, pageIndex) };
-
         private IReadOnlyList<FormPage> ConvertSupervisedPages(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<FormPage> pages = new List<FormPage>();
 
             for (int i = 0; i < readResults.Count; i++)
             {
+                // Check range here so only pages that are part of this form are added. Avoid "pageNumber = i + 1"
+                // because it is not safe to assume the pages will always be in order.
+
                 var pageNumber = readResults[i].Page;
 
                 if (pageNumber >= PageRange.FirstPageNumber && pageNumber <= PageRange.LastPageNumber)

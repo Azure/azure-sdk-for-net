@@ -592,7 +592,6 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             Assert.AreEqual(expectedPageNumber, formPage.PageNumber);
 
-            Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
             Assert.Greater(formPage.Width, 0.0);
             Assert.Greater(formPage.Height, 0.0);
 
