@@ -67,7 +67,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<TableItem> Create(CancellationToken cancellationToken = default)
         {
-            var response = _tableOperations.RestClient.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+            var response = _tableOperations.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
 
@@ -92,6 +92,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             var response = await _tableOperations.InsertEntityAsync(_table,
                                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                                      queryOptions: new QueryOptions() { Format = _format },
@@ -112,6 +114,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<ReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             var response = _tableOperations.InsertEntity(_table,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
@@ -132,6 +136,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<T>> InsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             var response = await _tableOperations.InsertEntityAsync(_table,
                                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                                      queryOptions: new QueryOptions() { Format = _format },
@@ -150,6 +156,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<T> Insert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             var response = _tableOperations.InsertEntity(_table,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
@@ -170,6 +178,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
@@ -198,6 +208,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
@@ -226,8 +238,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
-            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
 
             return await _tableOperations.UpdateEntityAsync(_table,
                                                             entity.PartitionKey,
@@ -246,8 +258,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response Upsert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
-            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
 
             return _tableOperations.UpdateEntity(_table,
                                                  entity.PartitionKey,
@@ -267,6 +279,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> UpdateAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
 
             //TODO: Create Resource strings
@@ -299,6 +312,7 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response Update(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
 
             //TODO: Create Resource strings
@@ -331,6 +345,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
@@ -361,6 +377,8 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(entity, nameof(entity));
+
             //TODO: Create Resource strings
             if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
             {
