@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // ManualResetEvent will enable testing of SemaphoreSlim used in AzureServiceTokenProvider.
             ManualResetEvent manualResetEvent = new ManualResetEvent(false);
-            
+
             // Use AzureServiceTokenProviders to get tokens in parallel.
             for (int i = 0; i < 5; i++)
             {
@@ -97,9 +97,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // AppAuthResultCache should not return this, since it is about to expire. 
             var tokenResponse = TokenResponse.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2));
             var authResult = AppAuthenticationResult.Create(tokenResponse);
-            AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
+            AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/",
                 new Tuple<AppAuthenticationResult, Principal>(authResult, null));
-            
+
             // Get the token again. 
             for (int i = 0; i < 5; i++)
             {
@@ -146,8 +146,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void InvalidAzureAdInstanceTest()
         {
-            var exception = Assert.Throws<ArgumentException>(() =>  new AzureServiceTokenProvider(azureAdInstance:"http://aadinstance/"));
-            
+            var exception = Assert.Throws<ArgumentException>(() => new AzureServiceTokenProvider(azureAdInstance: "http://aadinstance/"));
+
             Assert.Contains(Constants.MustUseHttpsError, exception.ToString());
         }
 
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Set environment variable AzureServicesAuthConnectionString
             Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, Constants.AzureCliConnectionString);
-           
+
             var provider = new AzureServiceTokenProvider();
 
             Assert.NotNull(provider);
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
-            var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
+            var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(providers);
 
             var token = await azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId);
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
-        
+
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);

@@ -22,7 +22,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly string _managedIdentityClientId;
 
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
+#if NETSTANDARD1_4 || net452 || net461
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
+#else
+        private static readonly HttpClient DefaultHttpClient = new HttpClient(new HttpClientHandler() { CheckCertificateRevocationList = true });
+#endif
 
         // Azure Instance Metadata Service (IMDS) endpoint
         private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
@@ -34,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Configurable timeout for MSI retry logic
         internal readonly int _retryTimeoutInSeconds = 0;
 
-        internal MsiAccessTokenProvider(int retryTimeoutInSeconds = 0, string managedIdentityClientId = default(string))
+        internal MsiAccessTokenProvider(int retryTimeoutInSeconds = 0, string managedIdentityClientId = default)
         {
             // require storeLocation if using subject name or thumbprint identifier
             if (retryTimeoutInSeconds < 0)
@@ -55,7 +59,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
             HttpClient httpClient = _httpClient ?? DefaultHttpClient;

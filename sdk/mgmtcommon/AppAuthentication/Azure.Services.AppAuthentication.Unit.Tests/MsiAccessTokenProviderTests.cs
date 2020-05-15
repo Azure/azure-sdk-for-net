@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
-            int timeoutInSeconds = (new Random()).Next(1,4);
+            int timeoutInSeconds = (new Random()).Next(1, 4);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiUnresponsive);
             HttpClient httpClient = new HttpClient(mockMsi);
