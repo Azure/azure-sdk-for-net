@@ -558,6 +558,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
+                    // if the message is abandoned (whether by user callback or
+                    // by processor due to call back throwing), the message will
+                    // be available to receive again immediately.
                     Assert.IsNotNull(msg);
                 }
                 else

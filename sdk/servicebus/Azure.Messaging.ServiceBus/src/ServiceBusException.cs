@@ -39,6 +39,11 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath { get; }
 
         /// <summary>
+        /// Can be used to hold the processor error source when we rethrow exceptions.
+        /// </summary>
+        internal ServiceBusErrorSource? ProcessorErrorSource { get; set; }
+
+        /// <summary>
         ///   Gets a message that describes the current exception.
         /// </summary>
         ///
