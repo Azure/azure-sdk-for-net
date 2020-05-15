@@ -1,7 +1,27 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
-Release notes will be provided here when the final set of features for the release is available.
+## 1.0.0-preview.3 (Unreleased)
+
+### Renames
+
+- `FormRecognizerError.Code` renamed to `FormRecognizerError.ErrorCode`.
+- `FormTrainingClient.GetModelInfos` renamed to `FormTrainingClient.GetCustomModels`.
+- Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
+- Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
+
+### Other breaking changes
+
+- `FormPageRange` is now a `struct`.
+- `RecognizeContentOperation` now returns a `FormPageCollection`.
+- `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
+- `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
+
+## 1.0.0-preview.2 (05-06-2020)
+
+### Fixes
+
+- All of `FormRecognizerClient`'s `FormRecognizerClientOptions` are now passed to the client returned by
+    `FormRecognizerClient.GetFormTrainingClient`.
 
 ## 1.0.0-preview.1 (04-23-2020)
 This is the first preview Azure Form Recognizer client library that follows the [.NET Azure SDK Design Guidelines][guidelines].

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Azure.Core
@@ -30,7 +31,7 @@ namespace Azure.Core
         public string GetRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : throw new InvalidOperationException($"Required keyword '{keyword}' is missing in connection string.");
 
-        public string GetNonRequired(string keyword) =>
+        public string? GetNonRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : null;
 
         public void Replace(string keyword, string value)

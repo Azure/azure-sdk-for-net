@@ -79,9 +79,8 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public RecordEntry Lookup(Request request, RecordMatcher matcher, RecordedTestSanitizer sanitizer)
+        public RecordEntry Lookup(RecordEntry requestEntry, RecordMatcher matcher, RecordedTestSanitizer sanitizer)
         {
-            var requestEntry = RecordTransport.CreateEntry(request, null);
             sanitizer.Sanitize(requestEntry);
 
             lock (Entries)

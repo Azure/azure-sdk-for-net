@@ -355,10 +355,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
-                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
-                        a => receiveLink.EndDisposeMessage(a),
-                        this);
+
+                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
                 Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
@@ -566,15 +564,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string deadLetterReason,
             string deadLetterErrorDescription)
         {
-            if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
-
-            if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
+            Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
+            Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
             Guid lockTokenGuid = new Guid(lockToken);
             var lockTokenGuids = new[] { lockTokenGuid };

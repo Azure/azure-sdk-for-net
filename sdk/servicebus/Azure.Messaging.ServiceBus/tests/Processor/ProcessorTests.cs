@@ -116,6 +116,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void ProcessorOptionsValidation()
+        {
+            var options = new ServiceBusProcessorOptions();
+            Assert.That(
+                () => options.PrefetchCount = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentCalls = 0,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxConcurrentCalls = -1,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(0),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            // should not throw
+            options.PrefetchCount = 0;
+            options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
+            options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+        }
+
+        [Test]
         public async Task UserSettledPropertySetCorrectly()
         {
             var msg = new ServiceBusReceivedMessage();

@@ -13,8 +13,10 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.1
+dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.2
 ``` 
+
+**Note:** This package version targets Azure Form Recognizer service API version v2.0-preview.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -114,8 +116,8 @@ Recognize data from US sales receipts using a prebuilt model.
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
-    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
-    foreach (var receipt in receipts.Value)
+    RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+    foreach (var receipt in receipts)
     {
         USReceipt usReceipt = receipt.AsUSReceipt();
 
@@ -150,8 +152,8 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 Recognize text and table data, along with their bounding box coordinates, from documents.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
-foreach (FormPage page in formPages.Value)
+FormPageCollection formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
 
@@ -177,8 +179,10 @@ foreach (FormPage page in formPages.Value)
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
-Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
-foreach (RecognizedForm form in forms.Value)
+string modelId = "<modelId>";
+
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
     foreach (FormField field in form.Fields.Values)
@@ -239,7 +243,7 @@ Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
 Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<CustomFormModelInfo> models = client.GetModelInfos();
+Pageable<CustomFormModelInfo> models = client.GetCustomModels();
 
 foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
@@ -286,7 +290,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 ```C# Snippet:FormRecognizerBadRequest
 try
 {
-    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+    RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
 }
 catch (RequestFailedException e)
 {

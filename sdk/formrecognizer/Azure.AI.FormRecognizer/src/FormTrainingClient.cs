@@ -12,12 +12,16 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to connect with the Form Recognizer Azure Cognitive Service to train models from
-    /// custom forms.  It also supports listing and deleting
-    /// trained models, as well as accessing account properties.
+    /// custom forms.  It also supports listing and deleting trained models, as well as accessing account
+    /// properties.
     /// </summary>
     public class FormTrainingClient
     {
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         internal readonly ServiceClient ServiceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
@@ -57,18 +61,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            var diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
-        /// </summary>
-        /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        internal FormTrainingClient(ServiceClient serviceClient)
-        {
-            ServiceClient = serviceClient;
+            ServiceClient = new ServiceClient(_diagnostics, pipeline, endpoint.ToString());
         }
 
         #region Training
@@ -76,18 +71,18 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
@@ -96,18 +91,18 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
@@ -192,7 +187,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
         }
@@ -204,7 +199,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
         }
@@ -236,5 +231,16 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
+
+        #region Form Recognizer Client
+
+        /// <summary>
+        /// Gets an instance of a <see cref="FormRecognizerClient"/> that shares the same endpoint, the same
+        /// credentials and the same set of <see cref="FormRecognizerClientOptions"/> this client has.
+        /// </summary>
+        /// <returns>A new instance of a <see cref="FormRecognizerClient"/>.</returns>
+        public virtual FormRecognizerClient GetFormRecognizerClient() => new FormRecognizerClient(_diagnostics, ServiceClient);
+
+        #endregion Form Recognizer Client
     }
 }

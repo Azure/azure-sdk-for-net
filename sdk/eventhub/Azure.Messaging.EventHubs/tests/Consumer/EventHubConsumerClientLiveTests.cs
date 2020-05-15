@@ -730,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(15).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(25).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -744,7 +744,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     async Task<bool> closeAfterFiveRead(ReadState state)
                     {
-                        if (state.Events.Count >= 5)
+                        if (state.Events.Count >= 2)
                         {
                             await consumer.CloseAsync(cancellationSource.Token).ConfigureAwait(false);
                         }
@@ -1371,6 +1371,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // The consumer should be able to read events from another partition after being superseded.  Start a new reader for the other partition,
                     // using the same lower level.  Wait for both readers to complete and then signal for cancellation.
 
+                    await Task.Delay(250);
                     var lowerReadState = await ReadEventsFromPartitionAsync(consumer, partitions[1], sourceEvents.Count, cancellationSource.Token, readOptions: lowerOptions);
 
                     await Task.WhenAny(higherMonitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -1414,7 +1415,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var readTime = TimeSpan
                         .FromSeconds(options.MaximumWaitTime.Value.TotalSeconds * desiredEmptyEvents)
-                        .Add(TimeSpan.FromSeconds(2));
+                        .Add(TimeSpan.FromSeconds(3));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.
