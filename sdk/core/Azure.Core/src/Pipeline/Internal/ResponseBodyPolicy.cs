@@ -88,6 +88,7 @@ namespace Azure.Core.Pipeline
                     bufferedStream.Position = 0;
                     message.Response.ContentStream = bufferedStream;
                 }
+                // We dispose stream on timeout so catch and check if cancellation token was cancelled
                 catch (ObjectDisposedException)
                 {
                     cts.Token.ThrowIfCancellationRequested();

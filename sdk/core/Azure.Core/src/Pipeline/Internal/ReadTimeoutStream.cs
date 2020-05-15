@@ -38,9 +38,10 @@ namespace Azure.Core.Pipeline
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
-            catch (ObjectDisposedException) when (source.IsCancellationRequested)
+            catch (ObjectDisposedException)
             {
-                throw new OperationCanceledException(source.Token);
+                source.Token.ThrowIfCancellationRequested();
+                throw;
             }
             finally
             {
