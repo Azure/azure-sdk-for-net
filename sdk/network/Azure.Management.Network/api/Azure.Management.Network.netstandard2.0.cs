@@ -29,8 +29,6 @@ namespace Azure.Management.Network
     public partial class ApplicationGatewaysClient
     {
         protected ApplicationGatewaysClient() { }
-        public ApplicationGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ApplicationGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ApplicationGateway> Get(string resourceGroupName, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ApplicationGateway>> GetAsync(string resourceGroupName, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetSslPredefinedPolicy(string predefinedPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -121,8 +119,6 @@ namespace Azure.Management.Network
     public partial class ApplicationSecurityGroupsClient
     {
         protected ApplicationSecurityGroupsClient() { }
-        public ApplicationSecurityGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ApplicationSecurityGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ApplicationSecurityGroup> Get(string resourceGroupName, string applicationSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ApplicationSecurityGroup>> GetAsync(string resourceGroupName, string applicationSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ApplicationSecurityGroup> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -165,24 +161,18 @@ namespace Azure.Management.Network
     public partial class AvailableDelegationsClient
     {
         protected AvailableDelegationsClient() { }
-        public AvailableDelegationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AvailableDelegationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailableDelegation> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.AvailableDelegation> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AvailableEndpointServicesClient
     {
         protected AvailableEndpointServicesClient() { }
-        public AvailableEndpointServicesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AvailableEndpointServicesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.EndpointServiceResult> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.EndpointServiceResult> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AvailablePrivateEndpointTypesClient
     {
         protected AvailablePrivateEndpointTypesClient() { }
-        public AvailablePrivateEndpointTypesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AvailablePrivateEndpointTypesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailablePrivateEndpointType> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.AvailablePrivateEndpointType> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailablePrivateEndpointType> ListByResourceGroup(string location, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -191,16 +181,12 @@ namespace Azure.Management.Network
     public partial class AvailableResourceGroupDelegationsClient
     {
         protected AvailableResourceGroupDelegationsClient() { }
-        public AvailableResourceGroupDelegationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AvailableResourceGroupDelegationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailableDelegation> List(string location, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.AvailableDelegation> ListAsync(string location, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AvailableServiceAliasesClient
     {
         protected AvailableServiceAliasesClient() { }
-        public AvailableServiceAliasesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AvailableServiceAliasesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailableServiceAlias> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.AvailableServiceAlias> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AvailableServiceAlias> ListByResourceGroup(string resourceGroupName, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -209,16 +195,12 @@ namespace Azure.Management.Network
     public partial class AzureFirewallFqdnTagsClient
     {
         protected AzureFirewallFqdnTagsClient() { }
-        public AzureFirewallFqdnTagsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AzureFirewallFqdnTagsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AzureFirewallFqdnTag> ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.AzureFirewallFqdnTag> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureFirewallsClient
     {
         protected AzureFirewallsClient() { }
-        public AzureFirewallsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public AzureFirewallsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.AzureFirewall> Get(string resourceGroupName, string azureFirewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.AzureFirewall>> GetAsync(string resourceGroupName, string azureFirewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.AzureFirewall> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -274,8 +256,6 @@ namespace Azure.Management.Network
     public partial class BastionHostsClient
     {
         protected BastionHostsClient() { }
-        public BastionHostsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public BastionHostsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.BastionHost> Get(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.BastionHost>> GetAsync(string resourceGroupName, string bastionHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.BastionHost> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -316,16 +296,12 @@ namespace Azure.Management.Network
     public partial class BgpServiceCommunitiesClient
     {
         protected BgpServiceCommunitiesClient() { }
-        public BgpServiceCommunitiesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public BgpServiceCommunitiesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.BgpServiceCommunity> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.BgpServiceCommunity> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ConnectionMonitorsClient
     {
         protected ConnectionMonitorsClient() { }
-        public ConnectionMonitorsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ConnectionMonitorsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ConnectionMonitorResult> Get(string resourceGroupName, string networkWatcherName, string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ConnectionMonitorResult>> GetAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ConnectionMonitorResult> List(string resourceGroupName, string networkWatcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -411,8 +387,6 @@ namespace Azure.Management.Network
     public partial class DdosCustomPoliciesClient
     {
         protected DdosCustomPoliciesClient() { }
-        public DdosCustomPoliciesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public DdosCustomPoliciesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.DdosCustomPolicy> Get(string resourceGroupName, string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.DdosCustomPolicy>> GetAsync(string resourceGroupName, string ddosCustomPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Network.DdosCustomPoliciesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string ddosCustomPolicyName, Azure.Management.Network.Models.DdosCustomPolicy parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -451,8 +425,6 @@ namespace Azure.Management.Network
     public partial class DdosProtectionPlansClient
     {
         protected DdosProtectionPlansClient() { }
-        public DdosProtectionPlansClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public DdosProtectionPlansClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.DdosProtectionPlan> Get(string resourceGroupName, string ddosProtectionPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.DdosProtectionPlan>> GetAsync(string resourceGroupName, string ddosProtectionPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.DdosProtectionPlan> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -495,8 +467,6 @@ namespace Azure.Management.Network
     public partial class DefaultSecurityRulesClient
     {
         protected DefaultSecurityRulesClient() { }
-        public DefaultSecurityRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public DefaultSecurityRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.SecurityRule> Get(string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.SecurityRule>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.SecurityRule> List(string resourceGroupName, string networkSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -505,8 +475,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCircuitAuthorizationsClient
     {
         protected ExpressRouteCircuitAuthorizationsClient() { }
-        public ExpressRouteCircuitAuthorizationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCircuitAuthorizationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitAuthorization> Get(string resourceGroupName, string circuitName, string authorizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitAuthorization>> GetAsync(string resourceGroupName, string circuitName, string authorizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteCircuitAuthorization> List(string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -545,8 +513,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCircuitConnectionsClient
     {
         protected ExpressRouteCircuitConnectionsClient() { }
-        public ExpressRouteCircuitConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCircuitConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitConnection> Get(string resourceGroupName, string circuitName, string peeringName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteCircuitConnection> List(string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -585,8 +551,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCircuitPeeringsClient
     {
         protected ExpressRouteCircuitPeeringsClient() { }
-        public ExpressRouteCircuitPeeringsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCircuitPeeringsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitPeering> Get(string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitPeering>> GetAsync(string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteCircuitPeering> List(string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -625,8 +589,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCircuitsClient
     {
         protected ExpressRouteCircuitsClient() { }
-        public ExpressRouteCircuitsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCircuitsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuit> Get(string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuit>> GetAsync(string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCircuitStats> GetPeeringStats(string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -718,8 +680,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteConnectionsClient
     {
         protected ExpressRouteConnectionsClient() { }
-        public ExpressRouteConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteConnection> Get(string resourceGroupName, string expressRouteGatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteConnection>> GetAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteConnectionList> List(string resourceGroupName, string expressRouteGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -758,8 +718,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCrossConnectionPeeringsClient
     {
         protected ExpressRouteCrossConnectionPeeringsClient() { }
-        public ExpressRouteCrossConnectionPeeringsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCrossConnectionPeeringsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCrossConnectionPeering> Get(string resourceGroupName, string crossConnectionName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCrossConnectionPeering>> GetAsync(string resourceGroupName, string crossConnectionName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteCrossConnectionPeering> List(string resourceGroupName, string crossConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -798,8 +756,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteCrossConnectionsClient
     {
         protected ExpressRouteCrossConnectionsClient() { }
-        public ExpressRouteCrossConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteCrossConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteCrossConnection> Get(string resourceGroupName, string crossConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteCrossConnection>> GetAsync(string resourceGroupName, string crossConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteCrossConnection> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -872,8 +828,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteGatewaysClient
     {
         protected ExpressRouteGatewaysClient() { }
-        public ExpressRouteGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteGateway> Get(string resourceGroupName, string expressRouteGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteGateway>> GetAsync(string resourceGroupName, string expressRouteGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteGatewayList> ListByResourceGroup(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -914,8 +868,6 @@ namespace Azure.Management.Network
     public partial class ExpressRouteLinksClient
     {
         protected ExpressRouteLinksClient() { }
-        public ExpressRouteLinksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteLinksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRouteLink> Get(string resourceGroupName, string expressRoutePortName, string linkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRouteLink>> GetAsync(string resourceGroupName, string expressRoutePortName, string linkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteLink> List(string resourceGroupName, string expressRoutePortName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -924,8 +876,6 @@ namespace Azure.Management.Network
     public partial class ExpressRoutePortsClient
     {
         protected ExpressRoutePortsClient() { }
-        public ExpressRoutePortsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRoutePortsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRoutePort> Get(string resourceGroupName, string expressRoutePortName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRoutePort>> GetAsync(string resourceGroupName, string expressRoutePortName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRoutePort> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -968,8 +918,6 @@ namespace Azure.Management.Network
     public partial class ExpressRoutePortsLocationsClient
     {
         protected ExpressRoutePortsLocationsClient() { }
-        public ExpressRoutePortsLocationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRoutePortsLocationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ExpressRoutePortsLocation> Get(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ExpressRoutePortsLocation>> GetAsync(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRoutePortsLocation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -978,16 +926,12 @@ namespace Azure.Management.Network
     public partial class ExpressRouteServiceProvidersClient
     {
         protected ExpressRouteServiceProvidersClient() { }
-        public ExpressRouteServiceProvidersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ExpressRouteServiceProvidersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ExpressRouteServiceProvider> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.ExpressRouteServiceProvider> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FirewallPoliciesClient
     {
         protected FirewallPoliciesClient() { }
-        public FirewallPoliciesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public FirewallPoliciesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.FirewallPolicy> Get(string resourceGroupName, string firewallPolicyName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.FirewallPolicy>> GetAsync(string resourceGroupName, string firewallPolicyName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.FirewallPolicy> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1028,8 +972,6 @@ namespace Azure.Management.Network
     public partial class FirewallPolicyRuleGroupsClient
     {
         protected FirewallPolicyRuleGroupsClient() { }
-        public FirewallPolicyRuleGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public FirewallPolicyRuleGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.FirewallPolicyRuleGroup> Get(string resourceGroupName, string firewallPolicyName, string ruleGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.FirewallPolicyRuleGroup>> GetAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.FirewallPolicyRuleGroup> List(string resourceGroupName, string firewallPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1068,8 +1010,6 @@ namespace Azure.Management.Network
     public partial class FlowLogsClient
     {
         protected FlowLogsClient() { }
-        public FlowLogsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public FlowLogsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.FlowLog> Get(string resourceGroupName, string networkWatcherName, string flowLogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.FlowLog>> GetAsync(string resourceGroupName, string networkWatcherName, string flowLogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.FlowLog> List(string resourceGroupName, string networkWatcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1108,8 +1048,6 @@ namespace Azure.Management.Network
     public partial class HubRouteTablesClient
     {
         protected HubRouteTablesClient() { }
-        public HubRouteTablesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public HubRouteTablesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.HubRouteTable> Get(string resourceGroupName, string virtualHubName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.HubRouteTable>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.HubRouteTable> List(string resourceGroupName, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1148,8 +1086,6 @@ namespace Azure.Management.Network
     public partial class HubVirtualNetworkConnectionsClient
     {
         protected HubVirtualNetworkConnectionsClient() { }
-        public HubVirtualNetworkConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public HubVirtualNetworkConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.HubVirtualNetworkConnection> Get(string resourceGroupName, string virtualHubName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.HubVirtualNetworkConnection>> GetAsync(string resourceGroupName, string virtualHubName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.HubVirtualNetworkConnection> List(string resourceGroupName, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1158,8 +1094,6 @@ namespace Azure.Management.Network
     public partial class InboundNatRulesClient
     {
         protected InboundNatRulesClient() { }
-        public InboundNatRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public InboundNatRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.InboundNatRule> Get(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.InboundNatRule>> GetAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.InboundNatRule> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1198,8 +1132,6 @@ namespace Azure.Management.Network
     public partial class IpAllocationsClient
     {
         protected IpAllocationsClient() { }
-        public IpAllocationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public IpAllocationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.IpAllocation> Get(string resourceGroupName, string ipAllocationName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.IpAllocation>> GetAsync(string resourceGroupName, string ipAllocationName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.IpAllocation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1242,8 +1174,6 @@ namespace Azure.Management.Network
     public partial class IpGroupsClient
     {
         protected IpGroupsClient() { }
-        public IpGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public IpGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.IpGroup> Get(string resourceGroupName, string ipGroupsName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.IpGroup>> GetAsync(string resourceGroupName, string ipGroupsName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.IpGroup> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1286,8 +1216,6 @@ namespace Azure.Management.Network
     public partial class LoadBalancerBackendAddressPoolsClient
     {
         protected LoadBalancerBackendAddressPoolsClient() { }
-        public LoadBalancerBackendAddressPoolsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerBackendAddressPoolsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.BackendAddressPool> Get(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.BackendAddressPool>> GetAsync(string resourceGroupName, string loadBalancerName, string backendAddressPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.BackendAddressPool> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1326,8 +1254,6 @@ namespace Azure.Management.Network
     public partial class LoadBalancerFrontendIPConfigurationsClient
     {
         protected LoadBalancerFrontendIPConfigurationsClient() { }
-        public LoadBalancerFrontendIPConfigurationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerFrontendIPConfigurationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.FrontendIPConfiguration> Get(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.FrontendIPConfiguration>> GetAsync(string resourceGroupName, string loadBalancerName, string frontendIPConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.FrontendIPConfiguration> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1336,8 +1262,6 @@ namespace Azure.Management.Network
     public partial class LoadBalancerLoadBalancingRulesClient
     {
         protected LoadBalancerLoadBalancingRulesClient() { }
-        public LoadBalancerLoadBalancingRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerLoadBalancingRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.LoadBalancingRule> Get(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.LoadBalancingRule>> GetAsync(string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.LoadBalancingRule> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1346,16 +1270,12 @@ namespace Azure.Management.Network
     public partial class LoadBalancerNetworkInterfacesClient
     {
         protected LoadBalancerNetworkInterfacesClient() { }
-        public LoadBalancerNetworkInterfacesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerNetworkInterfacesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NetworkInterface> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.NetworkInterface> ListAsync(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LoadBalancerOutboundRulesClient
     {
         protected LoadBalancerOutboundRulesClient() { }
-        public LoadBalancerOutboundRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerOutboundRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.OutboundRule> Get(string resourceGroupName, string loadBalancerName, string outboundRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.OutboundRule>> GetAsync(string resourceGroupName, string loadBalancerName, string outboundRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.OutboundRule> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1364,8 +1284,6 @@ namespace Azure.Management.Network
     public partial class LoadBalancerProbesClient
     {
         protected LoadBalancerProbesClient() { }
-        public LoadBalancerProbesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancerProbesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.Probe> Get(string resourceGroupName, string loadBalancerName, string probeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.Probe>> GetAsync(string resourceGroupName, string loadBalancerName, string probeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.Probe> List(string resourceGroupName, string loadBalancerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1374,8 +1292,6 @@ namespace Azure.Management.Network
     public partial class LoadBalancersClient
     {
         protected LoadBalancersClient() { }
-        public LoadBalancersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LoadBalancersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.LoadBalancer> Get(string resourceGroupName, string loadBalancerName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.LoadBalancer>> GetAsync(string resourceGroupName, string loadBalancerName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.LoadBalancer> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1418,8 +1334,6 @@ namespace Azure.Management.Network
     public partial class LocalNetworkGatewaysClient
     {
         protected LocalNetworkGatewaysClient() { }
-        public LocalNetworkGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public LocalNetworkGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.LocalNetworkGateway> Get(string resourceGroupName, string localNetworkGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.LocalNetworkGateway>> GetAsync(string resourceGroupName, string localNetworkGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.LocalNetworkGateway> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1460,8 +1374,6 @@ namespace Azure.Management.Network
     public partial class NatGatewaysClient
     {
         protected NatGatewaysClient() { }
-        public NatGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NatGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NatGateway> Get(string resourceGroupName, string natGatewayName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NatGateway>> GetAsync(string resourceGroupName, string natGatewayName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NatGateway> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1504,8 +1416,6 @@ namespace Azure.Management.Network
     public partial class NetworkInterfaceIPConfigurationsClient
     {
         protected NetworkInterfaceIPConfigurationsClient() { }
-        public NetworkInterfaceIPConfigurationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkInterfaceIPConfigurationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkInterfaceIPConfiguration> Get(string resourceGroupName, string networkInterfaceName, string ipConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkInterfaceIPConfiguration>> GetAsync(string resourceGroupName, string networkInterfaceName, string ipConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NetworkInterfaceIPConfiguration> List(string resourceGroupName, string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1514,16 +1424,12 @@ namespace Azure.Management.Network
     public partial class NetworkInterfaceLoadBalancersClient
     {
         protected NetworkInterfaceLoadBalancersClient() { }
-        public NetworkInterfaceLoadBalancersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkInterfaceLoadBalancersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.LoadBalancer> List(string resourceGroupName, string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.LoadBalancer> ListAsync(string resourceGroupName, string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkInterfacesClient
     {
         protected NetworkInterfacesClient() { }
-        public NetworkInterfacesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkInterfacesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkInterface> Get(string resourceGroupName, string networkInterfaceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkInterface>> GetAsync(string resourceGroupName, string networkInterfaceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkInterfaceIPConfiguration> GetVirtualMachineScaleSetIpConfiguration(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1606,8 +1512,6 @@ namespace Azure.Management.Network
     public partial class NetworkInterfaceTapConfigurationsClient
     {
         protected NetworkInterfaceTapConfigurationsClient() { }
-        public NetworkInterfaceTapConfigurationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkInterfaceTapConfigurationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkInterfaceTapConfiguration> Get(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkInterfaceTapConfiguration>> GetAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NetworkInterfaceTapConfiguration> List(string resourceGroupName, string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1647,7 +1551,7 @@ namespace Azure.Management.Network
     {
         protected NetworkManagementClient() { }
         public NetworkManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkManagementClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
+        public NetworkManagementClient(string subscriptionId, System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Management.Network.ApplicationGatewaysClient GetApplicationGatewaysClient() { throw null; }
         public virtual Azure.Management.Network.ApplicationSecurityGroupsClient GetApplicationSecurityGroupsClient() { throw null; }
         public virtual Azure.Management.Network.AvailableDelegationsClient GetAvailableDelegationsClient() { throw null; }
@@ -1751,8 +1655,6 @@ namespace Azure.Management.Network
     public partial class NetworkProfilesClient
     {
         protected NetworkProfilesClient() { }
-        public NetworkProfilesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkProfilesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkProfile> CreateOrUpdate(string resourceGroupName, string networkProfileName, Azure.Management.Network.Models.NetworkProfile parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkProfile>> CreateOrUpdateAsync(string resourceGroupName, string networkProfileName, Azure.Management.Network.Models.NetworkProfile parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkProfile> Get(string resourceGroupName, string networkProfileName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1782,8 +1684,6 @@ namespace Azure.Management.Network
     public partial class NetworkSecurityGroupsClient
     {
         protected NetworkSecurityGroupsClient() { }
-        public NetworkSecurityGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkSecurityGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkSecurityGroup> Get(string resourceGroupName, string networkSecurityGroupName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkSecurityGroup>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NetworkSecurityGroup> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1826,8 +1726,6 @@ namespace Azure.Management.Network
     public partial class NetworkVirtualAppliancesClient
     {
         protected NetworkVirtualAppliancesClient() { }
-        public NetworkVirtualAppliancesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkVirtualAppliancesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkVirtualAppliance> Get(string resourceGroupName, string networkVirtualApplianceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkVirtualAppliance>> GetAsync(string resourceGroupName, string networkVirtualApplianceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.NetworkVirtualAppliance> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1883,8 +1781,6 @@ namespace Azure.Management.Network
     public partial class NetworkWatchersClient
     {
         protected NetworkWatchersClient() { }
-        public NetworkWatchersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public NetworkWatchersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkWatcher> CreateOrUpdate(string resourceGroupName, string networkWatcherName, Azure.Management.Network.Models.NetworkWatcher parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.NetworkWatcher>> CreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, Azure.Management.Network.Models.NetworkWatcher parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.NetworkWatcher> Get(string resourceGroupName, string networkWatcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2068,16 +1964,12 @@ namespace Azure.Management.Network
     public partial class OperationsClient
     {
         protected OperationsClient() { }
-        public OperationsClient(Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public OperationsClient(string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.Operation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.Operation> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class P2SVpnGatewaysClient
     {
         protected P2SVpnGatewaysClient() { }
-        public P2SVpnGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public P2SVpnGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.P2SVpnGateway> Get(string resourceGroupName, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.P2SVpnGateway>> GetAsync(string resourceGroupName, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.P2SVpnGateway> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2180,8 +2072,6 @@ namespace Azure.Management.Network
     public partial class PacketCapturesClient
     {
         protected PacketCapturesClient() { }
-        public PacketCapturesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PacketCapturesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PacketCaptureResult> Get(string resourceGroupName, string networkWatcherName, string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PacketCaptureResult>> GetAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.PacketCaptureResult> List(string resourceGroupName, string networkWatcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2250,8 +2140,6 @@ namespace Azure.Management.Network
     public partial class PeerExpressRouteCircuitConnectionsClient
     {
         protected PeerExpressRouteCircuitConnectionsClient() { }
-        public PeerExpressRouteCircuitConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PeerExpressRouteCircuitConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PeerExpressRouteCircuitConnection> Get(string resourceGroupName, string circuitName, string peeringName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PeerExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.PeerExpressRouteCircuitConnection> List(string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2260,8 +2148,6 @@ namespace Azure.Management.Network
     public partial class PrivateDnsZoneGroupsClient
     {
         protected PrivateDnsZoneGroupsClient() { }
-        public PrivateDnsZoneGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PrivateDnsZoneGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PrivateDnsZoneGroup> Get(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PrivateDnsZoneGroup>> GetAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.PrivateDnsZoneGroup> List(string privateEndpointName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2300,8 +2186,6 @@ namespace Azure.Management.Network
     public partial class PrivateEndpointsClient
     {
         protected PrivateEndpointsClient() { }
-        public PrivateEndpointsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PrivateEndpointsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PrivateEndpoint> Get(string resourceGroupName, string privateEndpointName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PrivateEndpoint>> GetAsync(string resourceGroupName, string privateEndpointName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.PrivateEndpoint> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2342,8 +2226,6 @@ namespace Azure.Management.Network
     public partial class PrivateLinkServicesClient
     {
         protected PrivateLinkServicesClient() { }
-        public PrivateLinkServicesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PrivateLinkServicesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(string location, Azure.Management.Network.Models.CheckPrivateLinkServiceVisibilityRequest parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(string location, Azure.Management.Network.Models.CheckPrivateLinkServiceVisibilityRequest parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(string location, string resourceGroupName, Azure.Management.Network.Models.CheckPrivateLinkServiceVisibilityRequest parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2413,8 +2295,6 @@ namespace Azure.Management.Network
     public partial class PublicIPAddressesClient
     {
         protected PublicIPAddressesClient() { }
-        public PublicIPAddressesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PublicIPAddressesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PublicIPAddress> Get(string resourceGroupName, string publicIpAddressName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PublicIPAddress>> GetAsync(string resourceGroupName, string publicIpAddressName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.PublicIPAddress> GetVirtualMachineScaleSetPublicIPAddress(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2463,8 +2343,6 @@ namespace Azure.Management.Network
     public partial class PublicIPPrefixesClient
     {
         protected PublicIPPrefixesClient() { }
-        public PublicIPPrefixesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public PublicIPPrefixesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.PublicIPPrefix> Get(string resourceGroupName, string publicIpPrefixName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.PublicIPPrefix>> GetAsync(string resourceGroupName, string publicIpPrefixName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.PublicIPPrefix> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2507,16 +2385,12 @@ namespace Azure.Management.Network
     public partial class ResourceNavigationLinksClient
     {
         protected ResourceNavigationLinksClient() { }
-        public ResourceNavigationLinksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ResourceNavigationLinksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ResourceNavigationLinksListResult> List(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ResourceNavigationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RouteFilterRulesClient
     {
         protected RouteFilterRulesClient() { }
-        public RouteFilterRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public RouteFilterRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.RouteFilterRule> Get(string resourceGroupName, string routeFilterName, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.RouteFilterRule>> GetAsync(string resourceGroupName, string routeFilterName, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.RouteFilterRule> ListByRouteFilter(string resourceGroupName, string routeFilterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2555,8 +2429,6 @@ namespace Azure.Management.Network
     public partial class RouteFiltersClient
     {
         protected RouteFiltersClient() { }
-        public RouteFiltersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public RouteFiltersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.RouteFilter> Get(string resourceGroupName, string routeFilterName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.RouteFilter>> GetAsync(string resourceGroupName, string routeFilterName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.RouteFilter> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2599,8 +2471,6 @@ namespace Azure.Management.Network
     public partial class RoutesClient
     {
         protected RoutesClient() { }
-        public RoutesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public RoutesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.Route> Get(string resourceGroupName, string routeTableName, string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.Route>> GetAsync(string resourceGroupName, string routeTableName, string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.Route> List(string resourceGroupName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2639,8 +2509,6 @@ namespace Azure.Management.Network
     public partial class RouteTablesClient
     {
         protected RouteTablesClient() { }
-        public RouteTablesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public RouteTablesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.RouteTable> Get(string resourceGroupName, string routeTableName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.RouteTable>> GetAsync(string resourceGroupName, string routeTableName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.RouteTable> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2683,8 +2551,6 @@ namespace Azure.Management.Network
     public partial class SecurityPartnerProvidersClient
     {
         protected SecurityPartnerProvidersClient() { }
-        public SecurityPartnerProvidersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public SecurityPartnerProvidersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.SecurityPartnerProvider> Get(string resourceGroupName, string securityPartnerProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.SecurityPartnerProvider>> GetAsync(string resourceGroupName, string securityPartnerProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.SecurityPartnerProvider> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2727,8 +2593,6 @@ namespace Azure.Management.Network
     public partial class SecurityRulesClient
     {
         protected SecurityRulesClient() { }
-        public SecurityRulesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public SecurityRulesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.SecurityRule> Get(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.SecurityRule>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.SecurityRule> List(string resourceGroupName, string networkSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2767,16 +2631,12 @@ namespace Azure.Management.Network
     public partial class ServiceAssociationLinksClient
     {
         protected ServiceAssociationLinksClient() { }
-        public ServiceAssociationLinksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ServiceAssociationLinksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ServiceAssociationLinksListResult> List(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ServiceAssociationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceClient
     {
         protected ServiceClient() { }
-        public ServiceClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ServiceClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.BastionSessionState> DisconnectActiveSessions(string resourceGroupName, string bastionHostName, Azure.Management.Network.Models.SessionIds sessionIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2810,8 +2670,6 @@ namespace Azure.Management.Network
     public partial class ServiceEndpointPoliciesClient
     {
         protected ServiceEndpointPoliciesClient() { }
-        public ServiceEndpointPoliciesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ServiceEndpointPoliciesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ServiceEndpointPolicy> Get(string resourceGroupName, string serviceEndpointPolicyName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ServiceEndpointPolicy>> GetAsync(string resourceGroupName, string serviceEndpointPolicyName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ServiceEndpointPolicy> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2854,8 +2712,6 @@ namespace Azure.Management.Network
     public partial class ServiceEndpointPolicyDefinitionsClient
     {
         protected ServiceEndpointPolicyDefinitionsClient() { }
-        public ServiceEndpointPolicyDefinitionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ServiceEndpointPolicyDefinitionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ServiceEndpointPolicyDefinition> Get(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ServiceEndpointPolicyDefinition>> GetAsync(string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.ServiceEndpointPolicyDefinition> ListByResourceGroup(string resourceGroupName, string serviceEndpointPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2933,16 +2789,12 @@ namespace Azure.Management.Network
     public partial class ServiceTagsClient
     {
         protected ServiceTagsClient() { }
-        public ServiceTagsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public ServiceTagsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.ServiceTagsListResult> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.ServiceTagsListResult>> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubnetsClient
     {
         protected SubnetsClient() { }
-        public SubnetsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public SubnetsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.Subnet> Get(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.Subnet>> GetAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.Subnet> List(string resourceGroupName, string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3011,16 +2863,12 @@ namespace Azure.Management.Network
     public partial class UsagesClient
     {
         protected UsagesClient() { }
-        public UsagesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public UsagesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.Usage> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.Usage> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualHubRouteTableV2SClient
     {
         protected VirtualHubRouteTableV2SClient() { }
-        public VirtualHubRouteTableV2SClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualHubRouteTableV2SClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualHubRouteTableV2> Get(string resourceGroupName, string virtualHubName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualHubRouteTableV2>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualHubRouteTableV2> List(string resourceGroupName, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3059,8 +2907,6 @@ namespace Azure.Management.Network
     public partial class VirtualHubsClient
     {
         protected VirtualHubsClient() { }
-        public VirtualHubsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualHubsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualHub> Get(string resourceGroupName, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualHub>> GetAsync(string resourceGroupName, string virtualHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualHub> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3103,8 +2949,6 @@ namespace Azure.Management.Network
     public partial class VirtualNetworkGatewayConnectionsClient
     {
         protected VirtualNetworkGatewayConnectionsClient() { }
-        public VirtualNetworkGatewayConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualNetworkGatewayConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualNetworkGatewayConnection> Get(string resourceGroupName, string virtualNetworkGatewayConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualNetworkGatewayConnection>> GetAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.ConnectionSharedKey> GetSharedKey(string resourceGroupName, string virtualNetworkGatewayConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3220,8 +3064,6 @@ namespace Azure.Management.Network
     public partial class VirtualNetworkGatewaysClient
     {
         protected VirtualNetworkGatewaysClient() { }
-        public VirtualNetworkGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualNetworkGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualNetworkGateway> Get(string resourceGroupName, string virtualNetworkGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualNetworkGateway>> GetAsync(string resourceGroupName, string virtualNetworkGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualNetworkGateway> List(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3491,8 +3333,6 @@ namespace Azure.Management.Network
     public partial class VirtualNetworkPeeringsClient
     {
         protected VirtualNetworkPeeringsClient() { }
-        public VirtualNetworkPeeringsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualNetworkPeeringsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualNetworkPeering> Get(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualNetworkPeering>> GetAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualNetworkPeering> List(string resourceGroupName, string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3531,8 +3371,6 @@ namespace Azure.Management.Network
     public partial class VirtualNetworksClient
     {
         protected VirtualNetworksClient() { }
-        public VirtualNetworksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualNetworksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.IPAddressAvailabilityResult> CheckIPAddressAvailability(string resourceGroupName, string virtualNetworkName, string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string resourceGroupName, string virtualNetworkName, string ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualNetwork> Get(string resourceGroupName, string virtualNetworkName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3579,8 +3417,6 @@ namespace Azure.Management.Network
     public partial class VirtualNetworkTapsClient
     {
         protected VirtualNetworkTapsClient() { }
-        public VirtualNetworkTapsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualNetworkTapsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualNetworkTap> Get(string resourceGroupName, string tapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualNetworkTap>> GetAsync(string resourceGroupName, string tapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualNetworkTap> ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3623,8 +3459,6 @@ namespace Azure.Management.Network
     public partial class VirtualRouterPeeringsClient
     {
         protected VirtualRouterPeeringsClient() { }
-        public VirtualRouterPeeringsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualRouterPeeringsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualRouterPeering> Get(string resourceGroupName, string virtualRouterName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualRouterPeering>> GetAsync(string resourceGroupName, string virtualRouterName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualRouterPeering> List(string resourceGroupName, string virtualRouterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3663,8 +3497,6 @@ namespace Azure.Management.Network
     public partial class VirtualRoutersClient
     {
         protected VirtualRoutersClient() { }
-        public VirtualRoutersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualRoutersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualRouter> Get(string resourceGroupName, string virtualRouterName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualRouter>> GetAsync(string resourceGroupName, string virtualRouterName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualRouter> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3705,8 +3537,6 @@ namespace Azure.Management.Network
     public partial class VirtualWansClient
     {
         protected VirtualWansClient() { }
-        public VirtualWansClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VirtualWansClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VirtualWAN> Get(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VirtualWAN>> GetAsync(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VirtualWAN> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3749,8 +3579,6 @@ namespace Azure.Management.Network
     public partial class VpnConnectionsClient
     {
         protected VpnConnectionsClient() { }
-        public VpnConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnConnection> Get(string resourceGroupName, string gatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnConnection> ListByVpnGateway(string resourceGroupName, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3789,8 +3617,6 @@ namespace Azure.Management.Network
     public partial class VpnGatewaysClient
     {
         protected VpnGatewaysClient() { }
-        public VpnGatewaysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnGatewaysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnGateway> Get(string resourceGroupName, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnGateway>> GetAsync(string resourceGroupName, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnGateway> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3848,16 +3674,12 @@ namespace Azure.Management.Network
     public partial class VpnLinkConnectionsClient
     {
         protected VpnLinkConnectionsClient() { }
-        public VpnLinkConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnLinkConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnSiteLinkConnection> ListByVpnConnection(string resourceGroupName, string gatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Network.Models.VpnSiteLinkConnection> ListByVpnConnectionAsync(string resourceGroupName, string gatewayName, string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnServerConfigurationsAssociatedWithVirtualWanClient
     {
         protected VpnServerConfigurationsAssociatedWithVirtualWanClient() { }
-        public VpnServerConfigurationsAssociatedWithVirtualWanClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnServerConfigurationsAssociatedWithVirtualWanClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Management.Network.VpnServerConfigurationsAssociatedWithVirtualWanListOperation StartList(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Management.Network.VpnServerConfigurationsAssociatedWithVirtualWanListOperation> StartListAsync(string resourceGroupName, string virtualWANName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -3877,8 +3699,6 @@ namespace Azure.Management.Network
     public partial class VpnServerConfigurationsClient
     {
         protected VpnServerConfigurationsClient() { }
-        public VpnServerConfigurationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnServerConfigurationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnServerConfiguration> Get(string resourceGroupName, string vpnServerConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnServerConfiguration>> GetAsync(string resourceGroupName, string vpnServerConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnServerConfiguration> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3921,16 +3741,12 @@ namespace Azure.Management.Network
     public partial class VpnSiteLinkConnectionsClient
     {
         protected VpnSiteLinkConnectionsClient() { }
-        public VpnSiteLinkConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnSiteLinkConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnSiteLinkConnection> Get(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnSiteLinkConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VpnSiteLinksClient
     {
         protected VpnSiteLinksClient() { }
-        public VpnSiteLinksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnSiteLinksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnSiteLink> Get(string resourceGroupName, string vpnSiteName, string vpnSiteLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnSiteLink>> GetAsync(string resourceGroupName, string vpnSiteName, string vpnSiteLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnSiteLink> ListByVpnSite(string resourceGroupName, string vpnSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3939,8 +3755,6 @@ namespace Azure.Management.Network
     public partial class VpnSitesClient
     {
         protected VpnSitesClient() { }
-        public VpnSitesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnSitesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.VpnSite> Get(string resourceGroupName, string vpnSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.VpnSite>> GetAsync(string resourceGroupName, string vpnSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Network.Models.VpnSite> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3957,8 +3771,6 @@ namespace Azure.Management.Network
     public partial class VpnSitesConfigurationClient
     {
         protected VpnSitesConfigurationClient() { }
-        public VpnSitesConfigurationClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public VpnSitesConfigurationClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Management.Network.VpnSitesConfigurationDownloadOperation StartDownload(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.GetVpnSitesConfigurationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Management.Network.VpnSitesConfigurationDownloadOperation> StartDownloadAsync(string resourceGroupName, string virtualWANName, Azure.Management.Network.Models.GetVpnSitesConfigurationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -4004,8 +3816,6 @@ namespace Azure.Management.Network
     public partial class WebApplicationFirewallPoliciesClient
     {
         protected WebApplicationFirewallPoliciesClient() { }
-        public WebApplicationFirewallPoliciesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
-        public WebApplicationFirewallPoliciesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Network.NetworkManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Network.Models.WebApplicationFirewallPolicy> CreateOrUpdate(string resourceGroupName, string policyName, Azure.Management.Network.Models.WebApplicationFirewallPolicy parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Network.Models.WebApplicationFirewallPolicy>> CreateOrUpdateAsync(string resourceGroupName, string policyName, Azure.Management.Network.Models.WebApplicationFirewallPolicy parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Network.Models.WebApplicationFirewallPolicy> Get(string resourceGroupName, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

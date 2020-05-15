@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected ExpressRouteCircuitAuthorizationsClient()
         {
         }
-
         /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationsClient. </summary>
-        public ExpressRouteCircuitAuthorizationsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal ExpressRouteCircuitAuthorizationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationsClient. </summary>
-        public ExpressRouteCircuitAuthorizationsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ExpressRouteCircuitAuthorizationsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ExpressRouteCircuitAuthorizationsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the specified authorization from the specified express route circuit. </summary>

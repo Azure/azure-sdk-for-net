@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected PublicIPPrefixesClient()
         {
         }
-
         /// <summary> Initializes a new instance of PublicIPPrefixesClient. </summary>
-        public PublicIPPrefixesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal PublicIPPrefixesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of PublicIPPrefixesClient. </summary>
-        public PublicIPPrefixesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new PublicIPPrefixesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new PublicIPPrefixesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the specified public IP prefix in a specified resource group. </summary>

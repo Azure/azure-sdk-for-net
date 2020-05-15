@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected ExpressRouteCircuitPeeringsClient()
         {
         }
-
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringsClient. </summary>
-        public ExpressRouteCircuitPeeringsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal ExpressRouteCircuitPeeringsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringsClient. </summary>
-        public ExpressRouteCircuitPeeringsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ExpressRouteCircuitPeeringsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ExpressRouteCircuitPeeringsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the specified peering for the express route circuit. </summary>

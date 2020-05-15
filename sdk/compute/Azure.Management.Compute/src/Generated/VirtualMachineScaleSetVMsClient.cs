@@ -25,19 +25,12 @@ namespace Azure.Management.Compute
         protected VirtualMachineScaleSetVMsClient()
         {
         }
-
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsClient. </summary>
-        public VirtualMachineScaleSetVMsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VirtualMachineScaleSetVMsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsClient. </summary>
-        public VirtualMachineScaleSetVMsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
-        {
-            options ??= new ComputeManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VirtualMachineScaleSetVMsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VirtualMachineScaleSetVMsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets a virtual machine from a VM scale set. </summary>

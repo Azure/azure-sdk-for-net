@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected DdosProtectionPlansClient()
         {
         }
-
         /// <summary> Initializes a new instance of DdosProtectionPlansClient. </summary>
-        public DdosProtectionPlansClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal DdosProtectionPlansClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of DdosProtectionPlansClient. </summary>
-        public DdosProtectionPlansClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new DdosProtectionPlansRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new DdosProtectionPlansRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets information about the specified DDoS protection plan. </summary>

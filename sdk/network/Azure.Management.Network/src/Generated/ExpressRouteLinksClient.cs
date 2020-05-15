@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected ExpressRouteLinksClient()
         {
         }
-
         /// <summary> Initializes a new instance of ExpressRouteLinksClient. </summary>
-        public ExpressRouteLinksClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal ExpressRouteLinksClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of ExpressRouteLinksClient. </summary>
-        public ExpressRouteLinksClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ExpressRouteLinksRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ExpressRouteLinksRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>

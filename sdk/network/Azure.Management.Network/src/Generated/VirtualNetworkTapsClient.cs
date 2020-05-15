@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected VirtualNetworkTapsClient()
         {
         }
-
         /// <summary> Initializes a new instance of VirtualNetworkTapsClient. </summary>
-        public VirtualNetworkTapsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VirtualNetworkTapsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworkTapsClient. </summary>
-        public VirtualNetworkTapsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VirtualNetworkTapsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VirtualNetworkTapsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets information about the specified virtual network tap. </summary>

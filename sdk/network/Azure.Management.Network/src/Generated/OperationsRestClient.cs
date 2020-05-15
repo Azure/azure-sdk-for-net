@@ -18,19 +18,16 @@ namespace Azure.Management.Network
 {
     internal partial class OperationsRestClient
     {
-        private string host;
+        private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of OperationsRestClient. </summary>
-        public OperationsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://management.azure.com")
+        public OperationsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            endpoint ??= new Uri("https://management.azure.com");
 
-            this.host = host;
+            this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -41,7 +38,7 @@ namespace Azure.Management.Network
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/providers/Microsoft.Network/operations", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
@@ -108,7 +105,7 @@ namespace Azure.Management.Network
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             return message;

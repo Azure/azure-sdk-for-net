@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected VirtualNetworkPeeringsClient()
         {
         }
-
         /// <summary> Initializes a new instance of VirtualNetworkPeeringsClient. </summary>
-        public VirtualNetworkPeeringsClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal VirtualNetworkPeeringsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringsClient. </summary>
-        public VirtualNetworkPeeringsClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new VirtualNetworkPeeringsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new VirtualNetworkPeeringsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the specified virtual network peering. </summary>

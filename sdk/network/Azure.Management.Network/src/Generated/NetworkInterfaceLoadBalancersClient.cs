@@ -25,19 +25,12 @@ namespace Azure.Management.Network
         protected NetworkInterfaceLoadBalancersClient()
         {
         }
-
         /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancersClient. </summary>
-        public NetworkInterfaceLoadBalancersClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        internal NetworkInterfaceLoadBalancersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancersClient. </summary>
-        public NetworkInterfaceLoadBalancersClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new NetworkInterfaceLoadBalancersRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new NetworkInterfaceLoadBalancersRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> List all load balancers in a network interface. </summary>
