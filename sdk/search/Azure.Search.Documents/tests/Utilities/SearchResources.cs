@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public static TimeSpan Timeout => Debugger.IsAttached ?
             System.Threading.Timeout.InfiniteTimeSpan :
-            TimeSpan.FromSeconds(60);
+            TimeSpan.FromMinutes(2);
 
         /// <summary>
         /// The name of the Search service.
@@ -286,6 +285,8 @@ namespace Azure.Search.Documents.Tests
                 SearchServiceClient client = GetServiceClient();
                 await client.DeleteIndexAsync(IndexName);
                 RequiresCleanup = false;
+
+                await WaitForIndexDeletionAsync();
             }
         }
 
@@ -300,6 +301,8 @@ namespace Azure.Search.Documents.Tests
                 BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
                 await client.DeleteIfExistsAsync();
                 RequiresBlobContainerCleanup = false;
+
+                await WaitForBlobContainerDeletionAsync();
             }
         }
 
@@ -417,61 +420,40 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Wait for the index to be deleted.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForIndexDeletionAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
+
+        /// <summary>
+        /// Wait for blob containers to be deleted.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForBlobContainerDeletionAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
+
+        /// <summary>
         /// Wait for uploaded documents to be indexed.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForIndexingAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
 
         /// <summary>
         /// Wait for the synonym map to be updated.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForSynonymMapUpdateAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(5));
 
         /// <summary>
         /// Wait for the Search Service to be provisioned.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForServiceProvisioningAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(10));
 
-        /// <summary>
-        /// Wait for DNS to propagate.
-        /// </summary>
-        /// <param name="endpoint">The URI to check for.</param>
-        /// <param name="maxDelay">The maximum delay to wait</param>
-        /// <returns>True if the DNS resolves, false otherwise.</returns>
-        private static async Task<bool> WaitForSearchServiceDnsAsync(Uri endpoint, TimeSpan maxDelay)
-        {
-            // Check once a second
-            TimeSpan retryDelay = TimeSpan.FromSeconds(1);
-            int maxRetries = (int)(maxDelay.TotalSeconds / retryDelay.TotalSeconds);
-            int retries = 0;
-            while (retries < maxRetries)
-            {
-                try
-                {
-                    CancellationTokenSource cancel = new CancellationTokenSource();
-                    cancel.CancelAfter(retryDelay);
-                    TaskFactory factory = new TaskFactory(cancel.Token);
-                    await factory.FromAsync(Dns.BeginGetHostEntry, Dns.EndGetHostEntry, endpoint.Host, null);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.Contains("No such host is known"))
-                    {
-                        return false;
-                    }
-                }
-                await Task.Delay(retryDelay);
-                retries++;
-            }
-
-            return false;
-        }
         #endregion Service Management
     }
 }
