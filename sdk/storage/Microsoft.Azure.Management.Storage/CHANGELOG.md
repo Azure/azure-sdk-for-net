@@ -1,5 +1,14 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 17.0.0
+
+- Support Table and Queue create/get/list/remove
+- Support list deleted blob containers
+
+**Breaking changes**
+
+- The type of Microsoft.Azure.Management.Storage.Models.FileShare.ShareUsageBytes change from int? to long?.
+
 ### Changes in 16.0.0
 
 - Support TagFilter in ManagementPolicy
