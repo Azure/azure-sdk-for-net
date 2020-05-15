@@ -7,7 +7,7 @@ steps:
     displayName: 'Use Python 3.6'
     inputs:
       versionSpec: '3.6'
-  - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+  - template: /eng/common/pipelines/templates/steps/replace-relative-links.yml
     parameters:
       TargetFolder: '.'
       RootFolder: '.'

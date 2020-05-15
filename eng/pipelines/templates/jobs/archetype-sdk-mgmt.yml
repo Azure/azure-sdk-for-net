@@ -84,7 +84,7 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: PowerShell@2
