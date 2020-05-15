@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -456,7 +456,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -531,7 +531,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -595,5 +595,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan UseMinimum(TimeSpan firstOption,
                                            TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
 
+        private bool HasLinkCommunicationError(SendingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

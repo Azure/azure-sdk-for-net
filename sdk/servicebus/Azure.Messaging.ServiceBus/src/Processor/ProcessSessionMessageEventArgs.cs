@@ -42,12 +42,6 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
-        /// Indicates whether the user has settled the message as part of their callback.
-        /// If they have done so, we will not autocomplete.
-        /// </summary>
-        internal bool IsMessageSettled { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
@@ -113,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
         {
             await _sessionReceiver.AbandonAsync(message, propertiesToModify, cancellationToken)
                 .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
         /// <summary>
@@ -136,7 +130,7 @@ namespace Azure.Messaging.ServiceBus
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
         /// <summary>
@@ -167,7 +161,7 @@ namespace Azure.Messaging.ServiceBus
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
         /// <summary>
@@ -195,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
         /// <summary> Defers the processing for a message.</summary>
@@ -224,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
     }
 }
