@@ -4,6 +4,7 @@ resources:
       type: github
       name: azure/azure-sdk-tools
       endpoint: azure
+      ref: 'refs/tags/azure-sdk-tools_20200514.1'
 
 jobs:
   - job: GenerateDocIndex
