@@ -26,6 +26,9 @@ namespace Azure.Management.Compute
         {
         }
         /// <summary> Initializes a new instance of OperationsClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
         internal OperationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             RestClient = new OperationsRestClient(clientDiagnostics, pipeline, endpoint);

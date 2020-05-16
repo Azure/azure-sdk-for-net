@@ -25,6 +25,10 @@ namespace Azure.Data.Tables
         {
         }
         /// <summary> Initializes a new instance of ServiceClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="url"> The URL of the service account or table that is the targe of the desired operation. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         internal ServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
             RestClient = new ServiceRestClient(clientDiagnostics, pipeline, url, version);

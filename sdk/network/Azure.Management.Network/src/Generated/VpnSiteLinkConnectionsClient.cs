@@ -25,6 +25,10 @@ namespace Azure.Management.Network
         {
         }
         /// <summary> Initializes a new instance of VpnSiteLinkConnectionsClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
         internal VpnSiteLinkConnectionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             RestClient = new VpnSiteLinkConnectionsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
