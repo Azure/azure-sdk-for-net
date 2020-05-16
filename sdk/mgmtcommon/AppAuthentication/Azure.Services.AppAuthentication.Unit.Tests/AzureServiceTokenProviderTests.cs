@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete environment variables
             Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         
             // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, Constants.ClientSecret);
 
             // use test hook to expedite test
             MsiRetryHelper.WaitBeforeRetry = false;
@@ -302,8 +302,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(5, mockMsi.HitCount);
 
             // Clean up environment variables
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv,null);
-            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceHeaderEnv, null);
         }
 
         /// <summary>
