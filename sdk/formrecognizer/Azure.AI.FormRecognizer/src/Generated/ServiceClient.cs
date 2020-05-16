@@ -28,6 +28,9 @@ namespace Azure.AI.FormRecognizer
         {
         }
         /// <summary> Initializes a new instance of ServiceClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         internal ServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             RestClient = new ServiceRestClient(clientDiagnostics, pipeline, endpoint);

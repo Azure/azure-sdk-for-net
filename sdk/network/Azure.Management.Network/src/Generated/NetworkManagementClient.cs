@@ -26,10 +26,18 @@ namespace Azure.Management.Network
         }
 
         /// <summary> Initializes a new instance of NetworkManagementClient. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
         public NetworkManagementClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
         {
         }
         /// <summary> Initializes a new instance of NetworkManagementClient. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
         public NetworkManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
         {
             if (subscriptionId == null)

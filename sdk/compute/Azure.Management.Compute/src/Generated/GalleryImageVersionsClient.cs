@@ -26,6 +26,10 @@ namespace Azure.Management.Compute
         {
         }
         /// <summary> Initializes a new instance of GalleryImageVersionsClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
         internal GalleryImageVersionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             RestClient = new GalleryImageVersionsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
