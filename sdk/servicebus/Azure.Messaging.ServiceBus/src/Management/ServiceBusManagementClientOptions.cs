@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     ///
     /// </summary>
-    public class ManagementClientOptions : ClientOptions
+    public class ServiceBusManagementClientOptions : ClientOptions
     {
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -46,8 +46,8 @@ namespace Azure.Messaging.ServiceBus.Management
         ///        ///
         /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
-        internal ManagementClientOptions Clone() =>
-            new ManagementClientOptions
+        internal ServiceBusManagementClientOptions Clone() =>
+            new ServiceBusManagementClientOptions
             {
                 Transport = Transport,
             };

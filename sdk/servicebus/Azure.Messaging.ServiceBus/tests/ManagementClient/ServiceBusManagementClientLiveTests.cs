@@ -14,10 +14,10 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         {
             var queueName = "TestQueue";
             // using connection string
-            // var client = new Azure.Messaging.ServiceBus.Management.ManagementClient(TestEnvironment.ServiceBusConnectionString);
+            // var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
             // using AAD
-            var client = new Azure.Messaging.ServiceBus.Management.ManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             try
             {
                 var queueDescription = await client.CreateQueueAsync(queueName);
