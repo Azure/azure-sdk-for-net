@@ -19,24 +19,24 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -62,6 +62,7 @@ jobs:
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - script: >
           dotnet test eng/service.proj
@@ -84,6 +85,7 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()
