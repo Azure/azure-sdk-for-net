@@ -6,7 +6,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -49,22 +51,37 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void ConstructorRequiresTheEndpoint()
         {
-            var credential = new AzureKeyCredential("key");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, credential));
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, credential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, tokenCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, tokenCredential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, keyCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(null, keyCredential, new FormRecognizerClientOptions()));
         }
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        public void ConstructorRequiresTheCredential()
+        public void ConstructorRequiresTheTokenCredential()
         {
             var endpoint = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, null));
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, null, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
+        /// </summary>
+        [Test]
+        public void ConstructorRequiresTheAzureKeyCredential()
+        {
+            var endpoint = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
         }
 
         /// <summary>
@@ -74,9 +91,11 @@ namespace Azure.AI.FormRecognizer.Tests
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
-            var credential = new AzureKeyCredential("key");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, credential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
         /// <summary>
