@@ -6,6 +6,7 @@ parameters:
   BuildInParallel: true
   TimeoutInMinutes: 60
   Location: ''
+  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
 
 jobs:
   - job: "Test"
@@ -20,24 +21,24 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
     pool:
       vmImage: "$(OSVmImage)"
 
