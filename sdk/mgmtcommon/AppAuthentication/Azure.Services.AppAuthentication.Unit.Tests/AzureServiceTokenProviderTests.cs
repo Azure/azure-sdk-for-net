@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
@@ -350,6 +352,41 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
 
             Assert.EndsWith(MockHttpClientFactory.ExceptionMessage, exception.Message);
+        }
+
+        /// <summary>
+        /// Verify backwards compatibility with constructor and method signatures
+        /// </summary>
+        [Fact]
+        public void VerifyPublicSignatures()
+        {
+            var KnownPublicCtors = new List<string>()
+            {
+                "Void .ctor(System.String, System.String)",
+                "Void .ctor(System.String, System.String, Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory)"
+            };
+
+            var KnownPublicMethods = new List<string>()
+            {
+                "Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory get_HttpClientFactory()",
+                "Void set_HttpClientFactory(Microsoft.IdentityModel.Clients.ActiveDirectory.IHttpClientFactory)",
+                "TokenCallback get_KeyVaultTokenCallback()",
+                "Microsoft.Azure.Services.AppAuthentication.Principal get_PrincipalUsed()",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, System.String, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[System.String] GetAccessTokenAsync(System.String, System.String)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, System.String, System.Threading.CancellationToken)",
+                "System.Threading.Tasks.Task`1[Microsoft.Azure.Services.AppAuthentication.AppAuthenticationResult] GetAuthenticationResultAsync(System.String, System.String)",
+                "Boolean Equals(System.Object)",
+                "Int32 GetHashCode()",
+                "System.Type GetType()",
+                "System.String ToString()"
+            };
+
+            var publicCtorSignatures = typeof(AzureServiceTokenProvider).GetConstructors().Select(o => o.ToString()).ToList();
+            var publicMethodSignatures = typeof(AzureServiceTokenProvider).GetMethods().Select(o => o.ToString()).ToList();
+
+            Assert.True(Enumerable.SequenceEqual(KnownPublicCtors.OrderBy(i => i), publicCtorSignatures.OrderBy(i => i)));
+            Assert.True(Enumerable.SequenceEqual(KnownPublicMethods.OrderBy(i => i), publicMethodSignatures.OrderBy(i => i)));
         }
     }
 }

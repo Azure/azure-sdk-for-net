@@ -113,6 +113,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         }
 
+        public AzureServiceTokenProvider(string connectionString, string azureAdInstance)
+            : this(connectionString, azureAdInstance, default)
+        {
+
+        }
+
         /// <summary>
         /// This method is for testing only
         /// </summary>
