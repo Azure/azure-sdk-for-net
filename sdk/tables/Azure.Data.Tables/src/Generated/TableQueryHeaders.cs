@@ -10,13 +10,14 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableInternalSetAccessPolicyHeaders
+    internal class TableQueryHeaders
     {
         private readonly Response _response;
-        public TableInternalSetAccessPolicyHeaders(Response response)
+        public TableQueryHeaders(Response response)
         {
             _response = response;
         }
         public string XMsVersion => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        public string XMsContinuationNextTableName => _response.Headers.TryGetValue("x-ms-continuation-NextTableName", out string value) ? value : null;
     }
 }
