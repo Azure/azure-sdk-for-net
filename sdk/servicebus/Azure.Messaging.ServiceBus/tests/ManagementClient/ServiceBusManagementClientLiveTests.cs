@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 {
-    public class ManagementClientLiveTests : ServiceBusLiveTestBase
+    public class ServiceBusManagementClientLiveTests : ServiceBusLiveTestBase
     {
         [Test]
         public async Task CreateQueueTest()
