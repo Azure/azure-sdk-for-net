@@ -3,7 +3,6 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Newtonsoft.Json;
-    using System.Collections.Generic;
     using System.IO;
     using Xunit;
 
