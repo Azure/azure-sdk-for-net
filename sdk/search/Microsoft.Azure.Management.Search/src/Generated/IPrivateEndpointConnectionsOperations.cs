@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Search
     using System.Threading.Tasks;
 
     /// <summary>
-    /// QueryKeysOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IQueryKeysOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Generates a new query key for the specified Search service. You can
-        /// create up to 50 query keys per service.
+        /// Updates a Private Endpoint connection to the Search service in the
+        /// given resource group.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -37,8 +37,12 @@ namespace Microsoft.Azure.Management.Search
         /// The name of the Azure Cognitive Search service associated with the
         /// specified resource group.
         /// </param>
-        /// <param name='name'>
-        /// The name of the new query API key.
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection to the Azure Cognitive
+        /// Search service with the specified resource group.
+        /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The definition of the private endpoint connection to update.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -58,10 +62,84 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<QueryKey>> CreateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the list of query API keys for the given Azure Cognitive
+        /// Gets the details of the private endpoint connection to the Search
+        /// service in the given resource group.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the current subscription. You
+        /// can obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection to the Azure Cognitive
+        /// Search service with the specified resource group.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Disconnects the private endpoint connection and deletes it from the
         /// Search service.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the current subscription. You
+        /// can obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection to the Azure Cognitive
+        /// Search service with the specified resource group.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of all private endpoint connections in the given
+        /// service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -91,45 +169,10 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<QueryKey>>> ListBySearchServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified query key. Unlike admin keys, query keys are
-        /// not regenerated. The process for regenerating a query key is to
-        /// delete and then recreate it.
-        /// <see href="https://aka.ms/search-manage" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the current subscription. You
-        /// can obtain this value from the Azure Resource Manager API or the
-        /// portal.
-        /// </param>
-        /// <param name='searchServiceName'>
-        /// The name of the Azure Cognitive Search service associated with the
-        /// specified resource group.
-        /// </param>
-        /// <param name='key'>
-        /// The query key to be deleted. Query keys are identified by value,
-        /// not by name.
-        /// </param>
-        /// <param name='searchManagementRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns the list of query API keys for the given Azure Cognitive
-        /// Search service.
+        /// Gets a list of all private endpoint connections in the given
+        /// service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -153,6 +196,6 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<QueryKey>>> ListBySearchServiceNextWithHttpMessagesAsync(string nextPageLink, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
