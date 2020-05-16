@@ -13,37 +13,38 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Name of the namespace.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; internal set; }
+
 
         /// <summary>
         /// Type of entities present in the namespace.
         /// </summary>
-        public NamespaceType NamespaceType { get; set; }
+        public NamespaceType NamespaceType { get; internal set; }
 
         /// <summary>
         /// The time at which the namespace was created.
         /// </summary>
-        public DateTimeOffset CreatedTime { get; set; }
+        public DateTimeOffset CreatedTime { get; internal set; }
 
         /// <summary>
         /// The last time at which the namespace was modified.
         /// </summary>
-        public DateTimeOffset ModifiedTime { get; set; }
+        public DateTimeOffset ModifiedTime { get; internal set; }
 
         /// <summary>
         /// The SKU/tier of the namespace. Valid only for <see cref="NamespaceType.ServiceBus"/>
         /// </summary>
-        public MessagingSku MessagingSku { get; set; }
+        public MessagingSku MessagingSku { get; internal set; }
 
         /// <summary>
         /// Number of messaging units allocated for namespace.
         /// Valid only for <see cref="NamespaceType.ServiceBus"/> and <see cref="MessagingSku.Premium"/>
         /// </summary>
-        public int MessagingUnits { get; set; }
+        public int MessagingUnits { get; internal set; }
 
         /// <summary>
         /// Alias for the namespace.
         /// </summary>
-        public string Alias { get; set; }
+        public string Alias { get; internal set; }
     }
 }

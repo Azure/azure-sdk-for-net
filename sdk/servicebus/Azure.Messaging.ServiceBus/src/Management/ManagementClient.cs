@@ -158,83 +158,83 @@ namespace Azure.Messaging.ServiceBus.Management
         #region DeleteEntity
 
         /// <summary>
-        /// Deletes the queue described by the path relative to the service namespace base address.
+        /// Deletes the queue described by the name relative to the service namespace base address.
         /// </summary>
-        /// <param name="queuePath">The name of the queue relative to the service namespace base address.</param>
+        /// <param name="queueName">The name of the queue relative to the service namespace base address.</param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentException"><paramref name="queuePath"/> is empty or null, or path starts or ends with "/".</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of path is greater than 260.</exception>
+        /// <exception cref="ArgumentException"><paramref name="queueName"/> is empty or null, or name starts or ends with "/".</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteQueueAsync(string queuePath, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidQueueName(queuePath);
-            return DeleteEntity(queuePath, cancellationToken);
+            EntityNameFormatter.CheckValidQueueName(queueName);
+            return DeleteEntity(queueName, cancellationToken);
         }
 
         /// <summary>
         /// Deletes the topic described by the name relative to the service namespace base address.
         /// </summary>
-        /// <param name="topicPath">The name of the topic relative to the service namespace base address.</param>
+        /// <param name="topicName">The name of the topic relative to the service namespace base address.</param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentException"><paramref name="topicPath"/> is empty or null, or path starts or ends with "/".</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260.</exception>
+        /// <exception cref="ArgumentException"><paramref name="topicName"/> is empty or null, or name starts or ends with "/".</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteTopicAsync(string topicPath, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
-            return DeleteEntity(topicPath, cancellationToken);
+            EntityNameFormatter.CheckValidTopicName(topicName);
+            return DeleteEntity(topicName, cancellationToken);
         }
 
         /// <summary>
         /// Deletes the subscription with the specified topic and subscription name.
         /// </summary>
-        /// <param name="topicPath">The name of the topic relative to the service namespace base address.</param>
+        /// <param name="topicName">The name of the topic relative to the service namespace base address.</param>
         /// <param name="subscriptionName">The name of the subscription to delete.</param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentException"><paramref name="topicPath"/> or <paramref name="subscriptionName"/> is empty or null, or path starts or ends with "/".</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260 or length of subscription name is greater than 50.</exception>
+        /// <exception cref="ArgumentException"><paramref name="topicName"/> or <paramref name="subscriptionName"/> is empty or null, or path starts or ends with "/".</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteSubscriptionAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
-            return DeleteEntity(EntityNameFormatter.FormatSubscriptionPath(topicPath, subscriptionName), cancellationToken);
+            return DeleteEntity(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), cancellationToken);
         }
 
         /// <summary>
-        /// Deletes the rule described by <paramref name="ruleName"/> from <paramref name="subscriptionName"/> under <paramref name="topicPath"/>./>
+        /// Deletes the rule described by <paramref name="ruleName"/> from <paramref name="subscriptionName"/> under <paramref name="topicName"/>./>
         /// </summary>
-        /// <param name="topicPath">The name of the topic relative to the service namespace base address.</param>
+        /// <param name="topicName">The name of the topic relative to the service namespace base address.</param>
         /// <param name="subscriptionName">The name of the subscription to delete.</param>
         /// <param name="ruleName">The name of the rule to delete.</param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/>, <paramref name="subscriptionName"/>, or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/>, or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Rule with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteRuleAsync(string topicPath, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteRuleAsync(string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             EntityNameFormatter.CheckValidRuleName(ruleName);
 
-            return DeleteEntity(EntityNameFormatter.FormatRulePath(topicPath, subscriptionName, ruleName), cancellationToken);
+            return DeleteEntity(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), cancellationToken);
         }
 
         #endregion
@@ -244,21 +244,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves a queue from the service namespace.
         /// </summary>
-        /// <param name="queuePath">The path of the queue relative to service bus namespace.</param>
+        /// <param name="queueName">The name of the queue relative to service bus namespace.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="QueueDescription"/> containing information about the queue.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="queuePath"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of queue path is greater than 260.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="queueName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of queue name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<QueueDescription> GetQueueAsync(string queuePath, CancellationToken cancellationToken = default)
+        public virtual async Task<QueueDescription> GetQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidQueueName(queuePath);
+            EntityNameFormatter.CheckValidQueueName(queueName);
 
-            var content = await GetEntity(queuePath, null, false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(queueName, null, false, cancellationToken).ConfigureAwait(false);
 
             return QueueDescriptionExtensions.ParseFromContent(content);
         }
@@ -266,21 +266,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves a topic from the service namespace.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="TopicDescription"/> containing information about the topic.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<TopicDescription> GetTopicAsync(string topicPath, CancellationToken cancellationToken = default)
+        public virtual async Task<TopicDescription> GetTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
 
-            var content = await GetEntity(topicPath, null, false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(topicName, null, false, cancellationToken).ConfigureAwait(false);
 
             return TopicDescriptionExtensions.ParseFromContent(content);
         }
@@ -288,37 +288,37 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves a subscription from the service namespace.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="subscriptionName">The subscription name.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="SubscriptionDescription"/> containing information about the subscription.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260 or length of subscription-name is greater than 50.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic or Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<SubscriptionDescription> GetSubscriptionAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<SubscriptionDescription> GetSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
-            var content = await GetEntity(EntityNameFormatter.FormatSubscriptionPath(topicPath, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
 
-            return SubscriptionDescriptionExtensions.ParseFromContent(topicPath, content);
+            return SubscriptionDescriptionExtensions.ParseFromContent(topicName, content);
         }
 
         /// <summary>
         /// Retrieves a rule from the service namespace.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="subscriptionName">The subscription name the rule belongs to.</param>
         /// <param name="ruleName">The name of the rule to retrieve.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="RuleDescription"/> containing information about the rule.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/>, <paramref name="subscriptionName"/> or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> or <paramref name="ruleName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name/rule-name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic/Subscription/Rule with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
@@ -326,13 +326,13 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>Note - Only following data types are deserialized in Filters and Action parameters - string,int,long,bool,double,DateTime.
         /// Other data types would return its string value.</remarks>
-        public virtual async Task<RuleDescription> GetRuleAsync(string topicPath, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<RuleDescription> GetRuleAsync(string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             EntityNameFormatter.CheckValidRuleName(ruleName);
 
-            var content = await GetEntity(EntityNameFormatter.FormatRulePath(topicPath, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
 
             return RuleDescriptionExtensions.ParseFromContent(content);
         }
@@ -343,21 +343,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves the runtime information of a queue.
         /// </summary>
-        /// <param name="queuePath">The path of the queue relative to service bus namespace.</param>
+        /// <param name="queueName">The name of the queue relative to service bus namespace.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="QueueRuntimeInfo"/> containing runtime information about the queue.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="queuePath"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of queue path is greater than 260.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="queueName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of queue name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Queue with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<QueueRuntimeInfo> GetQueueRuntimeInfoAsync(string queuePath, CancellationToken cancellationToken = default)
+        public virtual async Task<QueueRuntimeInfo> GetQueueRuntimeInfoAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidQueueName(queuePath);
+            EntityNameFormatter.CheckValidQueueName(queueName);
 
-            var content = await GetEntity(queuePath, null, true, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(queueName, null, true, cancellationToken).ConfigureAwait(false);
 
             return QueueRuntimeInfoExtensions.ParseFromContent(content);
         }
@@ -365,21 +365,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves the runtime information of a topic.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="TopicRuntimeInfo"/> containing runtime information about the topic.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<TopicRuntimeInfo> GetTopicRuntimeInfoAsync(string topicPath, CancellationToken cancellationToken = default)
+        public virtual async Task<TopicRuntimeInfo> GetTopicRuntimeInfoAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
 
-            var content = await GetEntity(topicPath, null, true, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(topicName, null, true, cancellationToken).ConfigureAwait(false);
 
             return TopicRuntimeInfoExtensions.ParseFromContent(content);
         }
@@ -387,25 +387,25 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves the runtime information of a subscription.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="subscriptionName">The subscription name.</param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="SubscriptionRuntimeInfo"/> containing runtime information about the subscription.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="topicPath"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of topic path is greater than 260 or length of subscription-name is greater than 50.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="topicName"/>, <paramref name="subscriptionName"/> is null, white space empty or not in the right format.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of topic name is greater than 260 or length of subscription-name is greater than 50.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityNotFound">Topic or Subscription with this name does not exist.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<SubscriptionRuntimeInfo> GetSubscriptionRuntimeInfoAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<SubscriptionRuntimeInfo> GetSubscriptionRuntimeInfoAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
-            var content = await GetEntity(EntityNameFormatter.FormatSubscriptionPath(topicPath, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
 
-            return SubscriptionRuntimeInfoExtensions.ParseFromContent(topicPath, content);
+            return SubscriptionRuntimeInfoExtensions.ParseFromContent(topicName, content);
         }
 
         #endregion
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves the list of subscriptions present in the topic.
         /// </summary>
-        /// <param name="topicPath">The topic path under which all the subscriptions need to be retrieved.</param>
+        /// <param name="topicName">The topic name under which all the subscriptions need to be retrieved.</param>
         /// <param name="count">The number of subscriptions to fetch. Defaults to 100. Maximum value allowed is 100.</param>
         /// <param name="skip">The number of subscriptions to skip. Defaults to 0. Cannot be negative.</param>
         /// <param name="cancellationToken"></param>
@@ -484,9 +484,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
         /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
-        public virtual async Task<IList<SubscriptionDescription>> GetSubscriptionsAsync(string topicPath, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<SubscriptionDescription>> GetSubscriptionsAsync(string topicName, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             if (count > 100 || count < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
@@ -496,14 +496,14 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
             }
 
-            var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
-            return SubscriptionDescriptionExtensions.ParseCollectionFromContent(topicPath, content);
+            var content = await GetEntity($"{topicName}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+            return SubscriptionDescriptionExtensions.ParseCollectionFromContent(topicName, content);
         }
 
         /// <summary>
         /// Retrieves the list of rules for a given subscription in a topic.
         /// </summary>
-        /// <param name="topicPath">The topic path.</param>
+        /// <param name="topicName">The topic name.</param>
         /// <param name="subscriptionName"> The subscription for which all the rules need to be retrieved.</param>
         /// <param name="count">The number of rules to fetch. Defaults to 100. Maximum value allowed is 100.</param>
         /// <param name="skip">The number of rules to skip. Defaults to 0. Cannot be negative.</param>
@@ -518,9 +518,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.
         /// Note - Only following data types are deserialized in Filters and Action parameters - string,int,long,bool,double,DateTime.
         /// Other data types would return its string value.</remarks>
-        public virtual async Task<IList<RuleDescription>> GetRulesAsync(string topicPath, string subscriptionName, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<RuleDescription>> GetRulesAsync(string topicName, string subscriptionName, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             if (count > 100 || count < 1)
             {
@@ -531,7 +531,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
             }
 
-            var content = await GetEntity($"{topicPath}/Subscriptions/{subscriptionName}/rules", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity($"{topicName}/Subscriptions/{subscriptionName}/rules", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
             return RuleDescriptionExtensions.ParseCollectionFromContent(content);
         }
 
@@ -600,7 +600,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Retrieves the list of runtime information for subscriptions present in the namespace.
         /// </summary>
-        /// <param name="topicPath">The path of the topic relative to service bus namespace.</param>
+        /// <param name="topicName">The name of the topic relative to service bus namespace.</param>
         /// <param name="count">The number of subscriptions to fetch. Defaults to 100. Maximum value allowed is 100.</param>
         /// <param name="skip">The number of subscriptions to skip. Defaults to 0. Cannot be negative.</param>
         /// <param name="cancellationToken"></param>
@@ -612,7 +612,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
         /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
-        public virtual async Task<IList<SubscriptionRuntimeInfo>> GetSubscriptionsRuntimeInfoAsync(string topicPath, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<SubscriptionRuntimeInfo>> GetSubscriptionsRuntimeInfoAsync(string topicName, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
             if (count > 100 || count < 1)
             {
@@ -623,9 +623,9 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
             }
 
-            var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
+            var content = await GetEntity($"{topicName}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
 
-            return SubscriptionRuntimeInfoExtensions.ParseCollectionFromContent(topicPath, content);
+            return SubscriptionRuntimeInfoExtensions.ParseCollectionFromContent(topicName, content);
         }
 
         #endregion
@@ -636,20 +636,20 @@ namespace Azure.Messaging.ServiceBus.Management
         /// Creates a new queue in the service namespace with the given name.
         /// </summary>
         /// <remarks>Throws if a queue already exists. <see cref="QueueDescription"/> for default values of queue properties.</remarks>
-        /// <param name="queuePath">The name of the queue relative to the service namespace base address.</param>
+        /// <param name="queueName">The name of the queue relative to the service namespace base address.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The <see cref="QueueDescription"/> of the newly created queue.</returns>
         /// <exception cref="ArgumentNullException">Queue name is null or empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="queuePath"/> is greater than 260 characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="queueName"/> is greater than 260 characters.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityAlreadyExists">An entity with the same name exists under the same service namespace.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<QueueDescription> CreateQueueAsync(string queuePath, CancellationToken cancellationToken = default)
+        public virtual Task<QueueDescription> CreateQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            return this.CreateQueueAsync(new QueueDescription(queuePath), cancellationToken);
+            return this.CreateQueueAsync(new QueueDescription(queueName), cancellationToken);
         }
 
         /// <summary>
@@ -672,7 +672,7 @@ namespace Azure.Messaging.ServiceBus.Management
             queueDescription.NormalizeDescription(_fullyQualifiedNamespace);
             var atomRequest = queueDescription.Serialize().ToString();
             var content = await PutEntity(
-                queueDescription.Path,
+                queueDescription.QueueName,
                 atomRequest,
                 false,
                 queueDescription.ForwardTo,
@@ -685,20 +685,20 @@ namespace Azure.Messaging.ServiceBus.Management
         /// Creates a new topic in the service namespace with the given name.
         /// </summary>
         /// <remarks>Throws if a topic already exists. <see cref="TopicDescription"/> for default values of topic properties.</remarks>
-        /// <param name="topicPath">The name of the topic relative to the service namespace base address.</param>
+        /// <param name="topicName">The name of the topic relative to the service namespace base address.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The <see cref="TopicDescription"/> of the newly created topic.</returns>
         /// <exception cref="ArgumentNullException">Topic name is null or empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="topicPath"/> is greater than 260 characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="topicName"/> is greater than 260 characters.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityAlreadyExists">A topic with the same name exists under the same service namespace.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<TopicDescription> CreateTopicAsync(string topicPath, CancellationToken cancellationToken = default)
+        public virtual Task<TopicDescription> CreateTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            return CreateTopicAsync(new TopicDescription(topicPath), cancellationToken);
+            return CreateTopicAsync(new TopicDescription(topicName), cancellationToken);
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Azure.Messaging.ServiceBus.Management
             topicDescription = topicDescription ?? throw new ArgumentNullException(nameof(topicDescription));
             var atomRequest = topicDescription.Serialize().ToString();
 
-            var content = await PutEntity(topicDescription.Path, atomRequest, false, null, null, cancellationToken).ConfigureAwait(false);
+            var content = await PutEntity(topicDescription.TopicName, atomRequest, false, null, null, cancellationToken).ConfigureAwait(false);
 
             return TopicDescriptionExtensions.ParseFromContent(content);
         }
@@ -731,21 +731,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <remarks>Throws if a subscription already exists. <see cref="SubscriptionDescription"/> for default values of subscription properties.
         /// By default, A "pass-through" filter is created for this subscription, which means it will allow all messages to go to this subscription. The name of the filter is represented by <see cref="RuleDescription.DefaultRuleName"/>.
         /// <see cref="CreateSubscriptionAsync(SubscriptionDescription, RuleDescription, CancellationToken)"/> for creating subscription with a different filter.</remarks>
-        /// <param name="topicPath">The path of the topic relative to the service namespace base address.</param>
+        /// <param name="topicName">The name of the topic relative to the service namespace base address.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The <see cref="SubscriptionDescription"/> of the newly created subscription.</returns>
-        /// <exception cref="ArgumentNullException">Topic path or subscription name is null or empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="topicPath"/> is greater than 260 characters or <paramref name="subscriptionName"/> is greater than 50 characters.</exception>
+        /// <exception cref="ArgumentNullException">Topic name or subscription name is null or empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="topicName"/> is greater than 260 characters or <paramref name="subscriptionName"/> is greater than 50 characters.</exception>
         /// <exception cref="ServiceBusException.FailureReason.MessagingEntityAlreadyExists">A subscription with the same name exists under the same service namespace.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<SubscriptionDescription> CreateSubscriptionAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual Task<SubscriptionDescription> CreateSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            return CreateSubscriptionAsync(new SubscriptionDescription(topicPath, subscriptionName), cancellationToken);
+            return CreateSubscriptionAsync(new SubscriptionDescription(topicName, subscriptionName), cancellationToken);
         }
 
         /// <summary>
@@ -792,19 +792,19 @@ namespace Azure.Messaging.ServiceBus.Management
             subscriptionDescription.DefaultRuleDescription = defaultRule;
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
-                EntityNameFormatter.FormatSubscriptionPath(subscriptionDescription.TopicPath, subscriptionDescription.SubscriptionName),
+                EntityNameFormatter.FormatSubscriptionPath(subscriptionDescription.TopicName, subscriptionDescription.SubscriptionName),
                 atomRequest,
                 false,
                 subscriptionDescription.ForwardTo,
                 subscriptionDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
-            return SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content);
+            return SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicName, content);
         }
 
         /// <summary>
         /// Adds a new rule to the subscription under given topic.
         /// </summary>
-        /// <param name="topicPath">The topic path relative to the service namespace base address.</param>
+        /// <param name="topicName">The topic name relative to the service namespace base address.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
         /// <param name="ruleDescription">A <see cref="RuleDescription"/> object describing the attributes with which the messages are matched and acted upon.</param>
         /// <param name="cancellationToken"></param>
@@ -816,16 +816,16 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         /// <returns><see cref="RuleDescription"/> of the recently created rule.</returns>
-        public virtual async Task<RuleDescription> CreateRuleAsync(string topicPath, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
+        public virtual async Task<RuleDescription> CreateRuleAsync(string topicName, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             ruleDescription = ruleDescription ?? throw new ArgumentNullException(nameof(ruleDescription));
 
             var atomRequest = ruleDescription.Serialize().ToString();
 
             var content = await PutEntity(
-                EntityNameFormatter.FormatRulePath(topicPath, subscriptionName, ruleDescription.Name),
+                EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleDescription.Name),
                 atomRequest,
                 false,
                 null,
@@ -859,7 +859,7 @@ namespace Azure.Messaging.ServiceBus.Management
             var atomRequest = queueDescription.Serialize().ToString();
 
             var content = await PutEntity(
-                queueDescription.Path,
+                queueDescription.QueueName,
                 atomRequest,
                 true,
                 queueDescription.ForwardTo,
@@ -887,7 +887,7 @@ namespace Azure.Messaging.ServiceBus.Management
             topicDescription = topicDescription ?? throw new ArgumentNullException(nameof(topicDescription));
             var atomRequest = topicDescription.Serialize().ToString();
 
-            var content = await PutEntity(topicDescription.Path, atomRequest, true, null, null, cancellationToken).ConfigureAwait(false);
+            var content = await PutEntity(topicDescription.TopicName, atomRequest, true, null, null, cancellationToken).ConfigureAwait(false);
 
             return TopicDescriptionExtensions.ParseFromContent(content);
         }
@@ -911,19 +911,19 @@ namespace Azure.Messaging.ServiceBus.Management
             subscriptionDescription.NormalizeDescription(_fullyQualifiedNamespace);
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
-                EntityNameFormatter.FormatSubscriptionPath(subscriptionDescription.TopicPath, subscriptionDescription.SubscriptionName),
+                EntityNameFormatter.FormatSubscriptionPath(subscriptionDescription.TopicName, subscriptionDescription.SubscriptionName),
                 atomRequest,
                 true,
                 subscriptionDescription.ForwardTo,
                 subscriptionDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
-            return SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicPath, content);
+            return SubscriptionDescriptionExtensions.ParseFromContent(subscriptionDescription.TopicName, content);
         }
 
         /// <summary>
         /// Updates an existing rule for a topic-subscription.
         /// </summary>
-        /// <param name="topicPath">Path of the topic.</param>
+        /// <param name="topicName">Name of the topic.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="ruleDescription">A <see cref="RuleDescription"/> object describing the attributes with which the rule will be updated.</param>
         /// <param name="cancellationToken"></param>
@@ -935,15 +935,15 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<RuleDescription> UpdateRuleAsync(string topicPath, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
+        public virtual async Task<RuleDescription> UpdateRuleAsync(string topicName, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
         {
             ruleDescription = ruleDescription ?? throw new ArgumentNullException(nameof(ruleDescription));
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
             var atomRequest = ruleDescription.Serialize().ToString();
             var content = await PutEntity(
-                EntityNameFormatter.FormatRulePath(topicPath, subscriptionName, ruleDescription.Name),
+                EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleDescription.Name),
                 atomRequest,
                 true,
                 null, null,
@@ -958,21 +958,21 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Checks whether a given queue exists or not.
         /// </summary>
-        /// <param name="queuePath">Path of the queue entity to check.</param>
+        /// <param name="queueName">Name of the queue entity to check.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>True if queue exists, false otherwise.</returns>
-        /// <exception cref="ArgumentException">Queue path provided is not valid.</exception>
+        /// <exception cref="ArgumentException">Queue name provided is not valid.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<bool> QueueExistsAsync(string queuePath, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> QueueExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidQueueName(queuePath);
+            EntityNameFormatter.CheckValidQueueName(queueName);
 
             try
             {
-                QueueDescription qd = await GetQueueAsync(queuePath, cancellationToken).ConfigureAwait(false);
+                QueueDescription qd = await GetQueueAsync(queueName, cancellationToken).ConfigureAwait(false);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -985,22 +985,22 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Checks whether a given topic exists or not.
         /// </summary>
-        /// <param name="topicPath">Path of the topic entity to check.</param>
+        /// <param name="topicName">Name of the topic entity to check.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>True if topic exists, false otherwise.</returns>
-        /// <exception cref="ArgumentException">topic path provided is not valid.</exception>
+        /// <exception cref="ArgumentException">topic name provided is not valid.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<bool> TopicExistsAsync(string topicPath, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> TopicExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
 
             try
             {
                 // TODO: Optimize by removing deserialization costs.
-                var td = await GetTopicAsync(topicPath, cancellationToken).ConfigureAwait(false);
+                var td = await GetTopicAsync(topicName, cancellationToken).ConfigureAwait(false);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -1013,24 +1013,24 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Checks whether a given subscription exists or not.
         /// </summary>
-        /// <param name="topicPath">Path of the topic.</param>
+        /// <param name="topicName">Name of the topic.</param>
         /// <param name="subscriptionName">Name of the subscription to check.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>True if subscription exists, false otherwise.</returns>
-        /// <exception cref="ArgumentException">topic or subscription path provided is not valid.</exception>
+        /// <exception cref="ArgumentException">topic or subscription name provided is not valid.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceTimeout">The operation times out.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<bool> SubscriptionExistsAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> SubscriptionExistsAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            EntityNameFormatter.CheckValidTopicName(topicPath);
+            EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
             try
             {
                 // TODO: Optimize by removing deserialization costs.
-                var sd = await GetSubscriptionAsync(topicPath, subscriptionName, cancellationToken).ConfigureAwait(false);
+                var sd = await GetSubscriptionAsync(topicName, subscriptionName, cancellationToken).ConfigureAwait(false);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -1165,9 +1165,9 @@ namespace Azure.Messaging.ServiceBus.Management
             return token.Token;
         }
 
-        private async Task<string> GetEntity(string path, string query, bool enrich, CancellationToken cancellationToken)
+        private async Task<string> GetEntity(string entityName, string query, bool enrich, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(GetEntity), $"path:{entityName},query:{query},enrich:{enrich}");
 
             var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
             if (query != null)
@@ -1176,7 +1176,7 @@ namespace Azure.Messaging.ServiceBus.Management
             }
             var uri = new UriBuilder(_fullyQualifiedNamespace)
             {
-                Path = path,
+                Path = entityName,
                 Scheme = Uri.UriSchemeHttps,
                 Port = _port,
                 Query = queryString
@@ -1191,17 +1191,17 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(GetEntity), $"path:{entityName},query:{query},enrich:{enrich}");
             return result;
         }
 
-        private async Task<string> PutEntity(string path, string requestBody, bool isUpdate, string forwardTo, string fwdDeadLetterTo, CancellationToken cancellationToken)
+        private async Task<string> PutEntity(string entityName, string requestBody, bool isUpdate, string forwardTo, string fwdDeadLetterTo, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(PutEntity), $"path:{entityName},isUpdate:{isUpdate}");
 
             var uri = new UriBuilder(_fullyQualifiedNamespace)
             {
-                Path = path,
+                Path = entityName,
                 Port = _port,
                 Scheme = Uri.UriSchemeHttps,
                 Query = $"{ManagementClientConstants.apiVersionQuery}"
@@ -1235,17 +1235,17 @@ namespace Azure.Messaging.ServiceBus.Management
             Response response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(PutEntity), $"path:{entityName},isUpdate:{isUpdate}");
             return result;
         }
 
-        private async Task<Response> DeleteEntity(string path, CancellationToken cancellationToken)
+        private async Task<Response> DeleteEntity(string entityName, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(DeleteEntity), entityName);
 
             var uri = new UriBuilder(_fullyQualifiedNamespace)
             {
-                Path = path,
+                Path = entityName,
                 Scheme = Uri.UriSchemeHttps,
                 Port = _port,
                 Query = ManagementClientConstants.apiVersionQuery
@@ -1258,7 +1258,7 @@ namespace Azure.Messaging.ServiceBus.Management
             request.Method = RequestMethod.Delete;
 
             var response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(DeleteEntity), entityName);
             return response;
         }
 

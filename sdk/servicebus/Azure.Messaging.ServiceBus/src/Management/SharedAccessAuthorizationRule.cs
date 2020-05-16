@@ -231,25 +231,25 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator ==(SharedAccessAuthorizationRule o1, SharedAccessAuthorizationRule o2)
+        public static bool operator ==(SharedAccessAuthorizationRule left, SharedAccessAuthorizationRule right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
         /// <summary></summary>
-        public static bool operator !=(SharedAccessAuthorizationRule o1, SharedAccessAuthorizationRule o2)
+        public static bool operator !=(SharedAccessAuthorizationRule left, SharedAccessAuthorizationRule right)
         {
-            return !(o1 == o2);
+            return !(left == right);
         }
 
         /// <summary>Generates the random key for the authorization rule.</summary>

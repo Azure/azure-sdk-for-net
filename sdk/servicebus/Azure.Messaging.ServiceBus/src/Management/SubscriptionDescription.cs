@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class SubscriptionDescription : IEquatable<SubscriptionDescription>
     {
-        private string _topicPath, _subscriptionName;
+        private string _topicName, _subscriptionName;
         private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
@@ -23,13 +23,13 @@ namespace Azure.Messaging.ServiceBus.Management
         private string _userMetadata = null;
 
         /// <summary>
-        /// Initializes a new instance of SubscriptionDescription class with the specified name and topic path.
+        /// Initializes a new instance of SubscriptionDescription class with the specified name and topic name.
         /// </summary>
-        /// <param name="topicPath">Path of the topic relative to the namespace base address.</param>
+        /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>
-        public SubscriptionDescription(string topicPath, string subscriptionName)
+        public SubscriptionDescription(string topicName, string subscriptionName)
         {
-            TopicPath = topicPath;
+            TopicName = topicName;
             SubscriptionName = subscriptionName;
         }
 
@@ -113,17 +113,17 @@ namespace Azure.Messaging.ServiceBus.Management
         public bool EnableDeadLetteringOnFilterEvaluationExceptions { get; set; } = true;
 
         /// <summary>
-        /// Path of the topic under which subscription exists.
+        /// Name of the topic under which subscription exists.
         /// </summary>
         /// <remarks>Value cannot be null or empty. Value cannot exceed 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string TopicPath
+        public string TopicName
         {
-            get => _topicPath;
+            get => _topicName;
             set
             {
-                EntityNameFormatter.CheckValidTopicName(value, nameof(TopicPath));
-                _topicPath = value;
+                EntityNameFormatter.CheckValidTopicName(value, nameof(TopicName));
+                _topicName = value;
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public EntityStatus Status { get; set; } = EntityStatus.Active;
 
         /// <summary>
-        /// The path of the recipient entity to which all the messages sent to the subscription are forwarded to.
+        /// The name of the recipient entity to which all the messages sent to the subscription are forwarded to.
         /// </summary>
         /// <remarks>If set, user cannot manually receive messages from this subscription. The destination entity
         /// must be an already existing entity.</remarks>
@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
-                if (_topicPath.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_topicName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// The path of the recipient entity to which all the dead-lettered messages of this subscription are forwarded to.
+        /// The name of the recipient entity to which all the dead-lettered messages of this subscription are forwarded to.
         /// </summary>
         /// <remarks>If set, user cannot manually receive dead-lettered messages from this subscription. The destination
         /// entity must already exist.</remarks>
@@ -212,7 +212,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (_topicPath.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_topicName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -266,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Management
             int hash = 7;
             unchecked
             {
-                hash = (hash * 7) + this.TopicPath?.GetHashCode() ?? 0;
+                hash = (hash * 7) + this.TopicName?.GetHashCode() ?? 0;
                 hash = (hash * 7) + this.SubscriptionName?.GetHashCode() ?? 0;
             }
 
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             if (otherDescription is SubscriptionDescription other
                 && this.SubscriptionName.Equals(other.SubscriptionName, StringComparison.OrdinalIgnoreCase)
-                && this.TopicPath.Equals(other.TopicPath, StringComparison.OrdinalIgnoreCase)
+                && this.TopicName.Equals(other.TopicName, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
                 && this.EnableBatchedOperations == other.EnableBatchedOperations
@@ -308,33 +308,33 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         ///
         /// </summary>
-        /// <param name="o1"></param>
-        /// <param name="o2"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SubscriptionDescription o1, SubscriptionDescription o2)
+        public static bool operator ==(SubscriptionDescription left, SubscriptionDescription right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="o1"></param>
-        /// <param name="o2"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SubscriptionDescription o1, SubscriptionDescription o2)
+        public static bool operator !=(SubscriptionDescription left, SubscriptionDescription right)
         {
-            return !(o1 == o2);
+            return !(left == right);
         }
     }
 }

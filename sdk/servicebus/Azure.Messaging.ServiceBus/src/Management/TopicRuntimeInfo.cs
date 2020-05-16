@@ -10,15 +10,15 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class TopicRuntimeInfo
     {
-        internal TopicRuntimeInfo(string path)
+        internal TopicRuntimeInfo(string topicName)
         {
-            Path = path;
+            TopicName = topicName;
         }
 
         /// <summary>
-        /// The path of the topic.
+        /// The name of the topic.
         /// </summary>
-        public string Path { get; internal set; }
+        public string TopicName { get; internal set; }
 
         /// <summary>
         /// The total number of messages in the topic.
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// The <see cref="DateTime"/> when the entity was last accessed.
         /// </summary>
-        public DateTime AccessedAt { get; internal set; }
+        public DateTimeOffset AccessedAt { get; internal set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> when the entity was created.

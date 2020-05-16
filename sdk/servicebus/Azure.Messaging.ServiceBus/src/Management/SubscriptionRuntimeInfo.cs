@@ -10,16 +10,16 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class SubscriptionRuntimeInfo
     {
-        internal SubscriptionRuntimeInfo(string topicPath, string subscriptionName)
+        internal SubscriptionRuntimeInfo(string topicName, string subscriptionName)
         {
-            TopicPath = topicPath;
+            TopicName = topicName;
             SubscriptionName = subscriptionName;
         }
 
         /// <summary>
-        /// The path of the topic.
+        /// The name of the topic.
         /// </summary>
-        public string TopicPath { get; internal set; }
+        public string TopicName { get; internal set; }
 
         /// <summary>
         /// The name of subscription.

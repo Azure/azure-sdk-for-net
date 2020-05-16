@@ -82,25 +82,25 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator ==(AuthorizationRules o1, AuthorizationRules o2)
+        public static bool operator ==(AuthorizationRules left, AuthorizationRules right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
         /// <summary></summary>
-        public static bool operator !=(AuthorizationRules o1, AuthorizationRules o2)
+        public static bool operator !=(AuthorizationRules left, AuthorizationRules right)
         {
-            return !(o1 == o2);
+            return !(left == right);
         }
     }
 }

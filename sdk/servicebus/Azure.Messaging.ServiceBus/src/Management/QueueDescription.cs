@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Management
     public class QueueDescription : IEquatable<QueueDescription>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        private string _path;
+        private string _queueName;
         private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
@@ -23,26 +23,26 @@ namespace Azure.Messaging.ServiceBus.Management
         private string _userMetadata = null;
 
         /// <summary>
-        /// Initializes a new instance of QueueDescription class with the specified relative path.
+        /// Initializes a new instance of QueueDescription class with the specified relative name.
         /// </summary>
-        /// <param name="path">Path of the queue relative to the namespace base address.</param>
-        public QueueDescription(string path)
+        /// <param name="queueName">Name of the queue relative to the namespace base address.</param>
+        public QueueDescription(string queueName)
         {
-            Path = path;
+            QueueName = queueName;
         }
 
         /// <summary>
-        /// Path of the queue relative to the namespace base address.
+        /// Name of the queue relative to the namespace base address.
         /// </summary>
         /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string Path
+        public string QueueName
         {
-            get => _path;
+            get => _queueName;
             set
             {
-                EntityNameFormatter.CheckValidQueueName(value, nameof(Path));
-                _path = value;
+                EntityNameFormatter.CheckValidQueueName(value, nameof(QueueName));
+                _queueName = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public EntityStatus Status { get; set; } = EntityStatus.Active;
 
         /// <summary>
-        /// The path of the recipient entity to which all the messages sent to the queue are forwarded to.
+        /// The name of the recipient entity to which all the messages sent to the queue are forwarded to.
         /// </summary>
         /// <remarks>If set, user cannot manually receive messages from this queue. The destination entity
         /// must be an already existing entity.</remarks>
@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
-                if (_path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
 
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
@@ -220,7 +220,7 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// The path of the recipient entity to which all the dead-lettered messages of this queue are forwarded to.
+        /// The name of the recipient entity to which all the dead-lettered messages of this queue are forwarded to.
         /// </summary>
         /// <remarks>If set, user cannot manually receive dead-lettered messages from this queue. The destination
         /// entity must already exist.</remarks>
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (_path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         public override int GetHashCode()
         {
-            return Path?.GetHashCode() ?? base.GetHashCode();
+            return QueueName?.GetHashCode() ?? base.GetHashCode();
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -299,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public bool Equals(QueueDescription otherDescription)
         {
             if (otherDescription is QueueDescription other
-                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+                && this.QueueName.Equals(other.QueueName, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
                 && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
@@ -326,25 +326,25 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator ==(QueueDescription o1, QueueDescription o2)
+        public static bool operator ==(QueueDescription left, QueueDescription right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
         /// <summary></summary>
-        public static bool operator !=(QueueDescription o1, QueueDescription o2)
+        public static bool operator !=(QueueDescription left, QueueDescription right)
         {
-            return !(o1 == o2);
+            return !(left == right);
         }
     }
 }

@@ -261,28 +261,36 @@ namespace Azure.Messaging.ServiceBus.Filters
             return false;
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static bool operator ==(CorrelationFilter o1, CorrelationFilter o2)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(CorrelationFilter left, CorrelationFilter right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static bool operator !=(CorrelationFilter p1, CorrelationFilter p2)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(CorrelationFilter left, CorrelationFilter right)
         {
-            return !(p1 == p2);
+            return !(left == right);
         }
     }
 }

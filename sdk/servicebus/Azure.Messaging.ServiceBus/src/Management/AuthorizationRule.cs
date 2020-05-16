@@ -30,11 +30,11 @@ namespace Azure.Messaging.ServiceBus.Management
 
         /// <summary>Gets or sets the date and time when the authorization rule was created.</summary>
         /// <value>The date and time when the authorization rule was created.</value>
-        public DateTime CreatedTime { get; internal set; }
+        public DateTimeOffset CreatedTime { get; internal set; }
 
         /// <summary>Gets or sets the date and time when the authorization rule was modified.</summary>
         /// <value>The date and time when the authorization rule was modified.</value>
-        public DateTime ModifiedTime { get; internal set; }
+        public DateTimeOffset ModifiedTime { get; internal set; }
 
         /// <summary>Gets or sets the claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</summary>
         /// <value>The claim value which is either ‘Send’, ‘Listen’, or ‘Manage’.</value>

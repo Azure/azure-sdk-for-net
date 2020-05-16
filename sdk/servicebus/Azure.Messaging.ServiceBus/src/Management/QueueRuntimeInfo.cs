@@ -10,15 +10,15 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class QueueRuntimeInfo
     {
-        internal QueueRuntimeInfo(string path)
+        internal QueueRuntimeInfo(string queueName)
         {
-            Path = path;
+            QueueName = queueName;
         }
 
         /// <summary>
-        /// The path of the queue.
+        /// The name of the queue.
         /// </summary>
-        public string Path { get; internal set; }
+        public string QueueName { get; internal set; }
 
         /// <summary>
         /// The total number of messages in the queue.

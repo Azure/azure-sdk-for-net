@@ -12,18 +12,18 @@ namespace Azure.Messaging.ServiceBus.Management
     public class TopicDescription : IEquatable<TopicDescription>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        private string _path;
+        private string _topicName;
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private string _userMetadata = null;
 
         /// <summary>
-        /// Initializes a new instance of TopicDescription class with the specified relative path.
+        /// Initializes a new instance of TopicDescription class with the specified relative name.
         /// </summary>
-        /// <param name="path">Path of the topic relative to the namespace base address.</param>
-        public TopicDescription(string path)
+        /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
+        public TopicDescription(string topicName)
         {
-            Path = path;
+            TopicName = topicName;
         }
 
         /// <summary>
@@ -105,17 +105,17 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// Path of the topic relative to the namespace base address.
+        /// Name of the topic relative to the namespace base address.
         /// </summary>
         /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string Path
+        public string TopicName
         {
-            get => _path;
+            get => _topicName;
             set
             {
-                EntityNameFormatter.CheckValidTopicName(value, nameof(Path));
-                _path = value;
+                EntityNameFormatter.CheckValidTopicName(value, nameof(TopicName));
+                _topicName = value;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         public override int GetHashCode()
         {
-            return Path?.GetHashCode() ?? base.GetHashCode();
+            return TopicName?.GetHashCode() ?? base.GetHashCode();
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public bool Equals(TopicDescription otherDescription)
         {
             if (otherDescription is TopicDescription other
-                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+                && this.TopicName.Equals(other.TopicName, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
                 && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
@@ -218,25 +218,25 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator ==(TopicDescription o1, TopicDescription o2)
+        public static bool operator ==(TopicDescription left, TopicDescription right)
         {
-            if (ReferenceEquals(o1, o2))
+            if (ReferenceEquals(left, right))
             {
                 return true;
             }
 
-            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
             {
                 return false;
             }
 
-            return o1.Equals(o2);
+            return left.Equals(right);
         }
 
         /// <summary></summary>
-        public static bool operator !=(TopicDescription o1, TopicDescription o2)
+        public static bool operator !=(TopicDescription left, TopicDescription right)
         {
-            return !(o1 == o2);
+            return !(left == right);
         }
     }
 }
