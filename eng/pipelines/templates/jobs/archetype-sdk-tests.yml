@@ -5,6 +5,7 @@ parameters:
   MaxParallel: 0
   BuildInParallel: true
   TimeoutInMinutes: 60
+  Location: ''
 
 jobs:
   - job: "Test"
@@ -61,6 +62,7 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
+          Location: ${{ parameters.Location }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
 
