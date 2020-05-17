@@ -40,7 +40,7 @@ namespace Azure.Data.Tables.Tests
 
                 for (int i = 0; i < 10; i++)
                 {
-                    var table = Recording.GenerateId("testtable", 15);
+                    var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
                     await service.CreateTableAsync(table).ConfigureAwait(false);
                     createdTables.Add(table);
                 }
@@ -75,7 +75,7 @@ namespace Azure.Data.Tables.Tests
 
                 for (int i = 0; i < 10; i++)
                 {
-                    var table = Recording.GenerateId("testtable", 15);
+                    var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
                     await service.CreateTableAsync(table).ConfigureAwait(false);
                     createdTables.Add(table);
                 }

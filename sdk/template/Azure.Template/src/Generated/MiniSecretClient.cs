@@ -25,6 +25,10 @@ namespace Azure.Template
         {
         }
         /// <summary> Initializes a new instance of MiniSecretClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="apiVersion"> Api Version. </param>
         internal MiniSecretClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
             RestClient = new MiniSecretRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);

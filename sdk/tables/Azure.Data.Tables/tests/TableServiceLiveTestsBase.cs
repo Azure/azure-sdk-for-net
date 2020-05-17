@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -53,7 +54,7 @@ namespace Azure.Data.Tables.Tests
             service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
                                                               new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
                                                               Recording.InstrumentClientOptions(new TableClientOptions())));
-            tableName = Recording.GenerateId("testtable", 15);
+            tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             await service.CreateTableAsync(tableName).ConfigureAwait(false);
             client = service.GetTableClient(tableName);
         }
