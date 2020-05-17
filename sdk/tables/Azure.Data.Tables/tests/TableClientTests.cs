@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
@@ -22,7 +23,7 @@ namespace Azure.Tables.Tests
         { }
 
         private const string tableName = "someTableName";
-        internal Mock<TableInternalClient> mockClient { get; set; }
+        internal Mock<TableRestClient> mockClient { get; set; }
         internal TableClient client_Instrumented { get; set; }
         internal TableClient client { get; set; }
         internal ClientDiagnostics _clientDiagnostics = new ClientDiagnostics(new TableClientOptions());
@@ -33,7 +34,7 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            mockClient = new Mock<TableInternalClient>();
+            mockClient = new Mock<TableRestClient>();
             var service_Instrumented = InstrumentClient(new TableServiceClient(mockClient.Object));
             client_Instrumented = service_Instrumented.GetTableClient(tableName);
 
@@ -109,7 +110,7 @@ namespace Azure.Tables.Tests
             {
                 mockClient
                     .Setup(m => m.CreateAsync(It.IsAny<TableProperties>(), null, null, It.IsAny<QueryOptions>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync(Response.FromValue(new TableResponse(tableName, null, null, null, null), Mock.Of<Response>()))
+                    .ReturnsAsync(new ResponseWithHeaders<TableResponse, TableCreateHeaders>(new TableResponse(tableName, null, null, null, null), default, Mock.Of<Response>()))
                     .Verifiable();
 
                 await client.CreateAsync();
@@ -118,7 +119,7 @@ namespace Azure.Tables.Tests
             {
                 mockClient
                     .Setup(m => m.Create(It.IsAny<TableProperties>(), null, null, It.IsAny<QueryOptions>(), It.IsAny<CancellationToken>()))
-                    .Returns(Response.FromValue(new TableResponse(tableName, null, null, null, null), Mock.Of<Response>()))
+                    .Returns(new ResponseWithHeaders<TableResponse, TableCreateHeaders>(new TableResponse(tableName, null, null, null, null), default, Mock.Of<Response>()))
                     .Verifiable();
 
                 client.Create();
