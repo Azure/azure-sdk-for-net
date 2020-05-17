@@ -34,7 +34,7 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            mockClient = new Mock<TableRestClient>();
+            mockClient = new Mock<TableRestClient>(_clientDiagnostics, null, "dummy", "dummy");
             var service_Instrumented = InstrumentClient(new TableServiceClient(mockClient.Object));
             client_Instrumented = service_Instrumented.GetTableClient(tableName);
 
