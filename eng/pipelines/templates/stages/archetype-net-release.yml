@@ -137,44 +137,44 @@ stages:
                           solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
                           msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
-      - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
-            - deployment: PublicDocsMS
-              displayName: Publish to Docs.MS
-              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-              environment: githubio
-              dependsOn: PublishPackage
+        - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+          - deployment: PublicDocsMS
+            displayName: Publish to Docs.MS
+            condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+            environment: githubio
+            dependsOn: PublishPackage
 
-              pool:
-                vmImage: windows-2019
+            pool:
+              vmImage: windows-2019
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: self
-                      - template: /eng/pipelines/templates/steps/stage-filtered-artifacts.yml
-                        parameters:
-                          SourceFolder: ${{parameters.ArtifactName}}-signed
-                          TargetFolder: ${{artifact.safeName}}
-                          FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                        displayName: Stage artifacts
-                      - pwsh: |
-                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
-                        workingDirectory: $(Pipeline.Workspace)
-                        displayName: Output Visible Artifacts
-                      - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
-                        parameters:
-                          ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
-                          PackageRepository: Nuget
-                          ReleaseSha: $(Build.SourceVersion)
-                          RepoId: Azure/azure-sdk-for-net
-                          WorkingDirectory: $(System.DefaultWorkingDirectory)
-                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          PRBranchName: 'smoke-test-rdme'
-                          ArtifactName: ${{parameters.ArtifactName}}
-                          Language: '.net'
-                          DocRepoDestinationPath: 'api/overview/azure/' 
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                    - template: /eng/pipelines/templates/steps/stage-filtered-artifacts.yml
+                      parameters:
+                        SourceFolder: ${{parameters.ArtifactName}}-signed
+                        TargetFolder: ${{artifact.safeName}}
+                        FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
+                      displayName: Stage artifacts
+                    - pwsh: |
+                        Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
+                      workingDirectory: $(Pipeline.Workspace)
+                      displayName: Output Visible Artifacts
+                    - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
+                      parameters:
+                        ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                        PackageRepository: Nuget
+                        ReleaseSha: $(Build.SourceVersion)
+                        RepoId: Azure/azure-sdk-for-net
+                        WorkingDirectory: $(System.DefaultWorkingDirectory)
+                        TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                        TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                        PRBranchName: 'smoke-test-rdme'
+                        ArtifactName: ${{parameters.ArtifactName}}
+                        Language: '.net'
+                        DocRepoDestinationPath: 'api/overview/azure/' 
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
             - deployment: PublishDocs
