@@ -21,24 +21,19 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -65,7 +60,7 @@ jobs:
         parameters:
           Location: ${{ parameters.Location }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
+          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
 
       - script: >
           dotnet test eng/service.proj
