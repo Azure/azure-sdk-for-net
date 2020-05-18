@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.MixedReality.Models
     using System.Linq;
 
     /// <summary>
-    /// SpatialAnchorsAccount Response.
+    /// RemoteRenderingAccount Response.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SpatialAnchorsAccount : TrackedResource
+    public partial class RemoteRenderingAccount : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the SpatialAnchorsAccount class.
+        /// Initializes a new instance of the RemoteRenderingAccount class.
         /// </summary>
-        public SpatialAnchorsAccount()
+        public RemoteRenderingAccount()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpatialAnchorsAccount class.
+        /// Initializes a new instance of the RemoteRenderingAccount class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="accountId">unique id of certain account.</param>
         /// <param name="accountDomain">Correspond domain name of certain
         /// Spatial Anchors Account</param>
-        public SpatialAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountId = default(string), string accountDomain = default(string))
+        public RemoteRenderingAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountId = default(string), string accountDomain = default(string))
             : base(location, id, name, type, tags)
         {
             AccountId = accountId;
