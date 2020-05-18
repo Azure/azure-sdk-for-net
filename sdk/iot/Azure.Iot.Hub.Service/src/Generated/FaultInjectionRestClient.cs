@@ -54,7 +54,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Get FaultInjection entity. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<FaultInjectionProperties>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -81,7 +81,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Get FaultInjection entity. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<FaultInjectionProperties> Get(CancellationToken cancellationToken = default)
         {
@@ -125,7 +125,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Create or update FaultInjection entity. </summary>
         /// <param name="value"> The FaultInjectionProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
@@ -146,7 +146,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <summary> Create or update FaultInjection entity. </summary>
         /// <param name="value"> The FaultInjectionProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Set(FaultInjectionProperties value, CancellationToken cancellationToken = default)

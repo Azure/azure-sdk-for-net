@@ -16,11 +16,11 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
-        /// <param name="deviceId"> The ID of the device that indicated the error. </param>
+        /// <param name="deviceId"> Identifier of the device that indicated the error. </param>
         /// <param name="errorCode"> ErrorCode associated with the error. </param>
         /// <param name="errorStatus"> Additional details associated with the error. </param>
-        /// <param name="moduleId"> . </param>
-        /// <param name="operation"> . </param>
+        /// <param name="moduleId"> Identifier of the module associated with the error, if applicable. </param>
+        /// <param name="operation"> The type of the operation that failed. </param>
         internal DeviceRegistryOperationError(string deviceId, DeviceRegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation)
         {
             DeviceId = deviceId;
@@ -30,13 +30,15 @@ namespace Azure.Iot.Hub.Service.Models
             Operation = operation;
         }
 
-        /// <summary> The ID of the device that indicated the error. </summary>
+        /// <summary> Identifier of the device that indicated the error. </summary>
         public string DeviceId { get; }
         /// <summary> ErrorCode associated with the error. </summary>
         public DeviceRegistryOperationErrorCode? ErrorCode { get; }
         /// <summary> Additional details associated with the error. </summary>
         public string ErrorStatus { get; }
+        /// <summary> Identifier of the module associated with the error, if applicable. </summary>
         public string ModuleId { get; }
+        /// <summary> The type of the operation that failed. </summary>
         public string Operation { get; }
     }
 }

@@ -19,17 +19,17 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of TwinConfiguration. </summary>
-        /// <param name="id"> Gets Identifier for the configuration. </param>
-        /// <param name="schemaVersion"> Gets Schema version for the configuration. </param>
-        /// <param name="labels"> Gets or sets labels for the configuration. </param>
-        /// <param name="content"> Gets or sets Content for the configuration. </param>
-        /// <param name="targetCondition"> Gets or sets Target Condition for the configuration. </param>
-        /// <param name="createdTimeUtc"> Gets creation time for the configuration. </param>
-        /// <param name="lastUpdatedTimeUtc"> Gets last update time for the configuration. </param>
-        /// <param name="priority"> Gets or sets Priority for the configuration. </param>
-        /// <param name="systemMetrics"> System Configuration Metrics. </param>
-        /// <param name="metrics"> Custom Configuration Metrics. </param>
-        /// <param name="etag"> Gets or sets configuration&apos;s ETag. </param>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="schemaVersion"> Schema version of the configuration. </param>
+        /// <param name="labels"> Key-value pairs used to describe a configuration. </param>
+        /// <param name="content"> Content of the configuration. </param>
+        /// <param name="targetCondition"> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </param>
+        /// <param name="createdTimeUtc"> Creation time of the configuration. </param>
+        /// <param name="lastUpdatedTimeUtc"> Update time of the configuration. </param>
+        /// <param name="priority"> The priority number assigned to the configuration. </param>
+        /// <param name="systemMetrics"> Metrics calculated by IoT Hub that cannot be customized. </param>
+        /// <param name="metrics"> Custom metrics specified by developer as queries against twin reported properties. </param>
+        /// <param name="etag"> ETag of the configuration. </param>
         internal TwinConfiguration(string id, string schemaVersion, IDictionary<string, string> labels, ConfigurationContent content, string targetCondition, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, int? priority, ConfigurationMetrics systemMetrics, ConfigurationMetrics metrics, string etag)
         {
             Id = id;
@@ -45,27 +45,27 @@ namespace Azure.Iot.Hub.Service.Models
             Etag = etag;
         }
 
-        /// <summary> Gets Identifier for the configuration. </summary>
+        /// <summary> The unique identifier of the configuration. </summary>
         public string Id { get; set; }
-        /// <summary> Gets Schema version for the configuration. </summary>
+        /// <summary> Schema version of the configuration. </summary>
         public string SchemaVersion { get; set; }
-        /// <summary> Gets or sets labels for the configuration. </summary>
+        /// <summary> Key-value pairs used to describe a configuration. </summary>
         public IDictionary<string, string> Labels { get; set; }
-        /// <summary> Gets or sets Content for the configuration. </summary>
+        /// <summary> Content of the configuration. </summary>
         public ConfigurationContent Content { get; set; }
-        /// <summary> Gets or sets Target Condition for the configuration. </summary>
+        /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>
         public string TargetCondition { get; set; }
-        /// <summary> Gets creation time for the configuration. </summary>
+        /// <summary> Creation time of the configuration. </summary>
         public DateTimeOffset? CreatedTimeUtc { get; set; }
-        /// <summary> Gets last update time for the configuration. </summary>
+        /// <summary> Update time of the configuration. </summary>
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
-        /// <summary> Gets or sets Priority for the configuration. </summary>
+        /// <summary> The priority number assigned to the configuration. </summary>
         public int? Priority { get; set; }
-        /// <summary> System Configuration Metrics. </summary>
+        /// <summary> Metrics calculated by IoT Hub that cannot be customized. </summary>
         public ConfigurationMetrics SystemMetrics { get; set; }
-        /// <summary> Custom Configuration Metrics. </summary>
+        /// <summary> Custom metrics specified by developer as queries against twin reported properties. </summary>
         public ConfigurationMetrics Metrics { get; set; }
-        /// <summary> Gets or sets configuration&apos;s ETag. </summary>
+        /// <summary> ETag of the configuration. </summary>
         public string Etag { get; set; }
     }
 }
