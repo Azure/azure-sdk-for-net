@@ -12,6 +12,8 @@ jobs:
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
+      - name: SubscriptionConfiguration
+        value: ${{ parameters.SubscriptionConfiguration }}
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -60,7 +62,7 @@ jobs:
         parameters:
           Location: ${{ parameters.Location }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: ${{ parameters.SubscriptionConfiguration }}
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - script: >
           dotnet test eng/service.proj
