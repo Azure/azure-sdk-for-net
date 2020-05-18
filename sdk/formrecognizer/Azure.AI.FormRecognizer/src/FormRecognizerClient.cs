@@ -18,8 +18,6 @@ namespace Azure.AI.FormRecognizer
     /// </summary>
     public class FormRecognizerClient
     {
-        private const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
-
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         internal readonly ServiceClient ServiceClient;
 
@@ -94,7 +92,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(options, nameof(options));
 
             Diagnostics = new ClientDiagnostics(options);
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
             ServiceClient = new ServiceClient(Diagnostics, pipeline, endpoint.ToString());
         }
 

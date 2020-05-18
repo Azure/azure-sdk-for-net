@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var endpoint = new Uri("http://localhost");
 
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential)));
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential), new FormRecognizerClientOptions()));
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var endpoint = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(TokenCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential)));
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
         }
 
