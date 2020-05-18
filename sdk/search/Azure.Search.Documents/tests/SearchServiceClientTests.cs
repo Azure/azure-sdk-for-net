@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -396,7 +397,7 @@ namespace Azure.Search.Documents.Tests
             TimeSpan? timeout = null)
         {
             TimeSpan delay = TimeSpan.FromSeconds(10);
-            timeout ??= TimeSpan.FromMinutes(1);
+            timeout ??= TimeSpan.FromMinutes(5);
 
             using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
 
@@ -413,6 +414,21 @@ namespace Azure.Search.Documents.Tests
                     status.LastResult?.Status == IndexerExecutionStatus.Success)
                 {
                     return;
+                }
+                else if (status.Status == IndexerStatus.Error && status.LastResult is IndexerExecutionResult lastResult)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Error: {lastResult.ErrorMessage}");
+
+                    if (lastResult.Errors?.Count > 0)
+                    {
+                        foreach (SearchIndexerError error in lastResult.Errors)
+                        {
+                            sb.AppendLine($" ---> {error.ErrorMessage}");
+                        }
+                    }
+
+                    Assert.Fail(sb.ToString());
                 }
             }
         }
