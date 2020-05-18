@@ -19,6 +19,6 @@ namespace Azure.Core
 
         public THeaders Headers { get; }
 
-        public static implicit  operator Response(ResponseWithHeaders<THeaders> responseWithHeaders) => responseWithHeaders.GetRawResponse();
+        public static implicit operator Response(ResponseWithHeaders<THeaders> self) => self.GetRawResponse();
     }
 }
