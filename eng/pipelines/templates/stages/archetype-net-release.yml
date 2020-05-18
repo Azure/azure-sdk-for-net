@@ -95,13 +95,17 @@ stages:
                           TargetFolder: staging
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                         displayName: Stage artifacts
-                      - task: NuGetCommand@2
-                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-                        inputs:
-                          command: push
-                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
-                          nuGetFeedType: external
-                          publishFeedCredentials: Nuget.org
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      # - task: NuGetCommand@2
+                      #   displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                      #   inputs:
+                      #     command: push
+                      #     packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                      #     nuGetFeedType: external
+                      #     publishFeedCredentials: Nuget.org
                       - task: NuGetCommand@2
                         displayName: 'Publish to DevOps Feed'
                         inputs:
@@ -131,11 +135,15 @@ stages:
                           TargetFolder: staging
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                         displayName: Stage artifacts
-                      - task: MSBuild@1
-                        displayName: 'Upload Symbols for ${{artifact.name}}'
-                        inputs:
-                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      # - task: MSBuild@1
+                      #   displayName: 'Upload Symbols for ${{artifact.name}}'
+                      #   inputs:
+                      #     solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                      #     msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
         - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
           - deployment: PublicDocsMS
