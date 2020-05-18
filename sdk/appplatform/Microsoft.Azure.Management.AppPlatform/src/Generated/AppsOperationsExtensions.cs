@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static AppResource CreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource CreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> CreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> CreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the update operation
             /// </param>
-            public static AppResource Update(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource Update(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> UpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static AppResource BeginCreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource BeginCreateOrUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> BeginCreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> BeginCreateOrUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='appResource'>
             /// Parameters for the update operation
             /// </param>
-            public static AppResource BeginUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource))
+            public static AppResource BeginUpdate(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, appResource).GetAwaiter().GetResult();
             }
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppResource> BeginUpdateAsync(this IAppsOperations operations, string resourceGroupName, string serviceName, string appName, AppResource appResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, appResource, null, cancellationToken).ConfigureAwait(false))
                 {
