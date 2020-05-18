@@ -21,11 +21,13 @@ namespace Azure.Data.Tables
     {
         private readonly string _table;
         private readonly OdataMetadataFormat _format;
-        private readonly TableInternalClient _tableOperations;
+        private readonly TableRestClient _tableOperations;
+        private readonly string _version;
 
-        internal TableClient(string table, TableInternalClient tableOperations)
+        internal TableClient(string table, TableRestClient tableOperations, string version)
         {
             _tableOperations = tableOperations;
+            _version = version;
             _table = table;
             _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
         }
@@ -45,7 +47,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(_table, permissions, expiresOn) { Version = _tableOperations.version };
+            return new TableSasBuilder(_table, permissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(_table, rawPermissions, expiresOn) { Version = _tableOperations.version };
+            return new TableSasBuilder(_table, rawPermissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -358,7 +360,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return (await _tableOperations.RestClient.MergeEntityAsync(_table,
+            return (await _tableOperations.MergeEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -390,7 +392,7 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return _tableOperations.RestClient.MergeEntity(_table,
+            return _tableOperations.MergeEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -412,7 +414,7 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -426,7 +428,7 @@ namespace Azure.Data.Tables
             {
                 var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
@@ -454,7 +456,7 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response = _tableOperations.RestClient.QueryEntities(_table,
+                var response = _tableOperations.QueryEntities(_table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken);
 
@@ -468,7 +470,7 @@ namespace Azure.Data.Tables
             {
                 var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.RestClient.QueryEntities(
+                var response = _tableOperations.QueryEntities(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
@@ -496,7 +498,7 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -508,7 +510,7 @@ namespace Azure.Data.Tables
             {
                 var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
@@ -532,9 +534,9 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Pageable<T> Query<T>(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
-            return PageableHelpers.CreateEnumerable(_ =>
+            return PageableHelpers.CreateEnumerable((int? _) =>
             {
-                var response = _tableOperations.RestClient.QueryEntities(_table,
+                var response = _tableOperations.QueryEntities(_table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken);
 
@@ -546,7 +548,7 @@ namespace Azure.Data.Tables
             {
                 var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.RestClient.QueryEntities(
+                var response = _tableOperations.QueryEntities(
                     _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     nextPartitionKey: NextPartitionKey,
@@ -643,7 +645,7 @@ namespace Azure.Data.Tables
         public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
 
-        private static string CreateContinuationTokenFromHeaders(TableInternalQueryEntitiesHeaders headers)
+        private static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
         {
             if (headers.XMsContinuationNextPartitionKey == null && headers.XMsContinuationNextRowKey == null)
             {

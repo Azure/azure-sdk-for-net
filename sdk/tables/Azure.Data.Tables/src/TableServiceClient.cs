@@ -13,8 +13,9 @@ namespace Azure.Data.Tables
 {
     public class TableServiceClient
     {
-        private readonly TableInternalClient _tableOperations;
+        private readonly TableRestClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+        private readonly string _version;
 
         public TableServiceClient(Uri endpoint)
                 : this(endpoint, options: null)
@@ -59,14 +60,15 @@ namespace Azure.Data.Tables
             }
 
             var diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpointString);
+            _tableOperations = new TableRestClient(diagnostics, pipeline, endpointString);
+            _version = options.VersionString;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/>
         /// class for mocking.
         /// </summary>
-        internal TableServiceClient(TableInternalClient internalClient)
+        internal TableServiceClient(TableRestClient internalClient)
         {
             _tableOperations = internalClient;
         }
@@ -82,7 +84,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations);
+            return new TableClient(tableName, _tableOperations, _version);
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _tableOperations.RestClient.QueryAsync(
+                var response = await _tableOperations.QueryAsync(
                     null,
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
@@ -105,7 +107,7 @@ namespace Azure.Data.Tables
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
             {
-                var response = await _tableOperations.RestClient.QueryAsync(
+                var response = await _tableOperations.QueryAsync(
                        null,
                        nextTableName: nextLink,
                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
@@ -126,7 +128,7 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response = _tableOperations.RestClient.Query(
+                var response = _tableOperations.Query(
                     null,
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
@@ -134,7 +136,7 @@ namespace Azure.Data.Tables
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, (nextLink, _) =>
             {
-                var response = _tableOperations.RestClient.Query(
+                var response = _tableOperations.Query(
                        null,
                        nextTableName: nextLink,
                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },

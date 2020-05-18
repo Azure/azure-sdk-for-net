@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
-using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using Moq;
 using NUnit.Framework;
@@ -17,28 +14,20 @@ namespace Azure.Tables.Tests
 {
     public class TableClientTests : ClientTestBase
     {
-
         public TableClientTests(bool isAsync) : base(isAsync)
         { }
 
         private const string tableName = "someTableName";
-        internal Mock<TableInternalClient> mockClient { get; set; }
-        internal TableClient client_Instrumented { get; set; }
-        internal TableClient client { get; set; }
-        internal ClientDiagnostics _clientDiagnostics = new ClientDiagnostics(new TableClientOptions());
-        internal Dictionary<string, object> entityWithoutPK = new Dictionary<string, object> { { TableConstants.PropertyNames.RowKey, "row" } };
-        internal Dictionary<string, object> entityWithoutRK = new Dictionary<string, object> { { TableConstants.PropertyNames.PartitionKey, "partition" } };
-        internal Dictionary<string, object> validEntity = new Dictionary<string, object> { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
+        private TableClient client_Instrumented { get; set; }
+        private Dictionary<string, object> entityWithoutPK = new Dictionary<string, object> { { TableConstants.PropertyNames.RowKey, "row" } };
+        private Dictionary<string, object> entityWithoutRK = new Dictionary<string, object> { { TableConstants.PropertyNames.PartitionKey, "partition" } };
+        private Dictionary<string, object> validEntity = new Dictionary<string, object> { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
 
         [SetUp]
         public void TestSetup()
         {
-            mockClient = new Mock<TableInternalClient>();
-            var service_Instrumented = InstrumentClient(new TableServiceClient(mockClient.Object));
+            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com")));
             client_Instrumented = service_Instrumented.GetTableClient(tableName);
-
-            var service = new TableServiceClient(mockClient.Object);
-            client = service.GetTableClient(tableName);
         }
 
         /// <summary>
@@ -100,31 +89,6 @@ namespace Azure.Tables.Tests
 
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
-        }
-
-        [Test]
-        public async Task CreateCallsInternalCreate()
-        {
-            if (IsAsync)
-            {
-                mockClient
-                    .Setup(m => m.CreateAsync(It.IsAny<TableProperties>(), null, null, It.IsAny<QueryOptions>(), It.IsAny<CancellationToken>()))
-                    .ReturnsAsync(Response.FromValue(new TableResponse(tableName, null, null, null, null), Mock.Of<Response>()))
-                    .Verifiable();
-
-                await client.CreateAsync();
-            }
-            else
-            {
-                mockClient
-                    .Setup(m => m.Create(It.IsAny<TableProperties>(), null, null, It.IsAny<QueryOptions>(), It.IsAny<CancellationToken>()))
-                    .Returns(Response.FromValue(new TableResponse(tableName, null, null, null, null), Mock.Of<Response>()))
-                    .Verifiable();
-
-                client.Create();
-            }
-
-            mockClient.Verify();
         }
     }
 }
