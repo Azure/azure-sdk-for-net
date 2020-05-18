@@ -8,6 +8,7 @@
 .vs/
 *.lock.json
 developer/
+launch.json
 
 # Build results
 binaries/
