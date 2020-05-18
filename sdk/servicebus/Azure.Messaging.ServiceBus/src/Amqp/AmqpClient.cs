@@ -232,7 +232,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The token to use for service authorization.</returns>
         ///
-        private async Task<string> AquireAccessTokenAsync(CancellationToken cancellationToken)
+        private async Task<string> AcquireAccessTokenAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 

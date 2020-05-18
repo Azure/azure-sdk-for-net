@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSku class.
         /// </summary>
-        /// <param name="name">the Sku name of the resource.
-        /// the possible values: Basic; Premium. Possible values include:
-        /// 'Basic', 'Premium'</param>
+        /// <param name="name">The Sku name of the resource. The possible
+        /// values are: Basic or Premium. Possible values include: 'Basic',
+        /// 'Premium'</param>
         public ResourceSku(string name = default(string))
         {
             Name = name;
@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Sku name of the resource.
-        /// the possible values: Basic; Premium. Possible values include:
-        /// 'Basic', 'Premium'
+        /// Gets or sets the Sku name of the resource. The possible values are:
+        /// Basic or Premium. Possible values include: 'Basic', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

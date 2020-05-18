@@ -9,42 +9,42 @@ jobs:
         Linux (AzureCloud):
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetCoreApp (AzureCloud):
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetFramework (AzureCloud):
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         MacOs (AzureCloud):
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
         Windows_NetCoreApp (AzureUSGovernment):
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureUSGovernment
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
         Windows_NetFramework (AzureUSGovernment):
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureUSGovernment
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
         Windows_NetCoreApp (AzureChinaCloud):
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureChinaCloud
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
           ArmTemplateParameters: $(azureChinaCloudArmParameters)
         Windows_NetFramework (AzureChinaCloud):
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureChinaCloud
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
           ArmTemplateParameters: $(azureChinaCloudArmParameters)
 
     pool:
@@ -88,7 +88,7 @@ jobs:
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          CloudType: $(CloudType)
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
           ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
@@ -97,3 +97,4 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
