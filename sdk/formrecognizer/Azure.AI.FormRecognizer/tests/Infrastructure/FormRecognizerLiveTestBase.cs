@@ -18,11 +18,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
+        /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         protected FormTrainingClient CreateInstrumentedFormTrainingClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
