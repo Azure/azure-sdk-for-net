@@ -5,6 +5,10 @@
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
 - `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
 - `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
+- `TextAnalyticsError` property `Code` has been renamed to `ErrorCode` and it is an `TextAnalyticsErrorCode` instead of a string.
+- Single operation method `RecognizeEntitiesAsync` and `RecognizeEntities` now returns a `CategorizedEntityCollection`.
+- Single operation method `ExtractKeyPhrasesAsync` and `ExtractKeyPhrases` now returns a `KeyPhraseCollection`.
+- Single operation method `RecognizeLinkedEntitiesAsync` and `RecognizeLinkedEntities` now returns a `LinkedEntityCollection`.
 
 ### Added
 - Added `Text` property to `SentenceSentiment`.
