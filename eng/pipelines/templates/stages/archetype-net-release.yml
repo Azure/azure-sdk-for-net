@@ -157,12 +157,11 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
-                      - template: /eng/pipelines/templates/steps/stage-filtered-artifacts.yml
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: ${{artifact.safeName}}
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                        displayName: Stage artifacts
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
@@ -196,18 +195,16 @@ stages:
                   deploy:
                     steps:
                       - checkout: self
-                      - template: /eng/pipelines/templates/steps/stage-filtered-artifacts.yml
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
                           SourceFolder: Docs.${{artifact.name}}
                           TargetFolder: ${{artifact.safeName}}/packages
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                        displayName: Stage package artifacts for parsing
-                      - template: /eng/pipelines/templates/steps/stage-filtered-artifacts.yml
+                      - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
                           SourceFolder: Docs.${{artifact.name}}
                           TargetFolder: ${{artifact.safeName}}/Docs.${{artifact.name}}
                           FileFilter: '*'
-                        displayName: Stage documentation for publication
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
