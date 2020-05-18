@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
@@ -58,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerBadRequest
             try
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
             }
             catch (RequestFailedException e)
             {
@@ -81,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeFormContentFromFile
             using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
             {
-                Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
+                FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -103,7 +102,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
+                RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 /*
                  *
                  */
@@ -112,27 +111,39 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [Test]
-        [Ignore("Need to revisit how to pass the modelId. Issue https://github.com/Azure/azure-sdk-for-net/issues/11493")]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+
+            // Firstly, create a trained model we can use to recognize the custom form.
+
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+            // Proceed with the custom form recognition.
 
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
-            string modelId = "<your model id>";
+            string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
+                //@@ string modelId = "<modelId>";
+
+                RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 /*
                  *
                  */
             }
             #endregion
+
+            // Delete the model on completion to clean environment.
+            trainingClient.DeleteModel(model.ModelId);
         }
     }
 }

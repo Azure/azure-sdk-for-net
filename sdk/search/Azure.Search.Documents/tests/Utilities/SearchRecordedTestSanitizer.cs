@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -99,6 +99,13 @@ namespace Azure.Search.Documents.Tests
                 string encoded = JavaScriptEncoder.Default.Encode(value);
                 secrets.Add(encoded);
 
+                return SanitizeValue;
+            }
+
+            if (SearchTestEnvironment.SearchAdminKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase) ||
+                SearchTestEnvironment.SearchQueryKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                // No need to scan the body since they values should be found only in the header.
                 return SanitizeValue;
             }
 

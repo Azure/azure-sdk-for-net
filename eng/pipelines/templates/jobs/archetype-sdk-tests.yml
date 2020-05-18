@@ -17,40 +17,35 @@ jobs:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
         Linux:
-          OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp_ProjectReferences:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         MacOs:
-          OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     pool:
       vmImage: "$(OSVmImage)"
 
     steps:
+      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+      
       - ${{ parameters.PreSteps }}
 
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
@@ -67,11 +62,12 @@ jobs:
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx"
+          --logger "trx"
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false
@@ -89,12 +85,13 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testResultsFiles: "**/*.trx"
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true

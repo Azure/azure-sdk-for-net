@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -265,6 +265,33 @@ namespace Azure.Core.Tests
 
             StringAssert.DoesNotContain(body, text);
             StringAssert.Contains($"\"RequestBody\": null", text);
+        }
+
+        [Test]
+        public void RecordSessionLookupSkipsRequestBodyWhenFilterIsOn()
+        {
+            var request = new MockRequest();
+            request.Uri.Reset(new Uri("https://mockuri.com"));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A nice and long body."));
+            request.Headers.Add("Content-Type", "text/json");
+
+            HttpMessage message = new HttpMessage(request, null);
+            message.Response = new MockResponse(200);
+
+            var session = new RecordSession();
+            var recordTransport = new RecordTransport(session, Mock.Of<HttpPipelineTransport>(), entry => EntryRecordModel.RecordWithoutRequestBody, Mock.Of<Random>());
+
+            recordTransport.Process(message);
+
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body"));
+
+            var skipRequestBody = true;
+            var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);
+
+            playbackTransport.Process(message);
+
+            skipRequestBody = false;
+            Assert.Throws<InvalidOperationException>(() => playbackTransport.Process(message));
         }
 
         private class TestSanitizer : RecordedTestSanitizer

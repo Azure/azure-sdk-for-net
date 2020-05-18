@@ -1,6 +1,8 @@
 parameters:
   Artifacts: []
   ArtifactName: 'not-specified'
+  # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+  DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
 
 stages:
   - stage: Signing
@@ -75,13 +77,13 @@ stages:
 
           - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
-              displayName: Publish package to Nuget.org
+              displayName: Publish package to Nuget.org and DevOps Feed
               condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
               environment: nuget
               dependsOn: TagRepository
 
               pool:
-                vmImage: ubuntu-16.04
+                vmImage: ubuntu-18.04
 
               strategy:
                 runOnce:
@@ -100,6 +102,12 @@ stages:
                           packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
                           nuGetFeedType: external
                           publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        displayName: 'Publish to DevOps Feed'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
           - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
             - deployment: UploadSymbols
@@ -204,8 +212,26 @@ stages:
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
+      - pwsh: |
+          # For safety default to publishing to the private feed.
+          # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
+          $devopsFeedId = '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'
+          if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
+            # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+            $devopsFeedId = '${{ parameters.DevOpsFeedID }}'
+          }
+          echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
+          echo "Using DevopsFeedId = $devopsFeedId"
+        displayName: Setup DevOpsFeedId
+      - task: NuGetCommand@2
+        displayName: 'Publish to DevOps Feed'
+        inputs:
+          command: push
+          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
+          publishVstsFeed: $(DevOpsFeedID)
       - task: MSBuild@1
         displayName: 'Publish to blobfeed'
+        condition: and(succeeded(), eq('${{ parameters.DevOpsFeedID }}', variables['DevOpsFeedID']))
         inputs:
           solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
           msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'

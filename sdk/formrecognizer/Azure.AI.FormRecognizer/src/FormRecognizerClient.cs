@@ -19,11 +19,11 @@ namespace Azure.AI.FormRecognizer
     /// </summary>
     public class FormRecognizerClient
     {
-        internal readonly ServiceClient ServiceClient;
-        internal readonly ClientDiagnostics Diagnostics;
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        internal readonly ServiceRestClient ServiceClient;
 
-        private readonly Uri _endpoint;
-        private readonly AzureKeyCredential _credential;
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        internal readonly ClientDiagnostics Diagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
@@ -57,12 +57,20 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _endpoint = endpoint;
-            _credential = credential;
-
             Diagnostics = new ClientDiagnostics(options);
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(_credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(Diagnostics, pipeline, _endpoint.ToString());
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
+        /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        internal FormRecognizerClient(ClientDiagnostics diagnostics, ServiceRestClient serviceClient)
+        {
+            Diagnostics = diagnostics;
+            ServiceClient = serviceClient;
         }
 
         /// <summary>
@@ -90,7 +98,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.RestClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -110,7 +118,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -128,7 +136,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -146,7 +154,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -170,7 +178,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -190,7 +198,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -210,7 +218,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -230,7 +238,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
@@ -258,7 +266,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
 
@@ -282,7 +290,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
 
@@ -306,7 +314,7 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
 
@@ -330,22 +338,11 @@ namespace Azure.AI.FormRecognizer
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
 
         #endregion
-
-        #region Training client
-
-        /// <summary>
-        /// Gets an instance of a <see cref="FormTrainingClient"/> that shares the same endpoint, the same
-        /// credentials and the same set of <see cref="FormRecognizerClientOptions"/> this client has.
-        /// </summary>
-        /// <returns>A new instance of a <see cref="FormTrainingClient"/>.</returns>
-        public virtual FormTrainingClient GetFormTrainingClient() => new FormTrainingClient(ServiceClient);
-
-        #endregion Training client
 
         /// <summary>
         /// Used as part of argument validation. Detects the <see cref="ContentType"/> of a stream and

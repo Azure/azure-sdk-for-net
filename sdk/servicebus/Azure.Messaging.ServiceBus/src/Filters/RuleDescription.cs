@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -9,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
-    public sealed class RuleDescription : IEquatable<RuleDescription>
+    internal sealed class RuleDescription : IEquatable<RuleDescription>
     {
         /// <summary>
         /// Gets the name of the default rule on the subscription.
@@ -45,7 +46,8 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="filter">The filter expression used to match messages.</param>
         public RuleDescription(string name, Filter filter)
         {
-            Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
+            Argument.AssertNotNull(filter, nameof(filter));
+            Filter = filter;
             Name = name;
         }
 
@@ -58,7 +60,11 @@ namespace Azure.Messaging.ServiceBus.Filters
         {
             get => _filter;
 
-            set => _filter = value ?? throw Fx.Exception.ArgumentNull(nameof(Filter));
+            set
+            {
+                Argument.AssertNotNull(value, nameof(Filter));
+                _filter = value;
+            }
         }
 
         /// <summary>

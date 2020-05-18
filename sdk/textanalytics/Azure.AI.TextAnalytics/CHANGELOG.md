@@ -1,7 +1,14 @@
 # Release History
 
 ## 1.0.0-preview.5 (Unreleased)
+### Breaking changes
+- Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
+- `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
+- `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
 
+### Added
+- Added `Text` property to `SentenceSentiment`.
+- `Warnings` property added to each document-level response object returned from the endpoints. It is a list of `TextAnalyticsWarnings`.
 
 ## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes

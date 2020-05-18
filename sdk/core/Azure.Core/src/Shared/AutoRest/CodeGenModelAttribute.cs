@@ -8,13 +8,10 @@ using System;
 namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-    internal class CodeGenModelAttribute : Attribute
+    internal class CodeGenModelAttribute : CodeGenTypeAttribute
     {
-        public string OriginalName { get; }
-
-        public CodeGenModelAttribute(string originalName)
+        public CodeGenModelAttribute(string originalName): base(originalName)
         {
-            OriginalName = originalName;
         }
     }
 }

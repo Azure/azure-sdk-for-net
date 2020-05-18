@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Test.Shared
 {

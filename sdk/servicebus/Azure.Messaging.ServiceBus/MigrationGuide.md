@@ -137,7 +137,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
 await sender.SendAsync(message);
@@ -149,7 +149,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // get the message body as a string
-string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
 Console.WriteLine(body);
 ```
 
@@ -157,7 +157,18 @@ Console.WriteLine(body);
 
 In v4, `QueueClient`/`MessageSender`/`MessageReceiver` would be created directly, after which user would call `SendAsync()` method via `QueueClient`/`MessageSender` to send a batch of messages and `ReceiveAsync()` method via `MessageReceiver` to receive a batch of messages.
 
-In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. To send a batch of messages, user would call `CreateBatchAsync()` method to create `ServiceBusMessageBatch` and try to add messages to it using `TryAdd()` method. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendAsync()` via `ServiceBusSender`. To receive a batch of messages, user would call `ReceiveBatchAsync()` method via `ServiceBusReceiver`. 
+In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and 
+`CreateReceiver()` method to create a `ServiceBusReceiver`. There are two ways of sending several messages at once. 
+
+The first way uses the `SendAsync`overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will 
+attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are 
+too large to fit in a single batch, the operation will throw an exception. 
+
+The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, 
+which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot 
+fit in the batch, `TryAdd` will return false. If the `ServiceBusMessageBatch` accepts a message, user can be confident that 
+it will not violate size constraints when calling `SendAsync()` via `ServiceBusSender`. To receive a batch of messages, 
+user would call `ReceiveBatchAsync()` method via `ServiceBusReceiver`. 
 
 In v4:
 
@@ -200,8 +211,7 @@ await receiver.CloseAsync();
 ```
 
 In v7:
-
-```C# Snippet:ServiceBusSendAndReceiveBatch
+```C# Snippet:ServiceBusInitializeSend
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
@@ -209,15 +219,26 @@ await using var client = new ServiceBusClient(connectionString);
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// send the messages
+await sender.SendAsync(messages);
+```
 
-// create a message batch that we can send
+Or using the safe-batching feature:
+
+```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
 await sender.SendAsync(messageBatch);
+```
 
+And to receive a batch:
+```C# Snippet:ServiceBusReceiveBatch
 // create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -227,7 +248,7 @@ IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchA
 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 {
     // get the message body as a string
-    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
     Console.WriteLine(body);
 }
 ```

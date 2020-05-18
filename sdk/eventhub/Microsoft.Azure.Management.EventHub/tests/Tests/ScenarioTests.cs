@@ -6,6 +6,7 @@ namespace EventHub.Tests.ScenarioTests
 {
     using System.Net;
     using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
@@ -14,6 +15,7 @@ namespace EventHub.Tests.ScenarioTests
     {
         private ResourceManagementClient _resourceManagementClient;
         private EventHubManagementClient _EventHubManagementClient;
+        private KeyVaultManagementClient _KeyVaultManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         protected bool m_initialized = false;
@@ -33,6 +35,7 @@ namespace EventHub.Tests.ScenarioTests
                     {
                         _resourceManagementClient = EventHubManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _EventHubManagementClient = EventHubManagementHelper.GetEventHubManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _KeyVaultManagementClient = EventHubManagementHelper.GetKeyVaultManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }
@@ -52,6 +55,14 @@ namespace EventHub.Tests.ScenarioTests
             {               
                 return _EventHubManagementClient;
             }
-        }       
+        }
+
+        public KeyVaultManagementClient KeyVaultManagementClient
+        {
+            get
+            {
+                return _KeyVaultManagementClient;
+            }
+        }
     }
 }

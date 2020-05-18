@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of NetWorkRuleSet - IpRules resource.
+    /// The response from the List namespace operation.
     /// </summary>
     public partial class NWRuleSetIpRules
     {

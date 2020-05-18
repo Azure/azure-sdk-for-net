@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -173,8 +174,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
-            var timeoutHelper = new TimeoutHelper(timeout, true);
-            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            var stopWatch = ValueStopwatch.StartNew();
+            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
             var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
             AmqpSession amqpSession = null;
@@ -183,10 +184,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 amqpSession = connection.CreateSession(sessionSettings);
-                await amqpSession.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+                await amqpSession.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
-                controller = new Controller(amqpSession, timeoutHelper.RemainingTime());
-                await controller.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+                controller = new Controller(amqpSession, timeout.CalculateRemaining(stopWatch.GetElapsedTime()));
+                await controller.OpenAsync(timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -458,7 +459,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Create and open the link.
 
                 var linkSettings = new AmqpLinkSettings();
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
                 entityPath += '/' + AmqpClientConstants.ManagementAddress;
 
@@ -512,11 +513,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -629,11 +633,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -718,7 +725,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     linkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, entityPath);
                 }
 
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
                 var link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
@@ -754,11 +761,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -954,9 +964,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
             foreach (string resource in audience)
             {
-                cbsTokenExpiresAtUtc = TimeoutHelper.Min(
-                    cbsTokenExpiresAtUtc,
-                    await authLink.SendTokenAsync(TokenProvider, endpoint, resource, resource, requiredClaims, timeout).ConfigureAwait(false));
+                DateTime expiresAt =
+                    await authLink.SendTokenAsync(TokenProvider, endpoint, resource, resource, requiredClaims, timeout).ConfigureAwait(false);
+                if (expiresAt < cbsTokenExpiresAtUtc)
+                {
+                    cbsTokenExpiresAtUtc = expiresAt;
+                }
             }
             return cbsTokenExpiresAtUtc;
         }

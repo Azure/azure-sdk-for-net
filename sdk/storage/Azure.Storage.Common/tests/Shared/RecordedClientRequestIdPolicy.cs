@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Test.Shared
 {

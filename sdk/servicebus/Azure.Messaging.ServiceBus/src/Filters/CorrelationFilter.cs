@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -28,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>
     /// </remarks>
-    public sealed class CorrelationFilter : Filter
+    internal sealed class CorrelationFilter : Filter
     {
         internal PropertyDictionary properties;
 
@@ -47,11 +48,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         public CorrelationFilter(string correlationId)
             : this()
         {
-            if (string.IsNullOrWhiteSpace(correlationId))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(correlationId));
-            }
-
+            Argument.AssertNotNullOrWhiteSpace(correlationId, nameof(correlationId));
             CorrelationId = correlationId;
         }
 

@@ -12,18 +12,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> Base type for analyzers. </summary>
     public partial class LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
-        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public LexicalAnalyzer(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Name = name;
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>

@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/cancel").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -796,7 +796,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/exportTemplate").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -983,7 +983,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -5803,7 +5803,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -6007,7 +6007,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -6251,7 +6251,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/deployments/{deploymentName}/validate").ToString();
-            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{deploymentName}", System.Uri.EscapeDataString(deploymentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

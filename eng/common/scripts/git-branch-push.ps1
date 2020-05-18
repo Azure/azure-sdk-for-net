@@ -28,7 +28,7 @@ param(
     [string] $PushArgs = ""
 )
 
-Write-Host $MyInvocation.Line
+Write-Host "> $PSCommandPath $args"
 
 # This is necessay because of the janky git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
@@ -137,7 +137,6 @@ do
             }
         }
     }
-
 } while($needsRetry -and $tryNumber -le $numberOfRetries)
 
 if ($LASTEXITCODE -ne 0)

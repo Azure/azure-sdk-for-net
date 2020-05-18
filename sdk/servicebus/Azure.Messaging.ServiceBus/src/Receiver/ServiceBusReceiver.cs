@@ -133,6 +133,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode. <see cref="ReceiveMode"/> defaults to PeekLock mode.
+        /// This method doesn't guarantee to return exact `maxMessages` messages, even if there are `maxMessages` messages available in the queue or topic.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
@@ -148,6 +149,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            if (maxWaitTime.HasValue)
+            {
+                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.ReceiveMessageStart(Identifier, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;

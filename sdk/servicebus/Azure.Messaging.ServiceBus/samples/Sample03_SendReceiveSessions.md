@@ -17,7 +17,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a session message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"))
 {
     SessionId = "mySessionId"
 };
@@ -35,7 +35,7 @@ Console.WriteLine(receivedMessage.SessionId);
 
 // we can also set arbitrary session state using this receiver
 // the state is specific to the session, and not any particular message
-await receiver.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+await receiver.SetSessionStateAsync(Encoding.UTF8.GetBytes("some state"));
 
 // the state can be retrieved for the session as well
 byte[] state = await receiver.GetSessionStateAsync();
