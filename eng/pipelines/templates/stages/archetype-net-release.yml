@@ -66,7 +66,6 @@ stages:
                         SourceFolder: ${{parameters.ArtifactName}}-signed
                         TargetFolder: ${{artifact.safeName}}
                         FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                      displayName: Stage artifacts
                     - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
@@ -94,7 +93,6 @@ stages:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: staging
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                        displayName: Stage artifacts
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
                         workingDirectory: $(Pipeline.Workspace)
@@ -134,7 +132,6 @@ stages:
                           SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: staging
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
-                        displayName: Stage artifacts
                       - pwsh: |
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
                         workingDirectory: $(Pipeline.Workspace)
