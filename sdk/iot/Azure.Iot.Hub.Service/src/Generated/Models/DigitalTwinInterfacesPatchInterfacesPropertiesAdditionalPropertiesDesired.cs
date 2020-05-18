@@ -7,7 +7,7 @@
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired. </summary>
+    /// <summary> The desired property of the interface. </summary>
     public partial class DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired
     {
         /// <summary> Initializes a new instance of DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired. </summary>
