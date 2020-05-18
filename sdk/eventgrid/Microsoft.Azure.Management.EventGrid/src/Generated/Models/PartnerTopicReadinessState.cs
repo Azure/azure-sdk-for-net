@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 {
 
     /// <summary>
-    /// Defines values for InputSchemaMappingType.
+    /// Defines values for PartnerTopicReadinessState.
     /// </summary>
-    public static class InputSchemaMappingType
+    public static class PartnerTopicReadinessState
     {
-        public const string Json = "Json";
+        public const string NotActivatedByUserYet = "NotActivatedByUserYet";
+        public const string ActivatedByUser = "ActivatedByUser";
+        public const string DeactivatedByUser = "DeactivatedByUser";
+        public const string DeletedByUser = "DeletedByUser";
     }
 }
