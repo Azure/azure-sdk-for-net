@@ -225,6 +225,23 @@ namespace Azure.Storage.Test.Shared
                     new Uri($"{TestConfigDefault.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceSasCredentialsSnapshot(containerName: containerName, blobName: blobName, snapshot: snapshot, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
+        public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
+            => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
+
+        public TokenCredential GetTokenCredential_TargetKeyClient()
+            => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
+
+        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+            => new Security.KeyVault.Keys.KeyClient(
+                new Uri(config.VaultEndpoint),
+                GetKeyClientTokenCredential(config));
+
+        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => new Identity.ClientSecretCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
+
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,

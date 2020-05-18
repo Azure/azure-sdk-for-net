@@ -243,7 +243,14 @@ namespace Azure.Storage.Blobs.Specialized
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             string encryptionScope)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(
+                  blobUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics,
+                  customerProvidedKey,
+                  clientSideEncryption: default,
+                  encryptionScope)
         {
         }
 
@@ -1542,13 +1549,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         public static BlockBlobClient GetBlockBlobClient(
             this BlobContainerClient client,
-            string blobName) =>
-            new BlockBlobClient(
+            string blobName)
+        {
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
+            }
+            return new BlockBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);
+        }
     }
 }

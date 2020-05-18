@@ -42,5 +42,9 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidService(char s)
             => new ArgumentException($"Invalid service: '{s}'");
+
+        public static InvalidOperationException ClientSideEncryptionVersionNotSupported(string versionString = default)
+                => new InvalidOperationException("This library does not support the given version of client-side encryption." +
+                    versionString == default ? "" : $" Version ID = {versionString}");
     }
 }

@@ -192,7 +192,14 @@ namespace Azure.Storage.Blobs.Specialized
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             string encryptionScope)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(
+                  blobUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics,
+                  customerProvidedKey,
+                  clientSideEncryption: default,
+                  encryptionScope)
         {
         }
         #endregion ctors

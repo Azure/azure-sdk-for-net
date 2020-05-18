@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized.Models;
+using Azure.Storage.Cryptography;
+using Azure.Storage.Cryptography.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -74,6 +78,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// The name of the Encryption Scope to be used when sending requests.
@@ -204,6 +220,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -302,6 +319,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -325,6 +343,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption">Client-side encryption options.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobBaseClient(
             Uri blobUri,
@@ -332,6 +351,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope)
         {
             _uri = blobUri;
@@ -339,6 +359,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -370,7 +391,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
         }
 
         /// <summary>
@@ -643,9 +664,11 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
+                    EncryptedBlobRange encryptedRange = new EncryptedBlobRange(range);
+
                     // Start downloading the blob
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
-                        range,
+                        UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
                         conditions,
                         rangeGetContentHash,
                         async: async,
@@ -661,11 +684,11 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    response.Value.Content = RetriableStream.Create(
+                    stream = RetriableStream.Create(
                         stream,
                          startOffset =>
                             StartDownloadAsync(
-                                    range,
+                                    UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
                                     conditions,
                                     rangeGetContentHash,
                                     startOffset,
@@ -675,7 +698,7 @@ namespace Azure.Storage.Blobs.Specialized
                             .Item2,
                         async startOffset =>
                             (await StartDownloadAsync(
-                                range,
+                                UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
                                 conditions,
                                 rangeGetContentHash,
                                 startOffset,
@@ -685,6 +708,15 @@ namespace Azure.Storage.Blobs.Specialized
                             .Item2,
                         Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
+
+                    // if using clientside encryption, wrap the auto-retry stream in a decryptor
+                    // we already return a nonseekable stream; returning a crypto stream is fine
+                    if (UsingClientSideEncryption)
+                    {
+                        stream = await ClientSideDecryptInternal(stream, response.Value.Metadata, encryptedRange.OriginalRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    response.Value.Content = stream;
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
@@ -1201,7 +1233,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
 
@@ -2950,6 +2982,117 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion SetAccessTier
+
+        private async Task<Stream> ClientSideDecryptInternal(
+            Stream content,
+            Metadata metadata,
+            HttpRange originalRange,
+            string receivedContentRange,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            ContentRange? contentRange = string.IsNullOrWhiteSpace(receivedContentRange)
+                ? default
+                : ContentRange.Parse(receivedContentRange);
+
+            EncryptionData encryptionData = GetAndValidateEncryptionDataOrDefault(metadata);
+            if (encryptionData == default)
+            {
+                return content; // TODO readjust range
+            }
+
+            bool ivInStream = originalRange.Offset >= 16;
+
+            var plaintext = await Utility.DecryptInternal(
+                content,
+                encryptionData,
+                ivInStream,
+                ClientSideEncryption.KeyResolver,
+                ClientSideEncryption.KeyEncryptionKey,
+                CanIgnorePadding(contentRange),
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            // retrim start of stream to original requested location
+            // keeping in mind whether we already pulled the IV out of the stream as well
+            int gap = (int)(originalRange.Offset - (contentRange?.Start ?? 0))
+                - (ivInStream ? EncryptionConstants.EncryptionBlockSize : 0);
+            if (gap > 0)
+            {
+                // throw away initial bytes we want to trim off; stream cannot seek into future
+                if (async)
+                {
+                    await plaintext.ReadAsync(new byte[gap], 0, gap, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    plaintext.Read(new byte[gap], 0, gap);
+                }
+            }
+
+            if (originalRange.Length.HasValue)
+            {
+                plaintext = new WindowStream(plaintext, originalRange.Length.Value);
+            }
+
+            return plaintext;
+        }
+
+        internal static EncryptionData GetAndValidateEncryptionDataOrDefault(Metadata metadata)
+        {
+            if (metadata == default)
+            {
+                return default;
+            }
+            if (!metadata.TryGetValue(EncryptionConstants.EncryptionDataKey, out string encryptedDataString))
+            {
+                return default;
+            }
+
+            EncryptionData encryptionData = EncryptionData.Deserialize(encryptedDataString);
+
+            _ = encryptionData.ContentEncryptionIV ?? throw EncryptionErrors.MissingEncryptionMetadata(
+                nameof(EncryptionData.ContentEncryptionIV));
+            _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw EncryptionErrors.MissingEncryptionMetadata(
+                nameof(EncryptionData.WrappedContentKey.EncryptedKey));
+
+            return encryptionData;
+        }
+
+        /// <summary>
+        /// Gets whether to ignore padding options for decryption.
+        /// </summary>
+        /// <param name="contentRange">Downloaded content range.</param>
+        /// <returns>True if we should ignore padding.</returns>
+        /// <remarks>
+        /// If the last cipher block of the blob was returned, we need the padding. Otherwise, we can ignore it.
+        /// </remarks>
+        private static bool CanIgnorePadding(ContentRange? contentRange)
+        {
+            // if Content-Range not present, we requested the whole blob
+            if (!contentRange.HasValue)
+            {
+                return false;
+            }
+
+            // if range is wildcard, we requested the whole blob
+            if (!contentRange.Value.End.HasValue)
+            {
+                return false;
+            }
+
+            // blob storage will always return ContentRange.Size
+            // we don't have to worry about the impossible decision of what to do if it doesn't
+
+            // did we request the last block?
+            // end is inclusive/0-index, so end = n and size = n+1 means we requested the last block
+            if (contentRange.Value.Size - contentRange.Value.End == 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     /// <summary>
@@ -2977,6 +3120,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
+                client.ClientSideEncryption,
                 client.EncryptionScope);
     }
 }

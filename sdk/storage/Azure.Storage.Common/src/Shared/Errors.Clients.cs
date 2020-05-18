@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Security.Authentication;
 using Azure.Core.Pipeline;
 
@@ -83,6 +84,17 @@ namespace Azure.Storage
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
             }
+        }
+
+        public static class ClientSideEncryption
+        {
+            public static InvalidOperationException TypeNotSupported(Type type)
+                => new InvalidOperationException(
+                    $"Client-side encryption is not supported for type \"{type.FullName}\". " +
+                    "Please use a supported client type or create this client without specifying client-side encryption options.");
+
+            public static InvalidOperationException MissingRequiredEncryptionResources(params string[] resourceNames)
+                => new InvalidOperationException("Cannot encrypt without specifying " + string.Join(",", resourceNames.AsEnumerable()));
         }
     }
 }
