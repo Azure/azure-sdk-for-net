@@ -18,8 +18,8 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of FaultInjectionProperties. </summary>
-        /// <param name="iotHubName"> . </param>
-        /// <param name="connection"> . </param>
+        /// <param name="iotHubName"> Name of the IotHub. </param>
+        /// <param name="connection"> TODO: to be filled by the service team. </param>
         /// <param name="lastUpdatedTimeUtc"> Service generated. </param>
         internal FaultInjectionProperties(string iotHubName, FaultInjectionConnectionProperties connection, DateTimeOffset? lastUpdatedTimeUtc)
         {
@@ -28,7 +28,9 @@ namespace Azure.Iot.Hub.Service.Models
             LastUpdatedTimeUtc = lastUpdatedTimeUtc;
         }
 
+        /// <summary> Name of the IotHub. </summary>
         public string IotHubName { get; set; }
+        /// <summary> TODO: to be filled by the service team. </summary>
         public FaultInjectionConnectionProperties Connection { get; set; }
         /// <summary> Service generated. </summary>
         public DateTimeOffset? LastUpdatedTimeUtc { get; set; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The ModuleConnectionState. </summary>
+    /// <summary> Tells whether the module is connected or not. </summary>
     public readonly partial struct ModuleConnectionState : IEquatable<ModuleConnectionState>
     {
         private readonly string _value;
