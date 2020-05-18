@@ -21,22 +21,14 @@ namespace Microsoft.Azure.Management.AppPlatform
               {
                 new Tuple<string, string, string>("AppPlatform", "Apps", "2019-05-01-preview"),
                 new Tuple<string, string, string>("AppPlatform", "Bindings", "2019-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Certificates", "2019-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "CustomDomains", "2019-05-01-preview"),
                 new Tuple<string, string, string>("AppPlatform", "Deployments", "2019-05-01-preview"),
                 new Tuple<string, string, string>("AppPlatform", "Operations", "2019-05-01-preview"),
                 new Tuple<string, string, string>("AppPlatform", "Services", "2019-05-01-preview"),
+                new Tuple<string, string, string>("AppPlatform", "Sku", "2019-05-01-preview"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/appplatform/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\projects\\spring-service\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "191aa6f4e91585f08acf453f47817a36f1db9c69";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
