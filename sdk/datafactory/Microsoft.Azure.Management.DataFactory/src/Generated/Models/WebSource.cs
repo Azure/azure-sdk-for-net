@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for web page table.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("WebSource")]
     public partial class WebSource : CopySource
     {
         /// <summary>

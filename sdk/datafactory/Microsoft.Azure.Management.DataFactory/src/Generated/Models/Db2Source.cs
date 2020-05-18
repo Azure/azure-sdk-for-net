@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for Db2 databases.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Db2Source")]
     public partial class Db2Source : TabularSource
     {
         /// <summary>

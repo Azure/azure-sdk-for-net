@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The location of http server.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HttpServerLocation")]
     public partial class HttpServerLocation : DatasetLocation
     {
         /// <summary>

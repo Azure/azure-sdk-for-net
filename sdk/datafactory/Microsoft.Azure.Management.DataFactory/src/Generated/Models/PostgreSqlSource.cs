@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for PostgreSQL databases.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("PostgreSqlSource")]
     public partial class PostgreSqlSource : TabularSource
     {
         /// <summary>

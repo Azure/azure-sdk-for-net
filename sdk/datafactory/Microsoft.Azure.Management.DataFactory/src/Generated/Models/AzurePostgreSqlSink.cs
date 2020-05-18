@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure PostgreSQL sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzurePostgreSqlSink")]
     public partial class AzurePostgreSqlSink : CopySink
     {
         /// <summary>

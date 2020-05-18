@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Binary source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("BinarySource")]
     public partial class BinarySource : CopySource
     {
         /// <summary>

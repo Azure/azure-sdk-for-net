@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Salesforce Marketing Cloud source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SalesforceMarketingCloudSource")]
     public partial class SalesforceMarketingCloudSource : TabularSource
     {
         /// <summary>
