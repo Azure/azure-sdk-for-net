@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for an HTTP file.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HttpSource")]
     public partial class HttpSource : CopySource
     {
         /// <summary>

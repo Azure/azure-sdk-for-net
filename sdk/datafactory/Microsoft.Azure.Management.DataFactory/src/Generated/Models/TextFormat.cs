@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The data stored in text format.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TextFormat")]
     public partial class TextFormat : DatasetStorageFormat
     {
         /// <summary>

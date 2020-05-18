@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Mapping data flow.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MappingDataFlow")]
     [Rest.Serialization.JsonTransformation]
     public partial class MappingDataFlow : DataFlow
     {

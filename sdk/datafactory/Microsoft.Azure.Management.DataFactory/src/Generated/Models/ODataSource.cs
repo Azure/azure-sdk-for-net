@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for OData source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ODataSource")]
     public partial class ODataSource : CopySource
     {
         /// <summary>

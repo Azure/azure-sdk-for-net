@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Copy activity sources of tabular type.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TabularSource")]
     public partial class TabularSource : CopySource
     {
         /// <summary>

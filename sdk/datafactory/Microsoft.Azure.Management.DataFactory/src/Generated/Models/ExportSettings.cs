@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Export command settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ExportSettings")]
     public partial class ExportSettings
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure data lake store write settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureDataLakeStoreWriteSettings")]
     public partial class AzureDataLakeStoreWriteSettings : StoreWriteSettings
     {
         /// <summary>

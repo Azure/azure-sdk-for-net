@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Delimited text read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DelimitedTextReadSettings")]
     public partial class DelimitedTextReadSettings : FormatReadSettings
     {
         /// <summary>

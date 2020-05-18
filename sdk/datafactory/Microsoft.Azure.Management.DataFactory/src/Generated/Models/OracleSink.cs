@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Oracle sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OracleSink")]
     public partial class OracleSink : CopySink
     {
         /// <summary>

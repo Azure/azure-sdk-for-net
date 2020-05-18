@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The format definition of a storage.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DatasetStorageFormat")]
     public partial class DatasetStorageFormat
     {
         /// <summary>

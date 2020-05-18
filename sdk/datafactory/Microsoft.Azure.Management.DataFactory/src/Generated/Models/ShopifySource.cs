@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Shopify Service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ShopifySource")]
     public partial class ShopifySource : TabularSource
     {
         /// <summary>

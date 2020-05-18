@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure SQL Managed Instance source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SqlMISource")]
     public partial class SqlMISource : TabularSource
     {
         /// <summary>

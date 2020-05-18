@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The custom setup of setting environment variable.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("EnvironmentVariableSetup")]
     [Rest.Serialization.JsonTransformation]
     public partial class EnvironmentVariableSetup : CustomSetupBase
     {

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure data lake store read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AmazonS3ReadSettings")]
     public partial class AmazonS3ReadSettings : StoreReadSettings
     {
         /// <summary>

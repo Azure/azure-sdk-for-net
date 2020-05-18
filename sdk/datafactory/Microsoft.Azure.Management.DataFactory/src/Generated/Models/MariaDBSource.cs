@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity MariaDB server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MariaDBSource")]
     public partial class MariaDBSource : TabularSource
     {
         /// <summary>
