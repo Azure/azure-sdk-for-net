@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Compression read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CompressionReadSettings")]
     public partial class CompressionReadSettings
     {
         /// <summary>

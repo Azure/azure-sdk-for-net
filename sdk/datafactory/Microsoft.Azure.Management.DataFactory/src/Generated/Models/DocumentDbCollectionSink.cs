@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Document Database Collection sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DocumentDbCollectionSink")]
     public partial class DocumentDbCollectionSink : CopySink
     {
         /// <summary>

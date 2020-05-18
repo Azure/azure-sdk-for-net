@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Drill server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DrillSource")]
     public partial class DrillSource : TabularSource
     {
         /// <summary>

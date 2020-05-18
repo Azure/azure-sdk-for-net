@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Oracle Service Cloud source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OracleServiceCloudSource")]
     public partial class OracleServiceCloudSource : TabularSource
     {
         /// <summary>

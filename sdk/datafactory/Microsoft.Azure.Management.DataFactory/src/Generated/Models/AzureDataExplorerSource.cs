@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure Data Explorer (Kusto) source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureDataExplorerSource")]
     public partial class AzureDataExplorerSource : CopySource
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity sink for a CosmosDB (MongoDB API) database.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CosmosDbMongoDbApiSink")]
     public partial class CosmosDbMongoDbApiSink : CopySink
     {
         /// <summary>

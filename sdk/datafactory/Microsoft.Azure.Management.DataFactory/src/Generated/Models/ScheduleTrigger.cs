@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Trigger that creates pipeline runs periodically, on schedule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ScheduleTrigger")]
     [Rest.Serialization.JsonTransformation]
     public partial class ScheduleTrigger : MultiplePipelineTrigger
     {

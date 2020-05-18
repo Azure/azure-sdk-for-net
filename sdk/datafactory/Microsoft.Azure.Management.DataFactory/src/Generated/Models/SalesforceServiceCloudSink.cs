@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Salesforce Service Cloud sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SalesforceServiceCloudSink")]
     public partial class SalesforceServiceCloudSink : CopySink
     {
         /// <summary>

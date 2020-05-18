@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Informix sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("InformixSink")]
     public partial class InformixSink : CopySink
     {
         /// <summary>

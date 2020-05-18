@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure CosmosDB (SQL API) Collection source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CosmosDbSqlApiSource")]
     public partial class CosmosDbSqlApiSource : CopySource
     {
         /// <summary>

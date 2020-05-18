@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// HDFS read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HdfsReadSettings")]
     public partial class HdfsReadSettings : StoreReadSettings
     {
         /// <summary>

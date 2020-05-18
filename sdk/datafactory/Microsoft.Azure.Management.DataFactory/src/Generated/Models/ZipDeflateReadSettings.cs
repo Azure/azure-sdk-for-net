@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The ZipDeflate compression read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ZipDeflateReadSettings")]
     public partial class ZipDeflateReadSettings : CompressionReadSettings
     {
         /// <summary>

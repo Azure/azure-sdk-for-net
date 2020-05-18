@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Connector write settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("StoreWriteSettings")]
     public partial class StoreWriteSettings
     {
         /// <summary>
