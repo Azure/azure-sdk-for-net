@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Represents Twin properties. </summary>
+    /// <summary> The twin&apos;s desired and reported properties. The maximum depth of twin property objects is 10. </summary>
     public partial class TwinProperties
     {
         /// <summary> Initializes a new instance of TwinProperties. </summary>
@@ -18,17 +18,17 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of TwinProperties. </summary>
-        /// <param name="desired"> Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties. </param>
-        /// <param name="reported"> Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end. </param>
+        /// <param name="desired"> Properties that are set by the solution back end and read by the device. </param>
+        /// <param name="reported"> Properties that are set by the device, and read and queried by the solution back end. </param>
         internal TwinProperties(IDictionary<string, object> desired, IDictionary<string, object> reported)
         {
             Desired = desired;
             Reported = reported;
         }
 
-        /// <summary> Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties. </summary>
+        /// <summary> Properties that are set by the solution back end and read by the device. </summary>
         public IDictionary<string, object> Desired { get; set; }
-        /// <summary> Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end. </summary>
+        /// <summary> Properties that are set by the device, and read and queried by the solution back end. </summary>
         public IDictionary<string, object> Reported { get; set; }
     }
 }
