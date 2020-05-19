@@ -80,6 +80,7 @@ namespace Azure.Core.TestFramework
                 if (methodInfo.ContainsGenericParameters)
                 {
                     methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
+                    returnType = methodInfo.ReturnType;
                 }
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
@@ -186,31 +187,44 @@ namespace Azure.Core.TestFramework
             // only comparing the generic type or count and it's only enough
             // for the cases we have today.
             static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
-            MethodInfo GetMethodSlow() =>
-                invocation.TargetType
-                    // Start with all methods that have the right name
-                    .GetMethods(flags).Where(m => m.Name == nonAsyncMethodName)
-                    // Check if their type parameters have the same generic
-                    // type definitions (i.e., if I invoked
-                    // GetAsync<Model>(Wrapper<Model>) we want that to match
-                    // with Get<T>(Wrapper<T>)
-                    .Where(m =>
-                        m.GetParameters().Select(p => GenericDef(p.ParameterType))
-                        .SequenceEqual(types.Select(GenericDef)))
-                    // Check if they have the same number of type arguments
-                    // (all of our cases today either specialize on 0 or 1 type
-                    // argument for the static or dynamic user schema approach)
-                    .Where(m =>
+            MethodInfo GetMethodSlow()
+            {
+                var methods = invocation.TargetType
+                // Start with all methods that have the right name
+                .GetMethods(flags).Where(m => m.Name == nonAsyncMethodName);
+
+                // Check if their type parameters have the same generic
+                // type definitions (i.e., if I invoked
+                // GetAsync<Model>(Wrapper<Model>) we want that to match
+                // with Get<T>(Wrapper<T>)
+                var genericDefs = methods.Where(m =>
+                    m.GetParameters().Select(p => GenericDef(p.ParameterType))
+                    .SequenceEqual(types.Select(GenericDef)));
+
+                // If the previous check has any results, check if they have the same number of type arguments
+                // (all of our cases today either specialize on 0 or 1 type
+                // argument for the static or dynamic user schema approach)
+                // Else, close each GenericMethodDefinition and compare its paramter types.
+                var withSimilarGenericArguments = genericDefs.Any() ?
+                    genericDefs.Where(m =>
                         m.GetGenericArguments().Length ==
-                        invocation.Method.GetGenericArguments().Length)
-                    // Hopefully we're down to 1.  If you arrive here in the
-                    // future because SingleOrDefault threw, we need to make
-                    // the comparison logic more specific.  If you arrive here
-                    // because we're returning null, then we need to search
-                    // a little more broadly.  Either way, congratulations on
-                    // blazing new API patterns and taking us boldly into the
-                    // future.
-                    .SingleOrDefault();
+                        invocation.Method.GetGenericArguments().Length) :
+                    methods
+                        .Where(m => m.IsGenericMethodDefinition)
+                        .Select(m => m.MakeGenericMethod(invocation.GenericArguments))
+                        .Where(gm => gm.GetParameters().Select(p => p.ParameterType)
+                            .SequenceEqual(invocation.Method.GetParameters().Select(p => p.ParameterType)));
+
+                // Hopefully we're down to 1.  If you arrive here in the
+                // future because SingleOrDefault threw, we need to make
+                // the comparison logic more specific.  If you arrive here
+                // because we're returning null, then we need to search
+                // a little more broadly.  Either way, congratulations on
+                // blazing new API patterns and taking us boldly into the
+                // future.
+                return withSimilarGenericArguments.SingleOrDefault();
+            }
+
             try
             {
                 return invocation.TargetType.GetMethod(

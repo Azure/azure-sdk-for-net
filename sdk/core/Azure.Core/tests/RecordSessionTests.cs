@@ -283,7 +283,7 @@ namespace Azure.Core.Tests
 
             recordTransport.Process(message);
 
-            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body."));
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("A bad and longer body"));
 
             var skipRequestBody = true;
             var playbackTransport = new PlaybackTransport(session, new RecordMatcher(), new RecordedTestSanitizer(), Mock.Of<Random>(), entry => skipRequestBody);

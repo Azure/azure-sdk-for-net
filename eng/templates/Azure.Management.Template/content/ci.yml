@@ -19,7 +19,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/ProviderNameLowercase/
 
 pr:
   branches:
@@ -30,12 +30,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/ProviderNameLowercase/
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template
+    ServiceDirectory: ProviderNameLowercase
     ArtifactName: packages
     Artifacts:
     - name: Azure.Management.Template

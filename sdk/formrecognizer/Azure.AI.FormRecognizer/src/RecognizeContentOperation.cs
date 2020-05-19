@@ -15,16 +15,16 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing layout elements from forms.
     /// </summary>
-    public class RecognizeContentOperation : Operation<IReadOnlyList<FormPage>>
+    public class RecognizeContentOperation : Operation<FormPageCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceClient _serviceClient;
+        private readonly ServiceRestClient _serviceClient;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private IReadOnlyList<FormPage> _value;
+        private FormPageCollection _value;
 
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<FormPage> Value => OperationHelpers.GetValue(ref _value);
+        public override FormPageCollection Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeContentOperation(ServiceClient serviceClient, string operationLocation)
+        internal RecognizeContentOperation(ServiceRestClient serviceClient, string operationLocation)
         {
             _serviceClient = serviceClient;
 
@@ -79,11 +79,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<FormPageCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<FormPageCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <inheritdoc/>
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<FormPage> ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.Models
                 pages.Add(new FormPage(pageResults[pageIndex], rawPages, pageIndex));
             }
 
-            return pages;
+            return new FormPageCollection(pages);
         }
     }
 }

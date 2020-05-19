@@ -10,6 +10,8 @@ namespace EventHub.Tests.TestHelper
     using Microsoft.Azure.Management.EventHub.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
     using System.Security.Cryptography;
@@ -21,12 +23,16 @@ namespace EventHub.Tests.TestHelper
     public static class EventHubManagementHelper
     {
         internal const string ResourceGroupPrefix = "Default-EventHub-";
-        internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string NamespacePrefix = "sdk-NS-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string EventHubPrefix = "sdk-EventHub-";
         internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup-";
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
+        internal const string KeyVaultePrefix = "sdk-KeyVault-";
+
+        internal const string ResourceGroupCluster = "prod-by3-533-rg";
+        internal const string TestClusterName = "PMTestCluster";
 
 
         public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -35,7 +41,21 @@ namespace EventHub.Tests.TestHelper
             {
                 handler.IsPassThrough = true;
                 EventHubManagementClient nhManagementClient = context.GetServiceClient<EventHubManagementClient>(handlers: handler);
+                
                 return nhManagementClient;
+            }
+
+            return null;
+        }
+        
+
+        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+                KeyVaultManagementClient keyValutManagementClient = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
+                return keyValutManagementClient;
             }
 
             return null;

@@ -13,13 +13,22 @@ namespace Azure.Data.Tables
 {
     public class TableServiceClient
     {
-        private readonly TableInternalClient _tableOperations;
+        private readonly TableRestClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+        private readonly string _version;
 
         public TableServiceClient(Uri endpoint)
-                : this(endpoint, options: null) { }
+                : this(endpoint, options: null)
+        { }
+
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-            : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
+            : this(endpoint, default(TableSharedKeyPipelinePolicy), options)
+        {
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+            }
+        }
 
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
@@ -36,10 +45,7 @@ namespace Azure.Data.Tables
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            if (endpoint.Scheme != "https")
-            {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
-            }
+
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
             HttpPipeline pipeline;
@@ -54,7 +60,17 @@ namespace Azure.Data.Tables
             }
 
             var diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpointString);
+            _tableOperations = new TableRestClient(diagnostics, pipeline, endpointString);
+            _version = options.VersionString;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceClient"/>
+        /// class for mocking.
+        /// </summary>
+        internal TableServiceClient(TableRestClient internalClient)
+        {
+            _tableOperations = internalClient;
         }
 
         /// <summary>
@@ -66,7 +82,9 @@ namespace Azure.Data.Tables
 
         public virtual TableClient GetTableClient(string tableName)
         {
-            return new TableClient(tableName, _tableOperations);
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            return new TableClient(tableName, _tableOperations, _version);
         }
 
         /// <summary>
@@ -81,16 +99,18 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _tableOperations.RestClient.QueryAsync(
+                var response = await _tableOperations.QueryAsync(
+                    null,
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
             {
-                var response = await _tableOperations.RestClient.QueryAsync(
+                var response = await _tableOperations.QueryAsync(
                        null,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       nextTableName: nextLink,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                        cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -108,16 +128,18 @@ namespace Azure.Data.Tables
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response = _tableOperations.RestClient.Query(
+                var response = _tableOperations.Query(
+                    null,
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, (nextLink, _) =>
             {
-                var response = _tableOperations.RestClient.Query(
+                var response = _tableOperations.Query(
                        null,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       nextTableName: nextLink,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                        cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             });
@@ -132,7 +154,9 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
         {
-            var response = _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            var response = _tableOperations.Create(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
 
@@ -145,7 +169,9 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tableName, nameof(tableName));
+
+            var response = await _tableOperations.CreateAsync(new TableProperties(tableName), null, queryOptions: new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
         }
 

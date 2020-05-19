@@ -18,10 +18,10 @@ namespace Azure.Data.Tables.Models
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             writer.WriteStartElement("Start");
-            writer.WriteValue(Start, "S");
+            writer.WriteValue(Start, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("Expiry");
-            writer.WriteValue(Expiry, "S");
+            writer.WriteValue(Expiry, "O");
             writer.WriteEndElement();
             writer.WriteStartElement("Permission");
             writer.WriteValue(Permission);
@@ -36,11 +36,11 @@ namespace Azure.Data.Tables.Models
             string permission = default;
             if (element.Element("Start") is XElement startElement)
             {
-                start = startElement.GetDateTimeOffsetValue("S");
+                start = startElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Expiry") is XElement expiryElement)
             {
-                expiry = expiryElement.GetDateTimeOffsetValue("S");
+                expiry = expiryElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Permission") is XElement permissionElement)
             {

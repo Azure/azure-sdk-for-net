@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -18,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class FormTrainingClient
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceClient ServiceClient;
+        internal readonly ServiceRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -63,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             _diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
         }
 
         #region Training
@@ -71,40 +72,40 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
@@ -187,9 +188,19 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
+            Page<CustomFormModelInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                Response<Models_internal> response =  ServiceClient.ListCustomModels(cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            Page<CustomFormModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                Response<Models_internal> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -199,9 +210,19 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="CustomFormModelInfo"/> items.</returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
+            async Task<Page<CustomFormModelInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                Response<Models_internal> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            async Task<Page<CustomFormModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                Response<Models_internal> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -213,7 +234,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(cancellationToken);
+            Response<Models_internal> response = ServiceClient.GetCustomModels(cancellationToken);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
@@ -226,7 +247,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 

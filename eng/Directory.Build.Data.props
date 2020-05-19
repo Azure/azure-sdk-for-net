@@ -52,7 +52,7 @@
   <!-- TODO. REVIEW -->
   <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
     <NoWarn>
-      ($NoWarn);
+      $(NoWarn);
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
     </NoWarn>
