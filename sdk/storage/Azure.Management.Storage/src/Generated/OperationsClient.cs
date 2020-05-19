@@ -25,19 +25,16 @@ namespace Azure.Management.Storage
         protected OperationsClient()
         {
         }
-
         /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(TokenCredential tokenCredential, StorageManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal OperationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2019-06-01")
         {
-        }
-
-        /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(string host, TokenCredential tokenCredential, StorageManagementClientOptions options = null)
-        {
-            options ??= new StorageManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline, host: host);
+            RestClient = new OperationsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Lists all of the available Storage Rest API operations. </summary>

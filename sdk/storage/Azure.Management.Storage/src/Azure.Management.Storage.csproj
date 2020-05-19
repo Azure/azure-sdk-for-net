@@ -4,6 +4,6 @@
     <PackageId>Azure.Management.Storage</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsoft.Storage</Description>
     <PackageTags>azure;management;storage</PackageTags>
-    <NoWarn>$(NoWarn);AZC0008;CA1308</NoWarn>
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
   </PropertyGroup>
 </Project>

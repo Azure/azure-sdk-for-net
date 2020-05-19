@@ -20,11 +20,13 @@ namespace Azure.Management.Storage.Models
         /// <summary> Initializes a new instance of Encryption. </summary>
         /// <param name="services"> List of services which support encryption. </param>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </param>
+        /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
-        internal Encryption(EncryptionServices services, KeySource keySource, KeyVaultProperties keyVaultProperties)
+        internal Encryption(EncryptionServices services, KeySource keySource, bool? requireInfrastructureEncryption, KeyVaultProperties keyVaultProperties)
         {
             Services = services;
             KeySource = keySource;
+            RequireInfrastructureEncryption = requireInfrastructureEncryption;
             KeyVaultProperties = keyVaultProperties;
         }
 
@@ -32,6 +34,8 @@ namespace Azure.Management.Storage.Models
         public EncryptionServices Services { get; set; }
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </summary>
         public KeySource KeySource { get; set; }
+        /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
+        public bool? RequireInfrastructureEncryption { get; set; }
         /// <summary> Properties provided by key vault. </summary>
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }

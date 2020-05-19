@@ -22,6 +22,11 @@ namespace Azure.Management.Storage.Models
             }
             writer.WritePropertyName("keySource");
             writer.WriteStringValue(KeySource.ToString());
+            if (RequireInfrastructureEncryption != null)
+            {
+                writer.WritePropertyName("requireInfrastructureEncryption");
+                writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
+            }
             if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyvaultproperties");
@@ -34,6 +39,7 @@ namespace Azure.Management.Storage.Models
         {
             EncryptionServices services = default;
             KeySource keySource = default;
+            bool? requireInfrastructureEncryption = default;
             KeyVaultProperties keyvaultproperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,6 +57,15 @@ namespace Azure.Management.Storage.Models
                     keySource = new KeySource(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("requireInfrastructureEncryption"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requireInfrastructureEncryption = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("keyvaultproperties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -61,7 +76,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new Encryption(services, keySource, keyvaultproperties);
+            return new Encryption(services, keySource, requireInfrastructureEncryption, keyvaultproperties);
         }
     }
 }
