@@ -1,28 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Core.Spatial
 {
     /// <summary>
     ///
     /// </summary>
-    public sealed class Point : Geometry
+    public sealed class MultiPolygon : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="position"></param>
-        public Point(Position position)
+        /// <param name="polygons"></param>
+        public MultiPolygon(IEnumerable<Polygon> polygons)
         {
-            Position = position;
+            Polygons = polygons.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public Position Position { get; }
-
-        /// <inheritdoc />
-        public override string ToString() => $"Point: {Position}";
+        public IReadOnlyList<Polygon> Polygons { get; }
     }
 }

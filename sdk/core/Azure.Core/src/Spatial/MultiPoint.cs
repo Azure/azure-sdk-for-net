@@ -1,28 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Core.Spatial
 {
     /// <summary>
     ///
     /// </summary>
-    public sealed class Point : Geometry
+    public sealed class MultiPoint : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="position"></param>
-        public Point(Position position)
+        /// <param name="points"></param>
+        public MultiPoint(IEnumerable<Point> points)
         {
-            Position = position;
+            Points = points.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public Position Position { get; }
-
-        /// <inheritdoc />
-        public override string ToString() => $"Point: {Position}";
+        public IReadOnlyList<Point> Points { get; }
     }
 }
