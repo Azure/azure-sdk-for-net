@@ -4,11 +4,23 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ## Getting started
 
-To create an authenticated client and interact with Azure resources, please [see this document](https://github.com/Azure/azure-sdk-for-net/edit/nickzhums-track2-mgmt/doc/mgmt_preview_quickstart.md)
+To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
 
-## Install the package
+### Install the package
 
-Intall this package on Nuget
+Install the Azure Management Compute client library for .NET with [NuGet](https://www.nuget.org/):
+
+```PowerShell
+Install-Package Azure.Management.Compute
+```
+
+## Documentation
+
+Various documentation are provided to help you learn how to use this package
+
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md)
 
 ## Need help?
 
