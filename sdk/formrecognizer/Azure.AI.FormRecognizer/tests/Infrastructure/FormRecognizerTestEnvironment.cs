@@ -42,6 +42,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
         private const string FormFilename = "Form_1.jpg";
 
+        /// <summary>The name of the PDF file which contains the multipage form to be used for tests.</summary>
+        private const string MultipageFormFilename = "multipage_invoice_noblank.pdf";
+
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
@@ -84,6 +87,18 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <value>The URI string to the JPG file.</value>
         public static string JpgReceiptUri => CreateUri(JpgReceiptFilename);
+
+        /// <summary>
+        /// The relative path to the PDF file which contains the multipage form to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the PDF file.</value>
+        public static string MultipageFormPath => CreatePath(MultipageFormFilename);
+
+        /// <summary>
+        /// The URI string to the PDF file which contains the multipage form to be used for tests.
+        /// </summary>
+        /// <value>The URI string to the PDF file.</value>
+        public static string MultipageFormUri => CreateUri(MultipageFormFilename);
 
         /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.

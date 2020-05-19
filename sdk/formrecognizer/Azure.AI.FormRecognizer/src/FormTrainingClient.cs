@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -18,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class FormTrainingClient
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceClient ServiceClient;
+        internal readonly ServiceRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -63,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             _diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
@@ -139,7 +140,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
 
-            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
@@ -224,7 +225,17 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetCustomModels(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
+            Page<CustomFormModelInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                Response<Models_internal> response =  ServiceClient.ListCustomModels(cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            Page<CustomFormModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                Response<Models_internal> response = ServiceClient.ListCustomModelsNextPage(nextLink, cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -236,7 +247,17 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetCustomModelsAsync(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
+            async Task<Page<CustomFormModelInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                Response<Models_internal> response = await ServiceClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            async Task<Page<CustomFormModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                Response<Models_internal> response = await ServiceClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -248,7 +269,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(cancellationToken);
+            Response<Models_internal> response = ServiceClient.GetCustomModels(cancellationToken);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
@@ -261,7 +282,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await ServiceClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 

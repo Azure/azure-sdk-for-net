@@ -86,7 +86,7 @@ $pkgs = VerifyPackages -pkgRepository $Repository `
   -workingDirectory $WorkDirectory `
   -apiUrl $apiUrl `
   -releaseSha $ReleaseSHA `
-  -exitOnError $False
+  -continueOnError $True
 
 if ($pkgs) {
   Write-Host "Given the visible artifacts, readmes will be copied for the following packages"

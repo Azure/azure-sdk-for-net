@@ -25,19 +25,16 @@ namespace Azure.Management.Network
         protected PrivateLinkServicesClient()
         {
         }
-
         /// <summary> Initializes a new instance of PrivateLinkServicesClient. </summary>
-        public PrivateLinkServicesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal PrivateLinkServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of PrivateLinkServicesClient. </summary>
-        public PrivateLinkServicesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new PrivateLinkServicesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new PrivateLinkServicesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the specified private link service by resource group. </summary>

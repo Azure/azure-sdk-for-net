@@ -25,19 +25,16 @@ namespace Azure.Management.Compute
         protected DiskEncryptionSetsClient()
         {
         }
-
         /// <summary> Initializes a new instance of DiskEncryptionSetsClient. </summary>
-        public DiskEncryptionSetsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal DiskEncryptionSetsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of DiskEncryptionSetsClient. </summary>
-        public DiskEncryptionSetsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
-        {
-            options ??= new ComputeManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new DiskEncryptionSetsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new DiskEncryptionSetsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets information about a disk encryption set. </summary>

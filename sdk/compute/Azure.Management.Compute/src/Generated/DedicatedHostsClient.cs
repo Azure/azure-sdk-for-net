@@ -25,19 +25,16 @@ namespace Azure.Management.Compute
         protected DedicatedHostsClient()
         {
         }
-
         /// <summary> Initializes a new instance of DedicatedHostsClient. </summary>
-        public DedicatedHostsClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal DedicatedHostsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of DedicatedHostsClient. </summary>
-        public DedicatedHostsClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
-        {
-            options ??= new ComputeManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new DedicatedHostsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new DedicatedHostsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Retrieves information about a dedicated host. </summary>

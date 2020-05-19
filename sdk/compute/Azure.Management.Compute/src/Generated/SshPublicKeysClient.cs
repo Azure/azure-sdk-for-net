@@ -25,19 +25,16 @@ namespace Azure.Management.Compute
         protected SshPublicKeysClient()
         {
         }
-
         /// <summary> Initializes a new instance of SshPublicKeysClient. </summary>
-        public SshPublicKeysClient(string subscriptionId, TokenCredential tokenCredential, ComputeManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal SshPublicKeysClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of SshPublicKeysClient. </summary>
-        public SshPublicKeysClient(string subscriptionId, string host, TokenCredential tokenCredential, ComputeManagementClientOptions options = null)
-        {
-            options ??= new ComputeManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new SshPublicKeysRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new SshPublicKeysRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Creates a new SSH public key resource. </summary>

@@ -391,10 +391,10 @@ namespace Azure.Storage.Blobs.Specialized
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
         ///// </summary>
         ///// /// <remarks>
-        ///// Pass null or empty string to remove the verion ID returning a URL to the base blob.
+        ///// Pass null or empty string to remove the version ID returning a URL to the base blob.
         ///// </remarks>
         ///// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
-        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the verionId.</returns>
+        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the versionId.</returns>
         //public virtual BlobBaseClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobBaseClient WithVersionIdImpl(string versionId)
@@ -503,12 +503,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -552,12 +552,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -600,12 +600,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the blob in the specified
+        /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -712,7 +712,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// donwloading this blob.
+        /// downloading this blob.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -1160,7 +1160,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// This operation will download a blob of arbitrary size by downloading it as indiviually staged
+        /// This operation will download a blob of arbitrary size by downloading it as individually staged
         /// partitions if it's larger than the
         /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
@@ -2623,7 +2623,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshot"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -2659,7 +2659,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.
@@ -2695,7 +2695,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateSnapshotInternal"/> operation creates a
         /// read-only snapshot of a blob.
         ///
-        /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob snapshot.

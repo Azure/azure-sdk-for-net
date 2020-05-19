@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizeContentOperation : Operation<FormPageCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceClient _serviceClient;
+        private readonly ServiceRestClient _serviceClient;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeContentOperation(ServiceClient serviceClient, string operationLocation)
+        internal RecognizeContentOperation(ServiceRestClient serviceClient, string operationLocation)
         {
             _serviceClient = serviceClient;
 
