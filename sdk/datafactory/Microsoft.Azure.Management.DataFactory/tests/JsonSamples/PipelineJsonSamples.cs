@@ -6366,5 +6366,86 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyWithTypeConversion = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"" : ""Copy from CSV to SQL DW with Copy Command"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""rowDelimiter"": ""\n"",
+              ""quoteChar"": ""\"""",
+              ""escapeChar"": ""\""""
+            }
+          },
+          ""sink"": {
+            ""type"": ""SqlSink""
+          },
+          ""translator"": {
+            ""type"": ""TabularTranslator"",
+            ""mappings"": [
+              {
+                ""source"": {
+                  ""ordinal"": 3
+                },
+                ""sink"": {
+                  ""name"": ""CustomerName""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 2
+                },
+                ""sink"": {
+                  ""name"": ""CustomerAddress""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 1
+                },
+                ""sink"": {
+                  ""name"": ""CustomerDate""
+                }
+              }
+            ],
+            ""typeConversion"": true,
+            ""typeConversionSettings"": {
+              ""allowDataTruncation"": false,
+              ""dateTimeFormat"": ""MM/dd/yyyy HH:mm""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
     }
 }
