@@ -31,9 +31,12 @@ namespace Billing.Tests.ScenarioTests
             {
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                
+                // Set the subscription id.
+                billingMgmtClient.SubscriptionId = BillingSubscriptionName;
 
                 // Get the agreements
-                var billingSubscription = billingMgmtClient.BillingSubscriptions.Get(BillingAccountName, BillingSubscriptionName);
+                var billingSubscription = billingMgmtClient.BillingSubscriptions.Get(BillingAccountName);
 
                 // Verify the response
                 Assert.NotNull(billingSubscription);
