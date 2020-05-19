@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceClient(Diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
         }
 
         /// <summary>
