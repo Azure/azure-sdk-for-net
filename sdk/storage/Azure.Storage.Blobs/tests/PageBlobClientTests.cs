@@ -1230,6 +1230,56 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("#9855: Not possible to programmatically create a Managed Disk account")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewNonAsciiBlobName()));
+            await blob.CreateAsync(4 * Constants.KB, 0).ConfigureAwait(false);
+
+            // Upload some Pages
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Create prevSnapshot
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+            uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+            // Upload additional Pages
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // create snapshot
+            response = await blob.CreateSnapshotAsync();
+            string snapshot = response.Value.Snapshot;
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                previousSnapshotUri: uriBuilder.Uri);
+
+            // Assert
+            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            HttpRange range = result.Value.PageRanges.First();
+
+            Assert.AreEqual(2 * Constants.KB, range.Offset);
+            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+        }
+
         [Test]
         public async Task ResizeAsync()
         {
