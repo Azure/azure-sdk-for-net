@@ -3,19 +3,20 @@ using Microsoft.Azure.Management.MixedReality.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
+using System.Diagnostics;
 using System.Net;
 using Xunit;
 
 namespace MixedReality.Tests
 {
-    public sealed class SpatialAnchorsAccountTests : MixedRealityTests
+    public sealed class RemoteRenderingAccountTests : MixedRealityTests
     {
-        public const string SpatialAnchorsAccountName = "NetSdkTests";
+        public const string RemoteRenderingAccountName = "NetSdkTests";
         public const string Location = "EastUs2";
 
         [Fact]
-        [Trait("Name", "TestSpatialAnchorsAccountOperations")]
-        public void TestSpatialAnchorsAccountOperations()
+        [Trait("Name", "TestRemoteRenderingAccountOperations")]
+        public void TestRemoteRenderingAccountOperations()
         {
             var resourceGroup = new ResourceGroup
             {
@@ -23,31 +24,31 @@ namespace MixedReality.Tests
                 Location = Location
             };
 
-            var account = new SpatialAnchorsAccount
+            var account = new RemoteRenderingAccount
             {
-                Location = Location
+                Location = Location,
             };
 
             using (var context = StartTest())
             {
-                var operations = Client.SpatialAnchorsAccounts;
+                var operations = Client.RemoteRenderingAccounts;
 
                 try
                 {
                     resourceGroup = ArmClient.ResourceGroups.CreateOrUpdate(resourceGroup.Name, resourceGroup);
 
                     // Create
-                    AssertSpatialAnchorsAccountNotExist(operations, resourceGroup.Name, SpatialAnchorsAccountName);
+                    AssertRemoteRenderingAccountNotExist(operations, resourceGroup.Name, RemoteRenderingAccountName);
 
-                    account = operations.Create(resourceGroup.Name, SpatialAnchorsAccountName, account);
+                    account = operations.Create(resourceGroup.Name, RemoteRenderingAccountName, account);
 
-                    Assert.Equal(SpatialAnchorsAccountName, account.Name);
+                    Assert.Equal(RemoteRenderingAccountName, account.Name);
                     Assert.Equal(Location, account.Location);
 
                     // Read
-                    account = operations.Get(resourceGroup.Name, SpatialAnchorsAccountName);
+                    account = operations.Get(resourceGroup.Name, RemoteRenderingAccountName);
 
-                    Assert.Equal(SpatialAnchorsAccountName, account.Name);
+                    Assert.Equal(RemoteRenderingAccountName, account.Name);
                     Assert.Equal(Location, account.Location);
 
                     // Primary Key
@@ -63,23 +64,27 @@ namespace MixedReality.Tests
                     // Delete
                     operations.Delete(resourceGroup.Name, account.Name);
 
-                    AssertSpatialAnchorsAccountNotExist(operations, resourceGroup.Name, SpatialAnchorsAccountName);
+                    AssertRemoteRenderingAccountNotExist(operations, resourceGroup.Name, RemoteRenderingAccountName);
+                }
+                catch (CloudException e)
+                {
+                    Debug.Print(e.ToString());
                 }
                 finally
                 {
                     // Delete is idempotent
-                    operations.Delete(resourceGroup.Name, SpatialAnchorsAccountName);
+                    operations.Delete(resourceGroup.Name, RemoteRenderingAccountName);
 
                     ArmClient.ResourceGroups.Delete(resourceGroup.Name);
                 }
             }
         }
 
-        private static void AssertSpatialAnchorsAccountNotExist(ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName)
+        private static void AssertRemoteRenderingAccountNotExist(IRemoteRenderingAccountsOperations operations, string resourceGroupName, string remoteRenderingAccountName)
         {
             try
             {
-                operations.Get(resourceGroupName, spatialAnchorsAccountName);
+                operations.Get(resourceGroupName, remoteRenderingAccountName);
             }
             catch (CloudException e)
             {
