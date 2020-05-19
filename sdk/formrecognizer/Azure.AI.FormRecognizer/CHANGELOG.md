@@ -16,6 +16,10 @@
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 
+### Added
+
+- `FormRecognizerClient` and `FormTrainingClient` support authentication with Azure Active Directory.
+
 ### Fixes
 
 - Custom form recognition without labels can now handle multipaged forms.

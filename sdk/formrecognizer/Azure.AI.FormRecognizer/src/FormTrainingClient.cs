@@ -67,6 +67,41 @@ namespace Azure.AI.FormRecognizer.Training
             ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormTrainingClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new FormRecognizerClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormTrainingClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            _diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
+        }
+
         #region Training
 
         /// <summary>

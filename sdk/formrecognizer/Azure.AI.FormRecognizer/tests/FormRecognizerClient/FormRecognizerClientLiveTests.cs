@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -33,16 +34,46 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
+        /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedFormRecognizerClient()
+        private FormRecognizerClient CreateInstrumentedFormRecognizerClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-
             var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            var client = new FormRecognizerClient(endpoint, credential, options);
+            FormRecognizerClient client;
+
+            if (useTokenCredential)
+            {
+                client = new FormRecognizerClient(endpoint, TestEnvironment.Credential, options);
+            }
+            else
+            {
+                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                client = new FormRecognizerClient(endpoint, credential, options);
+            }
 
             return InstrumentClient(client);
+        }
+
+        [Test]
+        public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateInstrumentedFormRecognizerClient(useTokenCredential: true);
+            RecognizeContentOperation operation;
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+            var formPage = formPages.Single();
+
+            Assert.Greater(formPage.Lines.Count, 0);
+            Assert.AreEqual("Contoso", formPage.Lines[0].Text);
         }
 
         /// <summary>
