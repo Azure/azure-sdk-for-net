@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
@@ -220,7 +221,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Suggesters =
                 {
                     // Suggest query terms from both the hotelName and description fields.
-                    new Suggester("sg", "hotelName", "description")
+                    new SearchSuggester("sg", "hotelName", "description")
                 }
             };
 

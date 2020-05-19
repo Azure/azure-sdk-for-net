@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language to use for a stemmer token filter. </summary>
     public enum StemmerTokenFilterLanguage

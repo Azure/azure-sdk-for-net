@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Scripts that can be ignored by CjkBigramTokenFilter. </summary>
     public enum CjkBigramTokenFilterScripts

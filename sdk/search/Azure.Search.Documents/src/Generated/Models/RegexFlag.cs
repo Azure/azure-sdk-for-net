@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines flags that can be combined to control how regular expressions are used in the pattern analyzer and pattern tokenizer. </summary>
     public readonly partial struct RegexFlag : IEquatable<RegexFlag>

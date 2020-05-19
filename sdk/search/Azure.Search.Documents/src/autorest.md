@@ -127,3 +127,15 @@ directive:
 
     return $;
 ```
+
+### Move service models to Azure.Search.Documents.Indexes.Models
+
+Models in searchservice.json should be moved to Azure.Search.Documents.Indexes.Models.
+
+```yaml
+directive:
+  from: searchservice.json
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Search.Documents.Indexes.Models"
+```

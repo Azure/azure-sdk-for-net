@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language tokenizer. </summary>
     public enum MicrosoftTokenizerLanguage

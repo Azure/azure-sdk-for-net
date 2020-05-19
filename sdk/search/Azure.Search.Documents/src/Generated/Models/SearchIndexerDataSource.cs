@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
     public partial class SearchIndexerDataSource
