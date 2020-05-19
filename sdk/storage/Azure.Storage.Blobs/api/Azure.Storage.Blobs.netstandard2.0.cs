@@ -914,6 +914,11 @@ namespace Azure.Storage.Blobs.Models
 }
 namespace Azure.Storage.Blobs.Specialized
 {
+    public partial class AdvancedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
+    {
+        public AdvancedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
+    }
     public partial class AppendBlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
         protected AppendBlobClient() { }

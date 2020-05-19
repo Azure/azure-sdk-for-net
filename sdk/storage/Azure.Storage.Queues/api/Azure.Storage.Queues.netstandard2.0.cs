@@ -315,6 +315,14 @@ namespace Azure.Storage.Queues.Models
         public string PopReceipt { get { throw null; } }
     }
 }
+namespace Azure.Storage.Queues.Specialized
+{
+    public partial class AdvancedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
+    {
+        public AdvancedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
+    }
+}
 namespace Azure.Storage.Sas
 {
     [System.FlagsAttribute]

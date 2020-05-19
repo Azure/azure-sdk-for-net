@@ -18048,7 +18048,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The service error response object.
         /// </summary>
-        public Azure.Storage.Blobs.Models.Error Error { get; internal set; }
+        public Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails DataLakeStorageErrorDetails { get; internal set; }
 
         /// <summary>
         /// Creates a new DataLakeStorageError instance
@@ -18066,7 +18066,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Error = new Azure.Storage.Blobs.Models.Error();
+                DataLakeStorageErrorDetails = new Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails();
             }
         }
 
@@ -18083,7 +18083,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("error", ""));
             if (_child != null)
             {
-                _value.Error = Azure.Storage.Blobs.Models.Error.FromXml(_child);
+                _value.DataLakeStorageErrorDetails = Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -18093,6 +18093,59 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class DataLakeStorageError
+
+#region class DataLakeStorageErrorDetails
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The service error response object.
+    /// </summary>
+    internal partial class DataLakeStorageErrorDetails
+    {
+        /// <summary>
+        /// The service error code.
+        /// </summary>
+        public string Code { get; internal set; }
+
+        /// <summary>
+        /// The service error message.
+        /// </summary>
+        public string Message { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DataLakeStorageErrorDetails instances.
+        /// You can use BlobsModelFactory.DataLakeStorageErrorDetails instead.
+        /// </summary>
+        internal DataLakeStorageErrorDetails() { }
+
+        /// <summary>
+        /// Deserializes XML into a new DataLakeStorageErrorDetails instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized DataLakeStorageErrorDetails instance.</returns>
+        internal static Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails _value = new Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails();
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
+            if (_child != null)
+            {
+                _value.Message = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails value);
+    }
+}
+#endregion class DataLakeStorageErrorDetails
 
 #region enum DeleteSnapshotsOption
 namespace Azure.Storage.Blobs.Models
@@ -19849,58 +19902,5 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class UserDelegationKey
-
-#region class Error
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The service error response object.
-    /// </summary>
-    internal partial class Error
-    {
-        /// <summary>
-        /// The service error code.
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
-        /// The service error message.
-        /// </summary>
-        public string Message { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of Error instances.
-        /// You can use BlobsModelFactory.Error instead.
-        /// </summary>
-        internal Error() { }
-
-        /// <summary>
-        /// Deserializes XML into a new Error instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Error instance.</returns>
-        internal static Azure.Storage.Blobs.Models.Error FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.Error _value = new Azure.Storage.Blobs.Models.Error();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
-            if (_child != null)
-            {
-                _value.Message = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Error value);
-    }
-}
-#endregion class Error
 #endregion Models
 
