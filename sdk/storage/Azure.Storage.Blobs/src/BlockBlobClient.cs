@@ -2038,7 +2038,7 @@ namespace Azure.Storage.Blobs.Specialized
                         InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
-                    Response<BlobQuickQueryResult> result = await BlobRestClient.Blob.QuickQueryAsync(
+                    Response<BlobQueryResult> result = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: Uri,
