@@ -20,7 +20,7 @@ namespace Azure.Core.TestFramework
     /// We create an instance in SearchTestBase when we want to log test
     /// output.
     /// </summary>
-    internal class TestLogger : IDisposable
+    public class TestLogger : IDisposable
     {
         /// <summary>
         /// EventSource listener for AzureSDK events.
@@ -46,8 +46,9 @@ namespace Azure.Core.TestFramework
             var category = args.EventName;
             IDictionary<string, string> payload = GetPayload(args);
 
-            // If there's a request ID, use it after the category
             var message = new StringBuilder();
+            message.AppendLine(string.Format(args.Message, payload.Values.ToArray()));
+            // If there's a request ID, use it after the category
             if (payload.TryGetValue("requestId", out var requestId))
             {
                 payload.Remove("requestId");

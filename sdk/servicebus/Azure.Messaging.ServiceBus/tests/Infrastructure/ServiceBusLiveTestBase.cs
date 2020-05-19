@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -10,6 +11,36 @@ namespace Azure.Messaging.ServiceBus.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to Console.Out for easy debugging.
+        /// </summary>
+        private static TestLogger Logger { get; set; }
+
+        /// <summary>
+        /// Start logging events to the console if debugging or in Live mode.
+        /// This will run once before any tests.
+        /// </summary>
+        [OneTimeSetUp]
+        public virtual void StartLoggingEvents()
+        {
+            //if (Debugger.IsAttached)
+            {
+                Logger = new TestLogger();
+            }
+        }
+
+        /// <summary>
+        /// Stop logging events and do necessary cleanup.
+        /// This will run once after all tests have finished.
+        /// </summary>
+        [OneTimeTearDown]
+        public void StopLoggingEvents()
+        {
+            Logger?.Dispose();
+            Logger = null;
+        }
+
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
         protected ServiceBusClient GetNoRetryClient()
