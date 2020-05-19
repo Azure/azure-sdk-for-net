@@ -104,8 +104,8 @@ client's usage
 
 **Create a resource group**
 
-    location = "myLocation"
-    groupName = "myResourceGroupName"
+    location = "myLocation";
+    groupName = "myResourceGroupName";
     var result = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
 
 **Update a resource group**
