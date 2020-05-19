@@ -1415,7 +1415,7 @@ directive:
     };
 ```
 
-### Make BlobQuickQueryResult internal
+### Make BlobQueryResult internal
 ``` yaml
 directive:
 - from: swagger-document
@@ -1434,20 +1434,20 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Hide QuickQueryFormat
+### Hide QueryFormat
 ``` yaml
 directive:
 - from: swagger-document
-  where: definitions.QuickQueryFormat
+  where: definitions.QueryFormat
   transform: >
     $["x-az-public"] = false;
 ```
 
-### Hide QuickQuerySerialization
+### Hide QuerySerialization
 ``` yaml
 directive:
 - from: swagger-document
-  where: definitions.QuickQuerySerialization
+  where: definitions.QuerySerialization
   transform: >
     $["x-az-public"] = false;
 ```
@@ -1472,11 +1472,11 @@ directive:
     $["x-ms-client-name"] = "DelimitedTextConfigurationInternal";
 ```
 
-### Hide QuickQueryType
+### Hide QueryType
 ``` yaml
 directive:
 - from: swagger-document
-  where: definitions.QuickQueryType
+  where: definitions.QueryType
   transform: >
     $["x-az-public"] = false;
 ```
