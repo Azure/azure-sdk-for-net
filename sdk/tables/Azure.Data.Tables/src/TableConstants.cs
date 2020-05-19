@@ -5,6 +5,9 @@ namespace Azure.Data.Tables
 {
     internal static class TableConstants
     {
+        internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
+        internal const string CosmosTableDomain = ".table.cosmos.";
+
         internal static class HeaderNames
         {
             public const string Date = "x-ms-date";

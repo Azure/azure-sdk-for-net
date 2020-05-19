@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Queryable;
 using Azure.Data.Tables.Sas;
 
 namespace Azure.Data.Tables
@@ -23,13 +23,15 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
+        private readonly bool _isPremiumEndpoint;
 
-        internal TableClient(string table, TableRestClient tableOperations, string version)
+        internal TableClient(string table, TableRestClient tableOperations, string version, bool isPremiumEndpoint)
         {
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
             _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _isPremiumEndpoint = isPremiumEndpoint;
         }
 
         /// <summary>
@@ -38,6 +40,24 @@ namespace Azure.Data.Tables
         /// </summary>
         protected TableClient()
         { }
+
+        internal ExpressionParser GetExpressionParser()
+        {
+            if (_isPremiumEndpoint)
+            {
+                //TODO: Port TableExtensionExpressionParser
+                throw new NotImplementedException();
+            }
+            else
+            {
+                return new ExpressionParser();
+            }
+        }
+
+        public virtual TableQuery<T> CreateQuery<T>() where T : TableEntity, new()
+        {
+            return new TableQuery<T>(this);
+        }
 
         /// <summary>
         /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.

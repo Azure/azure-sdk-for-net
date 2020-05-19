@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
+using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -532,6 +533,47 @@ namespace Azure.Data.Tables.Tests
             entityResults = (await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task InsertedCustomEntitiesCanBeQueriedWithLinqExpressions()
+        {
+            List<TestEntity> entityResults;
+            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            var query = client.CreateQuery<TestEntity>()
+                .Where(e => e.PartitionKey == PartitionKeyValue && e.RowKey.CompareTo("10") > 0)
+                .AsTableQuery();
+
+            entityResults = (await query.QueryAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+
+            // Query the entities with a Take count to limit the number of responses
+
+            query = client.CreateQuery<TestEntity>()
+                .Where(e => e.PartitionKey == PartitionKeyValue)
+                .Take(10)
+                .AsTableQuery();
+
+            var pagedResult = query.QueryAsync();
+
+            await foreach (Page<TestEntity> page in pagedResult.AsPages())
+            {
+                Assert.That(page.Values.Count, Is.EqualTo(10), "The entity paged result count should be 10");
+            }
         }
 
         /// <summary>
