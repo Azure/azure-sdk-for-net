@@ -3,7 +3,7 @@
 ## Import the namespaces
 ```C# Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 ```
 
 ## Create a client
