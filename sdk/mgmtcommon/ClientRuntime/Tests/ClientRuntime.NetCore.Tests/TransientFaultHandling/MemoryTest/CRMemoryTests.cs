@@ -10,7 +10,7 @@ namespace CR.Azure.NetCore.Tests.MemoryTest
 
     public class CRMemoryTests
     {
-        [Fact(Skip="It fails on MacOS. Possibly due to ADO env. Skip to unblock PRs.")]
+        [Fact]
         public void MeasureSvcClientMem()
         {
             AddHeaderResponseDelegatingHandler addHeader = new AddHeaderResponseDelegatingHandler("Hello", "World");
