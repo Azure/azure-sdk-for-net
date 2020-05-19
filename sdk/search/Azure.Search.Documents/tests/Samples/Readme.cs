@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -193,8 +193,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a service client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
-            /*@@*/ client = resources.GetServiceClient();
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            /*@@*/ client = resources.GetIndexClient();
 
             // Create the index
             //@@SearchIndex index = new SearchIndex("hotels")
