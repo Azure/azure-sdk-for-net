@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public virtual void StartLoggingEvents()
         {
             Logger = new TestLogger();
-            TestContext.Out.WriteLine($"new test logger for "{ TestContext.CurrentContext.Test});
+            TestContext.Out.WriteLine($"new test logger for {TestContext.CurrentContext.Test}, {GetHashCode()}" );
         }
 
         /// <summary>
