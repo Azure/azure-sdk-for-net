@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
@@ -180,9 +181,21 @@ namespace Azure.Core.TestFramework
                     // fallback to generic string writing
                     if (document.RootElement.ValueKind != JsonValueKind.Array)
                     {
-                        jsonWriter.WritePropertyName(name.AsSpan());
-                        document.RootElement.WriteTo(jsonWriter);
-                        return;
+                        // Make sure JSON is exactly the same a the source
+                        // in the case where the original was formatted differently
+                        // fallback to generic string writing
+                        var memoryStream = new MemoryStream();
+                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream, jsonWriter.Options))
+                        {
+                            document.RootElement.WriteTo(reformattedWriter);
+                        }
+
+                        if (memoryStream.ToArray().SequenceEqual(requestBody))
+                        {
+                            jsonWriter.WritePropertyName(name.AsSpan());
+                            document.RootElement.WriteTo(jsonWriter);
+                            return;
+                        }
                     }
                 }
                 catch (Exception)
