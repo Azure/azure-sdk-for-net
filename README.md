@@ -33,7 +33,7 @@ Last stable versions of packages that are production-ready. These libraries prov
 
 ### Management: New Releases
 A new set of management libraries that follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) are now in Public Preview. These new libraries provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more. 
-You can find the list of new packages [on this page](https://azure.github.io/azure-sdk/releases/latest/dotnet.html). The quickstart guide to use these new libraries can be found [here](https://)
+You can find the list of new packages [on this page](https://azure.github.io/azure-sdk/releases/latest/dotnet.html). The quickstart guide to use these new libraries can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
 
 > NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
 
