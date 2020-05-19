@@ -16,7 +16,7 @@ Install-Package Azure.Management.Compute
 
 ## Documentation
 
-Various documentation are provided to help you learn how to use this package
+Various documentation is available to help you learn how to use this package
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md)
 - [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
@@ -25,8 +25,7 @@ Various documentation are provided to help you learn how to use this package
 ## Need help?
 
 -   File an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues) and
-    make sure you add the "Preview" label to the issue
+    Issues](https://github.com/Azure/azure-sdk-for-net/issues)
 -   Check [previous
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using azure and .NET tags.
