@@ -24,10 +24,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         [OneTimeSetUp]
         public virtual void StartLoggingEvents()
         {
-            //if (Debugger.IsAttached)
-            {
-                Logger = new TestLogger();
-            }
+            Logger = new TestLogger();
+            TestContext.Out.WriteLine($"new test logger for "{ TestContext.CurrentContext.Test});
         }
 
         /// <summary>
