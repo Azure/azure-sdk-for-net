@@ -13,7 +13,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
+    <PackageReference Include="Microsoft.Azure.Storage.Queue" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\MockKeyEncryptionKey.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

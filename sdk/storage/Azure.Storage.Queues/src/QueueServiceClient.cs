@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -58,6 +59,16 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </summary>
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -128,6 +139,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
         }
 
         /// <summary>
@@ -214,6 +226,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
         }
         #endregion ctors
 
@@ -230,7 +243,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption);
 
         #region GetQueues
         /// <summary>
