@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Opens an AMQP link for use with management operations.
         /// </summary>
         /// <param name="entityPath"></param>
-        ///
+        /// <param name="identifier"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -231,25 +231,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
             string entityPath,
+            string identifier,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            ServiceBusEventSource.Log.CreateManagementLinkStart(identifier);
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var stopWatch = ValueStopwatch.StartNew();
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var stopWatch = ValueStopwatch.StartNew();
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var link = await CreateManagementLinkAsync(
-                entityPath,
-                connection,
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var link = await CreateManagementLinkAsync(
+                    entityPath,
+                    connection,
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            return link;
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                ServiceBusEventSource.Log.CreateManagementLinkComplete(identifier);
+                return link;
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateManagementLinkException(identifier, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -261,6 +271,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
+        /// <param name="identifier">The identifier for the receive link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -273,35 +284,44 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
+            string identifier,
             CancellationToken cancellationToken)
         {
+            ServiceBusEventSource.Log.CreateReceiveLinkStart(identifier);
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var stopWatch = ValueStopwatch.StartNew();
+                var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
 
-            var stopWatch = ValueStopwatch.StartNew();
-            var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
+                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                ReceivingAmqpLink link = await CreateReceivingLinkAsync(
+                    entityPath,
+                    connection,
+                    receiverEndpoint,
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    prefetchCount,
+                    receiveMode,
+                    sessionId,
+                    isSessionReceiver,
+                    cancellationToken
+                ).ConfigureAwait(false);
 
-            ReceivingAmqpLink link = await CreateReceivingLinkAsync(
-                entityPath,
-                connection,
-                receiverEndpoint,
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
-                prefetchCount,
-                receiveMode,
-                sessionId,
-                isSessionReceiver,
-                cancellationToken
-            ).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            return link;
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(identifier);
+                return link;
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateReceiveLinkException(identifier, ex);
+                throw;
+            }
         }
 
         /// <summary>

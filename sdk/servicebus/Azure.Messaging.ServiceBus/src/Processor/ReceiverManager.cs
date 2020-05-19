@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcesserRenewMessageLockException(_identifier, ex);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(_identifier, ex);
                     await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop

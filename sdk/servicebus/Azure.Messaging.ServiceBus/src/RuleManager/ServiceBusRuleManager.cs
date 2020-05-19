@@ -73,7 +73,8 @@ namespace Azure.Messaging.ServiceBus
             SubscriptionPath = subscriptionPath;
             InnerRuleManager = _connection.CreateTransportRuleManager(
                 subscriptionPath: SubscriptionPath,
-                retryPolicy: connection.RetryOptions.ToRetryPolicy());
+                retryPolicy: connection.RetryOptions.ToRetryPolicy(),
+                identifier: Identifier);
         }
 
         /// <summary>
