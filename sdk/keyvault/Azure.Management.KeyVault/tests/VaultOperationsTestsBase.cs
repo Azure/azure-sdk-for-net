@@ -20,30 +20,26 @@ namespace Azure.Management.KeyVault.Tests
     public abstract class VaultOperationsTestsBase : RecordedTestBase<KeyVaultManagementTestEnvironment>
     {
         private const string ObjectIdKey = "ObjectId";
-        private const string ApplicationIdKey = "ApplicationId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
-        public string tenantId { get; set; }
-        public string objectId { get; set; }
-        public string applicationId { get; set; }
-        public string location { get; set; }
-        public string subscriptionId { get; set; }
+        public string TenantId { get; set; }
+        public string ObjectId { get; set; }
+        public string ApplicationId { get; set; }
+        public string Location { get; set; }
+        public string SubscriptionId { get; set; }
 
-        public AccessPolicyEntry accPol { get; internal set; }
-        public string objectIdGuid { get; internal set; }
-        public string rgName { get; internal set; }
-        public Dictionary<string, string> tags { get; internal set; }
-        public Guid tenantIdGuid { get; internal set; }
-        public string vaultName { get; internal set; }
-        public VaultProperties vaultProperties { get; internal set; }
+        public AccessPolicyEntry AccessPolicy { get; internal set; }
+        public string ResGroupName { get; internal set; }
+        public Dictionary<string, string> Tags { get; internal set; }
+        public Guid TenantIdGuid { get; internal set; }
+        public string VaultName { get; internal set; }
+        public VaultProperties VaultProperties { get; internal set; }
 
 
         public VaultsClient VaultsClient { get; set; }
         public ResourcesClient ResourcesClient { get; set; }
         public ResourceGroupsClient ResourceGroupsClient { get; set; }
         public ProvidersClient ResourceProvidersClient { get; set; }
-
-        //public ResourceManagementClient ResourceManagementClient { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -54,42 +50,42 @@ namespace Azure.Management.KeyVault.Tests
         {
             if (Mode == RecordedTestMode.Playback && Recording.IsTrack1SessionRecord())
             {
-                this.tenantId = TestEnvironment.TenantIdTrack1;
-                this.subscriptionId = TestEnvironment.SubscriptionIdTrack1;
-                this.applicationId = TestEnvironment.ApplicationIdTrack1;
+                this.TenantId = TestEnvironment.TenantIdTrack1;
+                this.SubscriptionId = TestEnvironment.SubscriptionIdTrack1;
+                this.ApplicationId = TestEnvironment.ApplicationIdTrack1;
             }
             else
             {
-                this.tenantId = TestEnvironment.TenantId;
-                this.subscriptionId = TestEnvironment.SubscriptionId;
-                this.applicationId = TestEnvironment.ClientId;
+                this.TenantId = TestEnvironment.TenantId;
+                this.SubscriptionId = TestEnvironment.SubscriptionId;
+                this.ApplicationId = TestEnvironment.ClientId;
             }
 
             var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = InstrumentClient(resourceManagementClient.GetResourcesClient());
-            ResourceGroupsClient = InstrumentClient(resourceManagementClient.GetResourceGroupsClient());
-            ResourceProvidersClient = InstrumentClient(resourceManagementClient.GetProvidersClient());
+            ResourcesClient = resourceManagementClient.GetResourcesClient();
+            ResourceGroupsClient = resourceManagementClient.GetResourceGroupsClient();
+            ResourceProvidersClient = resourceManagementClient.GetProvidersClient();
 
             var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = InstrumentClient(keyVaultManagementClient.GetVaultsClient());
+            VaultsClient = keyVaultManagementClient.GetVaultsClient();
 
             if (Mode == RecordedTestMode.Playback)
             {
-                this.objectId = Recording.GetVariable(ObjectIdKey, string.Empty);
+                this.ObjectId = Recording.GetVariable(ObjectIdKey, string.Empty);
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(this.tenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{this.applicationId}'");
+                var spClient = new RbacManagementClient(this.TenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
+                var servicePrincipalList = spClient.ListAsync($"appId eq '{this.ApplicationId}'");
                 await foreach (var servicePrincipal in servicePrincipalList)
                 {
-                    this.objectId = servicePrincipal.ObjectId;
-                    Recording.GetVariable(ObjectIdKey, this.objectId);
+                    this.ObjectId = servicePrincipal.ObjectId;
+                    Recording.GetVariable(ObjectIdKey, this.ObjectId);
                     break;
                 }
             }
             var provider = (await ResourceProvidersClient.GetAsync("Microsoft.KeyVault")).Value;
-            this.location = provider.ResourceTypes.Where(
+            this.Location = provider.ResourceTypes.Where(
                 (resType) =>
                 {
                     if (resType.ResourceType == "vaults")
@@ -99,13 +95,12 @@ namespace Azure.Management.KeyVault.Tests
                 }
                 ).First().Locations.FirstOrDefault();
 
-            rgName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(rgName, new Resource.Models.ResourceGroup(location));
-            vaultName = Recording.GenerateAssetName("sdktestvault");
+            ResGroupName = Recording.GenerateAssetName("sdktestrg");
+            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Resource.Models.ResourceGroup(Location));
+            VaultName = Recording.GenerateAssetName("sdktestvault");
 
-            tenantIdGuid = new Guid(tenantId);
-            objectIdGuid = objectId;
-            tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
+            TenantIdGuid = new Guid(TenantId);
+            Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
             var permissions = new Permissions
             {
@@ -114,45 +109,36 @@ namespace Azure.Management.KeyVault.Tests
                 Certificates = new CertificatePermissions[] { new CertificatePermissions("all") },
                 Storage = new StoragePermissions[] { new StoragePermissions("all") },
             };
-            accPol = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
+            AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
             IList<IPRule> ipRules = new List<IPRule>();
             ipRules.Add(new IPRule("1.2.3.4/32"));
             ipRules.Add(new IPRule("1.0.0.0/25"));
 
-            vaultProperties = new VaultProperties(tenantIdGuid, new Sku(SkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard));
 
 
-            vaultProperties.EnabledForDeployment = true;
-            vaultProperties.EnabledForDiskEncryption = true;
-            vaultProperties.EnabledForTemplateDeployment = true;
-            vaultProperties.EnableSoftDelete = true;
-            vaultProperties.VaultUri = "";
-            vaultProperties.NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null };
-            vaultProperties.AccessPolicies = new[] { accPol };
+            VaultProperties.EnabledForDeployment = true;
+            VaultProperties.EnabledForDiskEncryption = true;
+            VaultProperties.EnabledForTemplateDeployment = true;
+            VaultProperties.EnableSoftDelete = true;
+            VaultProperties.VaultUri = "";
+            VaultProperties.NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null };
+            VaultProperties.AccessPolicies = new[] { AccessPolicy };
         }
 
-        internal KeyVaultManagementClient GetKeyVaultManagementClient(TestRecording recording = null)
+        internal KeyVaultManagementClient GetKeyVaultManagementClient()
         {
-            recording = recording ?? Recording;
-
-            return InstrumentClient(new KeyVaultManagementClient(this.subscriptionId,
+            return InstrumentClient(new KeyVaultManagementClient(this.SubscriptionId,
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+                Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
 
-        internal ResourceManagementClient GetResourceManagementClient(TestRecording recording = null)
+        internal ResourceManagementClient GetResourceManagementClient()
         {
-            recording = recording ?? Recording;
-
-            return InstrumentClient(new ResourceManagementClient(this.subscriptionId,
+            return InstrumentClient(new ResourceManagementClient(this.SubscriptionId,
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ResourceManagementClientOptions())));
-        }
-
-        public override void StartTestRecording()
-        {
-            base.StartTestRecording();
+                Recording.InstrumentClientOptions(new ResourceManagementClientOptions())));
         }
 
         protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
