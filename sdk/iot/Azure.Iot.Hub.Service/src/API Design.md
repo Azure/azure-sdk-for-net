@@ -86,11 +86,11 @@ public  class Modules
     /// only if this ETag matches the value maintained by the server, indicating that the module has not been modified since it was last retrieved.
     /// The current ETag can be retrieved from the module identity last retrieved from the service. To force an unconditional update, set If-Match to the wildcard character (*).</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The created or updated device.</returns>
+    /// <returns>The created or updated device module.</returns>
     public virtual async Task<Response<ModuleIdentity>> UpdateIdentityAsync(ModuleIdentity moduleIdentity, string ifMatch = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Delete a single device.
+    /// Delete a single module.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device that contains the module.</param>
     /// <param name="moduleId">The unique identifier of the module to get.</param>
@@ -129,7 +129,7 @@ public  class Modules
     public virtual async Task<Response<TwinData>> UpdateTwinAsync(TwinData twinPatch, string ifMatch = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Invoke a method on a device.
+    /// Invoke a method on a device module.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device that contains the module.</param>
     /// <param name="moduleId">The unique identifier of the module.</param>
