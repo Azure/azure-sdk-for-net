@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.10.0
+###  Feature Additions
+- Added new type conversion support in Copy activity
+
 ## Version 4.9.0
 ###  Feature Additions
 - Added support for copying data to and from Snowflake using copy activity
