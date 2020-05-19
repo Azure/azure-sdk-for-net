@@ -9,13 +9,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class LineString : Geometry
+    public sealed class GeoLineString : Geometry
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="positions"></param>
-        public LineString(IEnumerable<Position> positions)
+        public GeoLineString(IEnumerable<GeoPosition> positions)
         {
             Positions = positions.ToArray();
         }
@@ -23,7 +23,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<Position> Positions { get; }
+        public IReadOnlyList<GeoPosition> Positions { get; }
 
         /// <inheritdoc />
         public override string ToString()

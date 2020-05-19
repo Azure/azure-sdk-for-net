@@ -9,20 +9,20 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class MultiPoint : Geometry
+    public sealed class GeoPolygon : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="points"></param>
-        public MultiPoint(IEnumerable<Point> points)
+        /// <param name="rings"></param>
+        public GeoPolygon(IEnumerable<GeoLineString> rings)
         {
-            Points = points.ToArray();
+            Rings = rings.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<Point> Points { get; }
+        public IReadOnlyList<GeoLineString> Rings { get; }
     }
 }

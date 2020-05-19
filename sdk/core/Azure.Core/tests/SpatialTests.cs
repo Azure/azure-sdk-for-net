@@ -16,12 +16,12 @@ namespace Azure.Core.Tests
             var input = "{ \"type\": \"GeometryCollection\", \"geometries\": [{ \"type\": \"Point\", \"coordinates\": [100.1, 0.2] }, { \"type\": \"LineString\", \"coordinates\": [ [101.3, 0.4], [102.5, 1.6] ] }] }";
 
             var collection = AssertRoundtrip<GeometryCollection>(input);
-            var point = (Point) collection.Geometries[0];
-            Assert.AreEqual(new Position(100.1, 0.2), point.Position);
+            var point = (GeoPoint) collection.Geometries[0];
+            Assert.AreEqual(new GeoPosition(100.1, 0.2), point.Position);
 
-            var lineString = (LineString) collection.Geometries[1];
-            Assert.AreEqual(new Position(101.3, 0.4), lineString.Positions[0]);
-            Assert.AreEqual(new Position(102.5, 1.6), lineString.Positions[1]);
+            var lineString = (GeoLineString) collection.Geometries[1];
+            Assert.AreEqual(new GeoPosition(101.3, 0.4), lineString.Positions[0]);
+            Assert.AreEqual(new GeoPosition(102.5, 1.6), lineString.Positions[1]);
 
             Assert.AreEqual(2, collection.Geometries.Count);
         }

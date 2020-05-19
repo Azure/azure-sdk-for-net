@@ -9,20 +9,20 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class Polygon : Geometry
+    public sealed class GeoMultiLineString : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="rings"></param>
-        public Polygon(IEnumerable<LineString> rings)
+        /// <param name="lineStrings"></param>
+        public GeoMultiLineString(IEnumerable<GeoLineString> lineStrings)
         {
-            Rings = rings.ToArray();
+            LineStrings = lineStrings.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<LineString> Rings { get; }
+        public IReadOnlyList<GeoLineString> LineStrings { get; }
     }
 }
