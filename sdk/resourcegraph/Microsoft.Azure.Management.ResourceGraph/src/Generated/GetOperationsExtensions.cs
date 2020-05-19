@@ -13,39 +13,43 @@ namespace Microsoft.Azure.Management.ResourceGraph
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for GetOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class GetOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available REST API operations.
+            /// Get resource change details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Operation> ListMethod(this IOperations operations)
+            /// <param name='parameters'>
+            /// The parameters for this request for resource change details.
+            /// </param>
+            public static ResourceChangeData ResourceChangeDetails(this IGetOperations operations, ResourceChangeDetailsRequestParameters parameters)
             {
-                return operations.ListMethodAsync().GetAwaiter().GetResult();
+                return operations.ResourceChangeDetailsAsync(parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available REST API operations.
+            /// Get resource change details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for this request for resource change details.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Operation>> ListMethodAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceChangeData> ResourceChangeDetailsAsync(this IGetOperations operations, ResourceChangeDetailsRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMethodWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ResourceChangeDetailsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

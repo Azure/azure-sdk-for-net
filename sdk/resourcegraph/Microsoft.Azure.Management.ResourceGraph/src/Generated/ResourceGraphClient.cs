@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// API version.
+        /// Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -70,6 +70,16 @@ namespace Microsoft.Azure.Management.ResourceGraph
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IListOperations.
+        /// </summary>
+        public virtual IListOperations List { get; private set; }
+
+        /// <summary>
+        /// Gets the IGetOperations.
+        /// </summary>
+        public virtual IGetOperations Get { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -317,9 +327,11 @@ namespace Microsoft.Azure.Management.ResourceGraph
         /// </summary>
         private void Initialize()
         {
+            List = new ListOperations(this);
+            Get = new GetOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01";
+            ApiVersion = "2020-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
