@@ -110,12 +110,13 @@ client's usage
 
 **Update a resource group**
 
-    group_name = "my_resource_group_name"
-    group.tags = {
-        "environment":"test",
-        "department":"tech"
-    }
-    updated_group = resource_client.resource_groups.create_or_update(group_name, group)
+    ...
+    var tags = new Dictionary<string,string>();
+    tags.Add("environment","test");
+    tags.Add("department","tech");
+    resourceGroup.Tags = tags;
+
+    var updated = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, resourceGroup);
 
 **List all resource groups**
 
@@ -126,8 +127,7 @@ client's usage
 
 **Delete a resource group**
 
-    var result = resource_client.resource_groups.begin_delete(group_name)
-    delete_async_op.wait()
+    await resourceClient.ResourceGroups.DeleteAsync(groupName);
 
 Need help?
 ----------
