@@ -97,13 +97,13 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/staging
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
-                      # - task: NuGetCommand@2
-                      #   displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-                      #   inputs:
-                      #     command: push
-                      #     packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
-                      #     nuGetFeedType: external
-                      #     publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          nuGetFeedType: external
+                          publishFeedCredentials: Nuget.org
                       - task: NuGetCommand@2
                         displayName: 'Publish to DevOps Feed'
                         inputs:
@@ -197,7 +197,7 @@ stages:
                       - checkout: self
                       - template: /eng/pipelines/templates/steps/stage-artifacts.yml
                         parameters:
-                          SourceFolder: Docs.${{artifact.name}}
+                          SourceFolder: ${{parameters.ArtifactName}}-signed
                           TargetFolder: ${{artifact.safeName}}/packages
                           FileFilter: ${{artifact.name}}.[0-9]*.[0-9]*.[0-9]*
                       - template: /eng/pipelines/templates/steps/stage-artifacts.yml
