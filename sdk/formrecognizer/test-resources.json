@@ -80,7 +80,7 @@
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_REGION": {
             "type": "string",
-            "value": "[parameters('location')"
+            "value": "[parameters('location')]"
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_ID": {
             "type": "string",
