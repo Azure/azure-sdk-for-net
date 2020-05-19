@@ -14,24 +14,24 @@ namespace Microsoft.Azure.Management.MixedReality.Models
     using System.Linq;
 
     /// <summary>
-    /// Spatial Anchors Account Keys
+    /// Developer Keys of account
     /// </summary>
-    public partial class SpatialAnchorsAccountKeys
+    public partial class AccountKeys
     {
         /// <summary>
-        /// Initializes a new instance of the SpatialAnchorsAccountKeys class.
+        /// Initializes a new instance of the AccountKeys class.
         /// </summary>
-        public SpatialAnchorsAccountKeys()
+        public AccountKeys()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpatialAnchorsAccountKeys class.
+        /// Initializes a new instance of the AccountKeys class.
         /// </summary>
         /// <param name="primaryKey">value of primary key.</param>
         /// <param name="secondaryKey">value of secondary key.</param>
-        public SpatialAnchorsAccountKeys(string primaryKey = default(string), string secondaryKey = default(string))
+        public AccountKeys(string primaryKey = default(string), string secondaryKey = default(string))
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
