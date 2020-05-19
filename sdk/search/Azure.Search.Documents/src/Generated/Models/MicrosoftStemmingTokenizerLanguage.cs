@@ -5,100 +5,100 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Lists the languages supported by the Microsoft language stemming tokenizer. </summary>
     public enum MicrosoftStemmingTokenizerLanguage
     {
-        /// <summary> arabic. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Arabic. </summary>
         Arabic,
-        /// <summary> bangla. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Bangla. </summary>
         Bangla,
-        /// <summary> bulgarian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Bulgarian. </summary>
         Bulgarian,
-        /// <summary> catalan. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Catalan. </summary>
         Catalan,
-        /// <summary> croatian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Croatian. </summary>
         Croatian,
-        /// <summary> czech. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Czech. </summary>
         Czech,
-        /// <summary> danish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Danish. </summary>
         Danish,
-        /// <summary> dutch. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Dutch. </summary>
         Dutch,
-        /// <summary> english. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for English. </summary>
         English,
-        /// <summary> estonian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Estonian. </summary>
         Estonian,
-        /// <summary> finnish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Finnish. </summary>
         Finnish,
-        /// <summary> french. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for French. </summary>
         French,
-        /// <summary> german. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for German. </summary>
         German,
-        /// <summary> greek. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Greek. </summary>
         Greek,
-        /// <summary> gujarati. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Gujarati. </summary>
         Gujarati,
-        /// <summary> hebrew. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Hebrew. </summary>
         Hebrew,
-        /// <summary> hindi. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Hindi. </summary>
         Hindi,
-        /// <summary> hungarian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Hungarian. </summary>
         Hungarian,
-        /// <summary> icelandic. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Icelandic. </summary>
         Icelandic,
-        /// <summary> indonesian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Indonesian. </summary>
         Indonesian,
-        /// <summary> italian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Italian. </summary>
         Italian,
-        /// <summary> kannada. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Kannada. </summary>
         Kannada,
-        /// <summary> latvian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Latvian. </summary>
         Latvian,
-        /// <summary> lithuanian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Lithuanian. </summary>
         Lithuanian,
-        /// <summary> malay. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Malay. </summary>
         Malay,
-        /// <summary> malayalam. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Malayalam. </summary>
         Malayalam,
-        /// <summary> marathi. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Marathi. </summary>
         Marathi,
-        /// <summary> norwegianBokmaal. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Norwegian (Bokmål). </summary>
         NorwegianBokmaal,
-        /// <summary> polish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Polish. </summary>
         Polish,
-        /// <summary> portuguese. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Portuguese. </summary>
         Portuguese,
-        /// <summary> portugueseBrazilian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Portuguese (Brazil). </summary>
         PortugueseBrazilian,
-        /// <summary> punjabi. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Punjabi. </summary>
         Punjabi,
-        /// <summary> romanian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Romanian. </summary>
         Romanian,
-        /// <summary> russian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Russian. </summary>
         Russian,
-        /// <summary> serbianCyrillic. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Cyrillic). </summary>
         SerbianCyrillic,
-        /// <summary> serbianLatin. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Latin). </summary>
         SerbianLatin,
-        /// <summary> slovak. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Slovak. </summary>
         Slovak,
-        /// <summary> slovenian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Slovenian. </summary>
         Slovenian,
-        /// <summary> spanish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Spanish. </summary>
         Spanish,
-        /// <summary> swedish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Swedish. </summary>
         Swedish,
-        /// <summary> tamil. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Tamil. </summary>
         Tamil,
-        /// <summary> telugu. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Telugu. </summary>
         Telugu,
-        /// <summary> turkish. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Turkish. </summary>
         Turkish,
-        /// <summary> ukrainian. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Ukrainian. </summary>
         Ukrainian,
-        /// <summary> urdu. </summary>
+        /// <summary> Selects the Microsoft stemming tokenizer for Urdu. </summary>
         Urdu
     }
 }

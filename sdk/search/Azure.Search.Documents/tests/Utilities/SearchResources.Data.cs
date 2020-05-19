@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using Microsoft.Spatial;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -70,7 +71,7 @@ namespace Azure.Search.Documents.Tests
                 },
                 Suggesters =
                 {
-                    new Suggester("sg", "description", "hotelName"),
+                    new SearchSuggester("sg", "description", "hotelName"),
                 },
                 ScoringProfiles =
                 {

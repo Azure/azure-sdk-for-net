@@ -2,6 +2,9 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Breaking Changes
+
+- Moved models for managing indexes, indexers, and skillsets to `Azure.Search.Documents.Indexes.Models`.
 
 ## 1.0.0-preview.3 (2020-05-05)
 

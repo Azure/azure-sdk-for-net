@@ -306,7 +306,7 @@ SearchIndex index = new SearchIndex("hotels")
     Suggesters =
     {
         // Suggest query terms from both the hotelName and description fields.
-        new Suggester("sg", "hotelName", "description")
+        new SearchSuggester("sg", "hotelName", "description")
     }
 };
 

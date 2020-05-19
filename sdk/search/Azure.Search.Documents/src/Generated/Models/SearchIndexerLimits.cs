@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The IndexerLimits. </summary>
+    /// <summary> The SearchIndexerLimits. </summary>
     public partial class SearchIndexerLimits
     {
         /// <summary> Initializes a new instance of SearchIndexerLimits. </summary>
