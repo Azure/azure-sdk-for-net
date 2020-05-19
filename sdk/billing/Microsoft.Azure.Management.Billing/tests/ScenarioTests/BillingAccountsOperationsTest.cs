@@ -101,7 +101,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingAccounts);
-                var billingAccount = Assert.Single(billingAccounts.Value);
+                var billingAccount = Assert.Single(billingAccounts);
                 Assert.Equal(BillingAccountName, billingAccount.Name);
             }
         }
@@ -123,7 +123,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingAccounts);
-                var billingAccount = Assert.Single(billingAccounts.Value);
+                var billingAccount = Assert.Single(billingAccounts);
                 Assert.Equal(BillingAccountName, billingAccount.Name);
                 var billingProfile = Assert.Single(billingAccount.BillingProfiles);
                 Assert.Equal(BillingProfileName, billingProfile.Name);

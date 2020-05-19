@@ -102,8 +102,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingRoleAssignments);
-                Assert.True(billingRoleAssignments.Value.Count > 0);
-                Assert.Contains(billingRoleAssignments.Value, role => role.Name == BillingAccountRoleAssignmentName);
+                Assert.True(billingRoleAssignments.Any());
+                Assert.Contains(billingRoleAssignments, role => role.Name == BillingAccountRoleAssignmentName);
             }
         }
 
@@ -124,8 +124,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingRoleAssignments);
-                Assert.True(billingRoleAssignments.Value.Count > 0);
-                Assert.Contains(billingRoleAssignments.Value, role => role.Name == BillingProfileRoleAssignmentName);
+                Assert.True(billingRoleAssignments.Any());
+                Assert.Contains(billingRoleAssignments, role => role.Name == BillingProfileRoleAssignmentName);
             }
         }
 
@@ -146,8 +146,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingRoleAssignments);
-                Assert.True(billingRoleAssignments.Value.Count > 0);
-                Assert.Contains(billingRoleAssignments.Value, role => role.Name == InvoiceSectionRoleAssignmentName);
+                Assert.True(billingRoleAssignments.Any());
+                Assert.Contains(billingRoleAssignments, role => role.Name == InvoiceSectionRoleAssignmentName);
             }
         }
     }

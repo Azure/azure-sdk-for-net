@@ -60,8 +60,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(invoiceSections);
-                Assert.Equal(7, invoiceSections.Value.Count);
-                var invoiceSection = Assert.Single(invoiceSections.Value.Where(i => i.Name == InvoiceSectionName));
+                Assert.Equal(7, invoiceSections.Count());
+                var invoiceSection = Assert.Single(invoiceSections.Where(i => i.Name == InvoiceSectionName));
                 Assert.Equal(InvoiceSectionDisplayName, invoiceSection.DisplayName);
             }
         }

@@ -36,7 +36,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the product
-                var product = billingMgmtClient.Products.Get(BillingAccountName, BillingProfileName, InvoiceSectionName, ProductName);
+                var product = billingMgmtClient.Products.Get(BillingAccountName, ProductName);
 
                 // Verify the response
                 Assert.Contains(BillingProfileName, product.BillingProfileId);
@@ -89,8 +89,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(products);
-                Assert.Equal(2, products.Value.Count);
-                var product = Assert.Single(products.Value.Where(p => p.Name == ProductName));
+                Assert.Equal(2, products.Count());
+                var product = Assert.Single(products.Where(p => p.Name == ProductName));
                 Assert.Contains(BillingProfileName, product.BillingProfileId);
                 Assert.Contains(InvoiceSectionName, product.InvoiceSectionId);
                 Assert.Equal(AvailabilityId, product.AvailabilityId);

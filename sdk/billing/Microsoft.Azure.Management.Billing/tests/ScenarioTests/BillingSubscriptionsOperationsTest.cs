@@ -33,7 +33,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the agreements
-                var billingSubscription = billingMgmtClient.BillingSubscriptions.Get(BillingAccountName, BillingProfileName, InvoiceSectionName, BillingSubscriptionName);
+                var billingSubscription = billingMgmtClient.BillingSubscriptions.Get(BillingAccountName, BillingSubscriptionName);
 
                 // Verify the response
                 Assert.NotNull(billingSubscription);
@@ -83,9 +83,9 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingSubscriptions);
-                Assert.True(billingSubscriptions.Value.Any());
-                Assert.Contains(billingSubscriptions.Value, bs => bs.BillingProfileId.Contains(BillingProfileName));
-                Assert.Contains(billingSubscriptions.Value, bs => bs.InvoiceSectionId.Contains(InvoiceSectionName));
+                Assert.True(billingSubscriptions.Any());
+                Assert.Contains(billingSubscriptions, bs => bs.BillingProfileId.Contains(BillingProfileName));
+                Assert.Contains(billingSubscriptions, bs => bs.InvoiceSectionId.Contains(InvoiceSectionName));
             }
         }
 
@@ -106,9 +106,9 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingSubscriptions);
-                Assert.True(billingSubscriptions.Value.Any());
-                Assert.Contains(billingSubscriptions.Value, bs => bs.BillingProfileId.Contains(BillingProfileName));
-                Assert.Contains(billingSubscriptions.Value, bs => bs.InvoiceSectionId.Contains(InvoiceSectionName));
+                Assert.True(billingSubscriptions.Any());
+                Assert.Contains(billingSubscriptions, bs => bs.BillingProfileId.Contains(BillingProfileName));
+                Assert.Contains(billingSubscriptions, bs => bs.InvoiceSectionId.Contains(InvoiceSectionName));
             }
         }
     }

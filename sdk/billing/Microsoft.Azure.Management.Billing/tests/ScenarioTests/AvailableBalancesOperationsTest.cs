@@ -31,7 +31,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the available balance
-                var availableBalance = billingMgmtClient.AvailableBalances.GetByBillingProfile(BillingAccountName, BillingProfileName);
+                var availableBalance = billingMgmtClient.AvailableBalances.Get(BillingAccountName, BillingProfileName);
 
                 // Verify the response
                 Assert.NotNull(availableBalance);

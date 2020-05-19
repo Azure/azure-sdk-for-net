@@ -36,7 +36,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the invoice
-                var invoice = billingMgmtClient.Invoices.Get(BillingAccountName, BillingProfileName, InvoiceNumber);
+                var invoice = billingMgmtClient.Invoices.Get(BillingAccountName, InvoiceNumber);
 
                 // Verify the response
                 Assert.NotNull(invoice);
@@ -64,7 +64,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(invoices);
-                var invoice = Assert.Single(invoices.Value);
+                var invoice = Assert.Single(invoices);
                 Assert.Contains(BillingProfileName, invoice.BillingProfileId);
                 Assert.Equal(InvoiceNumber, invoice.Name);
                 Assert.Equal(InvoiceStatus, invoice.Status);
@@ -89,7 +89,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(invoices);
-                var invoice = Assert.Single(invoices.Value);
+                var invoice = Assert.Single(invoices);
                 Assert.Contains(BillingProfileName, invoice.BillingProfileId);
                 Assert.Equal(InvoiceNumber, invoice.Name);
                 Assert.Equal(InvoiceStatus, invoice.Status);

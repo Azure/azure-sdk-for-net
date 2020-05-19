@@ -39,8 +39,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(OrganizationViewPermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(OrganizationViewPermission, billingPermissions.First().Actions);
             }
         }
 
@@ -61,8 +61,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(ViewBillingProfilePermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(ViewBillingProfilePermission, billingPermissions.First().Actions);
             }
         }
 
@@ -84,9 +84,9 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
+                Assert.True(billingPermissions.Any());
                 // There are no permissions for Customer for a non partner account
-                Assert.True(billingPermissions.Value.First().Actions.Count == 0);
+                Assert.True(billingPermissions.First().Actions.Count == 0);
             }
         }
 
@@ -107,8 +107,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(ViewInvoiceSectionPropertiesPermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(ViewInvoiceSectionPropertiesPermission, billingPermissions.First().Actions);
             }
         }
     }

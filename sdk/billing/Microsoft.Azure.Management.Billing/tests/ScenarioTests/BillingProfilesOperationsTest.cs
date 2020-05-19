@@ -35,7 +35,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingProfiles);
-                var billingProfile = Assert.Single(billingProfiles.Value);
+                var billingProfile = Assert.Single(billingProfiles);
                 Assert.Equal(BillingProfileName, billingProfile.Name);
                 Assert.Equal(BillingProfileCurrency, billingProfile.Currency);
             }

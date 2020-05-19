@@ -8,6 +8,7 @@ using Xunit;
 using Microsoft.Azure.Management.Billing;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Billing.Tests.ScenarioTests
@@ -33,7 +34,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(agreements);
-                Assert.Empty(agreements.Value);
+                Assert.Empty(agreements);
             }
         }
     }
