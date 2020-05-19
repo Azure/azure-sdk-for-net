@@ -97,9 +97,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
         }
 
         #region Training
