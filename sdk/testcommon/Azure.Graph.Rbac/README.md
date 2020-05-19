@@ -15,6 +15,22 @@
 
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
+### Install the package
+
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+
+Include a **Prerequisites** line after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+
+### Prerequisites
+
+You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+
+### Authenticate the client
+
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+
 ## Key concepts
 
 The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
