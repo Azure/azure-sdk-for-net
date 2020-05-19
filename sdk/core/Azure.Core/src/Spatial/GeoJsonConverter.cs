@@ -190,10 +190,12 @@ namespace Azure.Core.Spatial
                 case GeoPolygon polygon:
                     WriteType(PolygonType);
                     writer.WritePropertyName("coordinates");
+                    writer.WriteStartArray();
                     foreach (var ring in polygon.Rings)
                     {
                         WritePositions(ring.Positions);
                     }
+                    writer.WriteEndArray();
                     break;
 
                 case GeoMultiPoint multiPoint:
@@ -208,7 +210,7 @@ namespace Azure.Core.Spatial
                     break;
 
                 case GeoMultiLineString multiLineString:
-                    WriteType(MultiPointType);
+                    WriteType(MultiLineStringType);
                     writer.WritePropertyName("coordinates");
                     writer.WriteStartArray();
                     foreach (var lineString in multiLineString.LineStrings)
