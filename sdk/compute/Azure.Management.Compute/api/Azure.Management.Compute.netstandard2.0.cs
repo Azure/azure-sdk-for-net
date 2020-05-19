@@ -3,8 +3,6 @@ namespace Azure.Management.Compute
     public partial class AvailabilitySetsClient
     {
         protected AvailabilitySetsClient() { }
-        public AvailabilitySetsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public AvailabilitySetsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.AvailabilitySet> CreateOrUpdate(string resourceGroupName, string availabilitySetName, Azure.Management.Compute.Models.AvailabilitySet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.AvailabilitySet>> CreateOrUpdateAsync(string resourceGroupName, string availabilitySetName, Azure.Management.Compute.Models.AvailabilitySet parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -24,7 +22,7 @@ namespace Azure.Management.Compute
     {
         protected ComputeManagementClient() { }
         public ComputeManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public ComputeManagementClient(string host, string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
+        public ComputeManagementClient(System.Uri endpoint, string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Management.Compute.AvailabilitySetsClient GetAvailabilitySetsClient() { throw null; }
         public virtual Azure.Management.Compute.ContainerServicesClient GetContainerServicesClient() { throw null; }
         public virtual Azure.Management.Compute.DedicatedHostGroupsClient GetDedicatedHostGroupsClient() { throw null; }
@@ -63,8 +61,6 @@ namespace Azure.Management.Compute
     public partial class ContainerServicesClient
     {
         protected ContainerServicesClient() { }
-        public ContainerServicesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public ContainerServicesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.ContainerService> Get(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ContainerService>> GetAsync(string resourceGroupName, string containerServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.ContainerService> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -105,8 +101,6 @@ namespace Azure.Management.Compute
     public partial class DedicatedHostGroupsClient
     {
         protected DedicatedHostGroupsClient() { }
-        public DedicatedHostGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public DedicatedHostGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup> CreateOrUpdate(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHostGroup>> CreateOrUpdateAsync(string resourceGroupName, string hostGroupName, Azure.Management.Compute.Models.DedicatedHostGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,8 +117,6 @@ namespace Azure.Management.Compute
     public partial class DedicatedHostsClient
     {
         protected DedicatedHostsClient() { }
-        public DedicatedHostsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public DedicatedHostsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.DedicatedHost> Get(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DedicatedHost>> GetAsync(string resourceGroupName, string hostGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.DedicatedHost> ListByHostGroup(string resourceGroupName, string hostGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,8 +170,6 @@ namespace Azure.Management.Compute
     public partial class DiskEncryptionSetsClient
     {
         protected DiskEncryptionSetsClient() { }
-        public DiskEncryptionSetsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public DiskEncryptionSetsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet> Get(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.DiskEncryptionSet> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -235,8 +225,6 @@ namespace Azure.Management.Compute
     public partial class DisksClient
     {
         protected DisksClient() { }
-        public DisksClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public DisksClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.Disk> Get(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Disk>> GetAsync(string resourceGroupName, string diskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Disk> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -322,8 +310,6 @@ namespace Azure.Management.Compute
     public partial class GalleriesClient
     {
         protected GalleriesClient() { }
-        public GalleriesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public GalleriesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.Gallery> Get(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Gallery>> GetAsync(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Gallery> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -379,8 +365,6 @@ namespace Azure.Management.Compute
     public partial class GalleryApplicationsClient
     {
         protected GalleryApplicationsClient() { }
-        public GalleryApplicationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public GalleryApplicationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplication> Get(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplication>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplication> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -434,8 +418,6 @@ namespace Azure.Management.Compute
     public partial class GalleryApplicationVersionsClient
     {
         protected GalleryApplicationVersionsClient() { }
-        public GalleryApplicationVersionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public GalleryApplicationVersionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion> Get(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryApplicationVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryApplicationVersion> ListByGalleryApplication(string resourceGroupName, string galleryName, string galleryApplicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -489,8 +471,6 @@ namespace Azure.Management.Compute
     public partial class GalleryImagesClient
     {
         protected GalleryImagesClient() { }
-        public GalleryImagesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public GalleryImagesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImage> Get(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImage>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImage> ListByGallery(string resourceGroupName, string galleryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -544,8 +524,6 @@ namespace Azure.Management.Compute
     public partial class GalleryImageVersionsClient
     {
         protected GalleryImageVersionsClient() { }
-        public GalleryImageVersionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public GalleryImageVersionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.GalleryImageVersion> ListByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -599,8 +577,6 @@ namespace Azure.Management.Compute
     public partial class ImagesClient
     {
         protected ImagesClient() { }
-        public ImagesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public ImagesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.Image> Get(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Image>> GetAsync(string resourceGroupName, string imageName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Image> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -656,8 +632,6 @@ namespace Azure.Management.Compute
     public partial class LogAnalyticsClient
     {
         protected LogAnalyticsClient() { }
-        public LogAnalyticsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public LogAnalyticsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation StartExportRequestRateByInterval(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Management.Compute.LogAnalyticsExportRequestRateByIntervalOperation> StartExportRequestRateByIntervalAsync(string location, Azure.Management.Compute.Models.RequestRateByIntervalInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Compute.LogAnalyticsExportThrottledRequestsOperation StartExportThrottledRequests(string location, Azure.Management.Compute.Models.LogAnalyticsInputBase parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -692,16 +666,12 @@ namespace Azure.Management.Compute
     public partial class OperationsClient
     {
         protected OperationsClient() { }
-        public OperationsClient(Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public OperationsClient(string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.ComputeOperationValue> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ComputeOperationValue> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ProximityPlacementGroupsClient
     {
         protected ProximityPlacementGroupsClient() { }
-        public ProximityPlacementGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public ProximityPlacementGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup> CreateOrUpdate(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.ProximityPlacementGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.ProximityPlacementGroup>> CreateOrUpdateAsync(string resourceGroupName, string proximityPlacementGroupName, Azure.Management.Compute.Models.ProximityPlacementGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string proximityPlacementGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -718,16 +688,12 @@ namespace Azure.Management.Compute
     public partial class ResourceSkusClient
     {
         protected ResourceSkusClient() { }
-        public ResourceSkusClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public ResourceSkusClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.ResourceSku> List(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.ResourceSku> ListAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SnapshotsClient
     {
         protected SnapshotsClient() { }
-        public SnapshotsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public SnapshotsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.Snapshot> Get(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.Snapshot>> GetAsync(string resourceGroupName, string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Snapshot> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -813,8 +779,6 @@ namespace Azure.Management.Compute
     public partial class SshPublicKeysClient
     {
         protected SshPublicKeysClient() { }
-        public SshPublicKeysClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public SshPublicKeysClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource> Create(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.SshPublicKeyResource>> CreateAsync(string resourceGroupName, string sshPublicKeyName, Azure.Management.Compute.Models.SshPublicKeyResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string sshPublicKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -833,16 +797,12 @@ namespace Azure.Management.Compute
     public partial class UsageClient
     {
         protected UsageClient() { }
-        public UsageClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public UsageClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.Usage> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.Usage> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VirtualMachineExtensionImagesClient
     {
         protected VirtualMachineExtensionImagesClient() { }
-        public VirtualMachineExtensionImagesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineExtensionImagesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionImage> Get(string location, string publisherName, string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionImage>> GetAsync(string location, string publisherName, string type, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineExtensionImage>> ListTypes(string location, string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -853,8 +813,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineExtensionsClient
     {
         protected VirtualMachineExtensionsClient() { }
-        public VirtualMachineExtensionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineExtensionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -908,8 +866,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineImagesClient
     {
         protected VirtualMachineImagesClient() { }
-        public VirtualMachineImagesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineImagesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineImage> Get(string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Management.Compute.Models.VirtualMachineImageResource>> List(string location, string publisherName, string offer, string skus, string expand = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -924,8 +880,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineRunCommandsClient
     {
         protected VirtualMachineRunCommandsClient() { }
-        public VirtualMachineRunCommandsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineRunCommandsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.RunCommandDocument> Get(string location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RunCommandDocument>> GetAsync(string location, string commandId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.RunCommandDocumentBase> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -934,8 +888,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineScaleSetExtensionsClient
     {
         protected VirtualMachineScaleSetExtensionsClient() { }
-        public VirtualMachineScaleSetExtensionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineScaleSetExtensionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> Get(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineScaleSetExtension> List(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1002,8 +954,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineScaleSetRollingUpgradesClient
     {
         protected VirtualMachineScaleSetRollingUpgradesClient() { }
-        public VirtualMachineScaleSetRollingUpgradesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineScaleSetRollingUpgradesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.RollingUpgradeStatusInfo> GetLatest(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.RollingUpgradeStatusInfo>> GetLatestAsync(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.Compute.VirtualMachineScaleSetRollingUpgradesCancelOperation StartCancel(string resourceGroupName, string vmScaleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1042,8 +992,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineScaleSetsClient
     {
         protected VirtualMachineScaleSetsClient() { }
-        public VirtualMachineScaleSetsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineScaleSetsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response ConvertToSinglePlacementGroup(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ConvertToSinglePlacementGroupAsync(string resourceGroupName, string vmScaleSetName, Azure.Management.Compute.Models.VMScaleSetConvertToSinglePlacementGroupInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1274,8 +1222,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineScaleSetVMExtensionsClient
     {
         protected VirtualMachineScaleSetVMExtensionsClient() { }
-        public VirtualMachineScaleSetVMExtensionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineScaleSetVMExtensionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension> Get(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineExtensionsListResult> List(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1329,8 +1275,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineScaleSetVMsClient
     {
         protected VirtualMachineScaleSetVMsClient() { }
-        public VirtualMachineScaleSetVMsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineScaleSetVMsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVM> Get(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVM>> GetAsync(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachineScaleSetVMInstanceView> GetInstanceView(string resourceGroupName, string vmScaleSetName, string instanceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1521,8 +1465,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachinesClient
     {
         protected VirtualMachinesClient() { }
-        public VirtualMachinesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachinesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Response Generalize(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GeneralizeAsync(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.Compute.Models.VirtualMachine> Get(string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1623,8 +1565,6 @@ namespace Azure.Management.Compute
     public partial class VirtualMachineSizesClient
     {
         protected VirtualMachineSizesClient() { }
-        public VirtualMachineSizesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
-        public VirtualMachineSizesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.Compute.ComputeManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.Compute.Models.VirtualMachineSize> List(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.Compute.Models.VirtualMachineSize> ListAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

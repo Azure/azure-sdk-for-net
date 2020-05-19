@@ -16,6 +16,12 @@
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 
+### Fixes
+
+- Custom form recognition without labels can now handle multipaged forms.
+- `RecognizedForm.Pages` now only contains pages whose numbers are within `RecognizedForm.PageRange`.
+- `FieldText.TextContent` cannot be `null` anymore, and it will be empty when no element is returned from the service.
+
 ## 1.0.0-preview.2 (05-06-2020)
 
 ### Fixes

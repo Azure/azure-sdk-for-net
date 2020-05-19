@@ -25,19 +25,16 @@ namespace Azure.Management.Network
         protected AvailableEndpointServicesClient()
         {
         }
-
         /// <summary> Initializes a new instance of AvailableEndpointServicesClient. </summary>
-        public AvailableEndpointServicesClient(string subscriptionId, TokenCredential tokenCredential, NetworkManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal AvailableEndpointServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of AvailableEndpointServicesClient. </summary>
-        public AvailableEndpointServicesClient(string subscriptionId, string host, TokenCredential tokenCredential, NetworkManagementClientOptions options = null)
-        {
-            options ??= new NetworkManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new AvailableEndpointServicesRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new AvailableEndpointServicesRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> List what values of endpoint services are available for use. </summary>
