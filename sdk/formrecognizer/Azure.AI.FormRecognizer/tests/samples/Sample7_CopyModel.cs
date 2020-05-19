@@ -18,29 +18,50 @@ namespace Azure.AI.FormRecognizer.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+            string resourceId = TestEnvironment.TargetResourceId;
+            string region = TestEnvironment.TargetResourceRegion;
+
+
+            #region Snippet:FormRecognizerSample6CreateCopySourceClient
+            //@@ string endpoint = "<source_endpoint>";
+            //@@ string apiKey = "<source_apiKey>";
+            var credential = new AzureKeyCredential(apiKey);
+            var sourceClient = new FormTrainingClient(new Uri(endpoint), credential);
+            #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
             // if you already have a model, this is not neccesary.
-
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
-            CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
-
+            CustomFormModel model = await sourceClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
             string modelId = model.ModelId;
 
-            FormTrainingClient targetClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync("<resourceId>", "<region>");
+            #region Snippet:FormRecognizerSample6CreateCopyTargetClient
+            //@@ string endpoint = "<target_endpoint>";
+            //@@ string apiKey = "<target_apiKey>";
+            var targetCredential = new AzureKeyCredential(apiKey);
+            var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
+            #endregion
 
-            // Use ToJson to share the model access token with another application.
-            var jsonTargetAuth = targetAuth.ToJson();
+            #region Snippet:FormRecognizerSample6GetCopyAuthorization
+            //@@ string resourceId = "<resourceId>";
+            //@@ string region = "<region>";
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
+            #endregion
 
-            // Deserialize a model access token
-            CopyAuthorization targetAuthFromJson = CopyAuthorization.FromJson(jsonTargetAuth);
+            #region Snippet:FormRecognizerSample6ToJson
+            string jsonTargetAuth = targetAuth.ToJson();
+            #endregion
 
-            CustomFormModelInfo modelCopy = await client.StartCopyModelAsync(modelId, targetAuthFromJson).WaitForCompletionAsync();
+            #region Snippet:FormRecognizerSample6FromJson
+            CopyAuthorization targetCopyAuth = CopyAuthorization.FromJson(jsonTargetAuth);
+            #endregion
+
+            #region Snippet:FormRecognizerSample6CopyModel
+            //@@ string modelId = "<modelId>";
+            CustomFormModelInfo modelCopy = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
 
             Console.WriteLine($"Original modelID => {modelId}");
             Console.WriteLine($"Copied modelID => {modelCopy.ModelId}");
+            #endregion
         }
     }
 }
