@@ -217,8 +217,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Opens an AMQP link for use with management operations.
         /// </summary>
-        /// <param name="entityPath"></param>
-        /// <param name="identifier"></param>
+        /// <param name="entityPath">The path for the entity.</param>
+        /// <param name="identifier">The identifier for the sender or receiver that is opening a management link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
