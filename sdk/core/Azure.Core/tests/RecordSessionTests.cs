@@ -16,6 +16,7 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
         [TestCase("{\"json\"\n:\"value\"}", "application/json")]
         [TestCase("{\"json\" :\"value\"}", "application/json")]
         [TestCase("[\"json\", \"value\"]", "application/json")]
@@ -50,7 +51,10 @@ namespace Azure.Core.Tests
             session.Entries.Add(recordEntry);
 
             var arrayBufferWriter = new ArrayBufferWriter<byte>();
-            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter);
+            using var jsonWriter = new Utf8JsonWriter(arrayBufferWriter, new JsonWriterOptions()
+            {
+                Indented = true
+            });
             session.Serialize(jsonWriter);
             jsonWriter.Flush();
 

@@ -181,11 +181,12 @@ namespace Azure.Core.TestFramework
                     // fallback to generic string writing
                     if (document.RootElement.ValueKind != JsonValueKind.Array)
                     {
-                        // Make sure JSON is exactly the same a the source
-                        // in the case where the original was formatted differently
+                        // Make sure we can replay JSON is exactly the same as the source
+                        // for the case where service response was pre-formatted
                         // fallback to generic string writing
                         var memoryStream = new MemoryStream();
-                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream, jsonWriter.Options))
+                        // Settings of this writer should be in sync with the one used in deserialiation
+                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream))
                         {
                             document.RootElement.WriteTo(reformattedWriter);
                         }
