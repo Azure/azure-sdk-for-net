@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("DataSource")]
     [CodeGenSuppress(nameof(SearchIndexerDataSource), typeof(string), typeof(SearchIndexerDataSourceType), typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
     public partial class SearchIndexerDataSource
     {

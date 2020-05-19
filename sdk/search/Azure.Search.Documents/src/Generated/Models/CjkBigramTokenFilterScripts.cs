@@ -10,13 +10,13 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Scripts that can be ignored by CjkBigramTokenFilter. </summary>
     public enum CjkBigramTokenFilterScripts
     {
-        /// <summary> han. </summary>
+        /// <summary> Ignore Han script when forming bigrams of CJK terms. </summary>
         Han,
-        /// <summary> hiragana. </summary>
+        /// <summary> Ignore Hiragana script when forming bigrams of CJK terms. </summary>
         Hiragana,
-        /// <summary> katakana. </summary>
+        /// <summary> Ignore Katakana script when forming bigrams of CJK terms. </summary>
         Katakana,
-        /// <summary> hangul. </summary>
+        /// <summary> Ignore Hangul script when forming bigrams of CJK terms. </summary>
         Hangul
     }
 }

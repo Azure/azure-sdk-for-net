@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("Analyzer")]
     public partial class LexicalAnalyzer
     {
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>

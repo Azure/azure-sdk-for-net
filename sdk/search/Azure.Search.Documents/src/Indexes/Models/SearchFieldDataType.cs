@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("DataType")]
     public readonly partial struct SearchFieldDataType
     {
         private const string CollectionPrefix = "Collection(";

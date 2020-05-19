@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KeyVersion = keyVersion ?? throw new ArgumentNullException(nameof(keyVersion));
         }
 
-        [CodeGenMember("keyVaultUri")]
+        [CodeGenMember("vaultUri")]
         private string _vaultUri;
 
         /// <summary>

@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("Skill")]
     public partial class SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>

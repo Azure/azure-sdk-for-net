@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("Index")]
     public partial class SearchIndex
     {
         [CodeGenMember("etag")]

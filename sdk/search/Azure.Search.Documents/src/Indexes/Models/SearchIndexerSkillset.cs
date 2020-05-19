@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenModel("Skillset")]
     public partial class SearchIndexerSkillset
     {
         [CodeGenMember("etag")]
