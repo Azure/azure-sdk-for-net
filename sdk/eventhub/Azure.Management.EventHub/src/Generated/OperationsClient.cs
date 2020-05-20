@@ -25,19 +25,15 @@ namespace Azure.Management.EventHub
         protected OperationsClient()
         {
         }
-
         /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(TokenCredential tokenCredential, EventHubManagementClientOptions options = null) : this("https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal OperationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of OperationsClient. </summary>
-        public OperationsClient(string host, TokenCredential tokenCredential, EventHubManagementClientOptions options = null)
-        {
-            options ??= new EventHubManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new OperationsRestClient(_clientDiagnostics, _pipeline, host: host);
+            RestClient = new OperationsRestClient(clientDiagnostics, pipeline, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Lists all of the available Event Hub REST API operations. </summary>

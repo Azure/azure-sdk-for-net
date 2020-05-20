@@ -25,19 +25,16 @@ namespace Azure.Management.EventHub
         protected ConsumerGroupsClient()
         {
         }
-
         /// <summary> Initializes a new instance of ConsumerGroupsClient. </summary>
-        public ConsumerGroupsClient(string subscriptionId, TokenCredential tokenCredential, EventHubManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        internal ConsumerGroupsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-        }
-
-        /// <summary> Initializes a new instance of ConsumerGroupsClient. </summary>
-        public ConsumerGroupsClient(string subscriptionId, string host, TokenCredential tokenCredential, EventHubManagementClientOptions options = null)
-        {
-            options ??= new EventHubManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ConsumerGroupsRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ConsumerGroupsRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Creates or updates an Event Hubs consumer group as a nested resource within a Namespace. </summary>

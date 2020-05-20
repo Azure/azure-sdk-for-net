@@ -3,8 +3,6 @@ namespace Azure.Management.EventHub
     public partial class ClustersClient
     {
         protected ClustersClient() { }
-        public ClustersClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public ClustersClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.EventHub.Models.Cluster> Get(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.Cluster>> GetAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.AvailableClustersList> ListAvailableClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -62,8 +60,6 @@ namespace Azure.Management.EventHub
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }
-        public ConfigurationClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public ConfigurationClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.EventHub.Models.ClusterQuotaConfigurationProperties> Get(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.ClusterQuotaConfigurationProperties>> GetAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.ClusterQuotaConfigurationProperties> Patch(string resourceGroupName, string clusterName, Azure.Management.EventHub.Models.ClusterQuotaConfigurationProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -72,8 +68,6 @@ namespace Azure.Management.EventHub
     public partial class ConsumerGroupsClient
     {
         protected ConsumerGroupsClient() { }
-        public ConsumerGroupsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public ConsumerGroupsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.EventHub.Models.ConsumerGroup> CreateOrUpdate(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Azure.Management.EventHub.Models.ConsumerGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.ConsumerGroup>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Azure.Management.EventHub.Models.ConsumerGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -86,8 +80,6 @@ namespace Azure.Management.EventHub
     public partial class DisasterRecoveryConfigsClient
     {
         protected DisasterRecoveryConfigsClient() { }
-        public DisasterRecoveryConfigsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public DisasterRecoveryConfigsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response BreakPairing(string resourceGroupName, string namespaceName, string alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BreakPairingAsync(string resourceGroupName, string namespaceName, string alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.CheckNameAvailabilityResult> CheckNameAvailability(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -113,7 +105,7 @@ namespace Azure.Management.EventHub
     {
         protected EventHubManagementClient() { }
         public EventHubManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public EventHubManagementClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
+        public EventHubManagementClient(string subscriptionId, System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Management.EventHub.ClustersClient GetClustersClient() { throw null; }
         public virtual Azure.Management.EventHub.ConfigurationClient GetConfigurationClient() { throw null; }
         public virtual Azure.Management.EventHub.ConsumerGroupsClient GetConsumerGroupsClient() { throw null; }
@@ -130,8 +122,6 @@ namespace Azure.Management.EventHub
     public partial class EventHubsClient
     {
         protected EventHubsClient() { }
-        public EventHubsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public EventHubsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.EventHub.Models.Eventhub> CreateOrUpdate(string resourceGroupName, string namespaceName, string eventHubName, Azure.Management.EventHub.Models.Eventhub parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.Eventhub>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string eventHubName, Azure.Management.EventHub.Models.Eventhub parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.AuthorizationRule> CreateOrUpdateAuthorizationRule(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, Azure.Management.EventHub.Models.AuthorizationRule parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -156,8 +146,6 @@ namespace Azure.Management.EventHub
     public partial class NamespacesClient
     {
         protected NamespacesClient() { }
-        public NamespacesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public NamespacesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.EventHub.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.Management.EventHub.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.Management.EventHub.Models.CheckNameAvailabilityParameter parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.AuthorizationRule> CreateOrUpdateAuthorizationRule(string resourceGroupName, string namespaceName, string authorizationRuleName, Azure.Management.EventHub.Models.AuthorizationRule parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -234,16 +222,12 @@ namespace Azure.Management.EventHub
     public partial class OperationsClient
     {
         protected OperationsClient() { }
-        public OperationsClient(Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public OperationsClient(string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.EventHub.Models.Operation> List(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.EventHub.Models.Operation> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RegionsClient
     {
         protected RegionsClient() { }
-        public RegionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
-        public RegionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.EventHub.EventHubManagementClientOptions options = null) { }
         public virtual Azure.Pageable<Azure.Management.EventHub.Models.MessagingRegions> ListBySku(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.EventHub.Models.MessagingRegions> ListBySkuAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

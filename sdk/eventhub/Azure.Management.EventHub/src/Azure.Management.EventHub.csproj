@@ -4,6 +4,6 @@
     <PackageId>Azure.Management.EventHub</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsoft.EventHub</Description>
     <PackageTags>azure;management;eventhub</PackageTags>
-    <NoWarn>$(NoWarn);AZC0008;CA1308</NoWarn>
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
   </PropertyGroup>
 </Project>
