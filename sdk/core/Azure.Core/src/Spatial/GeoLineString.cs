@@ -15,7 +15,16 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="positions"></param>
-        public GeoLineString(IEnumerable<GeoPosition> positions)
+        public GeoLineString(IEnumerable<GeoPosition> positions): this(positions, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="positions"></param>
+        /// <param name="properties"></param>
+        public GeoLineString(IEnumerable<GeoPosition> positions, GeometryProperties? properties): base(properties)
         {
             Positions = positions.ToArray();
         }

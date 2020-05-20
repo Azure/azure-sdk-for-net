@@ -15,7 +15,16 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="rings"></param>
-        public GeoPolygon(IEnumerable<GeoLineString> rings)
+        public GeoPolygon(IEnumerable<GeoLineString> rings): this(rings, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="rings"></param>
+        /// <param name="properties"></param>
+        public GeoPolygon(IEnumerable<GeoLineString> rings, GeometryProperties? properties): base(properties)
         {
             Rings = rings.ToArray();
         }

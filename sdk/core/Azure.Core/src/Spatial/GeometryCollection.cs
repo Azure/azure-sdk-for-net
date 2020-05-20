@@ -15,7 +15,16 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="geometries"></param>
-        public GeometryCollection(IEnumerable<Geometry> geometries)
+        public GeometryCollection(IEnumerable<Geometry> geometries): this(geometries, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="geometries"></param>
+        /// <param name="properties"></param>
+        public GeometryCollection(IEnumerable<Geometry> geometries, GeometryProperties? properties): base(properties)
         {
             Geometries = geometries.ToArray();
         }

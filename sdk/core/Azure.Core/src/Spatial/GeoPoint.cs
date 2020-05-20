@@ -12,7 +12,16 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="position"></param>
-        public GeoPoint(GeoPosition position)
+        public GeoPoint(GeoPosition position): this(position, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="properties"></param>
+        public GeoPoint(GeoPosition position, GeometryProperties? properties): base(properties)
         {
             Position = position;
         }

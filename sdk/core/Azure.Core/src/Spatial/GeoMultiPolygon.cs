@@ -15,7 +15,16 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="polygons"></param>
-        public GeoMultiPolygon(IEnumerable<GeoPolygon> polygons)
+        public GeoMultiPolygon(IEnumerable<GeoPolygon> polygons): this(polygons, null)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="polygons"></param>
+        /// <param name="properties"></param>
+        public GeoMultiPolygon(IEnumerable<GeoPolygon> polygons, GeometryProperties? properties): base(properties)
         {
             Polygons = polygons.ToArray();
         }

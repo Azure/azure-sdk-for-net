@@ -84,5 +84,19 @@ namespace Azure.Core.Spatial
         {
             return !left.Equals(right);
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (Altitude == null)
+            {
+                return $"[{Longitude:G17}, {Latitude:G17}]";
+            }
+
+            return $"[{Longitude:G17}, {Latitude:G17}, {Altitude.Value:G17}]";
+        }
     }
 }
