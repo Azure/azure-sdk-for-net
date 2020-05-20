@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcesserRenewMessageLockException(_identifier, ex);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(_identifier, ex.ToString());
                     await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 // don't bubble up exceptions raised from customer exception handler
-                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
             }
         }
 

@@ -4,6 +4,7 @@
 using System;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -46,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 case "duration":
                     return XmlConvert.ToTimeSpan(element.Value);
                 default:
-                    MessagingEventSource.Log.ManagementSerializationException(
+                    ServiceBusEventSource.Log.ManagementSerializationException(
                             $"{nameof(XmlObjectConvertor)}_{nameof(ParseValueObject)}",
                             element.ToString());
                     return element.Value;
@@ -88,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             else
             {
                 var unknownType = value.GetType().Name;
-                MessagingEventSource.Log.ManagementSerializationException(
+                ServiceBusEventSource.Log.ManagementSerializationException(
                             $"{nameof(XmlObjectConvertor)}_{nameof(SerializeObject)}",
                             unknownType);
 

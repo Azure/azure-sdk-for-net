@@ -142,12 +142,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         receiveMode: receiveMode,
                         sessionId: sessionId,
                         isSessionReceiver: isSessionReceiver,
+                        identifier: _identifier,
                         cancellationToken: CancellationToken.None),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
                     _entityPath,
+                    _identifier,
                     timeout,
                     CancellationToken.None),
                 link => CloseLink(link));
@@ -173,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
@@ -195,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
+        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages to receive in this batch.</param>
@@ -204,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
         ///
         private async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsyncInternal(
             int maxMessages,
@@ -389,9 +391,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ServiceBusEventSource.Log.LinkStateLost(
                         _identifier,
                         receiveLink.Name,
-                        receiveLink.State,
+                        receiveLink.State.ToString(),
                         _isSessionReceiver,
-                        exception);
+                        exception.ToString());
                     ThrowLockLostException();
                 }
 
@@ -1229,7 +1231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.SessionReceiverLinkClosed(
                     _identifier,
                     SessionId,
-                    LinkException);
+                    LinkException.ToString());
             }
         }
 
