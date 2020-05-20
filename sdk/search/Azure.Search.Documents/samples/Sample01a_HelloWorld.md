@@ -15,7 +15,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 // Create a new SearchServiceClient
-SearchServiceClient search = new SearchServiceClient(endpoint, credential);
+SearchIndexClient search = new SearchIndexClient(endpoint, credential);
 
 // Perform an operation
 Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
