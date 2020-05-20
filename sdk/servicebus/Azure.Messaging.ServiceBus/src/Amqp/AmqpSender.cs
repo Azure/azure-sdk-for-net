@@ -597,7 +597,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex);
+                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex.ToString());
                 throw;
             }
         }

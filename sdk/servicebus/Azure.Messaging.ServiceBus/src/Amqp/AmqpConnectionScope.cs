@@ -257,7 +257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateManagementLinkException(identifier, ex);
+                ServiceBusEventSource.Log.CreateManagementLinkException(identifier, ex.ToString());
                 throw;
             }
         }
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateReceiveLinkException(identifier, ex);
+                ServiceBusEventSource.Log.CreateReceiveLinkException(identifier, ex.ToString());
                 throw;
             }
         }

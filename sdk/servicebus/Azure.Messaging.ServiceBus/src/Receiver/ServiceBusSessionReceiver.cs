@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.Identifier, ex);
+                receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.FullyQualifiedNamespace, entityPath, ex);
                 throw;
             }
             receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.GetSessionStateException(Identifier, exception);
+                Logger.GetSessionStateException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.SetSessionStateException(Identifier, exception);
+                Logger.SetSessionStateException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.RenewSessionLockException(Identifier, exception);
+                Logger.RenewSessionLockException(Identifier, exception.ToString());
                 throw;
             }
 

@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                     if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                     {
-                        Logger.RunOperationExceptionEncountered(activeEx);
+                        Logger.RunOperationExceptionEncountered(activeEx.ToString());
                         await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                         tryTimeout = CalculateTryTimeout(failedAttemptCount);
                     }

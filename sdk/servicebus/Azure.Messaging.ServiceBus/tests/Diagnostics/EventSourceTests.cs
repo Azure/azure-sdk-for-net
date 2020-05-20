@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.SendMessageException(
                         sender.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ScheduleMessageStart(
                         sender.Identifier,
-                        scheduleTime),
+                        scheduleTime.ToString()),
                 Times.Once);
             mockLogger
                 .Verify(
@@ -206,13 +206,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ScheduleMessageStart(
                         sender.Identifier,
-                        scheduleTime),
+                        scheduleTime.ToString()),
                 Times.Once);
             mockLogger
                 .Verify(
                     log => log.ScheduleMessageException(
                         sender.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.CancelScheduledMessageException(
                         sender.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ReceiveMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -525,7 +525,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.PeekMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -591,7 +591,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.CompleteMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -655,7 +655,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.CompleteMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -722,7 +722,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.DeadLetterMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -787,7 +787,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.AbandonMessageException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -851,7 +851,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.RenewMessageLockException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -910,7 +910,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.RenewSessionLockException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -969,7 +969,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.GetSessionStateException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -1029,7 +1029,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.SetSessionStateException(
                         receiver.Identifier,
-                        It.IsAny<Exception>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -1119,7 +1119,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.StartProcessingException(
                         processor.Identifier,
-                        It.IsAny<InvalidOperationException>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 
@@ -1176,7 +1176,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.StopProcessingException(
                         processor.Identifier,
-                        It.IsAny<TaskCanceledException>()),
+                        It.IsAny<string>()),
                 Times.Once);
         }
 

@@ -306,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockLogger
                 .Verify(
-                    log => log.RunOperationExceptionEncountered(retriableException),
+                    log => log.RunOperationExceptionEncountered(It.IsAny<string>()),
                 Times.Exactly(retryOptions.MaxRetries));
         }
 

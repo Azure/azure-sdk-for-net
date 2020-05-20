@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AddRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.AddRuleException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.GetRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
                 throw;
             }
 

@@ -183,11 +183,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(SendMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: SendAsync Exception: {1}.")]
-        public virtual void SendMessageException(string identifier, Exception exception)
+        public virtual void SendMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(SendMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(SendMessageExceptionEvent, identifier, exception);
             }
         }
 
@@ -210,11 +210,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CreateMessageBatchExceptionEvent, Level = EventLevel.Error, Message = "{0}: CreateBatchAsync Exception: {1}.")]
-        public virtual void CreateMessageBatchException(string identifier, Exception exception)
+        public virtual void CreateMessageBatchException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateMessageBatchExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CreateMessageBatchExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -231,7 +231,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ReceiveMessageCompleteEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveBatchAsync done. Received '{1}' messages")]
-        public virtual void ReceiveMessageComplete(string identifier, int messageCount)
+        public virtual void ReceiveMessageComplete(
+            string identifier,
+            int messageCount)
         {
             if (IsEnabled())
             {
@@ -240,21 +242,29 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ReceiveMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: ReceiveBatchAsync Exception: {1}.")]
-        public virtual void ReceiveMessageException(string clientId, Exception exception)
+        public virtual void ReceiveMessageException(
+            string clientId,
+            string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ReceiveMessageExceptionEvent, clientId, exception.ToString());
+                WriteEvent(ReceiveMessageExceptionEvent, clientId, exception);
             }
         }
 
         [Event(ReceiveDeferredMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
+        public void ReceiveDeferredMessageStartCore(string identifier, int messageCount, string sequenceNumbers)
+        {
+            WriteEvent(ReceiveDeferredMessageStartEvent, identifier, messageCount, sequenceNumbers);
+        }
+
+        [NonEvent]
         public virtual void ReceiveDeferredMessageStart(string identifier, int messageCount, IEnumerable<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                WriteEvent(ReceiveDeferredMessageStartEvent, identifier, messageCount, formattedSequenceNumbers);
+                ReceiveDeferredMessageStartCore(identifier, messageCount, formattedSequenceNumbers);
             }
         }
 
@@ -268,11 +278,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ReceiveDeferredMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: ReceiveDeferredMessageAsync Exception: {1}.")]
-        public virtual void ReceiveDeferredMessageException(string identifier, Exception exception)
+        public virtual void ReceiveDeferredMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ReceiveDeferredMessageExceptionEvent, identifier, exception, ToString());
+                WriteEvent(ReceiveDeferredMessageExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -297,22 +307,22 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(PeekMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: MessagePeekAsync Exception: {1}.")]
-        public virtual void PeekMessageException(string identifier, Exception exception)
+        public virtual void PeekMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(PeekMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(PeekMessageExceptionEvent, identifier, exception);
             }
         }
         #endregion
 
         #region Scheduling
         [Event(ScheduleMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        public virtual void ScheduleMessageStart(string identifier, DateTimeOffset scheduledEnqueueTime)
+        public virtual void ScheduleMessageStart(string identifier, string scheduledEnqueueTime)
         {
             if (IsEnabled())
             {
-                WriteEvent(ScheduleMessageStartEvent, identifier, scheduledEnqueueTime.ToString());
+                WriteEvent(ScheduleMessageStartEvent, identifier, scheduledEnqueueTime);
             }
         }
 
@@ -326,11 +336,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ScheduleMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
-        public virtual void ScheduleMessageException(string identifier, Exception exception)
+        public virtual void ScheduleMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ScheduleMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(ScheduleMessageExceptionEvent, identifier, exception);
             }
         }
 
@@ -353,11 +363,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CancelScheduledMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
-        public virtual void CancelScheduledMessageException(string identifier, Exception exception)
+        public virtual void CancelScheduledMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CancelScheduledMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CancelScheduledMessageExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -382,11 +392,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CompleteMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: CompleteAsync Exception: {1}.")]
-        public virtual void CompleteMessageException(string identifier, Exception exception)
+        public virtual void CompleteMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CompleteMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CompleteMessageExceptionEvent, identifier, exception);
             }
         }
 
@@ -409,9 +419,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(DeferMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: DeferAsync Exception: {1}.")]
-        public virtual void DeferMessageException(string identifier, Exception exception)
+        public virtual void DeferMessageException(string identifier, string exception)
         {
-            WriteEvent(DeferMessageExceptionEvent, identifier, exception.ToString());
+            WriteEvent(DeferMessageExceptionEvent, identifier, exception);
         }
 
         [Event(AbandonMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockToken = {2}")]
@@ -433,11 +443,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(AbandonMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: AbandonAsync Exception: {1}.")]
-        public virtual void AbandonMessageException(string identifier, Exception exception)
+        public virtual void AbandonMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(AbandonMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(AbandonMessageExceptionEvent, identifier, exception);
             }
         }
 
@@ -460,11 +470,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(DeadLetterMessageExceptionEvent, Level = EventLevel.Error, Message = "{0}: DeadLetterAsync Exception: {1}.")]
-        public virtual void DeadLetterMessageException(string identifier, Exception exception)
+        public virtual void DeadLetterMessageException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(DeadLetterMessageExceptionEvent, identifier, exception.ToString());
+                WriteEvent(DeadLetterMessageExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -489,11 +499,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(RenewMessageLockExceptionEvent, Level = EventLevel.Error, Message = "{0}: RenewLockAsync Exception: {1}.")]
-        public virtual void RenewMessageLockException(string identifier, Exception exception)
+        public virtual void RenewMessageLockException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(RenewMessageLockExceptionEvent, identifier, exception.ToString());
+                WriteEvent(RenewMessageLockExceptionEvent, identifier, exception);
             }
         }
 
@@ -516,11 +526,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(RenewSessionLockExceptionEvent, Level = EventLevel.Error, Message = "{0}: RenewSessionLockAsync Exception: {1}.")]
-        public virtual void RenewSessionLockException(string identifier, Exception exception)
+        public virtual void RenewSessionLockException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(RenewSessionLockExceptionEvent, identifier, exception.ToString());
+                WriteEvent(RenewSessionLockExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -546,11 +556,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(GetSessionStateExceptionEvent, Level = EventLevel.Error, Message = "{0}: Session GetStateAsync Exception: {1}.")]
-        public virtual void GetSessionStateException(string identifier, Exception exception)
+        public virtual void GetSessionStateException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(GetSessionStateExceptionEvent, identifier, exception.ToString());
+                WriteEvent(GetSessionStateExceptionEvent, identifier, exception);
             }
         }
 
@@ -573,11 +583,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(SetSessionStateExceptionEvent, Level = EventLevel.Error, Message = "{0}: Session SetStateAsync Exception: {1}.")]
-        public virtual void SetSessionStateException(string identifier, Exception exception)
+        public virtual void SetSessionStateException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(SetSessionStateExceptionEvent, identifier, exception.ToString());
+                WriteEvent(SetSessionStateExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -603,11 +613,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(StartProcessingExceptionEvent, Level = EventLevel.Error, Message = "{0}: StartProcessingAsync Exception: {1}.")]
-        public virtual void StartProcessingException(string identifier, Exception exception)
+        public virtual void StartProcessingException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(StartProcessingExceptionEvent, identifier, exception.ToString());
+                WriteEvent(StartProcessingExceptionEvent, identifier, exception);
             }
         }
 
@@ -630,11 +640,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(StopProcessingExceptionEvent, Level = EventLevel.Error, Message = "{0}: StopProcessingAsync Exception: {1}.")]
-        public virtual void StopProcessingException(string identifier, Exception exception)
+        public virtual void StopProcessingException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(StopProcessingExceptionEvent, identifier, exception.ToString());
+                WriteEvent(StopProcessingExceptionEvent, identifier, exception);
             }
         }
 
@@ -657,11 +667,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ProcessorRenewMessageLockExceptionEvent, Level = EventLevel.Error, Message = "{0}: Processor RenewMessageLock Exception: {1}.")]
-        public virtual void ProcessorRenewMessageLockException(string identifier, Exception exception)
+        public virtual void ProcessorRenewMessageLockException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorRenewMessageLockExceptionEvent, identifier, exception.ToString());
+                WriteEvent(ProcessorRenewMessageLockExceptionEvent, identifier, exception);
             }
         }
 
@@ -684,11 +694,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ProcessorRenewSessionLockExceptionEvent, Level = EventLevel.Error, Message = "{0}: Processor RenewSessionLock Exception: {1}.")]
-        public virtual void ProcessorRenewSessionLockException(string identifier, Exception exception)
+        public virtual void ProcessorRenewSessionLockException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ProcessorRenewSessionLockExceptionEvent, identifier, exception.ToString());
+                WriteEvent(ProcessorRenewSessionLockExceptionEvent, identifier, exception);
             }
         }
         #endregion region
@@ -713,11 +723,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(AddRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Add rule Exception: {1}.")]
-        public virtual void AddRuleException(string identifier, Exception exception)
+        public virtual void AddRuleException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(AddRuleExceptionEvent, identifier, exception.ToString());
+                WriteEvent(AddRuleExceptionEvent, identifier, exception);
             }
         }
 
@@ -740,11 +750,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(RemoveRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Remove rule Exception: {1}.")]
-        public virtual void RemoveRuleException(string identifier, Exception exception)
+        public virtual void RemoveRuleException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(RemoveRuleExceptionEvent, identifier, exception.ToString());
+                WriteEvent(RemoveRuleExceptionEvent, identifier, exception);
             }
         }
 
@@ -767,31 +777,31 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(GetRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Get rule Exception: {1}.")]
-        public virtual void GetRuleException(string identifier, Exception exception)
+        public virtual void GetRuleException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(GetRuleExceptionEvent, identifier, exception.ToString());
+                WriteEvent(GetRuleExceptionEvent, identifier, exception);
             }
         }
         #endregion
 
         #region Link lifecycle
         [Event(LinkStateLostEvent, Level = EventLevel.Error, Message = "Link state lost. Throwing LockLostException for identifier: {0}, receiveLinkName: {1}, receiveLinkState: {2}, isSessionReceiver: {3}, exception: {4}.")]
-        public virtual void LinkStateLost(string identifier, string receiveLinkName, AmqpObjectState receiveLinkState, bool isSessionReceiver, Exception exception)
+        public virtual void LinkStateLost(string identifier, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(LinkStateLostEvent, identifier, receiveLinkName, receiveLinkState.ToString(), isSessionReceiver, exception.ToString());
+                WriteEvent(LinkStateLostEvent, identifier, receiveLinkName, receiveLinkState, isSessionReceiver, exception);
             }
         }
 
         [Event(SessionReceiverLinkClosedEvent, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
-        public virtual void SessionReceiverLinkClosed(string identifier, string sessionId, Exception linkException)
+        public virtual void SessionReceiverLinkClosed(string identifier, string sessionId, string linkException)
         {
             if (IsEnabled())
             {
-                WriteEvent(SessionReceiverLinkClosedEvent, identifier, sessionId, linkException.ToString());
+                WriteEvent(SessionReceiverLinkClosedEvent, identifier, sessionId, linkException);
             }
         }
 
@@ -821,8 +831,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         ///
         [Event(AmqpLinkRefreshCompleteEvent, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}').")]
-        public virtual void AmqpLinkAuthorizationRefreshComplete(string identifier,
-                                                         string endpoint)
+        public virtual void AmqpLinkAuthorizationRefreshComplete(
+            string identifier,
+            string endpoint)
         {
             if (IsEnabled())
             {
@@ -873,11 +884,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         [Event(CreateSendLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating send link for Identifier: {0}. Error Message: '{1}'")]
         public virtual void CreateSendLinkException(
             string identifier,
-            Exception exception)
+            string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateSendLinkExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CreateSendLinkExceptionEvent, identifier, exception);
             }
         }
 
@@ -900,11 +911,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CreateReceiveLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating receive link for Identifier: {0}. Error Message: '{1}'")]
-        public virtual void CreateReceiveLinkException(string identifier, Exception exception)
+        public virtual void CreateReceiveLinkException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateReceiveLinkExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CreateReceiveLinkExceptionEvent, identifier, exception);
             }
         }
 
@@ -927,11 +938,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(CreateManagementLinkExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating management link for Identifier: {0}. Error Message: '{1}'")]
-        public virtual void CreateManagementLinkException(string identifier, Exception exception)
+        public virtual void CreateManagementLinkException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(CreateManagementLinkExceptionEvent, identifier, exception.ToString());
+                WriteEvent(CreateManagementLinkExceptionEvent, identifier, exception);
             }
         }
         #endregion
@@ -939,11 +950,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #region Retries
 
         [Event(RunOperationExceptionEvent, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
-        public virtual void RunOperationExceptionEncountered(Exception exception)
+        public virtual void RunOperationExceptionEncountered(string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(RunOperationExceptionEvent, exception.ToString());
+                WriteEvent(RunOperationExceptionEvent, exception);
             }
         }
         #endregion
@@ -957,13 +968,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         /// <param name="clientType">The type of client being created.</param>
-        [Event(ClientCreateStartEvent, Level = EventLevel.Verbose, Message = "Creating a {0}")]
+        /// <param name="fullyQualifiedNamespace">The namespace for the client.</param>
+        /// <param name="entityName">The entity name for the client.</param>
+        [Event(ClientCreateStartEvent, Level = EventLevel.Verbose, Message = "Creating a {0} (Namespace: '{1}', Entity name: '{2}'")]
         public virtual void ClientCreateStart(
-            Type clientType)
+            Type clientType,
+            string fullyQualifiedNamespace,
+            string entityName = default)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientCreateStartEvent, clientType.Name);
+                WriteEvent(ClientCreateStartEvent, clientType.Name, fullyQualifiedNamespace, entityName ?? string.Empty);
             }
         }
 
@@ -976,14 +991,25 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
-        [Event(ClientCreateCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been created (Identifier '{1}').")]
+        [NonEvent]
         public virtual void ClientCreateComplete(
             Type clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientCreateCompleteEvent, clientType.Name, identifier ?? string.Empty);
+                ClientCreateCompleteCore(clientType.Name, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(ClientCreateCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been created (Identifier '{1}').")]
+        public virtual void ClientCreateCompleteCore(
+            string clientType,
+            string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientCreateCompleteEvent, clientType, identifier ?? string.Empty);
             }
         }
 
@@ -994,18 +1020,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
-        /// <param name="identifier">An identifier to associate with the client.</param>
+        /// <param name="fullyQualifiedNamespace">The namespace for the client.</param>
+        /// <param name="entityPath">The entity path for the client.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        [Event(ClientCreateExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating a {0} (Identifier '{1}'). Error Message: '{2}'")]
+        [NonEvent]
         public virtual void ClientCreateException(
             Type clientType,
-            string identifier,
+            string fullyQualifiedNamespace,
+            string entityPath,
             Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientCreateExceptionEvent, clientType.Name, identifier, exception.ToString());
+                ClientCreateExceptionCore(clientType.Name, fullyQualifiedNamespace, entityPath, exception.ToString());
+            }
+        }
+
+        [Event(ClientCreateExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while creating a {0} (Namespace '{1}', Entity path '{2}'). Error Message: '{3}'")]
+        public virtual void ClientCreateExceptionCore(
+            string clientType,
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientCreateExceptionEvent, clientType, fullyQualifiedNamespace, entityPath, exception);
             }
         }
 
@@ -1018,14 +1059,25 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
-        [Event(ClientDisposeStartEvent, Level = EventLevel.Verbose, Message = "Closing a {0} (Identifier '{1}').")]
+        [NonEvent]
         public virtual void ClientDisposeStart(
             Type clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeStartEvent, clientType.Name, identifier ?? string.Empty);
+                ClientDisposeStartCore(clientType.Name, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(ClientDisposeStartEvent, Level = EventLevel.Verbose, Message = "Closing a {0} (Identifier '{1}').")]
+        public virtual void ClientDisposeStartCore(
+            string clientType,
+            string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientDisposeStartEvent, clientType, identifier);
             }
         }
 
@@ -1037,14 +1089,25 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="clientType">The type of client being closed.</param>
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
-        [Event(ClientDisposeCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been closed (Identifier '{1}').")]
+        [NonEvent]
         public virtual void ClientDisposeComplete(
             Type clientType,
             string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeCompleteEvent, clientType.Name, identifier ?? string.Empty);
+                ClientDisposeCompleteCore(clientType.Name, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(ClientDisposeCompleteEvent, Level = EventLevel.Verbose, Message = "A {0} has been closed (Identifier '{1}').")]
+        public virtual void ClientDisposeCompleteCore(
+            string clientType,
+            string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientDisposeCompleteEvent, clientType, identifier);
             }
         }
 
@@ -1057,7 +1120,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
-        [Event(ClientDisposeExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while closing a {0} (Identifier '{2}'). Error Message: '{3}'")]
+        [NonEvent]
         public virtual void ClientDisposeException(
             Type clientType,
             string identifier,
@@ -1065,7 +1128,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientDisposeExceptionEvent, clientType.Name, identifier, exception.ToString());
+                ClientDisposeExceptionCore(clientType.Name, identifier ?? string.Empty, exception.ToString());
+            }
+        }
+
+        [Event(ClientDisposeExceptionEvent, Level = EventLevel.Error, Message = "An exception occurred while closing a {0} (Identifier '{1}'). Error Message: '{2}'")]
+        public virtual void ClientDisposeExceptionCore(
+            string clientType,
+            string identifier,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientDisposeExceptionEvent, clientType, identifier, exception);
             }
         }
         #endregion

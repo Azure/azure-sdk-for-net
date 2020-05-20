@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default)
         {
             Type type = GetType();
-            Logger.ClientCreateStart(type);
+            Logger.ClientCreateStart(type, connection?.FullyQualifiedNamespace, entityPath);
             try
             {
                 Argument.AssertNotNull(connection, nameof(connection));
@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.ClientCreateException(type, Identifier, ex);
+                Logger.ClientCreateException(type, connection?.FullyQualifiedNamespace, entityPath, ex);
                 throw;
             }
         }
@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.ReceiveMessageException(Identifier, exception);
+                Logger.ReceiveMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -343,7 +343,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.PeekMessageException(Identifier, exception);
+                Logger.PeekMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -461,7 +461,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.CompleteMessageException(Identifier, exception);
+                Logger.CompleteMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -531,7 +531,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.AbandonMessageException(Identifier, exception);
+                Logger.AbandonMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -688,7 +688,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.DeadLetterMessageException(Identifier, exception);
+                Logger.DeadLetterMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -760,7 +760,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.DeferMessageException(Identifier, ex);
+                Logger.DeferMessageException(Identifier, ex.ToString());
                 throw;
             }
 
@@ -843,7 +843,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.ReceiveDeferredMessageException(Identifier, exception);
+                Logger.ReceiveDeferredMessageException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -908,7 +908,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.RenewMessageLockException(Identifier, exception);
+                Logger.RenewMessageLockException(Identifier, exception.ToString());
                 throw;
             }
 

@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusSenderOptions options,
             ServiceBusConnection connection)
         {
-            Logger.ClientCreateStart(typeof(ServiceBusSender));
+            Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try
             {
                 Argument.AssertNotNull(connection, nameof(connection));
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.ClientCreateException(typeof(ServiceBusSender), Identifier, ex);
+                Logger.ClientCreateException(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath, ex);
                 throw;
             }
             Logger.ClientCreateComplete(typeof(ServiceBusSender), Identifier);
@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.SendMessageException(Identifier, ex);
+                Logger.SendMessageException(Identifier, ex.ToString());
                 throw;
             }
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.CreateMessageBatchException(Identifier, ex);
+                Logger.CreateMessageBatchException(Identifier, ex.ToString());
                 throw;
             }
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.SendMessageException(Identifier, ex);
+                Logger.SendMessageException(Identifier, ex.ToString());
                 throw;
             }
             finally
@@ -307,7 +307,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime);
+            Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime.ToString());
 
             long sequenceNumber;
             try
@@ -317,7 +317,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.ScheduleMessageException(Identifier, ex);
+                Logger.ScheduleMessageException(Identifier, ex.ToString());
                 throw;
             }
 
@@ -345,7 +345,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.CancelScheduledMessageException(Identifier, ex);
+                Logger.CancelScheduledMessageException(Identifier, ex.ToString());
                 throw;
             }
 

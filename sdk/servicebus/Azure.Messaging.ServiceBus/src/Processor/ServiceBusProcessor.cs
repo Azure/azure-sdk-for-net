@@ -442,7 +442,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception exception)
                 {
-                    Logger.StartProcessingException(Identifier, exception);
+                    Logger.StartProcessingException(Identifier, exception.ToString());
                     throw;
                 }
                 finally
@@ -572,7 +572,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.StopProcessingException(Identifier, exception);
+                Logger.StopProcessingException(Identifier, exception.ToString());
                 throw;
             }
             finally

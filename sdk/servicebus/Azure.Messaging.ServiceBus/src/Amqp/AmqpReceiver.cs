@@ -391,9 +391,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ServiceBusEventSource.Log.LinkStateLost(
                         _identifier,
                         receiveLink.Name,
-                        receiveLink.State,
+                        receiveLink.State.ToString(),
                         _isSessionReceiver,
-                        exception);
+                        exception.ToString());
                     ThrowLockLostException();
                 }
 
@@ -1231,7 +1231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.SessionReceiverLinkClosed(
                     _identifier,
                     SessionId,
-                    LinkException);
+                    LinkException.ToString());
             }
         }
 
