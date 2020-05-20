@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary> The HttpRuntime service client. </summary>
-    public partial class HttpRuntimeClient
+    internal partial class HttpRuntimeClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

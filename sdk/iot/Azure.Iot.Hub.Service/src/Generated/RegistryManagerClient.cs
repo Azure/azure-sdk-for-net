@@ -16,7 +16,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary> The RegistryManager service client. </summary>
-    public partial class RegistryManagerClient
+    internal partial class RegistryManagerClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

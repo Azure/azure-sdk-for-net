@@ -15,7 +15,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary> The FaultInjection service client. </summary>
-    public partial class FaultInjectionClient
+    internal partial class FaultInjectionClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

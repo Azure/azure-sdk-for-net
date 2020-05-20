@@ -15,7 +15,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary> The DeviceMethod service client. </summary>
-    public partial class DeviceMethodClient
+    internal partial class DeviceMethodClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
