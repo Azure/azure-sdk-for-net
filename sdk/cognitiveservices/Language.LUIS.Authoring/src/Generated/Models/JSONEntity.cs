@@ -12,6 +12,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,12 +39,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="entity">The entity name.</param>
         /// <param name="role">The role the entity plays in the
         /// utterance.</param>
-        public JSONEntity(int startPos, int endPos, string entity, string role = default(string))
+        public JSONEntity(int startPos, int endPos, string entity, string role = default(string), IList<JSONEntity> children = default(IList<JSONEntity>))
         {
             StartPos = startPos;
             EndPos = endPos;
             Entity = entity;
             Role = role;
+            Children = children;
             CustomInit();
         }
 
@@ -78,6 +81,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public string Role { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "children")]
+        public IList<JSONEntity> Children { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -88,6 +96,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
             if (Entity == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Entity");
+            }
+            if (Children != null)
+            {
+                foreach (var element in Children)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
