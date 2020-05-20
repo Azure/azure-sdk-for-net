@@ -162,7 +162,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -180,7 +179,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
         }
@@ -218,7 +216,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -236,7 +233,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
         }
@@ -282,7 +278,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -300,7 +295,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
 
@@ -342,7 +336,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -360,7 +353,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()),
                 Times.Once());
         }
@@ -398,7 +390,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -416,7 +407,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<ReceiveMode>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
-                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once());
         }
@@ -453,7 +443,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
-                   It.IsAny<string>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -471,7 +460,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<ReceiveMode>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
-                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once());
         }

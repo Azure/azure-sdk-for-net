@@ -271,7 +271,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
-        /// <param name="identifier">The identifier for the receive link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -284,44 +283,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            string identifier,
             CancellationToken cancellationToken)
         {
-            ServiceBusEventSource.Log.CreateReceiveLinkStart(identifier);
-            try
-            {
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var stopWatch = ValueStopwatch.StartNew();
-                var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
+            var stopWatch = ValueStopwatch.StartNew();
+            var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
 
-                var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                ReceivingAmqpLink link = await CreateReceivingLinkAsync(
-                    entityPath,
-                    connection,
-                    receiverEndpoint,
-                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
-                    prefetchCount,
-                    receiveMode,
-                    sessionId,
-                    isSessionReceiver,
-                    cancellationToken
-                ).ConfigureAwait(false);
+            ReceivingAmqpLink link = await CreateReceivingLinkAsync(
+                entityPath,
+                connection,
+                receiverEndpoint,
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                prefetchCount,
+                receiveMode,
+                sessionId,
+                isSessionReceiver,
+                cancellationToken
+            ).ConfigureAwait(false);
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                ServiceBusEventSource.Log.CreateReceiveLinkComplete(identifier);
-                return link;
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.CreateReceiveLinkException(identifier, ex.ToString());
-                throw;
-            }
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            return link;
+
         }
 
         /// <summary>
@@ -910,28 +899,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         refreshTimeout)
                     .ConfigureAwait(false);
 
-                    // Reset the timer for the next refresh.
+                // Reset the timer for the next refresh.
 
-                    if (authExpirationUtc >= DateTimeOffset.UtcNow)
+                if (authExpirationUtc >= DateTimeOffset.UtcNow)
                     {
                         refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
                 }
                 catch (ObjectDisposedException)
                 {
-                    // This can occur if the connection is closed or the scope disposed after the factory
-                    // is called but before the timer is updated.  The callback may also fire while the timer is
-                    // in the act of disposing.  Do not consider it an error.
-                }
+                // This can occur if the connection is closed or the scope disposed after the factory
+                // is called but before the timer is updated.  The callback may also fire while the timer is
+                // in the act of disposing.  Do not consider it an error.
+            }
                 catch (Exception ex)
                 {
                     ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(entityPath, endpoint.AbsoluteUri, ex.Message);
 
-                    // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
-                    // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
-                    // At worse, another timer tick will occur and the operation will be retried.
+                // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
+                // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
+                // At worse, another timer tick will occur and the operation will be retried.
 
-                    try { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); } catch {}
+                try
+                    { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); }
+                    catch { }
                 }
                 finally
                 {

@@ -135,15 +135,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    _connectionScope.OpenReceiverLinkAsync(
-                        entityPath: _entityPath,
+                    OpenReceiverLinkAsync(
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         sessionId: sessionId,
-                        isSessionReceiver: isSessionReceiver,
-                        identifier: _identifier,
-                        cancellationToken: CancellationToken.None),
+                        isSessionReceiver: isSessionReceiver),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -153,6 +150,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout,
                     CancellationToken.None),
                 link => CloseLink(link));
+        }
+
+        private async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
+            TimeSpan timeout,
+            uint prefetchCount,
+            ReceiveMode receiveMode,
+            string sessionId,
+            bool isSessionReceiver)
+        {
+            ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
+
+            try
+            {
+                ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
+                    entityPath: _entityPath,
+                    timeout: timeout,
+                    prefetchCount: prefetchCount,
+                    receiveMode: receiveMode,
+                    sessionId: sessionId,
+                    isSessionReceiver: isSessionReceiver,
+                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier);
+                return link;
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateReceiveLinkException(_identifier, ex.ToString());
+                throw;
+            }
         }
 
         private void CloseLink(ReceivingAmqpLink link)
