@@ -33,11 +33,5 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         public IReadOnlyList<PositionGeometry> Positions { get; }
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return $"LineString: {Positions.Count} points";
-        }
     }
 }
