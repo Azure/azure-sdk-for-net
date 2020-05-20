@@ -19,24 +19,26 @@ namespace Azure.Iot.Hub.Service
 {
     internal partial class ConfigurationRestClient
     {
-        private string host;
+        private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ConfigurationRestClient. </summary>
-        public ConfigurationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://fully-qualified-iothubname.azure-devices.net", string apiVersion = "2020-03-13")
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        public ConfigurationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            endpoint ??= new Uri("https://fully-qualified-iothubname.azure-devices.net");
             if (apiVersion == null)
             {
                 throw new ArgumentNullException(nameof(apiVersion));
             }
 
-            this.host = host;
+            this.endpoint = endpoint;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -48,7 +50,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -128,7 +130,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -230,7 +232,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/configurations/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -292,7 +294,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/configurations", false);
             if (top != null)
             {
@@ -389,7 +391,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/configurations/testQueries", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -472,7 +474,7 @@ namespace Azure.Iot.Hub.Service
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/devices/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/applyConfigurationContent", false);
