@@ -970,7 +970,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="clientType">The type of client being created.</param>
         /// <param name="fullyQualifiedNamespace">The namespace for the client.</param>
         /// <param name="entityName">The entity name for the client.</param>
-        [Event(ClientCreateStartEvent, Level = EventLevel.Verbose, Message = "Creating a {0} (Namespace: '{1}', Entity name: '{2}'")]
+        [NonEvent]
         public virtual void ClientCreateStart(
             Type clientType,
             string fullyQualifiedNamespace,
@@ -978,7 +978,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(ClientCreateStartEvent, clientType.Name, fullyQualifiedNamespace, entityName ?? string.Empty);
+                ClientCreateStartCore(clientType.Name, fullyQualifiedNamespace, entityName ?? string.Empty);
+            }
+        }
+
+        [Event(ClientCreateStartEvent, Level = EventLevel.Verbose, Message = "Creating a {0} (Namespace: '{1}', Entity name: '{2}'")]
+        public virtual void ClientCreateStartCore(
+            string clientType,
+            string fullyQualifiedNamespace,
+            string entityName = default)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ClientCreateStartEvent, clientType, fullyQualifiedNamespace, entityName);
             }
         }
 
