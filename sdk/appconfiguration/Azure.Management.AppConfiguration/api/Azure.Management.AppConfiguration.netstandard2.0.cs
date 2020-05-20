@@ -4,7 +4,7 @@ namespace Azure.Management.AppConfiguration
     {
         protected AppConfigurationManagementClient() { }
         public AppConfigurationManagementClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
-        public AppConfigurationManagementClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
+        public AppConfigurationManagementClient(string subscriptionId, System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
         public virtual Azure.Management.AppConfiguration.ConfigurationStoresClient GetConfigurationStoresClient() { throw null; }
         public virtual Azure.Management.AppConfiguration.OperationsClient GetOperationsClient() { throw null; }
         public virtual Azure.Management.AppConfiguration.PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient() { throw null; }
@@ -17,8 +17,6 @@ namespace Azure.Management.AppConfiguration
     public partial class ConfigurationStoresClient
     {
         protected ConfigurationStoresClient() { }
-        public ConfigurationStoresClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
-        public ConfigurationStoresClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.AppConfiguration.Models.ConfigurationStore> Get(string resourceGroupName, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.AppConfiguration.Models.ConfigurationStore>> GetAsync(string resourceGroupName, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.AppConfiguration.Models.ConfigurationStore> List(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,8 +78,6 @@ namespace Azure.Management.AppConfiguration
     public partial class OperationsClient
     {
         protected OperationsClient() { }
-        public OperationsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
-        public OperationsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.AppConfiguration.Models.NameAvailabilityStatus> CheckNameAvailability(Azure.Management.AppConfiguration.Models.CheckNameAvailabilityParameters checkNameAvailabilityParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.AppConfiguration.Models.NameAvailabilityStatus>> CheckNameAvailabilityAsync(Azure.Management.AppConfiguration.Models.CheckNameAvailabilityParameters checkNameAvailabilityParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.AppConfiguration.Models.OperationDefinition> List(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -90,8 +86,6 @@ namespace Azure.Management.AppConfiguration
     public partial class PrivateEndpointConnectionsClient
     {
         protected PrivateEndpointConnectionsClient() { }
-        public PrivateEndpointConnectionsClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
-        public PrivateEndpointConnectionsClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.AppConfiguration.Models.PrivateEndpointConnection> Get(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.AppConfiguration.Models.PrivateEndpointConnection>> GetAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.AppConfiguration.Models.PrivateEndpointConnection> ListByConfigurationStore(string resourceGroupName, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -130,8 +124,6 @@ namespace Azure.Management.AppConfiguration
     public partial class PrivateLinkResourcesClient
     {
         protected PrivateLinkResourcesClient() { }
-        public PrivateLinkResourcesClient(string subscriptionId, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
-        public PrivateLinkResourcesClient(string subscriptionId, string host, Azure.Core.TokenCredential tokenCredential, Azure.Management.AppConfiguration.AppConfigurationManagementClientOptions options = null) { }
         public virtual Azure.Response<Azure.Management.AppConfiguration.Models.PrivateLinkResource> Get(string resourceGroupName, string configStoreName, string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.AppConfiguration.Models.PrivateLinkResource>> GetAsync(string resourceGroupName, string configStoreName, string groupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Management.AppConfiguration.Models.PrivateLinkResource> ListByConfigurationStore(string resourceGroupName, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

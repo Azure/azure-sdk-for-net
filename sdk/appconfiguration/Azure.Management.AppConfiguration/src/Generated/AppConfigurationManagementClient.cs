@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Management.AppConfiguration;
 
 namespace Azure.Management.AppConfiguration
@@ -13,10 +15,10 @@ namespace Azure.Management.AppConfiguration
     /// <summary> AppConfiguration service management client. </summary>
     public class AppConfigurationManagementClient
     {
-        private readonly AppConfigurationManagementClientOptions _options;
-        private readonly TokenCredential _tokenCredential;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         private readonly string _subscriptionId;
-        private readonly string _host;
+        private readonly Uri _endpoint;
 
         /// <summary> Initializes a new instance of AppConfigurationManagementClient for mocking. </summary>
         protected AppConfigurationManagementClient()
@@ -24,40 +26,55 @@ namespace Azure.Management.AppConfiguration
         }
 
         /// <summary> Initializes a new instance of AppConfigurationManagementClient. </summary>
-        public AppConfigurationManagementClient(string subscriptionId, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public AppConfigurationManagementClient(string subscriptionId, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
         {
         }
         /// <summary> Initializes a new instance of AppConfigurationManagementClient. </summary>
-        public AppConfigurationManagementClient(string subscriptionId, string host, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null)
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        public AppConfigurationManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null)
         {
-            _options = options ?? new AppConfigurationManagementClientOptions();
-            _tokenCredential = tokenCredential;
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            endpoint ??= new Uri("https://management.azure.com");
+
+            options ??= new AppConfigurationManagementClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
             _subscriptionId = subscriptionId;
-            _host = host;
+            _endpoint = endpoint;
         }
 
         /// <summary> Creates a new instance of ConfigurationStoresClient. </summary>
         public virtual ConfigurationStoresClient GetConfigurationStoresClient()
         {
-            return new ConfigurationStoresClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new ConfigurationStoresClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of OperationsClient. </summary>
         public virtual OperationsClient GetOperationsClient()
         {
-            return new OperationsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new OperationsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of PrivateEndpointConnectionsClient. </summary>
         public virtual PrivateEndpointConnectionsClient GetPrivateEndpointConnectionsClient()
         {
-            return new PrivateEndpointConnectionsClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new PrivateEndpointConnectionsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
 
         /// <summary> Creates a new instance of PrivateLinkResourcesClient. </summary>
         public virtual PrivateLinkResourcesClient GetPrivateLinkResourcesClient()
         {
-            return new PrivateLinkResourcesClient(_subscriptionId, _host, _tokenCredential, _options);
+            return new PrivateLinkResourcesClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
         }
     }
 }

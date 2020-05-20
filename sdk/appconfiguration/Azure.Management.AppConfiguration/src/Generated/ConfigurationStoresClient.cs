@@ -25,19 +25,17 @@ namespace Azure.Management.AppConfiguration
         protected ConfigurationStoresClient()
         {
         }
-
         /// <summary> Initializes a new instance of ConfigurationStoresClient. </summary>
-        public ConfigurationStoresClient(string subscriptionId, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null) : this(subscriptionId, "https://management.azure.com", tokenCredential, options)
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal ConfigurationStoresClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-11-01-preview")
         {
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationStoresClient. </summary>
-        public ConfigurationStoresClient(string subscriptionId, string host, TokenCredential tokenCredential, AppConfigurationManagementClientOptions options = null)
-        {
-            options ??= new AppConfigurationManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, host, options);
-            RestClient = new ConfigurationStoresRestClient(_clientDiagnostics, _pipeline, subscriptionId: subscriptionId, host: host);
+            RestClient = new ConfigurationStoresRestClient(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Gets the properties of the specified configuration store. </summary>
