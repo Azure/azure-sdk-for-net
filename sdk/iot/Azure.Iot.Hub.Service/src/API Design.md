@@ -54,15 +54,15 @@ APIs for managing module identities, module twins, and querying modules
 public  class Modules
 {
     /// <summary>
-    /// Create a module.
+    /// Create a device module.
     /// </summary>
     /// <param name="moduleIdentity">The module to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public virtual async Task<Response<ModuleIdentity>> CreateIdentityAsync(ModuleIdentity moduleIdentity, CancellationToken cancellationToken);
+    public virtual async Task<Response<ModuleIdentity>> CreateIdentityAsync(ModuleIdentity moduleIdentity, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Get a single device.
+    /// Get a single device module.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device that contains the module.</param>
     /// <param name="moduleId">The unique identifier of the module to get.</param>
@@ -79,7 +79,7 @@ public  class Modules
     public virtual async AsyncPageable<ModuleIdentity> GetIdentitiesAsync(string deviceId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Update a module.
+    /// Update a device module.
     /// </summary>
     /// <param name="moduleIdentity">The module to update.</param>
     /// <param name="ifMatch">A string representing a weak ETag for this module, as per RFC7232. The update operation is performed
@@ -90,7 +90,7 @@ public  class Modules
     public virtual async Task<Response<ModuleIdentity>> UpdateIdentityAsync(ModuleIdentity moduleIdentity, string ifMatch = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Delete a single module.
+    /// Delete a single device module.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device that contains the module.</param>
     /// <param name="moduleId">The unique identifier of the module to get.</param>
@@ -108,7 +108,7 @@ public  class Modules
     /// <param name="moduleId">The unique identifier of the device module.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The retrieved module twin.</returns>
-    public virtual async Task<Response<TwinData>> GetTwinAsync(string deviceId, string moduleId, CancellationToken cancellationToken);
+    public virtual async Task<Response<TwinData>> GetTwinAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List a set of module twins.
