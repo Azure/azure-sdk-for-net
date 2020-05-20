@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    ///
+    /// Converts a <see cref="Geometry"/> value from and to JSON.
     /// </summary>
     public class GeoJsonConverter : JsonConverter<Geometry>
     {

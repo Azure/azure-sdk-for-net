@@ -7,7 +7,7 @@ using System.Linq;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    ///
+    /// Represents a geometry that is composed of multiple geometries.
     /// </summary>
     public sealed class GeometryCollection : Geometry
     {
