@@ -24,7 +24,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
-            var point = AssertRoundtrip<GeoPoint>(input);
+            var point = AssertRoundtrip<PointGeometry>(input);
             Assert.AreEqual(P(0), point.Position);
         }
 
@@ -33,10 +33,16 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
 
-            var point = AssertRoundtrip<GeoPoint>(input);
+            var point = AssertRoundtrip<PointGeometry>(input);
             Assert.AreEqual(P(0), point.Position);
-            Assert.AreEqual(P(1), point.Properties.BoundingBox.Value.Min);
-            Assert.AreEqual(P(2), point.Properties.BoundingBox.Value.Max);
+            Assert.AreEqual(P(1).Longitude, point.Properties.BoundingBox.Value.West);
+            Assert.AreEqual(P(1).Latitude, point.Properties.BoundingBox.Value.South);
+
+            Assert.AreEqual(P(2).Longitude, point.Properties.BoundingBox.Value.East);
+            Assert.AreEqual(P(2).Latitude, point.Properties.BoundingBox.Value.North);
+
+            Assert.AreEqual(P(1).Altitude, point.Properties.BoundingBox.Value.MinAltitude);
+            Assert.AreEqual(P(2).Altitude, point.Properties.BoundingBox.Value.MaxAltitude);
         }
 
         [Test]
@@ -52,7 +58,7 @@ namespace Azure.Core.Tests
                         $" \"additionalArray\": [1, 2.2, 9999999999999999999, \"hello\", true, null]" +
                         $" }}";
 
-            var point = AssertRoundtrip<GeoPoint>(input);
+            var point = AssertRoundtrip<PointGeometry>(input);
             Assert.AreEqual(P(0), point.Position);
             Assert.AreEqual(1, point.Properties.AdditionalProperties["additionalNumber"]);
             Assert.AreEqual(2.2, point.Properties.AdditionalProperties["additionalNumber2"]);
@@ -68,7 +74,7 @@ namespace Azure.Core.Tests
         {
             var input = $" {{ \"type\": \"Polygon\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeoPolygon>(input);
+            var polygon = AssertRoundtrip<PolygonGeometry>(input);
             Assert.AreEqual(1, polygon.Rings.Count);
 
             CollectionAssert.AreEqual(new[]
@@ -89,7 +95,7 @@ namespace Azure.Core.Tests
                         $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}] ]" +
                         $" ] }}";
 
-            var polygon = AssertRoundtrip<GeoPolygon>(input);
+            var polygon = AssertRoundtrip<PolygonGeometry>(input);
             Assert.AreEqual(2, polygon.Rings.Count);
 
             CollectionAssert.AreEqual(new[]
@@ -116,7 +122,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
-            var multipoint = AssertRoundtrip<GeoMultiPoint>(input);
+            var multipoint = AssertRoundtrip<GeometryMultiPoint>(input);
             Assert.AreEqual(2, multipoint.Points.Count);
 
             Assert.AreEqual(P(0), multipoint.Points[0].Position);
@@ -128,7 +134,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeoMultiLine>(input);
+            var polygon = AssertRoundtrip<GeometryMultiLine>(input);
             Assert.AreEqual(2, polygon.Lines.Count);
 
             CollectionAssert.AreEqual(new[]
@@ -154,7 +160,7 @@ namespace Azure.Core.Tests
                         $" [ [{PS(5)}], [{PS(6)}], [{PS(7)}], [{PS(8)}], [{PS(9)}] ]" +
                         $" ] ]}}";
 
-            var multiPolygon = AssertRoundtrip<GeoMultiPolygon>(input);
+            var multiPolygon = AssertRoundtrip<MultiPolygonGeometry>(input);
 
             var polygon = multiPolygon.Polygons[0];
 
@@ -197,10 +203,10 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"GeometryCollection\", \"geometries\": [{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}, {{ \"type\": \"LineString\", \"coordinates\": [ [{PS(1)}], [{PS(2)}] ] }}] }}";
 
             var collection = AssertRoundtrip<GeometryCollection>(input);
-            var point = (GeoPoint) collection.Geometries[0];
+            var point = (PointGeometry) collection.Geometries[0];
             Assert.AreEqual(P(0), point.Position);
 
-            var lineString = (GeoLine) collection.Geometries[1];
+            var lineString = (LineGeometry) collection.Geometries[1];
             Assert.AreEqual(P(1), lineString.Positions[0]);
             Assert.AreEqual(P(2), lineString.Positions[1]);
 
@@ -217,14 +223,14 @@ namespace Azure.Core.Tests
             return $"{1.1 * number:G17}, {2.2 * number:G17}, {3.3 * number:G17}";
         }
 
-        private GeoPosition P(int number)
+        private PositionGeometry P(int number)
         {
             if (_points == 2)
             {
-                return new GeoPosition(1.1 * number, 2.2 * number);
+                return new PositionGeometry(1.1 * number, 2.2 * number);
             }
 
-            return new GeoPosition(1.1 * number, 2.2 * number, 3.3 * number);
+            return new PositionGeometry(1.1 * number, 2.2 * number, 3.3 * number);
         }
 
         private T AssertRoundtrip<T>(string json) where T: Geometry

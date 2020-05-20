@@ -6,13 +6,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeoPoint : Geometry
+    public sealed class PointGeometry : Geometry
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="position"></param>
-        public GeoPoint(GeoPosition position): this(position, null)
+        public PointGeometry(PositionGeometry position): this(position, null)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="position"></param>
         /// <param name="properties"></param>
-        public GeoPoint(GeoPosition position, GeometryProperties? properties): base(properties)
+        public PointGeometry(PositionGeometry position, GeometryProperties? properties): base(properties)
         {
             Position = position;
         }
@@ -29,7 +29,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public GeoPosition Position { get; }
+        public PositionGeometry Position { get; }
 
         /// <inheritdoc />
         public override string ToString() => $"Point: {Position}";

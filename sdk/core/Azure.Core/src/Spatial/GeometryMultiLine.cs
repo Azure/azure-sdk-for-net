@@ -9,13 +9,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeoMultiLine : Geometry
+    public sealed class GeometryMultiLine : Geometry
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="lineStrings"></param>
-        public GeoMultiLine(IEnumerable<GeoLine> lineStrings): this(lineStrings, null)
+        public GeometryMultiLine(IEnumerable<LineGeometry> lineStrings): this(lineStrings, null)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="lineStrings"></param>
         /// <param name="properties"></param>
-        public GeoMultiLine(IEnumerable<GeoLine> lineStrings, GeometryProperties? properties): base(properties)
+        public GeometryMultiLine(IEnumerable<LineGeometry> lineStrings, GeometryProperties? properties): base(properties)
         {
             Lines = lineStrings.ToArray();
         }
@@ -32,6 +32,6 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoLine> Lines { get; }
+        public IReadOnlyList<LineGeometry> Lines { get; }
     }
 }

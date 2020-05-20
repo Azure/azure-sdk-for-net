@@ -9,29 +9,29 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeoPolygon : Geometry
+    public sealed class MultiPolygonGeometry : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="rings"></param>
-        public GeoPolygon(IEnumerable<GeoLine> rings): this(rings, null)
+        /// <param name="polygons"></param>
+        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons): this(polygons, null)
         {
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="rings"></param>
+        /// <param name="polygons"></param>
         /// <param name="properties"></param>
-        public GeoPolygon(IEnumerable<GeoLine> rings, GeometryProperties? properties): base(properties)
+        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons, GeometryProperties? properties): base(properties)
         {
-            Rings = rings.ToArray();
+            Polygons = polygons.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoLine> Rings { get; }
+        public IReadOnlyList<PolygonGeometry> Polygons { get; }
     }
 }

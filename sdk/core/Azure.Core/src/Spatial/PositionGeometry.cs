@@ -8,7 +8,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public readonly struct GeoPosition : IEquatable<GeoPosition>
+    public readonly struct PositionGeometry : IEquatable<PositionGeometry>
     {
         /// <summary>
         ///
@@ -30,7 +30,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
-        public GeoPosition(double longitude, double latitude) : this(longitude, latitude, null)
+        public PositionGeometry(double longitude, double latitude) : this(longitude, latitude, null)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Core.Spatial
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
         /// <param name="altitude"></param>
-        public GeoPosition(double longitude, double latitude, double? altitude)
+        public PositionGeometry(double longitude, double latitude, double? altitude)
         {
             Longitude = longitude;
             Latitude = latitude;
@@ -49,7 +49,7 @@ namespace Azure.Core.Spatial
 
 
         /// <inheritdoc />
-        public bool Equals(GeoPosition other)
+        public bool Equals(PositionGeometry other)
         {
             return Nullable.Equals(Altitude, other.Altitude) && Longitude.Equals(other.Longitude) && Latitude.Equals(other.Latitude);
         }
@@ -57,7 +57,7 @@ namespace Azure.Core.Spatial
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            return obj is GeoPosition other && Equals(other);
+            return obj is PositionGeometry other && Equals(other);
         }
 
         /// <inheritdoc />
@@ -69,7 +69,7 @@ namespace Azure.Core.Spatial
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(GeoPosition left, GeoPosition right)
+        public static bool operator ==(PositionGeometry left, PositionGeometry right)
         {
             return left.Equals(right);
         }
@@ -80,7 +80,7 @@ namespace Azure.Core.Spatial
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(GeoPosition left, GeoPosition right)
+        public static bool operator !=(PositionGeometry left, PositionGeometry right)
         {
             return !left.Equals(right);
         }

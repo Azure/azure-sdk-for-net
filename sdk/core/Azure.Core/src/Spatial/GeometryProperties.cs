@@ -18,7 +18,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="boundingBox"></param>
         /// <param name="additionalProperties"></param>
-        public GeometryProperties(GeoBoundingBox? boundingBox = null, IReadOnlyDictionary<string, object?>? additionalProperties = null)
+        public GeometryProperties(GeometryBoundingBox? boundingBox = null, IReadOnlyDictionary<string, object?>? additionalProperties = null)
         {
             BoundingBox = boundingBox;
             AdditionalProperties = additionalProperties ?? EmptyReadonlyDictionary;
@@ -27,7 +27,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public GeoBoundingBox? BoundingBox { get; }
+        public GeometryBoundingBox? BoundingBox { get; }
 
         /// <summary>
         ///

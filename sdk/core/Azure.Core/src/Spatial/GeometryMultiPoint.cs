@@ -9,13 +9,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeoMultiPoint : Geometry
+    public sealed class GeometryMultiPoint : Geometry
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="points"></param>
-        public GeoMultiPoint(IEnumerable<GeoPoint> points): this(points, null)
+        public GeometryMultiPoint(IEnumerable<PointGeometry> points): this(points, null)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="points"></param>
         /// <param name="properties"></param>
-        public GeoMultiPoint(IEnumerable<GeoPoint> points, GeometryProperties? properties): base(properties)
+        public GeometryMultiPoint(IEnumerable<PointGeometry> points, GeometryProperties? properties): base(properties)
         {
             Points = points.ToArray();
         }
@@ -32,6 +32,6 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoPoint> Points { get; }
+        public IReadOnlyList<PointGeometry> Points { get; }
     }
 }
