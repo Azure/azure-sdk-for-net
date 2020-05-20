@@ -1,0 +1,3 @@
+launchSettings.json
+*.config.json
+!*common.config.json
