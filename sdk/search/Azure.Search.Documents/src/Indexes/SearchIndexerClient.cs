@@ -283,25 +283,12 @@ namespace Azure.Search.Documents
         public virtual Response DeleteDataSource(
             string dataSourceName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.Delete(
-                    dataSourceName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteDataSource(
+                dataSourceName,
+                null,
+                false,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a data source.
@@ -315,26 +302,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteDataSourceAsync(
             string dataSourceName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
-            scope.Start();
-            try
-            {
-                return await DataSourcesClient.DeleteAsync(
-                    dataSourceName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
+                dataSourceName,
+                null,
+                false,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a data source.
@@ -353,25 +327,12 @@ namespace Azure.Search.Documents
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
-            scope.Start();
-            try
-            {
-                return DataSourcesClient.Delete(
-                    dataSource?.Name,
-                    options?.ClientRequestId,
-                    onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteDataSource(
+                dataSource?.Name,
+                dataSource?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a data source.
@@ -390,16 +351,54 @@ namespace Azure.Search.Documents
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
+                dataSource?.Name,
+                dataSource?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private Response DeleteDataSource(
+            string dataSourceName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
+            scope.Start();
+            try
+            {
+                return DataSourcesClient.Delete(
+                    dataSourceName,
+                    options?.ClientRequestId,
+                    onlyIfUnchanged ? etag?.ToString() : null,
+                    null,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<Response> DeleteDataSourceAsync(
+            string dataSourceName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
             scope.Start();
             try
             {
                 return await DataSourcesClient.DeleteAsync(
-                    dataSource?.Name,
+                    dataSourceName,
                     options?.ClientRequestId,
-                    onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
+                    onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -756,25 +755,12 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndexer(
             string indexerName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
-            scope.Start();
-            try
-            {
-                return IndexersClient.Delete(
-                    indexerName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteIndexer(
+                indexerName,
+                null,
+                false,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes an indexer.
@@ -788,26 +774,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
-            scope.Start();
-            try
-            {
-                return await IndexersClient.DeleteAsync(
-                    indexerName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+                indexerName,
+                null,
+                false,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes an indexer.
@@ -826,25 +799,12 @@ namespace Azure.Search.Documents
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
-            scope.Start();
-            try
-            {
-                return IndexersClient.Delete(
-                    indexer?.Name,
-                    options?.ClientRequestId,
-                    onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteIndexer(
+                indexer?.Name,
+                indexer?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes an indexer.
@@ -863,16 +823,54 @@ namespace Azure.Search.Documents
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
+                indexer?.Name,
+                indexer?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private Response DeleteIndexer(
+            string indexerName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
+            scope.Start();
+            try
+            {
+                return IndexersClient.Delete(
+                    indexerName,
+                    options?.ClientRequestId,
+                    onlyIfUnchanged ? etag?.ToString() : null,
+                    null,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<Response> DeleteIndexerAsync(
+            string indexerName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
             scope.Start();
             try
             {
                 return await IndexersClient.DeleteAsync(
-                    indexer?.Name,
+                    indexerName,
                     options?.ClientRequestId,
-                    onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
+                    onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1412,25 +1410,12 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSkillset(
             string skillsetName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Delete(
-                    skillsetName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteSkillset(
+                skillsetName,
+                null,
+                false,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a skillset.
@@ -1444,26 +1429,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.DeleteAsync(
-                    skillsetName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+                skillsetName,
+                null,
+                false,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a skillset.
@@ -1482,25 +1454,12 @@ namespace Azure.Search.Documents
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Delete(
-                    skillset?.Name,
-                    options?.ClientRequestId,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteSkillset(
+                skillset?.Name,
+                skillset?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a skillset.
@@ -1519,16 +1478,54 @@ namespace Azure.Search.Documents
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
+                skillset?.Name,
+                skillset?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private Response DeleteSkillset(
+            string skillsetName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
+            scope.Start();
+            try
+            {
+                return SkillsetsClient.Delete(
+                    skillsetName,
+                    options?.ClientRequestId,
+                    onlyIfUnchanged ? etag?.ToString() : null,
+                    null,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<Response> DeleteSkillsetAsync(
+            string skillsetName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
             scope.Start();
             try
             {
                 return await SkillsetsClient.DeleteAsync(
-                    skillset?.Name,
+                    skillsetName,
                     options?.ClientRequestId,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
+                    onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);

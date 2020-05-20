@@ -477,25 +477,12 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndex(
             string indexName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
-            scope.Start();
-            try
-            {
-                return IndexesClient.Delete(
-                    indexName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteIndex(
+                indexName,
+                null,
+                false,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -509,26 +496,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
-            scope.Start();
-            try
-            {
-                return await IndexesClient.DeleteAsync(
-                    indexName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => await DeleteIndexAsync(
+                indexName,
+                null,
+                false,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -547,25 +521,12 @@ namespace Azure.Search.Documents
             SearchIndex index,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
-            scope.Start();
-            try
-            {
-                return IndexesClient.Delete(
-                    index?.Name,
-                    options?.ClientRequestId,
-                    onlyIfUnchanged ? index?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteIndex(
+                index?.Name,
+                index?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -584,16 +545,54 @@ namespace Azure.Search.Documents
             SearchIndex index,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) => await DeleteIndexAsync(
+                index?.Name,
+                index?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private Response DeleteIndex(
+            string indexName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
+            scope.Start();
+            try
+            {
+                return IndexesClient.Delete(
+                    indexName,
+                    options?.ClientRequestId,
+                    onlyIfUnchanged ? etag?.ToString() : null,
+                    null,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<Response> DeleteIndexAsync(
+            string indexName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
             scope.Start();
             try
             {
                 return await IndexesClient.DeleteAsync(
-                    index?.Name,
+                    indexName,
                     options?.ClientRequestId,
-                    onlyIfUnchanged ? index?.ETag?.ToString() : null,
+                    onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1043,25 +1042,12 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
-            scope.Start();
-            try
-            {
-                return SynonymMapsClient.Delete(
-                    synonymMapName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteSynonymMap(
+                synonymMapName,
+                null,
+                false,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a synonym map.
@@ -1075,26 +1061,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
-            scope.Start();
-            try
-            {
-                return await SynonymMapsClient.DeleteAsync(
-                    synonymMapName,
-                    options?.ClientRequestId,
-                    null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
+                synonymMapName,
+                null,
+                false,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a synonym map.
@@ -1113,25 +1086,12 @@ namespace Azure.Search.Documents
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
-            scope.Start();
-            try
-            {
-                return SynonymMapsClient.Delete(
-                    synonymMap?.Name,
-                    options?.ClientRequestId,
-                    onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            CancellationToken cancellationToken = default) => DeleteSynonymMap(
+                synonymMap?.Name,
+                synonymMap?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken);
 
         /// <summary>
         /// Deletes a synonym map.
@@ -1150,16 +1110,54 @@ namespace Azure.Search.Documents
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
+                synonymMap?.Name,
+                synonymMap?.ETag,
+                onlyIfUnchanged,
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private Response DeleteSynonymMap(
+            string synonymMapName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
+            scope.Start();
+            try
+            {
+                return SynonymMapsClient.Delete(
+                    synonymMapName,
+                    options?.ClientRequestId,
+                    onlyIfUnchanged ? etag?.ToString() : null,
+                    null,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private async Task<Response> DeleteSynonymMapAsync(
+            string synonymMapName,
+            ETag? etag,
+            bool onlyIfUnchanged,
+            SearchRequestOptions options,
+            CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
             scope.Start();
             try
             {
                 return await SynonymMapsClient.DeleteAsync(
-                    synonymMap?.Name,
+                    synonymMapName,
                     options?.ClientRequestId,
-                    onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                    onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
                     .ConfigureAwait(false);
