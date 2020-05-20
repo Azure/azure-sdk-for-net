@@ -38,5 +38,5 @@ stages:
     ServiceDirectory: resources
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Resource
-      safeName: AzureManagementResource
+    - name: Azure.Management.Resources
+      safeName: AzureManagementResources
