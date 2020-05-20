@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using NUnit.Framework;
@@ -181,6 +181,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeStartEvent, e => e.Payload.Contains(nameof(ServiceBusClient)) && e.Payload.Contains(client.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ClientDisposeCompleteEvent, e => e.Payload.Contains(nameof(ServiceBusClient)) && e.Payload.Contains(client.Identifier));
             }
+        }
+
+        [Test]
+        public async Task LogsTransactionEvents()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+
+                ServiceBusMessage message = GetMessage();
+
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sender.SendAsync(message);
+                    ts.Complete();
+                }
+                _listener.SingleEventById(ServiceBusEventSource.TransactionDeclaredEvent);
+                _listener.SingleEventById(ServiceBusEventSource.TransactionDischargedEvent);
+            };
         }
     }
 }

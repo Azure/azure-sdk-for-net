@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
@@ -159,6 +161,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int CreateManagementLinkStartEvent = 86;
         internal const int CreateManagementLinkCompleteEvent = 87;
         internal const int CreateManagementLinkExceptionEvent = 88;
+
+        internal const int TransactionInitializationExceptionEvent = 89;
+        internal const int TransactionDeclaredEvent = 90;
+        internal const int TransactionDischargedEvent = 91;
+        internal const int TransactionDischargedExceptionEvent = 92;
+        internal const int CreateControllerExceptionEvent = 93;
+
+        internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
+        internal const int ScheduleTaskFailedEvent = 95;
+        internal const int ManagementSerializedExceptionEvent = 96;
+
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -701,6 +714,18 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(ProcessorRenewSessionLockExceptionEvent, identifier, exception);
             }
         }
+
+        [Event(ProcessorErrorHandlerThrewExceptionEvent, Level = EventLevel.Error, Message = "ExceptionReceivedHandler threw exception. Exception:{0}")]
+        public void ProcessorErrorHandlerThrewException(string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception);
+            }
+        }
+
+
+
         #endregion region
 
         #region Rule management
@@ -1153,6 +1178,97 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ClientDisposeExceptionEvent, clientType, identifier, exception);
+            }
+        }
+        #endregion
+
+        #region transactions
+        [Event(TransactionInitializationExceptionEvent, Level = EventLevel.Error, Message = "AmqpTransactionInitializeException for TransactionId: {0} Exception: {1}.")]
+        public void TransactionInitializeException(string transactionId, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(TransactionInitializationExceptionEvent, transactionId, exception);
+            }
+        }
+
+        [NonEvent]
+        public void TransactionDeclared(string localTransactionId, ArraySegment<byte> amqpTransactionId)
+        {
+            if (IsEnabled())
+            {
+                TransactionDeclared(localTransactionId, amqpTransactionId.GetAsciiString());
+            }
+        }
+
+        [Event(TransactionDeclaredEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDeclared for LocalTransactionId: {0} AmqpTransactionId: {1}.")]
+        public void TransactionDeclared(string transactionId, string amqpTransactionId)
+        {
+            WriteEvent(TransactionDeclaredEvent, transactionId, amqpTransactionId);
+        }
+
+        [NonEvent]
+        public void TransactionDischarged(string localTransactionId, ArraySegment<byte> amqpTransactionId, bool rollback)
+        {
+            if (IsEnabled())
+            {
+                TransactionDischarged(localTransactionId, amqpTransactionId.GetAsciiString(), rollback);
+            }
+        }
+
+        [Event(TransactionDischargedEvent, Level = EventLevel.Informational, Message = "AmqpTransactionDischarged for LocalTransactionId: {0} AmqpTransactionId: {1} Rollback: {2}.")]
+        public void TransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
+        {
+            WriteEvent(TransactionDischargedEvent, transactionId, amqpTransactionId, rollback);
+        }
+
+        [NonEvent]
+        public void TransactionDischargeException(string transactionId, ArraySegment<byte> amqpTransactionId, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                TransactionDischargeException(transactionId, amqpTransactionId.GetAsciiString(), exception.ToString());
+            }
+        }
+
+        [Event(TransactionDischargedExceptionEvent, Level = EventLevel.Error, Message = "AmqpTransactionDischargeException for TransactionId: {0} AmqpTransactionId: {1} Exception: {2}.")]
+        public void TransactionDischargeException(string transactionId, string amqpTransactionId, string exception)
+        {
+            WriteEvent(TransactionDischargedExceptionEvent, transactionId, amqpTransactionId, exception);
+        }
+
+        [Event(CreateControllerExceptionEvent, Level = EventLevel.Error, Message = "AmqpCreateControllerException for ConnectionManager: {0} Exception: {1}.")]
+        public void CreateControllerException(string connectionManager, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CreateControllerExceptionEvent, connectionManager, exception);
+            }
+        }
+        #endregion
+
+        #region misc
+        [NonEvent]
+        public void ScheduleTaskFailed(Func<Task> task, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                ScheduleTaskFailed(task.Target.GetType().FullName, task.GetMethodInfo().Name, exception.ToString());
+            }
+        }
+
+        [Event(ScheduleTaskFailedEvent, Level = EventLevel.Error, Message = "Exception during Schedule Task. FunctionTargetName: {0}, MethodInfoName: {1}, Exception:{2}")]
+        public void ScheduleTaskFailed(string funcTargetName, string methodInfoName, string exception)
+        {
+            WriteEvent(ScheduleTaskFailedEvent, funcTargetName, methodInfoName, exception);
+        }
+
+        [Event(ManagementSerializedExceptionEvent, Level = EventLevel.Warning, Message = "[De]Serialization failed for object:{0}; Details:{1}")]
+        public void ManagementSerializationException(string objectName, string details = "")
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ManagementSerializedExceptionEvent, objectName, details);
             }
         }
         #endregion

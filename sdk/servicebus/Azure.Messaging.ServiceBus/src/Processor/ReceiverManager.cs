@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 // don't bubble up exceptions raised from customer exception handler
-                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
             }
         }
 

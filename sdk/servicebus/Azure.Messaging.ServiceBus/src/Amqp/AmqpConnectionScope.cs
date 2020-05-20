@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await amqpSession.CloseAsync(timeout).ConfigureAwait(false);
                 }
 
-                MessagingEventSource.Log.AmqpCreateControllerException(ActiveConnection.ToString(), exception);
+                ServiceBusEventSource.Log.CreateControllerException(ActiveConnection.ToString(), exception.ToString());
                 throw;
             }
 
