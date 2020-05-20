@@ -43,12 +43,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'EdifactInterchangeAcknowledgment',
         /// 'EdifactFunctionalGroupAcknowledgment',
         /// 'EdifactTransactionSetAcknowledgment'</param>
+        /// <param name="record">The record.</param>
         /// <param name="error">The error.</param>
-        public TrackingEvent(EventLevel eventLevel, System.DateTime eventTime, string recordType, TrackingEventErrorInfo error = default(TrackingEventErrorInfo))
+        public TrackingEvent(EventLevel eventLevel, System.DateTime eventTime, string recordType, object record = default(object), TrackingEventErrorInfo error = default(TrackingEventErrorInfo))
         {
             EventLevel = eventLevel;
             EventTime = eventTime;
             RecordType = recordType;
+            Record = record;
             Error = error;
             CustomInit();
         }
@@ -84,6 +86,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "recordType")]
         public string RecordType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the record.
+        /// </summary>
+        [JsonProperty(PropertyName = "record")]
+        public object Record { get; set; }
 
         /// <summary>
         /// Gets or sets the error.

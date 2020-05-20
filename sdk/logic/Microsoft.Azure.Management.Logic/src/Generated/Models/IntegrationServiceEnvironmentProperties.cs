@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// values include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
         /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'</param>
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'</param>
         /// <param name="state">The integration service environment state.
         /// Possible values include: 'NotSpecified', 'Completed', 'Enabled',
         /// 'Disabled', 'Deleted', 'Suspended'</param>
@@ -65,7 +66,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
         /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
