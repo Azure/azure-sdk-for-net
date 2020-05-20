@@ -125,7 +125,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                throw scope.FailAndWrap(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.WrapAndThrow(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
@@ -138,7 +138,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                 throw scope.FailAndWrap(e);
+                 throw scope.WrapAndThrow(e);
             }
         }
     }

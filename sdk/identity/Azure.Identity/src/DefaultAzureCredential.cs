@@ -114,7 +114,7 @@ namespace Azure.Identity
             }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
-               throw scope.FailAndWrap(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+               throw scope.WrapAndThrow(new AuthenticationFailedException(UnhandledExceptionMessage, e));
             }
         }
 

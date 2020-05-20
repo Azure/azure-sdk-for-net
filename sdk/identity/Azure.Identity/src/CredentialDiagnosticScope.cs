@@ -36,21 +36,21 @@ namespace Azure.Identity
             return token;
         }
 
-        public Exception FailAndWrap(Exception ex)
+        public Exception WrapAndThrow(Exception ex)
         {
             if (ex is OperationCanceledException || ex is AuthenticationFailedException)
             {
                 var info = ExceptionDispatchInfo.Capture(ex);
-                Failed(ex);
+                RegisterFailed(ex);
                 info.Throw();
             }
 
             ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
-            Failed(ex);
+            RegisterFailed(ex);
             throw ex;
         }
 
-        private void Failed(Exception ex)
+        private void RegisterFailed(Exception ex)
         {
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
             _scope.Failed(ex);
