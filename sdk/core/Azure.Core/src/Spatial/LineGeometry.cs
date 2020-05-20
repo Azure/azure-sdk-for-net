@@ -12,26 +12,28 @@ namespace Azure.Core.Spatial
     public sealed class LineGeometry : Geometry
     {
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
         /// <param name="positions"></param>
-        public LineGeometry(IEnumerable<PositionGeometry> positions): this(positions, null)
+        public LineGeometry(IEnumerable<GeometryPosition> positions): this(positions, DefaultProperties)
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
         /// <param name="positions"></param>
         /// <param name="properties"></param>
-        public LineGeometry(IEnumerable<PositionGeometry> positions, GeometryProperties? properties): base(properties)
+        public LineGeometry(IEnumerable<GeometryPosition> positions, GeometryProperties properties): base(properties)
         {
+            Argument.AssertNotNull(positions, nameof(positions));
+
             Positions = positions.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<PositionGeometry> Positions { get; }
+        public IReadOnlyList<GeometryPosition> Positions { get; }
     }
 }

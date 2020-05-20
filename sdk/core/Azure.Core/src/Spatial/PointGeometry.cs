@@ -12,7 +12,7 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="position"></param>
-        public PointGeometry(PositionGeometry position): this(position, null)
+        public PointGeometry(GeometryPosition position): this(position, DefaultProperties)
         {
         }
 
@@ -21,17 +21,14 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="position"></param>
         /// <param name="properties"></param>
-        public PointGeometry(PositionGeometry position, GeometryProperties? properties): base(properties)
+        public PointGeometry(GeometryPosition position, GeometryProperties properties): base(properties)
         {
             Position = position;
         }
 
         /// <summary>
-        ///
+        /// Gets position of the point.
         /// </summary>
-        public PositionGeometry Position { get; }
-
-        /// <inheritdoc />
-        public override string ToString() => $"Point: {Position}";
+        public GeometryPosition Position { get; }
     }
 }

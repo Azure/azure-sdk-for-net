@@ -9,9 +9,9 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    /// Converts a <see cref="Geometry"/> value from and to JSON.
+    /// Converts a <see cref="Geometry"/> value from and to JSON in GeoJSON format.
     /// </summary>
-    public class GeoJsonConverter : JsonConverter<Geometry>
+    public class GeometryJsonConverter : JsonConverter<Geometry>
     {
         private const string PointType = "Point";
         private const string LineStringType = "LineString";
@@ -32,6 +32,12 @@ namespace Azure.Core.Spatial
             return Read(document.RootElement);
         }
 
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, Geometry value, JsonSerializerOptions options)
+        {
+            Write(writer, value);
+        }
+
         internal static Geometry Read(JsonElement element)
         {
             JsonElement typeProperty = GetRequiredProperty(element, TypeProperty);
@@ -46,7 +52,7 @@ namespace Azure.Core.Spatial
                     geometries.Add(Read(geometry));
                 }
 
-                return new GeometryCollection(geometries, ReadProperties(element, GeometriesProperty));
+                return new CollectionGeometry(geometries, ReadProperties(element, GeometriesProperty));
             }
 
             JsonElement coordinates = GetRequiredProperty(element, CoordinatesProperty);
@@ -60,7 +66,7 @@ namespace Azure.Core.Spatial
                     return new LineGeometry(ReadCoordinates(coordinates), properties);
                 case MultiPointType:
                     var points = new List<PointGeometry>();
-                    foreach (PositionGeometry coordinate in ReadCoordinates(coordinates))
+                    foreach (GeometryPosition coordinate in ReadCoordinates(coordinates))
                     {
                         points.Add(new PointGeometry(coordinate));
                     }
@@ -106,7 +112,7 @@ namespace Azure.Core.Spatial
             }
         }
 
-        private static GeometryProperties? ReadProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
+        private static GeometryProperties ReadProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
         {
             GeometryBoundingBox? bbox = null;
 
@@ -118,20 +124,20 @@ namespace Azure.Core.Spatial
                 {
                     case 4:
                         bbox = new GeometryBoundingBox(
-                                bboxElement[0].GetDouble(),
-                                bboxElement[1].GetDouble(),
-                                bboxElement[2].GetDouble(),
-                                bboxElement[3].GetDouble()
+                            bboxElement[0].GetDouble(),
+                            bboxElement[1].GetDouble(),
+                            bboxElement[2].GetDouble(),
+                            bboxElement[3].GetDouble()
                         );
                         break;
                     case 6:
                         bbox = new GeometryBoundingBox(
-                                bboxElement[0].GetDouble(),
-                                bboxElement[1].GetDouble(),
-                                bboxElement[3].GetDouble(),
-                                bboxElement[4].GetDouble(),
-                                bboxElement[2].GetDouble(),
-                                bboxElement[5].GetDouble()
+                            bboxElement[0].GetDouble(),
+                            bboxElement[1].GetDouble(),
+                            bboxElement[3].GetDouble(),
+                            bboxElement[4].GetDouble(),
+                            bboxElement[2].GetDouble(),
+                            bboxElement[5].GetDouble()
                         );
                         break;
                     default:
@@ -158,7 +164,7 @@ namespace Azure.Core.Spatial
                 return new GeometryProperties(bbox, additionalProperties);
             }
 
-            return null;
+            return Geometry.DefaultProperties;
         }
 
         private static object? ReadAdditionalPropertyValue(in JsonElement element)
@@ -203,7 +209,7 @@ namespace Azure.Core.Spatial
             }
         }
 
-        private static IEnumerable<PositionGeometry> ReadCoordinates(JsonElement coordinates)
+        private static IEnumerable<GeometryPosition> ReadCoordinates(JsonElement coordinates)
         {
             foreach (JsonElement coordinate in coordinates.EnumerateArray())
             {
@@ -211,7 +217,7 @@ namespace Azure.Core.Spatial
             }
         }
 
-        private static PositionGeometry ReadCoordinate(JsonElement coordinate)
+        private static GeometryPosition ReadCoordinate(JsonElement coordinate)
         {
             var arrayLength = coordinate.GetArrayLength();
             if (arrayLength < 2 || arrayLength > 3)
@@ -228,23 +234,12 @@ namespace Azure.Core.Spatial
                 altitude = coordinate[2].GetDouble();
             }
 
-            return new PositionGeometry(lon, lat, altitude);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
-        /// <param name="options"></param>
-        public override void Write(Utf8JsonWriter writer, Geometry value, JsonSerializerOptions options)
-        {
-            Write(writer, value);
+            return new GeometryPosition(lon, lat, altitude);
         }
 
         internal static void Write(Utf8JsonWriter writer, Geometry value)
         {
-            void WritePositionValues(PositionGeometry type)
+            void WritePositionValues(GeometryPosition type)
             {
                 writer.WriteNumberValue(type.Longitude);
                 writer.WriteNumberValue(type.Latitude);
@@ -259,7 +254,7 @@ namespace Azure.Core.Spatial
                 writer.WriteString(TypeProperty, type);
             }
 
-            void WritePosition(PositionGeometry type)
+            void WritePosition(GeometryPosition type)
             {
                 writer.WriteStartArray();
                 WritePositionValues(type);
@@ -267,7 +262,7 @@ namespace Azure.Core.Spatial
                 writer.WriteEndArray();
             }
 
-            void WritePositions(IEnumerable<PositionGeometry> positions)
+            void WritePositions(IEnumerable<GeometryPosition> positions)
             {
                 writer.WriteStartArray();
                 foreach (var position in positions)
@@ -346,7 +341,7 @@ namespace Azure.Core.Spatial
                     writer.WriteEndArray();
                     break;
 
-                case GeometryCollection geometryCollection:
+                case CollectionGeometry geometryCollection:
                     WriteType(GeometryCollectionType);
                     writer.WritePropertyName(GeometriesProperty);
                     writer.WriteStartArray();

@@ -202,7 +202,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"GeometryCollection\", \"geometries\": [{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}, {{ \"type\": \"LineString\", \"coordinates\": [ [{PS(1)}], [{PS(2)}] ] }}] }}";
 
-            var collection = AssertRoundtrip<GeometryCollection>(input);
+            var collection = AssertRoundtrip<CollectionGeometry>(input);
             var point = (PointGeometry) collection.Geometries[0];
             Assert.AreEqual(P(0), point.Position);
 
@@ -223,29 +223,29 @@ namespace Azure.Core.Tests
             return $"{1.1 * number:G17}, {2.2 * number:G17}, {3.3 * number:G17}";
         }
 
-        private PositionGeometry P(int number)
+        private GeometryPosition P(int number)
         {
             if (_points == 2)
             {
-                return new PositionGeometry(1.1 * number, 2.2 * number);
+                return new GeometryPosition(1.1 * number, 2.2 * number);
             }
 
-            return new PositionGeometry(1.1 * number, 2.2 * number, 3.3 * number);
+            return new GeometryPosition(1.1 * number, 2.2 * number, 3.3 * number);
         }
 
         private T AssertRoundtrip<T>(string json) where T: Geometry
         {
             var element = JsonDocument.Parse(json).RootElement;
-            var geometry = GeoJsonConverter.Read(element);
+            var geometry = GeometryJsonConverter.Read(element);
 
             var memoryStreamOutput = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStreamOutput))
             {
-                GeoJsonConverter.Write(writer, geometry);
+                GeometryJsonConverter.Write(writer, geometry);
             }
 
             var element2 = JsonDocument.Parse(memoryStreamOutput.ToArray()).RootElement;
-            var geometry2 = GeoJsonConverter.Read(element2);
+            var geometry2 = GeometryJsonConverter.Read(element2);
 
             return (T)geometry2;
         }

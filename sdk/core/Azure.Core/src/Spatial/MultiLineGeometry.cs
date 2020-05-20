@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="lineStrings"></param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings): this(lineStrings, null)
+        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings): this(lineStrings, DefaultProperties)
         {
         }
 
@@ -24,8 +24,10 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="lineStrings"></param>
         /// <param name="properties"></param>
-        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings, GeometryProperties? properties): base(properties)
+        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings, GeometryProperties properties): base(properties)
         {
+            Argument.AssertNotNull(lineStrings, nameof(lineStrings));
+
             Lines = lineStrings.ToArray();
         }
 

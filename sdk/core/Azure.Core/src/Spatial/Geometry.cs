@@ -8,7 +8,7 @@ namespace Azure.Core.Spatial
     /// </summary>
     public class Geometry
     {
-        private static readonly GeometryProperties DefaultProperties = new GeometryProperties();
+        internal static readonly GeometryProperties DefaultProperties = new GeometryProperties();
 
         /// <summary>
         /// The <see cref="GeometryProperties"/> associated with this <see cref="Geometry"/> instance.
@@ -19,9 +19,11 @@ namespace Azure.Core.Spatial
         /// Initializes a new instance of <see cref="Geometry"/>.
         /// </summary>
         /// <param name="properties">The <see cref="GeometryProperties"/> to use.</param>
-        protected Geometry(GeometryProperties? properties)
+        protected Geometry(GeometryProperties properties)
         {
-            Properties = properties ?? DefaultProperties;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
     }
 }

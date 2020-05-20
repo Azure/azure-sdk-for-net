@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="polygons"></param>
-        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons): this(polygons, null)
+        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons): this(polygons, DefaultProperties)
         {
         }
 
@@ -24,8 +24,10 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="polygons"></param>
         /// <param name="properties"></param>
-        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons, GeometryProperties? properties): base(properties)
+        public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons, GeometryProperties properties): base(properties)
         {
+            Argument.AssertNotNull(polygons, nameof(polygons));
+
             Polygons = polygons.ToArray();
         }
 

@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="points"></param>
-        public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, null)
+        public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, DefaultProperties)
         {
         }
 
@@ -24,8 +24,10 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="points"></param>
         /// <param name="properties"></param>
-        public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryProperties? properties): base(properties)
+        public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryProperties properties): base(properties)
         {
+            Argument.AssertNotNull(points, nameof(points));
+
             Points = points.ToArray();
         }
 
