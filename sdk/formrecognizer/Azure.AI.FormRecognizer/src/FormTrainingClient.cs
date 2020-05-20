@@ -340,36 +340,36 @@ namespace Azure.AI.FormRecognizer.Training
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
         /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
-        /// <param name="region">Location of the target Form Recognizer resource</param>
+        /// <param name="resourceRegion">Location of the target Form Recognizer resource</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
         [ForwardsClientCalls]
-        public virtual Response<CopyAuthorization> GetCopyAuthorization(string resourceId, string region, CancellationToken cancellationToken = default)
+        public virtual Response<CopyAuthorization> GetCopyAuthorization(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(resourceRegion, nameof(resourceRegion));
 
             Response<CopyAuthorizationResult> response = ServiceClient.GenerateModelCopyAuthorization(cancellationToken);
-            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, region), response.GetRawResponse());
+            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
         }
 
         /// <summary>
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
         /// <param name="resourceId">Azure Resource Id of the target Form Recognizer resource where the model will be copied to.</param>
-        /// <param name="region">Location of the target Form Recognizer resource</param>
+        /// <param name="resourceRegion">Location of the target Form Recognizer resource</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information neccesary to copy a custom model into a target Form Recognizer resource.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string resourceId, string region, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string resourceId, string resourceRegion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(resourceRegion, nameof(resourceRegion));
 
             Response<CopyAuthorizationResult> response = await ServiceClient.GenerateModelCopyAuthorizationAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, region), response.GetRawResponse());
+            return Response.FromValue(new CopyAuthorization(response.Value, resourceId, resourceRegion), response.GetRawResponse());
         }
         #endregion Copy
 

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
             string resourceId = TestEnvironment.TargetResourceId;
-            string region = TestEnvironment.TargetResourceRegion;
+            string resourceRegion = TestEnvironment.TargetResourceRegion;
 
 
             #region Snippet:FormRecognizerSample6CreateCopySourceClient
@@ -43,8 +43,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSample6GetCopyAuthorization
             //@@ string resourceId = "<resourceId>";
-            //@@ string region = "<region>";
-            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
+            //@@ string resourceRegion = "<region>";
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, resourceRegion);
             #endregion
 
             #region Snippet:FormRecognizerSample6ToJson
