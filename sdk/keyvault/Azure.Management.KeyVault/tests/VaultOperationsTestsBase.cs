@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.Management.KeyVault.Models;
-using Azure.Management.Resource;
+using Azure.Management.Resources;
 
 using NUnit.Framework;
 
 namespace Azure.Management.KeyVault.Tests
 {
     [ClientTestFixture]
-    [NonParallelizable]
     public abstract class VaultOperationsTestsBase : RecordedTestBase<KeyVaultManagementTestEnvironment>
     {
         private const string ObjectIdKey = "ObjectId";
@@ -96,7 +95,7 @@ namespace Azure.Management.KeyVault.Tests
                 ).First().Locations.FirstOrDefault();
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Resource.Models.ResourceGroup(Location));
+            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Resources.Models.ResourceGroup(Location));
             VaultName = Recording.GenerateAssetName("sdktestvault");
 
             TenantIdGuid = new Guid(TenantId);
@@ -134,11 +133,11 @@ namespace Azure.Management.KeyVault.Tests
                 Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
 
-        internal ResourceManagementClient GetResourceManagementClient()
+        internal ResourcesManagementClient GetResourceManagementClient()
         {
-            return InstrumentClient(new ResourceManagementClient(this.SubscriptionId,
+            return InstrumentClient(new ResourcesManagementClient(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new ResourceManagementClientOptions())));
+                Recording.InstrumentClientOptions(new ResourcesManagementClientOptions())));
         }
 
         protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
