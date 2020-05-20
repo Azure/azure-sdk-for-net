@@ -15,7 +15,7 @@ namespace Azure.Core.Spatial
         ///
         /// </summary>
         /// <param name="rings"></param>
-        public GeoPolygon(IEnumerable<GeoLineString> rings): this(rings, null)
+        public GeoPolygon(IEnumerable<GeoLine> rings): this(rings, null)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="rings"></param>
         /// <param name="properties"></param>
-        public GeoPolygon(IEnumerable<GeoLineString> rings, GeometryProperties? properties): base(properties)
+        public GeoPolygon(IEnumerable<GeoLine> rings, GeometryProperties? properties): base(properties)
         {
             Rings = rings.ToArray();
         }
@@ -32,6 +32,6 @@ namespace Azure.Core.Spatial
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<GeoLineString> Rings { get; }
+        public IReadOnlyList<GeoLine> Rings { get; }
     }
 }

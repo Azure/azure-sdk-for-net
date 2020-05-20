@@ -9,13 +9,13 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeoLineString : Geometry
+    public sealed class GeoLine : Geometry
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="positions"></param>
-        public GeoLineString(IEnumerable<GeoPosition> positions): this(positions, null)
+        public GeoLine(IEnumerable<GeoPosition> positions): this(positions, null)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Core.Spatial
         /// </summary>
         /// <param name="positions"></param>
         /// <param name="properties"></param>
-        public GeoLineString(IEnumerable<GeoPosition> positions, GeometryProperties? properties): base(properties)
+        public GeoLine(IEnumerable<GeoPosition> positions, GeometryProperties? properties): base(properties)
         {
             Positions = positions.ToArray();
         }

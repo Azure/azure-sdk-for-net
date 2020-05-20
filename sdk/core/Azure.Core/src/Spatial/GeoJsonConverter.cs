@@ -57,7 +57,7 @@ namespace Azure.Core.Spatial
                 case PointType:
                     return new GeoPoint(ReadCoordinate(coordinates), properties);
                 case LineStringType:
-                    return new GeoLineString(ReadCoordinates(coordinates), properties);
+                    return new GeoLine(ReadCoordinates(coordinates), properties);
                 case MultiPointType:
                     var points = new List<GeoPoint>();
                     foreach (GeoPosition coordinate in ReadCoordinates(coordinates))
@@ -68,32 +68,32 @@ namespace Azure.Core.Spatial
                     return new GeoMultiPoint(points, properties);
 
                 case PolygonType:
-                    var rings = new List<GeoLineString>();
+                    var rings = new List<GeoLine>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        rings.Add(new GeoLineString(ReadCoordinates(ringArray)));
+                        rings.Add(new GeoLine(ReadCoordinates(ringArray)));
                     }
 
                     return new GeoPolygon(rings, properties);
 
                 case MultiLineStringType:
-                    var lineStrings = new List<GeoLineString>();
+                    var lineStrings = new List<GeoLine>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        lineStrings.Add(new GeoLineString(ReadCoordinates(ringArray)));
+                        lineStrings.Add(new GeoLine(ReadCoordinates(ringArray)));
                     }
 
-                    return new GeoMultiLineString(lineStrings, properties);
+                    return new GeoMultiLine(lineStrings, properties);
 
                 case MultiPolygonType:
 
                     var polygons = new List<GeoPolygon>();
                     foreach (JsonElement polygon in coordinates.EnumerateArray())
                     {
-                        var polygonRings = new List<GeoLineString>();
+                        var polygonRings = new List<GeoLine>();
                         foreach (JsonElement ringArray in polygon.EnumerateArray())
                         {
-                            polygonRings.Add(new GeoLineString(ReadCoordinates(ringArray)));
+                            polygonRings.Add(new GeoLine(ReadCoordinates(ringArray)));
                         }
 
                         polygons.Add(new GeoPolygon(polygonRings));
@@ -295,7 +295,7 @@ namespace Azure.Core.Spatial
                     WritePosition(point.Position);
                     break;
 
-                case GeoLineString lineString:
+                case GeoLine lineString:
                     WriteType(LineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     WritePositions(lineString.Positions);
@@ -325,11 +325,11 @@ namespace Azure.Core.Spatial
                     writer.WriteEndArray();
                     break;
 
-                case GeoMultiLineString multiLineString:
+                case GeoMultiLine multiLineString:
                     WriteType(MultiLineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     writer.WriteStartArray();
-                    foreach (var lineString in multiLineString.LineStrings)
+                    foreach (var lineString in multiLineString.Lines)
                     {
                         WritePositions(lineString.Positions);
                     }
