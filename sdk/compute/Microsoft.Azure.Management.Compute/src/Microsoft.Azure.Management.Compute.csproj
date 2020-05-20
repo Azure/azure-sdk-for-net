@@ -11,7 +11,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are SimulateEviction API for Spot Virtual Machines and Spot VMScaleSet VMs
+        VM model change to add a property related to in-guest VM patching.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
