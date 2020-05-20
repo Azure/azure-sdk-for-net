@@ -29,16 +29,19 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
         /// </summary>
-        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource();
+        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource(EventSourceName);
 
         /// <summary>
         ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being
         ///   created outside the scope of the <see cref="Log" /> instance, as well as setting up the
         ///   integration with AzureEventSourceListenter.
         /// </summary>
-        internal ServiceBusEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        private ServiceBusEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
+
+        // parameterless constructor for mocking
+        internal ServiceBusEventSource() { }
 
         #region event constants
         // event constants should not be changed
