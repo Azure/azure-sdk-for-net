@@ -9,29 +9,29 @@ namespace Azure.Core.Spatial
     /// <summary>
     ///
     /// </summary>
-    public sealed class GeometryMultiPoint : Geometry
+    public sealed class MultiLineGeometry : Geometry
     {
         /// <summary>
         ///
         /// </summary>
-        /// <param name="points"></param>
-        public GeometryMultiPoint(IEnumerable<PointGeometry> points): this(points, null)
+        /// <param name="lineStrings"></param>
+        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings): this(lineStrings, null)
         {
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="lineStrings"></param>
         /// <param name="properties"></param>
-        public GeometryMultiPoint(IEnumerable<PointGeometry> points, GeometryProperties? properties): base(properties)
+        public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings, GeometryProperties? properties): base(properties)
         {
-            Points = points.ToArray();
+            Lines = lineStrings.ToArray();
         }
 
         /// <summary>
         ///
         /// </summary>
-        public IReadOnlyList<PointGeometry> Points { get; }
+        public IReadOnlyList<LineGeometry> Lines { get; }
     }
 }

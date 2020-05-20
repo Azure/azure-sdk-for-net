@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
-            var multipoint = AssertRoundtrip<GeometryMultiPoint>(input);
+            var multipoint = AssertRoundtrip<MultiPointGeometry>(input);
             Assert.AreEqual(2, multipoint.Points.Count);
 
             Assert.AreEqual(P(0), multipoint.Points[0].Position);
@@ -134,7 +134,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeometryMultiLine>(input);
+            var polygon = AssertRoundtrip<MultiLineGeometry>(input);
             Assert.AreEqual(2, polygon.Lines.Count);
 
             CollectionAssert.AreEqual(new[]

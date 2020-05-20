@@ -8,7 +8,7 @@ namespace Azure.Core.Spatial
     /// </summary>
     public class Geometry
     {
-        private protected GeometryProperties DefaultProperties = new GeometryProperties();
+        private static readonly GeometryProperties DefaultProperties = new GeometryProperties();
 
         /// <summary>
         ///

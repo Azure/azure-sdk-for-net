@@ -65,7 +65,7 @@ namespace Azure.Core.Spatial
                         points.Add(new PointGeometry(coordinate));
                     }
 
-                    return new GeometryMultiPoint(points, properties);
+                    return new MultiPointGeometry(points, properties);
 
                 case PolygonType:
                     var rings = new List<LineGeometry>();
@@ -83,7 +83,7 @@ namespace Azure.Core.Spatial
                         lineStrings.Add(new LineGeometry(ReadCoordinates(ringArray)));
                     }
 
-                    return new GeometryMultiLine(lineStrings, properties);
+                    return new MultiLineGeometry(lineStrings, properties);
 
                 case MultiPolygonType:
 
@@ -305,7 +305,7 @@ namespace Azure.Core.Spatial
                     writer.WriteEndArray();
                     break;
 
-                case GeometryMultiPoint multiPoint:
+                case MultiPointGeometry multiPoint:
                     WriteType(MultiPointType);
                     writer.WritePropertyName(CoordinatesProperty);
                     writer.WriteStartArray();
@@ -317,7 +317,7 @@ namespace Azure.Core.Spatial
                     writer.WriteEndArray();
                     break;
 
-                case GeometryMultiLine multiLineString:
+                case MultiLineGeometry multiLineString:
                     WriteType(MultiLineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     writer.WriteStartArray();
