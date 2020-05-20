@@ -16,13 +16,12 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of DeviceCapabilities. </summary>
-        /// <param name="iotEdge"> Whether or not this device is an edge device. </param>
+        /// <param name="iotEdge"> . </param>
         internal DeviceCapabilities(bool? iotEdge)
         {
             IotEdge = iotEdge;
         }
 
-        /// <summary> Whether or not this device is an edge device. </summary>
         public bool? IotEdge { get; set; }
     }
 }

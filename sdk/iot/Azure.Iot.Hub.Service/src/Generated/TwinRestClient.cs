@@ -57,8 +57,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary> Gets a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> GetDeviceTwinAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -90,8 +90,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary> Gets a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> GetDeviceTwin(string id, CancellationToken cancellationToken = default)
         {
@@ -145,10 +145,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Replaces the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="deviceTwinInfo"> The twin object that will replace the current device twin. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
+        /// <summary> Replaces a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> ReplaceDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -184,10 +184,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Replaces the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="deviceTwinInfo"> The twin object that will replace the current device twin. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
+        /// <summary> Replaces a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> ReplaceDeviceTwin(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -245,10 +245,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Updates the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="deviceTwinInfo"> The twin object containing the tags and desired properties to be updated. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
+        /// <summary> Updates a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> UpdateDeviceTwinAsync(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -284,10 +284,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Updates the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="deviceTwinInfo"> The twin object containing the tags and desired properties to be updated. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
+        /// <summary> Updates a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> UpdateDeviceTwin(string id, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -339,9 +339,9 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Gets the module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
+        /// <summary> Gets a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> GetModuleTwinAsync(string id, string mid, CancellationToken cancellationToken = default)
         {
@@ -377,9 +377,9 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Gets the module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
+        /// <summary> Gets a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> GetModuleTwin(string id, string mid, CancellationToken cancellationToken = default)
         {
@@ -439,11 +439,11 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Replaces the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="deviceTwinInfo"> The twin object that will replace the current module twin. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
+        /// <summary> Replaces a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> ReplaceModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -483,11 +483,11 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Replaces the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="deviceTwinInfo"> The twin object that will replace the current module twin. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
+        /// <summary> Replaces a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin info. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> ReplaceModuleTwin(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -551,11 +551,11 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Updates the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="deviceTwinInfo"> The twin object containing the tags and desired properties to be updated. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
+        /// <summary> Updates a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin information. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<TwinData>> UpdateModuleTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -595,11 +595,11 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Updates the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="deviceTwinInfo"> The twin object containing the tags and desired properties to be updated. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
+        /// <summary> Updates a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="deviceTwinInfo"> Device twin information. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TwinData> UpdateModuleTwin(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {

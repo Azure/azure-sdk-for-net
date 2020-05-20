@@ -58,8 +58,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get the list of interfaces. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<DigitalTwinInterfaces>> GetComponentsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
@@ -91,8 +91,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get the list of interfaces. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DigitalTwinInterfaces> GetComponents(string digitalTwinId, CancellationToken cancellationToken = default)
         {
@@ -147,10 +147,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Updates desired properties of multiple interfaces. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
-        /// <param name="interfacesPatchInfo"> The JSON representation of the update patch. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for digital twin, as per RFC7232. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <param name="interfacesPatchInfo"> Multiple interfaces desired properties to update. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<DigitalTwinInterfaces>> UpdateComponentAsync(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -186,10 +186,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Updates desired properties of multiple interfaces. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
-        /// <param name="interfacesPatchInfo"> The JSON representation of the update patch. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for digital twin, as per RFC7232. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <param name="interfacesPatchInfo"> Multiple interfaces desired properties to update. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DigitalTwinInterfaces> UpdateComponent(string digitalTwinId, DigitalTwinInterfacesPatch interfacesPatchInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -241,8 +241,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get the interface. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="interfaceName"> The interface name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<DigitalTwinInterfaces>> GetComponentAsync(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
@@ -279,8 +279,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get the interface. </summary>
-        /// <param name="digitalTwinId"> The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="digitalTwinId"> Digital Twin ID. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional. </param>
         /// <param name="interfaceName"> The interface name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DigitalTwinInterfaces> GetComponent(string digitalTwinId, string interfaceName, CancellationToken cancellationToken = default)
@@ -335,13 +335,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary>
-        /// Returns a DigitalTwin model definition for the given id.
-        /// 
-        /// If &quot;expand&quot; is present in the query parameters and id is for a device capability model then it returns
-        /// 
-        /// the capability metamodel with expanded interface definitions.
-        /// </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="modelId"> Model id Ex: &lt;example&gt;urn:contoso:TemperatureSensor:1&lt;/example&gt;. </param>
         /// <param name="expand">
         /// Indicates whether to expand the device capability model&apos;s interface definitions inline or not.
@@ -382,13 +376,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary>
-        /// Returns a DigitalTwin model definition for the given id.
-        /// 
-        /// If &quot;expand&quot; is present in the query parameters and id is for a device capability model then it returns
-        /// 
-        /// the capability metamodel with expanded interface definitions.
-        /// </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="modelId"> Model id Ex: &lt;example&gt;urn:contoso:TemperatureSensor:1&lt;/example&gt;. </param>
         /// <param name="expand">
         /// Indicates whether to expand the device capability model&apos;s interface definitions inline or not.
