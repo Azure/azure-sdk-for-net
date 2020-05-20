@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             _diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             _diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(_diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         #region Training

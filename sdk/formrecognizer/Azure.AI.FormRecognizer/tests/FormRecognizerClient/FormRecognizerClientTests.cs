@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -29,21 +30,25 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>
         /// Creates a fake <see cref="FormRecognizerClient" />.
         /// </summary>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateClient()
+        private FormRecognizerClient CreateClient(FormRecognizerClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://localhost");
             var fakeCredential = new AzureKeyCredential("fakeKey");
+            options ??= new FormRecognizerClientOptions();
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential);
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, options);
         }
 
         /// <summary>
         /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
         /// Test Framework functionalities.
         /// </summary>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+        private FormRecognizerClient CreateInstrumentedClient(FormRecognizerClientOptions options = default) =>
+            InstrumentClient(CreateClient(options));
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
@@ -153,6 +158,33 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
+        [Test]
+        public async Task StartRecognizeContentFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.StartRecognizeContentFromUriAsync(new Uri(encodedUriString));
+            await client.StartRecognizeContentFromUriAsync(new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
+        }
+
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
@@ -206,6 +238,33 @@ namespace Azure.AI.FormRecognizer.Tests
             cancellationSource.Cancel();
 
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
+        public async Task StartRecognizeReceiptsFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.StartRecognizeReceiptsFromUriAsync(new Uri(encodedUriString));
+            await client.StartRecognizeReceiptsFromUriAsync(new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
         }
 
         /// <summary>
@@ -327,6 +386,41 @@ namespace Azure.AI.FormRecognizer.Tests
             cancellationSource.Cancel();
 
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
+        public async Task StartRecognizeCustomFormsFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/custom/models/00000000000000000000000000000000/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", new Uri(encodedUriString));
+            await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
+        }
+
+        private static string GetString(RequestContent content)
+        {
+            using var stream = new MemoryStream();
+            content.WriteTo(stream, CancellationToken.None);
+
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }

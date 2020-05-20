@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer
         {
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -187,7 +187,7 @@ namespace Azure.AI.FormRecognizer
         {
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -271,7 +271,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -323,7 +323,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
@@ -371,7 +371,7 @@ namespace Azure.AI.FormRecognizer
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
+            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
