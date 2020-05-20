@@ -40,7 +40,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal static bool IsClientType(Type t)
         {
-            return typeof(TableEntity).IsAssignableFrom(t);
+            return typeof(ITableEntity).IsAssignableFrom(t);
         }
     }
 }

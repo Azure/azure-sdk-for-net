@@ -107,7 +107,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Converts a List of Dictionaries containing properties and Odata type annotations to a custom entity type.
         /// </summary>
-        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : TableEntity, new()
+        internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList)
         {
             var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var result = new List<T>();
@@ -125,10 +125,15 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null) where T : TableEntity, new()
+        internal static T ToTableEntity<T>(this IDictionary<string, object> entity, PropertyInfo[]? properties = null)
         {
             properties ??= typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            var result = new T();
+            var result = EntityUtilities.ResolveEntityByType<T>();
+
+            if (result == null)
+            {
+                throw new ArgumentException($"Generic Type {typeof(T)} must implement ITableEntity");
+            }
 
             // Iterate through each property of the entity and set them as the correct type.
             foreach (var property in properties)
@@ -149,7 +154,7 @@ namespace Azure.Data.Tables
             // Populate the ETag if present.
             if (entity.TryGetValue(TableConstants.PropertyNames.Etag, out var etag))
             {
-                result.ETag = etag as string;
+                ((ITableEntity)result).ETag = etag as string;
             }
             return result;
         }

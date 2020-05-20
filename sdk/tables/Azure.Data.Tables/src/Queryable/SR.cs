@@ -5,6 +5,8 @@ namespace Azure.Data.Tables.Queryable
 {
     internal class SR
     {
+        public const string TableQueryTypeMustHaveDefaultParameterlessCtor = "TableQuery Generic Type must provide a default parameterless constructor.";
+
         // Table IQueryable Exception messages
         public const string ALinqCouldNotConvert = "Could not convert constant {0} expression to string.";
         public const string ALinqMethodNotSupported = "The method '{0}' is not supported.";

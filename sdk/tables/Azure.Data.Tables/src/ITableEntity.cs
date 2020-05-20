@@ -6,7 +6,7 @@ using System;
 namespace Azure.Data.Tables
 {
 
-    public class TableEntity : ITableEntity
+    public interface ITableEntity
     {
         /// <summary>
         /// The partition key is a unique identifier for the partition within a given table and forms the first part of an entity's primary key.
@@ -33,13 +33,5 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <value>A string containing the ETag value for the entity.</value>
         public string ETag { get; set; }
-
-        /// <summary>
-        /// Constructs an instance of a <see cref="TableEntity" />.
-        /// </summary>
-        public TableEntity()
-        {
-
-        }
     }
 }

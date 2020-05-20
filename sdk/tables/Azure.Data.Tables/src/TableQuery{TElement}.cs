@@ -14,7 +14,7 @@ namespace Azure.Data.Tables
     /// <summary>
     /// Represents a query against a Microsoft Azure table.
     /// </summary>
-    public class TableQuery<TElement> : IQueryable<TElement> where TElement : TableEntity, new()
+    public class TableQuery<TElement> : IQueryable<TElement>
     {
         private readonly TableQueryProvider queryProvider;
         private int? takeCount = null;
@@ -37,7 +37,7 @@ namespace Azure.Data.Tables
                 new ResourceSetExpression(typeof(IOrderedQueryable<TElement>), null, Expression.Constant("0"), typeof(TElement), null, CountOption.None, null, null);
         }
 
-        // Used by iqueryable on subsequent expression updates to update expression / provider
+        // Used by IQueryable on subsequent expression updates to update expression / provider
         internal TableQuery(Expression queryExpression, TableQueryProvider queryProvider)
         {
             this.queryProvider = queryProvider;
