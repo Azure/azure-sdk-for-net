@@ -10,29 +10,27 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class TableGetPropertiesOptions : OptionsResource
+    public partial class AutoscaleSettings
     {
         /// <summary>
-        /// Initializes a new instance of the TableGetPropertiesOptions class.
+        /// Initializes a new instance of the AutoscaleSettings class.
         /// </summary>
-        public TableGetPropertiesOptions()
+        public AutoscaleSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TableGetPropertiesOptions class.
+        /// Initializes a new instance of the AutoscaleSettings class.
         /// </summary>
-        /// <param name="throughput">Value of the Cosmos DB resource throughput
-        /// or autoscaleSettings. Use the ThroughputSetting resource when
-        /// retrieving offer details.</param>
-        /// <param name="autoscaleSettings">Specifies the Autoscale
-        /// settings.</param>
-        public TableGetPropertiesOptions(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
-            : base(throughput, autoscaleSettings)
+        /// <param name="maxThroughput">Represents maximum throughput, the
+        /// resource can scale up to.</param>
+        public AutoscaleSettings(int? maxThroughput = default(int?))
         {
+            MaxThroughput = maxThroughput;
             CustomInit();
         }
 
@@ -40,6 +38,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets represents maximum throughput, the resource can scale
+        /// up to.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxThroughput")]
+        public int? MaxThroughput { get; set; }
 
     }
 }
