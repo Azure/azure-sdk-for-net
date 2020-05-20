@@ -9,7 +9,7 @@ namespace Azure.Core.Spatial
     public sealed class PointGeometry : Geometry
     {
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="PointGeometry"/>.
         /// </summary>
         /// <param name="position"></param>
         public PointGeometry(GeometryPosition position): this(position, DefaultProperties)
@@ -17,10 +17,10 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="PointGeometry"/>.
         /// </summary>
         /// <param name="position"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public PointGeometry(GeometryPosition position, GeometryProperties properties): base(properties)
         {
             Position = position;

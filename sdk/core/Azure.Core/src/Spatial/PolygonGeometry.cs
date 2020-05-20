@@ -23,7 +23,7 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="PolygonGeometry"/>.
         /// </summary>
         /// <param name="rings"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public PolygonGeometry(IEnumerable<LineGeometry> rings, GeometryProperties properties): base(properties)
         {
             Argument.AssertNotNull(rings, nameof(rings));

@@ -12,7 +12,7 @@ namespace Azure.Core.Spatial
     public sealed class MultiPointGeometry : Geometry
     {
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
         /// <param name="points"></param>
         public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, DefaultProperties)
@@ -20,10 +20,10 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
         /// <param name="points"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryProperties properties): base(properties)
         {
             Argument.AssertNotNull(points, nameof(points));

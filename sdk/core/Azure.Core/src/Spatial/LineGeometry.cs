@@ -23,7 +23,7 @@ namespace Azure.Core.Spatial
         /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
         /// <param name="positions"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public LineGeometry(IEnumerable<GeometryPosition> positions, GeometryProperties properties): base(properties)
         {
             Argument.AssertNotNull(positions, nameof(positions));

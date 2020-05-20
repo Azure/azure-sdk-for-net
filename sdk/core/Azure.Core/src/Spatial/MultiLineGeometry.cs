@@ -12,7 +12,7 @@ namespace Azure.Core.Spatial
     public sealed class MultiLineGeometry : Geometry
     {
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiLineGeometry"/>.
         /// </summary>
         /// <param name="lineStrings"></param>
         public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings): this(lineStrings, DefaultProperties)
@@ -20,10 +20,10 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiLineGeometry"/>.
         /// </summary>
         /// <param name="lineStrings"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public MultiLineGeometry(IEnumerable<LineGeometry> lineStrings, GeometryProperties properties): base(properties)
         {
             Argument.AssertNotNull(lineStrings, nameof(lineStrings));

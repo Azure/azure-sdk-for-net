@@ -12,7 +12,7 @@ namespace Azure.Core.Spatial
     public sealed class MultiPolygonGeometry : Geometry
     {
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiPolygonGeometry"/>.
         /// </summary>
         /// <param name="polygons"></param>
         public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons): this(polygons, DefaultProperties)
@@ -20,10 +20,10 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        ///
+        /// Initializes new instance of <see cref="MultiPolygonGeometry"/>.
         /// </summary>
         /// <param name="polygons"></param>
-        /// <param name="properties"></param>
+        /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public MultiPolygonGeometry(IEnumerable<PolygonGeometry> polygons, GeometryProperties properties): base(properties)
         {
             Argument.AssertNotNull(polygons, nameof(polygons));
