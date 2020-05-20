@@ -133,10 +133,10 @@ public  class Modules
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device that contains the module.</param>
     /// <param name="moduleId">The unique identifier of the module.</param>
-    /// <param name="directMethodRequest">The details of the method to invoke.</param>
+    /// <param name="cloudToDeviceMethodRequest">The details of the method to invoke.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the method invocation.</returns>
-    public virtual async Task<Response<CloudToDeviceMethodResult>> InvokeMethodAsync(string deviceId, string moduleId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default);
+    public virtual async Task<Response<CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, string moduleId, CloudToDeviceMethodRequest cloudToDeviceMethodRequest, CancellationToken cancellationToken = default);
 }
 ```
 </details>

@@ -22,7 +22,7 @@ namespace Azure.Iot.Hub.Service.Models
             DateTimeOffset? endTime = default;
             long? maxExecutionTimeInSeconds = default;
             JobResponseType? type = default;
-            CloudToDeviceMethod cloudToDeviceMethod = default;
+            CloudToDeviceMethodRequest cloudToDeviceMethod = default;
             TwinData updateTwin = default;
             JobResponseStatus? status = default;
             string failureReason = default;
@@ -99,7 +99,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    cloudToDeviceMethod = CloudToDeviceMethod.DeserializeCloudToDeviceMethod(property.Value);
+                    cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("updateTwin"))
