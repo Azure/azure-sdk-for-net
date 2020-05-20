@@ -2126,9 +2126,9 @@
         "parentScopes": {
           "type": "array",
           "items": {
-            "type": "string",
-            "description": "TODO service folks need to explain this."
-          }
+            "type": "string"
+          },
+          "description": "TODO service folks need to explain this."
         }
       }
     },
@@ -2670,7 +2670,8 @@
       "properties": {
         "totalMessagesPurged": {
           "format": "int32",
-          "type": "integer"
+          "type": "integer",
+          "description": "The number of messages that were purged because of this request."
         },
         "deviceId": {
           "description": "The ID of the device whose messages are being purged.",
