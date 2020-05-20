@@ -78,11 +78,11 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException e)
             {
-                throw scope.WrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
             }
             catch (Exception e)
             {
-                throw scope.WrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 

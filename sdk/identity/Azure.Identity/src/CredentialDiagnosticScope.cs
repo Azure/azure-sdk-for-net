@@ -36,7 +36,7 @@ namespace Azure.Identity
             return token;
         }
 
-        public Exception WrapAndThrow(Exception ex)
+        public Exception FailWrapAndThrow(Exception ex)
         {
             if (ex is OperationCanceledException || ex is AuthenticationFailedException)
             {
