@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,22 +24,24 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the language analyzer. This property cannot be set when either <see cref="SearchAnalyzer"/> or <see cref="IndexAnalyzer"/> are set.
+        /// Gets or sets the name of the language analyzer. This property cannot be set when either <see cref="SearchAnalyzerName"/> or <see cref="IndexAnalyzerName"/> are set.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        public LexicalAnalyzerName? Analyzer { get; set; }
+        public LexicalAnalyzerName? AnalyzerName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the language analyzer for searching. This property must be set together with <see cref="IndexAnalyzer"/>, and cannot be set when <see cref="Analyzer"/> is set.
+        /// Gets or sets the name of the language analyzer for searching. This property must be set together with <see cref="IndexAnalyzerName"/>, and cannot be set when <see cref="AnalyzerName"/> is set.
+        /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        public LexicalAnalyzerName? SearchAnalyzer { get; set; }
+        public LexicalAnalyzerName? SearchAnalyzerName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the language analyzer for indexing. This property must be set together with <see cref="SearchAnalyzer"/>, and cannot be set when <see cref="Analyzer"/> is set.
+        /// Gets or sets the name of the language analyzer for indexing. This property must be set together with <see cref="SearchAnalyzerName"/>, and cannot be set when <see cref="AnalyzerName"/> is set.
+        /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
         /// Once the analyzer is chosen, it cannot be changed for the field in the index.
         /// </summary>
-        public LexicalAnalyzerName? IndexAnalyzer { get; set; }
+        public LexicalAnalyzerName? IndexAnalyzerName { get; set; }
 
         /// <summary>
         /// Gets a list of names of synonym maps to associate with this field.
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map.
         /// This attribute can be changed on existing fields.
         /// </remarks>
-        public IList<string> SynonymMaps { get; } = new List<string>();
+        public IList<string> SynonymMapNames { get; } = new List<string>();
 
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
@@ -58,13 +59,13 @@ namespace Azure.Search.Documents.Indexes.Models
             base.Save(field);
 
             field.IsSearchable = true;
-            field.Analyzer = Analyzer;
-            field.SearchAnalyzer = SearchAnalyzer;
-            field.IndexAnalyzer = IndexAnalyzer;
+            field.AnalyzerName = AnalyzerName;
+            field.SearchAnalyzerName = SearchAnalyzerName;
+            field.IndexAnalyzerName = IndexAnalyzerName;
 
-            if (SynonymMaps.Count > 0)
+            if (SynonymMapNames.Count > 0)
             {
-                field.SynonymMaps = SynonymMaps;
+                field.SynonymMapNames = SynonymMapNames;
             }
         }
     }
