@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.Management.AppConfiguration</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsoft.AppConfiguration</Description>
+    <PackageTags>azure;management;appconfiguration</PackageTags>
+    <NoWarn>$(NoWarn);AZC0008;CA1308</NoWarn>
+  </PropertyGroup>
+</Project>
