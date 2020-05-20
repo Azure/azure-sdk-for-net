@@ -1905,18 +1905,15 @@
             "properties": {
                 "totalDeviceCount": {
                     "format": "int64",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 },
                 "enabledDeviceCount": {
                     "format": "int64",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 },
                 "disabledDeviceCount": {
                     "format": "int64",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 }
             }
         },
@@ -1925,8 +1922,7 @@
             "properties": {
                 "connectedDeviceCount": {
                     "format": "int64",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 }
             }
         },
@@ -1937,8 +1933,7 @@
                     "type": "string"
                 },
                 "generationId": {
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "etag": {
                     "type": "string"
@@ -1948,8 +1943,7 @@
                         "Disconnected",
                         "Connected"
                     ],
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "status": {
                     "enum": [
@@ -1963,23 +1957,19 @@
                 },
                 "connectionStateUpdatedTime": {
                     "format": "date-time",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "statusUpdatedTime": {
                     "format": "date-time",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "lastActivityTime": {
                     "format": "date-time",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "cloudToDeviceMessageCount": {
                     "format": "int32",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 },
                 "authentication": {
                     "$ref": "#/definitions/AuthenticationMechanism"
@@ -2148,13 +2138,11 @@
             "properties": {
                 "isSuccessful": {
                     "description": "Whether or not the operation was successful.",
-                    "type": "boolean",
-                    "readOnly": true
+                    "type": "boolean"
                 },
                 "errors": {
                     "description": "If the operation was not successful, this contains an array of DeviceRegistryOperationError objects.",
                     "type": "array",
-                    "readOnly": true,
                     "items": {
                         "$ref": "#/definitions/DeviceRegistryOperationError"
                     }
@@ -2162,7 +2150,6 @@
                 "warnings": {
                     "description": "If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects.",
                     "type": "array",
-                    "readOnly": true,
                     "items": {
                         "$ref": "#/definitions/DeviceRegistryOperationWarning"
                     }
@@ -2175,8 +2162,7 @@
             "properties": {
                 "deviceId": {
                     "description": "The ID of the device that indicated the error.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "errorCode": {
                     "description": "ErrorCode associated with the error.",
@@ -2397,21 +2383,17 @@
                         "GenericGatewayTimeout",
                         "GatewayTimeout"
                     ],
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "errorStatus": {
                     "description": "Additional details associated with the error.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "moduleId": {
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "operation": {
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 }
             }
         },
@@ -2421,20 +2403,17 @@
             "properties": {
                 "deviceId": {
                     "description": "The ID of the device that indicated the warning.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "warningCode": {
                     "enum": [
                         "DeviceRegisteredWithoutTwin"
                     ],
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "warningStatus": {
                     "description": "Additional details associated with the warning.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 }
             }
         },
@@ -2667,18 +2646,15 @@
             "properties": {
                 "totalMessagesPurged": {
                     "format": "int32",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 },
                 "deviceId": {
                     "description": "The ID of the device whose messages are being purged.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "moduleId": {
                     "description": "The ID of the device whose messages are being purged.",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 }
             }
         },
@@ -3040,8 +3016,7 @@
                     "type": "string"
                 },
                 "generationId": {
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "etag": {
                     "type": "string"
@@ -3051,23 +3026,19 @@
                         "Disconnected",
                         "Connected"
                     ],
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "connectionStateUpdatedTime": {
                     "format": "date-time",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "lastActivityTime": {
                     "format": "date-time",
-                    "type": "string",
-                    "readOnly": true
+                    "type": "string"
                 },
                 "cloudToDeviceMessageCount": {
                     "format": "int32",
-                    "type": "integer",
-                    "readOnly": true
+                    "type": "integer"
                 },
                 "authentication": {
                     "$ref": "#/definitions/AuthenticationMechanism"
