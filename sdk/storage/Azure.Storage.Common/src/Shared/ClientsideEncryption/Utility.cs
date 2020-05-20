@@ -18,7 +18,7 @@ namespace Azure.Storage.Cryptography
             {
                 KeyEncryptionKey = other.KeyEncryptionKey,
                 KeyResolver = other.KeyResolver,
-                KeyWrapAlgorithm = other.KeyWrapAlgorithm
+                KeyWrapAlgorithm = other.KeyWrapAlgorithm,
             };
 
         /// <summary>
@@ -63,6 +63,10 @@ namespace Azure.Storage.Cryptography
         /// </param>
         /// <param name="async">Whether to perform this function asynchronously.</param>
         /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Decrypted plaintext. If key could not be resolved, returns null.
+        /// </returns>
+        /// <exception cref="ClientSideEncryptionKeyNotFoundException">When key ID cannot be resolved.</exception>
         public static async Task<Stream> DecryptInternal(
             Stream ciphertext,
             EncryptionData encryptionData,
@@ -73,6 +77,13 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
+            var contentEncryptionKey = await GetContentEncryptionKeyOrDefaultAsync(
+                encryptionData,
+                keyResolver,
+                potentialCachedKeyWrapper,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
             Stream plaintext;
             //int read = 0;
             if (encryptionData != default)
@@ -95,8 +106,6 @@ namespace Azure.Storage.Cryptography
                     }
                     //read = IV.Length;
                 }
-
-                var contentEncryptionKey = await GetContentEncryptionKeyAsync(encryptionData, keyResolver, potentialCachedKeyWrapper, async, cancellationToken).ConfigureAwait(false);
 
                 plaintext = WrapStream(
                     ciphertext,
@@ -124,8 +133,11 @@ namespace Azure.Storage.Cryptography
         /// <param name="potentiallyCachedKeyWrapper"></param>
         /// <param name="async">Whether to perform asynchronously.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Encryption key as a byte array.</returns>
-        private static async Task<Memory<byte>> GetContentEncryptionKeyAsync(
+        /// <returns>
+        /// Encryption key as a byte array.
+        /// </returns>
+        /// <exception cref="ClientSideEncryptionKeyNotFoundException">When key ID cannot be resolved.</exception>
+        private static async Task<Memory<byte>> GetContentEncryptionKeyOrDefaultAsync(
 #pragma warning restore CS1587 // XML comment is not placed on a valid language element
             EncryptionData encryptionData,
             IKeyEncryptionKeyResolver keyResolver,
@@ -133,7 +145,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            IKeyEncryptionKey key;
+            IKeyEncryptionKey key = default;
 
             // If we already have a local key and it is the correct one, use that.
             if (encryptionData.WrappedContentKey.KeyId == potentiallyCachedKeyWrapper?.KeyId)
@@ -147,14 +159,10 @@ namespace Azure.Storage.Cryptography
                     ? await keyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId, cancellationToken).ConfigureAwait(false)
                     : keyResolver.Resolve(encryptionData.WrappedContentKey.KeyId, cancellationToken);
             }
-            else
-            {
-                throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
-            }
 
             if (key == default)
             {
-                throw EncryptionErrors.NoKeyAccessor();
+                throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
             }
 
             return async

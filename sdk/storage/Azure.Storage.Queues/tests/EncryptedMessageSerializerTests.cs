@@ -12,6 +12,7 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Tests.Shared;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -84,10 +85,13 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(AreEqual(encryptedMessage, parsedEncryptedMessage));
         }
 
-        [Test]
-        public void TryDeserializeEncryptedMessageFail()
+        [TestCase("")]
+        [TestCase("\"aa\"")] // real world example
+        [TestCase("this is not even valid json")]
+        [TestCase("ᛁᚳ᛫ᛗᚨᚷ᛫ᚷᛚᚨᛋ᛫ᛖᚩᛏᚪᚾ᛫ᚩᚾᛞ᛫ᚻᛁᛏ᛫ᚾᛖ᛫ᚻᛖᚪᚱᛗᛁᚪᚧ᛫ᛗᛖ")]
+        public void TryDeserializeGracefulOnBadInput(string input)
         {
-            bool tryResult = EncryptedMessageSerializer.TryDeserialize("this is not even valid json", out var parsedEncryptedMessage);
+            bool tryResult = EncryptedMessageSerializer.TryDeserialize(input, out var parsedEncryptedMessage);
 
             Assert.AreEqual(false, tryResult);
             Assert.AreEqual(default, parsedEncryptedMessage);
@@ -105,7 +109,7 @@ namespace Azure.Storage.Queues.Test
             && left.ContentEncryptionIV.SequenceEqual(right.ContentEncryptionIV)
             && AreEqual(left.KeyWrappingMetadata, right.KeyWrappingMetadata);
 
-        private static bool AreEqual(WrappedKey left, WrappedKey right)
+        private static bool AreEqual(KeyEnvelope left, KeyEnvelope right)
             => left.KeyId.Equals(right.KeyId, StringComparison.InvariantCulture)
             && left.EncryptedKey.SequenceEqual(right.EncryptedKey)
             && left.Algorithm.Equals(right.Algorithm, StringComparison.InvariantCulture);

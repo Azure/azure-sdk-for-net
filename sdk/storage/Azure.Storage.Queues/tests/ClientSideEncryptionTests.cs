@@ -11,7 +11,10 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography.Models;
+using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Tests.Shared;
@@ -366,6 +369,83 @@ namespace Azure.Storage.Queues.Test
 
                 Assert.AreEqual(1, IsAsync ? mockKey.UnwrappedAsync : mockKey.UnwrappedSync);
                 Assert.AreEqual(0, IsAsync ? mockKey.UnwrappedSync : mockKey.UnwrappedAsync);
+            }
+        }
+
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        [LiveOnly]
+        public async Task CannotFindKeyAsync(bool useListener, bool resolverFailure)
+        {
+            MockMissingClientSideEncryptionKeyListener listener = null;
+            if (useListener)
+            {
+                listener = new MockMissingClientSideEncryptionKeyListener();
+            }
+
+            const int numMessages = 5;
+            var message = "any old message";
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestEncryptedQueueAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyResolver = mockKey,
+                    KeyWrapAlgorithm = "mock"
+                }))
+            {
+                var queue = disposable.Queue;
+                foreach (var _ in Enumerable.Range(0, numMessages))
+                {
+                    await queue.SendMessageAsync(message).ConfigureAwait(false);
+                }
+
+                bool threwKeyNotFound = false;
+                bool threwGeneral = false;
+                QueueMessage[] result = default;
+                try
+                {
+                    // download but can't find key
+                    var options = GetOptions();
+                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    {
+                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ResolverInternalFailure = resolverFailure },
+                        KeyWrapAlgorithm = "test"
+                    };
+                    options._missingClientSideEncryptionKeyListener = listener;
+                    result = await new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options).ReceiveMessagesAsync(numMessages);
+                }
+                catch (ClientSideEncryptionKeyNotFoundException)
+                {
+                    threwKeyNotFound = true;
+                }
+                catch (Exception)
+                {
+                    threwGeneral = true;
+                }
+                finally
+                {
+                    if (resolverFailure)
+                    {
+                        Assert.True(threwGeneral);
+                    }
+                    else
+                    {
+                        Assert.False(threwGeneral);
+
+                        if (useListener)
+                        {
+                            Assert.AreEqual(numMessages, listener.TimesInvoked);
+                            Assert.AreEqual(0, result.Length); // all messages should have been filtered out
+                        }
+                        else
+                        {
+                            Assert.True(threwKeyNotFound);
+                        }
+                    }
+                }
             }
         }
     }

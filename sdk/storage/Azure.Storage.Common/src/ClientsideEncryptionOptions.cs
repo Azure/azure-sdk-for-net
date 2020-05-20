@@ -46,18 +46,5 @@ namespace Azure.Storage
         {
             Version = version;
         }
-
-        /// <summary>
-        /// Copy constructor to keep these options grouped in clients while stopping users from
-        /// accidentally altering our configs out from under us.
-        /// </summary>
-        /// <param name="other"></param>
-        internal ClientSideEncryptionOptions(ClientSideEncryptionOptions other)
-        {
-            Version = other.Version;
-            KeyEncryptionKey = other.KeyEncryptionKey;
-            KeyResolver = other.KeyResolver;
-            KeyWrapAlgorithm = other.KeyWrapAlgorithm;
-        }
     }
 }

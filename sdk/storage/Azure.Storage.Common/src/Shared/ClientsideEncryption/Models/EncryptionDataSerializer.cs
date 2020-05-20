@@ -48,7 +48,7 @@ namespace Azure.Storage.Cryptography.Models
             json.WriteEndObject();
         }
 
-        private static void WriteWrappedKey(Utf8JsonWriter json, WrappedKey key)
+        private static void WriteWrappedKey(Utf8JsonWriter json, KeyEnvelope key)
         {
             json.WriteString(nameof(key.KeyId), key.KeyId);
             json.WriteString(nameof(key.EncryptedKey), Convert.ToBase64String(key.EncryptedKey));
@@ -102,7 +102,7 @@ namespace Azure.Storage.Cryptography.Models
             }
             else if (property.NameEquals(nameof(data.WrappedContentKey)))
             {
-                var key = new WrappedKey();
+                var key = new KeyEnvelope();
                 foreach (var subProperty in property.Value.EnumerateObject())
                 {
                     ReadPropertyValue(key, subProperty);
@@ -133,7 +133,7 @@ namespace Azure.Storage.Cryptography.Models
             }
         }
 
-        private static void ReadPropertyValue(WrappedKey key, JsonProperty property)
+        private static void ReadPropertyValue(KeyEnvelope key, JsonProperty property)
         {
             if (property.NameEquals(nameof(key.Algorithm)))
             {

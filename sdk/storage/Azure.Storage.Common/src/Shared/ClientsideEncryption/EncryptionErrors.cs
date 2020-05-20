@@ -7,8 +7,8 @@ namespace Azure.Storage.Cryptography
 {
     internal static class EncryptionErrors
     {
-        public static ArgumentException KeyNotFound(string keyId)
-            => new ArgumentException($"Could not resolve key of id `{keyId}`.");
+        public static ClientSideEncryptionKeyNotFoundException KeyNotFound(string keyId)
+            => new ClientSideEncryptionKeyNotFoundException(keyId);
 
         public static ArgumentException BadEncryptionAgent(string agent)
             => new ArgumentException("Invalid Encryption Agent. This version of the client library does not understand" +

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -659,16 +658,20 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            HttpRange requestedRange = range;
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    EncryptedBlobRange encryptedRange = new EncryptedBlobRange(range);
+                    if (UsingClientSideEncryption)
+                    {
+                        range = new EncryptedBlobRange(range).AdjustedRange;
+                    }
 
                     // Start downloading the blob
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
-                        UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
+                        range,
                         conditions,
                         rangeGetContentHash,
                         async: async,
@@ -688,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
                         stream,
                          startOffset =>
                             StartDownloadAsync(
-                                    UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
+                                    range,
                                     conditions,
                                     rangeGetContentHash,
                                     startOffset,
@@ -698,7 +701,7 @@ namespace Azure.Storage.Blobs.Specialized
                             .Item2,
                         async startOffset =>
                             (await StartDownloadAsync(
-                                UsingClientSideEncryption ? encryptedRange.AdjustedRange : range,
+                                range,
                                 conditions,
                                 rangeGetContentHash,
                                 startOffset,
@@ -713,7 +716,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // we already return a nonseekable stream; returning a crypto stream is fine
                     if (UsingClientSideEncryption)
                     {
-                        stream = await ClientSideDecryptInternal(stream, response.Value.Metadata, encryptedRange.OriginalRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                        stream = await ClientSideDecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
                     }
 
                     response.Value.Content = stream;
@@ -3003,6 +3006,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             bool ivInStream = originalRange.Offset >= 16;
 
+            // this method throws when key cannot be resolved. Blobs is intended to throw on this failure.
             var plaintext = await Utility.DecryptInternal(
                 content,
                 encryptionData,

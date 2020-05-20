@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
 {
@@ -69,6 +70,8 @@ namespace Azure.Storage.Queues
         /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        private readonly IMissingClientSideEncryptionKeyListener _missingClientSideEncryptionKeyListener;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -140,6 +143,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
         }
 
         /// <summary>
@@ -227,6 +231,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
         }
         #endregion ctors
 
@@ -243,7 +248,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, _missingClientSideEncryptionKeyListener);
 
         #region GetQueues
         /// <summary>

@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
+using Azure.Storage.Queues.Models;
+
 namespace Azure.Storage.Queues.Specialized
 {
     /// <summary>
@@ -34,5 +37,47 @@ namespace Azure.Storage.Queues.Specialized
             get => _clientSideEncryptionOptions;
             set => _clientSideEncryptionOptions = value;
         }
+
+        /// <summary>
+        /// Behavior when receiving a queue message that cannot be decrypted due to lack of key access.
+        /// Messages in the list of results that cannot be decrypted will be filtered out of the list and
+        /// sent to this listener. Default behavior, when no listener is provided, is for the overall message
+        /// fetch to throw.
+        /// </summary>
+        public IMissingClientSideEncryptionKeyListener OnMissingClientSideEncryptionKey
+        {
+            get => _missingClientSideEncryptionKeyListener;
+            set => _missingClientSideEncryptionKeyListener = value;
+        }
+    }
+
+    /// <summary>
+    /// Describes a listener to handle queue messages who's client-side encryption keys cannot be resolved.
+    /// </summary>
+    public interface IMissingClientSideEncryptionKeyListener
+    {
+        /// <summary>
+        /// Handle an unresolved key in a <see cref="QueueClient.ReceiveMessages()"/> call.
+        /// </summary>
+        /// <param name="message">Message that couldn't be decrypted.</param>
+        void OnMissingKey(QueueMessage message);
+
+        /// <summary>
+        /// Handle an unresolved key in a <see cref="QueueClient.ReceiveMessagesAsync()"/> call.
+        /// </summary>
+        /// <param name="message">Message that couldn't be decrypted.</param>
+        Task OnMissingKeyAsync(QueueMessage message);
+
+        /// <summary>
+        /// Handle an unresolved key in a <see cref="QueueClient.PeekMessages(int?, System.Threading.CancellationToken)"/> call.
+        /// </summary>
+        /// <param name="message">Message that couldn't be decrypted.</param>
+        void OnMissingKey(PeekedMessage message);
+
+        /// <summary>
+        /// Handle an unresolved key in a <see cref="QueueClient.PeekMessagesAsync(int?, System.Threading.CancellationToken)"/> call.
+        /// </summary>
+        /// <param name="message">Message that couldn't be decrypted.</param>
+        Task OnMissingKeyAsync(PeekedMessage message);
     }
 }

@@ -23,9 +23,9 @@ namespace Azure.Storage.Cryptography.Models
         public string EncryptionMode { get; set; }
 
         /// <summary>
-        /// A <see cref="WrappedKey"/> object that stores the wrapping algorithm, key identifier and the encrypted key.
+        /// A <see cref="KeyEnvelope"/> object that stores the wrapping algorithm, key identifier and the encrypted key.
         /// </summary>
-        public WrappedKey WrappedContentKey { get; set; }
+        public KeyEnvelope WrappedContentKey { get; set; }
 
         /// <summary>
         /// The encryption agent.
@@ -79,7 +79,7 @@ namespace Azure.Storage.Cryptography.Models
                 {
                     { EncryptionConstants.AgentMetadataKey, AgentString }
                 },
-                WrappedContentKey = new WrappedKey()
+                WrappedContentKey = new KeyEnvelope()
                 {
                     Algorithm = keyWrapAlgorithm,
                     EncryptedKey = async

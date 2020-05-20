@@ -321,6 +321,14 @@ namespace Azure.Storage.Queues.Specialized
     {
         public AdvancedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
+        public Azure.Storage.Queues.Specialized.IMissingClientSideEncryptionKeyListener OnMissingClientSideEncryptionKey { get { throw null; } set { } }
+    }
+    public partial interface IMissingClientSideEncryptionKeyListener
+    {
+        void OnMissingKey(Azure.Storage.Queues.Models.PeekedMessage message);
+        void OnMissingKey(Azure.Storage.Queues.Models.QueueMessage message);
+        System.Threading.Tasks.Task OnMissingKeyAsync(Azure.Storage.Queues.Models.PeekedMessage message);
+        System.Threading.Tasks.Task OnMissingKeyAsync(Azure.Storage.Queues.Models.QueueMessage message);
     }
 }
 namespace Azure.Storage.Sas

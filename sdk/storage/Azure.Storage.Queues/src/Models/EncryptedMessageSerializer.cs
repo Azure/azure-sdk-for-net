@@ -47,7 +47,9 @@ namespace Azure.Storage.Queues.Specialized.Models
                 encryptedMessage = Deserialize(serializedData);
                 return true;
             }
-            catch (JsonException)
+            // JsonException does not actually cover everything. InvalidOperationException can be thrown
+            // on some string inputs, as we can't assume input is even JSON.
+            catch (Exception)
             {
                 encryptedMessage = default;
                 return false;

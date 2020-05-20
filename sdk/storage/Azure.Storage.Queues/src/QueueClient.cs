@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -88,6 +88,8 @@ namespace Azure.Storage.Queues
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
         internal bool UsingClientSideEncryption => ClientSideEncryption != default;
+
+        private readonly IMissingClientSideEncryptionKeyListener _missingClientSideEncryptionKeyListener;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -196,6 +198,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
         }
 
         /// <summary>
@@ -288,6 +291,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
         }
 
         /// <summary>
@@ -312,7 +316,16 @@ namespace Azure.Storage.Queues
         /// <param name="encryptionOptions">
         /// Options for client-side encryption.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline, QueueClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, ClientSideEncryptionOptions encryptionOptions)
+        /// <param name="listener">
+        /// Listener regarding partial decryption failures using clientside encryption.
+        /// </param>
+        internal QueueClient(
+            Uri queueUri,
+            HttpPipeline pipeline,
+            QueueClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            ClientSideEncryptionOptions encryptionOptions,
+            IMissingClientSideEncryptionKeyListener listener)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -320,6 +333,7 @@ namespace Azure.Storage.Queues
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = encryptionOptions?.Clone();
+            _missingClientSideEncryptionKeyListener = listener;
         }
         #endregion ctors
 
@@ -2112,19 +2126,51 @@ namespace Azure.Storage.Queues
 
         private async Task<QueueMessage[]> ClientSideDecryptMessagesInternal(QueueMessage[] messages, bool async, CancellationToken cancellationToken)
         {
+            var filteredMessages = new List<QueueMessage>();
             foreach (var message in messages)
             {
-                message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                    filteredMessages.Add(message);
+                }
+                catch (ClientSideEncryptionKeyNotFoundException) when (_missingClientSideEncryptionKeyListener != default)
+                {
+                    if (async)
+                    {
+                        await _missingClientSideEncryptionKeyListener.OnMissingKeyAsync(message).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _missingClientSideEncryptionKeyListener.OnMissingKey(message);
+                    }
+                }
             }
-            return messages;
+            return filteredMessages.ToArray();
         }
         private async Task<PeekedMessage[]> ClientSideDecryptMessagesInternal(PeekedMessage[] messages, bool async, CancellationToken cancellationToken)
         {
+            var filteredMessages = new List<PeekedMessage>();
             foreach (var message in messages)
             {
-                message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
+                    filteredMessages.Add(message);
+                }
+                catch (ClientSideEncryptionKeyNotFoundException) when (_missingClientSideEncryptionKeyListener != default)
+                {
+                    if (async)
+                    {
+                        await _missingClientSideEncryptionKeyListener.OnMissingKeyAsync(message).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _missingClientSideEncryptionKeyListener.OnMissingKey(message);
+                    }
+                }
             }
-            return messages;
+            return filteredMessages.ToArray();
         }
 
         private async Task<string> ClientSideDecryptInternal(string downloadedMessage, bool async, CancellationToken cancellationToken)
@@ -2134,8 +2180,9 @@ namespace Azure.Storage.Queues
                 return downloadedMessage; // not recognized as client-side encrypted message
             }
 
+            var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents));
             var decryptedMessageStream = await Utility.DecryptInternal(
-                new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents)),
+                encryptedMessageStream,
                 encryptedMessage.EncryptionData,
                 ivInStream: false,
                 ClientSideEncryption.KeyResolver,
@@ -2143,6 +2190,12 @@ namespace Azure.Storage.Queues
                 noPadding: false,
                 async: async,
                 cancellationToken).ConfigureAwait(false);
+            // if we got back the stream we put in, then we couldn't decrypt and are supposed to return the original
+            // message to the user
+            if (encryptedMessageStream == decryptedMessageStream)
+            {
+                return downloadedMessage;
+            }
 
             return new StreamReader(decryptedMessageStream, Encoding.UTF8).ReadToEnd();
         }

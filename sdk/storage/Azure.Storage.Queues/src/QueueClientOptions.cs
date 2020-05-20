@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
 {
@@ -84,6 +85,7 @@ namespace Azure.Storage.Queues
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        internal IMissingClientSideEncryptionKeyListener _missingClientSideEncryptionKeyListener;
         #endregion
 
         /// <summary>

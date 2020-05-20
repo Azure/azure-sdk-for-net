@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Test.Shared;
@@ -336,6 +338,54 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DownloadToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());
+            }
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        [LiveOnly]
+        public async Task CannotFindKeyAsync(bool resolverFailure)
+        {
+            var data = GetRandomBuffer(Constants.KB);
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyResolver = mockKey,
+                    KeyWrapAlgorithm = ThrowawayAlgorithmName
+                }))
+            {
+                var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+                await blob.UploadAsync(new MemoryStream(data));
+
+                bool threwKeyNotFound = false;
+                bool threwGeneral = false;
+                try
+                {
+                    // download but can't find key
+                    var options = GetOptions();
+                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    {
+                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ResolverInternalFailure = resolverFailure },
+                        KeyWrapAlgorithm = "test"
+                    };
+                    var encryptedDataStream = new MemoryStream();
+                    await new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), options).DownloadToAsync(encryptedDataStream);
+                }
+                catch (ClientSideEncryptionKeyNotFoundException)
+                {
+                    threwKeyNotFound = true;
+                }
+                catch (Exception)
+                {
+                    threwGeneral = true;
+                }
+                finally
+                {
+                    Assert.AreEqual(resolverFailure, threwGeneral);
+                    Assert.AreEqual(!resolverFailure, threwKeyNotFound);
+                }
             }
         }
 

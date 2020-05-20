@@ -6,7 +6,7 @@ namespace Azure.Storage.Cryptography.Models
     /// <summary>
     /// Represents the envelope key details stored on the service.
     /// </summary>
-    internal class WrappedKey
+    internal class KeyEnvelope
     {
         /// <summary>
         /// The key identifier string.
