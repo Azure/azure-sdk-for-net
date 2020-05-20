@@ -201,6 +201,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task CopyModel()
         {
             var sourceClient = CreateInstrumentedFormTrainingClient();
@@ -231,6 +232,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task CopyModelError()
         {
             var sourceClient = CreateInstrumentedFormTrainingClient();
@@ -244,6 +246,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateInstrumentedFormTrainingClient();
@@ -260,7 +263,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task SerializedDesirializedCopyAuthorizationAsync()
+        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/12193")]
+        public async Task SerializeDeserializeCopyAuthorizationAsync()
         {
             var targetClient = CreateInstrumentedFormTrainingClient();
             var resourceID = TestEnvironment.TargetResourceId;
