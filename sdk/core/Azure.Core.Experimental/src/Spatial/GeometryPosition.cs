@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    ///
+    /// Represents a position that is a part of geometry.
     /// </summary>
     public readonly struct GeometryPosition : IEquatable<GeometryPosition>
     {
@@ -35,18 +35,17 @@ namespace Azure.Core.Spatial
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of <see cref="GeometryPosition"/>.
         /// </summary>
-        /// <param name="longitude"></param>
-        /// <param name="latitude"></param>
-        /// <param name="altitude"></param>
+        /// <param name="longitude">The longitude of the position.</param>
+        /// <param name="latitude">The latitude of the position.</param>
+        /// <param name="altitude">The altitude of the position.</param>
         public GeometryPosition(double longitude, double latitude, double? altitude)
         {
             Longitude = longitude;
             Latitude = latitude;
             Altitude = altitude;
         }
-
 
         /// <inheritdoc />
         public bool Equals(GeometryPosition other)
@@ -64,31 +63,28 @@ namespace Azure.Core.Spatial
         public override int GetHashCode() => HashCodeBuilder.Combine(Longitude, Latitude, Altitude);
 
         /// <summary>
-        ///
+        /// Determines whether two specified positions have the same value.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">The first position to compare.</param>
+        /// <param name="right">The first position to compare.</param>
+        /// <returns><c>true</c> if the value of <c>left</c> is the same as the value of <c>b</c>; otherwise, <c>false</c>.</returns>
         public static bool operator ==(GeometryPosition left, GeometryPosition right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        ///
+        /// Determines whether two specified positions have the same value.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left">The first position to compare.</param>
+        /// <param name="right">The first position to compare.</param>
+        /// <returns><c>false</c> if the value of <c>left</c> is the same as the value of <c>b</c>; otherwise, <c>true</c>.</returns>
         public static bool operator !=(GeometryPosition left, GeometryPosition right)
         {
             return !left.Equals(right);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             if (Altitude == null)

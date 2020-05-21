@@ -14,7 +14,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="CollectionGeometry"/>.
         /// </summary>
-        /// <param name="geometries">The list of inner geometries.</param>
+        /// <param name="geometries">The collection of inner geometries.</param>
         public CollectionGeometry(IEnumerable<Geometry> geometries): this(geometries, DefaultProperties)
         {
         }
@@ -22,7 +22,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="CollectionGeometry"/>.
         /// </summary>
-        /// <param name="geometries">The list of inner geometries.</param>
+        /// <param name="geometries">The collection of inner geometries.</param>
         /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public CollectionGeometry(IEnumerable<Geometry> geometries, GeometryProperties properties): base(properties)
         {

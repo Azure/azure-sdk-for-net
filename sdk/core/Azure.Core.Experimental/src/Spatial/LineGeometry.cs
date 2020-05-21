@@ -7,14 +7,14 @@ using System.Linq;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    ///
+    /// Represents a line geometry that consists of multiple coordinates.
     /// </summary>
     public sealed class LineGeometry : Geometry
     {
         /// <summary>
         /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
-        /// <param name="positions"></param>
+        /// <param name="positions">The collection of <see cref="GeometryPosition"/> that make up the line.</param>
         public LineGeometry(IEnumerable<GeometryPosition> positions): this(positions, DefaultProperties)
         {
         }
@@ -22,7 +22,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="LineGeometry"/>.
         /// </summary>
-        /// <param name="positions"></param>
+        /// <param name="positions">The collection of <see cref="GeometryPosition"/> that make up the line.</param>
         /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public LineGeometry(IEnumerable<GeometryPosition> positions, GeometryProperties properties): base(properties)
         {

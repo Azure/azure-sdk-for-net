@@ -14,7 +14,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="PolygonGeometry"/>.
         /// </summary>
-        /// <param name="rings"></param>
+        /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
         public PolygonGeometry(IEnumerable<LineGeometry> rings): this(rings, DefaultProperties)
         {
         }
@@ -22,7 +22,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="PolygonGeometry"/>.
         /// </summary>
-        /// <param name="rings"></param>
+        /// <param name="rings">The collection of rings that make up the polygon, first ring is the outer ring others are inner rings.</param>
         /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public PolygonGeometry(IEnumerable<LineGeometry> rings, GeometryProperties properties): base(properties)
         {

@@ -7,14 +7,14 @@ using System.Linq;
 namespace Azure.Core.Spatial
 {
     /// <summary>
-    ///
+    /// Represents a geometry that is composed of multiple <see cref="PointGeometry"/>.
     /// </summary>
     public sealed class MultiPointGeometry : Geometry
     {
         /// <summary>
         /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="points">The collection of inner points.</param>
         public MultiPointGeometry(IEnumerable<PointGeometry> points): this(points, DefaultProperties)
         {
         }
@@ -22,7 +22,7 @@ namespace Azure.Core.Spatial
         /// <summary>
         /// Initializes new instance of <see cref="MultiPointGeometry"/>.
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="points">The collection of inner points.</param>
         /// <param name="properties">The <see cref="GeometryProperties"/> associated with the geometry.</param>
         public MultiPointGeometry(IEnumerable<PointGeometry> points, GeometryProperties properties): base(properties)
         {
