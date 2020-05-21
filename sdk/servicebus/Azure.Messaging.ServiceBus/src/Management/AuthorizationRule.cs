@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Management
         internal abstract string ClaimValue { get; }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
-        public abstract bool Equals(AuthorizationRule comparand);
+        public abstract bool Equals(AuthorizationRule other);
 
         internal static AuthorizationRule ParseFromXElement(XElement xElement)
         {
