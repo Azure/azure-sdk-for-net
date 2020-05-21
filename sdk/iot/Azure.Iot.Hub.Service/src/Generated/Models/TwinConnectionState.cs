@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The device&apos;s connection state. </summary>
+    /// <summary> Corresponding Device&apos;s ConnectionState. </summary>
     public readonly partial struct TwinConnectionState : IEquatable<TwinConnectionState>
     {
         private readonly string _value;

@@ -57,7 +57,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get statistics about device identities in the IoT hub’s identity registry, such as total device count. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<RegistryStatistics>> GetDeviceStatisticsAsync(CancellationToken cancellationToken = default)
         {
@@ -84,7 +84,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get statistics about device identities in the IoT hub’s identity registry, such as total device count. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RegistryStatistics> GetDeviceStatistics(CancellationToken cancellationToken = default)
         {
@@ -124,7 +124,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Retrieves device statistics for this IoT hub, such as connected device count. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Retrieves device statistics for this IoT hub, such as connected device count. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
@@ -195,7 +195,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<IReadOnlyList<DeviceIdentity>>> GetDevicesAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -235,7 +235,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information. </summary>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IReadOnlyList<DeviceIdentity>> GetDevices(int? top = null, CancellationToken cancellationToken = default)
@@ -297,7 +297,7 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
+        /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="devices"> The ArrayOfExportImportDevice to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<BulkRegistryOperationResult>> BulkDeviceCrudAsync(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
@@ -331,7 +331,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). </summary>
+        /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="devices"> The ArrayOfExportImportDevice to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<BulkRegistryOperationResult> BulkDeviceCrud(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
@@ -390,10 +390,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination is supported. This returns information about device twins only. </summary>
-        /// <param name="querySpecification"> The query string to run. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. </param>
-        /// <param name="xMsContinuation"> The continuation token to get the next page of results. </param>
-        /// <param name="xMsMaxItemCount"> The maximum number of items to return per page. The service may use a different value if the value specified is not acceptable. </param>
+        /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="querySpecification"> The QuerySpecification to use. </param>
+        /// <param name="xMsContinuation"> The String to use. </param>
+        /// <param name="xMsMaxItemCount"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<ResponseWithHeaders<IReadOnlyList<TwinData>, RegistryManagerQueryIotHubHeaders>> QueryIotHubAsync(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
@@ -438,10 +438,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination is supported. This returns information about device twins only. </summary>
-        /// <param name="querySpecification"> The query string to run. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. </param>
-        /// <param name="xMsContinuation"> The continuation token to get the next page of results. </param>
-        /// <param name="xMsMaxItemCount"> The maximum number of items to return per page. The service may use a different value if the value specified is not acceptable. </param>
+        /// <summary> Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination of results is supported. This returns information about device twins only. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="querySpecification"> The QuerySpecification to use. </param>
+        /// <param name="xMsContinuation"> The String to use. </param>
+        /// <param name="xMsMaxItemCount"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<IReadOnlyList<TwinData>, RegistryManagerQueryIotHubHeaders> QueryIotHub(QuerySpecification querySpecification, string xMsContinuation = null, string xMsMaxItemCount = null, CancellationToken cancellationToken = default)
         {
@@ -500,8 +500,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get a device from the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to retrieve. </param>
+        /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<DeviceIdentity>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -533,8 +533,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get a device from the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to retrieve. </param>
+        /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DeviceIdentity> GetDevice(string id, CancellationToken cancellationToken = default)
         {
@@ -588,10 +588,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to create. </param>
-        /// <param name="device"> The contents of the device to create. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
+        /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="device"> The Device to use. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<DeviceIdentity>> CreateOrUpdateDeviceAsync(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -627,10 +627,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to create. </param>
-        /// <param name="device"> The contents of the device to create. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device. </param>
+        /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="device"> The Device to use. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DeviceIdentity> CreateOrUpdateDevice(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -684,9 +684,9 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Delete the identity of a device from the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to delete. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <summary> Delete the identity of a device from the identity registry of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> DeleteDeviceAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -706,9 +706,9 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Delete the identity of a device from the identity registry of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device to delete. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <summary> Delete the identity of a device from the identity registry of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteDevice(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -743,8 +743,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Deletes all the pending commands for this device from the IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary> Deletes all the pending commands for this device from the IoT hub For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<PurgeMessageQueueResult>> PurgeCommandQueueAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -776,8 +776,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Deletes all the pending commands for this device from the IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary> Deletes all the pending commands for this device from the IoT hub For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<PurgeMessageQueueResult> PurgeCommandQueue(string id, CancellationToken cancellationToken = default)
         {
@@ -824,8 +824,8 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get all the module identities of the device. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<IReadOnlyList<ModuleIdentity>>> GetModulesOnDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -869,8 +869,8 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get all the module identities of the device. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IReadOnlyList<ModuleIdentity>> GetModulesOnDevice(string id, CancellationToken cancellationToken = default)
         {
@@ -930,9 +930,9 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Get the specified module identity of the device. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ModuleIdentity>> GetModuleAsync(string id, string mid, CancellationToken cancellationToken = default)
         {
@@ -968,9 +968,9 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Get the specified module identity of the device. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ModuleIdentity> GetModule(string id, string mid, CancellationToken cancellationToken = default)
         {
@@ -1030,11 +1030,11 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Create or update the module identity for device in IoT hub. The moduleId and generation cannot be updated by the user. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="module"> The module identity. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="module"> The Module to use. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ModuleIdentity>> CreateOrUpdateModuleAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -1075,11 +1075,11 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Create or update the module identity for device in IoT hub. The moduleId and generation cannot be updated by the user. </summary>
-        /// <param name="id"> The unique identifier of the device. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="module"> The module identity. </param>
-        /// <param name="ifMatch"> A string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module. </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="module"> The Module to use. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ModuleIdentity> CreateOrUpdateModule(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -1140,10 +1140,10 @@ namespace Azure.Iot.Hub.Service
             return message;
         }
 
-        /// <summary> Delete the module identity for device of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the deivce. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="ifMatch">  A string representing a weak ETag for the module, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the module has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> DeleteModuleAsync(string id, string mid, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -1167,10 +1167,10 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        /// <summary> Delete the module identity for device of an IoT hub. </summary>
-        /// <param name="id"> The unique identifier of the deivce. </param>
-        /// <param name="mid"> The unique identifier of the module. </param>
-        /// <param name="ifMatch">  A string representing a weak ETag for the module, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the module has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*). </param>
+        /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
+        /// <param name="id"> Device ID. </param>
+        /// <param name="mid"> Module ID. </param>
+        /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteModule(string id, string mid, string ifMatch = null, CancellationToken cancellationToken = default)
         {

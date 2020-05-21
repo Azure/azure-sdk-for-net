@@ -18,19 +18,19 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ExportImportDevice. </summary>
-        /// <param name="id"> Identifier of the device to perform this operation on. </param>
-        /// <param name="moduleId"> Identifier of the module to perform this operation on, if applicable. </param>
+        /// <param name="id"> Device Id is always required. </param>
+        /// <param name="moduleId"> ModuleId is applicable to modules only. </param>
         /// <param name="eTag"> ETag parameter is only used for pre-conditioning the update when importMode is updateIfMatchETag. </param>
-        /// <param name="importMode"> The type of registry operation and if ETag should be ignored or not. </param>
-        /// <param name="status"> Flags whether a module is enabled or not. If disabled, a module cannot connect to the service. </param>
-        /// <param name="statusReason"> A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </param>
+        /// <param name="importMode"> . </param>
+        /// <param name="status"> Status is optional and defaults to enabled. </param>
+        /// <param name="statusReason"> . </param>
         /// <param name="authentication"> Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys. </param>
         /// <param name="twinETag"> twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag. </param>
         /// <param name="tags"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="properties"> TODO need service folks to explain this. </param>
-        /// <param name="capabilities"> Status of capabilities enabled on the device. </param>
-        /// <param name="deviceScope"> The scope that this identity belongs to. </param>
-        /// <param name="parentScopes"> TODO: service team needs to explain this. </param>
+        /// <param name="properties"> Properties are optional and defaults to empty object. </param>
+        /// <param name="capabilities"> Capabilities param is optional and defaults to no capability. </param>
+        /// <param name="deviceScope"> . </param>
+        /// <param name="parentScopes"> . </param>
         internal ExportImportDevice(string id, string moduleId, string eTag, ExportImportDeviceImportMode? importMode, ExportImportDeviceStatus? status, string statusReason, AuthenticationMechanism authentication, string twinETag, IDictionary<string, object> tags, PropertyContainer properties, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             Id = id;
@@ -48,17 +48,15 @@ namespace Azure.Iot.Hub.Service.Models
             ParentScopes = parentScopes;
         }
 
-        /// <summary> Identifier of the device to perform this operation on. </summary>
+        /// <summary> Device Id is always required. </summary>
         public string Id { get; set; }
-        /// <summary> Identifier of the module to perform this operation on, if applicable. </summary>
+        /// <summary> ModuleId is applicable to modules only. </summary>
         public string ModuleId { get; set; }
         /// <summary> ETag parameter is only used for pre-conditioning the update when importMode is updateIfMatchETag. </summary>
         public string ETag { get; set; }
-        /// <summary> The type of registry operation and if ETag should be ignored or not. </summary>
         public ExportImportDeviceImportMode? ImportMode { get; set; }
-        /// <summary> Flags whether a module is enabled or not. If disabled, a module cannot connect to the service. </summary>
+        /// <summary> Status is optional and defaults to enabled. </summary>
         public ExportImportDeviceStatus? Status { get; set; }
-        /// <summary> A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </summary>
         public string StatusReason { get; set; }
         /// <summary> Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys. </summary>
         public AuthenticationMechanism Authentication { get; set; }
@@ -66,13 +64,11 @@ namespace Azure.Iot.Hub.Service.Models
         public string TwinETag { get; set; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IDictionary<string, object> Tags { get; set; }
-        /// <summary> TODO need service folks to explain this. </summary>
+        /// <summary> Properties are optional and defaults to empty object. </summary>
         public PropertyContainer Properties { get; set; }
-        /// <summary> Status of capabilities enabled on the device. </summary>
+        /// <summary> Capabilities param is optional and defaults to no capability. </summary>
         public DeviceCapabilities Capabilities { get; set; }
-        /// <summary> The scope that this identity belongs to. </summary>
         public string DeviceScope { get; set; }
-        /// <summary> TODO: service team needs to explain this. </summary>
         public IList<string> ParentScopes { get; set; }
     }
 }

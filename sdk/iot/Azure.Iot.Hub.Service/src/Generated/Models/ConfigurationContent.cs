@@ -18,9 +18,9 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationContent. </summary>
-        /// <param name="deviceContent"> Device Configurations. </param>
-        /// <param name="modulesContent"> Modules configuration content. </param>
-        /// <param name="moduleContent"> Module configuration content. </param>
+        /// <param name="deviceContent"> Gets or sets device Configurations. </param>
+        /// <param name="modulesContent"> Gets or sets Modules Configurations. </param>
+        /// <param name="moduleContent"> Gets or sets Module Configurations. </param>
         internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, object> modulesContent, IDictionary<string, object> moduleContent)
         {
             DeviceContent = deviceContent;
@@ -28,11 +28,11 @@ namespace Azure.Iot.Hub.Service.Models
             ModuleContent = moduleContent;
         }
 
-        /// <summary> Device Configurations. </summary>
+        /// <summary> Gets or sets device Configurations. </summary>
         public IDictionary<string, object> DeviceContent { get; set; }
-        /// <summary> Modules configuration content. </summary>
+        /// <summary> Gets or sets Modules Configurations. </summary>
         public IDictionary<string, object> ModulesContent { get; set; }
-        /// <summary> Module configuration content. </summary>
+        /// <summary> Gets or sets Module Configurations. </summary>
         public IDictionary<string, object> ModuleContent { get; set; }
     }
 }

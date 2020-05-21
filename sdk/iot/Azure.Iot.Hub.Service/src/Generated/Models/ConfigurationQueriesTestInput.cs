@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> The ConfigurationQueriesTestInput. </summary>
@@ -16,17 +18,16 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationQueriesTestInput. </summary>
-        /// <param name="targetCondition"> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </param>
-        /// <param name="customMetricQueries"> Queries on twin reported properties. </param>
-        internal ConfigurationQueriesTestInput(string targetCondition, string customMetricQueries)
+        /// <param name="targetCondition"> . </param>
+        /// <param name="customMetricQueries"> Dictionary of &lt;string&gt;. </param>
+        internal ConfigurationQueriesTestInput(string targetCondition, IDictionary<string, string> customMetricQueries)
         {
             TargetCondition = targetCondition;
             CustomMetricQueries = customMetricQueries;
         }
 
-        /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>
         public string TargetCondition { get; set; }
-        /// <summary> Queries on twin reported properties. </summary>
-        public string CustomMetricQueries { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> CustomMetricQueries { get; set; }
     }
 }

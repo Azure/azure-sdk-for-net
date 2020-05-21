@@ -16,17 +16,15 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of SymmetricKey. </summary>
-        /// <param name="primaryKey"> The base 64 encoded primary key of your device. </param>
-        /// <param name="secondaryKey"> The base 64 encoded secondary key of your device. </param>
+        /// <param name="primaryKey"> . </param>
+        /// <param name="secondaryKey"> . </param>
         internal SymmetricKey(string primaryKey, string secondaryKey)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
         }
 
-        /// <summary> The base 64 encoded primary key of your device. </summary>
         public string PrimaryKey { get; set; }
-        /// <summary> The base 64 encoded secondary key of your device. </summary>
         public string SecondaryKey { get; set; }
     }
 }
