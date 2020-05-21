@@ -53,7 +53,7 @@ namespace Azure.Management.KeyVault.Tests
             ValidateVault(createdVault,
                 VaultName,
                 ResGroupName,
-                SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 TenantIdGuid,
                 Location,
                 "A",
@@ -86,7 +86,7 @@ namespace Azure.Management.KeyVault.Tests
             ValidateVault(updateVault,
                 VaultName,
                 ResGroupName,
-                SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 TenantIdGuid,
                 Location,
                 "A",
@@ -107,7 +107,7 @@ namespace Azure.Management.KeyVault.Tests
             ValidateVault(retrievedVault,
                 VaultName,
                 ResGroupName,
-                SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 TenantIdGuid,
                 Location,
                 "A",
@@ -136,7 +136,7 @@ namespace Azure.Management.KeyVault.Tests
         [Test]
         public async Task CreateKeyVaultDisableSoftDelete()
         {
-            this.AccessPolicy.ApplicationId = Guid.Parse(this.ApplicationId);
+            this.AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             this.VaultProperties.EnableSoftDelete = false;
 
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
@@ -156,7 +156,7 @@ namespace Azure.Management.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementVaultTestCompoundIdentityAccessControlPolicy()
         {
-            AccessPolicy.ApplicationId = Guid.Parse(ApplicationId);
+            AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             VaultProperties.EnableSoftDelete = null;
 
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
@@ -172,7 +172,7 @@ namespace Azure.Management.KeyVault.Tests
             ValidateVault(vaultResponse.Value,
                 VaultName,
                 ResGroupName,
-                SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 TenantIdGuid,
                 Location,
                 "A",
@@ -192,7 +192,7 @@ namespace Azure.Management.KeyVault.Tests
             ValidateVault(retrievedVault.Value,
                 VaultName,
                 ResGroupName,
-                SubscriptionId,
+                TestEnvironment.SubscriptionId,
                 TenantIdGuid,
                 Location,
                 "A",
