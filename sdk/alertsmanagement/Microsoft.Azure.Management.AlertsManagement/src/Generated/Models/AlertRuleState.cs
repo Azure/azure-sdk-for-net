@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
 
     /// <summary>
-    /// Defines values for ScopeType.
+    /// Defines values for AlertRuleState.
     /// </summary>
-    public static class ScopeType
+    public static class AlertRuleState
     {
-        public const string ResourceGroup = "ResourceGroup";
-        public const string Resource = "Resource";
-        public const string Subscription = "Subscription";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
