@@ -644,7 +644,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = IndexesClient.List(
                         Constants.All,
-                            cancellationToken);
+                        cancellationToken);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
                 });
@@ -678,7 +678,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
                         Constants.All,
-                            cancellationToken)
+                        cancellationToken)
                         .ConfigureAwait(false);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
@@ -713,7 +713,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = IndexesClient.List(
                         Constants.NameKey,
-                            cancellationToken);
+                        cancellationToken);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
@@ -748,7 +748,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
                         Constants.NameKey,
-                            cancellationToken)
+                        cancellationToken)
                         .ConfigureAwait(false);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
