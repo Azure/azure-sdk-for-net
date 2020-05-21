@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub. </summary>
+    /// <summary> Twin Representation. </summary>
     public partial class TwinData
     {
         /// <summary> Initializes a new instance of TwinData. </summary>
@@ -19,24 +19,24 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of TwinData. </summary>
-        /// <param name="deviceId"> The unique identifier of the device in the IoT hub&apos;s identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
-        /// <param name="moduleId"> The unique identifier of the module in the IoT hub&apos;s identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
-        /// <param name="tags"> A collection of key-value pairs read and written by the solution back end. They are not visible to device apps. </param>
-        /// <param name="properties"> The twin&apos;s desired and reported properties. </param>
-        /// <param name="etag"> TODO - which operation does this affect - update tags/ properties etc?. </param>
+        /// <param name="deviceId"> The deviceId uniquely identifies the device in the IoT hub&apos;s identity registry. A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
+        /// <param name="moduleId"> Gets and sets the Module Id. </param>
+        /// <param name="tags"> A JSON document read and written by the solution back end. Tags are not visible to device apps. </param>
+        /// <param name="properties"> Gets and sets the Twin properties. </param>
+        /// <param name="etag"> Twin&apos;s ETag. </param>
         /// <param name="version"> Version for device twin, including tags and desired properties. </param>
-        /// <param name="deviceEtag"> TODO - which operation does this affect?. </param>
-        /// <param name="status"> Flags whether a device is enabled or not. If disabled, a device cannot connect to the service. </param>
-        /// <param name="statusReason"> Reason, if any, for the device&apos;s current status. </param>
-        /// <param name="statusUpdateTime"> Time when the corresponding device&apos;s status was last updated. </param>
-        /// <param name="connectionState"> The device&apos;s connection state. </param>
+        /// <param name="deviceEtag"> Device&apos;s ETag. </param>
+        /// <param name="status"> Gets the corresponding Device&apos;s Status. </param>
+        /// <param name="statusReason"> Reason, if any, for the corresponding Device to be in specified Status. </param>
+        /// <param name="statusUpdateTime"> Time when the corresponding Device&apos;s Status was last updated. </param>
+        /// <param name="connectionState"> Corresponding Device&apos;s ConnectionState. </param>
         /// <param name="lastActivityTime"> The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations. </param>
         /// <param name="cloudToDeviceMessageCount"> Number of messages sent to the corresponding Device from the Cloud. </param>
         /// <param name="authenticationType"> Corresponding Device&apos;s authentication type. </param>
         /// <param name="x509Thumbprint"> Corresponding Device&apos;s X509 thumbprint. </param>
         /// <param name="capabilities"> Status of Capabilities enabled on the device. </param>
-        /// <param name="deviceScope"> Scope to which this device instance belongs to. </param>
-        /// <param name="parentScopes"> TODO: new property added - need explanation. </param>
+        /// <param name="deviceScope"> . </param>
+        /// <param name="parentScopes"> . </param>
         internal TwinData(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             DeviceId = deviceId;
@@ -59,27 +59,27 @@ namespace Azure.Iot.Hub.Service.Models
             ParentScopes = parentScopes;
         }
 
-        /// <summary> The unique identifier of the device in the IoT hub&apos;s identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
+        /// <summary> The deviceId uniquely identifies the device in the IoT hub&apos;s identity registry. A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
         public string DeviceId { get; set; }
-        /// <summary> The unique identifier of the module in the IoT hub&apos;s identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </summary>
+        /// <summary> Gets and sets the Module Id. </summary>
         public string ModuleId { get; set; }
-        /// <summary> A collection of key-value pairs read and written by the solution back end. They are not visible to device apps. </summary>
+        /// <summary> A JSON document read and written by the solution back end. Tags are not visible to device apps. </summary>
         public IDictionary<string, object> Tags { get; set; }
-        /// <summary> The twin&apos;s desired and reported properties. </summary>
+        /// <summary> Gets and sets the Twin properties. </summary>
         public TwinProperties Properties { get; set; }
-        /// <summary> TODO - which operation does this affect - update tags/ properties etc?. </summary>
+        /// <summary> Twin&apos;s ETag. </summary>
         public string Etag { get; set; }
         /// <summary> Version for device twin, including tags and desired properties. </summary>
         public long? Version { get; set; }
-        /// <summary> TODO - which operation does this affect?. </summary>
+        /// <summary> Device&apos;s ETag. </summary>
         public string DeviceEtag { get; set; }
-        /// <summary> Flags whether a device is enabled or not. If disabled, a device cannot connect to the service. </summary>
+        /// <summary> Gets the corresponding Device&apos;s Status. </summary>
         public TwinStatus? Status { get; set; }
-        /// <summary> Reason, if any, for the device&apos;s current status. </summary>
+        /// <summary> Reason, if any, for the corresponding Device to be in specified Status. </summary>
         public string StatusReason { get; set; }
-        /// <summary> Time when the corresponding device&apos;s status was last updated. </summary>
+        /// <summary> Time when the corresponding Device&apos;s Status was last updated. </summary>
         public DateTimeOffset? StatusUpdateTime { get; set; }
-        /// <summary> The device&apos;s connection state. </summary>
+        /// <summary> Corresponding Device&apos;s ConnectionState. </summary>
         public TwinConnectionState? ConnectionState { get; set; }
         /// <summary> The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations. </summary>
         public DateTimeOffset? LastActivityTime { get; set; }
@@ -91,9 +91,7 @@ namespace Azure.Iot.Hub.Service.Models
         public X509Thumbprint X509Thumbprint { get; set; }
         /// <summary> Status of Capabilities enabled on the device. </summary>
         public DeviceCapabilities Capabilities { get; set; }
-        /// <summary> Scope to which this device instance belongs to. </summary>
         public string DeviceScope { get; set; }
-        /// <summary> TODO: new property added - need explanation. </summary>
         public IList<string> ParentScopes { get; set; }
     }
 }

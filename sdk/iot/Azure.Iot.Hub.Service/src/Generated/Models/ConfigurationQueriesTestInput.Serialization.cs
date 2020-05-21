@@ -23,7 +23,13 @@ namespace Azure.Iot.Hub.Service.Models
             if (CustomMetricQueries != null)
             {
                 writer.WritePropertyName("customMetricQueries");
-                writer.WriteStringValue(CustomMetricQueries);
+                writer.WriteStartObject();
+                foreach (var item in CustomMetricQueries)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

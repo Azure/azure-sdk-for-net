@@ -63,8 +63,8 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. </param>
-        /// <param name="directMethodRequest"> Parameters to execute a direct method on the device. </param>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<CloudToDeviceMethodResult>> InvokeDeviceMethodAsync(string deviceId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
@@ -101,8 +101,8 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. </param>
-        /// <param name="directMethodRequest"> Parameters to execute a direct method on the device. </param>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CloudToDeviceMethodResult> InvokeDeviceMethod(string deviceId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
@@ -160,9 +160,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. </param>
-        /// <param name="moduleId"> The unique identifier of the module. </param>
-        /// <param name="directMethodRequest"> Parameters to execute a direct method on the module. </param>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="moduleId"> The String to use. </param>
+        /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<CloudToDeviceMethodResult>> InvokeModuleMethodAsync(string deviceId, string moduleId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {
@@ -203,9 +203,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. </param>
-        /// <param name="moduleId"> The unique identifier of the module. </param>
-        /// <param name="directMethodRequest"> Parameters to execute a direct method on the module. </param>
+        /// <param name="deviceId"> The String to use. </param>
+        /// <param name="moduleId"> The String to use. </param>
+        /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<CloudToDeviceMethodResult> InvokeModuleMethod(string deviceId, string moduleId, CloudToDeviceMethod directMethodRequest, CancellationToken cancellationToken = default)
         {

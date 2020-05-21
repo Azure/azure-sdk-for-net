@@ -17,8 +17,8 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
-        /// <param name="deviceId"> Identifier of the device that indicated the warning. </param>
-        /// <param name="warningCode"> The code associated with the warning. </param>
+        /// <param name="deviceId"> The ID of the device that indicated the warning. </param>
+        /// <param name="warningCode"> . </param>
         /// <param name="warningStatus"> Additional details associated with the warning. </param>
         internal DeviceRegistryOperationWarning(string deviceId, string warningCode, string warningStatus)
         {
@@ -27,9 +27,8 @@ namespace Azure.Iot.Hub.Service.Models
             WarningStatus = warningStatus;
         }
 
-        /// <summary> Identifier of the device that indicated the warning. </summary>
+        /// <summary> The ID of the device that indicated the warning. </summary>
         public string DeviceId { get; }
-        /// <summary> The code associated with the warning. </summary>
         public string WarningCode { get; }
         /// <summary> Additional details associated with the warning. </summary>
         public string WarningStatus { get; }
