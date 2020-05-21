@@ -188,7 +188,6 @@ namespace Azure.Search.Documents
     public partial class SearchRequestOptions
     {
         public SearchRequestOptions() { }
-        public System.Guid? ClientRequestId { get { throw null; } set { } }
     }
     public partial class SuggestOptions : Azure.Search.Documents.SearchRequestOptions
     {
