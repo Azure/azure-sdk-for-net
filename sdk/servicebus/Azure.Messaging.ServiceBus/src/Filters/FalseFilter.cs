@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         }
 
         /// <inheritdoc/>
-        public override bool Equals(Filter other)
+        public override bool Equals(RuleFilter other)
         {
             return other is FalseFilter;
         }

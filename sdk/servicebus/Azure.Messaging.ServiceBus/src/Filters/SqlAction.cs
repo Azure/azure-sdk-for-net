@@ -11,16 +11,16 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusMessage" />.
     /// </summary>
-    public sealed class SqlRuleAction : RuleAction
+    public sealed class SqlAction : RuleAction
     {
         internal PropertyDictionary parameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlRuleAction" /> class with the specified SQL expression.
+        /// Initializes a new instance of the <see cref="SqlAction" /> class with the specified SQL expression.
         /// </summary>
         /// <param name="sqlExpression">The SQL expression.</param>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
-        public SqlRuleAction(string sqlExpression)
+        public SqlAction(string sqlExpression)
         {
             if (string.IsNullOrEmpty(sqlExpression))
             {
@@ -53,9 +53,9 @@ namespace Azure.Messaging.ServiceBus.Filters
         public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
-        /// Returns a string representation of <see cref="SqlRuleAction" />.
+        /// Returns a string representation of <see cref="SqlAction" />.
         /// </summary>
-        /// <returns>The string representation of <see cref="SqlRuleAction" />.</returns>
+        /// <returns>The string representation of <see cref="SqlAction" />.</returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", SqlExpression);
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(RuleAction other)
         {
-            if (other is SqlRuleAction sqlAction)
+            if (other is SqlAction sqlAction)
             {
                 if (string.Equals(SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
                     && (parameters != null && sqlAction.parameters != null
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SqlRuleAction left, SqlRuleAction right)
+        public static bool operator ==(SqlAction left, SqlAction right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SqlRuleAction left, SqlRuleAction right)
+        public static bool operator !=(SqlAction left, SqlAction right)
         {
             return !(left == right);
         }

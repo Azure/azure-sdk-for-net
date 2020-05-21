@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class QueueRuntimeInfoExtensions
+    internal static class SubscriptionMetricsExtensions
     {
-        public static QueueRuntimeInfo ParseFromContent(string xml)
+        public static SubscriptionMetrics ParseFromContent(string topicName, string xml)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return ParseFromEntryElement(xDoc);
+                        return ParseFromEntryElement(topicName, xDoc);
                     }
                 }
             }
@@ -27,20 +27,20 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static QueueRuntimeInfo ParseFromEntryElement(XElement xEntry)
+        private static SubscriptionMetrics ParseFromEntryElement(string topicName, XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var qRuntime = new QueueRuntimeInfo(name);
+            var subscriptionRuntimeInfo = new SubscriptionMetrics(topicName, name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
-                .Element(XName.Get("QueueDescription", ManagementClientConstants.ServiceBusNamespace));
+                .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.ServiceBusNamespace));
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in qdXml.Elements())
@@ -48,40 +48,37 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "AccessedAt":
-                        qRuntime.AccessedAt = DateTime.Parse(element.Value);
+                        subscriptionRuntimeInfo.AccessedAt = DateTime.Parse(element.Value);
                         break;
                     case "CreatedAt":
-                        qRuntime.CreatedAt = DateTime.Parse(element.Value);
-                        break;
-                    case "MessageCount":
-                        qRuntime.MessageCount = long.Parse(element.Value);
-                        break;
-                    case "SizeInBytes":
-                        qRuntime.SizeInBytes = long.Parse(element.Value);
+                        subscriptionRuntimeInfo.CreatedAt = DateTime.Parse(element.Value);
                         break;
                     case "UpdatedAt":
-                        qRuntime.UpdatedAt = DateTime.Parse(element.Value);
+                        subscriptionRuntimeInfo.UpdatedAt = DateTime.Parse(element.Value);
+                        break;
+                    case "MessageCount":
+                        subscriptionRuntimeInfo.MessageCount = long.Parse(element.Value);
                         break;
                     case "CountDetails":
-                        qRuntime.MessageCountDetails = new MessageCountDetails();
+                        subscriptionRuntimeInfo.MessageCountDetails = new MessageCountDetails();
                         foreach (var countElement in element.Elements())
                         {
                             switch (countElement.Name.LocalName)
                             {
                                 case "ActiveMessageCount":
-                                    qRuntime.MessageCountDetails.ActiveMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.MessageCountDetails.ActiveMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "DeadLetterMessageCount":
-                                    qRuntime.MessageCountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.MessageCountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "ScheduledMessageCount":
-                                    qRuntime.MessageCountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.MessageCountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "TransferMessageCount":
-                                    qRuntime.MessageCountDetails.TransferMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.MessageCountDetails.TransferMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "TransferDeadLetterMessageCount":
-                                    qRuntime.MessageCountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.MessageCountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
                                     break;
                             }
                         }
@@ -89,10 +86,10 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
             }
 
-            return qRuntime;
+            return subscriptionRuntimeInfo;
         }
 
-        public static IList<QueueRuntimeInfo> ParseCollectionFromContent(string xml)
+        public static List<SubscriptionMetrics> ParseCollectionFromContent(string topicPath, string xml)
         {
             try
             {
@@ -101,15 +98,15 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var queueList = new List<QueueRuntimeInfo>();
+                        var subscriptionList = new List<SubscriptionMetrics>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            queueList.Add(ParseFromEntryElement(entry));
+                            subscriptionList.Add(ParseFromEntryElement(topicPath, entry));
                         }
 
-                        return queueList;
+                        return subscriptionList;
                     }
                 }
             }
@@ -118,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 throw new ServiceBusException(false, ex.Message);
             }
 
-            throw new ServiceBusException("No queues were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException("No subscriptions were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
     }
 }

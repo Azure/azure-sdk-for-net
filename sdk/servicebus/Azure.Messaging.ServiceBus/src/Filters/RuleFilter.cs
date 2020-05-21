@@ -19,16 +19,14 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <seealso cref="TrueFilter"/>
     /// <seealso cref="CorrelationFilter "/>
     /// <seealso cref="FalseFilter"/>
-#pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Filter : IEquatable<Filter>
-#pragma warning restore AZC0012 // Avoid single word type names
+    public abstract class RuleFilter : IEquatable<RuleFilter>
     {
-        internal Filter()
+        internal RuleFilter()
         {
             // This is intentionally left blank. This constructor exists
             // only to prevent external assemblies inheriting from it.
         }
         /// <inheritdoc/>
-        public abstract bool Equals(Filter other);
+        public abstract bool Equals(RuleFilter other);
     }
 }

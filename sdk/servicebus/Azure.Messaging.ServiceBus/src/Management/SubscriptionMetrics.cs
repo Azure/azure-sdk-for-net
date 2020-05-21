@@ -8,9 +8,9 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     /// This provides runtime information of the subscription.
     /// </summary>
-    public class SubscriptionRuntimeInfo
+    public class SubscriptionMetrics
     {
-        internal SubscriptionRuntimeInfo(string topicName, string subscriptionName)
+        internal SubscriptionMetrics(string topicName, string subscriptionName)
         {
             TopicName = topicName;
             SubscriptionName = subscriptionName;

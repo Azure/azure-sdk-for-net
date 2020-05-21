@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     /// Represents the metadata related to a service bus namespace.
     /// </summary>
-    public class NamespaceInfo
+    public class NamespaceProperties
     {
         /// <summary>
         /// Name of the namespace.

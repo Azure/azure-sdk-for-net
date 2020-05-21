@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class TopicDescriptionExtensions
+    internal static class TopicPropertiesExtensions
     {
-        public static TopicDescription ParseFromContent(string xml)
+        public static TopicProperties ParseFromContent(string xml)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<TopicDescription> ParseCollectionFromContent(string xml)
+        public static IList<TopicProperties> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var topicList = new List<TopicDescription>();
+                        var topicList = new List<TopicProperties>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -60,10 +60,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No topics were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static TopicDescription ParseFromEntryElement(XElement xEntry)
+        private static TopicProperties ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var topicDesc = new TopicDescription(name);
+            var topicDesc = new TopicProperties(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return topicDesc;
         }
 
-        public static XDocument Serialize(this TopicDescription description)
+        public static XDocument Serialize(this TopicProperties description)
         {
             var topicDescriptionElements = new List<object>
             {

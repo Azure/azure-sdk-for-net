@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 
         public AmqpRuleDescriptionCodec() : base(Name, Code) { }
 
-        public AmqpFilterCodec Filter { get; set; }
+        public AmqpRuleFilterCodec Filter { get; set; }
 
         public AmqpRuleActionCodec Action { get; set; }
 
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
         {
             if (count-- > 0)
             {
-                Filter = (AmqpFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
+                Filter = (AmqpRuleFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
             }
 
             if (count-- > 0)

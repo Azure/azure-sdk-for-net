@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>
     /// </remarks>
-    public sealed class CorrelationFilter : Filter
+    public sealed class CorrelationFilter : RuleFilter
     {
         internal PropertyDictionary properties;
 
@@ -221,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         }
 
         /// <inheritdoc/>
-        public override bool Equals(Filter other)
+        public override bool Equals(RuleFilter other)
         {
             if (other is CorrelationFilter correlationFilter)
             {

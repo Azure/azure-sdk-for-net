@@ -7,9 +7,9 @@ using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    internal static class FilterExtensions
+    internal static class RuleFilterExtensions
     {
-        public static Filter ParseFromXElement(XElement xElement)
+        public static RuleFilter ParseFromXElement(XElement xElement)
         {
             var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
             if (attribute == null)
@@ -29,13 +29,13 @@ namespace Azure.Messaging.ServiceBus.Filters
                     return new FalseFilter();
                 default:
                     MessagingEventSource.Log.ManagementSerializationException(
-                        $"{nameof(FilterExtensions)}_{nameof(ParseFromXElement)}",
+                        $"{nameof(RuleFilterExtensions)}_{nameof(ParseFromXElement)}",
                         xElement.ToString());
                     return null;
             }
         }
 
-        public static XElement Serialize(this Filter filter)
+        public static XElement Serialize(this RuleFilter filter)
         {
             switch (filter)
             {

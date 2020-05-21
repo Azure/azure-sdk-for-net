@@ -9,9 +9,9 @@ using Azure.Messaging.ServiceBus.Filters;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class SubscriptionDescriptionExtensions
+    internal static class SubscriptionPropertiesExtensions
     {
-        public static void NormalizeDescription(this SubscriptionDescription description, string baseAddress)
+        public static void NormalizeDescription(this SubscriptionProperties description, string baseAddress)
         {
             if (!string.IsNullOrWhiteSpace(description.ForwardTo))
             {
@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return forwardToUri.AbsoluteUri;
         }
 
-        public static SubscriptionDescription ParseFromContent(string topicName, string xml)
+        public static SubscriptionProperties ParseFromContent(string topicName, string xml)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<SubscriptionDescription> ParseCollectionFromContent(string topicName, string xml)
+        public static IList<SubscriptionProperties> ParseCollectionFromContent(string topicName, string xml)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var subscriptionList = new List<SubscriptionDescription>();
+                        var subscriptionList = new List<SubscriptionProperties>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -89,10 +89,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No subscriptions were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static SubscriptionDescription ParseFromEntryElement(string topicName, XElement xEntry)
+        private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var subscriptionDesc = new SubscriptionDescription(topicName, name);
+            var subscriptionDesc = new SubscriptionProperties(topicName, name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return subscriptionDesc;
         }
 
-        public static XDocument Serialize(this SubscriptionDescription description)
+        public static XDocument Serialize(this SubscriptionProperties description)
         {
             var subscriptionDescriptionElements = new List<object>()
             {
@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
                 new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
                 new XElement(XName.Get("DeadLetteringOnFilterEvaluationExceptions", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableDeadLetteringOnFilterEvaluationExceptions)),
-                description.DefaultRuleDescription != null ? description.DefaultRuleDescription.SerializeRule("DefaultRuleDescription") : null,
+                description.Rule != null ? description.Rule.SerializeRule("DefaultRuleDescription") : null,
                 new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxDeliveryCount)),
                 new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableBatchedOperations)),
                 new XElement(XName.Get("Status", ManagementClientConstants.ServiceBusNamespace), description.Status.ToString()),

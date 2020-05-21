@@ -6,9 +6,9 @@ using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
-    internal abstract class AmqpFilterCodec : DescribedList
+    internal abstract class AmqpRuleFilterCodec : DescribedList
     {
-        protected AmqpFilterCodec(string name, ulong code)
+        protected AmqpRuleFilterCodec(string name, ulong code)
             : base(name, code)
         {
         }

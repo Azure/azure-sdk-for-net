@@ -8,9 +8,9 @@ using System.Xml;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class QueueDescriptionExtensions
+    internal static class QueuePropertiesExtensions
     {
-        public static XDocument Serialize(this QueueDescription description)
+        public static XDocument Serialize(this QueueProperties description)
         {
             var queueDescriptionElements = new List<object>()
             {
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         ///
         /// </summary>
-        public static QueueDescription ParseFromContent(string xml)
+        public static QueueProperties ParseFromContent(string xml)
         {
             try
             {
@@ -71,10 +71,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static QueueDescription ParseFromEntryElement(XElement xEntry)
+        private static QueueProperties ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var qd = new QueueDescription(name);
+            var qd = new QueueProperties(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("QueueDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return qd;
         }
 
-        public static IList<QueueDescription> ParseCollectionFromContent(string xml)
+        public static IList<QueueProperties> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var queueList = new List<QueueDescription>();
+                        var queueList = new List<QueueProperties>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -195,7 +195,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No queues were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static void NormalizeDescription(this QueueDescription description, string baseAddress)
+        public static void NormalizeDescription(this QueueProperties description, string baseAddress)
         {
             if (!string.IsNullOrWhiteSpace(description.ForwardTo))
             {

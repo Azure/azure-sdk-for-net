@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators,
     /// numeric arithmetic, and simple text pattern matching with LIKE.
     /// </remarks>
-    public class SqlFilter : Filter
+    public class SqlFilter : RuleFilter
     {
         internal PropertyDictionary parameters;
 
@@ -77,12 +77,12 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            var other = obj as Filter;
+            var other = obj as RuleFilter;
             return Equals(other);
         }
 
         /// <inheritdoc/>
-        public override bool Equals(Filter other)
+        public override bool Equals(RuleFilter other)
         {
             if (other is SqlFilter sqlFilter)
             {

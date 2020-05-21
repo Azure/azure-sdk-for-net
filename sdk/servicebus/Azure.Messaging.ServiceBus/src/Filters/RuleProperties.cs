@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
-    public sealed class RuleDescription : IEquatable<RuleDescription>
+    public sealed class RuleProperties : IEquatable<RuleProperties>
     {
         /// <summary>
         /// Gets the name of the default rule on the subscription.
@@ -19,31 +19,31 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
         /// </remarks>
         public const string DefaultRuleName = "$Default";
-        private Filter _filter;
+        private RuleFilter _filter;
         private string _name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleDescription" /> class with default values.
+        /// Initializes a new instance of the <see cref="RuleProperties" /> class with default values.
         /// </summary>
-        public RuleDescription()
-            : this(RuleDescription.DefaultRuleName, TrueFilter.Default)
+        public RuleProperties()
+            : this(RuleProperties.DefaultRuleName, TrueFilter.Default)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name.
+        /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name.
         /// </summary>
-        public RuleDescription(string name)
+        public RuleProperties(string name)
             : this(name, TrueFilter.Default)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name and filter expression.
+        /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name and filter expression.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="filter">The filter expression used to match messages.</param>
-        public RuleDescription(string name, Filter filter)
+        public RuleProperties(string name, RuleFilter filter)
         {
             Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
             Name = name;
@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// </summary>
         /// <value>The filter expression used to match messages.</value>
         /// <exception cref="System.ArgumentNullException">null (Nothing in Visual Basic) is assigned.</exception>
-        public Filter Filter
+        public RuleFilter Filter
         {
             get => _filter;
 
@@ -104,17 +104,17 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            var other = obj as RuleDescription;
+            var other = obj as RuleProperties;
             return Equals(other);
         }
 
         /// <inheritdoc/>
-        public bool Equals(RuleDescription otherRule)
+        public bool Equals(RuleProperties other)
         {
-            if (otherRule is RuleDescription other
-                && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
-                && (Filter == null || Filter.Equals(other.Filter))
-                && (Action == null || Action.Equals(other.Action)))
+            if (other is RuleProperties otherProperties
+                && string.Equals(Name, otherProperties.Name, StringComparison.OrdinalIgnoreCase)
+                && (Filter == null || Filter.Equals(otherProperties.Filter))
+                && (Action == null || Action.Equals(otherProperties.Action)))
             {
                 return true;
             }
@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(RuleDescription left, RuleDescription right)
+        public static bool operator ==(RuleProperties left, RuleProperties right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(RuleDescription left, RuleDescription right)
+        public static bool operator !=(RuleProperties left, RuleProperties right)
         {
             return !(left == right);
         }

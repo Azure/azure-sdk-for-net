@@ -3,47 +3,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Messaging.ServiceBus.Filters;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents the metadata description of the queue.
+    /// Represents the metadata description of the subscription.
     /// </summary>
-    public class QueueDescription : IEquatable<QueueDescription>
+    public class SubscriptionProperties : IEquatable<SubscriptionProperties>
     {
-        private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        private string _queueName;
+        private string _topicName, _subscriptionName;
         private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
-        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
+        private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private int _maxDeliveryCount = 10;
         private string _forwardTo = null;
         private string _forwardDeadLetteredMessagesTo = null;
         private string _userMetadata = null;
 
         /// <summary>
-        /// Initializes a new instance of QueueDescription class with the specified relative name.
+        /// Initializes a new instance of SubscriptionDescription class with the specified name and topic name.
         /// </summary>
-        /// <param name="queueName">Name of the queue relative to the namespace base address.</param>
-        public QueueDescription(string queueName)
+        /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
+        /// <param name="subscriptionName">Name of the subscription.</param>
+        public SubscriptionProperties(string topicName, string subscriptionName)
         {
-            QueueName = queueName;
-        }
-
-        /// <summary>
-        /// Name of the queue relative to the namespace base address.
-        /// </summary>
-        /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
-        /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string QueueName
-        {
-            get => _queueName;
-            set
-            {
-                EntityNameFormatter.CheckValidQueueName(value, nameof(QueueName));
-                _queueName = value;
-            }
+            TopicName = topicName;
+            SubscriptionName = subscriptionName;
         }
 
         /// <summary>
@@ -62,24 +49,10 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// The maximum size of the queue in megabytes, which is the size of memory allocated for the queue.
-        /// </summary>
-        /// <remarks>Default value is 1024.</remarks>
-        public long MaxSizeInMB { get; set; } = 1024;
-
-        /// <summary>
-        /// This value indicates if the queue requires guard against duplicate messages. If true, duplicate messages having same
-        /// <see cref="ServiceBusMessage.MessageId"/> and sent to queue within duration of <see cref="DuplicateDetectionHistoryTimeWindow"/>
-        /// will be discarded.
-        /// </summary>
-        /// <remarks>Defaults to false.</remarks>
-        public bool RequiresDuplicateDetection { get; set; } = false;
-
-        /// <summary>
-        /// This indicates whether the queue supports the concept of session. Sessionful-messages follow FIFO ordering.
+        /// This indicates whether the subscription supports the concept of session. Sessionful-messages follow FIFO ordering.
         /// </summary>
         /// <remarks>
-        /// If true, the receiver can only receive messages using <see cref="ServiceBusSessionReceiver"/>.
+        /// If true, the receiver can only receive messages using <see cref="ServiceBusSessionProcessor"/>.
         /// Defaults to false.
         /// </remarks>
         public bool RequiresSession { get; set; } = false;
@@ -109,12 +82,12 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// The <see cref="TimeSpan"/> idle interval after which the queue is automatically deleted.
+        /// The <see cref="TimeSpan"/> idle interval after which the subscription is automatically deleted.
         /// </summary>
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
         public TimeSpan AutoDeleteOnIdle
         {
-            get => autoDeleteOnIdle;
+            get => _autoDeleteOnIdle;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
@@ -123,34 +96,49 @@ namespace Azure.Messaging.ServiceBus.Management
                         $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
-                autoDeleteOnIdle = value;
+                _autoDeleteOnIdle = value;
             }
         }
 
         /// <summary>
-        /// Indicates whether this queue has dead letter support when a message expires.
+        /// Indicates whether this subscription has dead letter support when a message expires.
         /// </summary>
         /// <remarks>If true, the expired messages are moved to dead-letter sub-queue. Default value is false.</remarks>
         public bool EnableDeadLetteringOnMessageExpiration { get; set; } = false;
 
         /// <summary>
-        /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
+        /// indicates whether messages need to be forwarded to dead-letter sub queue when subscription rule evaluation fails.
         /// </summary>
-        /// <remarks>
-        /// The default value is 1 minute. Max value is 7 days and minimum is 20 seconds.
-        /// </remarks>
-        public TimeSpan DuplicateDetectionHistoryTimeWindow
+        /// <remarks>Defaults to true.</remarks>
+        public bool EnableDeadLetteringOnFilterEvaluationExceptions { get; set; } = true;
+
+        /// <summary>
+        /// Name of the topic under which subscription exists.
+        /// </summary>
+        /// <remarks>Value cannot be null or empty. Value cannot exceed 260 chars. Cannot start or end with a slash.
+        /// Cannot have restricted characters: '@','?','#','*'</remarks>
+        public string TopicName
         {
-            get => _duplicateDetectionHistoryTimeWindow;
+            get => _topicName;
             set
             {
-                if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(DuplicateDetectionHistoryTimeWindow),
-                        $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
-                }
+                EntityNameFormatter.CheckValidTopicName(value, nameof(TopicName));
+                _topicName = value;
+            }
+        }
 
-                _duplicateDetectionHistoryTimeWindow = value;
+        /// <summary>
+        /// Name of the subscription.
+        /// </summary>
+        /// <remarks>Value cannot be null or empty. Value cannot exceed 50 chars.
+        /// Cannot have restricted characters: '@','?','#','*','/','\'</remarks>
+        public string SubscriptionName
+        {
+            get => _subscriptionName;
+            set
+            {
+                EntityNameFormatter.CheckValidSubscriptionName(value, nameof(SubscriptionName));
+                _subscriptionName = value;
             }
         }
 
@@ -176,26 +164,15 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// Indicates whether server-side batched operations are enabled.
-        /// </summary>
-        /// <remarks>Defaults to true.</remarks>
-        public bool EnableBatchedOperations { get; set; } = true;
-
-        /// <summary>
-        /// The <see cref="AuthorizationRules"/> on the queue to control user access at entity level.
-        /// </summary>
-        public AuthorizationRules AuthorizationRules { get; internal set; } = new AuthorizationRules();
-
-        /// <summary>
-        /// The current status of the queue (Enabled / Disabled).
+        /// The current status of the subscription (Enabled / Disabled).
         /// </summary>
         /// <remarks>When an entity is disabled, that entity cannot send or receive messages.</remarks>
         public EntityStatus Status { get; set; } = EntityStatus.Active;
 
         /// <summary>
-        /// The name of the recipient entity to which all the messages sent to the queue are forwarded to.
+        /// The name of the recipient entity to which all the messages sent to the subscription are forwarded to.
         /// </summary>
-        /// <remarks>If set, user cannot manually receive messages from this queue. The destination entity
+        /// <remarks>If set, user cannot manually receive messages from this subscription. The destination entity
         /// must be an already existing entity.</remarks>
         public string ForwardTo
         {
@@ -209,8 +186,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
-                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
-
+                if (_topicName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -220,9 +196,9 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// The name of the recipient entity to which all the dead-lettered messages of this queue are forwarded to.
+        /// The name of the recipient entity to which all the dead-lettered messages of this subscription are forwarded to.
         /// </summary>
-        /// <remarks>If set, user cannot manually receive dead-lettered messages from this queue. The destination
+        /// <remarks>If set, user cannot manually receive dead-lettered messages from this subscription. The destination
         /// entity must already exist.</remarks>
         public string ForwardDeadLetteredMessagesTo
         {
@@ -236,7 +212,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_topicName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -246,10 +222,10 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// Indicates whether the queue is to be partitioned across multiple message brokers.
+        /// Indicates whether server-side batched operations are enabled.
         /// </summary>
-        /// <remarks>Defaults to false.</remarks>
-        public bool EnablePartitioning { get; set; } = false;
+        /// <remarks>Defaults to true.</remarks>
+        public bool EnableBatchedOperations { get; set; } = true;
 
         /// <summary>
         /// Custom metdata that user can associate with the description.
@@ -275,49 +251,53 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary>
-        /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.
-        /// The list will be sent back when an already retrieved QueueDescription will be used in UpdateQueue call.
+        /// List of properties that were retrieved using GetSubscription but are not understood by this version of client is stored here.
+        /// The list will be sent back when an already retrieved SubscriptionDescription will be used in UpdateSubscription call.
         /// </summary>
         internal List<object> UnknownProperties { get; set; }
+
+        internal RuleProperties Rule { get; set; }
 
         /// <summary>
         ///   Returns a hash code for this instance.
         /// </summary>
         public override int GetHashCode()
         {
-            return QueueName?.GetHashCode() ?? base.GetHashCode();
+            int hash = 7;
+            unchecked
+            {
+                hash = (hash * 7) + TopicName?.GetHashCode() ?? 0;
+                hash = (hash * 7) + SubscriptionName?.GetHashCode() ?? 0;
+            }
+
+            return hash;
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public override bool Equals(object obj)
         {
-            var other = obj as QueueDescription;
-            return this.Equals(other);
+            var other = obj as SubscriptionProperties;
+            return Equals(other);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
-        public bool Equals(QueueDescription otherDescription)
+        public bool Equals(SubscriptionProperties other)
         {
-            if (otherDescription is QueueDescription other
-                && this.QueueName.Equals(other.QueueName, StringComparison.OrdinalIgnoreCase)
-                && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && this.EnableBatchedOperations == other.EnableBatchedOperations
-                && this.EnableDeadLetteringOnMessageExpiration == other.EnableDeadLetteringOnMessageExpiration
-                && this.EnablePartitioning == other.EnablePartitioning
-                && string.Equals(this.ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(this.ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && this.LockDuration.Equals(other.LockDuration)
-                && this.MaxDeliveryCount == other.MaxDeliveryCount
-                && this.MaxSizeInMB == other.MaxSizeInMB
-                && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && this.RequiresSession.Equals(other.RequiresSession)
-                && this.Status.Equals(other.Status)
-                && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.AuthorizationRules != null && other.AuthorizationRules != null
-                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
-                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+            if (other is SubscriptionProperties otherProperties
+                && SubscriptionName.Equals(otherProperties.SubscriptionName, StringComparison.OrdinalIgnoreCase)
+                && TopicName.Equals(otherProperties.TopicName, StringComparison.OrdinalIgnoreCase)
+                && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
+                && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
+                && EnableBatchedOperations == otherProperties.EnableBatchedOperations
+                && EnableDeadLetteringOnMessageExpiration == otherProperties.EnableDeadLetteringOnMessageExpiration
+                && EnableDeadLetteringOnFilterEvaluationExceptions == otherProperties.EnableDeadLetteringOnFilterEvaluationExceptions
+                && string.Equals(ForwardDeadLetteredMessagesTo, otherProperties.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, otherProperties.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && LockDuration.Equals(otherProperties.LockDuration)
+                && MaxDeliveryCount == otherProperties.MaxDeliveryCount
+                && RequiresSession.Equals(otherProperties.RequiresSession)
+                && Status.Equals(otherProperties.Status)
+                && string.Equals(_userMetadata, otherProperties._userMetadata, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
@@ -325,8 +305,13 @@ namespace Azure.Messaging.ServiceBus.Management
             return false;
         }
 
-        /// <summary></summary>
-        public static bool operator ==(QueueDescription left, QueueDescription right)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(SubscriptionProperties left, SubscriptionProperties right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -341,8 +326,13 @@ namespace Azure.Messaging.ServiceBus.Management
             return left.Equals(right);
         }
 
-        /// <summary></summary>
-        public static bool operator !=(QueueDescription left, QueueDescription right)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(SubscriptionProperties left, SubscriptionProperties right)
         {
             return !(left == right);
         }

@@ -401,7 +401,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
+        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
         {
             var ruleDescriptionMap = new AmqpMap();
 
@@ -423,19 +423,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             nameof(CorrelationFilter)));
             }
 
-            var amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            var amqpAction = GetRuleActionMap(description.Action as SqlAction);
             ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
             ruleDescriptionMap[ManagementConstants.Properties.RuleName] = description.Name;
 
             return ruleDescriptionMap;
         }
 
-        public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        public static RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
         {
             var filter = GetFilter(amqpDescription.Filter);
             var ruleAction = GetRuleAction(amqpDescription.Action);
 
-            var ruleDescription = new RuleDescription(amqpDescription.RuleName, filter)
+            var ruleDescription = new RuleProperties(amqpDescription.RuleName, filter)
             {
                 Action = ruleAction
             };
@@ -443,9 +443,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ruleDescription;
         }
 
-        public static Filter GetFilter(AmqpFilterCodec amqpFilter)
+        public static RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
         {
-            Filter filter;
+            RuleFilter filter;
 
             switch (amqpFilter.DescriptorCode)
             {
@@ -499,10 +499,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 action = null;
             }
-            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            else if (amqpAction.DescriptorCode == AmqpSqlActionCodec.Code)
             {
-                var amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
-                var sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
+                var amqpSqlAction = (AmqpSqlActionCodec)amqpAction;
+                var sqlAction = new SqlAction(amqpSqlAction.SqlExpression);
 
                 action = sqlAction;
             }
@@ -739,7 +739,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return correlationFilterMap;
         }
 
-        internal static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        internal static AmqpMap GetRuleActionMap(SqlAction sqlRuleAction)
         {
             AmqpMap ruleActionMap = null;
             if (sqlRuleAction != null)

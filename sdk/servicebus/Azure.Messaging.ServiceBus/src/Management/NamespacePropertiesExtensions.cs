@@ -6,9 +6,9 @@ using System.Xml.Linq;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal class NamespaceInfoExtensions
+    internal class NamespacePropertiesExtensions
     {
-        public static NamespaceInfo ParseFromContent(string xml)
+        public static NamespaceProperties ParseFromContent(string xml)
         {
             try
             {
@@ -29,9 +29,9 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException(false, "Unknown error.");
         }
 
-        private static NamespaceInfo ParseFromEntryElement(XElement xEntry)
+        private static NamespaceProperties ParseFromEntryElement(XElement xEntry)
         {
-            var nsInfo = new NamespaceInfo();
+            var nsInfo = new NamespaceProperties();
 
             var nsInfoXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("NamespaceInfo", ManagementClientConstants.ServiceBusNamespace));

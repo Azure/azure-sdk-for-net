@@ -54,10 +54,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <param name="rights">The list of rights.</param>
         public SharedAccessAuthorizationRule(string keyName, string primaryKey, string secondaryKey, IEnumerable<AccessRights> rights)
         {
-            this.PrimaryKey = primaryKey;
-            this.SecondaryKey = secondaryKey;
-            this.Rights = new List<AccessRights>(rights);
-            this.KeyName = keyName;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            Rights = new List<AccessRights>(rights);
+            KeyName = keyName;
         }
 
         /// <inheritdoc/>
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <value>The authorization rule key name.</value>
         public sealed override string KeyName
         {
-            get { return this.internalKeyName; }
+            get { return internalKeyName; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     throw new ArgumentException("The key name specified contains invalid characters");
                 }
 
-                this.internalKeyName = value;
+                internalKeyName = value;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <value>The primary key for the authorization rule.</value>
         public string PrimaryKey
         {
-            get { return this.internalPrimaryKey; }
+            get { return internalPrimaryKey; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     throw new ArgumentException(nameof(PrimaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
                 }
 
-                this.internalPrimaryKey = value;
+                internalPrimaryKey = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <value>The secondary key for the authorization rule.</value>
         public string SecondaryKey
         {
-            get { return this.internalSecondaryKey; }
+            get { return internalSecondaryKey; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -140,14 +140,14 @@ namespace Azure.Messaging.ServiceBus.Management
                     throw new ArgumentException(nameof(SecondaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
                 }
 
-                this.internalSecondaryKey = value;
+                internalSecondaryKey = value;
             }
         }
 
         /// <inheritdoc/>
         public override List<AccessRights> Rights
         {
-            get => this.internalRights;
+            get => internalRights;
             set
             {
                 if (value == null || value.Count < 0 || value.Count > ManagementClientConstants.SupportedClaimsCount)
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Management
                     throw new ArgumentException(nameof(Rights), "Manage permission should also include Send and Listen");
                 }
 
-                this.internalRights = value;
+                internalRights = value;
             }
         }
 
@@ -176,10 +176,10 @@ namespace Azure.Messaging.ServiceBus.Management
             int hash = 13;
             unchecked
             {
-                hash = (hash * 7) + this.KeyName?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.PrimaryKey?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.SecondaryKey?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.Rights.GetHashCode();
+                hash = (hash * 7) + KeyName?.GetHashCode() ?? 0;
+                hash = (hash * 7) + PrimaryKey?.GetHashCode() ?? 0;
+                hash = (hash * 7) + SecondaryKey?.GetHashCode() ?? 0;
+                hash = (hash * 7) + Rights.GetHashCode();
             }
 
             return hash;
@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public override bool Equals(object obj)
         {
             var other = obj as AuthorizationRule;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -203,22 +203,22 @@ namespace Azure.Messaging.ServiceBus.Management
             }
 
             SharedAccessAuthorizationRule comparand = (SharedAccessAuthorizationRule)other;
-            if (!string.Equals(this.KeyName, comparand.KeyName, StringComparison.OrdinalIgnoreCase) ||
-                !string.Equals(this.PrimaryKey, comparand.PrimaryKey, StringComparison.Ordinal) ||
-                !string.Equals(this.SecondaryKey, comparand.SecondaryKey, StringComparison.Ordinal))
+            if (!string.Equals(KeyName, comparand.KeyName, StringComparison.OrdinalIgnoreCase) ||
+                !string.Equals(PrimaryKey, comparand.PrimaryKey, StringComparison.Ordinal) ||
+                !string.Equals(SecondaryKey, comparand.SecondaryKey, StringComparison.Ordinal))
             {
                 return false;
             }
 
-            if ((this.Rights != null && comparand.Rights == null) ||
-                (this.Rights == null && comparand.Rights != null))
+            if ((Rights != null && comparand.Rights == null) ||
+                (Rights == null && comparand.Rights != null))
             {
                 return false;
             }
 
-            if (this.Rights != null && comparand.Rights != null)
+            if (Rights != null && comparand.Rights != null)
             {
-                HashSet<AccessRights> thisRights = new HashSet<AccessRights>(this.Rights);
+                HashSet<AccessRights> thisRights = new HashSet<AccessRights>(Rights);
                 if (comparand.Rights.Count != thisRights.Count)
                 {
                     return false;
@@ -319,13 +319,13 @@ namespace Azure.Messaging.ServiceBus.Management
             XElement rule = new XElement(
                 XName.Get("AuthorizationRule", ManagementClientConstants.ServiceBusNamespace),
                 new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SharedAccessAuthorizationRule)),
-                new XElement(XName.Get("ClaimType", ManagementClientConstants.ServiceBusNamespace), this.ClaimType),
-                new XElement(XName.Get("ClaimValue", ManagementClientConstants.ServiceBusNamespace), this.ClaimValue),
+                new XElement(XName.Get("ClaimType", ManagementClientConstants.ServiceBusNamespace), ClaimType),
+                new XElement(XName.Get("ClaimValue", ManagementClientConstants.ServiceBusNamespace), ClaimValue),
                 new XElement(XName.Get("Rights", ManagementClientConstants.ServiceBusNamespace),
-                    this.Rights.Select(right => new XElement(XName.Get("AccessRights", ManagementClientConstants.ServiceBusNamespace), right.ToString()))),
-                new XElement(XName.Get("KeyName", ManagementClientConstants.ServiceBusNamespace), this.KeyName),
-                new XElement(XName.Get("PrimaryKey", ManagementClientConstants.ServiceBusNamespace), this.PrimaryKey),
-                new XElement(XName.Get("SecondaryKey", ManagementClientConstants.ServiceBusNamespace), this.SecondaryKey)
+                    Rights.Select(right => new XElement(XName.Get("AccessRights", ManagementClientConstants.ServiceBusNamespace), right.ToString()))),
+                new XElement(XName.Get("KeyName", ManagementClientConstants.ServiceBusNamespace), KeyName),
+                new XElement(XName.Get("PrimaryKey", ManagementClientConstants.ServiceBusNamespace), PrimaryKey),
+                new XElement(XName.Get("SecondaryKey", ManagementClientConstants.ServiceBusNamespace), SecondaryKey)
             );
 
             return rule;

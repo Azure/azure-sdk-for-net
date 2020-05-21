@@ -6,34 +6,29 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the queue.
+    /// This provides runtime information of the topic.
     /// </summary>
-    public class QueueRuntimeInfo
+    public class TopicMetrics
     {
-        internal QueueRuntimeInfo(string queueName)
+        internal TopicMetrics(string topicName)
         {
-            QueueName = queueName;
+            TopicName = topicName;
         }
 
         /// <summary>
-        /// The name of the queue.
+        /// The name of the topic.
         /// </summary>
-        public string QueueName { get; internal set; }
+        public string TopicName { get; internal set; }
 
         /// <summary>
-        /// The total number of messages in the queue.
-        /// </summary>
-        public long MessageCount { get; internal set; }
-
-        /// <summary>
-        /// Message count details of the sub-queues of the entity.
+        /// The total number of messages in the topic.
         /// </summary>
         public MessageCountDetails MessageCountDetails { get; internal set; }
 
         /// <summary>
-        /// Current size of the entity in bytes.
+        /// The <see cref="DateTime"/> when the entity was last accessed.
         /// </summary>
-        public long SizeInBytes { get; internal set; }
+        public DateTimeOffset AccessedAt { get; internal set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> when the entity was created.
@@ -46,8 +41,13 @@ namespace Azure.Messaging.ServiceBus.Management
         public DateTimeOffset UpdatedAt { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTimeOffset"/> when the entity was last accessed.
+        /// Current size of the entity in bytes.
         /// </summary>
-        public DateTimeOffset AccessedAt { get; internal set; }
+        public long SizeInBytes { get; internal set; }
+
+        /// <summary>
+        /// Number of subscriptions to the topic.
+        /// </summary>
+        public int SubscriptionCount { get; internal set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     /// Represents the metadata description of the topic.
     /// </summary>
-    public class TopicDescription : IEquatable<TopicDescription>
+    public class TopicProperties : IEquatable<TopicProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         private string _topicName;
@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// Initializes a new instance of TopicDescription class with the specified relative name.
         /// </summary>
         /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
-        public TopicDescription(string topicName)
+        public TopicProperties(string topicName)
         {
             TopicName = topicName;
         }
@@ -189,27 +189,27 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public override bool Equals(object obj)
         {
-            var other = obj as TopicDescription;
-            return this.Equals(other);
+            var other = obj as TopicProperties;
+            return Equals(other);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
-        public bool Equals(TopicDescription otherDescription)
+        public bool Equals(TopicProperties other)
         {
-            if (otherDescription is TopicDescription other
-                && this.TopicName.Equals(other.TopicName, StringComparison.OrdinalIgnoreCase)
-                && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && this.EnableBatchedOperations == other.EnableBatchedOperations
-                && this.EnablePartitioning == other.EnablePartitioning
-                && this.MaxSizeInMB == other.MaxSizeInMB
-                && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && this.Status.Equals(other.Status)
-                && string.Equals(this._userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.AuthorizationRules != null && other.AuthorizationRules != null
-                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
-                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+            if (other is TopicProperties otherProperties
+                && TopicName.Equals(otherProperties.TopicName, StringComparison.OrdinalIgnoreCase)
+                && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
+                && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
+                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherProperties.DuplicateDetectionHistoryTimeWindow))
+                && EnableBatchedOperations == otherProperties.EnableBatchedOperations
+                && EnablePartitioning == otherProperties.EnablePartitioning
+                && MaxSizeInMB == otherProperties.MaxSizeInMB
+                && RequiresDuplicateDetection.Equals(otherProperties.RequiresDuplicateDetection)
+                && Status.Equals(otherProperties.Status)
+                && string.Equals(_userMetadata, otherProperties._userMetadata, StringComparison.OrdinalIgnoreCase)
+                && (AuthorizationRules != null && otherProperties.AuthorizationRules != null
+                    || AuthorizationRules == null && otherProperties.AuthorizationRules == null)
+                && (AuthorizationRules == null || AuthorizationRules.Equals(otherProperties.AuthorizationRules)))
             {
                 return true;
             }
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator ==(TopicDescription left, TopicDescription right)
+        public static bool operator ==(TopicProperties left, TopicProperties right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <summary></summary>
-        public static bool operator !=(TopicDescription left, TopicDescription right)
+        public static bool operator !=(TopicProperties left, TopicProperties right)
         {
             return !(left == right);
         }

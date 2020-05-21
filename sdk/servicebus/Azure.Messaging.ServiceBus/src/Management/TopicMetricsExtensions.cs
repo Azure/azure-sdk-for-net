@@ -6,9 +6,9 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class TopicRuntimeInfoExtensions
+    internal static class TopicMetricsExtensions
     {
-        public static TopicRuntimeInfo ParseFromContent(string xml)
+        public static TopicMetrics ParseFromContent(string xml)
         {
             try
             {
@@ -29,10 +29,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static TopicRuntimeInfo ParseFromEntryElement(XElement xEntry)
+        public static TopicMetrics ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var topicRuntimeInfo = new TopicRuntimeInfo(name);
+            var topicRuntimeInfo = new TopicMetrics(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return topicRuntimeInfo;
         }
 
-        public static List<TopicRuntimeInfo> ParseCollectionFromContent(string xml)
+        public static List<TopicMetrics> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var topicList = new List<TopicRuntimeInfo>();
+                        var topicList = new List<TopicMetrics>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)

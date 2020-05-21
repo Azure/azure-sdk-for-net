@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 {
     internal static class CorrelationFilterExtensions
     {
-        public static Filter ParseFromXElement(XElement xElement)
+        public static RuleFilter ParseFromXElement(XElement xElement)
         {
             var correlationFilter = new CorrelationFilter();
             foreach (var element in xElement.Elements())

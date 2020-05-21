@@ -6,7 +6,7 @@ using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
-    internal sealed class AmqpSqlFilterCodec : AmqpFilterCodec
+    internal sealed class AmqpSqlFilterCodec : AmqpRuleFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":sql-filter:list";
         public const ulong Code = 0x000001370000006;
