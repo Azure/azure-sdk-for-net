@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
 
@@ -44,40 +45,44 @@ namespace Azure.Storage.Queues.Specialized
         /// sent to this listener. Default behavior, when no listener is provided, is for the overall message
         /// fetch to throw.
         /// </summary>
-        public IMissingClientSideEncryptionKeyListener OnMissingClientSideEncryptionKey
+        public IClientSideDecryptionFailureListener OnClientSideDecryptionFailure
         {
-            get => _missingClientSideEncryptionKeyListener;
-            set => _missingClientSideEncryptionKeyListener = value;
+            get => _onClientSideDecryptionFailure;
+            set => _onClientSideDecryptionFailure = value;
         }
     }
 
     /// <summary>
     /// Describes a listener to handle queue messages who's client-side encryption keys cannot be resolved.
     /// </summary>
-    public interface IMissingClientSideEncryptionKeyListener
+    public interface IClientSideDecryptionFailureListener
     {
         /// <summary>
-        /// Handle an unresolved key in a <see cref="QueueClient.ReceiveMessages()"/> call.
+        /// Handle a decryption failure in a <see cref="QueueClient.ReceiveMessages()"/> call.
         /// </summary>
         /// <param name="message">Message that couldn't be decrypted.</param>
-        void OnMissingKey(QueueMessage message);
+        /// <param name="exception">Exception of the failure.</param>
+        void OnFailure(QueueMessage message, Exception exception);
 
         /// <summary>
-        /// Handle an unresolved key in a <see cref="QueueClient.ReceiveMessagesAsync()"/> call.
+        /// Handle a decryption failure in a <see cref="QueueClient.ReceiveMessagesAsync()"/> call.
         /// </summary>
         /// <param name="message">Message that couldn't be decrypted.</param>
-        Task OnMissingKeyAsync(QueueMessage message);
+        /// <param name="exception">Exception of the failure.</param>
+        Task OnFailureAsync(QueueMessage message, Exception exception);
 
         /// <summary>
-        /// Handle an unresolved key in a <see cref="QueueClient.PeekMessages(int?, System.Threading.CancellationToken)"/> call.
+        /// Handle a decryption failure in a <see cref="QueueClient.PeekMessages(int?, System.Threading.CancellationToken)"/> call.
         /// </summary>
         /// <param name="message">Message that couldn't be decrypted.</param>
-        void OnMissingKey(PeekedMessage message);
+        /// <param name="exception">Exception of the failure.</param>
+        void OnFailure(PeekedMessage message, Exception exception);
 
         /// <summary>
-        /// Handle an unresolved key in a <see cref="QueueClient.PeekMessagesAsync(int?, System.Threading.CancellationToken)"/> call.
+        /// Handle a decryption failure in a <see cref="QueueClient.PeekMessagesAsync(int?, System.Threading.CancellationToken)"/> call.
         /// </summary>
         /// <param name="message">Message that couldn't be decrypted.</param>
-        Task OnMissingKeyAsync(PeekedMessage message);
+        /// <param name="exception">Exception of the failure.</param>
+        Task OnFailureAsync(PeekedMessage message, Exception exception);
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
-        private readonly IMissingClientSideEncryptionKeyListener _missingClientSideEncryptionKeyListener;
+        private readonly IClientSideDecryptionFailureListener _missingClientSideEncryptionKeyListener;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -143,7 +143,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
+            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
+            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
         }
         #endregion ctors
 

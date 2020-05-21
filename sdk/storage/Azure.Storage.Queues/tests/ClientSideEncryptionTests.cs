@@ -372,12 +372,12 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestCase(true, true)]
         [TestCase(true, false)]
-        [TestCase(false, true)]
         [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
         [LiveOnly]
-        public async Task CannotFindKeyAsync(bool useListener, bool resolverFailure)
+        public async Task CannotFindKeyAsync(bool useListener, bool resolverThrows)
         {
             MockMissingClientSideEncryptionKeyListener listener = null;
             if (useListener)
@@ -402,8 +402,7 @@ namespace Azure.Storage.Queues.Test
                     await queue.SendMessageAsync(message).ConfigureAwait(false);
                 }
 
-                bool threwKeyNotFound = false;
-                bool threwGeneral = false;
+                bool threw = false;
                 QueueMessage[] result = default;
                 try
                 {
@@ -411,39 +410,25 @@ namespace Azure.Storage.Queues.Test
                     var options = GetOptions();
                     options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
-                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ResolverInternalFailure = resolverFailure },
+                        // note decryption will throw whether the resolver throws or just returns null
+                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ShouldThrow = resolverThrows },
                         KeyWrapAlgorithm = "test"
                     };
-                    options._missingClientSideEncryptionKeyListener = listener;
+                    options._onClientSideDecryptionFailure = listener;
                     result = await new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options).ReceiveMessagesAsync(numMessages);
-                }
-                catch (ClientSideEncryptionKeyNotFoundException)
-                {
-                    threwKeyNotFound = true;
                 }
                 catch (Exception)
                 {
-                    threwGeneral = true;
+                    threw = true;
                 }
                 finally
                 {
-                    if (resolverFailure)
-                    {
-                        Assert.True(threwGeneral);
-                    }
-                    else
-                    {
-                        Assert.False(threwGeneral);
+                    Assert.AreNotEqual(useListener, threw);
 
-                        if (useListener)
-                        {
-                            Assert.AreEqual(numMessages, listener.TimesInvoked);
-                            Assert.AreEqual(0, result.Length); // all messages should have been filtered out
-                        }
-                        else
-                        {
-                            Assert.True(threwKeyNotFound);
-                        }
+                    if (useListener)
+                    {
+                        Assert.AreEqual(numMessages, listener.TimesInvoked);
+                        Assert.AreEqual(0, result.Length); // all messages should have been filtered out
                     }
                 }
             }

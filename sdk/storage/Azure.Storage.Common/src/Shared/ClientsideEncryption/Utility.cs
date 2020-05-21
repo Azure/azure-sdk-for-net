@@ -64,9 +64,12 @@ namespace Azure.Storage.Cryptography
         /// <param name="async">Whether to perform this function asynchronously.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>
-        /// Decrypted plaintext. If key could not be resolved, returns null.
+        /// Decrypted plaintext.
         /// </returns>
-        /// <exception cref="ClientSideEncryptionKeyNotFoundException">When key ID cannot be resolved.</exception>
+        /// <exception cref="Exception">
+        /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
+        /// <see cref="IKeyEncryptionKeyResolver"/>.
+        /// </exception>
         public static async Task<Stream> DecryptInternal(
             Stream ciphertext,
             EncryptionData encryptionData,
@@ -136,7 +139,10 @@ namespace Azure.Storage.Cryptography
         /// <returns>
         /// Encryption key as a byte array.
         /// </returns>
-        /// <exception cref="ClientSideEncryptionKeyNotFoundException">When key ID cannot be resolved.</exception>
+        /// <exception cref="Exception">
+        /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
+        /// <see cref="IKeyEncryptionKeyResolver"/>.
+        /// </exception>
         private static async Task<Memory<byte>> GetContentEncryptionKeyOrDefaultAsync(
 #pragma warning restore CS1587 // XML comment is not placed on a valid language element
             EncryptionData encryptionData,
@@ -160,6 +166,8 @@ namespace Azure.Storage.Cryptography
                     : keyResolver.Resolve(encryptionData.WrappedContentKey.KeyId, cancellationToken);
             }
 
+            // We throw for every other reason that decryption couldn't happen. Throw a reasonable
+            // exception here instead of nullref.
             if (key == default)
             {
                 throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId);

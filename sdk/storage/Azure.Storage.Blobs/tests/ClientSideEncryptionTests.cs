@@ -344,7 +344,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(true)]
         [TestCase(false)]
         [LiveOnly]
-        public async Task CannotFindKeyAsync(bool resolverFailure)
+        public async Task CannotFindKeyAsync(bool resolverThrows)
         {
             var data = GetRandomBuffer(Constants.KB);
             var mockKey = new MockKeyEncryptionKey();
@@ -359,32 +359,26 @@ namespace Azure.Storage.Blobs.Test
                 var blob = disposable.Container.GetBlobClient(GetNewBlobName());
                 await blob.UploadAsync(new MemoryStream(data));
 
-                bool threwKeyNotFound = false;
-                bool threwGeneral = false;
+                bool threw = false;
                 try
                 {
                     // download but can't find key
                     var options = GetOptions();
                     options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
-                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ResolverInternalFailure = resolverFailure },
+                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ShouldThrow = resolverThrows },
                         KeyWrapAlgorithm = "test"
                     };
                     var encryptedDataStream = new MemoryStream();
                     await new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), options).DownloadToAsync(encryptedDataStream);
                 }
-                catch (ClientSideEncryptionKeyNotFoundException)
-                {
-                    threwKeyNotFound = true;
-                }
                 catch (Exception)
                 {
-                    threwGeneral = true;
+                    threw = true;
                 }
                 finally
                 {
-                    Assert.AreEqual(resolverFailure, threwGeneral);
-                    Assert.AreEqual(!resolverFailure, threwKeyNotFound);
+                    Assert.IsTrue(threw);
                 }
             }
         }

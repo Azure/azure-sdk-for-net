@@ -12,14 +12,14 @@ namespace Azure.Storage.Blobs.Tests
     internal class AlwaysFailsKeyEncryptionKeyResolver : IKeyEncryptionKeyResolver
     {
         /// <summary>
-        /// False means the resolver just can't find the key and returns null.
-        /// True means the resolver has an internal failure and throws.
+        /// False means the resolver returns null.
+        /// True means the resolver throws.
         /// </summary>
-        public bool ResolverInternalFailure { get; set; } = false;
+        public bool ShouldThrow { get; set; } = false;
 
         public IKeyEncryptionKey Resolve(string keyId, CancellationToken cancellationToken = default)
         {
-            if (ResolverInternalFailure)
+            if (ShouldThrow)
             {
                 throw new Exception();
             }
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Tests
 
         public Task<IKeyEncryptionKey> ResolveAsync(string keyId, CancellationToken cancellationToken = default)
         {
-            if (ResolverInternalFailure)
+            if (ShouldThrow)
             {
                 throw new Exception();
             }

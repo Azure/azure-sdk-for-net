@@ -89,7 +89,7 @@ namespace Azure.Storage.Queues
 
         internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
-        private readonly IMissingClientSideEncryptionKeyListener _missingClientSideEncryptionKeyListener;
+        private readonly IClientSideDecryptionFailureListener _missingClientSideEncryptionKeyListener;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -198,7 +198,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
+            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._missingClientSideEncryptionKeyListener;
+            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.Storage.Queues
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             ClientSideEncryptionOptions encryptionOptions,
-            IMissingClientSideEncryptionKeyListener listener)
+            IClientSideDecryptionFailureListener listener)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -2134,15 +2134,15 @@ namespace Azure.Storage.Queues
                     message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
-                catch (ClientSideEncryptionKeyNotFoundException) when (_missingClientSideEncryptionKeyListener != default)
+                catch (Exception e) when (_missingClientSideEncryptionKeyListener != default)
                 {
                     if (async)
                     {
-                        await _missingClientSideEncryptionKeyListener.OnMissingKeyAsync(message).ConfigureAwait(false);
+                        await _missingClientSideEncryptionKeyListener.OnFailureAsync(message, e).ConfigureAwait(false);
                     }
                     else
                     {
-                        _missingClientSideEncryptionKeyListener.OnMissingKey(message);
+                        _missingClientSideEncryptionKeyListener.OnFailure(message, e);
                     }
                 }
             }
@@ -2158,15 +2158,15 @@ namespace Azure.Storage.Queues
                     message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
-                catch (ClientSideEncryptionKeyNotFoundException) when (_missingClientSideEncryptionKeyListener != default)
+                catch (Exception e) when (_missingClientSideEncryptionKeyListener != default)
                 {
                     if (async)
                     {
-                        await _missingClientSideEncryptionKeyListener.OnMissingKeyAsync(message).ConfigureAwait(false);
+                        await _missingClientSideEncryptionKeyListener.OnFailureAsync(message, e).ConfigureAwait(false);
                     }
                     else
                     {
-                        _missingClientSideEncryptionKeyListener.OnMissingKey(message);
+                        _missingClientSideEncryptionKeyListener.OnFailure(message, e);
                     }
                 }
             }
