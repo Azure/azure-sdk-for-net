@@ -102,7 +102,7 @@ public  class Modules
     public virtual async Task<Response> DeleteIdentityAsync(string deviceId, string moduleId, string ifMatch = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets the device module twin.
+    /// Get a device module twin.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device.</param>
     /// <param name="moduleId">The unique identifier of the device module.</param>
