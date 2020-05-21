@@ -475,9 +475,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm(bool useStream)
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
@@ -489,18 +487,10 @@ namespace Azure.AI.FormRecognizer.Tests
             // Attempt to recognize a different type of form: Invoice_1.pdf. This form does not contain all the labels
             // the newly trained model expects.
 
-            if (useStream)
+            using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-                }
-            }
-            else
-            {
-                var uri = new Uri(FormRecognizerTestEnvironment.RetrieveInvoiceUri(1));
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
 
             RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
