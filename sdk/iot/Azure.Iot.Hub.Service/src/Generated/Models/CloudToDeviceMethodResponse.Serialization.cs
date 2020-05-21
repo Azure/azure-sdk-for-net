@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class CloudToDeviceMethodResult
+    public partial class CloudToDeviceMethodResponse
     {
-        internal static CloudToDeviceMethodResult DeserializeCloudToDeviceMethodResult(JsonElement element)
+        internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element)
         {
             int? status = default;
             object payload = default;
@@ -37,7 +37,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodResult(status, payload);
+            return new CloudToDeviceMethodResponse(status, payload);
         }
     }
 }
