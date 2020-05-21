@@ -1378,7 +1378,7 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class SimilarityAlgorithm
     {
-        public SimilarityAlgorithm() { }
+        internal SimilarityAlgorithm() { }
     }
     public partial class SimpleField : Azure.Search.Documents.Indexes.Models.SearchFieldTemplate
     {
