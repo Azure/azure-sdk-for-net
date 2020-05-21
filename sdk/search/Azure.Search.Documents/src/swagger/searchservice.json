@@ -52,7 +52,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             },
             "description": "The definition of the datasource to create or update."
           },
@@ -77,13 +77,13 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             }
           },
           "default": {
@@ -179,7 +179,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             }
           },
           "default": {
@@ -257,7 +257,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             },
             "description": "The definition of the datasource to create."
           },
@@ -273,7 +273,7 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DataSource"
+              "$ref": "#/definitions/SearchIndexerDataSource"
             }
           },
           "default": {
@@ -401,7 +401,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             },
             "description": "The definition of the indexer to create or update."
           },
@@ -426,13 +426,13 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             }
           },
           "default": {
@@ -528,7 +528,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             }
           },
           "default": {
@@ -606,7 +606,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             },
             "description": "The definition of the indexer to create."
           },
@@ -622,7 +622,7 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Indexer"
+              "$ref": "#/definitions/SearchIndexer"
             }
           },
           "default": {
@@ -669,7 +669,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/IndexerExecutionInfo"
+              "$ref": "#/definitions/SearchIndexerStatus"
             }
           },
           "default": {
@@ -709,7 +709,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             },
             "description": "The skillset containing one or more skills to create or update in a search service."
           },
@@ -734,13 +734,13 @@
           "200": {
             "description": "The skillset is successfully updated.",
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             }
           },
           "201": {
             "description": "The skillset is successfully created.",
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             }
           },
           "default": {
@@ -836,7 +836,7 @@
           "200": {
             "description": "The skillset is successfully returned.",
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             }
           },
           "default": {
@@ -914,7 +914,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             },
             "description": "The skillset containing one or more skills to create in a search service."
           },
@@ -930,7 +930,7 @@
           "201": {
             "description": "The skillset is successfully created.",
             "schema": {
-              "$ref": "#/definitions/Skillset"
+              "$ref": "#/definitions/SearchIndexerSkillset"
             }
           },
           "default": {
@@ -1224,7 +1224,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             },
             "description": "The definition of the index to create."
           },
@@ -1240,7 +1240,7 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             }
           },
           "default": {
@@ -1294,6 +1294,9 @@
               "$ref": "#/definitions/SearchError"
             }
           }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": null
         }
       }
     },
@@ -1325,7 +1328,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             },
             "description": "The definition of the index to create or update."
           },
@@ -1357,13 +1360,13 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             }
           },
           "default": {
@@ -1384,7 +1387,7 @@
             "$ref": "./examples/SearchServiceDeleteIndex.json"
           }
         },
-        "description": "Deletes a search index and all the documents it contains.",
+        "description": "Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index.",
         "externalDocs": {
           "url": "https://docs.microsoft.com/rest/api/searchservice/Delete-Index"
         },
@@ -1459,7 +1462,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/Index"
+              "$ref": "#/definitions/SearchIndex"
             }
           },
           "default": {
@@ -1620,11 +1623,11 @@
           "description": "The text to break into tokens."
         },
         "analyzer": {
-          "$ref": "#/definitions/AnalyzerName",
+          "$ref": "#/definitions/LexicalAnalyzerName",
           "description": "The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive."
         },
         "tokenizer": {
-          "$ref": "#/definitions/TokenizerName",
+          "$ref": "#/definitions/LexicalTokenizerName",
           "description": "The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive."
         },
         "tokenFilters": {
@@ -1654,7 +1657,7 @@
         "tokens": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TokenInfo"
+            "$ref": "#/definitions/AnalyzedTokenInfo"
           },
           "description": "The list of tokens returned by the analyzer specified in the request."
         }
@@ -1664,7 +1667,7 @@
       ],
       "description": "The result of testing an analyzer on text."
     },
-    "TokenInfo": {
+    "AnalyzedTokenInfo": {
       "properties": {
         "token": {
           "type": "string",
@@ -1701,7 +1704,7 @@
       ],
       "description": "Information about a token returned by an analyzer."
     },
-    "AnalyzerName": {
+    "LexicalAnalyzerName": {
       "type": "string",
       "enum": [
         "ar.microsoft",
@@ -1799,7 +1802,7 @@
         "whitespace"
       ],
       "x-ms-enum": {
-        "name": "AnalyzerName",
+        "name": "LexicalAnalyzerName",
         "modelAsString": true,
         "values": [
           {
@@ -2274,7 +2277,7 @@
         "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
       }
     },
-    "TokenizerName": {
+    "LexicalTokenizerName": {
       "type": "string",
       "enum": [
         "classic",
@@ -2292,7 +2295,7 @@
         "whitespace"
       ],
       "x-ms-enum": {
-        "name": "TokenizerName",
+        "name": "LexicalTokenizerName",
         "modelAsString": true,
         "values": [
           {
@@ -2427,7 +2430,7 @@
           {
             "value": "cjk_bigram",
             "name": "CjkBigram",
-            "description": "Forms bigrams of CJK terms that are generated from StandardTokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html"
+            "description": "Forms bigrams of CJK terms that are generated from the standard tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html"
           },
           {
             "value": "cjk_width",
@@ -2621,14 +2624,56 @@
       ],
       "x-ms-enum": {
         "name": "RegexFlags",
-        "modelAsString": true
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "CANON_EQ",
+            "name": "CanonEq",
+            "description": "Enables canonical equivalence."
+          },
+          {
+            "value": "CASE_INSENSITIVE",
+            "name": "CaseInsensitive",
+            "description": "Enables case-insensitive matching."
+          },
+          {
+            "value": "COMMENTS",
+            "name": "Comments",
+            "description": "Permits whitespace and comments in the pattern."
+          },
+          {
+            "value": "DOTALL",
+            "name": "DotAll",
+            "description": "Enables dotall mode."
+          },
+          {
+            "value": "LITERAL",
+            "name": "Literal",
+            "description": "Enables literal parsing of the pattern."
+          },
+          {
+            "value": "MULTILINE",
+            "name": "Multiline",
+            "description": "Enables multiline mode."
+          },
+          {
+            "value": "UNICODE_CASE",
+            "name": "UnicodeCase",
+            "description": "Enables Unicode-aware case folding."
+          },
+          {
+            "value": "UNIX_LINES",
+            "name": "UnixLines",
+            "description": "Enables Unix lines mode."
+          }
+        ]
       },
       "description": "Defines flags that can be combined to control how regular expressions are used in the pattern analyzer and pattern tokenizer.",
       "externalDocs": {
         "url": "http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#field_summary"
       }
     },
-    "DataType": {
+    "SearchFieldDataType": {
       "type": "string",
       "enum": [
         "Edm.String",
@@ -2641,12 +2686,54 @@
         "Edm.ComplexType"
       ],
       "x-ms-enum": {
-        "name": "DataType",
-        "modelAsString": true
+        "name": "SearchFieldDataType",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "Edm.String",
+            "name": "String",
+            "description": "Indicates that a field contains a string."
+          },
+          {
+            "value": "Edm.Int32",
+            "name": "Int32",
+            "description": "Indicates that a field contains a 32-bit signed integer."
+          },
+          {
+            "value": "Edm.Int64",
+            "name": "Int64",
+            "description": "Indicates that a field contains a 64-bit signed integer."
+          },
+          {
+            "value": "Edm.Double",
+            "name": "Double",
+            "description": "Indicates that a field contains an IEEE double-precision floating point number."
+          },
+          {
+            "value": "Edm.Boolean",
+            "name": "Boolean",
+            "description": "Indicates that a field contains a Boolean value (true or false)."
+          },
+          {
+            "value": "Edm.DateTimeOffset",
+            "name": "DateTimeOffset",
+            "description": "Indicates that a field contains a date/time value, including timezone information."
+          },
+          {
+            "value": "Edm.GeographyPoint",
+            "name": "GeographyPoint",
+            "description": "Indicates that a field contains a geo-location in terms of longitude and latitude."
+          },
+          {
+            "value": "Edm.ComplexType",
+            "name": "Complex",
+            "description": "Indicates that a field contains one or more complex objects that in turn have sub-fields of other types."
+          }
+        ]
       },
       "description": "Defines the data type of a field in a search index."
     },
-    "Analyzer": {
+    "LexicalAnalyzer": {
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
@@ -2671,12 +2758,12 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.CustomAnalyzer",
       "allOf": [
         {
-          "$ref": "#/definitions/Analyzer"
+          "$ref": "#/definitions/LexicalAnalyzer"
         }
       ],
       "properties": {
         "tokenizer": {
-          "$ref": "#/definitions/TokenizerName",
+          "$ref": "#/definitions/LexicalTokenizerName",
           "description": "The name of the tokenizer to use to divide continuous text into a sequence of tokens, such as breaking a sentence into words."
         },
         "tokenFilters": {
@@ -2705,7 +2792,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.PatternAnalyzer",
       "allOf": [
         {
-          "$ref": "#/definitions/Analyzer"
+          "$ref": "#/definitions/LexicalAnalyzer"
         }
       ],
       "properties": {
@@ -2718,7 +2805,7 @@
         "pattern": {
           "type": "string",
           "default": "\\W+",
-          "description": "A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters."
+          "description": "A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters."
         },
         "flags": {
           "$ref": "#/definitions/RegexFlags",
@@ -2737,11 +2824,11 @@
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html"
       }
     },
-    "StandardAnalyzer": {
+    "LuceneStandardAnalyzer": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.StandardAnalyzer",
       "allOf": [
         {
-          "$ref": "#/definitions/Analyzer"
+          "$ref": "#/definitions/LexicalAnalyzer"
         }
       ],
       "properties": {
@@ -2769,7 +2856,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.StopAnalyzer",
       "allOf": [
         {
-          "$ref": "#/definitions/Analyzer"
+          "$ref": "#/definitions/LexicalAnalyzer"
         }
       ],
       "properties": {
@@ -2786,7 +2873,7 @@
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html"
       }
     },
-    "Tokenizer": {
+    "LexicalTokenizer": {
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
@@ -2814,7 +2901,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.ClassicTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -2842,7 +2929,34 @@
       ],
       "x-ms-enum": {
         "name": "TokenCharacterKind",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "letter",
+            "name": "Letter",
+            "description": "Keeps letters in tokens."
+          },
+          {
+            "value": "digit",
+            "name": "Digit",
+            "description": "Keeps digits in tokens."
+          },
+          {
+            "value": "whitespace",
+            "name": "Whitespace",
+            "description": "Keeps whitespace in tokens."
+          },
+          {
+            "value": "punctuation",
+            "name": "Punctuation",
+            "description": "Keeps punctuation in tokens."
+          },
+          {
+            "value": "symbol",
+            "name": "Symbol",
+            "description": "Keeps symbols in tokens."
+          }
+        ]
       },
       "description": "Represents classes of characters on which a token filter can operate."
     },
@@ -2850,7 +2964,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.EdgeNGramTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -2886,7 +3000,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.KeywordTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -2907,7 +3021,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.KeywordTokenizerV2",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -2972,7 +3086,219 @@
       ],
       "x-ms-enum": {
         "name": "MicrosoftTokenizerLanguage",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "bangla",
+            "name": "Bangla",
+            "description": "Selects the Microsoft tokenizer for Bangla."
+          },
+          {
+            "value": "bulgarian",
+            "name": "Bulgarian",
+            "description": "Selects the Microsoft tokenizer for Bulgarian."
+          },
+          {
+            "value": "catalan",
+            "name": "Catalan",
+            "description": "Selects the Microsoft tokenizer for Catalan."
+          },
+          {
+            "value": "chineseSimplified",
+            "name": "ChineseSimplified",
+            "description": "Selects the Microsoft tokenizer for Chinese (Simplified)."
+          },
+          {
+            "value": "chineseTraditional",
+            "name": "ChineseTraditional",
+            "description": "Selects the Microsoft tokenizer for Chinese (Traditional)."
+          },
+          {
+            "value": "croatian",
+            "name": "Croatian",
+            "description": "Selects the Microsoft tokenizer for Croatian."
+          },
+          {
+            "value": "czech",
+            "name": "Czech",
+            "description": "Selects the Microsoft tokenizer for Czech."
+          },
+          {
+            "value": "danish",
+            "name": "Danish",
+            "description": "Selects the Microsoft tokenizer for Danish."
+          },
+          {
+            "value": "dutch",
+            "name": "Dutch",
+            "description": "Selects the Microsoft tokenizer for Dutch."
+          },
+          {
+            "value": "english",
+            "name": "English",
+            "description": "Selects the Microsoft tokenizer for English."
+          },
+          {
+            "value": "french",
+            "name": "French",
+            "description": "Selects the Microsoft tokenizer for French."
+          },
+          {
+            "value": "german",
+            "name": "German",
+            "description": "Selects the Microsoft tokenizer for German."
+          },
+          {
+            "value": "greek",
+            "name": "Greek",
+            "description": "Selects the Microsoft tokenizer for Greek."
+          },
+          {
+            "value": "gujarati",
+            "name": "Gujarati",
+            "description": "Selects the Microsoft tokenizer for Gujarati."
+          },
+          {
+            "value": "hindi",
+            "name": "Hindi",
+            "description": "Selects the Microsoft tokenizer for Hindi."
+          },
+          {
+            "value": "icelandic",
+            "name": "Icelandic",
+            "description": "Selects the Microsoft tokenizer for Icelandic."
+          },
+          {
+            "value": "indonesian",
+            "name": "Indonesian",
+            "description": "Selects the Microsoft tokenizer for Indonesian."
+          },
+          {
+            "value": "italian",
+            "name": "Italian",
+            "description": "Selects the Microsoft tokenizer for Italian."
+          },
+          {
+            "value": "japanese",
+            "name": "Japanese",
+            "description": "Selects the Microsoft tokenizer for Japanese."
+          },
+          {
+            "value": "kannada",
+            "name": "Kannada",
+            "description": "Selects the Microsoft tokenizer for Kannada."
+          },
+          {
+            "value": "korean",
+            "name": "Korean",
+            "description": "Selects the Microsoft tokenizer for Korean."
+          },
+          {
+            "value": "malay",
+            "name": "Malay",
+            "description": "Selects the Microsoft tokenizer for Malay."
+          },
+          {
+            "value": "malayalam",
+            "name": "Malayalam",
+            "description": "Selects the Microsoft tokenizer for Malayalam."
+          },
+          {
+            "value": "marathi",
+            "name": "Marathi",
+            "description": "Selects the Microsoft tokenizer for Marathi."
+          },
+          {
+            "value": "norwegianBokmaal",
+            "name": "NorwegianBokmaal",
+            "description": "Selects the Microsoft tokenizer for Norwegian (Bokmål)."
+          },
+          {
+            "value": "polish",
+            "name": "Polish",
+            "description": "Selects the Microsoft tokenizer for Polish."
+          },
+          {
+            "value": "portuguese",
+            "name": "Portuguese",
+            "description": "Selects the Microsoft tokenizer for Portuguese."
+          },
+          {
+            "value": "portugueseBrazilian",
+            "name": "PortugueseBrazilian",
+            "description": "Selects the Microsoft tokenizer for Portuguese (Brazil)."
+          },
+          {
+            "value": "punjabi",
+            "name": "Punjabi",
+            "description": "Selects the Microsoft tokenizer for Punjabi."
+          },
+          {
+            "value": "romanian",
+            "name": "Romanian",
+            "description": "Selects the Microsoft tokenizer for Romanian."
+          },
+          {
+            "value": "russian",
+            "name": "Russian",
+            "description": "Selects the Microsoft tokenizer for Russian."
+          },
+          {
+            "value": "serbianCyrillic",
+            "name": "SerbianCyrillic",
+            "description": "Selects the Microsoft tokenizer for Serbian (Cyrillic)."
+          },
+          {
+            "value": "serbianLatin",
+            "name": "SerbianLatin",
+            "description": "Selects the Microsoft tokenizer for Serbian (Latin)."
+          },
+          {
+            "value": "slovenian",
+            "name": "Slovenian",
+            "description": "Selects the Microsoft tokenizer for Slovenian."
+          },
+          {
+            "value": "spanish",
+            "name": "Spanish",
+            "description": "Selects the Microsoft tokenizer for Spanish."
+          },
+          {
+            "value": "swedish",
+            "name": "Swedish",
+            "description": "Selects the Microsoft tokenizer for Swedish."
+          },
+          {
+            "value": "tamil",
+            "name": "Tamil",
+            "description": "Selects the Microsoft tokenizer for Tamil."
+          },
+          {
+            "value": "telugu",
+            "name": "Telugu",
+            "description": "Selects the Microsoft tokenizer for Telugu."
+          },
+          {
+            "value": "thai",
+            "name": "Thai",
+            "description": "Selects the Microsoft tokenizer for Thai."
+          },
+          {
+            "value": "ukrainian",
+            "name": "Ukrainian",
+            "description": "Selects the Microsoft tokenizer for Ukrainian."
+          },
+          {
+            "value": "urdu",
+            "name": "Urdu",
+            "description": "Selects the Microsoft tokenizer for Urdu."
+          },
+          {
+            "value": "vietnamese",
+            "name": "Vietnamese",
+            "description": "Selects the Microsoft tokenizer for Vietnamese."
+          }
+        ]
       },
       "description": "Lists the languages supported by the Microsoft language tokenizer."
     },
@@ -2980,7 +3306,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3054,7 +3380,234 @@
       ],
       "x-ms-enum": {
         "name": "MicrosoftStemmingTokenizerLanguage",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "arabic",
+            "name": "Arabic",
+            "description": "Selects the Microsoft stemming tokenizer for Arabic."
+          },
+          {
+            "value": "bangla",
+            "name": "Bangla",
+            "description": "Selects the Microsoft stemming tokenizer for Bangla."
+          },
+          {
+            "value": "bulgarian",
+            "name": "Bulgarian",
+            "description": "Selects the Microsoft stemming tokenizer for Bulgarian."
+          },
+          {
+            "value": "catalan",
+            "name": "Catalan",
+            "description": "Selects the Microsoft stemming tokenizer for Catalan."
+          },
+          {
+            "value": "croatian",
+            "name": "Croatian",
+            "description": "Selects the Microsoft stemming tokenizer for Croatian."
+          },
+          {
+            "value": "czech",
+            "name": "Czech",
+            "description": "Selects the Microsoft stemming tokenizer for Czech."
+          },
+          {
+            "value": "danish",
+            "name": "Danish",
+            "description": "Selects the Microsoft stemming tokenizer for Danish."
+          },
+          {
+            "value": "dutch",
+            "name": "Dutch",
+            "description": "Selects the Microsoft stemming tokenizer for Dutch."
+          },
+          {
+            "value": "english",
+            "name": "English",
+            "description": "Selects the Microsoft stemming tokenizer for English."
+          },
+          {
+            "value": "estonian",
+            "name": "Estonian",
+            "description": "Selects the Microsoft stemming tokenizer for Estonian."
+          },
+          {
+            "value": "finnish",
+            "name": "Finnish",
+            "description": "Selects the Microsoft stemming tokenizer for Finnish."
+          },
+          {
+            "value": "french",
+            "name": "French",
+            "description": "Selects the Microsoft stemming tokenizer for French."
+          },
+          {
+            "value": "german",
+            "name": "German",
+            "description": "Selects the Microsoft stemming tokenizer for German."
+          },
+          {
+            "value": "greek",
+            "name": "Greek",
+            "description": "Selects the Microsoft stemming tokenizer for Greek."
+          },
+          {
+            "value": "gujarati",
+            "name": "Gujarati",
+            "description": "Selects the Microsoft stemming tokenizer for Gujarati."
+          },
+          {
+            "value": "hebrew",
+            "name": "Hebrew",
+            "description": "Selects the Microsoft stemming tokenizer for Hebrew."
+          },
+          {
+            "value": "hindi",
+            "name": "Hindi",
+            "description": "Selects the Microsoft stemming tokenizer for Hindi."
+          },
+          {
+            "value": "hungarian",
+            "name": "Hungarian",
+            "description": "Selects the Microsoft stemming tokenizer for Hungarian."
+          },
+          {
+            "value": "icelandic",
+            "name": "Icelandic",
+            "description": "Selects the Microsoft stemming tokenizer for Icelandic."
+          },
+          {
+            "value": "indonesian",
+            "name": "Indonesian",
+            "description": "Selects the Microsoft stemming tokenizer for Indonesian."
+          },
+          {
+            "value": "italian",
+            "name": "Italian",
+            "description": "Selects the Microsoft stemming tokenizer for Italian."
+          },
+          {
+            "value": "kannada",
+            "name": "Kannada",
+            "description": "Selects the Microsoft stemming tokenizer for Kannada."
+          },
+          {
+            "value": "latvian",
+            "name": "Latvian",
+            "description": "Selects the Microsoft stemming tokenizer for Latvian."
+          },
+          {
+            "value": "lithuanian",
+            "name": "Lithuanian",
+            "description": "Selects the Microsoft stemming tokenizer for Lithuanian."
+          },
+          {
+            "value": "malay",
+            "name": "Malay",
+            "description": "Selects the Microsoft stemming tokenizer for Malay."
+          },
+          {
+            "value": "malayalam",
+            "name": "Malayalam",
+            "description": "Selects the Microsoft stemming tokenizer for Malayalam."
+          },
+          {
+            "value": "marathi",
+            "name": "Marathi",
+            "description": "Selects the Microsoft stemming tokenizer for Marathi."
+          },
+          {
+            "value": "norwegianBokmaal",
+            "name": "NorwegianBokmaal",
+            "description": "Selects the Microsoft stemming tokenizer for Norwegian (Bokmål)."
+          },
+          {
+            "value": "polish",
+            "name": "Polish",
+            "description": "Selects the Microsoft stemming tokenizer for Polish."
+          },
+          {
+            "value": "portuguese",
+            "name": "Portuguese",
+            "description": "Selects the Microsoft stemming tokenizer for Portuguese."
+          },
+          {
+            "value": "portugueseBrazilian",
+            "name": "PortugueseBrazilian",
+            "description": "Selects the Microsoft stemming tokenizer for Portuguese (Brazil)."
+          },
+          {
+            "value": "punjabi",
+            "name": "Punjabi",
+            "description": "Selects the Microsoft stemming tokenizer for Punjabi."
+          },
+          {
+            "value": "romanian",
+            "name": "Romanian",
+            "description": "Selects the Microsoft stemming tokenizer for Romanian."
+          },
+          {
+            "value": "russian",
+            "name": "Russian",
+            "description": "Selects the Microsoft stemming tokenizer for Russian."
+          },
+          {
+            "value": "serbianCyrillic",
+            "name": "SerbianCyrillic",
+            "description": "Selects the Microsoft stemming tokenizer for Serbian (Cyrillic)."
+          },
+          {
+            "value": "serbianLatin",
+            "name": "SerbianLatin",
+            "description": "Selects the Microsoft stemming tokenizer for Serbian (Latin)."
+          },
+          {
+            "value": "slovak",
+            "name": "Slovak",
+            "description": "Selects the Microsoft stemming tokenizer for Slovak."
+          },
+          {
+            "value": "slovenian",
+            "name": "Slovenian",
+            "description": "Selects the Microsoft stemming tokenizer for Slovenian."
+          },
+          {
+            "value": "spanish",
+            "name": "Spanish",
+            "description": "Selects the Microsoft stemming tokenizer for Spanish."
+          },
+          {
+            "value": "swedish",
+            "name": "Swedish",
+            "description": "Selects the Microsoft stemming tokenizer for Swedish."
+          },
+          {
+            "value": "tamil",
+            "name": "Tamil",
+            "description": "Selects the Microsoft stemming tokenizer for Tamil."
+          },
+          {
+            "value": "telugu",
+            "name": "Telugu",
+            "description": "Selects the Microsoft stemming tokenizer for Telugu."
+          },
+          {
+            "value": "turkish",
+            "name": "Turkish",
+            "description": "Selects the Microsoft stemming tokenizer for Turkish."
+          },
+          {
+            "value": "ukrainian",
+            "name": "Ukrainian",
+            "description": "Selects the Microsoft stemming tokenizer for Ukrainian."
+          },
+          {
+            "value": "urdu",
+            "name": "Urdu",
+            "description": "Selects the Microsoft stemming tokenizer for Urdu."
+          }
+        ]
       },
       "description": "Lists the languages supported by the Microsoft language stemming tokenizer."
     },
@@ -3062,7 +3615,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3089,7 +3642,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.NGramTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3125,7 +3678,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.PathHierarchyTokenizerV2",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3171,14 +3724,14 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.PatternTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
         "pattern": {
           "type": "string",
           "default": "\\W+",
-          "description": "A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters."
+          "description": "A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters."
         },
         "flags": {
           "$ref": "#/definitions/RegexFlags",
@@ -3196,11 +3749,11 @@
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternTokenizer.html"
       }
     },
-    "StandardTokenizer": {
+    "LuceneStandardTokenizer": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.StandardTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3217,11 +3770,11 @@
       },
       "x-az-search-deprecated": true
     },
-    "StandardTokenizerV2": {
+    "LuceneStandardTokenizerV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.StandardTokenizerV2",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3242,7 +3795,7 @@
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.UaxUrlEmailTokenizer",
       "allOf": [
         {
-          "$ref": "#/definitions/Tokenizer"
+          "$ref": "#/definitions/LexicalTokenizer"
         }
       ],
       "properties": {
@@ -3312,7 +3865,29 @@
       ],
       "x-ms-enum": {
         "name": "CjkBigramTokenFilterScripts",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "han",
+            "name": "Han",
+            "description": "Ignore Han script when forming bigrams of CJK terms."
+          },
+          {
+            "value": "hiragana",
+            "name": "Hiragana",
+            "description": "Ignore Hiragana script when forming bigrams of CJK terms."
+          },
+          {
+            "value": "katakana",
+            "name": "Katakana",
+            "description": "Ignore Katakana script when forming bigrams of CJK terms."
+          },
+          {
+            "value": "hangul",
+            "name": "Hangul",
+            "description": "Ignore Hangul script when forming bigrams of CJK terms."
+          }
+        ]
       },
       "description": "Scripts that can be ignored by CjkBigramTokenFilter."
     },
@@ -3338,7 +3913,7 @@
           "description": "A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false."
         }
       },
-      "description": "Forms bigrams of CJK terms that are generated from StandardTokenizer. This token filter is implemented using Apache Lucene.",
+      "description": "Forms bigrams of CJK terms that are generated from the standard tokenizer. This token filter is implemented using Apache Lucene.",
       "externalDocs": {
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/cjk/CJKBigramFilter.html"
       }
@@ -3436,7 +4011,19 @@
       ],
       "x-ms-enum": {
         "name": "EdgeNGramTokenFilterSide",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "front",
+            "name": "Front",
+            "description": "Specifies that the n-gram should be generated from the front of the input."
+          },
+          {
+            "value": "back",
+            "name": "Back",
+            "description": "Specifies that the n-gram should be generated from the back of the input."
+          }
+        ]
       },
       "description": "Specifies which side of the input an n-gram should be generated from."
     },
@@ -3594,6 +4181,7 @@
       ],
       "properties": {
         "min": {
+          "x-ms-client-name": "minLength",
           "type": "integer",
           "format": "int32",
           "default": 0,
@@ -3601,6 +4189,7 @@
           "description": "The minimum length in characters. Default is 0. Maximum is 300. Must be less than the value of max."
         },
         "max": {
+          "x-ms-client-name": "maxLength",
           "type": "integer",
           "format": "int32",
           "default": 300,
@@ -3765,7 +4354,64 @@
       ],
       "x-ms-enum": {
         "name": "PhoneticEncoder",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "metaphone",
+            "name": "Metaphone",
+            "description": "Encodes a token into a Metaphone value."
+          },
+          {
+            "value": "doubleMetaphone",
+            "name": "DoubleMetaphone",
+            "description": "Encodes a token into a double metaphone value."
+          },
+          {
+            "value": "soundex",
+            "name": "Soundex",
+            "description": "Encodes a token into a Soundex value."
+          },
+          {
+            "value": "refinedSoundex",
+            "name": "RefinedSoundex",
+            "description": "Encodes a token into a Refined Soundex value."
+          },
+          {
+            "value": "caverphone1",
+            "name": "Caverphone1",
+            "description": "Encodes a token into a Caverphone 1.0 value."
+          },
+          {
+            "value": "caverphone2",
+            "name": "Caverphone2",
+            "description": "Encodes a token into a Caverphone 2.0 value."
+          },
+          {
+            "value": "cologne",
+            "name": "Cologne",
+            "description": "Encodes a token into a Cologne Phonetic value."
+          },
+          {
+            "value": "nysiis",
+            "name": "Nysiis",
+            "description": "Encodes a token into a NYSIIS value."
+          },
+          {
+            "value": "koelnerPhonetik",
+            "name": "KoelnerPhonetik",
+            "description": "Encodes a token using the Kölner Phonetik algorithm."
+          },
+          {
+            "value": "haasePhonetik",
+            "name": "HaasePhonetik",
+            "description": "Encodes a token using the Haase refinement of the Kölner Phonetik algorithm."
+          },
+          {
+            "value": "beiderMorse",
+            "name": "BeiderMorse",
+            "description": "Encodes a token into a Beider-Morse value."
+          }
+        ]
       },
       "description": "Identifies the type of phonetic encoder to use with a PhoneticTokenFilter."
     },
@@ -3870,7 +4516,119 @@
       ],
       "x-ms-enum": {
         "name": "SnowballTokenFilterLanguage",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "armenian",
+            "name": "Armenian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Armenian."
+          },
+          {
+            "value": "basque",
+            "name": "Basque",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Basque."
+          },
+          {
+            "value": "catalan",
+            "name": "Catalan",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Catalan."
+          },
+          {
+            "value": "danish",
+            "name": "Danish",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Danish."
+          },
+          {
+            "value": "dutch",
+            "name": "Dutch",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Dutch."
+          },
+          {
+            "value": "english",
+            "name": "English",
+            "description": "Selects the Lucene Snowball stemming tokenizer for English."
+          },
+          {
+            "value": "finnish",
+            "name": "Finnish",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Finnish."
+          },
+          {
+            "value": "french",
+            "name": "French",
+            "description": "Selects the Lucene Snowball stemming tokenizer for French."
+          },
+          {
+            "value": "german",
+            "name": "German",
+            "description": "Selects the Lucene Snowball stemming tokenizer for German."
+          },
+          {
+            "value": "german2",
+            "name": "German2",
+            "description": "Selects the Lucene Snowball stemming tokenizer that uses the German variant algorithm."
+          },
+          {
+            "value": "hungarian",
+            "name": "Hungarian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Hungarian."
+          },
+          {
+            "value": "italian",
+            "name": "Italian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Italian."
+          },
+          {
+            "value": "kp",
+            "name": "Kp",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm."
+          },
+          {
+            "value": "lovins",
+            "name": "Lovins",
+            "description": "Selects the Lucene Snowball stemming tokenizer for English that uses the Lovins stemming algorithm."
+          },
+          {
+            "value": "norwegian",
+            "name": "Norwegian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Norwegian."
+          },
+          {
+            "value": "porter",
+            "name": "Porter",
+            "description": "Selects the Lucene Snowball stemming tokenizer for English that uses the Porter stemming algorithm."
+          },
+          {
+            "value": "portuguese",
+            "name": "Portuguese",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Portuguese."
+          },
+          {
+            "value": "romanian",
+            "name": "Romanian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Romanian."
+          },
+          {
+            "value": "russian",
+            "name": "Russian",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Russian."
+          },
+          {
+            "value": "spanish",
+            "name": "Spanish",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Spanish."
+          },
+          {
+            "value": "swedish",
+            "name": "Swedish",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Swedish."
+          },
+          {
+            "value": "turkish",
+            "name": "Turkish",
+            "description": "Selects the Lucene Snowball stemming tokenizer for Turkish."
+          }
+        ]
       },
       "description": "The language to use for a Snowball token filter."
     },
@@ -3955,7 +4713,279 @@
       ],
       "x-ms-enum": {
         "name": "StemmerTokenFilterLanguage",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "arabic",
+            "name": "Arabic",
+            "description": "Selects the Lucene stemming tokenizer for Arabic."
+          },
+          {
+            "value": "armenian",
+            "name": "Armenian",
+            "description": "Selects the Lucene stemming tokenizer for Armenian."
+          },
+          {
+            "value": "basque",
+            "name": "Basque",
+            "description": "Selects the Lucene stemming tokenizer for Basque."
+          },
+          {
+            "value": "brazilian",
+            "name": "Brazilian",
+            "description": "Selects the Lucene stemming tokenizer for Portuguese (Brazil)."
+          },
+          {
+            "value": "bulgarian",
+            "name": "Bulgarian",
+            "description": "Selects the Lucene stemming tokenizer for Bulgarian."
+          },
+          {
+            "value": "catalan",
+            "name": "Catalan",
+            "description": "Selects the Lucene stemming tokenizer for Catalan."
+          },
+          {
+            "value": "czech",
+            "name": "Czech",
+            "description": "Selects the Lucene stemming tokenizer for Czech."
+          },
+          {
+            "value": "danish",
+            "name": "Danish",
+            "description": "Selects the Lucene stemming tokenizer for Danish."
+          },
+          {
+            "value": "dutch",
+            "name": "Dutch",
+            "description": "Selects the Lucene stemming tokenizer for Dutch."
+          },
+          {
+            "value": "dutchKp",
+            "name": "DutchKp",
+            "description": "Selects the Lucene stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm."
+          },
+          {
+            "value": "english",
+            "name": "English",
+            "description": "Selects the Lucene stemming tokenizer for English."
+          },
+          {
+            "value": "lightEnglish",
+            "name": "LightEnglish",
+            "description": "Selects the Lucene stemming tokenizer for English that does light stemming."
+          },
+          {
+            "value": "minimalEnglish",
+            "name": "MinimalEnglish",
+            "description": "Selects the Lucene stemming tokenizer for English that does minimal stemming."
+          },
+          {
+            "value": "possessiveEnglish",
+            "name": "PossessiveEnglish",
+            "description": "Selects the Lucene stemming tokenizer for English that removes trailing possessives from words."
+          },
+          {
+            "value": "porter2",
+            "name": "Porter2",
+            "description": "Selects the Lucene stemming tokenizer for English that uses the Porter2 stemming algorithm."
+          },
+          {
+            "value": "lovins",
+            "name": "Lovins",
+            "description": "Selects the Lucene stemming tokenizer for English that uses the Lovins stemming algorithm."
+          },
+          {
+            "value": "finnish",
+            "name": "Finnish",
+            "description": "Selects the Lucene stemming tokenizer for Finnish."
+          },
+          {
+            "value": "lightFinnish",
+            "name": "LightFinnish",
+            "description": "Selects the Lucene stemming tokenizer for Finnish that does light stemming."
+          },
+          {
+            "value": "french",
+            "name": "French",
+            "description": "Selects the Lucene stemming tokenizer for French."
+          },
+          {
+            "value": "lightFrench",
+            "name": "LightFrench",
+            "description": "Selects the Lucene stemming tokenizer for French that does light stemming."
+          },
+          {
+            "value": "minimalFrench",
+            "name": "MinimalFrench",
+            "description": "Selects the Lucene stemming tokenizer for French that does minimal stemming."
+          },
+          {
+            "value": "galician",
+            "name": "Galician",
+            "description": "Selects the Lucene stemming tokenizer for Galician."
+          },
+          {
+            "value": "minimalGalician",
+            "name": "MinimalGalician",
+            "description": "Selects the Lucene stemming tokenizer for Galician that does minimal stemming."
+          },
+          {
+            "value": "german",
+            "name": "German",
+            "description": "Selects the Lucene stemming tokenizer for German."
+          },
+          {
+            "value": "german2",
+            "name": "German2",
+            "description": "Selects the Lucene stemming tokenizer that uses the German variant algorithm."
+          },
+          {
+            "value": "lightGerman",
+            "name": "LightGerman",
+            "description": "Selects the Lucene stemming tokenizer for German that does light stemming."
+          },
+          {
+            "value": "minimalGerman",
+            "name": "MinimalGerman",
+            "description": "Selects the Lucene stemming tokenizer for German that does minimal stemming."
+          },
+          {
+            "value": "greek",
+            "name": "Greek",
+            "description": "Selects the Lucene stemming tokenizer for Greek."
+          },
+          {
+            "value": "hindi",
+            "name": "Hindi",
+            "description": "Selects the Lucene stemming tokenizer for Hindi."
+          },
+          {
+            "value": "hungarian",
+            "name": "Hungarian",
+            "description": "Selects the Lucene stemming tokenizer for Hungarian."
+          },
+          {
+            "value": "lightHungarian",
+            "name": "LightHungarian",
+            "description": "Selects the Lucene stemming tokenizer for Hungarian that does light stemming."
+          },
+          {
+            "value": "indonesian",
+            "name": "Indonesian",
+            "description": "Selects the Lucene stemming tokenizer for Indonesian."
+          },
+          {
+            "value": "irish",
+            "name": "Irish",
+            "description": "Selects the Lucene stemming tokenizer for Irish."
+          },
+          {
+            "value": "italian",
+            "name": "Italian",
+            "description": "Selects the Lucene stemming tokenizer for Italian."
+          },
+          {
+            "value": "lightItalian",
+            "name": "LightItalian",
+            "description": "Selects the Lucene stemming tokenizer for Italian that does light stemming."
+          },
+          {
+            "value": "sorani",
+            "name": "Sorani",
+            "description": "Selects the Lucene stemming tokenizer for Sorani."
+          },
+          {
+            "value": "latvian",
+            "name": "Latvian",
+            "description": "Selects the Lucene stemming tokenizer for Latvian."
+          },
+          {
+            "value": "norwegian",
+            "name": "Norwegian",
+            "description": "Selects the Lucene stemming tokenizer for Norwegian (Bokmål)."
+          },
+          {
+            "value": "lightNorwegian",
+            "name": "LightNorwegian",
+            "description": "Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does light stemming."
+          },
+          {
+            "value": "minimalNorwegian",
+            "name": "MinimalNorwegian",
+            "description": "Selects the Lucene stemming tokenizer for Norwegian (Bokmål) that does minimal stemming."
+          },
+          {
+            "value": "lightNynorsk",
+            "name": "LightNynorsk",
+            "description": "Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming."
+          },
+          {
+            "value": "minimalNynorsk",
+            "name": "MinimalNynorsk",
+            "description": "Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does minimal stemming."
+          },
+          {
+            "value": "portuguese",
+            "name": "Portuguese",
+            "description": "Selects the Lucene stemming tokenizer for Portuguese."
+          },
+          {
+            "value": "lightPortuguese",
+            "name": "LightPortuguese",
+            "description": "Selects the Lucene stemming tokenizer for Portuguese that does light stemming."
+          },
+          {
+            "value": "minimalPortuguese",
+            "name": "MinimalPortuguese",
+            "description": "Selects the Lucene stemming tokenizer for Portuguese that does minimal stemming."
+          },
+          {
+            "value": "portugueseRslp",
+            "name": "PortugueseRslp",
+            "description": "Selects the Lucene stemming tokenizer for Portuguese that uses the RSLP stemming algorithm."
+          },
+          {
+            "value": "romanian",
+            "name": "Romanian",
+            "description": "Selects the Lucene stemming tokenizer for Romanian."
+          },
+          {
+            "value": "russian",
+            "name": "Russian",
+            "description": "Selects the Lucene stemming tokenizer for Russian."
+          },
+          {
+            "value": "lightRussian",
+            "name": "LightRussian",
+            "description": "Selects the Lucene stemming tokenizer for Russian that does light stemming."
+          },
+          {
+            "value": "spanish",
+            "name": "Spanish",
+            "description": "Selects the Lucene stemming tokenizer for Spanish."
+          },
+          {
+            "value": "lightSpanish",
+            "name": "LightSpanish",
+            "description": "Selects the Lucene stemming tokenizer for Spanish that does light stemming."
+          },
+          {
+            "value": "swedish",
+            "name": "Swedish",
+            "description": "Selects the Lucene stemming tokenizer for Swedish."
+          },
+          {
+            "value": "lightSwedish",
+            "name": "LightSwedish",
+            "description": "Selects the Lucene stemming tokenizer for Swedish that does light stemming."
+          },
+          {
+            "value": "turkish",
+            "name": "Turkish",
+            "description": "Selects the Lucene stemming tokenizer for Turkish."
+          }
+        ]
       },
       "description": "The language to use for a stemmer token filter."
     },
@@ -4041,7 +5071,164 @@
       ],
       "x-ms-enum": {
         "name": "StopwordsList",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "arabic",
+            "name": "Arabic",
+            "description": "Selects the stopword list for Arabic."
+          },
+          {
+            "value": "armenian",
+            "name": "Armenian",
+            "description": "Selects the stopword list for Armenian."
+          },
+          {
+            "value": "basque",
+            "name": "Basque",
+            "description": "Selects the stopword list for Basque."
+          },
+          {
+            "value": "brazilian",
+            "name": "Brazilian",
+            "description": "Selects the stopword list for Portuguese (Brazil)."
+          },
+          {
+            "value": "bulgarian",
+            "name": "Bulgarian",
+            "description": "Selects the stopword list for Bulgarian."
+          },
+          {
+            "value": "catalan",
+            "name": "Catalan",
+            "description": "Selects the stopword list for Catalan."
+          },
+          {
+            "value": "czech",
+            "name": "Czech",
+            "description": "Selects the stopword list for Czech."
+          },
+          {
+            "value": "danish",
+            "name": "Danish",
+            "description": "Selects the stopword list for Danish."
+          },
+          {
+            "value": "dutch",
+            "name": "Dutch",
+            "description": "Selects the stopword list for Dutch."
+          },
+          {
+            "value": "english",
+            "name": "English",
+            "description": "Selects the stopword list for English."
+          },
+          {
+            "value": "finnish",
+            "name": "Finnish",
+            "description": "Selects the stopword list for Finnish."
+          },
+          {
+            "value": "french",
+            "name": "French",
+            "description": "Selects the stopword list for French."
+          },
+          {
+            "value": "galician",
+            "name": "Galician",
+            "description": "Selects the stopword list for Galician."
+          },
+          {
+            "value": "german",
+            "name": "German",
+            "description": "Selects the stopword list for German."
+          },
+          {
+            "value": "greek",
+            "name": "Greek",
+            "description": "Selects the stopword list for Greek."
+          },
+          {
+            "value": "hindi",
+            "name": "Hindi",
+            "description": "Selects the stopword list for Hindi."
+          },
+          {
+            "value": "hungarian",
+            "name": "Hungarian",
+            "description": "Selects the stopword list for Hungarian."
+          },
+          {
+            "value": "indonesian",
+            "name": "Indonesian",
+            "description": "Selects the stopword list for Indonesian."
+          },
+          {
+            "value": "irish",
+            "name": "Irish",
+            "description": "Selects the stopword list for Irish."
+          },
+          {
+            "value": "italian",
+            "name": "Italian",
+            "description": "Selects the stopword list for Italian."
+          },
+          {
+            "value": "latvian",
+            "name": "Latvian",
+            "description": "Selects the stopword list for Latvian."
+          },
+          {
+            "value": "norwegian",
+            "name": "Norwegian",
+            "description": "Selects the stopword list for Norwegian."
+          },
+          {
+            "value": "persian",
+            "name": "Persian",
+            "description": "Selects the stopword list for Persian."
+          },
+          {
+            "value": "portuguese",
+            "name": "Portuguese",
+            "description": "Selects the stopword list for Portuguese."
+          },
+          {
+            "value": "romanian",
+            "name": "Romanian",
+            "description": "Selects the stopword list for Romanian."
+          },
+          {
+            "value": "russian",
+            "name": "Russian",
+            "description": "Selects the stopword list for Russian."
+          },
+          {
+            "value": "sorani",
+            "name": "Sorani",
+            "description": "Selects the stopword list for Sorani."
+          },
+          {
+            "value": "spanish",
+            "name": "Spanish",
+            "description": "Selects the stopword list for Spanish."
+          },
+          {
+            "value": "swedish",
+            "name": "Swedish",
+            "description": "Selects the stopword list for Swedish."
+          },
+          {
+            "value": "thai",
+            "name": "Thai",
+            "description": "Selects the stopword list for Thai."
+          },
+          {
+            "value": "turkish",
+            "name": "Turkish",
+            "description": "Selects the stopword list for Turkish."
+          }
+        ]
       },
       "description": "Identifies a predefined list of language-specific stopwords."
     },
@@ -4353,7 +5540,7 @@
       },
       "description": "Represents credentials that can be used to connect to a datasource."
     },
-    "DataContainer": {
+    "SearchIndexerDataContainer": {
       "properties": {
         "name": {
           "type": "string",
@@ -4441,7 +5628,7 @@
         }
       }
     },
-    "DataSourceType": {
+    "SearchIndexerDataSourceType": {
       "type": "string",
       "enum": [
         "azuresql",
@@ -4451,7 +5638,7 @@
         "mysql"
       ],
       "x-ms-enum": {
-        "name": "DataSourceType",
+        "name": "SearchIndexerDataSourceType",
         "modelAsString": true,
         "values": [
           {
@@ -4483,7 +5670,7 @@
       },
       "description": "Defines the type of a datasource."
     },
-    "DataSource": {
+    "SearchIndexerDataSource": {
       "properties": {
         "name": {
           "externalDocs": {
@@ -4497,7 +5684,7 @@
           "description": "The description of the datasource."
         },
         "type": {
-          "$ref": "#/definitions/DataSourceType",
+          "$ref": "#/definitions/SearchIndexerDataSourceType",
           "description": "The type of the datasource."
         },
         "credentials": {
@@ -4505,7 +5692,7 @@
           "description": "Credentials for the datasource."
         },
         "container": {
-          "$ref": "#/definitions/DataContainer",
+          "$ref": "#/definitions/SearchIndexerDataContainer",
           "description": "The data container for the datasource."
         },
         "dataChangeDetectionPolicy": {
@@ -4519,7 +5706,7 @@
         "@odata.etag": {
           "x-ms-client-name": "ETag",
           "type": "string",
-          "description": "The ETag of the DataSource."
+          "description": "The ETag of the data source."
         }
       },
       "required": [
@@ -4537,7 +5724,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/DataSource"
+            "$ref": "#/definitions/SearchIndexerDataSource"
           },
           "description": "The datasources in the Search service."
         }
@@ -4639,7 +5826,7 @@
         "url": "https://docs.microsoft.com/azure/search/search-indexer-field-mappings"
       }
     },
-    "Indexer": {
+    "SearchIndexer": {
       "properties": {
         "name": {
           "externalDocs": {
@@ -4701,7 +5888,7 @@
         "@odata.etag": {
           "x-ms-client-name": "ETag",
           "type": "string",
-          "description": "The ETag of the Indexer."
+          "description": "The ETag of the indexer."
         }
       },
       "required": [
@@ -4721,7 +5908,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/Indexer"
+            "$ref": "#/definitions/SearchIndexer"
           },
           "description": "The indexers in the Search service."
         }
@@ -4731,7 +5918,7 @@
       ],
       "description": "Response from a List Indexers request. If successful, it includes the full definitions of all indexers."
     },
-    "ItemError": {
+    "SearchIndexerError": {
       "properties": {
         "key": {
           "type": "string",
@@ -4772,7 +5959,7 @@
       ],
       "description": "Represents an item- or document-level indexing error."
     },
-    "ItemWarning": {
+    "SearchIndexerWarning": {
       "properties": {
         "key": {
           "type": "string",
@@ -4833,7 +6020,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/ItemError"
+            "$ref": "#/definitions/SearchIndexerError"
           },
           "description": "The item-level indexing errors."
         },
@@ -4841,7 +6028,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/ItemWarning"
+            "$ref": "#/definitions/SearchIndexerWarning"
           },
           "description": "The item-level indexing warnings."
         },
@@ -4918,7 +6105,7 @@
       "x-nullable": false,
       "description": "Represents the status of an individual indexer execution."
     },
-    "IndexerExecutionInfo": {
+    "SearchIndexerStatus": {
       "properties": {
         "status": {
           "$ref": "#/definitions/IndexerStatus",
@@ -4939,7 +6126,7 @@
           "description": "History of the recent indexer executions, sorted in reverse chronological order."
         },
         "limits": {
-          "$ref": "#/definitions/IndexerLimits",
+          "$ref": "#/definitions/SearchIndexerLimits",
           "readOnly": true,
           "description": "The execution limits for the indexer."
         }
@@ -4982,7 +6169,7 @@
       "x-nullable": false,
       "description": "Represents the overall indexer status."
     },
-    "IndexerLimits": {
+    "SearchIndexerLimits": {
       "properties": {
         "maxRunTime": {
           "type": "string",
@@ -5004,7 +6191,7 @@
         }
       }
     },
-    "Field": {
+    "SearchField": {
       "properties": {
         "name": {
           "type": "string",
@@ -5014,7 +6201,7 @@
           }
         },
         "type": {
-          "$ref": "#/definitions/DataType",
+          "$ref": "#/definitions/SearchFieldDataType",
           "description": "The data type of the field.",
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/supported-data-types"
@@ -5048,21 +6235,21 @@
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
-          "$ref": "#/definitions/AnalyzerName",
+          "$ref": "#/definitions/LexicalAnalyzerName",
           "description": "The name of the analyzer to use for the field. This option can be used only with searchable fields and it can't be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
         },
         "searchAnalyzer": {
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
-          "$ref": "#/definitions/AnalyzerName",
+          "$ref": "#/definitions/LexicalAnalyzerName",
           "description": "The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields."
         },
         "indexAnalyzer": {
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
-          "$ref": "#/definitions/AnalyzerName",
+          "$ref": "#/definitions/LexicalAnalyzerName",
           "description": "The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
         },
         "synonymMaps": {
@@ -5078,7 +6265,7 @@
         "fields": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Field"
+            "$ref": "#/definitions/SearchField"
           },
           "description": "A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields."
         }
@@ -5305,7 +6492,29 @@
       ],
       "x-ms-enum": {
         "name": "ScoringFunctionInterpolation",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "linear",
+            "name": "Linear",
+            "description": "Boosts scores by a linearly decreasing amount. This is the default interpolation for scoring functions."
+          },
+          {
+            "value": "constant",
+            "name": "Constant",
+            "description": "Boosts scores by a constant factor."
+          },
+          {
+            "value": "quadratic",
+            "name": "Quadratic",
+            "description": "Boosts scores by an amount that decreases quadratically. Boosts decrease slowly for higher scores, and more quickly as the scores decrease. This interpolation option is not allowed in tag scoring functions."
+          },
+          {
+            "value": "logarithmic",
+            "name": "Logarithmic",
+            "description": "Boosts scores by an amount that decreases logarithmically. Boosts decrease quickly for higher scores, and more slowly as the scores decrease. This interpolation option is not allowed in tag scoring functions."
+          }
+        ]
       },
       "description": "Defines the function used to interpolate score boosting across a range of documents."
     },
@@ -5354,7 +6563,34 @@
       ],
       "x-ms-enum": {
         "name": "ScoringFunctionAggregation",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "sum",
+            "name": "Sum",
+            "description": "Boost scores by the sum of all scoring function results."
+          },
+          {
+            "value": "average",
+            "name": "Average",
+            "description": "Boost scores by the average of all scoring function results."
+          },
+          {
+            "value": "minimum",
+            "name": "Minimum",
+            "description": "Boost scores by the minimum of all scoring function results."
+          },
+          {
+            "value": "maximum",
+            "name": "Maximum",
+            "description": "Boost scores by the maximum of all scoring function results."
+          },
+          {
+            "value": "firstMatching",
+            "name": "FirstMatching",
+            "description": "Boost scores using the first applicable scoring function in the scoring profile."
+          }
+        ]
       },
       "description": "Defines the aggregation function used to combine the results of all the scoring functions in a scoring profile."
     },
@@ -5393,8 +6629,15 @@
             "analyzingInfixMatching"
           ],
           "x-ms-enum": {
-            "name": "searchMode",
-            "modelAsString": false
+            "name": "SuggesterSearchMode",
+            "modelAsString": false,
+            "values": [
+              {
+                "value": "analyzingInfixMatching",
+                "name": "AnalyzingInfixMatching",
+                "description": "Matches consecutive whole terms and prefixes in a field. For example, for the field 'The fastest brown fox', the queries 'fast' and 'fastest brow' would both match."
+              }
+            ]
           },
           "description": "A value indicating the capabilities of the suggester."
         },
@@ -5413,7 +6656,7 @@
       ],
       "description": "Defines how the Suggest API should apply to a group of fields in the index."
     },
-    "Index": {
+    "SearchIndex": {
       "properties": {
         "name": {
           "externalDocs": {
@@ -5425,7 +6668,7 @@
         "fields": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Field"
+            "$ref": "#/definitions/SearchField"
           },
           "description": "The fields of the index."
         },
@@ -5454,7 +6697,7 @@
         "analyzers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Analyzer"
+            "$ref": "#/definitions/LexicalAnalyzer"
           },
           "description": "The analyzers for the index.",
           "externalDocs": {
@@ -5464,7 +6707,7 @@
         "tokenizers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Tokenizer"
+            "$ref": "#/definitions/LexicalTokenizer"
           },
           "description": "The tokenizers for the index.",
           "externalDocs": {
@@ -5492,7 +6735,7 @@
           }
         },
         "encryptionKey": {
-          "$ref": "#/definitions/EncryptionKey",
+          "$ref": "#/definitions/SearchResourceEncryptionKey",
           "description": "A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019.",
           "externalDocs": {
             "url": "https://aka.ms/azure-search-encryption-with-cmk"
@@ -5547,7 +6790,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/Index"
+            "$ref": "#/definitions/SearchIndex"
           },
           "description": "The indexes in the Search service."
         }
@@ -5557,7 +6800,7 @@
       ],
       "description": "Response from a List Indexes request. If successful, it includes the full definitions of all indexes."
     },
-    "Skillset": {
+    "SearchIndexerSkillset": {
       "properties": {
         "name": {
           "type": "string",
@@ -5570,7 +6813,7 @@
         "skills": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Skill"
+            "$ref": "#/definitions/SearchIndexerSkill"
           },
           "description": "A list of skills in the skillset."
         },
@@ -5639,7 +6882,7 @@
         "key"
       ]
     },
-    "Skill": {
+    "SearchIndexerSkill": {
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
@@ -5733,7 +6976,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Util.ConditionalSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "externalDocs": {
@@ -5745,7 +6988,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5769,7 +7012,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Vision.OcrSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5797,7 +7040,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5831,7 +7074,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.LanguageDetectionSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "externalDocs": {
@@ -5843,7 +7086,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Util.ShaperSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "externalDocs": {
@@ -5855,7 +7098,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.MergeSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5879,7 +7122,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.EntityRecognitionSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5916,7 +7159,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.SentimentSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5934,7 +7177,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.SplitSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5963,7 +7206,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Text.TranslationSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -5992,7 +7235,7 @@
       "x-ms-discriminator-value": "#Microsoft.Skills.Custom.WebApiSkill",
       "allOf": [
         {
-          "$ref": "#/definitions/Skill"
+          "$ref": "#/definitions/SearchIndexerSkill"
         }
       ],
       "properties": {
@@ -6048,7 +7291,7 @@
           "type": "array",
           "readOnly": true,
           "items": {
-            "$ref": "#/definitions/Skillset"
+            "$ref": "#/definitions/SearchIndexerSkillset"
           },
           "description": "The skillsets defined in the Search service."
         }
@@ -6056,7 +7299,7 @@
       "required": [
         "value"
       ],
-      "description": "Response from a list Skillset request. If successful, it includes the full definitions of all skillsets."
+      "description": "Response from a list skillset request. If successful, it includes the full definitions of all skillsets."
     },
     "TextExtractionAlgorithm": {
       "type": "string",
@@ -7123,7 +8366,14 @@
           ],
           "x-ms-enum": {
             "name": "SynonymMapFormat",
-            "modelAsString": false
+            "modelAsString": false,
+            "values": [
+              {
+                "value": "solr",
+                "name": "Solr",
+                "description": "Selects the SOLR format for synonym maps."
+              }
+            ]
           },
           "description": "The format of the synonym map. Only the 'solr' format is currently supported."
         },
@@ -7135,7 +8385,7 @@
           }
         },
         "encryptionKey": {
-          "$ref": "#/definitions/EncryptionKey",
+          "$ref": "#/definitions/SearchResourceEncryptionKey",
           "description": "A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019.",
           "externalDocs": {
             "url": "https://aka.ms/azure-search-encryption-with-cmk"
@@ -7171,17 +8421,20 @@
       ],
       "description": "Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps."
     },
-    "EncryptionKey": {
+    "SearchResourceEncryptionKey": {
       "properties": {
         "keyVaultKeyName": {
+          "x-ms-client-name": "keyName",
           "type": "string",
           "description": "The name of your Azure Key Vault key to be used to encrypt your data at rest."
         },
         "keyVaultKeyVersion": {
+          "x-ms-client-name": "keyVersion",
           "type": "string",
           "description": "The version of your Azure Key Vault key to be used to encrypt your data at rest."
         },
         "keyVaultUri": {
+          "x-ms-client-name": "vaultUri",
           "type": "string",
           "description": "The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net."
         },
@@ -7385,9 +8638,6 @@
       "required": false,
       "type": "string",
       "description": "Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value.",
-      "x-ms-parameter-grouping": {
-        "name": "access-condition"
-      },
       "x-ms-parameter-location": "method"
     },
     "IfNoneMatchParameter": {
@@ -7396,9 +8646,6 @@
       "required": false,
       "type": "string",
       "description": "Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value.",
-      "x-ms-parameter-grouping": {
-        "name": "access-condition"
-      },
       "x-ms-parameter-location": "method"
     },
     "PreferHeaderParameter": {

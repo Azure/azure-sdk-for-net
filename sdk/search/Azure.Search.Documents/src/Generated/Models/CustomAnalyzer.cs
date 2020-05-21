@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Allows you to take control over the process of converting text into indexable/searchable tokens. It&apos;s a user-defined configuration consisting of a single predefined tokenizer and one or more filters. The tokenizer is responsible for breaking text into tokens, and the filters for modifying tokens emitted by the tokenizer. </summary>
     public partial class CustomAnalyzer : LexicalAnalyzer

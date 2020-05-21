@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 {
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public class ServiceBusLiveTestBase : ServiceBusTestBase
+    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 

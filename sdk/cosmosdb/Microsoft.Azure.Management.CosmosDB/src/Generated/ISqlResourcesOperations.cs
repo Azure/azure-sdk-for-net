@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account with the provided name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Cosmos DB database account with the provided name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL container
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL container.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Azure Cosmos DB database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL container
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL storedProcedure
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -493,7 +493,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL storedProcedure.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -525,7 +525,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -591,7 +591,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL userDefinedFunction
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -628,7 +628,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL userDefinedFunction.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -660,7 +660,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -692,7 +692,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -726,7 +726,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL trigger
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -763,7 +763,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL trigger.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -794,7 +794,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -825,7 +825,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -850,7 +850,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -882,7 +882,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL container
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -916,7 +916,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL container.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL container
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -979,7 +979,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL storedProcedure
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1016,7 +1016,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL storedProcedure.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1047,7 +1047,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL userDefinedFunction
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1084,7 +1084,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL userDefinedFunction.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1115,7 +1115,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB SQL trigger
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1152,7 +1152,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB SQL trigger.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.

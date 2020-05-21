@@ -171,7 +171,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
-        /// <see cref="SearchServiceClient"/>.
+        /// <see cref="SearchIndexClient"/>.
         /// </summary>
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely

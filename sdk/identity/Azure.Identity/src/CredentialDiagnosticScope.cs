@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.ExceptionServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -34,26 +36,25 @@ namespace Azure.Identity
             return token;
         }
 
-        public AuthenticationFailedException FailAndWrap(Exception ex)
+        public Exception FailWrapAndThrow(Exception ex)
         {
-            if (!(ex is AuthenticationFailedException))
+            if (ex is OperationCanceledException || ex is AuthenticationFailedException)
             {
-                ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
+                var info = ExceptionDispatchInfo.Capture(ex);
+                RegisterFailed(ex);
+                info.Throw();
             }
 
-            return (AuthenticationFailedException)Failed(ex);
+            ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
+            RegisterFailed(ex);
+            throw ex;
         }
 
-
-        public Exception Failed(Exception ex)
+        private void RegisterFailed(Exception ex)
         {
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
-
             _scope.Failed(ex);
-
-            return ex;
         }
-
 
         public void Dispose()
         {
