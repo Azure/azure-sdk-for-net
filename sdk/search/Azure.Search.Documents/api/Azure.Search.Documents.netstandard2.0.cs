@@ -1093,17 +1093,17 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchableField : Azure.Search.Documents.Indexes.Models.SimpleField
     {
         public SearchableField(string name, bool collection = false) : base (default(string), default(Azure.Search.Documents.Indexes.Models.SearchFieldDataType)) { }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? Analyzer { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzer { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzer { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? AnalyzerName { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzerName { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
     }
     public partial class SearchField
     {
         public SearchField(string name, Azure.Search.Documents.Indexes.Models.SearchFieldDataType type) { }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? Analyzer { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? AnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Fields { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzer { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzerName { get { throw null; } set { } }
         public bool? IsFacetable { get { throw null; } set { } }
         public bool? IsFilterable { get { throw null; } set { } }
         public bool? IsHidden { get { throw null; } set { } }
@@ -1111,8 +1111,8 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? IsSearchable { get { throw null; } set { } }
         public bool? IsSortable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzer { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
         public override string ToString() { throw null; }
     }

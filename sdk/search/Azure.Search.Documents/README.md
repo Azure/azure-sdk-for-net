@@ -289,7 +289,7 @@ SearchIndex index = new SearchIndex("hotels")
     {
         new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
         new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-        new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
         new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
         new ComplexField("address")
         {
