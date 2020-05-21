@@ -248,7 +248,7 @@
       "get": {
         "summary": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query language to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
         "description": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-        "operationId": "Devices_GetDevices",
+        "operationId": "Devices_Get",
         "consumes": [],
         "produces": [
           "application/json"
@@ -281,7 +281,7 @@
       "post": {
         "summary": "Create, update, or delete the identities of multiple devices from the IoT hub identity registry.",
         "description": "Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
-        "operationId": "Devices_BulkDeviceCRUD",
+        "operationId": "Devices_BulkDeviceOperations",
         "consumes": [
           "application/json"
         ],
@@ -387,7 +387,7 @@
       "get": {
         "summary": "Retrieve a device from the identity registry of an IoT hub.",
         "description": "Get a device from the identity registry of an IoT hub.",
-        "operationId": "Devices_GetDevice",
+        "operationId": "Devices_Get",
         "consumes": [],
         "produces": [
           "application/json"
@@ -416,7 +416,7 @@
       "put": {
         "summary": "Create or update the identity of a device in the identity registry of an IoT hub.",
         "description": "Create or update the identity of a device in the identity registry of an IoT hub.",
-        "operationId": "Devices_CreateOrUpdateDevice",
+        "operationId": "Devices_CreateOrUpdate",
         "consumes": [
           "application/json"
         ],
@@ -463,7 +463,7 @@
       "delete": {
         "summary": "Delete the identity of a device from the identity registry of an IoT hub.",
         "description": "Delete the identity of a device from the identity registry of an IoT hub.",
-        "operationId": "Devices_DeleteDevice",
+        "operationId": "Devices_Delete",
         "consumes": [],
         "produces": [
           "application/json"
@@ -668,7 +668,7 @@
       "delete": {
         "summary": "Deletes all the pending commands for this device from the IoT hub.",
         "description": "Deletes all the pending commands for this device from the IoT hub.",
-        "operationId": "Messages_PurgeCommandQueue",
+        "operationId": "Messages_PurgeCloudToDeviceMessageQueue",
         "consumes": [],
         "produces": [
           "application/json"
@@ -752,7 +752,7 @@
       "get": {
         "summary": "Gets a device twin.",
         "description": "Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_GetDeviceTwin",
+        "operationId": "Devices_GetTwin",
         "consumes": [],
         "produces": [
           "application/json"
@@ -781,7 +781,7 @@
       "put": {
         "summary": "Replaces tags and desired properties of a device twin.",
         "description": "Replaces the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_ReplaceDeviceTwin",
+        "operationId": "Devices_ReplaceTwin",
         "consumes": [
           "application/json"
         ],
@@ -828,7 +828,7 @@
       "patch": {
         "summary": "Updates tags and desired properties of a device twin.",
         "description": "Updates the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_UpdateDeviceTwin",
+        "operationId": "Devices_UpdateTwin",
         "consumes": [
           "application/json"
         ],
@@ -877,7 +877,7 @@
       "get": {
         "summary": "Gets a module twin.",
         "description": "Gets the module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_GetModuleTwin",
+        "operationId": "Modules_GetTwin",
         "consumes": [],
         "produces": [
           "application/json"
@@ -913,7 +913,7 @@
       "put": {
         "summary": "Replaces tags and desired properties of a module twin.",
         "description": "Replaces the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_ReplaceModuleTwin",
+        "operationId": "Modules_ReplaceTwin",
         "consumes": [
           "application/json"
         ],
@@ -967,7 +967,7 @@
       "patch": {
         "summary": "Updates tags and desired properties of a module twin.",
         "description": "Updates the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_UpdateModuleTwin",
+        "operationId": "Modules_UpdateTwin",
         "consumes": [
           "application/json"
         ],
@@ -1237,7 +1237,7 @@
       "get": {
         "summary": "Retrieves details of a scheduled job from an IoT hub.",
         "description": "Retrieves details of a scheduled job from IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_GetJob",
+        "operationId": "Jobs_Get",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1266,7 +1266,7 @@
       "put": {
         "summary": "Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time.",
         "description": "Creates a new job to schedule twin updates or direct methods on IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_CreateJob",
+        "operationId": "Jobs_Create",
         "consumes": [
           "application/json"
         ],
@@ -1308,7 +1308,7 @@
       "post": {
         "summary": "Cancels a scheduled job on an IoT hub.",
         "description": "Cancels a scheduled job on IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_CancelJob",
+        "operationId": "Jobs_Cancel",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1339,7 +1339,7 @@
       "get": {
         "summary": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language",
         "description": "Query IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-        "operationId": "Jobs_QueryJobs",
+        "operationId": "Jobs_Query",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1411,7 +1411,7 @@
       "get": {
         "summary": "Retrieve the specified module identity on the device.",
         "description": "Get the specified module identity of the device.",
-        "operationId": "Modules_GetModule",
+        "operationId": "Modules_Get",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1447,7 +1447,7 @@
       "put": {
         "summary": "Create or update the module identity for device in IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that moduleId and generation cannot be updated by the user.",
         "description": "Create or update the module identity for device in IoT hub. The moduleId and generation cannot be updated by the user.",
-        "operationId": "Modules_CreateOrUpdateModule",
+        "operationId": "Modules_CreateOrUpdate",
         "consumes": [
           "application/json"
         ],
@@ -1507,7 +1507,7 @@
       "delete": {
         "summary": "Delete the module identity for device of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*).",
         "description": "Delete the module identity for device of an IoT hub.",
-        "operationId": "Modules_DeleteModule",
+        "operationId": "Modules_Delete",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1626,7 +1626,7 @@
       "post": {
         "summary": "Invoke a direct method on a device.",
         "description": "Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
-        "operationId": "Devices_InvokeDeviceMethod",
+        "operationId": "Devices_InvokeMethod",
         "consumes": [
           "application/json"
         ],
@@ -1668,7 +1668,7 @@
       "post": {
         "summary": "Invoke a direct method on a module of a device.",
         "description": "Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
-        "operationId": "Modules_InvokeModuleMethod",
+        "operationId": "Modules_InvokeMethod",
         "consumes": [
           "application/json"
         ],
