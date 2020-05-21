@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -31,15 +27,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a fake <see cref="FormTrainingClient" /> and instruments it to make use of the Azure Core
         /// Test Framework functionalities.
         /// </summary>
-        /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedClient(FormRecognizerClientOptions options = default)
+        private FormTrainingClient CreateInstrumentedClient()
         {
             var fakeEndpoint = new Uri("http://localhost");
             var fakeCredential = new AzureKeyCredential("fakeKey");
-            options ??= new FormRecognizerClientOptions();
+            var client = new FormTrainingClient(fakeEndpoint, fakeCredential);
 
-            var client = new FormTrainingClient(fakeEndpoint, fakeCredential, options);
             return InstrumentClient(client);
         }
 
@@ -106,33 +100,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartTrainingEncodesBlankSpaces()
-        {
-            var mockResponse = new MockResponse(201);
-            mockResponse.AddHeader(new HttpHeader("Location", "host/custom/models/00000000000000000000000000000000"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
-
-            var encodedUriString = "https://fakeuri.com/blank%20space";
-            var decodedUriString = "https://fakeuri.com/blank space";
-
-            await client.StartTrainingAsync(new Uri(encodedUriString));
-            await client.StartTrainingAsync(new Uri(decodedUriString));
-
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-
-            foreach (var request in mockTransport.Requests)
-            {
-                var requestBody = GetString(request.Content);
-
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
-            }
-        }
-
-        [Test]
         public void GetCustomModelArgumentValidation()
         {
             FormTrainingClient client = CreateInstrumentedClient();
@@ -161,14 +128,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(formRecognizerClient);
             Assert.IsNotNull(formRecognizerClient.Diagnostics);
             Assert.IsNotNull(formRecognizerClient.ServiceClient);
-        }
-
-        private static string GetString(RequestContent content)
-        {
-            using var stream = new MemoryStream();
-            content.WriteTo(stream, CancellationToken.None);
-
-            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }
