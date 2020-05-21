@@ -70,6 +70,7 @@ pr:
     - sdk/iotcentral/Microsoft.Azure.Management.IotCentral
     - sdk/iothub/Microsoft.Azure.Management.IotHub
     - sdk/keyvault/Microsoft.Azure.Management.KeyVault
+    - sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration
     - sdk/kusto/Microsoft.Azure.Management.Kusto
     - sdk/labservices/Microsoft.Azure.Management.LabServices
     - sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices
