@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Management.Resource.csproj" />
+    <ProjectReference Include="..\src\Azure.Management.Resources.csproj" />
   </ItemGroup>
 </Project>

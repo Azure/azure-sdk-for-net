@@ -11,8 +11,6 @@ using Azure.Graph.Rbac;
 using Azure.Management.KeyVault.Models;
 using Azure.Management.Resources;
 
-using NUnit.Framework;
-
 namespace Azure.Management.KeyVault.Tests
 {
     [ClientTestFixture]
@@ -21,11 +19,9 @@ namespace Azure.Management.KeyVault.Tests
         private const string ObjectIdKey = "ObjectId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
-        public string TenantId { get; set; }
         public string ObjectId { get; set; }
-        public string ApplicationId { get; set; }
+        //Could not use TestEnvironment.Location since Location is got dynamically
         public string Location { get; set; }
-        public string SubscriptionId { get; set; }
 
         public AccessPolicyEntry AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
@@ -47,19 +43,6 @@ namespace Azure.Management.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            if (Mode == RecordedTestMode.Playback && Recording.IsTrack1SessionRecord())
-            {
-                this.TenantId = TestEnvironment.TenantIdTrack1;
-                this.SubscriptionId = TestEnvironment.SubscriptionIdTrack1;
-                this.ApplicationId = TestEnvironment.ApplicationIdTrack1;
-            }
-            else
-            {
-                this.TenantId = TestEnvironment.TenantId;
-                this.SubscriptionId = TestEnvironment.SubscriptionId;
-                this.ApplicationId = TestEnvironment.ClientId;
-            }
-
             var resourceManagementClient = GetResourceManagementClient();
             ResourcesClient = resourceManagementClient.GetResourcesClient();
             ResourceGroupsClient = resourceManagementClient.GetResourceGroupsClient();
@@ -74,8 +57,8 @@ namespace Azure.Management.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(this.TenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{this.ApplicationId}'");
+                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).GetServicePrincipalsClient();
+                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
                 await foreach (var servicePrincipal in servicePrincipalList)
                 {
                     this.ObjectId = servicePrincipal.ObjectId;
@@ -98,7 +81,7 @@ namespace Azure.Management.KeyVault.Tests
             await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Resources.Models.ResourceGroup(Location));
             VaultName = Recording.GenerateAssetName("sdktestvault");
 
-            TenantIdGuid = new Guid(TenantId);
+            TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
             var permissions = new Permissions
@@ -128,14 +111,14 @@ namespace Azure.Management.KeyVault.Tests
 
         internal KeyVaultManagementClient GetKeyVaultManagementClient()
         {
-            return InstrumentClient(new KeyVaultManagementClient(this.SubscriptionId,
+            return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
 
         internal ResourcesManagementClient GetResourceManagementClient()
         {
-            return InstrumentClient(new ResourcesManagementClient(this.SubscriptionId,
+            return InstrumentClient(new ResourcesManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new ResourcesManagementClientOptions())));
         }
