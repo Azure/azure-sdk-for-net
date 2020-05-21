@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// <remarks>
     /// Action rule with diagnostics configuration
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("Diagnostics")]
     public partial class Diagnostics : ActionRuleProperties
     {
         /// <summary>
