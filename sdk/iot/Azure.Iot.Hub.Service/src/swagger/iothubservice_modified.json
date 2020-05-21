@@ -11,7 +11,8 @@
   "paths": {
     "/configurations/{id}": {
       "get": {
-        "description": "Gets a configuration on the IoT Hub for automatic device/module management.",
+        "summary": "Retrieve a configuration for Iot Hub devices and modules by its identifier.",
+        "description": "Get a configuration on IoT Hub for automatic device/module management.",
         "operationId": "Configuration_Get",
         "consumes": [],
         "produces": [
@@ -31,15 +32,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the Configuration.",
             "schema": {
-              "$ref": "#/definitions/TwinConfiguration"
+              "$ref": "#/definitions/Configuration"
             }
           }
         }
       },
       "put": {
-        "description": "Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated.",
+        "summary": "Create or update the configuration for devices or modules of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that configuration Id and Content cannot be updated by the user.",
+        "description": "Create or update a configuration on IoT Hub for automatic device/module management. Configuration Id and Content cannot be updated.",
         "operationId": "Configuration_CreateOrUpdate",
         "consumes": [
           "application/json"
@@ -60,7 +62,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinConfiguration"
+              "$ref": "#/definitions/Configuration"
             },
             "description": "The configuration to be created or updated."
           },
@@ -69,7 +71,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration."
+            "description": "A string representing a weak ETag for configuration, as per RFC7232. Should not be set when creating a configuration, but may be set when updating a configuration."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -77,21 +79,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the updated configuration",
             "schema": {
-              "$ref": "#/definitions/TwinConfiguration"
+              "$ref": "#/definitions/Configuration"
             }
           },
           "201": {
-            "description": "Created.",
+            "description": "Returns the created configuration",
             "schema": {
-              "$ref": "#/definitions/TwinConfiguration"
+              "$ref": "#/definitions/Configuration"
             }
           }
         }
       },
-      "delete": {        
-        "description": "Deletes a configuration on the IoT Hub for automatic device/module management.",
+      "delete": {
+        "summary": "Delete the configuration for devices or modules of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*).",
+        "description": "Delete a configuration on IoT Hub for automatic device/module management",
         "operationId": "Configuration_Delete",
         "consumes": [],
         "produces": [
@@ -110,7 +113,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
+            "description": "A string representing a weak ETag for configuration, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the configuration has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -118,14 +121,15 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content."
+            "description": "No Content"
           }
         }
       }
     },
     "/configurations": {
-      "get": {       
-        "description": "Gets configurations on the IoT Hub for automatic device/module management. Pagination is not supported.",
+      "get": {
+        "summary": "Get multiple configurations for devices or modules of an IoT Hub. Returns the specified number of configurations for Iot Hub. Pagination is not supported.",
+        "description": "Get multiple configurations on IoT Hub for automatic device/module management",
         "operationId": "Configuration_GetConfigurations",
         "consumes": [],
         "produces": [
@@ -138,7 +142,7 @@
             "required": false,
             "type": "integer",
             "format": "int32",
-            "description": "The number of configurations to retrieve. TODO: <service team> Can value be overriden if too large?"
+            "description": "Number of configurations to retrieve. TODO: Ask service team if this value can be overriden if too large"
           },
           {
             "$ref": "#/parameters/api-version"
@@ -146,11 +150,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns a list of configurations. Pagination is not supported.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TwinConfiguration"
+                "$ref": "#/definitions/Configuration"
               }
             }
           }
@@ -158,8 +162,9 @@
       }
     },
     "/configurations/testQueries": {
-      "post": {        
-        "description": "Validates target condition and custom metric queries for a configuration on the IoT Hub.",
+      "post": {
+        "summary": "Validates the target condition query and custom metric queries for a configuration.",
+        "description": "Validate the target condition and custom metric queries for a configuration on IoT Hub.",
         "operationId": "Configuration_TestQueries",
         "consumes": [
           "application/json"
@@ -173,9 +178,9 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinConfigurationQueriesTestInput"
+              "$ref": "#/definitions/ConfigurationQueriesTestInput"
             },
-            "description": "The configuration for target condition and custom metric queries."
+            "description": "Configuration query for target condition or custom metrics."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -183,18 +188,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the configuration queries test response.",
             "schema": {
-              "$ref": "#/definitions/TwinConfigurationQueriesTestResponse"
+              "$ref": "#/definitions/ConfigurationQueriesTestResponse"
             }
           }
         }
       }
     },
     "/statistics/devices": {
-      "get": {        
-        "description": "Gets device statistics of the IoT Hub identity registry, such as total device count.",
-        "operationId": "Statistics_GetDeviceStatistics",
+      "get": {
+        "summary": "Retrieves statistics about device identities in the IoT hub's identity registry.",
+        "description": "Get statistics about device identities in the IoT hub's identity registry, such as total device count.",
+        "operationId": "RegistryManager_GetDeviceStatistics",
         "consumes": [],
         "produces": [
           "application/json"
@@ -206,18 +212,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DeviceStatistics"
+              "$ref": "#/definitions/RegistryStatistics"
             }
           }
         }
       }
     },
     "/statistics/service": {
-      "get": {        
-        "description": "Gets service statistics of the IoT Hub identity registry, such as connected device count.",
-        "operationId": "Statistics_GetServiceStatistics",
+      "get": {
+        "summary": "Retrieves service statistics for this IoT hub's identity registry.",
+        "description": "Retrieves device statistics for this IoT hub, such as connected device count.",
+        "operationId": "RegistryManager_GetServiceStatistics",
         "consumes": [],
         "produces": [
           "application/json"
@@ -229,7 +236,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/ServiceStatistics"
             }
@@ -238,9 +245,10 @@
       }
     },
     "/devices": {
-      "get": {        
-        "description": "Gets the identities of multiple devices from the IoT Hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-        "operationId": "Devices_GetIdentities",
+      "get": {
+        "summary": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query language to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
+        "description": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
+        "operationId": "RegistryManager_GetDevices",
         "consumes": [],
         "produces": [
           "application/json"
@@ -249,7 +257,7 @@
           {
             "name": "top",
             "in": "query",
-            "description": "The maximum number of device identities returned by the query. Any value outside the range of 1-1000 is considered to be 1000.",
+            "description": "This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000.",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -260,19 +268,20 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/DeviceIdentity"
+                "$ref": "#/definitions/Device"
               }
             }
           }
         }
       },
-      "post": {       
-        "description": "Creates, updates, or deletes the identities of multiple devices from the IoT Hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, use the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
-        "operationId": "Devices_BulkRegistryOperations",
+      "post": {
+        "summary": "Create, update, or delete the identities of multiple devices from the IoT hub identity registry.",
+        "description": "Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
+        "operationId": "RegistryManager_BulkDeviceCRUD",
         "consumes": [
           "application/json"
         ],
@@ -287,9 +296,9 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/RegistryOperationRequest"
+                "$ref": "#/definitions/ExportImportDevice"
               },
-              "description": "The registry operations to perform."
+              "description": "The set of registry operations to perform."
             }
           },
           {
@@ -298,24 +307,25 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/BulkRegistryOperationResponse"
+              "$ref": "#/definitions/BulkRegistryOperationResult"
             }
           },
           "400": {
-            "description": "Bad Request.",
+            "description": "BadRequest",
             "schema": {
-              "$ref": "#/definitions/BulkRegistryOperationResponse"
+              "$ref": "#/definitions/BulkRegistryOperationResult"
             }
           }
         }
       }
     },
     "/devices/query": {
-      "post": {        
-        "description": "Query an IoT Hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination is supported. This returns information about device twins only.",
-        "operationId": "Query_GetTwins",
+      "post": {
+        "summary": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language.",
+        "description": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination is supported. This returns information about device twins only.",
+        "operationId": "RegistryManager_QueryIotHub",
         "consumes": [
           "application/json"
         ],
@@ -330,7 +340,7 @@
             "schema": {
               "$ref": "#/definitions/QuerySpecification"
             },
-            "description": "The query string. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information."
+            "description": "The query string to run. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -340,32 +350,32 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The continuation token used to get the next page of results."
+            "description": "The continuation token to get the next page of results."
           },
           {
             "name": "x-ms-max-item-count",
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The maximum number of items returned per page. The service may use a different value if the value specified is not acceptable."
+            "description": "The maximum number of items to return per page. The service may use a different value if the value specified is not acceptable."
           }
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Query result with continuation token, if applicable.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TwinData"
+                "$ref": "#/definitions/Twin"
               }
             },
             "headers": {
               "x-ms-item-type": {
-                "description": "The type of list of items.",
+                "description": "Type of the list of items.",
                 "type": "string"
               },
               "x-ms-continuation": {
-                "description": "The continuation token used to get the next page of results.",
+                "description": "Continuation token",
                 "type": "string"
               }
             }
@@ -374,9 +384,10 @@
       }
     },
     "/devices/{id}": {
-      "get": {        
-        "description": "Gets a device from the identity registry of the IoT Hub.",
-        "operationId": "Devices_GetIdentity",
+      "get": {
+        "summary": "Retrieve a device from the identity registry of an IoT hub.",
+        "description": "Get a device from the identity registry of an IoT hub.",
+        "operationId": "RegistryManager_GetDevice",
         "consumes": [],
         "produces": [
           "application/json"
@@ -385,7 +396,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device.",
+            "description": "The unique identifier of the device to retrieve.",
             "required": true,
             "type": "string"
           },
@@ -395,16 +406,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the Device.",
             "schema": {
-              "$ref": "#/definitions/DeviceIdentity"
+              "$ref": "#/definitions/Device"
             }
           }
         }
       },
-      "put": {        
-        "description": "Creates or updates the identity of a device in the identity registry of the IoT Hub.",
-        "operationId": "Devices_CreateOrUpdateIdentity",
+      "put": {
+        "summary": "Create or update the identity of a device in the identity registry of an IoT hub.",
+        "description": "Create or update the identity of a device in the identity registry of an IoT hub.",
+        "operationId": "RegistryManager_CreateOrUpdateDevice",
         "consumes": [
           "application/json"
         ],
@@ -415,7 +427,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device.",
+            "description": "The unique identifier of the device to create",
             "required": true,
             "type": "string"
           },
@@ -424,16 +436,16 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DeviceIdentity"
+              "$ref": "#/definitions/Device"
             },
-            "description": "The contents of the device."
+            "description": "The contents of the device to create."
           },
           {
             "name": "If-Match",
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device."
+            "description": "A string representing a weak ETag for the device identity, as per RFC7232. Should not be set when creating a device, but may be set when updating a device."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -441,16 +453,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the Device",
             "schema": {
-              "$ref": "#/definitions/DeviceIdentity"
+              "$ref": "#/definitions/Device"
             }
           }
         }
       },
-      "delete": {        
-        "description": "Deletes the identity of a device from the identity registry of the IoT Hub.",
-        "operationId": "Devices_DeleteIdentity",
+      "delete": {
+        "summary": "Delete the identity of a device from the identity registry of an IoT hub.",
+        "description": "Delete the identity of a device from the identity registry of an IoT hub.",
+        "operationId": "RegistryManager_DeleteDevice",
         "consumes": [],
         "produces": [
           "application/json"
@@ -459,7 +472,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device.",
+            "description": "The unique identifier of the device to delete.",
             "required": true,
             "type": "string"
           },
@@ -468,7 +481,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
+            "description": "A string representing a weak ETag for the device identity, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the device identity has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -476,14 +489,15 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content."
+            "description": "No Content"
           }
         }
       }
     },
     "/devices/{id}/applyConfigurationContent": {
-      "post": {        
-        "description": "Applies the configuration content to an edge device.",
+      "post": {
+        "summary": "Applies the provided configuration content to the specified edge device.",
+        "description": "Apply the provided configuration content to the specified edge device.",
         "operationId": "Configuration_ApplyOnEdgeDevice",
         "consumes": [
           "application/json"
@@ -495,17 +509,17 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the edge device.  TODO <service team>: Is it just device or edge device?",
+            "description": "The unique identifier of the device.",
             "required": true,
             "type": "string"
           },
           {
             "name": "content",
             "in": "body",
-            "description": "The configuration content.",
+            "description": "Configuration Content.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinConfigurationContent"
+              "$ref": "#/definitions/ConfigurationContent"
             }
           },
           {
@@ -514,21 +528,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "type": "object"
             }
           },
           "204": {
-            "description": "No Content."
+            "description": "NoContent"
           }
         }
       }
     },
     "/jobs/create": {
-      "post": {        
-        "description": "Creates a new import or export job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
-        "operationId": "Jobs_CreateImportExportJob",
+      "post": {
+        "summary": "Create a new import/export job on an IoT hub.",
+        "description": "Create a new import or export job on IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "operationId": "JobClient_CreateImportExportJob",
         "consumes": [
           "application/json"
         ],
@@ -539,10 +554,10 @@
           {
             "name": "jobProperties",
             "in": "body",
-            "description": "The job specifications.",
+            "description": "Specifies the job specification.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ImportExportJobProperties"
+              "$ref": "#/definitions/JobProperties"
             }
           },
           {
@@ -551,18 +566,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/ImportExportJobProperties"
+              "$ref": "#/definitions/JobProperties"
             }
           }
         }
       }
     },
     "/jobs": {
-      "get": {        
-        "description": "Gets the status of all import and export jobs in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
-        "operationId": "Jobs_GetImportExportJobs",
+      "get": {
+        "summary": "Gets the status of all import/export jobs in an iot hub",
+        "description": "Get the status of all import and export jobs in IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "operationId": "JobClient_GetImportExportJobs",
         "consumes": [],
         "produces": [
           "application/json"
@@ -574,11 +590,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns an array of JobProperties",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ImportExportJobProperties"
+                "$ref": "#/definitions/JobProperties"
               }
             }
           }
@@ -586,9 +602,10 @@
       }
     },
     "/jobs/{id}": {
-      "get": {        
-        "description": "Gets the status of an import or export job in the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
-        "operationId": "Jobs_GetImportExportJob",
+      "get": {
+        "summary": "Gets the status of an import or export job in an iot hub",
+        "description": "Get the status of an import or export job in IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities for more information.",
+        "operationId": "JobClient_GetImportExportJob",
         "consumes": [],
         "produces": [
           "application/json"
@@ -607,16 +624,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/ImportExportJobProperties"
+              "$ref": "#/definitions/JobProperties"
             }
           }
         }
       },
-      "delete": {        
-        "description": "Cancels an import or export job in the IoT Hub.",
-        "operationId": "Jobs_CancelImportExportJob",
+      "delete": {
+        "summary": "Cancels an import or export job in an IoT hub.",
+        "description": "Cancels an import or export job in IoT Hub.",
+        "operationId": "JobClient_CancelImportExportJob",
         "consumes": [],
         "produces": [
           "application/json"
@@ -635,21 +653,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "type": "object"
             }
           },
           "204": {
-            "description": "No Content."
+            "description": "NoContent"
           }
         }
       }
     },
     "/devices/{id}/commands": {
-      "delete": {        
-        "description": "Deletes all the pending commands for a device in the IoT Hub.",
-        "operationId": "Messages_PurgeCloudToDeviceMessageQueue",
+      "delete": {
+        "summary": "Deletes all the pending commands for this device from the IoT hub.",
+        "description": "Deletes all the pending commands for this device from the IoT hub.",
+        "operationId": "RegistryManager_PurgeCommandQueue",
         "consumes": [],
         "produces": [
           "application/json"
@@ -668,7 +687,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/PurgeMessageQueueResult"
             }
@@ -677,8 +696,9 @@
       }
     },
     "/faultInjection": {
-      "get": {       
-        "description": "Gets the FaultInjection entity.",
+      "get": {
+        "summary": "Get FaultInjection entity",
+        "description": "Get FaultInjection entity.",
         "operationId": "FaultInjection_Get",
         "consumes": [],
         "produces": [
@@ -691,15 +711,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/FaultInjectionProperties"
             }
           }
         }
       },
-      "put": {        
-        "description": "Creates or updates the FaultInjection entity.",
+      "put": {
+        "summary": "Create or update FaultInjection entity",
+        "description": "Create or update FaultInjection entity.",
         "operationId": "FaultInjection_Set",
         "consumes": [
           "application/json"
@@ -722,15 +743,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK."
+            "description": "OK"
           }
         }
       }
     },
     "/twins/{id}": {
-      "get": {        
+      "get": {
+        "summary": "Gets a device twin.",
         "description": "Gets the device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_GetTwin",
+        "operationId": "Twin_GetDeviceTwin",
         "consumes": [],
         "produces": [
           "application/json"
@@ -751,14 +773,15 @@
           "200": {
             "description": "OK.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       },
-      "put": {        
-        "description": "Replaces the tags and desired properties of a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_ReplaceTwin",
+      "put": {
+        "summary": "Replaces tags and desired properties of a device twin.",
+        "description": "Replaces the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "operationId": "Twin_ReplaceDeviceTwin",
         "consumes": [
           "application/json"
         ],
@@ -776,10 +799,10 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The device twin info that will replace the existing info.",
+            "description": "The twin object that will replace the current device twin.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           },
           {
@@ -787,7 +810,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out."
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -795,16 +818,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The updated device twin.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       },
-      "patch": {        
-        "description": "Updates the tags and desired properties of a device twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Devices_UpdateTwin",
+      "patch": {
+        "summary": "Updates tags and desired properties of a device twin.",
+        "description": "Updates the tags and desired properties of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "operationId": "Twin_UpdateDeviceTwin",
         "consumes": [
           "application/json"
         ],
@@ -822,10 +846,10 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The device twin info containing the tags and desired properties to be updated.",
+            "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           },
           {
@@ -833,7 +857,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out."
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -841,18 +865,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The updated device twin.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       }
     },
     "/twins/{id}/modules/{mid}": {
-      "get": {        
+      "get": {
+        "summary": "Gets a module twin.",
         "description": "Gets the module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_GetTwin",
+        "operationId": "Twin_GetModuleTwin",
         "consumes": [],
         "produces": [
           "application/json"
@@ -861,14 +886,14 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the device.",
+            "description": "The unique identifier of the device",
             "required": true,
             "type": "string"
           },
           {
             "name": "mid",
             "in": "path",
-            "description": "The unique identifier of the module.",
+            "description": "The unique identifier of the module",
             "required": true,
             "type": "string"
           },
@@ -880,14 +905,15 @@
           "200": {
             "description": "The module state information.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       },
-      "put": {        
-        "description": "Replaces the tags and desired properties of a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_ReplaceTwin",
+      "put": {
+        "summary": "Replaces tags and desired properties of a module twin.",
+        "description": "Replaces the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "operationId": "Twin_ReplaceModuleTwin",
         "consumes": [
           "application/json"
         ],
@@ -912,10 +938,10 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The module twin info that will replace the existing info. TODO <service team>: Is the type for module twin info deviceTwinInfo?",
+            "description": "The twin object that will replace the current module twin.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           },
           {
@@ -923,7 +949,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out."
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -931,16 +957,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The updated module twin.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       },
-      "patch": {        
-        "description": "Updates the tags and desired properties of a module twin. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
-        "operationId": "Modules_UpdateTwin",
+      "patch": {
+        "summary": "Updates tags and desired properties of a module twin.",
+        "description": "Updates the tags and desired properties of a module. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins for more information.",
+        "operationId": "Twin_UpdateModuleTwin",
         "consumes": [
           "application/json"
         ],
@@ -965,10 +992,10 @@
           {
             "name": "deviceTwinInfo",
             "in": "body",
-            "description": "The module twin info containing the tags and desired properties to be updated. TODO <service team>: Should the description say module twin info or device twin info?",
+            "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           },
           {
@@ -976,7 +1003,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out."
+            "description": "A string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -984,17 +1011,18 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The updated module twin.",
             "schema": {
-              "$ref": "#/definitions/TwinData"
+              "$ref": "#/definitions/Twin"
             }
           }
         }
       }
     },
     "/digitalTwins/{digitalTwinId}/interfaces": {
-      "get": {        
-        "description": "Gets the list of interfaces.",
+      "get": {
+        "summary": "Gets the list of interfaces.",
+        "description": "Get the list of interfaces.",
         "operationId": "DigitalTwin_GetComponents",
         "consumes": [],
         "produces": [
@@ -1004,7 +1032,7 @@
           {
             "name": "digitalTwinId",
             "in": "path",
-            "description": "The unique identifier of the digital twin. The format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional.",
+            "description": "The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional.",
             "required": true,
             "type": "string"
           },
@@ -1014,21 +1042,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns a collection of interfaces",
             "schema": {
               "$ref": "#/definitions/DigitalTwinInterfaces"
             },
             "headers": {
               "ETag": {
-                "description": "The ETag of the digital twin.",
+                "description": "ETag of the digital twin.",
                 "type": "string"
               }
             }
           }
         }
       },
-      "patch": {        
-        "description": "Updates the desired properties of multiple interfaces.",
+      "patch": {
+        "summary": "Updates desired properties of multiple interfaces.\r\n            Example URI: \"digitalTwins/{digitalTwinId}/interfaces\"",
+        "description": "Updates desired properties of multiple interfaces.",
         "operationId": "DigitalTwin_UpdateComponent",
         "consumes": [
           "application/json"
@@ -1040,14 +1069,14 @@
           {
             "name": "digitalTwinId",
             "in": "path",
-            "description": "The unique identifier of the digital twin. The format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional.",
+            "description": "The unique identifier of the digital twin. Format of digitalTwinId is DeviceId[~ModuleId]. ModuleId is optional.",
             "required": true,
             "type": "string"
           },
           {
             "name": "interfacesPatchInfo",
             "in": "body",
-            "description": "The JSON representation of the update patch.",
+            "description": "The JSON representation of the update patch",
             "required": true,
             "schema": {
               "$ref": "#/definitions/DigitalTwinInterfacesPatch"
@@ -1058,7 +1087,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for digital twin, as per RFC7232."
+            "description": "A string representing a weak ETag for digital twin, as per RFC7232"
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1066,13 +1095,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns multiple interfaces",
             "schema": {
               "$ref": "#/definitions/DigitalTwinInterfaces"
             },
             "headers": {
               "ETag": {
-                "description": "The ETag of the digital twin.",
+                "description": "ETag of the digital twin.",
                 "type": "string"
               }
             }
@@ -1081,8 +1110,9 @@
       }
     },
     "/digitalTwins/{digitalTwinId}/interfaces/{interfaceName}": {
-      "get": {       
-        "description": "Gets the interface.",
+      "get": {
+        "summary": "Gets the interface of given interfaceId.\r\n            Example URI: \"digitalTwins/{digitalTwinId}/interfaces/{interfaceName}\"",
+        "description": "Get the interface.",
         "operationId": "DigitalTwin_GetComponent",
         "consumes": [],
         "produces": [
@@ -1099,7 +1129,7 @@
           {
             "name": "interfaceName",
             "in": "path",
-            "description": "The name of the interface.",
+            "description": "The interface name.",
             "required": true,
             "type": "string"
           },
@@ -1109,13 +1139,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the interface",
             "schema": {
               "$ref": "#/definitions/DigitalTwinInterfaces"
             },
             "headers": {
               "ETag": {
-                "description": "The ETag of the digital twin.",
+                "description": "ETag of the digital twin.",
                 "type": "string"
               }
             }
@@ -1124,9 +1154,10 @@
       }
     },
     "/messages/serviceBound/feedback": {
-      "get": {        
-        "description": "Gets the feedback for cloud-to-device messages. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution).",
-        "operationId": "CloudToDeviceMessages_ReceiveFeedbackNotification",
+      "get": {
+        "summary": "This method is used to retrieve feedback of a cloud-to-device message.",
+        "description": "This method is used to retrieve feedback for cloud-to-device messages. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution).",
+        "operationId": "HttpRuntime_ReceiveFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1138,18 +1169,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK."
+            "description": "The feedback response of a cloud-to-device message"
           },
           "204": {
-            "description": "No Content."
+            "description": "No Content Sent if feedback queue is empty"
           }
         }
       }
     },
     "/messages/serviceBound/feedback/{lockToken}": {
-      "delete": {        
-        "description": "Completes the cloud-to-device feedback message. A completed message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
-        "operationId": "CloudToDeviceMessages_CompleteFeedbackNotification",
+      "delete": {
+        "summary": "This method completes a feedback message.",
+        "description": "This method completes a cloud-to-device feedback message. A completed message is deleted from the service's feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
+        "operationId": "HttpRuntime_CompleteFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1158,7 +1190,7 @@
           {
             "name": "lockToken",
             "in": "path",
-            "description": "The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when completing a feedback message.",
+            "description": "The lock token obtained when the C2D message was received, and provided to resolve race conditions when completing a feedback message.",
             "required": true,
             "type": "string"
           },
@@ -1168,15 +1200,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content."
+            "description": "No Content"
           }
         }
       }
     },
     "/messages/serviceBound/feedback/{lockToken}/abandon": {
-      "post": {        
-        "description": "Abandons a cloud-to-device feedback message. An abandoned message is deleted from the feedback queue of the service. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
-        "operationId": "CloudToDeviceMessages_AbandonFeedbackNotification",
+      "post": {
+        "summary": "This method abandons a feedback message.",
+        "description": "This method abandons a cloud-to-device feedback message. An abandoned message is deleted from the service's feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
+        "operationId": "HttpRuntime_AbandonFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1185,7 +1218,7 @@
           {
             "name": "lockToken",
             "in": "path",
-            "description": "The lock token obtained when the cloud-to-device message is received. This is used to resolve race conditions when abandoning a feedback message.",
+            "description": "The lock token obtained when the C2D message was received, and provided to resolve race conditions when abandoning a feedback message.",
             "required": true,
             "type": "string"
           },
@@ -1195,15 +1228,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content."
+            "description": "No Content"
           }
         }
       }
     },
     "/jobs/v2/{id}": {
-      "get": {        
-        "description": "Gets details of a scheduled job from the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_GetScheduledJob",
+      "get": {
+        "summary": "Retrieves details of a scheduled job from an IoT hub.",
+        "description": "Retrieves details of a scheduled job from IoT hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "operationId": "JobClient_GetJob",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1222,16 +1256,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the job details.",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
           }
         }
       },
-      "put": {      
-        "description": "Creates a new job to schedule twin updates or direct methods on the IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_CreateScheduledJob",
+      "put": {
+        "summary": "Creates a new job to schedule update twins or device direct methods on an IoT hub at a scheduled time.",
+        "description": "Creates a new job to schedule twin updates or direct methods on IoT Hub at a scheduled time. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "operationId": "JobClient_CreateJob",
         "consumes": [
           "application/json"
         ],
@@ -1253,7 +1288,7 @@
             "schema": {
               "$ref": "#/definitions/JobRequest"
             },
-            "description": "The job request info."
+            "description": "The job to be created."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1261,7 +1296,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the job response.",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
@@ -1270,9 +1305,10 @@
       }
     },
     "/jobs/v2/{id}/cancel": {
-      "post": {        
-        "description": "Cancels a scheduled job on the IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
-        "operationId": "Jobs_CancelScheduledJob",
+      "post": {
+        "summary": "Cancels a scheduled job on an IoT hub.",
+        "description": "Cancels a scheduled job on IoT Hub. See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.",
+        "operationId": "JobClient_CancelJob",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1291,7 +1327,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the job response",
             "schema": {
               "$ref": "#/definitions/JobResponse"
             }
@@ -1300,9 +1336,10 @@
       }
     },
     "/jobs/v2/query": {
-      "get": {        
-        "description": "Gets the information about jobs using an IoT Hub query. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-        "operationId": "Jobs_QueryScheduledJobs",
+      "get": {
+        "summary": "Query an IoT hub to retrieve information regarding jobs using the IoT Hub query language",
+        "description": "Query IoT hub to retrieve information regarding jobs using the IoT Hub query language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.",
+        "operationId": "JobClient_QueryJobs",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1328,7 +1365,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the Query Result.",
             "schema": {
               "$ref": "#/definitions/QueryResult"
             }
@@ -1337,9 +1374,10 @@
       }
     },
     "/devices/{id}/modules": {
-      "get": {        
-        "description": "Gets all the module identities on the device.",
-        "operationId": "Modules_GetModulesOnDevice",
+      "get": {
+        "summary": "Retrieve all the module identities on the device.",
+        "description": "Get all the module identities of the device.",
+        "operationId": "RegistryManager_GetModulesOnDevice",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1358,11 +1396,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns all the modules of the device.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ModuleIdentity"
+                "$ref": "#/definitions/Module"
               }
             }
           }
@@ -1370,9 +1408,10 @@
       }
     },
     "/devices/{id}/modules/{mid}": {
-      "get": {        
-        "description": "Gets a module identity on the device.",
-        "operationId": "Modules_GetIdentity",
+      "get": {
+        "summary": "Retrieve the specified module identity on the device.",
+        "description": "Get the specified module identity of the device.",
+        "operationId": "RegistryManager_GetModule",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1398,16 +1437,17 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the module.",
             "schema": {
-              "$ref": "#/definitions/ModuleIdentity"
+              "$ref": "#/definitions/Module"
             }
           }
         }
       },
-      "put": {        
-        "description": "Creates or updates the module identity for a device in the IoT Hub. The moduleId and generation cannot be updated by the user. TODO <service team>: What is generation?",
-        "operationId": "Modules_CreateOrUpdateIdentity",
+      "put": {
+        "summary": "Create or update the module identity for device in IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that moduleId and generation cannot be updated by the user.",
+        "description": "Create or update the module identity for device in IoT hub. The moduleId and generation cannot be updated by the user.",
+        "operationId": "RegistryManager_CreateOrUpdateModule",
         "consumes": [
           "application/json"
         ],
@@ -1434,7 +1474,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ModuleIdentity"
+              "$ref": "#/definitions/Module"
             },
             "description": "The module identity."
           },
@@ -1443,7 +1483,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module."
+            "description": "A string representing a weak ETag for the module, as per RFC7232. Should not be set when creating module, but may be set when updating a module"
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1451,22 +1491,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the updated module.",
             "schema": {
-              "$ref": "#/definitions/ModuleIdentity"
+              "$ref": "#/definitions/Module"
             }
           },
           "201": {
-            "description": "Created.",
+            "description": "Returns the created module.",
             "schema": {
-              "$ref": "#/definitions/ModuleIdentity"
+              "$ref": "#/definitions/Module"
             }
           }
         }
       },
-      "delete": {        
-        "description": "Deletes the module identity for a device in the IoT Hub.",
-        "operationId": "Modules_DeleteIdentity",
+      "delete": {
+        "summary": "Delete the module identity for device of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*).",
+        "description": "Delete the module identity for device of an IoT hub.",
+        "operationId": "RegistryManager_DeleteModule",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1491,7 +1532,7 @@
             "in": "header",
             "required": false,
             "type": "string",
-            "description": "The string representing a weak ETag for the module, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the module has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
+            "description": " A string representing a weak ETag for the module, as per RFC7232. The delete operation is performed only if this ETag matches the value maintained by the server, indicating that the module has not been modified since it was last retrieved. To force an unconditional delete, set If-Match to the wildcard character (*)."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1499,14 +1540,15 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content."
+            "description": "No Content"
           }
         }
       }
     },
     "/digitalTwins/models/{modelId}": {
-      "get": {        
-        "description": "Gets a DigitalTwin model definition. If \"expand\" is present in the query parameters and the identifier is for a device capability model then it returns the capability metamodel with expanded interface definitions.",
+      "get": {
+        "summary": "Returns a DigitalTwin model definition for the given id.\r\nIf \"expand\" is present in the query parameters and id is for a device capability model then it returns\r\nthe capability metamodel with expanded interface definitions.",
+        "description": "Returns a DigitalTwin model definition for the given id.\r\nIf \"expand\" is present in the query parameters and id is for a device capability model then it returns\r\nthe capability metamodel with expanded interface definitions.",
         "operationId": "DigitalTwin_GetDigitalTwinModel",
         "consumes": [],
         "produces": [
@@ -1516,14 +1558,14 @@
           {
             "name": "modelId",
             "in": "path",
-            "description": "The model identifier, e.g.: <example>urn:contoso:TemperatureSensor:1</example>.",
+            "description": "Model id Ex: <example>urn:contoso:TemperatureSensor:1</example>",
             "required": true,
             "type": "string"
           },
           {
             "name": "expand",
             "in": "query",
-            "description": "The query parameter that indicates whether to expand the interface definitions inline or not. This only applies to capability model.",
+            "description": "Indicates whether to expand the device capability model's interface definitions inline or not.\r\nThis query parameter ONLY applies to Capability model.",
             "required": false,
             "type": "boolean"
           },
@@ -1533,46 +1575,46 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the digital twin model",
             "schema": {
               "type": "object"
             },
             "headers": {
               "ETag": {
-                "description": "The ETag of the digital twin.",
+                "description": "ETag of the digital twin.",
                 "type": "string"
               },
               "x-ms-model-id": {
-                "description": "The model identifier of the digital twin.",
+                "description": "Digital twin model id.",
                 "type": "string"
               },
               "x-ms-model-resolution-status": {
-                "description": "The model resolution status of the digital twin: enum [Pending, Success, NotFound, Failed, Resolved, Deleted]",
+                "description": "Digital twin model resolution status: enum [Pending, Success, NotFound, Failed, Resolved, Deleted]",
                 "type": "string"
               },
               "x-ms-model-resolution-description": {
-                "description": "The model resolution status description of the digital twin.",
+                "description": "Digital twin model resolution status description.",
                 "type": "string"
               }
             }
           },
           "204": {
-            "description": "No Content.",
+            "description": "Model is not resolved, See the 'x-ms-model-resolution-description' and 'x-ms-model-resolution-status' for the resolution status code and description.",
             "headers": {
               "ETag": {
-                "description": "The ETag of the digital twin.",
+                "description": "ETag of the digital twin.",
                 "type": "string"
               },
               "x-ms-model-id": {
-                "description": "The model identifier of the digital twin.",
+                "description": "Digital twin model id.",
                 "type": "string"
               },
               "x-ms-model-resolution-status": {
-                "description": "The model resolution status of the digital twin: enum [Pending, Success, NotFound, Failed, Resolved, Deleted].",
+                "description": "Digital twin model resolution status: enum [Pending, Success, NotFound, Failed, Resolved, Deleted]",
                 "type": "string"
               },
               "x-ms-model-resolution-description": {
-                "description": "The model resolution status description of the digital twin.",
+                "description": "Digital twin model resolution status description.",
                 "type": "string"
               }
             }
@@ -1581,9 +1623,10 @@
       }
     },
     "/twins/{deviceId}/methods": {
-      "post": {        
-        "description": "Invokes a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
-        "operationId": "Devices_InvokeMethod",
+      "post": {
+        "summary": "Invoke a direct method on a device.",
+        "description": "Invoke a direct method on a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
+        "operationId": "DeviceMethod_InvokeDeviceMethod",
         "consumes": [
           "application/json"
         ],
@@ -1603,9 +1646,9 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CloudToDeviceMethodRequest"
+              "$ref": "#/definitions/CloudToDeviceMethod"
             },
-            "description": "The parameters to execute a direct method on the device."
+            "description": "Parameters to execute a direct method on the device."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1613,7 +1656,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -1622,9 +1665,10 @@
       }
     },
     "/twins/{deviceId}/modules/{moduleId}/methods": {
-      "post": {        
-        "description": "Invokes a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
-        "operationId": "Modules_InvokeMethod",
+      "post": {
+        "summary": "Invoke a direct method on a module of a device.",
+        "description": "Invoke a direct method on a module of a device. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-direct-methods for more information.",
+        "operationId": "DeviceMethod_InvokeModuleMethod",
         "consumes": [
           "application/json"
         ],
@@ -1651,9 +1695,9 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CloudToDeviceMethodRequest"
+              "$ref": "#/definitions/CloudToDeviceMethod"
             },
-            "description": "The parameters to execute a direct method on the module."
+            "description": "Parameters to execute a direct method on the module."
           },
           {
             "$ref": "#/parameters/api-version"
@@ -1661,7 +1705,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "The direct method response payload.",
             "schema": {
               "$ref": "#/definitions/CloudToDeviceMethodResult"
             }
@@ -1670,8 +1714,9 @@
       }
     },
     "/digitalTwins/{digitalTwinId}/interfaces/{interfaceName}/commands/{commandName}": {
-      "post": {        
-        "description": "Invokes a digital twin interface command.",
+      "post": {
+        "summary": "Invoke a digital twin interface command.",
+        "description": "Invoke a digital twin interface command.",
         "operationId": "DigitalTwin_InvokeComponentCommand",
         "consumes": [
           "application/json"
@@ -1703,7 +1748,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "description": "The request payload.",
+              "description": "The Request Payload",
               "type": "object"
             }
           },
@@ -1713,7 +1758,7 @@
           {
             "name": "connectTimeoutInSeconds",
             "in": "query",
-            "description": "The connection timeout in seconds.",
+            "description": "Connect timeout in seconds.",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -1721,7 +1766,7 @@
           {
             "name": "responseTimeoutInSeconds",
             "in": "query",
-            "description": "The response timeout in seconds.",
+            "description": "Response timeout in seconds.",
             "required": false,
             "type": "integer",
             "format": "int32"
@@ -1729,19 +1774,19 @@
         ],
         "responses": {
           "200": {
-            "description": "OK.",
+            "description": "Returns the digital twin command response payload",
             "schema": {
-              "description": "The response payload.",
+              "description": "The Response Payload",
               "type": "object"
             },
             "headers": {
               "x-ms-command-statuscode": {
-                "description": "The device generated status code for this Operation.",
+                "description": "Device Generated Status Code for this Operation",
                 "type": "integer",
                 "format": "int32"
               },
               "x-ms-request-id": {
-                "description": "The server generated unique request identifier.",
+                "description": "Server Generated Request Id (GUID), to uniquely identify this request in the service",
                 "type": "string"
               }
             }
@@ -1751,29 +1796,29 @@
     }
   },
   "definitions": {
-    "TwinConfigurationMetrics": {
-      "description": "The configuration metrics for Iot Hub devices and modules.",
+    "ConfigurationMetrics": {
+      "description": "Configuration Metrics for IotHub devices and modules.",
       "type": "object",
       "properties": {
         "results": {
-            "type": "object",
-            "additionalProperties": {
-                "format": "int64",
-                "type": "integer"
-            },
-            "description": "Version for device twin, including tags and desired properties. TODO <service team>: Is the format correct?"
+          "type": "object",
+          "additionalProperties": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "description": "TODO: Service to fill in"
         },
         "queries": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "TODO<service team>: Can you add a description?"
+          "description": "TODO: Service to fill in"
         }
       }
     },
-    "TwinConfiguration": {
-      "description": "The configuration for Iot Hub device and module twins.",
+    "Configuration": {
+      "description": "Configuration for IotHub devices and modules.",
       "type": "object",
       "properties": {
         "id": {
@@ -1781,33 +1826,33 @@
           "type": "string"
         },
         "schemaVersion": {
-          "description": "The schema version of the configuration.",
+          "description": "Schema version of the configuration",
           "type": "string"
         },
         "labels": {
-          "description": "The key-value pairs used to describe the configuration.",
+          "description": "Key-value pairs used to describe a configuration",
           "type": "object",
           "additionalProperties": {
             "type": "string"
           }
         },
         "content": {
-          "$ref": "#/definitions/TwinConfigurationContent",
-          "description": "The content of the configuration."
+          "$ref": "#/definitions/ConfigurationContent",
+          "description": "Content of the configuration."
         },
         "targetCondition": {
-          "description": "The query used to define the targeted devices or modules. The query is based on twin tags and/or reported properties.",
+          "description": "The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties",
           "type": "string"
         },
         "createdTimeUtc": {
           "format": "date-time",
-          "description": "The creation date and time of the configuration.",
+          "description": "Creation time of the configuration.",
           "type": "string",
           "readOnly": true
         },
         "lastUpdatedTimeUtc": {
           "format": "date-time",
-          "description": "The update date and time of the configuration.",
+          "description": "Update time of the configuration.",
           "type": "string",
           "readOnly": true
         },
@@ -1817,32 +1862,32 @@
           "type": "integer"
         },
         "systemMetrics": {
-          "$ref": "#/definitions/TwinConfigurationMetrics",
-          "description": "The system metrics computed by the IoT Hub that cannot be customized."
+          "$ref": "#/definitions/ConfigurationMetrics",
+          "description": "Metrics calculated by IoT Hub that cannot be customized."
         },
         "metrics": {
-          "$ref": "#/definitions/TwinConfigurationMetrics",
-          "description": "The custom metrics specified by the developer as queries against twin reported properties."
+          "$ref": "#/definitions/ConfigurationMetrics",
+          "description": "Custom metrics specified by developer as queries against twin reported properties"
         },
         "etag": {
-          "description": "The ETag of the configuration.",
+          "description": "ETag of the configuration",
           "type": "string"
         }
       }
     },
-    "TwinConfigurationContent": {
-      "description": "The configuration content for devices or modules on edge devices.",
+    "ConfigurationContent": {
+      "description": "Configuration Content for Devices or Modules on Edge Devices.",
       "type": "object",
       "properties": {
         "deviceContent": {
-          "description": "The device configuration content.",
+          "description": "Device Configurations",
           "type": "object",
           "additionalProperties": {
             "type": "object"
           }
         },
         "modulesContent": {
-          "description": "The modules configuration content.",
+          "description": "Modules configuration content",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -1852,7 +1897,7 @@
           }
         },
         "moduleContent": {
-          "description": "The module configuration content.",
+          "description": "Module configuration content",
           "type": "object",
           "additionalProperties": {
             "type": "object"
@@ -1860,46 +1905,46 @@
         }
       }
     },
-    "TwinConfigurationQueriesTestInput": {
+    "ConfigurationQueriesTestInput": {
       "type": "object",
       "properties": {
         "targetCondition": {
           "type": "string",
-          "description": "The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties."
+          "description": "The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties"
         },
         "customMetricQueries": {
           "type": "string",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The queries on twin reported properties."
+          "description": "Queries on twin reported properties"
         }
       }
     },
-    "TwinConfigurationQueriesTestResponse": {
+    "ConfigurationQueriesTestResponse": {
       "type": "object",
       "properties": {
         "targetConditionError": {
           "type": "string",
-          "description": "The errors from running the target condition query."
+          "description": "Errors running the target condition query."
         },
         "customMetricQueryErrors": {
           "type": "object",
           "additionalProperties": {
             "type": "string",
-            "description": "The errors from running the custom metric query."
+            "description": "Errors running the custom metric query."
           }
         }
       }
     },
-    "DeviceStatistics": {
+    "RegistryStatistics": {
       "type": "object",
       "properties": {
         "totalDeviceCount": {
           "format": "int64",
           "type": "integer",
           "readOnly": true,
-          "description": "The total number of devices registered for the IoT Hub."
+          "description": "The total number of devices registered for this hub."
         },
         "enabledDeviceCount": {
           "format": "int64",
@@ -1926,21 +1971,21 @@
         }
       }
     },
-    "DeviceIdentity": {
+    "Device": {
       "type": "object",
       "properties": {
         "deviceId": {
           "type": "string",
-          "description": "The unique identifier of the device."
+          "description": "The unique identifier of this device."
         },
         "generationId": {
           "type": "string",
           "readOnly": true,
-          "description": "The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
+          "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
         },
         "etag": {
           "type": "string",
-          "description": "The string representing a weak ETag for the device identity, as per RFC7232."
+          "description": "A string representing a weak ETag for the device identity, as per RFC7232."
         },
         "connectionState": {
           "enum": [
@@ -1949,7 +1994,7 @@
           ],
           "type": "string",
           "readOnly": true,
-          "description": "The state of the device."
+          "description": "Tells whether the device is connected or not."
         },
         "status": {
           "enum": [
@@ -1957,54 +2002,54 @@
             "disabled"
           ],
           "type": "string",
-          "description": "The status of the device. If the status disabled, a device cannot connect to the service."
+          "description": "Flags whether a device is enabled or not. If disabled, a device cannot connect to the service."
         },
         "statusReason": {
           "type": "string",
-          "description": "The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
+          "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
         },
         "connectionStateUpdatedTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The date and time the connection state was last updated."
+          "description": "A temporal indicator, showing the date and last time the connection state was updated."
         },
         "statusUpdatedTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The date and time when the status field was last updated."
+          "description": "The last timestamp of when the status field was updated."
         },
         "lastActivityTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The date and last time the device last connected, received, or sent a message."
+          "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message."
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
           "type": "integer",
           "readOnly": true,
-          "description": "The number of cloud-to-device messages currently queued to be sent to the device."
+          "description": "The number of cloud to device messages currently queued to be sent to the device."
         },
         "authentication": {
           "$ref": "#/definitions/AuthenticationMechanism",
-          "description": "The authentication mechanism used by the device."
+          "description": "The details on what authentication mechanisms are used by this device."
         },
         "capabilities": {
           "$ref": "#/definitions/DeviceCapabilities",
-          "description": "The set of capabilities of the device. For example, if this device is an edge device or not."
+          "description": "The set of capabilities that this device has. For example, if this device is an edge device or not."
         },
         "deviceScope": {
           "type": "string",
-          "description": "The scope of the device. TODO <service team>: Any more info on what scope means? Can it be any value, or does it come from a set?"
+          "description": "The scope that this device belongs to."
         },
         "parentScopes": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "TODO <service team>: Can you add a description for this parameter?"
+          "description": "TODO: service team needs to explain this"
         }
       },
       "required": [
@@ -2030,17 +2075,17 @@
             "none"
           ],
           "type": "string",
-          "description": "The type of authentication used to connect to the service."
+          "description": "The type of authentication used when connecting to the service."
         }
       }
     },
     "DeviceCapabilities": {
-      "description": "The status of capabilities enabled on the device",
+      "description": "Status of Capabilities enabled on the device",
       "type": "object",
       "properties": {
         "iotEdge": {
           "type": "boolean",
-          "description": "The property that determines if the device is an edge device or not."
+          "description": "Whether or not this device is an edge device."
         }
       }
     },
@@ -2049,11 +2094,11 @@
       "properties": {
         "primaryKey": {
           "type": "string",
-          "description": "The base64 encoded primary key of the device."
+          "description": "The base 64 encoded primary key of your device."
         },
         "secondaryKey": {
           "type": "string",
-          "description": "The base64 encoded secondary key of the device."
+          "description": "The base 64 encoded secondary key of your device."
         }
       }
     },
@@ -2062,27 +2107,27 @@
       "properties": {
         "primaryThumbprint": {
           "type": "string",
-          "description": "The X509 client certificate primary thumbprint."
+          "description": "Gets and sets the X509 client certificate primary thumbprint."
         },
         "secondaryThumbprint": {
           "type": "string",
-          "description": "The X509 client certificate secondary thumbprint."
+          "description": "Gets and sets the X509 client certificate secondary thumbprint."
         }
       }
     },
-    "RegistryOperationRequest": {
+    "ExportImportDevice": {
       "type": "object",
       "properties": {
         "id": {
-          "description": "The unique identifier of the device.",
+          "description": "Identifier of the device to perform this operation on.",
           "type": "string"
         },
         "moduleId": {
-          "description": "The unique identifier of the module, if applicable.",
+          "description": "Identifier of the module to perform this operation on, if applicable.",
           "type": "string"
         },
         "eTag": {
-          "description": "The ETag parameter used for pre-conditioning the update when importMode is updateIfMatchETag. TODO <service team>: What does this mean?",
+          "description": "ETag parameter is only used for pre-conditioning the update when importMode is updateIfMatchETag",
           "type": "string"
         },
         "importMode": {
@@ -2096,10 +2141,10 @@
             "updateTwinIfMatchETag"
           ],
           "type": "string",
-          "description": "The type of registry operation and ETag preferences."
+          "description": "The type of registry operation and if ETag should be ignored or not."
         },
         "status": {
-          "description": "The status of the module. If disabled, the module cannot connect to the service.",
+          "description": "Flags whether a module is enabled or not. If disabled, a module cannot connect to the service.",
           "enum": [
             "enabled",
             "disabled"
@@ -2108,41 +2153,42 @@
         },
         "statusReason": {
           "type": "string",
-          "description": "The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
+          "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
         },
         "authentication": {
           "$ref": "#/definitions/AuthenticationMechanism",
-          "description": "The authentication mechanism used by the module. This parameter is optional and defaults to SAS if not provided. In that case, primary/secondary access keys are auto-generated."
+          "description": "Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys."
         },
         "twinETag": {
-          "description": "The parameter used for pre-conditioning the update when importMode is updateTwinIfMatchETag. TODO <service team>: What does this mean?",
+          "description": "twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag.",
           "type": "string"
         },
         "tags": {
           "type": "object",
           "additionalProperties": {
             "type": "object",
-            "description": "The JSON document read and written by the solution back end. The tags are not visible to device apps."
+            "description": "A JSON document read and written by the solution back end. Tags are not visible to device apps."
           }
         },
         "properties": {
           "$ref": "#/definitions/PropertyContainer",
-          "description": "TODO <service team>: Can you add a description for this?"
+          "description": "TODO need service folks to explain this."
         },
         "capabilities": {
           "$ref": "#/definitions/DeviceCapabilities",
-          "description": "The status of capabilities enabled on the device."
+          "description": "Status of capabilities enabled on the device."
         },
         "deviceScope": {
           "type": "string",
-          "description": "The scope of the device."
+          "description": "The scope that this identity belongs to."
         },
         "parentScopes": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "description": "TODO service folks need to explain this."
           },
-          "description": "TODO <service team>: Can you add a description for this?"
+          "description": "TODO: service team needs to explain this"
         }
       },
       "required": [
@@ -2150,18 +2196,18 @@
       ]
     },
     "PropertyContainer": {
-      "description": "The properties of a twin.",
+      "description": "Represents Twin properties",
       "type": "object",
       "properties": {
         "desired": {
-          "description": "The desired properties used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and read by the device app. The device app can be notified in real time of changes on the desired properties.",
+          "description": "Used in conjunction with reported properties to synchronize device configuration or condition. Desired properties can only be set by the solution back end and can be read by the device app. The device app can also be notified in real time of changes on the desired properties.",
           "type": "object",
           "additionalProperties": {
             "type": "object"
           }
         },
         "reported": {
-          "description": "The reported properties used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and read/queried by the solution back end.",
+          "description": "Used in conjunction with desired properties to synchronize device configuration or condition. Reported properties can only be set by the device app and can be read and queried by the solution back end.",
           "type": "object",
           "additionalProperties": {
             "type": "object"
@@ -2169,17 +2215,17 @@
         }
       }
     },
-    "BulkRegistryOperationResponse": {
-      "description": "The result of the bulk registry operation.",
+    "BulkRegistryOperationResult": {
+      "description": "Encapsulates the result of a bulk registry operation.",
       "type": "object",
       "properties": {
         "isSuccessful": {
-          "description": "The operation result.",
+          "description": "Whether or not the operation was successful.",
           "type": "boolean",
           "readOnly": true
         },
         "errors": {
-          "description": "The device registry operation errors.",
+          "description": "If the operation was not successful, this contains an array of DeviceRegistryOperationError objects.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/DeviceRegistryOperationError"
@@ -2187,7 +2233,7 @@
           "readOnly": true
         },
         "warnings": {
-          "description": "The device registry operation warnings.",
+          "description": "If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/DeviceRegistryOperationWarning"
@@ -2197,16 +2243,16 @@
       }
     },
     "DeviceRegistryOperationError": {
-      "description": "The device registry operation error details.",
+      "description": "Encapsulates device registry operation error details.",
       "type": "object",
       "properties": {
         "deviceId": {
-          "description": "The unique identifier of the device.",
+          "description": "Identifier of the device that indicated the error.",
           "type": "string",
           "readOnly": true
         },
         "errorCode": {
-          "description": "The possible error codes.",
+          "description": "ErrorCode associated with the error.",
           "enum": [
             "InvalidErrorCode",
             "GenericBadRequest",
@@ -2428,14 +2474,14 @@
           "readOnly": true
         },
         "errorStatus": {
-          "description": "The details of the error.",
+          "description": "Additional details associated with the error.",
           "type": "string",
           "readOnly": true
         },
         "moduleId": {
           "type": "string",
           "readOnly": true,
-          "description": "The unique identifier of the module, if applicable."
+          "description": "Identifier of the module associated with the error, if applicable."
         },
         "operation": {
           "type": "string",
@@ -2445,11 +2491,11 @@
       }
     },
     "DeviceRegistryOperationWarning": {
-      "description": "The device registry operation warning details.",
+      "description": "Encapsulates device registry operation error details.",
       "type": "object",
       "properties": {
         "deviceId": {
-          "description": "The unique identifier of the device.",
+          "description": "Identifier of the device that indicated the warning.",
           "type": "string",
           "readOnly": true
         },
@@ -2459,67 +2505,67 @@
           ],
           "type": "string",
           "readOnly": true,
-          "description": "The warning code."
+          "description": "The code associated with the warning."
         },
         "warningStatus": {
-          "description": "The details of the warning.",
+          "description": "Additional details associated with the warning.",
           "type": "string",
           "readOnly": true
         }
       }
     },
     "QuerySpecification": {
-      "description": "The Json query request",
+      "description": "A Json query request",
       "type": "object",
       "properties": {
         "query": {
-          "description": "The query string.",
+          "description": "The query.",
           "type": "string"
         }
       }
     },
-    "TwinData": {
-      "description": "The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub.",
+    "Twin": {
+      "description": "The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub.",
       "type": "object",
       "properties": {
         "deviceId": {
-          "description": "The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
+          "description": "The unique identifier of the device in the IoT hub's identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
           "type": "string"
         },
         "moduleId": {
-          "description": "The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
+          "description": "The unique identifier of the module in the IoT hub's identity registry. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.",
           "type": "string"
         },
         "tags": {
-          "description": "The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The values are JSON objects, up-to 4KB in length.",
+          "description": "A collection of key-value pairs read and written by the solution back end. They are not visible to device apps.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
-            "description": "TODO <service team>: Can you add a description for this?"
+            "description": "The collection of the twin's tags as key-value pairs. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The values are JSON objects, up-to 4KB in length."
           }
         },
         "properties": {
           "$ref": "#/definitions/TwinProperties",
-          "description": "The desired and reported properties of the twin."
+          "description": "The twin's desired and reported properties."
         },
         "etag": {
-          "description": "TODO <service team>: which operation does this affect - update tags/ properties etc?",
+          "description": "TODO - which operation does this affect - update tags/ properties etc?",
           "type": "string",
           "readOnly": true
         },
         "version": {
           "format": "int64",
-          "description": "TODO <service team>: What should this be?.",
+          "description": "Version for device twin, including tags and desired properties",
           "type": "integer",
           "readOnly": true
         },
         "deviceEtag": {
-          "description": "TODO <service team> - which operation does this affect?.",
+          "description": "TODO - which operation does this affect?",
           "type": "string",
           "readOnly": true
         },
         "status": {
-          "description": "The enabled status of the device. If disabled, the device cannot connect to the service.",
+          "description": "Flags whether a device is enabled or not. If disabled, a device cannot connect to the service.",
           "enum": [
             "enabled",
             "disabled"
@@ -2527,17 +2573,17 @@
           "type": "string"
         },
         "statusReason": {
-          "description": "The reason for the current status of the device, if any.",
+          "description": "Reason, if any, for the device's current status.",
           "type": "string"
         },
         "statusUpdateTime": {
           "format": "date-time",
-          "description": "The date and time when the status of the device was last updated.",
+          "description": "Time when the corresponding device's status was last updated.",
           "type": "string",
           "readOnly": true
         },
         "connectionState": {
-          "description": "The connection state of the device.",
+          "description": "The device's connection state.",
           "enum": [
             "Disconnected",
             "Connected"
@@ -2547,18 +2593,18 @@
         },
         "lastActivityTime": {
           "format": "date-time",
-          "description": "The date and time when the device last connected or received or sent a message. The date and time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations.",
+          "description": "The last time the device connected, received or sent a message. In ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This does not update if the device uses the HTTP/1 protocol to perform messaging operations.",
           "type": "string",
           "readOnly": true
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
-          "description": "The number of cloud-to-device messages sent.",
+          "description": "Number of messages sent to the corresponding Device from the Cloud",
           "type": "integer",
           "readOnly": true
         },
         "authenticationType": {
-          "description": "The authentication type used by the device.",
+          "description": "Corresponding Device's authentication type",
           "enum": [
             "sas",
             "selfSigned",
@@ -2569,21 +2615,21 @@
         },
         "x509Thumbprint": {
           "$ref": "#/definitions/X509Thumbprint",
-          "description": "The X509 thumbprint of the device."
+          "description": "Corresponding Device's X509 thumbprint"
         },
         "capabilities": {
           "$ref": "#/definitions/DeviceCapabilities"
         },
         "deviceScope": {
           "type": "string",
-          "description": "The scope of the device."
+          "description": "Scope to which this device instance belongs to"
         },
         "parentScopes": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "TODO <service team>: Can you add a description for this?."
+          "description": "TODO: new property added - need explanation"
         }
       },
       "required": [
@@ -2591,11 +2637,11 @@
       ]
     },
     "TwinProperties": {
-      "description": "The desired and reported properties of the twin. The maximum depth of the object is 10.",
+      "description": "The twin's desired and reported properties. The maximum depth of twin property objects is 10.",
       "type": "object",
       "properties": {
         "desired": {
-          "description": "The properties that are set by the solution back end and read by the device.",
+          "description": "Properties that are set by the solution back end and read by the device.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
@@ -2603,7 +2649,7 @@
           }
         },
         "reported": {
-          "description": "The properties that are set by the device, and read and queried by the solution back end.",
+          "description": "Properties that are set by the device, and read and queried by the solution back end.",
           "type": "object",
           "readOnly": true,
           "additionalProperties": {
@@ -2613,7 +2659,7 @@
         }
       }
     },
-    "ImportExportJobProperties": {
+    "JobProperties": {
       "type": "object",
       "properties": {
         "jobId": {
@@ -2623,18 +2669,18 @@
         },
         "startTimeUtc": {
           "format": "date-time",
-          "description": "The start date and time of the job in UTC.",
+          "description": "The start time of the job in UTC.",
           "type": "string",
           "readOnly": true
         },
         "endTimeUtc": {
           "format": "date-time",
-          "description": "The end date and time of the job in UTC.",
+          "description": "The time the job stopped.",
           "type": "string",
           "readOnly": true
         },
         "type": {
-          "description": "The job type.",
+          "description": "The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2670,24 +2716,24 @@
         },
         "progress": {
           "format": "int32",
-          "description": "The percentage of job completion.",
+          "description": "Represents the percentage of completion.",
           "type": "integer",
           "readOnly": true
         },
         "inputBlobContainerUri": {
-          "description": "The URI containing SAS token to a blob container that contains registry data to sync.",
+          "description": "URI containing SAS token to a blob container that contains registry data to sync.",
           "type": "string"
         },
         "inputBlobName": {
-          "description": "The blob name to use when importing from the input blob container.",
+          "description": "The blob name to be used when importing from the provided input blob container.",
           "type": "string"
         },
         "outputBlobContainerUri": {
-          "description": "The SAS token to access the blob container. This is used to output the status and results of the job.",
+          "description": "SAS token to access a blob container. This is used to output the status of the job and the results.",
           "type": "string"
         },
         "outputBlobName": {
-          "description": "The blob name that will be created in the output blob container. This blob will contain the exported device registry information for the IoT Hub.",
+          "description": "The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.",
           "type": "string"
         },
         "excludeKeysInExport": {
@@ -2695,7 +2741,7 @@
           "type": "boolean"
         },
         "storageAuthenticationType": {
-          "description": "The authentication type used for connecting to the storage account.",
+          "description": "Specifies authentication type being used for connecting to storage account.",
           "enum": [
             "keyBased",
             "identityBased"
@@ -2703,7 +2749,7 @@
           "type": "string"
         },
         "failureReason": {
-          "description": "The reason for failure, if a failure occurred.",
+          "description": "Contains the reason for the failure, if a failure occurred.",
           "type": "string",
           "readOnly": true
         }
@@ -2713,7 +2759,7 @@
       ]
     },
     "PurgeMessageQueueResult": {
-      "description": "The result of a device message queue purge operation.",
+      "description": "Result of a device message queue purge operation.",
       "type": "object",
       "properties": {
         "totalMessagesPurged": {
@@ -2723,12 +2769,12 @@
           "description": "The total number of messages purged."
         },
         "deviceId": {
-          "description": "The unique identifier of the device.",
+          "description": "The ID of the device whose messages are being purged.",
           "type": "string",
           "readOnly": true
         },
         "moduleId": {
-          "description": "The unique identifier of the module.",
+          "description": "The ID of the device whose messages are being purged.",
           "type": "string",
           "readOnly": true
         }
@@ -2739,15 +2785,15 @@
       "properties": {
         "IotHubName": {
           "type": "string",
-          "description": "The name of the Iot Hub."
+          "description": "Name of the IotHub."
         },
         "connection": {
           "$ref": "#/definitions/FaultInjectionConnectionProperties",
-          "description": "TODO <service team>: Can you add a description for this?."
+          "description": "TODO: to be filled by the service team."
         },
         "lastUpdatedTimeUtc": {
           "format": "date-time",
-          "description": "Service generated. TODO <service team>: Can you add a description for this?.",
+          "description": "Service generated.",
           "type": "string"
         }
       }
@@ -2762,12 +2808,12 @@
             "Periodic"
           ],
           "type": "string",
-          "description": "The action to perform."
+          "description": "Action to perform"
         },
         "blockDurationInMinutes": {
           "format": "int32",
           "type": "integer",
-          "description": "TODO <service team>: Can you add a description for this?."
+          "description": "TODO: to be filled by the service team"
         }
       }
     },
@@ -2775,7 +2821,7 @@
       "type": "object",
       "properties": {
         "interfaces": {
-          "description": "The interface(s) data on the digital twin.",
+          "description": "Interface(s) data on the digital twin.",
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/Interface"
@@ -2783,7 +2829,7 @@
         },
         "version": {
           "format": "int64",
-          "description": "The digital twin version.",
+          "description": "Version of digital twin.",
           "type": "integer"
         }
       }
@@ -2792,11 +2838,11 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "The full name of digital twin interface.",
+          "description": "Full name of digital twin interface.",
           "type": "string"
         },
         "properties": {
-          "description": "The list of all properties in an interface.",
+          "description": "List of all properties in an interface.",
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/Property"
@@ -2819,7 +2865,7 @@
       "type": "object",
       "properties": {
         "value": {
-          "description": "The reported value of the interface property in the digital twin.",
+          "description": "The current interface property value in a digitalTwin.",
           "type": "object"
         },
         "desiredState": {
@@ -2831,7 +2877,7 @@
       "type": "object",
       "properties": {
         "value": {
-          "description": "The desired value of the interface property in a digital twin.",
+          "description": "The desired value of the interface property to set in a digitalTwin.",
           "type": "object"
         }
       }
@@ -2841,16 +2887,16 @@
       "properties": {
         "code": {
           "format": "int32",
-          "description": "The status code for the operation.",
+          "description": "Status code for the operation.",
           "type": "integer"
         },
         "version": {
           "format": "int64",
-          "description": "The version of the desired value received.",
+          "description": "Version of the desired value received.",
           "type": "integer"
         },
         "description": {
-          "description": "The description of the status. TODO <service team>: Is this correct?.",
+          "description": "Description of the status.",
           "type": "string"
         }
       }
@@ -2859,11 +2905,11 @@
       "type": "object",
       "properties": {
         "jobId": {
-          "description": "The unique identifier of the job.",
+          "description": "Job identifier",
           "type": "string"
         },
         "type": {
-          "description": "The job type.",
+          "description": "The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2883,24 +2929,24 @@
           "type": "string"
         },
         "cloudToDeviceMethod": {
-          "$ref": "#/definitions/CloudToDeviceMethodRequest",
-          "description": "The method type and parameters. This is required if the job type is cloudToDeviceMethod."
+          "$ref": "#/definitions/CloudToDeviceMethod",
+          "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters."
         },
         "updateTwin": {
-          "$ref": "#/definitions/TwinData"
+          "$ref": "#/definitions/Twin"
         },
         "queryCondition": {
-          "description": "The condition for devices to execute the job. This is required if the job type is updateTwin or cloudToDeviceMethod.",
+          "description": "Required if jobType is updateTwin or cloudToDeviceMethod. Condition for device query to get devices to execute the job on.",
           "type": "string"
         },
         "startTime": {
           "format": "date-time",
-          "description": "The start date and time of the job in ISO 8601 standard. TODO <service team>: Is this correct?.",
+          "description": "ISO 8601 date time to start the job",
           "type": "string"
         },
         "maxExecutionTimeInSeconds": {
           "format": "int64",
-          "description": "The maximum execution time in secounds.",
+          "description": "Max execution time in secounds (ttl duration)",
           "type": "integer"
         }
       },
@@ -2908,12 +2954,12 @@
         "type"
       ]
     },
-    "CloudToDeviceMethodRequest": {
-      "description": "The parameters to execute a direct method on the device.",
+    "CloudToDeviceMethod": {
+      "description": "Parameters to execute a direct method on the device.",
       "type": "object",
       "properties": {
         "methodName": {
-          "description": "The name of the method to execute.",
+          "description": "Name of the method to be executed.",
           "type": "string"
         },
         "payload": {
@@ -2923,12 +2969,12 @@
         "responseTimeoutInSeconds": {
           "format": "int32",
           "type": "integer",
-          "description": "The time (in seconds) that the service waits for the method invocation to return a response. The default is 30 seconds, minimum is 5 seconds, and maximum is 300 seconds."
+          "description": "Time (in seconds) that the service waits for the method invocation to return a response. It defaults to 30 seconds. Minimum allowed value is 5 seconds, maximum allowed value is 300 seconds."
         },
         "connectTimeoutInSeconds": {
           "format": "int32",
           "type": "integer",
-          "description": "The time (in seconds) that the service waits for the device to come online. The default is 0 seconds (which means the device must already be online) and the maximum is 300 seconds."
+          "description": "Time (in seconds) that the service waits for the device to come online. It defaults to 0, meaning the device must already be online. Maximum allowed value is 300 seconds."
         }
       },
       "required": [
@@ -2944,36 +2990,36 @@
           "readOnly": true
         },
         "queryCondition": {
-          "description": "The device query condition.",
+          "description": "Device query condition.",
           "type": "string",
           "readOnly": true
         },
         "createdTime": {
           "format": "date-time",
-          "description": "The creation date and time of the job.",
+          "description": "The creation time of the job.",
           "type": "string",
           "readOnly": true
         },
         "startTime": {
           "format": "date-time",
-          "description": "The start date and time of the scheduled job in UTC.",
+          "description": "Scheduled job start time in UTC.",
           "type": "string",
           "readOnly": true
         },
         "endTime": {
           "format": "date-time",
-          "description": "The end date and time of the job in UTC.",
+          "description": "The time the job stopped.",
           "type": "string",
           "readOnly": true
         },
         "maxExecutionTimeInSeconds": {
           "format": "int64",
-          "description": "The maximum execution time in secounds.",
+          "description": "Max execution time in secounds (ttl duration)",
           "type": "integer",
           "readOnly": true
         },
         "type": {
-          "description": "The job type.",
+          "description": "The type of job to execute.",
           "enum": [
             "unknown",
             "export",
@@ -2993,12 +3039,12 @@
           "type": "string"
         },
         "cloudToDeviceMethod": {
-          "$ref": "#/definitions/CloudToDeviceMethodRequest",
-          "description": "The method type and parameters. This is required if job type is cloudToDeviceMethod.",
+          "$ref": "#/definitions/CloudToDeviceMethod",
+          "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters.",
           "readOnly": true
         },
         "updateTwin": {
-          "$ref": "#/definitions/TwinData",
+          "$ref": "#/definitions/Twin",
           "readOnly": true
         },
         "status": {
@@ -3017,18 +3063,18 @@
           "readOnly": true
         },
         "failureReason": {
-          "description": "The reason for the failure, if a failure occurred.",
+          "description": "Contains the reason for the failure, if a failure occurred.",
           "type": "string",
           "readOnly": true
         },
         "statusMessage": {
-          "description": "The status message of the job.",
+          "description": "Status message for the job",
           "type": "string",
           "readOnly": true
         },
         "deviceJobStatistics": {
           "$ref": "#/definitions/DeviceJobStatistics",
-          "description": "The job details. TODO <service team>. Can you add more details to this description?",
+          "description": "Job details",
           "readOnly": true
         }
       },
@@ -3037,22 +3083,22 @@
       ]
     },
     "DeviceJobStatistics": {
-      "description": "The job statistics e.g., number of failed/succeeded devices // TODO: This looks wrong",
+      "description": "The job counts, e.g., number of failed/succeeded devices",
       "type": "object",
       "properties": {
         "deviceCount": {
           "format": "int32",
-          "description": "The number of devices in the job. // TODO: What does this mean?",
+          "description": "Number of devices in the job",
           "type": "integer"
         },
         "failedCount": {
           "format": "int32",
-          "description": "The number of failed jobs.",
+          "description": "The number of failed jobs",
           "type": "integer"
         },
         "succeededCount": {
           "format": "int32",
-          "description": "The number of succeeded jobs",
+          "description": "The number of Successed jobs",
           "type": "integer"
         },
         "runningCount": {
@@ -3093,18 +3139,18 @@
           }
         },
         "continuationToken": {
-          "description": "The continuation token.",
+          "description": "Request continuation token.",
           "type": "string"
         }
       }
     },
-    "ModuleIdentity": {
-      "description": "The module identity on a device.",
+    "Module": {
+      "description": "Module identity on a device.",
       "type": "object",
       "properties": {
         "moduleId": {
           "type": "string",
-          "description": "The unique identifier of the module."
+          "description": "The unique identifier of this module."
         },
         "managedBy": {
           "type": "string",
@@ -3112,16 +3158,16 @@
         },
         "deviceId": {
           "type": "string",
-          "description": "The unique identifier of the device."
+          "description": "The unique identifier of the device that has this module."
         },
         "generationId": {
           "type": "string",
           "readOnly": true,
-          "description": "The IoT Hub generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created."
+          "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created."
         },
         "etag": {
           "type": "string",
-          "description": "The string representing a weak ETag for the module identity, as per RFC7232."
+          "description": "A string representing a weak ETag for the module identity, as per RFC7232."
         },
         "connectionState": {
           "enum": [
@@ -3130,29 +3176,29 @@
           ],
           "type": "string",
           "readOnly": true,
-          "description": "The connection state of the device."
+          "description": "Tells whether the module is connected or not."
         },
         "connectionStateUpdatedTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The date and time the connection state was last updated."
+          "description": "A temporal indicator, showing the date and last time the connection state was updated."
         },
         "lastActivityTime": {
           "format": "date-time",
           "type": "string",
           "readOnly": true,
-          "description": "The date and time the device last connected, received, or sent a message."
+          "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message."
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
           "type": "integer",
           "readOnly": true,
-          "description": "The number of cloud-to-module messages currently queued to be sent to the module."
+          "description": "The number of cloud to module messages currently queued to be sent to the module."
         },
         "authentication": {
           "$ref": "#/definitions/AuthenticationMechanism",
-          "description": "The authentication mechanism used by the module when connecting to the service and edge hub."
+          "description": "The details on what authentication mechanisms are used by this module when connecting to the service and edgehub."
         }
       },
       "required": [
@@ -3161,12 +3207,12 @@
       ]
     },
     "CloudToDeviceMethodResult": {
-      "description": "The device method invocation results.",
+      "description": "Represents the Device Method Invocation Results.",
       "type": "object",
       "properties": {
         "status": {
           "format": "int32",
-          "description": "The method invocation result status, provided by the device.",
+          "description": "Method invocation result status, provided by the device.",
           "type": "integer",
           "readOnly": true
         },
@@ -3181,13 +3227,13 @@
       "type": "object",
       "properties": {
         "interfaces": {
-          "description": "The interface(s) data to patch in the digital twin.",
+          "description": "Interface(s) data to patch in the digital twin.",
           "type": "object",
           "additionalProperties": {
             "type": "object",
             "properties": {
               "properties": {
-                "description": "The list of properties to update in the interface.",
+                "description": "List of properties to update in an interface.",
                 "type": "object",
                 "additionalProperties": {
                   "type": "object",
@@ -3196,11 +3242,11 @@
                       "type": "object",
                       "properties": {
                         "value": {
-                          "description": "The desired value of the interface property to set in the digitalTwin.",
+                          "description": "The desired value of the interface property to set in a digitalTwin.",
                           "type": "object"
                         }
                       },
-                      "description": "The desired property of the interface."
+                      "description": "The desired property of the interface"
                     }
                   }
                 }

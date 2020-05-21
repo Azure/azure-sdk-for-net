@@ -16,13 +16,12 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties. </summary>
-        /// <param name="desired"> The desired property of the interface. </param>
+        /// <param name="desired"> . </param>
         internal Components17Cpi2FSchemasDigitaltwininterfacespatchPropertiesInterfacesAdditionalpropertiesPropertiesAdditionalproperties(DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired desired)
         {
             Desired = desired;
         }
 
-        /// <summary> The desired property of the interface. </summary>
         public DigitalTwinInterfacesPatchInterfacesPropertiesAdditionalPropertiesDesired Desired { get; set; }
     }
 }

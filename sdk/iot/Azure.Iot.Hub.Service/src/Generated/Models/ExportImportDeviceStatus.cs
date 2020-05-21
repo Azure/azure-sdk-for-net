@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> Flags whether a module is enabled or not. If disabled, a module cannot connect to the service. </summary>
+    /// <summary> Status is optional and defaults to enabled. </summary>
     public readonly partial struct ExportImportDeviceStatus : IEquatable<ExportImportDeviceStatus>
     {
         private readonly string _value;

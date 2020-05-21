@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    /// <summary> The status of the job. </summary>
+    /// <summary> System generated.  Ignored at creation. </summary>
     public readonly partial struct JobResponseStatus : IEquatable<JobResponseStatus>
     {
         private readonly string _value;
