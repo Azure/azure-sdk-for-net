@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="azureAdInstance"></param>
         /// <returns></returns>
-        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString, string azureAdInstance, IHttpClientFactory httpClientFactory = null)
+        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString, string azureAdInstance, IHttpClientFactory httpClientFactory = default)
         {
             Dictionary<string, string> connectionSettings = ParseConnectionString(connectionString);
 
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 connectionSettings.ContainsKey(TenantId) // tenantId can be specified in connection string or retrieved from Key Vault access token later
                                     ? connectionSettings[TenantId]
-                                    : default(string),
+                                    : default,
                                 connectionSettings.ContainsKey(MsiRetryTimeout)
                                     ? int.Parse(connectionSettings[MsiRetryTimeout])
                                     : 0,

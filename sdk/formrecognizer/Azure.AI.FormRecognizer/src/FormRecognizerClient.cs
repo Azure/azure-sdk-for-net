@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -59,6 +58,41 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormRecognizerClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new FormRecognizerClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
+        /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <remarks>
+        /// The <paramref name="endpoint"/> URI <c>string</c> can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
+        public FormRecognizerClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
             ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.ToString());
         }
 

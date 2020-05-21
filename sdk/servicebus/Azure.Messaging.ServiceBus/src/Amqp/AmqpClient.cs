@@ -118,12 +118,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         public override TransportSender CreateSender(
             string entityPath,
             string viaEntityPath,
-            ServiceBusRetryPolicy retryPolicy)
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
@@ -132,7 +134,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 viaEntityPath,
                 ConnectionScope,
-                retryPolicy
+                retryPolicy,
+                identifier
             );
         }
 
@@ -182,11 +185,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the rule manager.</param>
         ///
         /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
         public override TransportRuleManager CreateRuleManager(
             string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy)
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
@@ -194,7 +199,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             (
                 subscriptionPath,
                 ConnectionScope,
-                retryPolicy
+                retryPolicy,
+                identifier
             );
         }
 
@@ -232,7 +238,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The token to use for service authorization.</returns>
         ///
-        private async Task<string> AquireAccessTokenAsync(CancellationToken cancellationToken)
+        private async Task<string> AcquireAccessTokenAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 

@@ -5,11 +5,17 @@ parameters:
   MaxParallel: 0
   BuildInParallel: true
   TimeoutInMinutes: 60
+  Location: ''
+  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
 
 jobs:
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
+      - name: SubscriptionConfiguration
+        value: ${{ parameters.SubscriptionConfiguration }}
+      - name: Location
+        value: ${{ parameters.Location }}
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -19,24 +25,19 @@ jobs:
         Linux:
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -61,6 +62,7 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
+          Location: $(Location)
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
 

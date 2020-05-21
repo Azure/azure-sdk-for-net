@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -33,16 +34,46 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
+        /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedFormRecognizerClient()
+        private FormRecognizerClient CreateInstrumentedFormRecognizerClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-
             var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            var client = new FormRecognizerClient(endpoint, credential, options);
+            FormRecognizerClient client;
+
+            if (useTokenCredential)
+            {
+                client = new FormRecognizerClient(endpoint, TestEnvironment.Credential, options);
+            }
+            else
+            {
+                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+                client = new FormRecognizerClient(endpoint, credential, options);
+            }
 
             return InstrumentClient(client);
+        }
+
+        [Test]
+        public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateInstrumentedFormRecognizerClient(useTokenCredential: true);
+            RecognizeContentOperation operation;
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+            var formPage = formPages.Single();
+
+            Assert.Greater(formPage.Lines.Count, 0);
+            Assert.AreEqual("Contoso", formPage.Lines[0].Text);
         }
 
         /// <summary>
@@ -144,16 +175,15 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "File has not been uploaded to GitHub yet.")]
-        public async Task StartRecognizeContentCanParseMultipagedForm(bool useStream)
+        [TestCase(false)]
+        public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            var filename = "multipage_invoice_noblank.pdf";
             RecognizeContentOperation operation;
 
             if (useStream)
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.CreatePath(filename), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageFormPath, FileMode.Open);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeContentAsync(stream);
@@ -161,7 +191,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = new Uri(FormRecognizerTestEnvironment.CreateUri(filename));
+                var uri = new Uri(FormRecognizerTestEnvironment.MultipageFormUri);
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -289,18 +319,17 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true, true)]
         [TestCase(true, false)]
-        [TestCase(false, true, Ignore = "File has not been uploaded to GitHub yet.")]
-        [TestCase(false, false, Ignore = "File has not been uploaded to GitHub yet.")]
-        public async Task StartRecognizeReceiptsCanParseMultipagedForm(bool useStream, bool includeTextContent)
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
-            var filename = "multipage_invoice_noblank.pdf";
             RecognizeReceiptsOperation operation;
 
             if (useStream)
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.CreatePath(filename), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageFormPath, FileMode.Open);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -308,7 +337,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = new Uri(FormRecognizerTestEnvironment.CreateUri(filename));
+                var uri = new Uri(FormRecognizerTestEnvironment.MultipageFormUri);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
@@ -409,18 +438,17 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, true)]
         [TestCase(false, false)]
         [Ignore("Blocked by #11821, since some fields cannot be parsed.")]
-        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipagedForms(bool useStream, bool includeTextContent)
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForms(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
-            var filename = "multipage_invoice_noblank.pdf";
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
             if (useStream)
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.CreatePath(filename), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageFormPath, FileMode.Open);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -428,7 +456,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = new Uri(FormRecognizerTestEnvironment.CreateUri(filename));
+                var uri = new Uri(FormRecognizerTestEnvironment.MultipageFormUri);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
@@ -444,6 +472,33 @@ namespace Azure.AI.FormRecognizer.Tests
                 // Basic sanity test to make sure pages are ordered correctly.
                 // TODO: implement sanity check once #11821 is solved.
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            // Use Form_<id>.<ext> files for training with labels.
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            // Attempt to recognize a different type of form: Invoice_1.pdf. This form does not contain all the labels
+            // the newly trained model expects.
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
+            var fields = forms.Single().Fields;
+
+            // Verify that we got back at least one null field to make sure we hit the code path we want to test.
+
+            Assert.IsTrue(fields.Any(kvp => kvp.Value == null));
         }
 
         /// <summary>
@@ -503,20 +558,19 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true, true)]
         [TestCase(true, false)]
-        [TestCase(false, true, Ignore = "File has not been uploaded to GitHub yet.")]
-        [TestCase(false, false, Ignore = "File has not been uploaded to GitHub yet.")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipagedForms(bool useStream, bool includeTextContent)
+        [TestCase(false, true, Ignore = "Service returning 'Unsupported media type' error.")]
+        [TestCase(false, false, Ignore = "Service returning 'Unsupported media type' error.")]
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForms(bool useStream, bool includeTextContent)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
-            var filename = "multipage_invoice_noblank.pdf";
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
 
             if (useStream)
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.CreatePath(filename), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageFormPath, FileMode.Open);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -524,7 +578,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = new Uri(FormRecognizerTestEnvironment.CreateUri(filename));
+                var uri = new Uri(FormRecognizerTestEnvironment.MultipageFormUri);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 

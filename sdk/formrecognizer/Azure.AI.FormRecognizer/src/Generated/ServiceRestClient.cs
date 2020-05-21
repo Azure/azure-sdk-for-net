@@ -433,6 +433,214 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
+        internal HttpMessage CreateCopyCustomModelRequest(Guid modelId, CopyRequest copyRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/copy", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            using var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(copyRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Copy custom model stored in this resource (the source) to user specified target Form Recognizer resource. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="copyRequest"> Copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<ResponseWithHeaders<ServiceCopyCustomModelHeaders>> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        {
+            if (copyRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyRequest));
+            }
+
+            using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceCopyCustomModelHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Copy custom model stored in this resource (the source) to user specified target Form Recognizer resource. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="copyRequest"> Copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ServiceCopyCustomModelHeaders> CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        {
+            if (copyRequest == null)
+            {
+                throw new ArgumentNullException(nameof(copyRequest));
+            }
+
+            using var message = CreateCopyCustomModelRequest(modelId, copyRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceCopyCustomModelHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCustomModelCopyResultRequest(Guid modelId, Guid resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/copyResults/", false);
+            uri.AppendPath(resultId, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Obtain current status and the result of a custom model copy operation. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="resultId"> Copy operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<Response<CopyOperationResult>> GetCustomModelCopyResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CopyOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Obtain current status and the result of a custom model copy operation. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="resultId"> Copy operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<CopyOperationResult> GetCustomModelCopyResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CopyOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
+                        }
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGenerateModelCopyAuthorizationRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models/copyAuthorization", false);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<ResponseWithHeaders<CopyAuthorizationResult, ServiceGenerateModelCopyAuthorizationHeaders>> GenerateModelCopyAuthorizationAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGenerateModelCopyAuthorizationRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceGenerateModelCopyAuthorizationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CopyAuthorizationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Generate authorization to copy a model into the target Form Recognizer resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<CopyAuthorizationResult, ServiceGenerateModelCopyAuthorizationHeaders> GenerateModelCopyAuthorization(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGenerateModelCopyAuthorizationRequest();
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceGenerateModelCopyAuthorizationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        CopyAuthorizationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        if (document.RootElement.ValueKind == JsonValueKind.Null)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAnalyzeReceiptAsyncRequest(ContentType contentType, Stream fileStream, bool? includeTextDetails)
         {
             var message = _pipeline.CreateMessage();

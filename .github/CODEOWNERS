@@ -23,6 +23,8 @@
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
 /sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski

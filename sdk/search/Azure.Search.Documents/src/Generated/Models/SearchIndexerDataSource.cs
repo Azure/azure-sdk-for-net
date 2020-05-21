@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
     public partial class SearchIndexerDataSource
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="container"> The data container for the datasource. </param>
         /// <param name="dataChangeDetectionPolicy"> The data change detection policy for the datasource. </param>
         /// <param name="dataDeletionDetectionPolicy"> The data deletion detection policy for the datasource. </param>
-        /// <param name="Etag"> The ETag of the DataSource. </param>
+        /// <param name="Etag"> The ETag of the data source. </param>
         internal SearchIndexerDataSource(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string Etag)
         {
             Name = name;
