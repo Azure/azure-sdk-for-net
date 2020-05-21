@@ -199,6 +199,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     await sender.SendAsync(message);
                     ts.Complete();
                 }
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                await Task.Delay(TimeSpan.FromSeconds(2));
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDeclaredEvent);
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDischargedEvent);
             };

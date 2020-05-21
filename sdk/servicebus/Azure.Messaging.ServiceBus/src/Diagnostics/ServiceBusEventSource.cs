@@ -100,6 +100,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int AmqpLinkRefreshStartEvent = 39;
         internal const int AmqpLinkRefreshCompleteEvent = 40;
         internal const int AmqpLinkRefreshExceptionEvent = 41;
+
+        internal const int ManagementSerializedExceptionEvent = 42;
         internal const int RunOperationExceptionEvent = 43;
 
         internal const int ClientDisposeStartEvent = 44;
@@ -170,8 +172,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         internal const int ProcessorErrorHandlerThrewExceptionEvent = 94;
         internal const int ScheduleTaskFailedEvent = 95;
-        internal const int ManagementSerializedExceptionEvent = 96;
-
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -723,8 +723,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(ProcessorErrorHandlerThrewExceptionEvent, exception);
             }
         }
-
-
 
         #endregion region
 
