@@ -474,6 +474,33 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [Test]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            // Use Form_<id>.<ext> files for training with labels.
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            // Attempt to recognize a different type of form: Invoice_1.pdf. This form does not contain all the labels
+            // the newly trained model expects.
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
+            var fields = forms.Single().Fields;
+
+            // Verify that we got back at least one null field to make sure we hit the code path we want to test.
+
+            Assert.IsTrue(fields.Any(kvp => kvp.Value == null));
+        }
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
