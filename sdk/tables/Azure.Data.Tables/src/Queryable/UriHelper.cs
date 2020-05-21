@@ -8,24 +8,7 @@ namespace Azure.Data.Tables.Queryable
         internal const char FORWARDSLASH = '/';
         internal const char LEFTPAREN = '(';
         internal const char RIGHTPAREN = ')';
-        internal const char QUESTIONMARK = '?';
-        internal const char AMPERSAND = '&';
-        internal const char EQUALSSIGN = '=';
-        internal const char DOLLARSIGN = '$';
         internal const char SPACE = ' ';
-        internal const char COMMA = ',';
-        internal const char QUOTE = '\'';
-        internal const char ASTERISK = '*';
-        internal const string OPTIONTOP = "top";
-        internal const string OPTIONSKIP = "skip";
-        internal const string OPTIONORDERBY = "orderby";
-        internal const string OPTIONFILTER = "filter";
-        internal const string OPTIONDESC = "desc";
-        internal const string OPTIONEXPAND = "expand";
-        internal const string OPTIONCOUNT = "inlinecount";
-        internal const string OPTIONSELECT = "select";
-        internal const string COUNTALL = "allpages";
-        internal const string COUNT = "count";
         internal const string AND = "and";
         internal const string OR = "or";
         internal const string EQ = "eq";
@@ -42,7 +25,5 @@ namespace Azure.Data.Tables.Queryable
         internal const string NEGATE = "-";
         internal const string NOT = "not";
         internal const string NULL = "null";
-        internal const string ISOF = "isof";
-        internal const string CAST = "cast";
     }
 }

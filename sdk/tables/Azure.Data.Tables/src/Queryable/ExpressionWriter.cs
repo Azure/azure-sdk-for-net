@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionWriter : DataServiceLinqExpressionVisitor
+    internal class ExpressionWriter : LinqExpressionVisitor
     {
         internal readonly StringBuilder builder;
 
@@ -55,110 +55,6 @@ namespace Azure.Data.Tables.Queryable
             return result;
         }
 
-        internal override Expression VisitConditional(ConditionalExpression c)
-        {
-            cantTranslateExpression = true;
-            return c;
-        }
-
-        internal override Expression VisitLambda(LambdaExpression lambda)
-        {
-            cantTranslateExpression = true;
-            return lambda;
-        }
-
-        internal override NewExpression VisitNew(NewExpression nex)
-        {
-            cantTranslateExpression = true;
-            return nex;
-        }
-
-        internal override Expression VisitMemberInit(MemberInitExpression init)
-        {
-            cantTranslateExpression = true;
-            return init;
-        }
-
-        internal override Expression VisitListInit(ListInitExpression init)
-        {
-            cantTranslateExpression = true;
-            return init;
-        }
-
-        internal override Expression VisitNewArray(NewArrayExpression na)
-        {
-            cantTranslateExpression = true;
-            return na;
-        }
-
-        internal override Expression VisitInvocation(InvocationExpression iv)
-        {
-            cantTranslateExpression = true;
-            return iv;
-        }
-
-        internal override Expression VisitInputReferenceExpression(InputReferenceExpression ire)
-        {
-            Debug.Assert(ire != null, "ire != null");
-            if (parent == null || parent.NodeType != ExpressionType.MemberAccess)
-            {
-                string expressionText = (parent != null) ? parent.ToString() : ire.ToString();
-                throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantTranslateExpression, expressionText));
-            }
-
-            return ire;
-        }
-
-        internal override Expression VisitMethodCall(MethodCallExpression m)
-        {
-            if (TypeSystem.TryGetQueryOptionMethod(m.Method, out string methodName))
-            {
-                builder.Append(methodName);
-                builder.Append(UriHelper.LEFTPAREN);
-
-                if (methodName == "substringof")
-                {
-                    Debug.Assert(m.Method.Name == "Contains", "m.Method.Name == 'Contains'");
-                    Debug.Assert(m.Object != null, "m.Object != null");
-                    Debug.Assert(m.Arguments.Count == 1, "m.Arguments.Count == 1");
-                    Visit(m.Arguments[0]);
-                    builder.Append(UriHelper.COMMA);
-                    Visit(m.Object);
-                }
-                else
-                {
-                    if (m.Object != null)
-                    {
-                        Visit(m.Object);
-                    }
-
-                    if (m.Arguments.Count > 0)
-                    {
-                        if (m.Object != null)
-                        {
-                            builder.Append(UriHelper.COMMA);
-                        }
-
-                        for (int ii = 0; ii < m.Arguments.Count; ii++)
-                        {
-                            Visit(m.Arguments[ii]);
-                            if (ii < m.Arguments.Count - 1)
-                            {
-                                builder.Append(UriHelper.COMMA);
-                            }
-                        }
-                    }
-                }
-
-                builder.Append(UriHelper.RIGHTPAREN);
-            }
-            else
-            {
-                cantTranslateExpression = true;
-            }
-
-            return m;
-        }
 
         internal override Expression VisitMemberAccess(MemberExpression m)
         {
@@ -166,31 +62,6 @@ namespace Azure.Data.Tables.Queryable
             {
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantReferToPublicField, m.Member.Name));
             }
-            //TODO: Investigate if this can be done with object (dictionary<string, object> rather than dictionary<string, EntityProperty>
-            /*
-            if (m.Member.DeclaringType == typeof(EntityProperty))
-            {
-                MethodCallExpression mce = m.Expression as MethodCallExpression;
-                if (mce != null && mce.Arguments.Count == 1 && mce.Method == ReflectionUtil.DictionaryGetItemMethodInfo)
-                {
-                    MemberExpression me = mce.Object as MemberExpression;
-                    if (me != null && me.Member.DeclaringType == typeof(DynamicTableEntity) && me.Member.Name == "Properties")
-                    {
-                        // Append Property name arg to string
-                        ConstantExpression ce = mce.Arguments[0] as ConstantExpression;
-                        if (ce == null || !(ce.Value is string))
-                        {
-                            throw new NotSupportedException(SR.TableQueryDynamicPropertyAccess);
-                        }
-
-                        builder.Append(TranslateMemberName((string)ce.Value));
-                        return ce;
-                    }
-                }
-
-                throw new NotSupportedException(SR.TableQueryEntityPropertyInQueryNotSupported);
-            }
-            */
 
             Expression e = Visit(m.Expression);
             if (m.Member.Name == "Value" && m.Member.DeclaringType.IsGenericType
@@ -275,26 +146,6 @@ namespace Azure.Data.Tables.Queryable
             return b;
         }
 
-        internal override Expression VisitTypeIs(TypeBinaryExpression b)
-        {
-            builder.Append(UriHelper.ISOF);
-            builder.Append(UriHelper.LEFTPAREN);
-
-            if (!IsInputReference(b.Expression))
-            {
-                Visit(b.Expression);
-                builder.Append(UriHelper.COMMA);
-                builder.Append(UriHelper.SPACE);
-            }
-
-            builder.Append(UriHelper.QUOTE);
-            builder.Append(TypeNameForUri(b.TypeOperand));
-            builder.Append(UriHelper.QUOTE);
-            builder.Append(UriHelper.RIGHTPAREN);
-
-            return b;
-        }
-
         internal override Expression VisitParameter(ParameterExpression p)
         {
             return p;
@@ -302,29 +153,7 @@ namespace Azure.Data.Tables.Queryable
 
         private static bool IsInputReference(Expression exp)
         {
-            return exp is InputReferenceExpression || exp is ParameterExpression;
-        }
-
-        private static string TypeNameForUri(Type type)
-        {
-            Debug.Assert(type != null, "type != null");
-            type = Nullable.GetUnderlyingType(type) ?? type;
-
-            if (ClientConvert.IsKnownType(type))
-            {
-                if (ClientConvert.IsSupportedPrimitiveTypeForUri(type))
-                {
-                    return ClientConvert.ToTypeName(type);
-                }
-
-                throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantCastToUnsupportedPrimitive, type.Name));
-            }
-            else
-            {
-                return null;
-
-                // return this.context.ResolveNameFromType(type) ?? type.FullName;
-            }
+            return exp is ParameterExpression;
         }
 
         private void VisitOperand(Expression e)
@@ -350,11 +179,6 @@ namespace Azure.Data.Tables.Queryable
         protected virtual string TranslateMemberName(string memberName)
         {
             return memberName;
-        }
-
-        protected virtual object TranslateConstantValue(object value)
-        {
-            return value;
         }
 
         protected virtual string TranslateOperator(ExpressionType type)

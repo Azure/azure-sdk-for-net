@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
     {
         public TableClientQueryableTests(bool isAsync) : base(isAsync)
         { }
-
+        /*
         private const string tableName = "someTableName";
         private TableClient client { get; set; }
 
@@ -135,5 +135,6 @@ namespace Azure.Data.Tables.Tests
                                select ent.Int32).Average(), Throws.InstanceOf<TargetInvocationException>());
 
         }
+        */
     }
 }

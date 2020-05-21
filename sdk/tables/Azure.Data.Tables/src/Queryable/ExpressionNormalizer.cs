@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionNormalizer : DataServiceLinqExpressionVisitor
+    internal class ExpressionNormalizer : LinqExpressionVisitor
     {
         private const bool LiftToNull = false;
 
@@ -109,83 +109,6 @@ namespace Azure.Data.Tables.Queryable
         {
             MethodCallExpression visited = (MethodCallExpression)base.VisitMethodCall(call);
 
-            if (visited.Method.IsStatic && visited.Method.Name.StartsWith("op_", StringComparison.Ordinal))
-            {
-                if (visited.Arguments.Count == 2)
-                {
-                    switch (visited.Method.Name)
-                    {
-                        case "op_Equality":
-                            return Expression.Equal(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_Inequality":
-                            return Expression.NotEqual(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_GreaterThan":
-                            return Expression.GreaterThan(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_GreaterThanOrEqual":
-                            return Expression.GreaterThanOrEqual(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_LessThan":
-                            return Expression.LessThan(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_LessThanOrEqual":
-                            return Expression.LessThanOrEqual(visited.Arguments[0], visited.Arguments[1], LiftToNull, visited.Method);
-
-                        case "op_Multiply":
-                            return Expression.Multiply(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_Subtraction":
-                            return Expression.Subtract(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_Addition":
-                            return Expression.Add(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_Division":
-                            return Expression.Divide(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_Modulus":
-                            return Expression.Modulo(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_BitwiseAnd":
-                            return Expression.And(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_BitwiseOr":
-                            return Expression.Or(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        case "op_ExclusiveOr":
-                            return Expression.ExclusiveOr(visited.Arguments[0], visited.Arguments[1], visited.Method);
-
-                        default:
-                            break;
-                    }
-                }
-
-                if (visited.Arguments.Count == 1)
-                {
-                    switch (visited.Method.Name)
-                    {
-                        case "op_UnaryNegation":
-                            return Expression.Negate(visited.Arguments[0], visited.Method);
-
-                        case "op_UnaryPlus":
-                            return Expression.UnaryPlus(visited.Arguments[0], visited.Method);
-
-                        case "op_Explicit":
-                        case "op_Implicit":
-                            return Expression.Convert(visited.Arguments[0], visited.Type, visited.Method);
-
-                        case "op_OnesComplement":
-                        case "op_False":
-                            return Expression.Not(visited.Arguments[0], visited.Method);
-
-                        default:
-                            break;
-                    }
-                }
-            }
-
             if (visited.Method.IsStatic && visited.Method.Name == "Equals" && visited.Arguments.Count > 1)
             {
                 return Expression.Equal(visited.Arguments[0], visited.Arguments[1], false, visited.Method);
@@ -211,97 +134,7 @@ namespace Azure.Data.Tables.Queryable
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
             }
 
-            MethodCallExpression normalizedResult = NormalizePredicateArgument(visited);
-
-            return normalizedResult;
-        }
-
-        private static MethodCallExpression NormalizePredicateArgument(MethodCallExpression callExpression)
-        {
-            MethodCallExpression result;
-
-            if (HasPredicateArgument(callExpression, out int argumentOrdinal) &&
-                TryMatchCoalescePattern(callExpression.Arguments[argumentOrdinal], out Expression normalizedArgument))
-            {
-                List<Expression> normalizedArguments = new List<Expression>(callExpression.Arguments);
-
-                normalizedArguments[argumentOrdinal] = normalizedArgument;
-
-                result = Expression.Call(callExpression.Object, callExpression.Method, normalizedArguments);
-            }
-            else
-            {
-                result = callExpression;
-            }
-
-            return result;
-        }
-
-        private static bool HasPredicateArgument(MethodCallExpression callExpression, out int argumentOrdinal)
-        {
-            argumentOrdinal = default(int);
-            bool result = false;
-
-            if (2 <= callExpression.Arguments.Count &&
-                ReflectionUtil.TryIdentifySequenceMethod(callExpression.Method, out SequenceMethod sequenceMethod))
-            {
-                switch (sequenceMethod)
-                {
-                    case SequenceMethod.FirstPredicate:
-                    case SequenceMethod.FirstOrDefaultPredicate:
-                    case SequenceMethod.SinglePredicate:
-                    case SequenceMethod.SingleOrDefaultPredicate:
-                    case SequenceMethod.LastPredicate:
-                    case SequenceMethod.LastOrDefaultPredicate:
-                    case SequenceMethod.Where:
-                    case SequenceMethod.WhereOrdinal:
-                    case SequenceMethod.CountPredicate:
-                    case SequenceMethod.LongCountPredicate:
-                    case SequenceMethod.AnyPredicate:
-                    case SequenceMethod.All:
-                    case SequenceMethod.SkipWhile:
-                    case SequenceMethod.SkipWhileOrdinal:
-                    case SequenceMethod.TakeWhile:
-                    case SequenceMethod.TakeWhileOrdinal:
-                        argumentOrdinal = 1;
-                        result = true;
-                        break;
-                }
-            }
-
-            return result;
-        }
-
-        private static bool TryMatchCoalescePattern(Expression expression, out Expression normalized)
-        {
-            normalized = null;
-            bool result = false;
-
-            if (expression.NodeType == ExpressionType.Quote)
-            {
-                UnaryExpression quote = (UnaryExpression)expression;
-                if (TryMatchCoalescePattern(quote.Operand, out normalized))
-                {
-                    result = true;
-                    normalized = Expression.Quote(normalized);
-                }
-            }
-            else if (expression.NodeType == ExpressionType.Lambda)
-            {
-                LambdaExpression lambda = (LambdaExpression)expression;
-
-                if (lambda.Body.NodeType == ExpressionType.Coalesce && lambda.Body.Type == typeof(bool))
-                {
-                    BinaryExpression coalesce = (BinaryExpression)lambda.Body;
-                    if (coalesce.Right.NodeType == ExpressionType.Constant && false.Equals(((ConstantExpression)coalesce.Right).Value))
-                    {
-                        normalized = Expression.Lambda(lambda.Type, Expression.Convert(coalesce.Left, typeof(bool)), lambda.Parameters);
-                        result = true;
-                    }
-                }
-            }
-
-            return result;
+            throw new NotSupportedException($"Method {visited.Method.Name} not supported.");
         }
 
         private static readonly MethodInfo StaticRelationalOperatorPlaceholderMethod = typeof(ExpressionNormalizer).GetMethod("RelationalOperatorPlaceholder", BindingFlags.Static | BindingFlags.NonPublic);

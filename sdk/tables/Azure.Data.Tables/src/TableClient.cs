@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -41,23 +42,6 @@ namespace Azure.Data.Tables
         protected TableClient()
         { }
 
-        internal ExpressionParser GetExpressionParser()
-        {
-            if (_isPremiumEndpoint)
-            {
-                //TODO: Port TableExtensionExpressionParser
-                throw new NotImplementedException();
-            }
-            else
-            {
-                return new ExpressionParser();
-            }
-        }
-
-        public virtual TableQuery<T> CreateQuery<T>() where T : TableEntity, new()
-        {
-            return new TableQuery<T>(this);
-        }
 
         /// <summary>
         /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.
@@ -508,13 +492,27 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
+        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+
+        [ForwardsClientCalls]
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+            QueryAsync<T>(Bind(filter), top, select, cancellationToken);
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<T> QueryAsync<T>(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -546,13 +544,25 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-        public virtual Pageable<T> Query<T>(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) =>
+            Query<T>(Bind(filter), top, select, cancellationToken);
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
+        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+
+        [ForwardsClientCalls]
+        public virtual Pageable<T> Query<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable((int? _) =>
             {
@@ -664,6 +674,42 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
+
+        internal ExpressionParser GetExpressionParser()
+        {
+            if (_isPremiumEndpoint)
+            {
+                //TODO: Port TableExtensionExpressionParser
+                throw new NotImplementedException();
+            }
+            else
+            {
+                return new ExpressionParser();
+            }
+        }
+
+        internal string Bind(Expression expression)
+        {
+            Argument.AssertNotNull(expression, nameof(expression));
+
+            Dictionary<Expression, Expression> normalizerRewrites = new Dictionary<Expression, Expression>(ReferenceEqualityComparer<Expression>.Instance);
+
+            // Evaluate any local evaluatable expressions ( lambdas etc)
+            Expression partialEvaluatedExpression = Evaluator.PartialEval(expression);
+
+            // Normalize expression, replace String Comparisons etc.
+            Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
+
+            // Bind Expression, Analyze predicates and create query option expressions. End result is a single ResourceSetExpression
+            //Expression boundExpression = ResourceBinder.Bind(normalizedExpression);
+
+            // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
+            ExpressionParser parser = GetExpressionParser();
+            parser.Translate(normalizedExpression);
+
+            // Return the FilterString.
+            return parser.FilterString == "true" ? null : parser.FilterString;
+        }
 
         private static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
         {

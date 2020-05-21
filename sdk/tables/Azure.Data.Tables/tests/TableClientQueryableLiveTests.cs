@@ -34,8 +34,7 @@ namespace Azure.Data.Tables.Tests
 
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
-            var query = client.CreateQuery<ComplexEntity>().Where(x => x.PartitionKey == PartitionKeyValue).AsTableQuery();
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue, default).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             foreach (var entity in results)
             {
@@ -53,11 +52,7 @@ namespace Azure.Data.Tables.Tests
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
             // Filter before key predicate.
-            var query = (from ent in client.CreateQuery<ComplexEntity>()
-                         where ent.RowKey != "0004" && ent.PartitionKey == PartitionKeyValue
-                         select ent).AsTableQuery();
-
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(ent => ent.RowKey != "0004" && ent.PartitionKey == PartitionKeyValue).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             foreach (ComplexEntity ent in results)
             {
@@ -67,11 +62,8 @@ namespace Azure.Data.Tables.Tests
             Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count - 1));
 
             // Key predicate before filter.
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.PartitionKey == PartitionKeyValue && ent.RowKey != "0004"
-                     select ent).AsTableQuery();
 
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.PartitionKey == PartitionKeyValue && ent.RowKey != "0004").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             foreach (ComplexEntity ent in results)
             {
@@ -90,11 +82,7 @@ namespace Azure.Data.Tables.Tests
 
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
-            var query = (from ent in client.CreateQuery<ComplexEntity>()
-                         where (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50)
-                         select ent).AsTableQuery();
-
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) || ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true)) || (ent.LongPrimitiveN == (long)int.MaxValue + 50)).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             foreach (ComplexEntity ent in results)
             {
@@ -114,13 +102,9 @@ namespace Azure.Data.Tables.Tests
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
             // Complex nested query to return entity 2 and 4.
-            var query = (from ent in client.CreateQuery<ComplexEntity>()
-                         where (ent.RowKey == "0004" && ent.Int32 == 4) ||
+            var results = (await client.QueryAsync<ComplexEntity>(ent => (ent.RowKey == "0004" && ent.Int32 == 4) ||
                          ((ent.Int32 == 2) && (ent.String == "wrong string" || ent.Bool == true) && !(ent.IntegerPrimitive == 1 && ent.LongPrimitive == (long)int.MaxValue + 1)) ||
-                         (ent.LongPrimitiveN == (long)int.MaxValue + 50)
-                         select ent).AsTableQuery();
-
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                         (ent.LongPrimitiveN == (long)int.MaxValue + 50)).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             foreach (ComplexEntity ent in results)
             {
@@ -141,11 +125,7 @@ namespace Azure.Data.Tables.Tests
 
             // Unary Not.
 
-            var query = client.CreateQuery<ComplexEntity>()
-                .Where(x => x.PartitionKey == PartitionKeyValue)
-                .Where(x => !(x.RowKey == entitiesToInsert[0].RowKey))
-                .AsTableQuery();
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && !(x.RowKey == entitiesToInsert[0].RowKey)).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             // Assert that all but one were returned
 
@@ -158,22 +138,14 @@ namespace Azure.Data.Tables.Tests
 
             // Unary +.
 
-            query = client.CreateQuery<ComplexEntity>()
-                .Where(x => x.PartitionKey == PartitionKeyValue)
-                .Where(x => +x.Int32 < +5)
-                .AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && +x.Int32 < +5).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             // Assert that all were returned
             Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count));
 
             // Unary -.
 
-            query = client.CreateQuery<ComplexEntity>()
-                .Where(x => x.PartitionKey == PartitionKeyValue)
-                .Where(x => x.Int32 > -1)
-                .AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.Int32 > -1).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             // Assert that all were returned
             Assert.That(results.Count, Is.EqualTo(entitiesToInsert.Count));
@@ -190,12 +162,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses
 
-            var query = client.CreateQuery<TestEntity>()
-                .Where(e => e.PartitionKey == PartitionKeyValue)
-                .Take(10)
-                .AsTableQuery();
-
-            var pagedResult = InstrumentClient(query).ExecuteAsync();
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 10);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -214,12 +181,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a Take count to limit the number of responses. The lower of the Take values is what takes effect.
 
-            var query = client.CreateQuery<TestEntity>()
-                .Where(e => e.PartitionKey == PartitionKeyValue)
-                .Take(5).Take(12)
-                .AsTableQuery();
-
-            var pagedResult = InstrumentClient(query).ExecuteAsync();
+            var pagedResult = client.QueryAsync<TestEntity>(e => e.PartitionKey == PartitionKeyValue, top: 5);
 
             await foreach (Page<TestEntity> page in pagedResult.AsPages())
             {
@@ -238,10 +200,7 @@ namespace Azure.Data.Tables.Tests
 
             Func<string, string> identityFunc = (s) => s;
 
-            var query = client.CreateQuery<ComplexEntity>()
-                .Where(x => x.PartitionKey == PartitionKeyValue && x.RowKey == identityFunc(entitiesToInsert[1].RowKey))
-                .AsTableQuery();
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == identityFunc(entitiesToInsert[1].RowKey)).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
@@ -258,11 +217,7 @@ namespace Azure.Data.Tables.Tests
 
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
-            var query = client.CreateQuery<ComplexEntity>()
-                .Where(x => x.PartitionKey == PartitionKeyValue)
-                .Where(x => x.RowKey == entitiesToInsert[1].RowKey)
-                .AsTableQuery();
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(x => x.PartitionKey == PartitionKeyValue && x.RowKey == entitiesToInsert[1].RowKey).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             var entity = results.SingleOrDefault();
 
             Assert.That(entity, Is.Not.Null);
@@ -280,19 +235,18 @@ namespace Azure.Data.Tables.Tests
 
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
-            TableQuery<ComplexEntity> res = (from ent in client.CreateQuery<ComplexEntity>()
-                                             select ent).AsTableQuery();
+            var results = (await client.QueryAsync<ComplexEntity>(x => true).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             List<ComplexEntity> firstIteration = new List<ComplexEntity>();
             List<ComplexEntity> secondIteration = new List<ComplexEntity>();
 
-            foreach (ComplexEntity ent in res)
+            foreach (ComplexEntity ent in results)
             {
                 Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
                 firstIteration.Add(ent);
             }
 
-            foreach (ComplexEntity ent in res)
+            foreach (ComplexEntity ent in results)
             {
                 Assert.That(ent.PartitionKey, Is.EqualTo(PartitionKeyValue));
                 secondIteration.Add(ent);
@@ -320,138 +274,90 @@ namespace Azure.Data.Tables.Tests
             }
 
             // 1. Filter on String
-            var query = (from ent in client.CreateQuery<ComplexEntity>()
-                         where ent.String.CompareTo(thirdEntity.String) >= 0
-                         select ent).AsTableQuery();
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(ent => ent.String.CompareTo(thirdEntity.String) >= 0).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
             // 2. Filter on Guid
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Guid == thirdEntity.Guid
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Guid == thirdEntity.Guid).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(1));
 
 
             // 3. Filter on Long
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Int64 >= thirdEntity.Int64
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Int64 >= thirdEntity.Int64).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.LongPrimitive >= thirdEntity.LongPrimitive
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.LongPrimitive >= thirdEntity.LongPrimitive).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.LongPrimitiveN >= thirdEntity.LongPrimitiveN
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.LongPrimitiveN >= thirdEntity.LongPrimitiveN).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 4. Filter on Double
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Double >= thirdEntity.Double
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Double >= thirdEntity.Double).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.DoublePrimitive >= thirdEntity.DoublePrimitive
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.DoublePrimitive >= thirdEntity.DoublePrimitive).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 5. Filter on Integer
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Int32 >= thirdEntity.Int32
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Int32 >= thirdEntity.Int32).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Int32N >= thirdEntity.Int32N
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Int32N >= thirdEntity.Int32N).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 6. Filter on Date
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.DateTimeOffset >= thirdEntity.DateTimeOffset
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.DateTimeOffset < thirdEntity.DateTimeOffset
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.DateTimeOffset < thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 7. Filter on Boolean
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Bool == thirdEntity.Bool
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Bool == thirdEntity.Bool).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.BoolPrimitive == thirdEntity.BoolPrimitive
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.BoolPrimitive == thirdEntity.BoolPrimitive).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
 
 
             // 8. Filter on Binary
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.Binary == thirdEntity.Binary
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.Binary == thirdEntity.Binary).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(1));
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.BinaryPrimitive == thirdEntity.BinaryPrimitive
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.BinaryPrimitive == thirdEntity.BinaryPrimitive).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(1));
 
 
             // 10. Complex Filter on Binary GTE
 
-            query = (from ent in client.CreateQuery<ComplexEntity>()
-                     where ent.PartitionKey == thirdEntity.PartitionKey &&
+            results = (await client.QueryAsync<ComplexEntity>(ent => ent.PartitionKey == thirdEntity.PartitionKey &&
                      ent.String.CompareTo(thirdEntity.String) >= 0 &&
                      ent.Int64 >= thirdEntity.Int64 &&
                      ent.LongPrimitive >= thirdEntity.LongPrimitive &&
                      ent.LongPrimitiveN >= thirdEntity.LongPrimitiveN &&
                      ent.Int32 >= thirdEntity.Int32 &&
                      ent.Int32N >= thirdEntity.Int32N &&
-                     ent.DateTimeOffset >= thirdEntity.DateTimeOffset
-                     select ent).AsTableQuery();
-            results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                     ent.DateTimeOffset >= thirdEntity.DateTimeOffset).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(results.Count, Is.EqualTo(2));
         }
@@ -466,11 +372,7 @@ namespace Azure.Data.Tables.Tests
 
             await InsertTestEntities(entitiesToInsert).ConfigureAwait(false);
 
-            var query = (from ent in client.CreateQuery<TestEntity>()
-                         where ent.PartitionKey == PartitionKeyValue && ent.PartitionKey == PartitionKeyValue2
-                         select ent).AsTableQuery();
-
-            var results = (await InstrumentClient(query).ExecuteAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var results = (await client.QueryAsync<ComplexEntity>(ent => ent.PartitionKey == PartitionKeyValue && ent.PartitionKey == PartitionKeyValue2).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(results.Count, Is.Zero);
         }
     }
