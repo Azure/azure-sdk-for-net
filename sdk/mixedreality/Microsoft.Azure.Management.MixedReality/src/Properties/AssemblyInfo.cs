@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MixedReality.Tests")]
-[assembly: AssemblyDescription("Unit Test Cases of Microsoft.Azure.Management.MixedReality")]
+[assembly: AssemblyTitle("MixedReality")]
+[assembly: AssemblyDescription(".NET SDK of Azure Mixed Reality Management APIs")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
-[assembly: AssemblyProduct("MixedReality.Tests")]
+[assembly: AssemblyProduct("MixedReality")]
 [assembly: AssemblyCopyright("Copyright © 2020 Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
