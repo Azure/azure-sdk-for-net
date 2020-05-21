@@ -11,7 +11,7 @@
   "paths": {
     "/configurations/{id}": {
       "get": {
-        "summary": "Retrieve a configuration for Iot Hub devices and modules by it identifier.",
+        "summary": "Retrieve a configuration for Iot Hub devices and modules by its identifier.",
         "description": "Get a configuration on IoT Hub for automatic device/module management.",
         "operationId": "Configuration_Get",
         "consumes": [],
@@ -362,7 +362,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Query result with continuation token if appropriate.",
+            "description": "Query result with continuation token, if applicable.",
             "schema": {
               "type": "array",
               "items": {
