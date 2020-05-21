@@ -16,20 +16,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Cosmos DB provisioned throughput settings object
     /// </summary>
-    public partial class ProvisionedThroughputSettingsResource
+    public partial class AutoscaleSettingsResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProvisionedThroughputSettingsResource class.
+        /// Initializes a new instance of the AutoscaleSettingsResource class.
         /// </summary>
-        public ProvisionedThroughputSettingsResource()
+        public AutoscaleSettingsResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProvisionedThroughputSettingsResource class.
+        /// Initializes a new instance of the AutoscaleSettingsResource class.
         /// </summary>
         /// <param name="maxThroughput">Represents maximum throughput container
         /// can scale up to.</param>
@@ -38,7 +36,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="targetMaxThroughput">Represents target maximum
         /// throughput container can scale up to once offer is no longer in
         /// pending state.</param>
-        public ProvisionedThroughputSettingsResource(int maxThroughput, AutoUpgradePolicyResource autoUpgradePolicy = default(AutoUpgradePolicyResource), int? targetMaxThroughput = default(int?))
+        public AutoscaleSettingsResource(int maxThroughput, AutoUpgradePolicyResource autoUpgradePolicy = default(AutoUpgradePolicyResource), int? targetMaxThroughput = default(int?))
         {
             MaxThroughput = maxThroughput;
             AutoUpgradePolicy = autoUpgradePolicy;

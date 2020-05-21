@@ -27,11 +27,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the
         /// GremlinDatabaseGetPropertiesOptions class.
         /// </summary>
-        /// <param name="throughput">Value of the Cosmos DB resource
-        /// throughput. Use the ThroughputSetting resource when retrieving
-        /// offer details.</param>
-        public GremlinDatabaseGetPropertiesOptions(int? throughput = default(int?))
-            : base(throughput)
+        /// <param name="throughput">Value of the Cosmos DB resource throughput
+        /// or autoscaleSettings. Use the ThroughputSetting resource when
+        /// retrieving offer details.</param>
+        /// <param name="autoscaleSettings">Specifies the Autoscale
+        /// settings.</param>
+        public GremlinDatabaseGetPropertiesOptions(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
+            : base(throughput, autoscaleSettings)
         {
             CustomInit();
         }

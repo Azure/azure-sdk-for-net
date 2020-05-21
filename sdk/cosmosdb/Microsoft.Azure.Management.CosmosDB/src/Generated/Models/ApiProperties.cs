@@ -10,29 +10,27 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class TableGetPropertiesOptions : OptionsResource
+    public partial class ApiProperties
     {
         /// <summary>
-        /// Initializes a new instance of the TableGetPropertiesOptions class.
+        /// Initializes a new instance of the ApiProperties class.
         /// </summary>
-        public TableGetPropertiesOptions()
+        public ApiProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TableGetPropertiesOptions class.
+        /// Initializes a new instance of the ApiProperties class.
         /// </summary>
-        /// <param name="throughput">Value of the Cosmos DB resource throughput
-        /// or autoscaleSettings. Use the ThroughputSetting resource when
-        /// retrieving offer details.</param>
-        /// <param name="autoscaleSettings">Specifies the Autoscale
-        /// settings.</param>
-        public TableGetPropertiesOptions(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
-            : base(throughput, autoscaleSettings)
+        /// <param name="serverVersion">Describes the ServerVersion of an a
+        /// MongoDB account. Possible values include: '3.2', '3.6'</param>
+        public ApiProperties(string serverVersion = default(string))
         {
+            ServerVersion = serverVersion;
             CustomInit();
         }
 
@@ -40,6 +38,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets describes the ServerVersion of an a MongoDB account.
+        /// Possible values include: '3.2', '3.6'
+        /// </summary>
+        [JsonProperty(PropertyName = "serverVersion")]
+        public string ServerVersion { get; set; }
 
     }
 }
