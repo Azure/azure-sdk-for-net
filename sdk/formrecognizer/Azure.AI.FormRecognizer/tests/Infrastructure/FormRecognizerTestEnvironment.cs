@@ -27,6 +27,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable for the Blob Container SAS Url use for storing documents used for live tests.</summary>
         internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
+        /// <summary>The name of the environment variable for the target resource identifier use for copying custom models live tests.</summary>
+        internal const string TargetResourceIdEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_ID";
+
+        /// <summary>The name of the environment variable for the target resource region use for copying custom models live tests.</summary>
+        internal const string TargetResourceRegionEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_REGION";
+
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
 
@@ -51,6 +57,8 @@ namespace Azure.AI.FormRecognizer.Tests
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
+        public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
+        public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 
         /// <summary>
         /// The name of the directory where the running assembly is located.

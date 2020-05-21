@@ -18,6 +18,14 @@ namespace Azure.AI.FormRecognizer.Training
             Status = modelInfo.Status;
         }
 
+        internal CustomFormModelInfo(string modelId, DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, CustomFormModelStatus status)
+        {
+            ModelId = modelId;
+            CreatedOn = createdOn;
+            LastModified = lastModifiedOn;
+            Status = status;
+        }
+
         /// <summary>
         /// The unique identifier of the model.
         /// </summary>

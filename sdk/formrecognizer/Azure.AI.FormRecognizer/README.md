@@ -111,6 +111,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Training custom models to recognize all fields and values found in your custom forms.  A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract for each form type.
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
+- Copying a custom model from one Form Recognizer resource to another.
 
 Please note that models can also be trained using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
@@ -357,6 +358,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize custom forms][recognize_custom_forms]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
+- [Copy a custom model between Form Recognizer resources][copy_custom_models]
 
 ## Contributing
 
@@ -400,6 +402,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_custom_forms]: samples/Sample3_RecognizeCustomForms.md
 [train_a_model]: samples/Sample4_TrainModel.md
 [manage_custom_models]: samples/Sample5_ManageCustomModels.md
+[copy_custom_models]: samples/Sample6_CopyCustomModel.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
