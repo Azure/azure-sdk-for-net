@@ -58,7 +58,7 @@ public  class Modules
     /// </summary>
     /// <param name="moduleIdentity">The module to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The newly created module identity</returns>
+    /// <returns>The newly created device module identity</returns>
     public virtual async Task<Response<ModuleIdentity>> CreateIdentityAsync(ModuleIdentity moduleIdentity, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -114,7 +114,7 @@ public  class Modules
     /// List a set of device module twins.
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A pageable set of module twins.</returns>
+    /// <returns>A pageable set of device module twins.</returns>
     public virtual async AsyncPageable<TwinData> GetTwinsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -125,7 +125,7 @@ public  class Modules
     /// only if this ETag matches the value maintained by the server, indicating that the twin has not been modified since it was last retrieved.
     /// To force an unconditional update, set If-Match to the wildcard character (*).</param>
     /// <param name="cancellationToken">The cancellation token</param>
-    /// <returns>The server's new representation of the device twin.</returns>
+    /// <returns>The server's new representation of the device module twin.</returns>
     public virtual async Task<Response<TwinData>> UpdateTwinAsync(TwinData twinPatch, string ifMatch = null, CancellationToken cancellationToken = default);
 
     /// <summary>
