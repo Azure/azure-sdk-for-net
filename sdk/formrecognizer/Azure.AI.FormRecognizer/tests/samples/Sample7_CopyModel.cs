@@ -25,8 +25,8 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSample6CreateCopySourceClient
             //@@ string endpoint = "<source_endpoint>";
             //@@ string apiKey = "<source_apiKey>";
-            var credential = new AzureKeyCredential(apiKey);
-            var sourceClient = new FormTrainingClient(new Uri(endpoint), credential);
+            var sourcecredential = new AzureKeyCredential(apiKey);
+            var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
             #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
@@ -56,11 +56,11 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             #region Snippet:FormRecognizerSample6CopyModel
-            //@@ string modelId = "<modelId>";
-            CustomFormModelInfo modelCopy = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
+            //@@ string modelId = "<source_modelId>";
+            CustomFormModelInfo newModel = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
 
             Console.WriteLine($"Original modelID => {modelId}");
-            Console.WriteLine($"Copied modelID => {modelCopy.ModelId}");
+            Console.WriteLine($"Copied modelID => {newModel.ModelId}");
             #endregion
         }
     }
