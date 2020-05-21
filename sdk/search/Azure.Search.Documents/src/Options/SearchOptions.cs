@@ -189,7 +189,6 @@ namespace Azure.Search.Documents
             destination.ScoringProfile = source.ScoringProfile;
             destination.SearchMode = source.SearchMode;
             destination.Skip = source.Skip;
-            destination.ClientRequestId = source.ClientRequestId;
         }
 
         /// <summary>

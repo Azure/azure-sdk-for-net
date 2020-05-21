@@ -98,7 +98,6 @@ namespace Azure.Search.Documents
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 UseFuzzyMatching = UseFuzzyMatching,
-                ClientRequestId = ClientRequestId
             };
     }
 }

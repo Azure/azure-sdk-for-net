@@ -35,19 +35,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task ClientRequestIdRountrips()
-        {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexerClient client = resources.GetIndexerClient();
-            Guid id = Recording.Random.NewGuid();
-            Response<IReadOnlyList<SearchIndexer>> response =
-                await client.GetIndexersAsync(
-                    new SearchRequestOptions { ClientRequestId = id });
-
-            Assert.AreEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
-        }
-
-        [Test]
         public void DiagnosticsAreUnique()
         {
             // Make sure we're not repeating Header/Query names already defined
@@ -88,8 +75,7 @@ namespace Azure.Search.Documents.Tests
                 new SearchIndexerDataContainer(resources.BlobContainerName));
 
             SearchIndexerDataSource actualSource = await serviceClient.CreateDataSourceAsync(
-                dataSource,
-                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+                dataSource);
 
             SearchIndexer indexer = new SearchIndexer(
                 Recording.Random.GetName(),
@@ -97,30 +83,26 @@ namespace Azure.Search.Documents.Tests
                 resources.IndexName);
 
             SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
-                indexer,
-                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+                indexer);
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                onlyIfUnchanged: true,
-                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+                onlyIfUnchanged: true);
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
-                indexer.Name,
-                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+                indexer.Name);
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Query the index.
             SearchClient client = resources.GetSearchClient();
 
-            long count = await client.GetDocumentCountAsync(
-                new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+            long count = await client.GetDocumentCountAsync();
 
             // This should be equal, but sometimes reports double despite logs showing no shared resources.
             Assert.That(count, Is.GreaterThanOrEqualTo(SearchResources.TestDocuments.Length));
@@ -149,8 +131,7 @@ namespace Azure.Search.Documents.Tests
 
                 SearchIndexerStatus status = await client.GetIndexerStatusAsync(
                     indexerName,
-                    new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() },
-                    cts.Token);
+                    cancellationToken: cts.Token);
 
                 if (status.Status == IndexerStatus.Running &&
                     status.LastResult?.Status == IndexerExecutionStatus.Success)

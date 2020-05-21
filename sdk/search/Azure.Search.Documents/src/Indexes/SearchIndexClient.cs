@@ -94,6 +94,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -104,6 +105,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -114,6 +116,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -172,7 +175,6 @@ namespace Azure.Search.Documents
             try
             {
                 return ServiceClient.GetServiceStatistics(
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -213,7 +215,6 @@ namespace Azure.Search.Documents
             try
             {
                 return await ServiceClient.GetServiceStatisticsAsync(
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -251,7 +252,6 @@ namespace Azure.Search.Documents
                 Response<AnalyzeResult> result = IndexesClient.Analyze(
                     indexName,
                     analyzeRequest,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Tokens, result.GetRawResponse());
@@ -288,7 +288,6 @@ namespace Azure.Search.Documents
                 Response<AnalyzeResult> result = await IndexesClient.AnalyzeAsync(
                     indexName,
                     analyzeRequest,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -324,7 +323,6 @@ namespace Azure.Search.Documents
             {
                 return IndexesClient.Create(
                     index,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -357,7 +355,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexesClient.CreateAsync(
                     index,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -404,7 +401,6 @@ namespace Azure.Search.Documents
                     index?.Name,
                     index,
                     allowIndexDowntime,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? index?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -452,7 +448,6 @@ namespace Azure.Search.Documents
                     index?.Name,
                     index,
                     allowIndexDowntime,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? index?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -481,7 +476,6 @@ namespace Azure.Search.Documents
                 indexName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -500,7 +494,6 @@ namespace Azure.Search.Documents
                 indexName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -525,7 +518,6 @@ namespace Azure.Search.Documents
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -549,7 +541,6 @@ namespace Azure.Search.Documents
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -557,7 +548,6 @@ namespace Azure.Search.Documents
             string indexName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
@@ -566,7 +556,6 @@ namespace Azure.Search.Documents
             {
                 return IndexesClient.Delete(
                     indexName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -582,7 +571,6 @@ namespace Azure.Search.Documents
             string indexName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteIndex)}");
@@ -591,7 +579,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexesClient.DeleteAsync(
                     indexName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -624,7 +611,6 @@ namespace Azure.Search.Documents
             {
                 return IndexesClient.Get(
                     indexName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -654,7 +640,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexesClient.GetAsync(
                     indexName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -689,8 +674,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = IndexesClient.List(
                         Constants.All,
-                        options?.ClientRequestId,
-                        cancellationToken);
+                            cancellationToken);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
                 });
@@ -726,8 +710,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
                         Constants.All,
-                        options?.ClientRequestId,
-                        cancellationToken)
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
@@ -764,8 +747,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = IndexesClient.List(
                         Constants.NameKey,
-                        options?.ClientRequestId,
-                        cancellationToken);
+                            cancellationToken);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
@@ -802,8 +784,7 @@ namespace Azure.Search.Documents
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
                         Constants.NameKey,
-                        options?.ClientRequestId,
-                        cancellationToken)
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
@@ -837,7 +818,6 @@ namespace Azure.Search.Documents
             {
                 return IndexesClient.GetStatistics(
                     indexName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -867,7 +847,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexesClient.GetStatisticsAsync(
                     indexName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -903,7 +882,6 @@ namespace Azure.Search.Documents
             {
                 return SynonymMapsClient.Create(
                     synonymMap,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -936,7 +914,6 @@ namespace Azure.Search.Documents
             {
                 return await SynonymMapsClient.CreateAsync(
                     synonymMap,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -976,7 +953,6 @@ namespace Azure.Search.Documents
                 return SynonymMapsClient.CreateOrUpdate(
                     synonymMap?.Name,
                     synonymMap,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1017,7 +993,6 @@ namespace Azure.Search.Documents
                 return await SynonymMapsClient.CreateOrUpdateAsync(
                     synonymMap?.Name,
                     synonymMap,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1046,7 +1021,6 @@ namespace Azure.Search.Documents
                 synonymMapName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -1065,7 +1039,6 @@ namespace Azure.Search.Documents
                 synonymMapName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1090,7 +1063,6 @@ namespace Azure.Search.Documents
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -1114,7 +1086,6 @@ namespace Azure.Search.Documents
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1122,7 +1093,6 @@ namespace Azure.Search.Documents
             string synonymMapName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
@@ -1131,7 +1101,6 @@ namespace Azure.Search.Documents
             {
                 return SynonymMapsClient.Delete(
                     synonymMapName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1147,7 +1116,6 @@ namespace Azure.Search.Documents
             string synonymMapName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteSynonymMap)}");
@@ -1156,7 +1124,6 @@ namespace Azure.Search.Documents
             {
                 return await SynonymMapsClient.DeleteAsync(
                     synonymMapName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1189,7 +1156,6 @@ namespace Azure.Search.Documents
             {
                 return SynonymMapsClient.Get(
                     synonymMapName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1219,7 +1185,6 @@ namespace Azure.Search.Documents
             {
                 return await SynonymMapsClient.GetAsync(
                     synonymMapName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1247,7 +1212,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.SynonymMaps, result.GetRawResponse());
@@ -1276,7 +1240,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1306,7 +1269,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
@@ -1336,7 +1298,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 

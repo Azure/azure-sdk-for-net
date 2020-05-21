@@ -97,6 +97,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -107,6 +108,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -117,6 +119,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -144,7 +147,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Create(
                     dataSource,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -177,7 +179,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.CreateAsync(
                     dataSource,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -217,7 +218,6 @@ namespace Azure.Search.Documents
                 return DataSourcesClient.CreateOrUpdate(
                     dataSource?.Name,
                     dataSource,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -258,7 +258,6 @@ namespace Azure.Search.Documents
                 return await DataSourcesClient.CreateOrUpdateAsync(
                     dataSource?.Name,
                     dataSource,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -287,7 +286,6 @@ namespace Azure.Search.Documents
                 dataSourceName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -306,7 +304,6 @@ namespace Azure.Search.Documents
                 dataSourceName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -331,7 +328,6 @@ namespace Azure.Search.Documents
                 dataSource?.Name,
                 dataSource?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -355,7 +351,6 @@ namespace Azure.Search.Documents
                 dataSource?.Name,
                 dataSource?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -363,7 +358,6 @@ namespace Azure.Search.Documents
             string dataSourceName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
@@ -372,7 +366,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Delete(
                     dataSourceName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -388,7 +381,6 @@ namespace Azure.Search.Documents
             string dataSourceName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
@@ -397,7 +389,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.DeleteAsync(
                     dataSourceName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -430,7 +421,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Get(
                     dataSourceName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -460,7 +450,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.GetAsync(
                     dataSourceName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -488,7 +477,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = DataSourcesClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
@@ -517,7 +505,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -547,7 +534,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = DataSourcesClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
@@ -577,7 +563,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -616,7 +601,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Create(
                     indexer,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -649,7 +633,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.CreateAsync(
                     indexer,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -689,7 +672,6 @@ namespace Azure.Search.Documents
                 return IndexersClient.CreateOrUpdate(
                     indexer?.Name,
                     indexer,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -730,7 +712,6 @@ namespace Azure.Search.Documents
                 return await IndexersClient.CreateOrUpdateAsync(
                     indexer?.Name,
                     indexer,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -759,7 +740,6 @@ namespace Azure.Search.Documents
                 indexerName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -778,7 +758,6 @@ namespace Azure.Search.Documents
                 indexerName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -803,7 +782,6 @@ namespace Azure.Search.Documents
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -827,7 +805,6 @@ namespace Azure.Search.Documents
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -835,7 +812,6 @@ namespace Azure.Search.Documents
             string indexerName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
@@ -844,7 +820,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Delete(
                     indexerName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -860,7 +835,6 @@ namespace Azure.Search.Documents
             string indexerName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
@@ -869,7 +843,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.DeleteAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -902,7 +875,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Get(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -932,7 +904,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.GetAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -960,7 +931,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = IndexersClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
@@ -989,7 +959,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = await IndexersClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1019,7 +988,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = IndexersClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
@@ -1049,7 +1017,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = await IndexersClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1083,7 +1050,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.GetStatus(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1113,7 +1079,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.GetStatusAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1144,7 +1109,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Reset(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1174,7 +1138,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.ResetAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1205,7 +1168,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Run(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1235,7 +1197,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.RunAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1271,7 +1232,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Create(
                     skillset,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1304,7 +1264,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.CreateAsync(
                     skillset,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1344,7 +1303,6 @@ namespace Azure.Search.Documents
                 return SkillsetsClient.CreateOrUpdate(
                     skillset?.Name,
                     skillset,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1385,7 +1343,6 @@ namespace Azure.Search.Documents
                 return await SkillsetsClient.CreateOrUpdateAsync(
                     skillset?.Name,
                     skillset,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1414,7 +1371,6 @@ namespace Azure.Search.Documents
                 skillsetName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -1433,7 +1389,6 @@ namespace Azure.Search.Documents
                 skillsetName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1458,7 +1413,6 @@ namespace Azure.Search.Documents
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -1482,7 +1436,6 @@ namespace Azure.Search.Documents
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1490,7 +1443,6 @@ namespace Azure.Search.Documents
             string skillsetName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
@@ -1499,7 +1451,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Delete(
                     skillsetName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1515,7 +1466,6 @@ namespace Azure.Search.Documents
             string skillsetName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
@@ -1524,7 +1474,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.DeleteAsync(
                     skillsetName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1557,7 +1506,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Get(
                     skillsetName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1587,7 +1535,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.GetAsync(
                     skillsetName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1615,7 +1562,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = SkillsetsClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
@@ -1644,7 +1590,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1674,7 +1619,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = SkillsetsClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
@@ -1704,7 +1648,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
