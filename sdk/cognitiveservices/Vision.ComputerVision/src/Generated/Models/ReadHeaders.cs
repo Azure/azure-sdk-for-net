@@ -14,24 +14,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for BatchReadFile operation.
+    /// Defines headers for Read operation.
     /// </summary>
-    public partial class BatchReadFileHeaders
+    public partial class ReadHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the BatchReadFileHeaders class.
+        /// Initializes a new instance of the ReadHeaders class.
         /// </summary>
-        public BatchReadFileHeaders()
+        public ReadHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BatchReadFileHeaders class.
+        /// Initializes a new instance of the ReadHeaders class.
         /// </summary>
         /// <param name="operationLocation">URL to query for status of the
         /// operation. The operation ID will expire in 48 hours. </param>
-        public BatchReadFileHeaders(string operationLocation = default(string))
+        public ReadHeaders(string operationLocation = default(string))
         {
             OperationLocation = operationLocation;
             CustomInit();

@@ -14,24 +14,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for RecognizeText operation.
+    /// Defines headers for ReadInStream operation.
     /// </summary>
-    public partial class RecognizeTextHeaders
+    public partial class ReadInStreamHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the RecognizeTextHeaders class.
+        /// Initializes a new instance of the ReadInStreamHeaders class.
         /// </summary>
-        public RecognizeTextHeaders()
+        public ReadInStreamHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecognizeTextHeaders class.
+        /// Initializes a new instance of the ReadInStreamHeaders class.
         /// </summary>
         /// <param name="operationLocation">URL to query for status of the
         /// operation. The operation ID will expire in 48 hours. </param>
-        public RecognizeTextHeaders(string operationLocation = default(string))
+        public ReadInStreamHeaders(string operationLocation = default(string))
         {
             OperationLocation = operationLocation;
             CustomInit();
