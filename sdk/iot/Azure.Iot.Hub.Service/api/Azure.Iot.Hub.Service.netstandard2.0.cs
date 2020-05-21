@@ -74,7 +74,7 @@ namespace Azure.Iot.Hub.Service.Models
     public partial class ConfigurationQueriesTestInput
     {
         public ConfigurationQueriesTestInput() { }
-        public string CustomMetricQueries { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomMetricQueries { get { throw null; } set { } }
         public string TargetCondition { get { throw null; } set { } }
     }
     public partial class ConfigurationQueriesTestResponse

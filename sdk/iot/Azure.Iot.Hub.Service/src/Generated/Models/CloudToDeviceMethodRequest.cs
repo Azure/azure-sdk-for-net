@@ -16,10 +16,10 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
-        /// <param name="methodName"> Name of the method to be executed. </param>
-        /// <param name="payload"> The JSON-formatted direct method payload, up to 128kb in size. </param>
-        /// <param name="responseTimeoutInSeconds"> Time (in seconds) that the service waits for the method invocation to return a response. It defaults to 30 seconds. Minimum allowed value is 5 seconds, maximum allowed value is 300 seconds. </param>
-        /// <param name="connectTimeoutInSeconds"> Time (in seconds) that the service waits for the device to come online. It defaults to 0, meaning the device must already be online. Maximum allowed value is 300 seconds. </param>
+        /// <param name="methodName"> Method to run. </param>
+        /// <param name="payload"> Payload. </param>
+        /// <param name="responseTimeoutInSeconds"> . </param>
+        /// <param name="connectTimeoutInSeconds"> . </param>
         internal CloudToDeviceMethodRequest(string methodName, object payload, int? responseTimeoutInSeconds, int? connectTimeoutInSeconds)
         {
             MethodName = methodName;
@@ -28,13 +28,11 @@ namespace Azure.Iot.Hub.Service.Models
             ConnectTimeoutInSeconds = connectTimeoutInSeconds;
         }
 
-        /// <summary> Name of the method to be executed. </summary>
+        /// <summary> Method to run. </summary>
         public string MethodName { get; set; }
-        /// <summary> The JSON-formatted direct method payload, up to 128kb in size. </summary>
+        /// <summary> Payload. </summary>
         public object Payload { get; set; }
-        /// <summary> Time (in seconds) that the service waits for the method invocation to return a response. It defaults to 30 seconds. Minimum allowed value is 5 seconds, maximum allowed value is 300 seconds. </summary>
         public int? ResponseTimeoutInSeconds { get; set; }
-        /// <summary> Time (in seconds) that the service waits for the device to come online. It defaults to 0, meaning the device must already be online. Maximum allowed value is 300 seconds. </summary>
         public int? ConnectTimeoutInSeconds { get; set; }
     }
 }

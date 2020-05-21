@@ -18,17 +18,33 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of JobResponse. </summary>
-        /// <param name="jobId"> The unique identifier of the job. </param>
+        /// <param name="jobId"> System generated.  Ignored at creation. </param>
         /// <param name="queryCondition"> Device query condition. </param>
-        /// <param name="createdTime"> The creation time of the job. </param>
+        /// <param name="createdTime"> System generated.  Ignored at creation. </param>
         /// <param name="startTime"> Scheduled job start time in UTC. </param>
-        /// <param name="endTime"> The time the job stopped. </param>
+        /// <param name="endTime">
+        /// System generated.  Ignored at creation.
+        /// 
+        /// Represents the time the job stopped processing.
+        /// </param>
         /// <param name="maxExecutionTimeInSeconds"> Max execution time in secounds (ttl duration). </param>
-        /// <param name="type"> The type of job to execute. </param>
-        /// <param name="cloudToDeviceMethod"> Required if jobType is cloudToDeviceMethod. The method type and parameters. </param>
-        /// <param name="updateTwin"> The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub. </param>
-        /// <param name="status"> The status of the job. </param>
-        /// <param name="failureReason"> Contains the reason for the failure, if a failure occurred. </param>
+        /// <param name="type">
+        /// Required.
+        /// 
+        /// The type of job to execute.
+        /// </param>
+        /// <param name="cloudToDeviceMethod">
+        /// Required if jobType is cloudToDeviceMethod.
+        /// 
+        /// The method type and parameters.
+        /// </param>
+        /// <param name="updateTwin"> Twin Representation. </param>
+        /// <param name="status"> System generated.  Ignored at creation. </param>
+        /// <param name="failureReason">
+        /// System generated.  Ignored at creation.
+        /// 
+        /// If status == failure, this represents a string containing the reason.
+        /// </param>
         /// <param name="statusMessage"> Status message for the job. </param>
         /// <param name="deviceJobStatistics"> Job details. </param>
         internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics)
@@ -48,27 +64,43 @@ namespace Azure.Iot.Hub.Service.Models
             DeviceJobStatistics = deviceJobStatistics;
         }
 
-        /// <summary> The unique identifier of the job. </summary>
+        /// <summary> System generated.  Ignored at creation. </summary>
         public string JobId { get; }
         /// <summary> Device query condition. </summary>
         public string QueryCondition { get; }
-        /// <summary> The creation time of the job. </summary>
+        /// <summary> System generated.  Ignored at creation. </summary>
         public DateTimeOffset? CreatedTime { get; }
         /// <summary> Scheduled job start time in UTC. </summary>
         public DateTimeOffset? StartTime { get; }
-        /// <summary> The time the job stopped. </summary>
+        /// <summary>
+        /// System generated.  Ignored at creation.
+        /// 
+        /// Represents the time the job stopped processing.
+        /// </summary>
         public DateTimeOffset? EndTime { get; }
         /// <summary> Max execution time in secounds (ttl duration). </summary>
         public long? MaxExecutionTimeInSeconds { get; }
-        /// <summary> The type of job to execute. </summary>
+        /// <summary>
+        /// Required.
+        /// 
+        /// The type of job to execute.
+        /// </summary>
         public JobResponseType? Type { get; }
-        /// <summary> Required if jobType is cloudToDeviceMethod. The method type and parameters. </summary>
+        /// <summary>
+        /// Required if jobType is cloudToDeviceMethod.
+        /// 
+        /// The method type and parameters.
+        /// </summary>
         public CloudToDeviceMethodRequest CloudToDeviceMethod { get; }
-        /// <summary> The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub. </summary>
+        /// <summary> Twin Representation. </summary>
         public TwinData UpdateTwin { get; }
-        /// <summary> The status of the job. </summary>
+        /// <summary> System generated.  Ignored at creation. </summary>
         public JobResponseStatus? Status { get; }
-        /// <summary> Contains the reason for the failure, if a failure occurred. </summary>
+        /// <summary>
+        /// System generated.  Ignored at creation.
+        /// 
+        /// If status == failure, this represents a string containing the reason.
+        /// </summary>
         public string FailureReason { get; }
         /// <summary> Status message for the job. </summary>
         public string StatusMessage { get; }
