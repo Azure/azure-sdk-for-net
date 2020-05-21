@@ -55,10 +55,97 @@ APIs for managing module identities, module twins, and querying modules
 </details>
 
 <details><summary><b>Jobs</b></summary>
-APIs for using IotHub v2 jobs
 
 ```csharp
+public class Jobs
+{
+    /// <summary>
+    /// Creates a job to export device registrations to the container using a job properties object.
+    /// </summary>
+    /// <param name="jobProperties">Properties for the job</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>JobProperties of the newly created job.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleExportDevicesWithJobPropertiesAsync" language="csharp">
+    /// // Code snippet of how to use this API while using JobProperties.CreateForExportJob
+    /// </code>
+    /// </example>
+    public virtual async Task<JobProperties> ExportDevicesAsync(JobProperties jobProperties, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Creates a job to export device registrations to the container.
+    /// </summary>
+    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the status of the job and the results.</param>
+    /// <param name="outputBlobName">The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.</param>
+    /// <param name="excludeKeys">If false, authorization keys are included in export output.  Keys are exported as null otherwise.</param>
+    /// <param name="storageAuthenticationType">Specifies authentication type being used for connecting to storage account.</param>
+    /// <param name="cancellationToken">Task cancellation token.</param>
+    /// <returns>JobProperties of the newly created job.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleExportDevicesAsync" language="csharp">
+    /// </code>
+    /// </example>
+    public virtual async Task<JobProperties> ExportDevicesAsync(string outputBlobContainerUri, string outputBlobName, bool excludeKeys, JobPropertiesStorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates a job to import device registrations into the IoT Hub using a job properties object.
+    /// </summary>
+    /// <param name="jobProperties">Properties for the job</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>JobProperties of the newly created job.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleImportDevicesWithJobPropertiesAsync" language="csharp">
+    /// // Code snippet of how to use this API while using JobProperties.CreateForImportJob
+    /// </code>
+    /// </example>
+    public virtual async Task<JobProperties> ImportDevicesAsync(JobProperties jobProperties, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates a job to import device registrations into the IoT Hub.
+    /// </summary>
+    /// <param name="importBlobContainerUri">URI containing SAS token to a blob container that contains registry data to sync.</param>
+    /// <param name="importBlobName">The blob name to be used when importing from the provided input blob container.</param>
+    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the status of the job.</param>
+    /// <param name="outputBlobName">The name of the blob that will be created in the provided output blob container.</param>
+    /// <param name="storageAuthenticationType">Specifies authentication type being used for connecting to storage account.</param>
+    /// <param name="cancellationToken">Task cancellation token.</param>
+    /// <returns>JobProperties of the newly created job.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleImportDevicesAsync" language="csharp">
+    /// </code>
+    /// </example>
+    public virtual async Task<JobProperties> ImportDevicesAsync(string importBlobContainerUri, string importBlobName, string outputBlobContainerUri, string outputBlobName, JobPropertiesStorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// List all import and export jobs for the IoT Hub.
+    /// </summary>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>IEnumerable of JobProperties of all jobs for this IoT Hub.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleGetImportExportJobsAsync" language="csharp">
+    /// </code>
+    /// </example>
+    public virtual async Task<IEnumerable<JobProperties>> GetImportExportJobsAsync(CancellationToken cancellationToken);
+
+
+}
+
+// Customized
+public partial class JobProperties
+{
+    public static JobProperties CreateForExportJob(
+        string outputBlobContainerUri, 
+        string outputBlobName, 
+        bool excludeKeys, 
+        JobPropertiesStorageAuthenticationType stroageAuthenticationType);
+
+    public static JobProperties CreateForImportJob(
+        string importBlobContainerUri,
+        string importBlobName,
+        string outputBlobContainerUri,
+        string outputBlobName,
+        JobPropertiesStorageAuthenticationType storageAuthenticationType); 
+}
 ```
 </details>
 
