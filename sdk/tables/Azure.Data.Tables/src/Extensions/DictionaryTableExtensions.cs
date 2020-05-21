@@ -130,11 +130,6 @@ namespace Azure.Data.Tables
             properties ??= typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var result = new T();
 
-            if (result == null)
-            {
-                throw new ArgumentException($"Generic Type {typeof(T)} must implement ITableEntity");
-            }
-
             // Iterate through each property of the entity and set them as the correct type.
             foreach (var property in properties)
             {
