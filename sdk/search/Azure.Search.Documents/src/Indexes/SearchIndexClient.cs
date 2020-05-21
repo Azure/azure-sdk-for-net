@@ -162,12 +162,10 @@ namespace Azure.Search.Documents
         /// operations.
         /// </para>
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchServiceStatistics"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchServiceStatistics> GetServiceStatistics(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetServiceStatistics)}");
@@ -202,12 +200,10 @@ namespace Azure.Search.Documents
         /// operations.
         /// </para>
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchServiceStatistics"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetServiceStatistics)}");
@@ -232,7 +228,6 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
         /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
@@ -242,7 +237,6 @@ namespace Azure.Search.Documents
         public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
             AnalyzeRequest analyzeRequest,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -268,7 +262,6 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
         /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
@@ -278,7 +271,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
             AnalyzeRequest analyzeRequest,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -304,7 +296,6 @@ namespace Azure.Search.Documents
         /// Creates a new search index.
         /// </summary>
         /// <param name="index">Required. The <see cref="SearchIndex"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created.
@@ -314,7 +305,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndex> CreateIndex(
             SearchIndex index,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateIndex)}");
@@ -336,7 +326,6 @@ namespace Azure.Search.Documents
         /// Creates a new search index.
         /// </summary>
         /// <param name="index">Required. The <see cref="SearchIndex"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created.
@@ -346,7 +335,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndex>> CreateIndexAsync(
             SearchIndex index,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateIndex)}");
@@ -378,7 +366,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndex.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created or updated.
@@ -390,7 +377,6 @@ namespace Azure.Search.Documents
             SearchIndex index,
             bool allowIndexDowntime = false,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
@@ -425,7 +411,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndex.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created or updated.
@@ -437,7 +422,6 @@ namespace Azure.Search.Documents
             SearchIndex index,
             bool allowIndexDowntime = false,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
@@ -464,14 +448,12 @@ namespace Azure.Search.Documents
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteIndex(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteIndex(
                 indexName,
                 null,
@@ -482,14 +464,12 @@ namespace Azure.Search.Documents
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteIndexAsync(
                 indexName,
                 null,
@@ -505,7 +485,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndex.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
@@ -513,7 +492,6 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndex(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteIndex(
                 index?.Name,
                 index?.ETag,
@@ -528,7 +506,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndex.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="index"/> is null.</exception>
@@ -536,7 +513,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexAsync(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteIndexAsync(
                 index?.Name,
                 index?.ETag,
@@ -595,14 +571,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndex"/>.
         /// </summary>
         /// <param name="indexName">Required. The name of the index to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndex"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndex> GetIndex(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndex)}");
@@ -624,14 +598,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndex"/>.
         /// </summary>
         /// <param name="indexName">Required. The name of the index to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndex"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndex>> GetIndexAsync(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndex)}");
@@ -653,12 +625,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Pageable<SearchIndex> GetIndexes(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
@@ -689,12 +659,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
@@ -726,12 +694,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all index names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Pageable<string> GetIndexNames(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
@@ -763,12 +729,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all index names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual AsyncPageable<string> GetIndexNamesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
@@ -802,14 +766,12 @@ namespace Azure.Search.Documents
         /// Gets <see cref="SearchIndexStatistics"/> for the given index, including a document count and storage usage.
         /// </summary>
         /// <param name="indexName">Required. The name of the index.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchIndexStatistics"/> names.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexStatistics> GetIndexStatistics(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatistics)}");
@@ -831,14 +793,12 @@ namespace Azure.Search.Documents
         /// Gets <see cref="SearchIndexStatistics"/> for the given index, including a document count and storage usage.
         /// </summary>
         /// <param name="indexName">Required. The name of the index.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="SearchIndexStatistics"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexStatistics>> GetIndexStatisticsAsync(
             string indexName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatistics)}");
@@ -863,7 +823,6 @@ namespace Azure.Search.Documents
         /// Creates a new synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -873,7 +832,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SynonymMap> CreateSynonymMap(
             SynonymMap synonymMap,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateSynonymMap)}");
@@ -895,7 +853,6 @@ namespace Azure.Search.Documents
         /// Creates a new synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -905,7 +862,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SynonymMap>> CreateSynonymMapAsync(
             SynonymMap synonymMap,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateSynonymMap)}");
@@ -932,7 +888,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -943,7 +898,6 @@ namespace Azure.Search.Documents
         public virtual Response<SynonymMap> CreateOrUpdateSynonymMap(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
@@ -972,7 +926,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -983,7 +936,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<SynonymMap>> CreateOrUpdateSynonymMapAsync(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
@@ -1009,14 +961,12 @@ namespace Azure.Search.Documents
         /// Deletes a synonym map.
         /// </summary>
         /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteSynonymMap(
                 synonymMapName,
                 null,
@@ -1027,14 +977,12 @@ namespace Azure.Search.Documents
         /// Deletes a synonym map.
         /// </summary>
         /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
                 synonymMapName,
                 null,
@@ -1050,7 +998,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
@@ -1058,7 +1005,6 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSynonymMap(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteSynonymMap(
                 synonymMap?.Name,
                 synonymMap?.ETag,
@@ -1073,7 +1019,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
@@ -1081,7 +1026,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSynonymMapAsync(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
                 synonymMap?.Name,
                 synonymMap?.ETag,
@@ -1140,14 +1084,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SynonymMap"/>.
         /// </summary>
         /// <param name="synonymMapName">Required. The name of the <see cref="SynonymMap"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SynonymMap"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SynonymMap> GetSynonymMap(
             string synonymMapName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMap)}");
@@ -1169,14 +1111,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SynonymMap"/>.
         /// </summary>
         /// <param name="synonymMapName">Required. The name of the <see cref="SynonymMap"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SynonymMap"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SynonymMap>> GetSynonymMapAsync(
             string synonymMapName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMap)}");
@@ -1198,12 +1138,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym maps.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMaps)}");
@@ -1226,12 +1164,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym maps.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMaps)}");
@@ -1255,12 +1191,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym map names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMapNames)}");
@@ -1284,12 +1218,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all synonym map names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SynonymMap"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetSynonymMapNames)}");

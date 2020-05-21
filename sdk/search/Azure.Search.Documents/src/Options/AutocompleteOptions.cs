@@ -14,7 +14,7 @@ namespace Azure.Search.Documents
     /// </summary>
     [CodeGenModel("AutocompleteRequest")]
     [CodeGenSuppress(nameof(AutocompleteOptions), typeof(string), typeof(string))]
-    public partial class AutocompleteOptions : SearchRequestOptions
+    public partial class AutocompleteOptions
     {
         /// <summary>
         /// Initializes new instance of <see cref="AutocompleteOptions"/>

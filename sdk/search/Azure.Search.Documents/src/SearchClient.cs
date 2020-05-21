@@ -230,9 +230,6 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -242,7 +239,6 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         public virtual Response<long> GetDocumentCount(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
@@ -262,9 +258,6 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -274,7 +267,6 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         public virtual async Task<Response<long>> GetDocumentCountAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
