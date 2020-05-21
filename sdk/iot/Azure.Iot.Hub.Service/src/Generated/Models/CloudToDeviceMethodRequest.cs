@@ -8,19 +8,19 @@
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> Parameters to execute a direct method on the device. </summary>
-    public partial class CloudToDeviceMethod
+    public partial class CloudToDeviceMethodRequest
     {
-        /// <summary> Initializes a new instance of CloudToDeviceMethod. </summary>
-        public CloudToDeviceMethod()
+        /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
+        public CloudToDeviceMethodRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceMethod. </summary>
+        /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
         /// <param name="methodName"> Method to run. </param>
         /// <param name="payload"> Payload. </param>
         /// <param name="responseTimeoutInSeconds"> . </param>
         /// <param name="connectTimeoutInSeconds"> . </param>
-        internal CloudToDeviceMethod(string methodName, object payload, int? responseTimeoutInSeconds, int? connectTimeoutInSeconds)
+        internal CloudToDeviceMethodRequest(string methodName, object payload, int? responseTimeoutInSeconds, int? connectTimeoutInSeconds)
         {
             MethodName = methodName;
             Payload = payload;
