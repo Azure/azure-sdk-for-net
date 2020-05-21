@@ -274,6 +274,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 {
                     sbMessage.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
                 }
+
+                if (amqpMessage.Properties.CreationTime.HasValue && amqpMessage.Properties.AbsoluteExpiryTime.HasValue)
+                {
+                    // Overwrite TimeToLive from AbsoluteExpiryTime
+                    sbMessage.TimeToLive = amqpMessage.Properties.AbsoluteExpiryTime.Value - amqpMessage.Properties.CreationTime.Value;
+                }
             }
 
             // Do application properties before message annotations, because the application properties
