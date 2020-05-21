@@ -1114,14 +1114,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
@@ -1178,14 +1178,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
 
             mockEventSource
                 .Verify(log => log.ClientCloseError(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>(),
                     expectedException.Message),
@@ -1193,7 +1193,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Verify(log => log.ClientCloseComplete(
-                    typeof(PartitionReceiver),
+                    nameof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>()),
                 Times.Once);
