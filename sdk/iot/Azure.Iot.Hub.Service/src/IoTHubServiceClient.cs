@@ -12,32 +12,27 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// 
         /// </summary>
-        public Devices Devices;
+        public DevicesClient Devices;
         /// <summary>
         /// 
         /// </summary>
-        public Modules Modules;
+        public ModulesClient Modules;
         /// <summary>
         /// 
         /// </summary>
-        public Statistics Statistics;
+        public StatisticsClient Statistics;
         /// <summary>
         /// 
         /// </summary>
-        public Messages Messages;
+        public MessagesClient Messages;
         /// <summary>
         /// 
         /// </summary>
-        public Files Files;
-
-
+        public FilesClient Files;
         /// <summary>
-        /// Initializes a new instance of the <see cref="IoTHubServiceClient"/> class.
+        /// 
         /// </summary>
-        public IoTHubServiceClient(Uri endpoint, IoTHubServiceClientOptions options)
-        {
-            FaultInjectionClient = new FaultInjectionClient();
-        }
+        public JobsClient Jobs;
 
 
         /// <summary>
