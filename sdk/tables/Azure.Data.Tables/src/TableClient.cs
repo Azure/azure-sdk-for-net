@@ -499,7 +499,7 @@ namespace Azure.Data.Tables
 
         [ForwardsClientCalls]
 #pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) =>
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
 #pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
             QueryAsync<T>(Bind(filter), top, select, cancellationToken);
 
@@ -512,7 +512,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -550,7 +550,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) =>
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
             Query<T>(Bind(filter), top, select, cancellationToken);
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-        public virtual Pageable<T> Query<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> Query<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             return PageableHelpers.CreateEnumerable((int? _) =>
             {

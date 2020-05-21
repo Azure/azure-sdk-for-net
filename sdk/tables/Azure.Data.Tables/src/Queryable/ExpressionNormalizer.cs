@@ -13,7 +13,7 @@ namespace Azure.Data.Tables.Queryable
     {
         private const bool LiftToNull = false;
 
-        private readonly Dictionary<Expression, Pattern> patterns = new Dictionary<Expression, Pattern>(ReferenceEqualityComparer<Expression>.Instance);
+        private readonly Dictionary<Expression, Pattern> _patterns = new Dictionary<Expression, Pattern>(ReferenceEqualityComparer<Expression>.Instance);
 
         private ExpressionNormalizer(Dictionary<Expression, Expression> normalizerRewrites)
         {
@@ -47,7 +47,7 @@ namespace Azure.Data.Tables.Queryable
                 }
             }
 
-            if (patterns.TryGetValue(visited.Left, out Pattern pattern) && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
+            if (_patterns.TryGetValue(visited.Left, out Pattern pattern) && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
             {
                 ComparePattern comparePattern = (ComparePattern)pattern;
                 if (TryCreateRelationalOperator(visited.NodeType, comparePattern.Left, comparePattern.Right, out BinaryExpression relationalExpression))
@@ -201,7 +201,7 @@ namespace Azure.Data.Tables.Queryable
                     Expression.Constant(1),
                     Expression.Constant(-1)));
 
-            patterns[result] = new ComparePattern(left, right);
+            _patterns[result] = new ComparePattern(left, right);
 
             return result;
         }

@@ -7,7 +7,7 @@ namespace Azure.Data.Tables.Queryable
 {
     internal static class ClientConvert
     {
-        private static readonly Type[] KnownTypes = CreateKnownPrimitives();
+        private static readonly Type[] s_knownTypes = CreateKnownPrimitives();
 
 
         internal enum StorageType
@@ -103,7 +103,7 @@ namespace Azure.Data.Tables.Queryable
 
         private static int IndexOfStorage(Type type)
         {
-            int index = ClientConvert.IndexOfReference(ClientConvert.KnownTypes, type);
+            int index = ClientConvert.IndexOfReference(ClientConvert.s_knownTypes, type);
             return index;
         }
 

@@ -12,12 +12,6 @@ namespace Azure.Data.Tables
 {
     internal static class EntityUtilities
     {
-        internal static TElement ResolveEntityByType<TElement>()
-        {
-            ITableEntity entity = (ITableEntity)InstantiateEntityFromType(typeof(TElement));
-            return (TElement)entity;
-        }
-
         internal static object InstantiateEntityFromType(Type type)
         {
             EntityActivator activator = compiledActivators.GetOrAdd(type, GenerateActivator);

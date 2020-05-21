@@ -13,19 +13,15 @@ namespace Azure.Data.Tables.Queryable
 {
     internal class ExpressionWriter : LinqExpressionVisitor
     {
-        internal readonly StringBuilder builder;
-
-        private readonly Stack<Expression> expressionStack;
-
-        private bool cantTranslateExpression;
-
-        private Expression parent;
+        internal readonly StringBuilder _builder;
+        private readonly Stack<Expression> _expressionStack;
+        private bool _cantTranslateExpression;
 
         protected ExpressionWriter()
         {
-            builder = new StringBuilder();
-            expressionStack = new Stack<Expression>();
-            expressionStack.Push(null);
+            _builder = new StringBuilder();
+            _expressionStack = new Stack<Expression>();
+            _expressionStack.Push(null);
         }
 
         internal static string ExpressionToString(Expression e)
@@ -38,7 +34,7 @@ namespace Azure.Data.Tables.Queryable
         {
             string serialized = Translate(e);
 
-            if (cantTranslateExpression)
+            if (_cantTranslateExpression)
             {
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.ALinqCantTranslateExpression, e.ToString()));
             }
@@ -48,10 +44,9 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression Visit(Expression exp)
         {
-            parent = expressionStack.Peek();
-            expressionStack.Push(exp);
+            _expressionStack.Push(exp);
             Expression result = base.Visit(exp);
-            expressionStack.Pop();
+            _expressionStack.Pop();
             return result;
         }
 
@@ -72,10 +67,10 @@ namespace Azure.Data.Tables.Queryable
 
             if (!IsInputReference(e) && e.NodeType != ExpressionType.Convert && e.NodeType != ExpressionType.ConvertChecked)
             {
-                builder.Append(UriHelper.FORWARDSLASH);
+                _builder.Append(UriHelper.FORWARDSLASH);
             }
 
-            builder.Append(TranslateMemberName(m.Member.Name));
+            _builder.Append(TranslateMemberName(m.Member.Name));
 
             return m;
         }
@@ -85,7 +80,7 @@ namespace Azure.Data.Tables.Queryable
             string result;
             if (c.Value == null)
             {
-                builder.Append(UriHelper.NULL);
+                _builder.Append(UriHelper.NULL);
                 return c;
             }
             else if (!ClientConvert.TryKeyPrimitiveToString(c.Value, out result))
@@ -96,7 +91,7 @@ namespace Azure.Data.Tables.Queryable
             Debug.Assert(result != null, "result != null");
 
             // A Difference from WCF Data Services is that we will escape later when we execute the fully parsed query.
-            builder.Append(result);
+            _builder.Append(result);
             return c;
         }
 
@@ -105,14 +100,14 @@ namespace Azure.Data.Tables.Queryable
             switch (u.NodeType)
             {
                 case ExpressionType.Not:
-                    builder.Append(UriHelper.NOT);
-                    builder.Append(UriHelper.SPACE);
+                    _builder.Append(UriHelper.NOT);
+                    _builder.Append(UriHelper.SPACE);
                     VisitOperand(u.Operand);
                     break;
                 case ExpressionType.Negate:
                 case ExpressionType.NegateChecked:
-                    builder.Append(UriHelper.SPACE);
-                    builder.Append(TranslateOperator(u.NodeType));
+                    _builder.Append(UriHelper.SPACE);
+                    _builder.Append(TranslateOperator(u.NodeType));
                     VisitOperand(u.Operand);
                     break;
                 case ExpressionType.Convert:
@@ -120,7 +115,7 @@ namespace Azure.Data.Tables.Queryable
                 case ExpressionType.UnaryPlus:
                     break;
                 default:
-                    cantTranslateExpression = true;
+                    _cantTranslateExpression = true;
                     break;
             }
 
@@ -130,18 +125,18 @@ namespace Azure.Data.Tables.Queryable
         internal override Expression VisitBinary(BinaryExpression b)
         {
             VisitOperand(b.Left);
-            builder.Append(UriHelper.SPACE);
+            _builder.Append(UriHelper.SPACE);
             string operatorString = TranslateOperator(b.NodeType);
             if (string.IsNullOrEmpty(operatorString))
             {
-                cantTranslateExpression = true;
+                _cantTranslateExpression = true;
             }
             else
             {
-                builder.Append(operatorString);
+                _builder.Append(operatorString);
             }
 
-            builder.Append(UriHelper.SPACE);
+            _builder.Append(UriHelper.SPACE);
             VisitOperand(b.Right);
             return b;
         }
@@ -160,9 +155,9 @@ namespace Azure.Data.Tables.Queryable
         {
             if (e is BinaryExpression || e is UnaryExpression)
             {
-                builder.Append(UriHelper.LEFTPAREN);
+                _builder.Append(UriHelper.LEFTPAREN);
                 Visit(e);
-                builder.Append(UriHelper.RIGHTPAREN);
+                _builder.Append(UriHelper.RIGHTPAREN);
             }
             else
             {
@@ -173,7 +168,7 @@ namespace Azure.Data.Tables.Queryable
         private string Translate(Expression e)
         {
             Visit(e);
-            return builder.ToString();
+            return _builder.ToString();
         }
 
         protected virtual string TranslateMemberName(string memberName)

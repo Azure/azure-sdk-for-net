@@ -6,7 +6,7 @@ using System;
 namespace Azure.Data.Tables
 {
 
-    public class TableEntity : ITableEntity
+    public class TableEntity
     {
         /// <summary>
         /// The partition key is a unique identifier for the partition within a given table and forms the first part of an entity's primary key.
