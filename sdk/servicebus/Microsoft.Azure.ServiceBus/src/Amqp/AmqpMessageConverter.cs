@@ -113,7 +113,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             if (sbMessage.TimeToLive != TimeSpan.MaxValue)
             {
-                amqpMessage.Header.Ttl = (uint)sbMessage.TimeToLive.TotalMilliseconds;
+                amqpMessage.Header.Ttl = sbMessage.TimeToLive.TotalMilliseconds < UInt32.MaxValue ? (uint)sbMessage.TimeToLive.TotalMilliseconds : UInt32.MaxValue;
                 amqpMessage.Properties.CreationTime = DateTime.UtcNow;
 
                 if (AmqpConstants.MaxAbsoluteExpiryTime - amqpMessage.Properties.CreationTime.Value > sbMessage.TimeToLive)
