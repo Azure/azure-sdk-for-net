@@ -78,11 +78,6 @@ namespace Azure.Data.Tables.Queryable
             }
         }
 
-        internal RequestOptionsQueryOptionExpression RequestOptions
-        {
-            get { return sequenceQueryOptions.OfType<RequestOptionsQueryOptionExpression>().SingleOrDefault(); }
-        }
-
         internal TakeQueryOptionExpression Take
         {
             get { return sequenceQueryOptions.OfType<TakeQueryOptionExpression>().SingleOrDefault(); }

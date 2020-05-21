@@ -18,11 +18,11 @@ namespace Azure.Data.Tables.Queryable
             {
                 case ResourceExpressionType.RootResourceSet:
                 case ResourceExpressionType.ResourceNavigationProperty:
-                    return this.VisitResourceSetExpression((ResourceSetExpression)exp);
+                    return VisitResourceSetExpression((ResourceSetExpression)exp);
                 case ResourceExpressionType.ResourceNavigationPropertySingleton:
-                    return this.VisitNavigationPropertySingletonExpression((NavigationPropertySingletonExpression)exp);
+                    return VisitNavigationPropertySingletonExpression((NavigationPropertySingletonExpression)exp);
                 case ResourceExpressionType.InputReference:
-                    return this.VisitInputReferenceExpression((InputReferenceExpression)exp);
+                    return VisitInputReferenceExpression((InputReferenceExpression)exp);
                 default:
                     return base.Visit(exp);
             }
@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal virtual Expression VisitResourceSetExpression(ResourceSetExpression rse)
         {
-            Expression source = this.Visit(rse.Source);
+            Expression source = Visit(rse.Source);
 
             if (source != rse.Source)
             {
@@ -42,7 +42,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal virtual Expression VisitNavigationPropertySingletonExpression(NavigationPropertySingletonExpression npse)
         {
-            Expression source = this.Visit(npse.Source);
+            Expression source = Visit(npse.Source);
 
             if (source != npse.Source)
             {
@@ -55,7 +55,7 @@ namespace Azure.Data.Tables.Queryable
         internal virtual Expression VisitInputReferenceExpression(InputReferenceExpression ire)
         {
             // Debug.Assert(ire != null, "ire != null -- otherwise caller never should have visited here");
-            ResourceExpression re = (ResourceExpression)this.Visit(ire.Target);
+            ResourceExpression re = (ResourceExpression)Visit(ire.Target);
             return re.CreateReference();
         }
     }

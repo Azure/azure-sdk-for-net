@@ -39,7 +39,17 @@ namespace Azure.Data.Tables
         /// </summary>
         public TableEntity()
         {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with the specified partition key and row key.
+        /// </summary>
+        /// <param name="partitionKey">A string containing the partition key of the <see cref="TableEntity"/> to be initialized.</param>
+        /// <param name="rowKey">A string containing the row key of the <see cref="TableEntity"/> to be initialized.</param>
+        public TableEntity(string partitionKey, string rowKey)
+        {
+            PartitionKey = partitionKey;
+            RowKey = rowKey;
         }
     }
 }

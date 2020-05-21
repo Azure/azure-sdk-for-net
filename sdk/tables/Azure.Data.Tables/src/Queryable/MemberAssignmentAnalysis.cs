@@ -103,8 +103,7 @@ namespace Azure.Data.Tables.Queryable
             MemberAssignmentAnalysis previousNested = null;
             foreach (var binding in init.Bindings)
             {
-                MemberAssignment assignment = binding as MemberAssignment;
-                if (assignment == null)
+                if (!(binding is MemberAssignment assignment))
                 {
                     continue;
                 }

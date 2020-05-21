@@ -148,8 +148,7 @@ namespace Azure.Data.Tables.Queryable
         {
             if (re.HasQueryOptions)
             {
-                ResourceSetExpression rse = re as ResourceSetExpression;
-                if (rse != null)
+                if (re is ResourceSetExpression rse)
                 {
                     IEnumerator options = rse.SequenceQueryOptions.GetEnumerator();
                     while (options.MoveNext())
@@ -158,15 +157,6 @@ namespace Azure.Data.Tables.Queryable
                         ResourceExpressionType et = (ResourceExpressionType)e.NodeType;
                         switch (et)
                         {
-                            case ResourceExpressionType.RequestOptions:
-                                VisitQueryOptionExpression((RequestOptionsQueryOptionExpression)e);
-                                break;
-                            case ResourceExpressionType.OperationContext:
-                                VisitQueryOptionExpression((OperationContextQueryOptionExpression)e);
-                                break;
-                            case ResourceExpressionType.Resolver:
-                                VisitQueryOptionExpression((EntityResolverQueryOptionExpression)e);
-                                break;
                             case ResourceExpressionType.TakeQueryOption:
                                 VisitQueryOptionExpression((TakeQueryOptionExpression)e);
                                 break;
@@ -174,6 +164,7 @@ namespace Azure.Data.Tables.Queryable
                                 VisitQueryOptionExpression((FilterQueryOptionExpression)e);
                                 break;
                             default:
+                                //TODO: Determine if support for ResourceExpressionType.Resolver, ResourceExpressionType.OperationContext, or ResourceExpressionType.RequestOptions is needed
                                 Debug.Assert(false, "Unexpected expression type " + (int)et);
                                 break;
                         }
@@ -191,23 +182,6 @@ namespace Azure.Data.Tables.Queryable
                     VisitCustomQueryOptions(re.CustomQueryOptions);
                 }
             }
-        }
-
-        internal virtual void VisitQueryOptionExpression(RequestOptionsQueryOptionExpression roqoe)
-        {
-            //TODO: Investigate if this is needed
-            //this.RequestOptions = (TableRequestOptions)roqoe.RequestOptions.Value;
-        }
-
-        internal virtual void VisitQueryOptionExpression(OperationContextQueryOptionExpression ocqoe)
-        {
-            //TODO: Investigate if this is needed
-            //OperationContext = (OperationContext)ocqoe.OperationContext.Value;
-        }
-
-        internal virtual void VisitQueryOptionExpression(EntityResolverQueryOptionExpression erqoe)
-        {
-            Resolver = erqoe.Resolver;
         }
 
         internal virtual void VisitQueryOptionExpression(TakeQueryOptionExpression tqoe)

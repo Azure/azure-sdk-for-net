@@ -829,109 +829,6 @@ namespace Azure.Data.Tables.Queryable
                 return paramRef == expectedTarget && refPath.Count == 1 && refPath[0] == rse.TransparentScope.Accessor;
             }
 
-            internal static bool MatchIdentityProjectionResultSelector(Expression e)
-            {
-                LambdaExpression le = (LambdaExpression)e;
-                return le.Body == le.Parameters[1];
-            }
-
-            internal static bool MatchTransparentScopeSelector(ResourceSetExpression input, LambdaExpression resultSelector, out ResourceSetExpression.TransparentAccessors transparentScope)
-            {
-                transparentScope = null;
-
-                if (resultSelector.Body.NodeType != ExpressionType.New)
-                {
-                    return false;
-                }
-
-                NewExpression ne = (NewExpression)resultSelector.Body;
-                if (ne.Arguments.Count < 2)
-                {
-                    return false;
-                }
-
-                if (ne.Type.BaseType != typeof(object))
-                {
-                    return false;
-                }
-
-                ParameterInfo[] constructorParams = ne.Constructor.GetParameters();
-                if (ne.Members.Count != constructorParams.Length)
-                {
-                    return false;
-                }
-
-                ResourceSetExpression inputSourceSet = input.Source as ResourceSetExpression;
-                int introducedMemberIndex = -1;
-                ParameterExpression collectorSourceParameter = resultSelector.Parameters[0];
-                ParameterExpression introducedRangeParameter = resultSelector.Parameters[1];
-                MemberInfo[] memberProperties = new MemberInfo[ne.Members.Count];
-                PropertyInfo[] properties = ne.Type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                Dictionary<string, Expression> sourceAccessors = new Dictionary<string, Expression>(constructorParams.Length - 1, StringComparer.Ordinal);
-                for (int i = 0; i < ne.Arguments.Count; i++)
-                {
-                    Expression argument = ne.Arguments[i];
-                    MemberInfo member = ne.Members[i];
-
-                    if (!ExpressionIsSimpleAccess(argument, resultSelector.Parameters))
-                    {
-                        return false;
-                    }
-
-                    if (member.MemberType == MemberTypes.Method)
-                    {
-                        member = properties.Where(property => property.GetGetMethod() == member).FirstOrDefault();
-                        if (member == null)
-                        {
-                            return false;
-                        }
-                    }
-
-                    if (member.Name != constructorParams[i].Name)
-                    {
-                        return false;
-                    }
-
-                    memberProperties[i] = member;
-
-                    ParameterExpression argumentAsParameter = StripTo<ParameterExpression>(argument);
-                    if (introducedRangeParameter == argumentAsParameter)
-                    {
-                        if (introducedMemberIndex != -1)
-                        {
-                            return false;
-                        }
-
-                        introducedMemberIndex = i;
-                    }
-                    else if (collectorSourceParameter == argumentAsParameter)
-                    {
-                        sourceAccessors[member.Name] = inputSourceSet.CreateReference();
-                    }
-                    else
-                    {
-                        List<ResourceExpression> referencedInputs = new List<ResourceExpression>();
-                        InputBinder.Bind(argument, inputSourceSet, resultSelector.Parameters[0], referencedInputs);
-                        if (referencedInputs.Count != 1)
-                        {
-                            return false;
-                        }
-
-                        sourceAccessors[member.Name] = referencedInputs[0].CreateReference();
-                    }
-                }
-
-                if (introducedMemberIndex == -1)
-                {
-                    return false;
-                }
-
-                string resultAccessor = memberProperties[introducedMemberIndex].Name;
-                transparentScope = new ResourceSetExpression.TransparentAccessors(resultAccessor, sourceAccessors);
-
-                return true;
-            }
-
             internal static bool MatchPropertyProjectionSet(ResourceExpression input, Expression potentialPropertyRef, out MemberExpression navigationMember)
             {
                 return MatchNavigationPropertyProjection(input, potentialPropertyRef, true, out navigationMember);
@@ -1093,11 +990,6 @@ namespace Azure.Data.Tables.Queryable
                 return e is BinaryExpression;
             }
 
-            internal static bool MatchBinaryEquality(Expression e)
-            {
-                return MatchBinaryExpression(e) && ((BinaryExpression)e).NodeType == ExpressionType.Equal;
-            }
-
             internal static bool MatchStringAddition(Expression e)
             {
                 if (e.NodeType == ExpressionType.Add)
@@ -1161,31 +1053,6 @@ namespace Azure.Data.Tables.Queryable
                 return result;
             }
 
-            private static bool ExpressionIsSimpleAccess(Expression argument, ReadOnlyCollection<ParameterExpression> expressions)
-            {
-                Debug.Assert(argument != null, "argument != null");
-                Debug.Assert(expressions != null, "expressions != null");
-
-                Expression source = argument;
-                MemberExpression member;
-                do
-                {
-                    member = source as MemberExpression;
-                    if (member != null)
-                    {
-                        source = member.Expression;
-                    }
-                }
-                while (member != null);
-
-                if (!(source is ParameterExpression parameter))
-                {
-                    return false;
-                }
-
-                return expressions.Contains(parameter);
-            }
-
             private static bool MatchNaryLambda(Expression expression, int parameterCount, out LambdaExpression lambda)
             {
                 lambda = null;
@@ -1237,8 +1104,7 @@ namespace Azure.Data.Tables.Queryable
 
             internal static void RequireCanProject(Expression e)
             {
-                ResourceExpression re;
-                if (!PatternRules.MatchResource(e, out re))
+                if (!PatternRules.MatchResource(e, out ResourceExpression re))
                 {
                     throw new NotSupportedException("Can only project the last entity type in the query being translated.");
                 }
@@ -1256,8 +1122,7 @@ namespace Azure.Data.Tables.Queryable
 
             internal static void RequireCanAddCount(Expression e)
             {
-                ResourceExpression re;
-                if (!PatternRules.MatchResource(e, out re))
+                if (!PatternRules.MatchResource(e, out ResourceExpression re))
                 {
                     throw new NotSupportedException("Cannot add count option to the resource set.");
                 }

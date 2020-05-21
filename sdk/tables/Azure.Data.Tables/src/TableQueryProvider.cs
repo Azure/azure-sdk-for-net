@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -56,6 +57,30 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(expression, nameof(expression));
 
             return (TResult)ReflectionUtil.TableQueryProviderReturnSingletonMethodInfo.MakeGenericMethod(typeof(TResult)).Invoke(this, new object[] { expression });
+        }
+
+        internal TElement ReturnSingleton<TElement>(Expression expression)
+        {
+            IQueryable<TElement> query = new TableQuery<TElement>(expression, this);
+
+            MethodCallExpression mce = expression as MethodCallExpression;
+
+            if (ReflectionUtil.TryIdentifySequenceMethod(mce.Method, out SequenceMethod sequenceMethod))
+            {
+                switch (sequenceMethod)
+                {
+                    case SequenceMethod.Single:
+                        return query.AsEnumerable().Single();
+                    case SequenceMethod.SingleOrDefault:
+                        return query.AsEnumerable().SingleOrDefault();
+                    case SequenceMethod.First:
+                        return query.AsEnumerable().First();
+                    case SequenceMethod.FirstOrDefault:
+                        return query.AsEnumerable().FirstOrDefault();
+                }
+            }
+
+            throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, SR.ALinqMethodNotSupported, mce.Method.Name));
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining | System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]

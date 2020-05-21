@@ -27,7 +27,7 @@ namespace Azure.Data.Tables.Queryable
         internal void OverrideTarget(ResourceSetExpression newTarget)
         {
             Debug.Assert(newTarget != null, "Resource set cannot be null");
-            Debug.Assert(newTarget.ResourceType.Equals(this.Type), "Cannot reference a resource set with a different resource type");
+            Debug.Assert(newTarget.ResourceType.Equals(Type), "Cannot reference a resource set with a different resource type");
 
             Target = newTarget;
         }

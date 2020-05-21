@@ -90,8 +90,7 @@ namespace Azure.Data.Tables.Queryable
                     continue;
                 }
 
-                Expression source;
-                if (!targetSet.TransparentScope.SourceAccessors.TryGetValue(currentProp.Name, out source))
+                if (!targetSet.TransparentScope.SourceAccessors.TryGetValue(currentProp.Name, out Expression source))
                 {
                     break;
                 }
@@ -99,8 +98,7 @@ namespace Azure.Data.Tables.Queryable
                 transparentScopeTraversed = true;
                 nestedAccesses.Pop();
                 Debug.Assert(source != null, "source != null -- otherwise ResourceBinder created an accessor to nowhere");
-                InputReferenceExpression sourceReference = source as InputReferenceExpression;
-                if (sourceReference == null)
+                if (!(source is InputReferenceExpression sourceReference))
                 {
                     targetSet = source as ResourceSetExpression;
                     if (targetSet == null || !targetSet.HasTransparentScope)

@@ -111,8 +111,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitMethodCall(MethodCallExpression m)
         {
-            string methodName;
-            if (TypeSystem.TryGetQueryOptionMethod(m.Method, out methodName))
+            if (TypeSystem.TryGetQueryOptionMethod(m.Method, out string methodName))
             {
                 builder.Append(methodName);
                 builder.Append(UriHelper.LEFTPAREN);
@@ -212,7 +211,7 @@ namespace Azure.Data.Tables.Queryable
 
         internal override Expression VisitConstant(ConstantExpression c)
         {
-            string result = null;
+            string result;
             if (c.Value == null)
             {
                 builder.Append(UriHelper.NULL);

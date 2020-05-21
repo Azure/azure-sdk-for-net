@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Queryable
         internal virtual QueryOptionExpression ComposeMultipleSpecification(QueryOptionExpression previous)
         {
             Debug.Assert(previous != null, "other != null");
-            Debug.Assert(previous.GetType() == this.GetType(), "other.GetType == this.GetType() -- otherwise it's not the same specification");
+            Debug.Assert(previous.GetType() == GetType(), "other.GetType == this.GetType() -- otherwise it's not the same specification");
             return this;
         }
     }

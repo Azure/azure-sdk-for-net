@@ -278,14 +278,6 @@ namespace Azure.Data.Tables.Queryable
 
             internal override Expression VisitMethodCall(MethodCallExpression m)
             {
-                /*
-                if ((m.Object != null && ProjectionAnalyzer.IsDisallowedExpressionForMethodCall(m.Object))
-                   || m.Arguments.Any(a => ProjectionAnalyzer.IsDisallowedExpressionForMethodCall(a)))
-                {
-                    throw new NotSupportedException(string.Format(SR.ALinqExpressionNotSupportedInProjection, this.type, m.ToString()));
-                }
-                */
-
                 if (ProjectionAnalyzer.IsMethodCallAllowedEntitySequence(m))
                 {
                     ProjectionAnalyzer.CheckChainedSequence(m, type);

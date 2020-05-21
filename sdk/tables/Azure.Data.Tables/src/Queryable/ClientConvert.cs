@@ -50,14 +50,11 @@ namespace Azure.Data.Tables.Queryable
 
         internal static bool IsBinaryValue(object value)
         {
-            // Debug.Assert(value != null, "value != null");
             return StorageType.Binary == (StorageType)IndexOfStorage(value.GetType());
         }
 
         internal static bool TryKeyBinaryToString(object binaryValue, out string result)
         {
-            // Debug.Assert(binaryValue != null, "binaryValue != null");
-            // Debug.Assert(IsBinaryValue(binaryValue), "IsBinaryValue(binaryValue) - otherwise TryKeyBinaryToString shouldn't have been called.");
             const System.Reflection.BindingFlags Flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.InvokeMethod;
             byte[] bytes = (byte[])binaryValue.GetType().InvokeMember("ToArray", Flags, null, binaryValue, null, null /* ParamModifiers */, System.Globalization.CultureInfo.InvariantCulture, null /* NamedParams */);
             return WebConvert.TryKeyPrimitiveToString(bytes, out result);
@@ -65,7 +62,6 @@ namespace Azure.Data.Tables.Queryable
 
         internal static bool TryKeyPrimitiveToString(object value, out string result)
         {
-            // Debug.Assert(value != null, "value != null");
             if (IsBinaryValue(value))
             {
                 return TryKeyBinaryToString(value, out result);
@@ -85,7 +81,6 @@ namespace Azure.Data.Tables.Queryable
 
         internal static string ToTypeName(Type type)
         {
-            // Debug.Assert(type != null, "type != null");
             foreach (var pair in ClientConvert.NamedTypesMap)
             {
                 if (pair.Value == type)
@@ -99,7 +94,6 @@ namespace Azure.Data.Tables.Queryable
 
         internal static string ToString(object propertyValue, bool atomDateConstruct)
         {
-            // Debug.Assert(null != propertyValue, "null should be handled by caller");
             switch ((StorageType)IndexOfStorage(propertyValue.GetType()))
             {
                 case StorageType.Boolean:
@@ -152,11 +146,8 @@ namespace Azure.Data.Tables.Queryable
                 case StorageType.XElement:
                     return ((System.Xml.Linq.XElement)propertyValue).ToString();
                 case StorageType.Binary:
-                    // Debug.Assert(null != KnownTypes[(int)StorageType.Binary], "null typeof(System.Data.Linq.Binary)");
-                    // Debug.Assert(KnownTypes[(int)StorageType.Binary].IsInstanceOfType(propertyValue), "not IsInstanceOfType System.Data.Linq.Binary");
                     return propertyValue.ToString();
                 default:
-                    // Debug.Assert(false, "new StorageType without update to knownTypes");
                     return propertyValue.ToString();
             }
         }
@@ -189,9 +180,7 @@ namespace Azure.Data.Tables.Queryable
                     return XmlConstants.EdmBooleanTypeName;
                 case StorageType.Byte:
                     return XmlConstants.EdmByteTypeName;
-#if !ASTORIA_LIGHT
                 case StorageType.Binary:
-#endif
                 case StorageType.ByteArray:
                     return XmlConstants.EdmBinaryTypeName;
                 case StorageType.DateTime:
@@ -227,18 +216,13 @@ namespace Azure.Data.Tables.Queryable
                 case StorageType.XElement:
                     return null;
                 default:
-                    // Debug.Assert(false, "knowntype without reverse mapping");
                     return null;
             }
         }
 
         private static Type[] CreateKnownPrimitives()
         {
-#if !ASTORIA_LIGHT
             Type[] types = new Type[1 + (int)StorageType.Binary];
-#else
-            Type[] types = new Type[1 + (int)StorageType.XElement];
-#endif
             types[(int)StorageType.Boolean] = typeof(bool);
             types[(int)StorageType.Byte] = typeof(byte);
             types[(int)StorageType.ByteArray] = typeof(byte[]);
@@ -263,9 +247,7 @@ namespace Azure.Data.Tables.Queryable
             types[(int)StorageType.Uri] = typeof(Uri);
             types[(int)StorageType.XDocument] = typeof(System.Xml.Linq.XDocument);
             types[(int)StorageType.XElement] = typeof(System.Xml.Linq.XElement);
-#if !ASTORIA_LIGHT
             types[(int)StorageType.Binary] = null;
-#endif
             return types;
         }
 
@@ -301,7 +283,6 @@ namespace Azure.Data.Tables.Queryable
 
         internal static int IndexOfReference<T>(T[] array, T value) where T : class
         {
-            // Debug.Assert(null != array, "null array");
             for (int i = 0; i < array.Length; ++i)
             {
                 if (object.ReferenceEquals(array[i], value))

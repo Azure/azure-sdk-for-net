@@ -108,6 +108,7 @@ namespace Azure.Data.Tables
         /// <returns>An <see cref="IEnumerator{TElement}"/> for the <see cref="TableQuery{TElement}"/>.</returns>
         public virtual IEnumerator<TElement> GetEnumerator()
         {
+            //TODO: Determine if we can prevent poorly formed queries that bring back too many records.
             if (Expression == null)
             {
                 throw new InvalidOperationException();
@@ -116,7 +117,7 @@ namespace Azure.Data.Tables
             {
                 Bind();
 
-                var response = queryProvider.Table.Query<TElement>(string.Join(",", SelectColumns), FilterString, TakeCount);
+                var response = queryProvider.Table.Query<TElement>(CreateSelectString(), FilterString, TakeCount);
                 return response.GetEnumerator();
             }
         }
@@ -127,25 +128,25 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Queries entities in the table.
+        /// Executes the current query.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TElement> QueryAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TElement> ExecuteAsync(CancellationToken cancellationToken = default)
         {
             Bind();
-            return queryProvider.Table.QueryAsync<TElement>(string.Join(",", SelectColumns), FilterString, TakeCount, cancellationToken);
+            return queryProvider.Table.QueryAsync<TElement>(CreateSelectString(), FilterString, TakeCount, cancellationToken);
         }
 
         /// <summary>
-        /// Queries entities in the table.
+        /// Executes the current query.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        public virtual Pageable<TElement> Query(CancellationToken cancellationToken = default)
+        public virtual Pageable<TElement> Execute(CancellationToken cancellationToken = default)
         {
             Bind();
-            return queryProvider.Table.Query<TElement>(string.Join(",", SelectColumns), FilterString, TakeCount, cancellationToken);
+            return queryProvider.Table.Query<TElement>(CreateSelectString(), FilterString, TakeCount, cancellationToken);
         }
 
         internal void Bind()
@@ -172,50 +173,10 @@ namespace Azure.Data.Tables
                 TakeCount = parser.TakeCount;
                 FilterString = parser.FilterString;
                 SelectColumns = parser.SelectColumns;
-
-                /*
-                // Step 6. If projection & no resolver then generate a resolver to perform the projection
-                if (parser.Resolver == null)
-                {
-                    if (parser.Projection != null && parser.Projection.Selector != ProjectionQueryOptionExpression.DefaultLambda)
-                    {
-                        Type intermediateType = parser.Projection.Selector.Parameters[0].Type;
-
-                        // Convert Expression to take type object as input to allow for direct invocation.
-                        ParameterExpression paramExpr = Expression.Parameter(typeof(object));
-
-                        Func<object, TElement> projectorFunc = Expression.Lambda<Func<object, TElement>>(
-                            Expression.Invoke(parser.Projection.Selector, Expression.Convert(paramExpr, intermediateType)), paramExpr).Compile();
-
-                        // Generate a resolver to do the projection.
-                        retVal.Resolver = (pk, rk, ts, props, etag) =>
-                        {
-                            // Parse to intermediate type
-                            ITableEntity intermediateObject = (TableEntity)EntityUtilities.InstantiateEntityFromType(intermediateType);
-                            intermediateObject.PartitionKey = pk;
-                            intermediateObject.RowKey = rk;
-                            intermediateObject.Timestamp = ts;
-                            intermediateObject.ReadEntity(props, parser.OperationContext);
-                            intermediateObject.ETag = etag;
-
-                            // Invoke lambda expression
-                            return projectorFunc(intermediateObject);
-                        };
-                    }
-                    else
-                    {
-                        // No op - No resolver or projection specified.
-                    }
-                }
-                else
-                {
-                    retVal.Resolver = (EntityResolver<TElement>)parser.Resolver.Value;
-                }
-                */
             }
-
-            //retVal.RequestOptions = TableRequestOptions.ApplyDefaults(retVal.RequestOptions, queryProvider.Table.ServiceClient);
-            //retVal.OperationContext = retVal.OperationContext ?? new OperationContext();
         }
+
+        private string CreateSelectString() =>
+            SelectColumns.Count > 0 ? string.Join(",", SelectColumns) : null;
     }
 }

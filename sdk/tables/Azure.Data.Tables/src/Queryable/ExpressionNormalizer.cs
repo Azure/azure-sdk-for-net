@@ -47,12 +47,10 @@ namespace Azure.Data.Tables.Queryable
                 }
             }
 
-            Pattern pattern;
-            if (patterns.TryGetValue(visited.Left, out pattern) && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
+            if (patterns.TryGetValue(visited.Left, out Pattern pattern) && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
             {
                 ComparePattern comparePattern = (ComparePattern)pattern;
-                BinaryExpression relationalExpression;
-                if (TryCreateRelationalOperator(visited.NodeType, comparePattern.Left, comparePattern.Right, out relationalExpression))
+                if (TryCreateRelationalOperator(visited.NodeType, comparePattern.Left, comparePattern.Right, out BinaryExpression relationalExpression))
                 {
                     visited = relationalExpression;
                 }
@@ -222,10 +220,8 @@ namespace Azure.Data.Tables.Queryable
         {
             MethodCallExpression result;
 
-            int argumentOrdinal;
-            Expression normalizedArgument;
-            if (HasPredicateArgument(callExpression, out argumentOrdinal) &&
-                TryMatchCoalescePattern(callExpression.Arguments[argumentOrdinal], out normalizedArgument))
+            if (HasPredicateArgument(callExpression, out int argumentOrdinal) &&
+                TryMatchCoalescePattern(callExpression.Arguments[argumentOrdinal], out Expression normalizedArgument))
             {
                 List<Expression> normalizedArguments = new List<Expression>(callExpression.Arguments);
 
@@ -246,9 +242,8 @@ namespace Azure.Data.Tables.Queryable
             argumentOrdinal = default(int);
             bool result = false;
 
-            SequenceMethod sequenceMethod;
             if (2 <= callExpression.Arguments.Count &&
-                ReflectionUtil.TryIdentifySequenceMethod(callExpression.Method, out sequenceMethod))
+                ReflectionUtil.TryIdentifySequenceMethod(callExpression.Method, out SequenceMethod sequenceMethod))
             {
                 switch (sequenceMethod)
                 {
@@ -319,8 +314,7 @@ namespace Azure.Data.Tables.Queryable
 
         private static BinaryExpression CreateRelationalOperator(ExpressionType op, Expression left, Expression right)
         {
-            BinaryExpression result;
-            if (!TryCreateRelationalOperator(op, left, right, out result))
+            if (!TryCreateRelationalOperator(op, left, right, out BinaryExpression result))
             {
                 Debug.Assert(false, "CreateRelationalOperator has unknown op " + op);
             }
