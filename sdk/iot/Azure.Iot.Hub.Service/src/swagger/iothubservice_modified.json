@@ -325,7 +325,7 @@
       "post": {
         "summary": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language.",
         "description": "Query an IoT hub to retrieve information regarding device twins using a SQL-like language. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information. Pagination is supported. This returns information about device twins only.",
-        "operationId": "Devices_QueryIotHub",
+        "operationId": "Devices_Query",
         "consumes": [
           "application/json"
         ],
