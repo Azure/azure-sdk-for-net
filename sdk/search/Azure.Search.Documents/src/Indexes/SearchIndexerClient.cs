@@ -97,6 +97,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -107,6 +108,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -117,6 +119,7 @@ namespace Azure.Search.Documents
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
+            null,
             _version.ToVersionString())
         );
 
@@ -125,7 +128,6 @@ namespace Azure.Search.Documents
         /// Creates a new data source.
         /// </summary>
         /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
@@ -135,7 +137,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerDataSource> CreateDataSource(
             SearchIndexerDataSource dataSource,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSource)}");
@@ -144,7 +145,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Create(
                     dataSource,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -158,7 +158,6 @@ namespace Azure.Search.Documents
         /// Creates a new data source.
         /// </summary>
         /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
@@ -168,7 +167,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerDataSource>> CreateDataSourceAsync(
             SearchIndexerDataSource dataSource,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSource)}");
@@ -177,7 +175,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.CreateAsync(
                     dataSource,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -196,7 +193,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
@@ -207,7 +203,6 @@ namespace Azure.Search.Documents
         public virtual Response<SearchIndexerDataSource> CreateOrUpdateDataSource(
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSource)}");
@@ -217,7 +212,6 @@ namespace Azure.Search.Documents
                 return DataSourcesClient.CreateOrUpdate(
                     dataSource?.Name,
                     dataSource,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -237,7 +231,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
@@ -248,7 +241,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<SearchIndexerDataSource>> CreateOrUpdateDataSourceAsync(
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSource)}");
@@ -258,7 +250,6 @@ namespace Azure.Search.Documents
                 return await DataSourcesClient.CreateOrUpdateAsync(
                     dataSource?.Name,
                     dataSource,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? dataSource?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -275,38 +266,32 @@ namespace Azure.Search.Documents
         /// Deletes a data source.
         /// </summary>
         /// <param name="dataSourceName">The name of the <see cref="SearchIndexerDataSource"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteDataSource(
             string dataSourceName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteDataSource(
                 dataSourceName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
         /// Deletes a data source.
         /// </summary>
         /// <param name="dataSourceName">The name of the <see cref="SearchIndexerDataSource"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteDataSourceAsync(
             string dataSourceName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
                 dataSourceName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -318,7 +303,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
@@ -326,12 +310,10 @@ namespace Azure.Search.Documents
         public virtual Response DeleteDataSource(
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteDataSource(
                 dataSource?.Name,
                 dataSource?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -342,7 +324,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSource.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
@@ -350,12 +331,10 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteDataSourceAsync(
             SearchIndexerDataSource dataSource,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteDataSourceAsync(
                 dataSource?.Name,
                 dataSource?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -363,7 +342,6 @@ namespace Azure.Search.Documents
             string dataSourceName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
@@ -372,7 +350,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Delete(
                     dataSourceName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -388,7 +365,6 @@ namespace Azure.Search.Documents
             string dataSourceName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteDataSource)}");
@@ -397,7 +373,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.DeleteAsync(
                     dataSourceName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -414,14 +389,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexerDataSource"/>.
         /// </summary>
         /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerDataSource> GetDataSource(
             string dataSourceName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSource)}");
@@ -430,7 +403,6 @@ namespace Azure.Search.Documents
             {
                 return DataSourcesClient.Get(
                     dataSourceName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -444,14 +416,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexerDataSource"/>.
         /// </summary>
         /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerDataSource>> GetDataSourceAsync(
             string dataSourceName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSource)}");
@@ -460,7 +430,6 @@ namespace Azure.Search.Documents
             {
                 return await DataSourcesClient.GetAsync(
                     dataSourceName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -474,12 +443,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data sources.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexerDataSource>> GetDataSources(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSources)}");
@@ -488,7 +455,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = DataSourcesClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
@@ -503,12 +469,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data sources.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSource>>> GetDataSourcesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSources)}");
@@ -517,7 +481,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -533,12 +496,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data source names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<string>> GetDataSourceNames(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceNames)}");
@@ -547,7 +508,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = DataSourcesClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
@@ -563,12 +523,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all data source names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceNamesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceNames)}");
@@ -577,7 +535,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListDataSourcesResult> result = await DataSourcesClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -597,7 +554,6 @@ namespace Azure.Search.Documents
         /// Creates a new indexer.
         /// </summary>
         /// <param name="indexer">Required. The <see cref="SearchIndex"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -607,7 +563,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexer> CreateIndexer(
             SearchIndexer indexer,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateIndexer)}");
@@ -616,7 +571,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Create(
                     indexer,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -630,7 +584,6 @@ namespace Azure.Search.Documents
         /// Creates a new indexer.
         /// </summary>
         /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -640,7 +593,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexer>> CreateIndexerAsync(
             SearchIndexer indexer,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateIndexer)}");
@@ -649,7 +601,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.CreateAsync(
                     indexer,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -668,7 +619,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -679,7 +629,6 @@ namespace Azure.Search.Documents
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
@@ -689,7 +638,6 @@ namespace Azure.Search.Documents
                 return IndexersClient.CreateOrUpdate(
                     indexer?.Name,
                     indexer,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -709,7 +657,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -720,7 +667,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
@@ -730,7 +676,6 @@ namespace Azure.Search.Documents
                 return await IndexersClient.CreateOrUpdateAsync(
                     indexer?.Name,
                     indexer,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -747,38 +692,32 @@ namespace Azure.Search.Documents
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteIndexer(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteIndexer(
                 indexerName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
                 indexerName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -790,7 +729,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
@@ -798,12 +736,10 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteIndexer(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -814,7 +750,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
@@ -822,12 +757,10 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteIndexerAsync(
                 indexer?.Name,
                 indexer?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -835,7 +768,6 @@ namespace Azure.Search.Documents
             string indexerName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
@@ -844,7 +776,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Delete(
                     indexerName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -860,7 +791,6 @@ namespace Azure.Search.Documents
             string indexerName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteIndexer)}");
@@ -869,7 +799,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.DeleteAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -886,14 +815,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexer"/>.
         /// </summary>
         /// <param name="indexerName">Required. The name of the <see cref="SearchIndexer"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexer> GetIndexer(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexer)}");
@@ -902,7 +829,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Get(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -916,14 +842,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexer"/>.
         /// </summary>
         /// <param name="indexerName">Required. The name of the <see cref="SearchIndexer"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexer>> GetIndexerAsync(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexer)}");
@@ -932,7 +856,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.GetAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -946,12 +869,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexers.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexers)}");
@@ -960,7 +881,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = IndexersClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
@@ -975,12 +895,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexers.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexers)}");
@@ -989,7 +907,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = await IndexersClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1005,12 +922,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexer names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexerNames)}");
@@ -1019,7 +934,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = IndexersClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
@@ -1035,12 +949,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all indexer names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexer"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexerNames)}");
@@ -1049,7 +961,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListIndexersResult> result = await IndexersClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1067,14 +978,12 @@ namespace Azure.Search.Documents
         /// Gets the current status and execution history of an indexer.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer for which to retrieve status.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerStatus"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerStatus> GetIndexerStatus(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexerStatus)}");
@@ -1083,7 +992,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.GetStatus(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1097,14 +1005,12 @@ namespace Azure.Search.Documents
         /// Gets the current status and execution history of an indexer.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer for which to retrieve status.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerStatus"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerStatus>> GetIndexerStatusAsync(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetIndexerStatus)}");
@@ -1113,7 +1019,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.GetStatusAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1128,14 +1033,12 @@ namespace Azure.Search.Documents
         /// Resets the change tracking state associated with an indexer.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer to reset.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response ResetIndexer(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetIndexer)}");
@@ -1144,7 +1047,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Reset(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1158,14 +1060,12 @@ namespace Azure.Search.Documents
         /// Resets the change tracking state associated with an indexer.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer to reset.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> ResetIndexerAsync(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetIndexer)}");
@@ -1174,7 +1074,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.ResetAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1189,14 +1088,12 @@ namespace Azure.Search.Documents
         /// Run an indexer now.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer to run.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response RunIndexer(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(RunIndexer)}");
@@ -1205,7 +1102,6 @@ namespace Azure.Search.Documents
             {
                 return IndexersClient.Run(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1219,14 +1115,12 @@ namespace Azure.Search.Documents
         /// Run an indexer now.
         /// </summary>
         /// <param name="indexerName">Required. The name of the indexer to run.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> RunIndexerAsync(
             string indexerName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(RunIndexer)}");
@@ -1235,7 +1129,6 @@ namespace Azure.Search.Documents
             {
                 return await IndexersClient.RunAsync(
                     indexerName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1252,7 +1145,6 @@ namespace Azure.Search.Documents
         /// Creates a new skillset.
         /// </summary>
         /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1262,7 +1154,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerSkillset> CreateSkillset(
             SearchIndexerSkillset skillset,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
@@ -1271,7 +1162,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Create(
                     skillset,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1285,7 +1175,6 @@ namespace Azure.Search.Documents
         /// Creates a new skillset.
         /// </summary>
         /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1295,7 +1184,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerSkillset>> CreateSkillsetAsync(
             SearchIndexerSkillset skillset,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
@@ -1304,7 +1192,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.CreateAsync(
                     skillset,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1323,7 +1210,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1334,7 +1220,6 @@ namespace Azure.Search.Documents
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
@@ -1344,7 +1229,6 @@ namespace Azure.Search.Documents
                 return SkillsetsClient.CreateOrUpdate(
                     skillset?.Name,
                     skillset,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1364,7 +1248,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1375,7 +1258,6 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
@@ -1385,7 +1267,6 @@ namespace Azure.Search.Documents
                 return await SkillsetsClient.CreateOrUpdateAsync(
                     skillset?.Name,
                     skillset,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1402,38 +1283,32 @@ namespace Azure.Search.Documents
         /// Deletes a skillset.
         /// </summary>
         /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response DeleteSkillset(
             string skillsetName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteSkillset(
                 skillsetName,
                 null,
                 false,
-                options,
                 cancellationToken);
 
         /// <summary>
         /// Deletes a skillset.
         /// </summary>
         /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
                 skillsetName,
                 null,
                 false,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1445,7 +1320,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
@@ -1453,12 +1327,10 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => DeleteSkillset(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken);
 
         /// <summary>
@@ -1469,7 +1341,6 @@ namespace Azure.Search.Documents
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
@@ -1477,12 +1348,10 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) => await DeleteSkillsetAsync(
                 skillset?.Name,
                 skillset?.ETag,
                 onlyIfUnchanged,
-                options,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1490,7 +1359,6 @@ namespace Azure.Search.Documents
             string skillsetName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
@@ -1499,7 +1367,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Delete(
                     skillsetName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken);
@@ -1515,7 +1382,6 @@ namespace Azure.Search.Documents
             string skillsetName,
             ETag? etag,
             bool onlyIfUnchanged,
-            SearchRequestOptions options,
             CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
@@ -1524,7 +1390,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.DeleteAsync(
                     skillsetName,
-                    options?.ClientRequestId,
                     onlyIfUnchanged ? etag?.ToString() : null,
                     null,
                     cancellationToken)
@@ -1541,14 +1406,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexerSkillset"/>.
         /// </summary>
         /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerSkillset> GetSkillset(
             string skillsetName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
@@ -1557,7 +1420,6 @@ namespace Azure.Search.Documents
             {
                 return SkillsetsClient.Get(
                     skillsetName,
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1571,14 +1433,12 @@ namespace Azure.Search.Documents
         /// Gets a specific <see cref="SearchIndexerSkillset"/>.
         /// </summary>
         /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerSkillset>> GetSkillsetAsync(
             string skillsetName,
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
@@ -1587,7 +1447,6 @@ namespace Azure.Search.Documents
             {
                 return await SkillsetsClient.GetAsync(
                     skillsetName,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1601,12 +1460,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillsets.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
@@ -1615,7 +1472,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = SkillsetsClient.List(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
@@ -1630,12 +1486,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillsets.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
@@ -1644,7 +1498,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
                     Constants.All,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1660,12 +1513,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillset names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
@@ -1674,7 +1525,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = SkillsetsClient.List(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken);
 
                 IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
@@ -1690,12 +1540,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets a list of all skillset names.
         /// </summary>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/> names.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
@@ -1704,7 +1552,6 @@ namespace Azure.Search.Documents
             {
                 Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
                     Constants.NameKey,
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
 

@@ -78,19 +78,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task ClientRequestIdRountrips()
-        {
-            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
-            Guid id = Recording.Random.NewGuid();
-            Response<SearchServiceStatistics> response =
-                await client.GetServiceStatisticsAsync(
-                    new SearchRequestOptions { ClientRequestId = id });
-
-            Assert.AreEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
-        }
-
-        [Test]
         public void DiagnosticsAreUnique()
         {
             // Make sure we're not repeating Header/Query names already defined
@@ -211,8 +198,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
                 createdIndex,
                 allowIndexDowntime: true,
-                onlyIfUnchanged: true,
-                options: new SearchRequestOptions { ClientRequestId = Recording.Random.NewGuid() });
+                onlyIfUnchanged: true);
 
             Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
             Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
