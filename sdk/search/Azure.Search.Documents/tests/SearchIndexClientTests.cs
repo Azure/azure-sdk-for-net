@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Tests
             createdIndex.Fields.Add(
                 new SearchableField("asciiTags", collection: true)
                 {
-                    Analyzer = analyzerName,
+                    AnalyzerName = analyzerName,
                     IsFacetable = true,
                     IsFilterable = true,
                 });

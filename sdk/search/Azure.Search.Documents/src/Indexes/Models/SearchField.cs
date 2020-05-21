@@ -145,13 +145,43 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("key")]
         public bool? IsKey { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the analyzer to use for the field.
+        /// This option can be used only with searchable fields and it cannot be set together with either <see cref="SearchAnalyzerName"/> or <see cref="IndexAnalyzerName"/>.
+        /// Once the analyzer is chosen, it cannot be changed for the field.
+        /// Must be null for complex fields.
+        /// </summary>
+        [CodeGenMember("analyzer")]
+        public LexicalAnalyzerName? AnalyzerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at search time for the field.
+        /// This option can be used only with searchable fields.
+        /// It must be set together with <see cref="IndexAnalyzerName"/> and it cannot be set together with the <see cref="AnalyzerName"/> option.
+        /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
+        /// This analyzer can be updated on an existing field.
+        /// Must be null for complex fields.
+        /// </summary>
+        [CodeGenMember("searchAnalyzer")]
+        public LexicalAnalyzerName? SearchAnalyzerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at indexing time for the field.
+        /// This option can be used only with searchable fields.
+        /// It must be set together with <see cref="SearchAnalyzerName"/> and it cannot be set together with the <see cref="AnalyzerName"/> option.
+        /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
+        /// Once the analyzer is chosen, it cannot be changed for the field.
+        /// Must be null for complex fields. </summary>
+        [CodeGenMember("indexAnalyzer")]
+        public LexicalAnalyzerName? IndexAnalyzerName { get; set; }
+
         // TODO: Remove "overrides" for collection properties when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
 
         /// <summary>
         /// Gets a list of names of synonym maps associated with this field. Only fields where <see cref="IsSearchable"/> is true can have associated synonym maps.
         /// </summary>
         [CodeGenMember("synonymMaps")]
-        public IList<string> SynonymMaps { get; internal set; }
+        public IList<string> SynonymMapNames { get; internal set; }
 
         /// <summary>
         /// Gets a list of nested fields if this field is of type <see cref="SearchFieldDataType.Complex"/> or "Collection(DataType.Complex)".
