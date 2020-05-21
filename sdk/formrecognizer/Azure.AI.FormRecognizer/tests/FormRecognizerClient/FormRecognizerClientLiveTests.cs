@@ -199,9 +199,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(2, formPages.Count);
 
-            var line0 = formPages[0].Lines;
-            var line1 = formPages[1].Lines;
-
             for (int pageIndex = 0; pageIndex < formPages.Count; pageIndex++)
             {
                 var formPage = formPages[pageIndex];
@@ -215,6 +212,45 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.AreEqual(expectedText, sampleLine.Text);
             }
+        }
+
+        [Test]
+        public async Task StartRecognizeContentCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream);
+            }
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(3, formPages.Count);
+
+            for (int pageIndex = 0; pageIndex < formPages.Count; pageIndex++)
+            {
+                var formPage = formPages[pageIndex];
+
+                ValidateFormPage(formPage, includeTextContent: true, expectedPageNumber: pageIndex + 1);
+
+                // Basic sanity test to make sure pages are ordered correctly.
+
+                if (pageIndex == 0 || pageIndex == 2)
+                {
+                    var sampleLine = formPage.Lines[3];
+                    var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+
+                    Assert.AreEqual(expectedText, sampleLine.Text);
+                }
+            }
+
+            var blankPage = formPages[1];
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         /// <summary>
@@ -627,11 +663,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.NotNull(formPage.Lines);
 
-            if (includeTextContent)
-            {
-                Assert.Greater(formPage.Lines.Count, 0);
-            }
-            else
+            if (!includeTextContent)
             {
                 Assert.AreEqual(0, formPage.Lines.Count);
             }
