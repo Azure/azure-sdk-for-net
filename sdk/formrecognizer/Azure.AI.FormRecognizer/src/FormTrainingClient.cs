@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service. The URI is likely to be similar to <c>{protocol}://{resourcename}.cognitiveservices.azure.com</c>.</param>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI <c>string</c> and the <paramref name="credential"/> <c>string</c> key
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service. The URI is likely to be similar to <c>{protocol}://{resourcename}.cognitiveservices.azure.com</c>.</param>
+        /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
