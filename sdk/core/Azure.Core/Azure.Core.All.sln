@@ -131,6 +131,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Experimental", "..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{D667DC89-2570-47AB-B6BA-FB977F64F59F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Experimental.Tests", "..\Azure.Core.Experimental\tests\Azure.Core.Experimental.Tests.csproj", "{E17E480E-E791-4EB5-9C85-7949CF259A87}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{359ffa3a-4f5d-411c-8978-28e58f50eea3}*SharedItemsImports = 5
@@ -917,6 +921,30 @@ Global
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x64.Build.0 = Release|Any CPU
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x86.Build.0 = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|x64.Build.0 = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|x64.ActiveCfg = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|x64.Build.0 = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D667DC89-2570-47AB-B6BA-FB977F64F59F}.Release|x86.Build.0 = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|x64.Build.0 = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Debug|x86.Build.0 = Debug|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|x64.ActiveCfg = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|x64.Build.0 = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|x86.ActiveCfg = Release|Any CPU
+		{E17E480E-E791-4EB5-9C85-7949CF259A87}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
