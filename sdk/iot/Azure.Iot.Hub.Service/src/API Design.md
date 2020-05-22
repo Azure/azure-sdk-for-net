@@ -127,6 +127,29 @@ public class Jobs
     /// </example>
     public virtual async Task<IEnumerable<JobProperties>> GetImportExportJobsAsync(CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Gets the import or export job with the specified ID.
+    /// </summary>
+    /// <param name="jobId">Id of the Job object to retrieve</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>JobProperties of the job specified by the provided jobId.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleGetImportExportJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    public virtual async Task<JobProperties> GetImportExportJobAsync(string jobId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Cancels/Deletes the job with the specified ID.
+    /// </summary>
+    /// <param name="jobId">Id of the job to cancel</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A response object.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleCancelImportExportJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    public virtual async ValueTask<Response<object>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken);
 
 }
 
