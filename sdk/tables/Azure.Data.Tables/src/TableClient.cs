@@ -700,9 +700,6 @@ namespace Azure.Data.Tables
             // Normalize expression, replace String Comparisons etc.
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
-            // Bind Expression, Analyze predicates and create query option expressions. End result is a single ResourceSetExpression
-            //Expression boundExpression = ResourceBinder.Bind(normalizedExpression);
-
             // Parse the Bound expression into sub components, i.e. take count, filter, select columns, request options, opcontext, etc.
             ExpressionParser parser = GetExpressionParser();
             parser.Translate(normalizedExpression);
