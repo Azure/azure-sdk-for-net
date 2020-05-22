@@ -55,24 +55,14 @@ APIs for managing module identities, module twins, and querying modules
 </details>
 
 <details><summary><b>Jobs</b></summary>
-Import/Export Jobs APIs: Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
+
+## Import/Export Jobs APIs
+
+Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
 
 ```csharp
 public class Jobs
 {
-    /// <summary>
-    /// Creates a job to export device registrations to the container using a job properties object.
-    /// </summary>
-    /// <param name="jobProperties">Properties for the job</param>
-    /// <param name="cancellationToken">Task cancellation token</param>
-    /// <returns>JobProperties of the newly created job.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleExportDevicesWithJobPropertiesAsync" language="csharp">
-    /// // Code snippet of how to use this API while using JobProperties.CreateForExportJob
-    /// </code>
-    /// </example>
-    public virtual async Task<JobProperties> ExportDevicesAsync(JobProperties jobProperties, CancellationToken cancellationToken = default);
-
     /// <summary>
     /// Creates a job to export device registrations to the container.
     /// </summary>
@@ -87,19 +77,6 @@ public class Jobs
     /// </code>
     /// </example>
     public virtual async Task<JobProperties> ExportDevicesAsync(string outputBlobContainerUri, string outputBlobName, bool excludeKeys, JobPropertiesStorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Creates a job to import device registrations into the IoT Hub using a job properties object.
-    /// </summary>
-    /// <param name="jobProperties">Properties for the job</param>
-    /// <param name="cancellationToken">Task cancellation token</param>
-    /// <returns>JobProperties of the newly created job.</returns>
-    /// <example>
-    /// <code snippet="Snippet:JobsSampleImportDevicesWithJobPropertiesAsync" language="csharp">
-    /// // Code snippet of how to use this API while using JobProperties.CreateForImportJob
-    /// </code>
-    /// </example>
-    public virtual async Task<JobProperties> ImportDevicesAsync(JobProperties jobProperties, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a job to import device registrations into the IoT Hub.
@@ -154,23 +131,86 @@ public class Jobs
 
 }
 
-// Customized
-public partial class JobProperties
-{
-    public static JobProperties CreateForExportJob(
-        string outputBlobContainerUri, 
-        string outputBlobName, 
-        bool excludeKeys, 
-        JobPropertiesStorageAuthenticationType stroageAuthenticationType);
+```
 
-    public static JobProperties CreateForImportJob(
-        string importBlobContainerUri,
-        string importBlobName,
-        string outputBlobContainerUri,
-        string outputBlobName,
-        JobPropertiesStorageAuthenticationType storageAuthenticationType); 
+## Scheduled Jobs
+Scheduled jobs execute device twin updates and direct methods against a set of devices at a scheduled time. You can use scheduled jobs to update desired properties, update tags and invoke direct methods.
+
+```csharp
+public class Jobs
+{
+    /// <summary>
+    /// Retrieves details of a scheduled job from the IoT Hub.
+    /// </summary>
+    /// <param name="jobId">Id of the Job to retrieve</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>The matching JobResponse object</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleGetScheduledJobJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual async ValueTask<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Creates a new scheduled job to update twin tags and desired properties on one or multiple devices.
+    /// </summary>
+    /// <param name="jobId">Unique Job Id for this job</param>
+    /// <param name="queryCondition">Query condition to evaluate which devices to run the job on</param>
+    /// <param name="twin">Twin object to use for the update</param>
+    /// <param name="startTimeUtc">Date time in Utc to start the job</param>
+    /// <param name="maxExecutionTimeInSeconds">Max execution time in seconds, i.e., ttl duration the job can run</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A JobResponse object</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleScheduleTwinUpdateJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual async ValueTask<Response<JobResponse>> ScheduleTwinUpdateAsync(string jobId, string queryCondition, Twin twin, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Creates a new scheduled job to run a device method on one or multiple devices.
+    /// </summary>
+    /// <param name="jobId">Unique Job Id for this job</param>
+    /// <param name="queryCondition">Query condition to evaluate which devices to run the job on</param>
+    /// <param name="cloudToDeviceMethod">Method call parameters</param>
+    /// <param name="startTimeUtc">Date time in Utc to start the job</param>
+    /// <param name="maxExecutionTimeInSeconds">Max execution time in seconds, i.e., ttl duration the job can run</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A JobResponse object</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleScheduleDeviceMethodJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual async ValueTask<Response<JobResponse>> ScheduleDeviceMethodAsync(string jobId, string queryCondition, CloudToDeviceMethod cloudToDeviceMethod, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Cancels/Deletes the job with the specified ID.
+    /// </summary>
+    /// <param name="jobId">Id of the job to cancel</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>A JobResponse object</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleCancelScheduledJobAsync" language="csharp">
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual async ValueTask<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken);
+
+
 }
 ```
+
 </details>
 
 <details><summary><b>Messages</b></summary>
