@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Batch
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Batch", "Application", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "BatchAccount", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "Certificate", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "Location", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "Operations", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "Pool", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "PrivateEndpointConnection", "2020-03-01"),
-                new Tuple<string, string, string>("Batch", "PrivateLinkResource", "2020-03-01"),
+                new Tuple<string, string, string>("Batch", "Application", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "BatchAccount", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "Certificate", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "Location", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "Operations", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "Pool", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "PrivateEndpointConnection", "2020-05-01"),
+                new Tuple<string, string, string>("Batch", "PrivateLinkResource", "2020-05-01"),
               }.AsEnumerable();
           }
       }
