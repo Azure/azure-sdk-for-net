@@ -5,6 +5,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CognitiveServicesAccount
     {
+        /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
         private protected CognitiveServicesAccount()
         {
         }
