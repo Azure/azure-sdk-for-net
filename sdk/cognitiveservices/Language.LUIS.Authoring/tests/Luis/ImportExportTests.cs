@@ -1,6 +1,7 @@
 ﻿namespace LUIS.Authoring.Tests.Luis
 {
     using System.IO;
+    using System.Text;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Newtonsoft.Json;
@@ -52,6 +53,12 @@
 
                 await client.Apps.DeleteAsync(appId);
 
+                var buffer = new byte[app.Length];
+
+                app.Read(buffer, 0, (int)app.Length);
+
+                var f = Encoding.UTF8.GetString(buffer);
+                //LocalEncoding.GetString(stream.ToArray());
                 Assert.NotNull(app);
             });
         }
@@ -176,7 +183,7 @@
 
             UseClientFor(async client =>
             {
-                var testAppId = await client.Apps.ImportLuFromatAsync(appText, "Test Import LUIS App Lu format");
+                var testAppId = await client.Apps.ImportLuFormatAsync(appText, "Test Import LUIS App Lu format");
                 var testApp = await client.Apps.GetAsync(testAppId);
                 await client.Apps.DeleteAsync(testAppId);
 

@@ -49,13 +49,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2017-04-18
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -91,6 +90,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
@@ -336,6 +345,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
             Accounts = new AccountsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Operations = new Operations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-18";
             AcceptLanguage = "en-US";
@@ -411,6 +422,24 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
+            }
             if (location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
@@ -427,7 +456,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
-            string apiVersion = "2017-04-18";
             CheckSkuAvailabilityParameter parameters = new CheckSkuAvailabilityParameter();
             if (skus != null || kind != null || type != null)
             {
@@ -442,7 +470,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -454,9 +481,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -625,6 +652,24 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
+            }
             if (subdomainName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subdomainName");
@@ -633,7 +678,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
-            string apiVersion = "2017-04-18";
             CheckDomainAvailabilityParameter parameters = new CheckDomainAvailabilityParameter();
             if (subdomainName != null || type != null)
             {
@@ -647,7 +691,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckDomainAvailability", tracingParameters);
@@ -657,9 +700,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -22,8 +22,15 @@ To create a new Storage Account, you can use the [Azure Portal][storage_account_
 Here's an example using the Azure CLI:
 
 ```Powershell
-az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
-az storage container create --account-name MyStorageAccount -n mycontainer
+az storage account create --name <storage-account> --resource-group <resource-group> --location westus --sku Standard_LRS
+az storage container create --account-name <storage-account> -n <container>
+
+# Give write access to a user
+az role assignment create --role "Storage Blob Data Contributor" --assignee <your_email> --scope "/subscriptions/<subscription>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>/blobServices/default/containers/<container>"
+
+# OR give write access to a service principal (application)
+az role assignment create --role "Storage Blob Data Contributor" --assignee-object-id <application_id> --scope "/subscriptions/<subscription>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>/blobServices/default/containers/<container>"
+
 ```
 
 ## Examples

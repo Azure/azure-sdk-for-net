@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -29,6 +29,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]

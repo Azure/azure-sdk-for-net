@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "65",
         "Content-Type": "application/json",
-        "traceparent": "00-dd8974fab0c18148a5b07fecc1ca3f19-517655cba13b094d-00",
+        "traceparent": "00-f11a1b417e9979469ad85ee643fa7c35-9eb0b9fa955a9848-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200308.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "836405f774d01ce051263e9c5247117e",
         "x-ms-return-client-request-id": "true"
@@ -23,10 +24,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "387",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sun, 08 Mar 2020 23:05:17 GMT",
-        "elapsed-time": "5",
+        "Content-Length": "222",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 06:41:18 GMT",
+        "elapsed-time": "13",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -35,7 +36,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.AutocompleteItem)",
         "value": [
           {
             "text": "point",
@@ -63,7 +63,8 @@
   ],
   "Variables": {
     "RandomSeed": "351280611",
-    "SearchIndexName": "grurisvf",
-    "SearchServiceName": "azs-net-gjxdhkdl"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

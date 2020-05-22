@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The <see cref="ProcessSessionMessageEventArgs"/> contain event args that are specific
-    /// to the <see cref="ServiceBusReceivedMessage"/> that is being processed.
+    /// to the <see cref="ServiceBusReceivedMessage"/> and session that is being processed.
     /// </summary>
     public class ProcessSessionMessageEventArgs : EventArgs
     {
@@ -43,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
@@ -87,25 +86,6 @@ namespace Azure.Messaging.ServiceBus
             await _sessionReceiver.SetSessionStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <remarks>
-        /// <para>
-        /// When you get session receiver, the session is locked for this receiver by the service for a duration as specified during the Queue/Subscription creation.
-        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed.
-        /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
-        /// </para>
-        /// <para>
-        /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
-        /// </para>
-        /// </remarks>
-        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for immediate processing as the lock on the message held by the processor will be released.
         /// </summary>
         ///
@@ -123,9 +103,12 @@ namespace Azure.Messaging.ServiceBus
         public async Task AbandonAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _sessionReceiver.AbandonAsync(message, propertiesToModify, cancellationToken)
-            .ConfigureAwait(false);
+                .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -141,11 +124,14 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public async Task CompleteAsync(
             ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _sessionReceiver.CompleteAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         /// Moves a message to the deadletter sub-queue.
@@ -167,13 +153,16 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _sessionReceiver.DeadLetterAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         /// Moves a message to the deadletter sub-queue.
@@ -193,12 +182,15 @@ namespace Azure.Messaging.ServiceBus
         public async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _sessionReceiver.DeadLetterAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary> Defers the processing for a message.</summary>
         ///
@@ -219,11 +211,14 @@ namespace Azure.Messaging.ServiceBus
         public async Task DeferAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _sessionReceiver.DeferAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
     }
 }

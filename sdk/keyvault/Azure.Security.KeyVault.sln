@@ -25,6 +25,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{117730A7-49B1-4608-9A4C-77469BA5372F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
@@ -77,6 +79,10 @@ Global
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117730A7-49B1-4608-9A4C-77469BA5372F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117730A7-49B1-4608-9A4C-77469BA5372F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117730A7-49B1-4608-9A4C-77469BA5372F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117730A7-49B1-4608-9A4C-77469BA5372F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

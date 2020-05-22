@@ -9,18 +9,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListDataSourcesResult
     {
         internal static ListDataSourcesResult DeserializeListDataSourcesResult(JsonElement element)
         {
-            IReadOnlyList<DataSource> value = default;
+            IReadOnlyList<SearchIndexerDataSource> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DataSource> array = new List<DataSource>();
+                    List<SearchIndexerDataSource> array = new List<SearchIndexerDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            array.Add(DataSource.DeserializeDataSource(item));
+                            array.Add(SearchIndexerDataSource.DeserializeSearchIndexerDataSource(item));
                         }
                     }
                     value = array;

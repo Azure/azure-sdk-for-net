@@ -5,24 +5,24 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating what entity categories to return. </summary>
     public enum EntityCategory
     {
-        /// <summary> location. </summary>
+        /// <summary> Entities describing a physical location. </summary>
         Location,
-        /// <summary> organization. </summary>
+        /// <summary> Entities describing an organization. </summary>
         Organization,
-        /// <summary> person. </summary>
+        /// <summary> Entities describing a person. </summary>
         Person,
-        /// <summary> quantity. </summary>
+        /// <summary> Entities describing a quantity. </summary>
         Quantity,
-        /// <summary> datetime. </summary>
+        /// <summary> Entities describing a date and time. </summary>
         Datetime,
-        /// <summary> url. </summary>
+        /// <summary> Entities describing a URL. </summary>
         Url,
-        /// <summary> email. </summary>
+        /// <summary> Entities describing an email address. </summary>
         Email
     }
 }

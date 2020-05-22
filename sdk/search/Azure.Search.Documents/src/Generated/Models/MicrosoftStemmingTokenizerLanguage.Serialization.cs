@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal static class MicrosoftStemmingTokenizerLanguageExtensions
     {

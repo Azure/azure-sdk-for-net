@@ -42,18 +42,30 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="source">Source associated with this partner topic.
         /// This represents a unique partner resource.</param>
+        /// <param name="expirationTimeIfNotActivatedUtc">Expiration time of
+        /// the partner topic. If this timer expires while the partner topic is
+        /// still never activated,
+        /// the partner topic and corresponding event channel are
+        /// deleted.</param>
         /// <param name="provisioningState">Provisioning state of the partner
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="activationState">Activation state of the partner
         /// topic. Possible values include: 'NeverActivated', 'Activated',
         /// 'Deactivated'</param>
-        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string source = default(string), string provisioningState = default(string), string activationState = default(string))
+        /// <param name="partnerTopicFriendlyDescription">Friendly description
+        /// about the topic. This can be set by the publisher/partner to show
+        /// custom description for the customer partner topic.
+        /// This will be helpful to remove any ambiguity of the origin of
+        /// creation of the partner topic for the customer.</param>
+        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string source = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), string provisioningState = default(string), string activationState = default(string), string partnerTopicFriendlyDescription = default(string))
             : base(location, id, name, type, tags)
         {
             Source = source;
+            ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
             ProvisioningState = provisioningState;
             ActivationState = activationState;
+            PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
             CustomInit();
         }
 
@@ -70,6 +82,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string Source { get; set; }
 
         /// <summary>
+        /// Gets or sets expiration time of the partner topic. If this timer
+        /// expires while the partner topic is still never activated,
+        /// the partner topic and corresponding event channel are deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationTimeIfNotActivatedUtc")]
+        public System.DateTime? ExpirationTimeIfNotActivatedUtc { get; set; }
+
+        /// <summary>
         /// Gets provisioning state of the partner topic. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
         /// 'Canceled', 'Failed'
@@ -83,6 +103,16 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.activationState")]
         public string ActivationState { get; set; }
+
+        /// <summary>
+        /// Gets or sets friendly description about the topic. This can be set
+        /// by the publisher/partner to show custom description for the
+        /// customer partner topic.
+        /// This will be helpful to remove any ambiguity of the origin of
+        /// creation of the partner topic for the customer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerTopicFriendlyDescription")]
+        public string PartnerTopicFriendlyDescription { get; set; }
 
         /// <summary>
         /// Validate the object.

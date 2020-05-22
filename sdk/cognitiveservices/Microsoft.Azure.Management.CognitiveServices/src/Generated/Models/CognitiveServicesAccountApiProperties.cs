@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -80,5 +81,36 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         [JsonProperty(PropertyName = "storageAccountConnectionString")]
         public string StorageAccountConnectionString { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (EventHubConnectionString != null)
+            {
+                if (EventHubConnectionString.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "EventHubConnectionString", 1000);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(EventHubConnectionString, "^( *)Endpoint=sb://(.*);( *)SharedAccessKeyName=(.*);( *)SharedAccessKey=(.*)$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "EventHubConnectionString", "^( *)Endpoint=sb://(.*);( *)SharedAccessKeyName=(.*);( *)SharedAccessKey=(.*)$");
+                }
+            }
+            if (StorageAccountConnectionString != null)
+            {
+                if (StorageAccountConnectionString.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "StorageAccountConnectionString", 1000);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(StorageAccountConnectionString, "^(( *)DefaultEndpointsProtocol=(http|https)( *);( *))?AccountName=(.*)AccountKey=(.*)EndpointSuffix=(.*)$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "StorageAccountConnectionString", "^(( *)DefaultEndpointsProtocol=(http|https)( *);( *))?AccountName=(.*)AccountKey=(.*)EndpointSuffix=(.*)$");
+                }
+            }
+        }
     }
 }

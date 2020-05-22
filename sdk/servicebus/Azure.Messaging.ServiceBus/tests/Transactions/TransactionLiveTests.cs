@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Messaging.ServiceBus.Filters;
 using Moq;
 using NUnit.Framework;
 
@@ -426,8 +428,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             var intermediateSender = client.CreateSender(intermediateQueue.QueueName);
             var intermediateReceiver = client.CreateReceiver(intermediateQueue.QueueName);
             var destination1Sender = client.CreateSender(destination1.TopicName);
-            var destination1ViaSender = client.CreateSender(destination1.TopicName, intermediateQueue.QueueName);
-            var destination2ViaSender = client.CreateSender(destination2.QueueName, intermediateQueue.QueueName);
+            var destination1ViaSender = client.CreateSender(destination1.TopicName, new ServiceBusSenderOptions
+            {
+                ViaQueueOrTopicName = intermediateQueue.QueueName
+            });
+            var destination2ViaSender = client.CreateSender(destination2.QueueName, new ServiceBusSenderOptions
+            {
+                ViaQueueOrTopicName = intermediateQueue.QueueName
+            });
             var destination1Receiver = client.CreateReceiver(destination1.TopicName, destination1.SubscriptionNames.First());
             var destination2Receiver = client.CreateReceiver(destination2.QueueName);
 

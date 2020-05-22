@@ -10,7 +10,7 @@ param (
   $UploadLatest=1
 )
 
-Write-Host $MyInvocation.Line
+Write-Host "> $PSCommandPath $args"
 
 $Language = $Language.ToLower()
 
@@ -303,6 +303,17 @@ if ($Language -eq "java")
             Set-Location $UnjarredDocumentationPath
             jar -xf "$($Item.FullName)"
             Set-Location $CurrentLocation
+
+            # If javadocs are produced for a library with source, there will always be an
+            # index.html. If this file doesn't exist in the UnjarredDocumentationPath then
+            # this is a sourceless library which means there are no javadocs and nothing
+            # should be uploaded to blob storage.
+            $IndexHtml = Join-Path -Path $UnjarredDocumentationPath -ChildPath "index.html"
+            if (!(Test-Path -path $IndexHtml))
+            {
+                Write-Host "$($PkgName) does not have an index.html file, skippping."
+                continue
+            }
 
             # Get the POM file for the artifact we're processing
             $PomFile = $Item.FullName.Substring(0,$Item.FullName.LastIndexOf(("-javadoc.jar"))) + ".pom"

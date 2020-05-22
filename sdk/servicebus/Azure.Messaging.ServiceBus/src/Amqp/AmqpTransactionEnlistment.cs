@@ -7,6 +7,7 @@ using System.Transactions;
 using Microsoft.Azure.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Transaction;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -38,12 +39,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
                 Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
-                MessagingEventSource.Log.AmqpTransactionDeclared(_transactionId, AmqpTransactionId);
+                ServiceBusEventSource.Log.TransactionDeclared(_transactionId, AmqpTransactionId);
                 return this;
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.AmqpTransactionInitializeException(_transactionId, exception);
+                ServiceBusEventSource.Log.TransactionInitializeException(_transactionId, exception.ToString());
                 _transactionManager.RemoveEnlistment(_transactionId);
                 throw;
             }
@@ -73,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 await controller.DischargeAsync(AmqpTransactionId, fail: false).ConfigureAwait(false);
                 singlePhaseEnlistment.Committed();
-                MessagingEventSource.Log.AmqpTransactionDischarged(
+                ServiceBusEventSource.Log.TransactionDischarged(
                     _transactionId,
                     AmqpTransactionId,
                     false);
@@ -82,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception e)
             {
                 Exception exception = AmqpExceptionHelper.TranslateException(e, null);
-                MessagingEventSource.Log.AmqpTransactionDischargeException(
+                ServiceBusEventSource.Log.TransactionDischargeException(
                     _transactionId,
                     AmqpTransactionId,
                     exception);
@@ -106,12 +107,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
-                MessagingEventSource.Log.AmqpTransactionDischarged(_transactionId, AmqpTransactionId, true);
+                ServiceBusEventSource.Log.TransactionDischarged(_transactionId, AmqpTransactionId, true);
             }
             catch (Exception e)
             {
                 Exception exception = AmqpExceptionHelper.TranslateException(e, null);
-                MessagingEventSource.Log.AmqpTransactionDischargeException(
+                ServiceBusEventSource.Log.TransactionDischargeException(
                     _transactionId,
                     AmqpTransactionId,
                     exception);

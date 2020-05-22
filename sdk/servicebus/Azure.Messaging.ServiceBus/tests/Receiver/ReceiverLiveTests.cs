@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 await using var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -181,10 +181,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var remainingMessages = messageCount;
@@ -239,7 +238,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
@@ -271,6 +270,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task CanPeekADeferredMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var receivedMsg = await receiver.ReceiveAsync();
+
+                await receiver.DeferAsync(receivedMsg);
+                var peekedMsg = await receiver.PeekAsync();
+                Assert.AreEqual(receivedMsg.MessageId, peekedMsg.MessageId);
+                Assert.AreEqual(receivedMsg.SequenceNumber, peekedMsg.SequenceNumber);
+
+                var deferredMsg = await receiver.ReceiveDeferredMessageAsync(peekedMsg.SequenceNumber);
+                Assert.AreEqual(peekedMsg.MessageId, deferredMsg.MessageId);
+                Assert.AreEqual(peekedMsg.SequenceNumber, deferredMsg.SequenceNumber);
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesInReceiveAndDeleteMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -282,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var clientOptions = new ServiceBusReceiverOptions()
                 {
@@ -412,6 +436,106 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNull(receivedMessage);
                 diff = end - start;
                 Assert.IsTrue(diff.TotalSeconds > 10);
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfCompletePeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.CompleteAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfAbandonPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.AbandonAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfDeferPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.DeferAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfDeadletterPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.DeadLetterAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfRenewlockOfPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.RenewMessageLockAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
             }
         }
     }

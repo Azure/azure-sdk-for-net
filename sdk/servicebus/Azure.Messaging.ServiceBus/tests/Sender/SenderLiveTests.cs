@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential());
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
             }
@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, 3);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>()));
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
                 batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.True, "A message was rejected by the batch; all messages should be accepted.");
                 Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.False, "A message was rejected by the batch; message size exceed.");
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -258,12 +258,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 var client = new ServiceBusClient(
                     TestEnvironment.FullyQualifiedNamespace,
-                    GetTokenCredential());
+                    TestEnvironment.Credential);
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageCt = 10;
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
-                await sender.SendBatchAsync(batch);
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCt);
+                await sender.SendAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions()
                 {
@@ -282,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 }
                 foreach (ServiceBusReceivedMessage msg in receivedMessages)
                 {
-                    await sender.SendAsync(ServiceBusMessage.CreateFrom(msg));
+                    await sender.SendAsync(new ServiceBusMessage(msg));
                 }
 
                 var messageEnum = receivedMessages.GetEnumerator();

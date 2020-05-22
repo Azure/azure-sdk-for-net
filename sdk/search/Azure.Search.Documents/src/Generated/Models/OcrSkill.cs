@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that extracts text from image files. </summary>
-    public partial class OcrSkill : Skill
+    public partial class OcrSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of OcrSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

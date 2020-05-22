@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "129",
         "Content-Type": "application/json",
-        "traceparent": "00-6905ed62f459c545ae3b3947c7c7006a-2c468f42e40c4a41-00",
+        "traceparent": "00-dcee205a279de74eb137eece89f0da2c-73bac3fadd723444-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200309.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "30514a78ff01748af3ca8bcba92a7563",
         "x-ms-return-client-request-id": "true"
@@ -24,9 +25,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "431",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Mon, 09 Mar 2020 09:47:47 GMT",
+        "Content-Length": "330",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 07:10:20 GMT",
         "elapsed-time": "13",
         "Expires": "-1",
         "OData-Version": "4.0",
@@ -36,7 +37,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/$metadata#docs(*)",
         "value": [
           {
             "@search.text": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
@@ -52,7 +52,8 @@
   ],
   "Variables": {
     "RandomSeed": "110296479",
-    "SearchIndexName": "bapsfvkb",
-    "SearchServiceName": "azs-net-wvqysflr"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

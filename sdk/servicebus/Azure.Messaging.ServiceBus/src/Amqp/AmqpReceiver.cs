@@ -3,12 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -134,32 +135,59 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    _connectionScope.OpenReceiverLinkAsync(
-                        entityPath: _entityPath,
+                    OpenReceiverLinkAsync(
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         sessionId: sessionId,
-                        isSessionReceiver: isSessionReceiver,
-                        cancellationToken: CancellationToken.None),
-                link =>
-                {
-                    CloseLink(link);
-                });
+                        isSessionReceiver: isSessionReceiver),
+                link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
                     _entityPath,
+                    _identifier,
                     timeout,
                     CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => CloseLink(link));
+        }
+
+        private async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
+            TimeSpan timeout,
+            uint prefetchCount,
+            ReceiveMode receiveMode,
+            string sessionId,
+            bool isSessionReceiver)
+        {
+            ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
+
+            try
+            {
+                ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
+                    entityPath: _entityPath,
+                    timeout: timeout,
+                    prefetchCount: prefetchCount,
+                    receiveMode: receiveMode,
+                    sessionId: sessionId,
+                    isSessionReceiver: isSessionReceiver,
+                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier);
+                return link;
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateReceiveLinkException(_identifier, ex.ToString());
+                throw;
+            }
         }
 
         private void CloseLink(ReceivingAmqpLink link)
+        {
+            link.Session?.SafeClose();
+            link.SafeClose();
+        }
+
+        private void CloseLink(RequestResponseAmqpLink link)
         {
             link.Session?.SafeClose();
             link.SafeClose();
@@ -173,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
@@ -195,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
+        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages to receive in this batch.</param>
@@ -204,7 +232,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
         ///
         private async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsyncInternal(
             int maxMessages,
@@ -215,44 +243,58 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
-
-            var stopWatch = Stopwatch.StartNew();
-
-            link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            var messagesReceived = await Task.Factory.FromAsync
-            (
-                (callback, state) => link.BeginReceiveRemoteMessages(
-                    maxMessages,
-                    TimeSpan.FromMilliseconds(20),
-                    maxWaitTime ?? timeout,
-                    callback,
-                    state),
-                (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
-                TaskCreationOptions.RunContinuationsAsynchronously
-            ).ConfigureAwait(false);
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            // If event messages were received, then package them for consumption and
-            // return them.
-
-            if ((messagesReceived) && (amqpMessages != null))
+            if (_isSessionReceiver)
             {
-                foreach (AmqpMessage message in amqpMessages)
-                {
-                    if (_receiveMode == ReceiveMode.ReceiveAndDelete)
-                    {
-                        link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                    }
-                    receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
-                    message.Dispose();
-                }
+                ThrowIfSessionLockLost();
             }
 
-            stopWatch.Stop();
-            return receivedMessages;
+            try
+            {
+                link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                var messagesReceived = await Task.Factory.FromAsync
+                (
+                    (callback, state) => link.BeginReceiveRemoteMessages(
+                        maxMessages,
+                        TimeSpan.FromMilliseconds(20),
+                        maxWaitTime ?? timeout,
+                        callback,
+                        state),
+                    (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
+                    TaskCreationOptions.RunContinuationsAsynchronously
+                ).ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                // If event messages were received, then package them for consumption and
+                // return them.
+
+                if ((messagesReceived) && (amqpMessages != null))
+                {
+                    foreach (AmqpMessage message in amqpMessages)
+                    {
+                        if (_receiveMode == ReceiveMode.ReceiveAndDelete)
+                        {
+                            link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                        }
+                        receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                        message.Dispose();
+                    }
+                }
+
+                return receivedMessages;
+            }
+            catch (Exception exception)
+            {
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
+                    exception,
+                    link?.GetTrackingId(),
+                    null,
+                    HasLinkCommunicationError(link)))
+                .Throw();
+
+                throw; // will never be reached
+            }
         }
 
         /// <summary>
@@ -346,10 +388,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
-                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
-                        a => receiveLink.EndDisposeMessage(a),
-                        this);
+
+                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
                 Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
@@ -377,9 +417,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ServiceBusEventSource.Log.LinkStateLost(
                         _identifier,
                         receiveLink.Name,
-                        receiveLink.State,
+                        receiveLink.State.ToString(),
                         _isSessionReceiver,
-                        exception);
+                        exception.ToString());
                     ThrowLockLostException();
                 }
 
@@ -557,15 +597,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string deadLetterReason,
             string deadLetterErrorDescription)
         {
-            if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
-
-            if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
-            }
+            Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
+            Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
             Guid lockTokenGuid = new Guid(lockToken);
             var lockTokenGuids = new[] { lockTokenGuid };
@@ -795,8 +828,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
+            var stopWatch = ValueStopwatch.StartNew();
 
             AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.PeekMessageOperation,
@@ -818,13 +850,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
                 UseMinimum(_connectionScope.SessionTimeout,
-                timeout.CalculateRemaining(stopWatch.Elapsed)))
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime())))
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             using AmqpMessage responseAmqpMessage = await link.RequestAsync(
                 amqpRequestMessage.AmqpMessage,
-                timeout.CalculateRemaining(stopWatch.Elapsed))
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                 .ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -937,7 +969,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<AmqpResponseMessage> ExecuteRequest(TimeSpan timeout, AmqpRequestMessage amqpRequestMessage)
         {
-            ThrowIfSessionLockLost();
+            if (_isSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
             AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,
                 _managementLink,
@@ -1165,7 +1200,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.TranslateException(exception);
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(exception))
+                    .Throw();
+
+                throw; // will never be reached
             }
 
             return messages;
@@ -1191,7 +1229,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 await _receiveLink.CloseAsync().ConfigureAwait(false);
             }
 
+            if (_managementLink?.TryGetOpenedObject(out var _) == true)
+            {
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                await _managementLink.CloseAsync().ConfigureAwait(false);
+            }
+
             _receiveLink?.Dispose();
+            _managementLink?.Dispose();
 
         }
 
@@ -1212,7 +1257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.SessionReceiverLinkClosed(
                     _identifier,
                     SessionId,
-                    LinkException);
+                    LinkException.ToString());
             }
         }
 
@@ -1267,5 +1312,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             }
         }
+
+        private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

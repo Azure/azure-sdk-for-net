@@ -75,14 +75,9 @@ namespace Azure.Identity
                 var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(accessToken);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -101,10 +96,11 @@ namespace Azure.Identity
             var exceptions = new List<Exception>();
             foreach (ProcessStartInfo processStartInfo in processStartInfos)
             {
+                string output = string.Empty;
                 try
                 {
                     var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
-                    string output = async
+                    output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
 
@@ -116,6 +112,10 @@ namespace Azure.Identity
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
+                }
+                catch (JsonException exception)
+                {
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
                 catch (Exception exception)
                 {

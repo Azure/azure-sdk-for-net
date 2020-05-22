@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
         /// <param name="contentType">If the detection is successful, outputs the detected content type. Otherwise, <c>default</c>.</param>
         /// <returns><c>true</c> if the detection was successful. Otherwise, <c>false</c>.</returns>
-        /// <exception cref="NotSupportedException">Happens when <paramref name="stream"/> is not seekable or readable.</exception>
+        /// <exception cref="NotSupportedException">Thrown when <paramref name="stream"/> is not seekable or readable.</exception>
         public static bool TryGetContentType(this Stream stream, out ContentType contentType)
         {
             if (stream.BeginsWithHeader(PdfHeader))

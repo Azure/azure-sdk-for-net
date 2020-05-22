@@ -55,7 +55,7 @@ namespace Azure.Identity
         {
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
-            _processService = processService;
+            _processService = processService ?? ProcessService.Default;
         }
 
         /// <summary>
@@ -89,14 +89,9 @@ namespace Azure.Identity
                 AccessToken token = await RequestCliAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 

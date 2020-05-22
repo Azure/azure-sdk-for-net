@@ -35,11 +35,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// table</param>
         /// <param name="schema">Schema of the Cosmos DB Cassandra
         /// table</param>
-        public CassandraTableResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema))
+        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
+        public CassandraTableResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema), int? analyticalStorageTtl = default(int?))
         {
             Id = id;
             DefaultTtl = defaultTtl;
             Schema = schema;
+            AnalyticalStorageTtl = analyticalStorageTtl;
             CustomInit();
         }
 
@@ -65,6 +67,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "schema")]
         public CassandraSchema Schema { get; set; }
+
+        /// <summary>
+        /// Gets or sets analytical TTL.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyticalStorageTtl")]
+        public int? AnalyticalStorageTtl { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/sentiment",
+      "RequestUri": "https://westus2.ppe.cognitiveservices.azure.com/text/analytics/v3.0/sentiment",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "76",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f8dc2e59630c2e4fbdabe6d82dbefcd4-6c7820be6c8d2245-00",
+        "traceparent": "00-ca4922c4410a79468d0aa380cd067297-2cc9750c42fef348-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200128.1\u002Be5639ed90e83bdfbc90235ee2d4bde3a94e1e715",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200424.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f4cd73140416ebb6ebdc26116b39a234",
         "x-ms-return-client-request-id": "true"
@@ -26,21 +26,21 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b15aaa5e-f6cc-4715-95a6-4497f4300c1c",
+        "apim-request-id": "ac4f463a-16f9-400a-8909-f3533e88d7a9",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Tue, 28 Jan 2020 19:10:04 GMT",
+        "Date": "Sat, 25 Apr 2020 20:38:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5080"
+        "x-envoy-upstream-service-time": "137"
       },
       "ResponseBody": {
         "documents": [
           {
             "id": "0",
             "sentiment": "positive",
-            "documentScores": {
+            "confidenceScores": {
               "positive": 1.0,
               "neutral": 0.0,
               "negative": 0.0
@@ -48,15 +48,17 @@
             "sentences": [
               {
                 "sentiment": "positive",
-                "sentenceScores": {
+                "confidenceScores": {
                   "positive": 1.0,
                   "neutral": 0.0,
                   "negative": 0.0
                 },
                 "offset": 0,
-                "length": 24
+                "length": 24,
+                "text": "El mejor test del mundo!"
               }
-            ]
+            ],
+            "warnings": []
           }
         ],
         "errors": [],
@@ -66,7 +68,7 @@
   ],
   "Variables": {
     "RandomSeed": "324602469",
-    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/",
-    "TEXT_ANALYTICS_API_KEY": "Sanitized"
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.ppe.cognitiveservices.azure.com/"
   }
 }

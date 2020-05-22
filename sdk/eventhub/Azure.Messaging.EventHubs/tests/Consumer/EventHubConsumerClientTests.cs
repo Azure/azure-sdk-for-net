@@ -461,6 +461,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ReadEventsFromPartitionAsyncThrowsIfConsumerClosedBeforeRead()
         {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
             var events = new List<EventData>
             {
                new EventData(Encoding.UTF8.GetBytes("One")),
@@ -473,28 +476,21 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportConsumer = new PublishingTransportConsumerMock(events);
             var mockConnection = new MockConnection(() => transportConsumer);
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
-            var receivedEvents = 0;
-
-            using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(250);
+            var receivedEvents = false;
 
             Assert.That(async () =>
             {
-                await consumer.CloseAsync(cancellation.Token);
+                await consumer.CloseAsync(cancellationSource.Token);
 
-                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), cancellation.Token))
+                await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), cancellationSource.Token))
                 {
-                    if (partitionEvent.Data == null)
-                    {
-                        break;
-                    }
-
-                    ++receivedEvents;
+                    receivedEvents = true;
+                    break;
                 }
             }, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The iterator should have indicated the consumer was closed.");
 
-            Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
-            Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
+            Assert.That(receivedEvents, Is.False, "There should have been no events received.");
         }
 
         /// <summary>
@@ -563,7 +559,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () =>
             {
@@ -604,7 +600,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () =>
             {
@@ -641,7 +637,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {
@@ -688,7 +684,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {
@@ -745,7 +741,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {
@@ -1288,7 +1284,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(250);
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () =>
             {
@@ -1375,7 +1371,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () =>
             {
@@ -1416,7 +1412,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var receivedEvents = 0;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             Assert.That(async () =>
             {
@@ -1456,7 +1452,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var thresholdModifier = 5 * partitions.Length;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {
@@ -1506,7 +1502,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var thresholdModifier = 5 * partitions.Length;
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {
@@ -1563,7 +1559,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
 
             using var cancellation = new CancellationTokenSource();
-            cancellation.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             try
             {

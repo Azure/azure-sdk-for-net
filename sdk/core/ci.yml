@@ -21,6 +21,8 @@ trigger:
     include:
     - sdk/core/
     - eng/
+    exclude:
+    - eng/mgmt/
 
 pr:
   branches:
@@ -34,6 +36,8 @@ pr:
     - sdk/core/
     - eng/
     - samples/
+    exclude:
+    - eng/mgmt/
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -44,5 +48,7 @@ stages:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
+    - name: Azure.Core.Experimental
+      safeName: AzureCoreExperimental
     - name: Microsoft.Extensions.Azure
       safeName: MicrosoftExtensionsAzure

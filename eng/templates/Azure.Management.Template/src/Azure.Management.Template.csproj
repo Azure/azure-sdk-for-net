@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.Management.Template</PackageId>
+    <Description>Azure management client SDK for Azure resource provider ProviderFullName</Description>
+    <PackageTags>azure;management;ProviderNameLowercase</PackageTags>
+  </PropertyGroup>
+</Project>

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that enables scenarios that require a Boolean operation to determine the data to assign to an output. </summary>
-    public partial class ConditionalSkill : Skill
+    public partial class ConditionalSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of ConditionalSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

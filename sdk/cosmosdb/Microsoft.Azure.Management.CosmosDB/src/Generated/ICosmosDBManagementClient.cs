@@ -41,14 +41,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
-        string SubscriptionId1 { get; set; }
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -158,6 +153,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IGremlinResourcesOperations.
         /// </summary>
         IGremlinResourcesOperations GremlinResources { get; }
+
+        /// <summary>
+        /// Gets the INotebookWorkspacesOperations.
+        /// </summary>
+        INotebookWorkspacesOperations NotebookWorkspaces { get; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.

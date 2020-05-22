@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexer : IUtf8JsonSerializable
     {
@@ -67,10 +67,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("disabled");
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (ETag != null)
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }

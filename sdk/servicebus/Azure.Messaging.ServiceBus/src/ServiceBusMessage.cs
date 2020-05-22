@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
+using System.Xml.Schema;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -27,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new Message
         /// </summary>
         public ServiceBusMessage()
-            : this(default)
+            : this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -39,6 +42,30 @@ namespace Azure.Messaging.ServiceBus
         {
             Body = body;
             Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified received message by copying the properties.
+        /// </summary>
+        /// <param name="receivedMessage">The received message to copy the data from.</param>
+        public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
+        {
+            Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
+
+            Body = receivedMessage.Body;
+            ContentType = receivedMessage.ContentType;
+            CorrelationId = receivedMessage.CorrelationId;
+            Label = receivedMessage.Label;
+            MessageId = receivedMessage.MessageId;
+            PartitionKey = receivedMessage.PartitionKey;
+            Properties = new Dictionary<string, object>(receivedMessage.SentMessage.Properties);
+            ReplyTo = receivedMessage.ReplyTo;
+            ReplyToSessionId = receivedMessage.ReplyToSessionId;
+            SessionId = receivedMessage.SessionId;
+            ScheduledEnqueueTime = receivedMessage.ScheduledEnqueueTime;
+            TimeToLive = receivedMessage.TimeToLive;
+            To = receivedMessage.To;
+            ViaPartitionKey = receivedMessage.ViaPartitionKey;
         }
 
         /// <summary>
@@ -174,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                TimeoutHelper.ThrowIfNonPositiveArgument(value);
+                Argument.AssertPositive(value, nameof(TimeToLive));
                 _timeToLive = value;
             }
         }
@@ -258,33 +285,6 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static ServiceBusMessage CreateFrom(ServiceBusReceivedMessage message)
-        {
-            var copiedMessage = new ServiceBusMessage
-            {
-                Body = message.Body,
-                ContentType = message.ContentType,
-                CorrelationId = message.CorrelationId,
-                Label = message.Label,
-                MessageId = message.MessageId,
-                PartitionKey = message.PartitionKey,
-                Properties = new Dictionary<string, object>(message.Properties),
-                ReplyTo = message.ReplyTo,
-                ReplyToSessionId = message.ReplyToSessionId,
-                SessionId = message.SessionId,
-                ScheduledEnqueueTime = message.ScheduledEnqueueTime,
-                TimeToLive = message.TimeToLive,
-                To = message.To,
-                ViaPartitionKey = message.ViaPartitionKey
-            };
-            return copiedMessage;
         }
 
         private static void ValidateMessageId(string messageId)

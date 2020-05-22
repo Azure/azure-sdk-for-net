@@ -40,7 +40,7 @@ pr:
     - sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance
     - sdk/containerregistry/Microsoft.Azure.Management.ContainerRegistry
     - sdk/containerservice/Microsoft.Azure.Management.ContainerService
-    - sdk/cosmos-db/Microsoft.Azure.Management.CosmosDB
+    - sdk/cosmosdb/Microsoft.Azure.Management.CosmosDB
     - sdk/cost-management/Microsoft.Azure.Management.CostManagement
     - sdk/customer-insights/Microsoft.Azure.Management.CustomerInsights
     - sdk/customproviders/Microsoft.Azure.Management.CustomProviders
@@ -83,7 +83,9 @@ pr:
     - sdk/managementgroups/Microsoft.Azure.Management.ManagementGroups
     - sdk/managementpartner/Microsoft.Azure.Management.ManagementPartner
     - sdk/maps/Microsoft.Azure.Management.Maps
+    - sdk/marketplace/Microsoft.Azure.Management.Marketplace
     - sdk/marketplaceordering/Microsoft.Azure.Management.MarketplaceOrdering
+    - sdk/marketplace/Microsoft.Azure.Management.Marketplace
     - sdk/mediaservices/Microsoft.Azure.Management.Media
     - sdk/mgmtcommon/AppAuthentication
     - sdk/mgmtcommon/Auth
@@ -129,6 +131,7 @@ pr:
     - sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics
     - sdk/subscription/Microsoft.Azure.Management.Subscription
     - sdk/support/Microsoft.Azure.Management.Support
+    - sdk/synapse/Microsoft.Azure.Management.Synapse
     - sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - eng/pipelines/mgmt.yml

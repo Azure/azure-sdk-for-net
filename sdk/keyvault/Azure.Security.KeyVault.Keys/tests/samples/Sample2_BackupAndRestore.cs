@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -19,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void BackupAndRestoreSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample2KeyClient
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

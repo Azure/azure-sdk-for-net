@@ -28,9 +28,11 @@ This section should include everything a developer needs to do to install and cr
 
 First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
 
-Include a **Prerequisites** line after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+### Prerequisites
 
-**Prerequisites**: You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
 ### Authenticate the client
 
@@ -67,14 +69,12 @@ thing.save()
 
 The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
 
-```Python
-thing = client.get_thing(id)
-```
+```C# Snippet:GetSecret
+var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
 
-### List the things
+SecretBundle secret = client.GetSecret("TestSecret");
 
-Use [list_things](not-valid-link) to get one or more Thing objects from the service. If there are no Things available, a `404` exception is thrown (see [Troubleshooting](#troubleshooting) for details on handling exceptions).
-
+Console.WriteLine(secret.Value);
 ```Python
 things = client.list_things()
 ```

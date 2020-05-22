@@ -3,6 +3,9 @@
 ## 12.3.0-preview.1 (Unreleased)
 
 
+## 12.2.1 (2020-05)
+- Fixed bug where blob, file and directory names were not URL encoded.
+
 ## 12.2.0 (2020-03)
 - Added Exists() and DeleteIfExists() to ShareClient, ShareDirectoryClient, and ShareFileClient.
 - Added CreateIfNotExists() to ShareClient and ShareDirectoryClient.

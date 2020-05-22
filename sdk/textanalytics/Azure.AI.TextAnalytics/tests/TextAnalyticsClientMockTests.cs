@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -38,16 +38,27 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("1", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
+
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
                 new TextDocumentBatchStatistics(2, 2, 0, 2),
@@ -77,16 +88,26 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("3", new TextDocumentStatistics(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("3", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
                 new RecognizeEntitiesResult("4", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
                 new RecognizeEntitiesResult("5", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
             };
@@ -134,11 +155,18 @@ namespace Azure.AI.TextAnalytics.Tests
                         {
                             json.WriteStartObject();
                             json.WriteString("text", entity.Text);
-                            json.WriteString("type", JsonSerializer.Serialize(entity.Category));
-                            json.WriteString("subtype", JsonSerializer.Serialize(entity.SubCategory));
-                            json.WriteNumber("offset", entity.GraphemeOffset);
-                            json.WriteNumber("length", entity.GraphemeLength);
-                            json.WriteNumber("score", entity.ConfidenceScore);
+                            json.WriteString("category", JsonSerializer.Serialize(entity.Category));
+                            json.WriteString("subcategory", JsonSerializer.Serialize(entity.SubCategory));
+                            json.WriteNumber("confidenceScore", entity.ConfidenceScore);
+                            json.WriteEndObject();
+                        }
+                        json.WriteEndArray();
+                        json.WriteStartArray("warnings");
+                        foreach (var warning in result.Entities.Warnings)
+                        {
+                            json.WriteStartObject();
+                            json.WriteString("code", warning.WarningCode.ToString());
+                            json.WriteString("message", warning.Message);
                             json.WriteEndObject();
                         }
                         json.WriteEndArray();
@@ -158,7 +186,8 @@ namespace Azure.AI.TextAnalytics.Tests
                         json.WriteStartObject();
                         json.WriteString("id", result.Id);
                         json.WriteStartObject("error");
-                        json.WriteStartObject("innerError");
+                        json.WriteStartObject("innererror");
+                        json.WriteString("code", result.Error.ErrorCode.ToString());
                         json.WriteString("message", result.Error.Message);
                         json.WriteEndObject();
                         json.WriteEndObject();

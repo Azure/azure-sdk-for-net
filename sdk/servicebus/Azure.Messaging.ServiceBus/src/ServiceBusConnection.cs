@@ -211,8 +211,9 @@ namespace Azure.Messaging.ServiceBus
         internal virtual TransportSender CreateTransportSender(
             string entityPath,
             string viaEntityPath,
-            ServiceBusRetryPolicy retryPolicy) =>
-            _innerClient.CreateSender(entityPath, viaEntityPath, retryPolicy);
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier) =>
+            _innerClient.CreateSender(entityPath, viaEntityPath, retryPolicy, identifier);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
@@ -230,6 +231,12 @@ namespace Azure.Messaging.ServiceBus
                     identifier,
                     sessionId,
                     isSessionReceiver);
+
+        internal virtual TransportRuleManager CreateTransportRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier) =>
+            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy, identifier);
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the

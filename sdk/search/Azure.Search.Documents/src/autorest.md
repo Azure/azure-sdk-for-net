@@ -65,6 +65,18 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
+### Rename one of SearchMode definitions
+
+SearchMode is duplicated across swaggers. Rename one of them, even though it will be internalized.
+This prevents the serializer from attempting to use undefined values until [Azure/autorest.csharp#583](https://github.com/Azure/autorest.csharp/issues/583) is fixed.
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.Suggester.properties.searchMode
+  transform: $["x-ms-enum"].name = "SuggesterMode";
+```
+
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
@@ -87,14 +99,56 @@ modelerfour:
   group-parameters: false
 ```
 
-### Rename one of SearchMode definitions
+### Set odata.metadata Accept header in operations
 
-SearchMode is duplicated across swaggers. Rename one of them, even though it will be internalized.
-This prevents the serializer from attempting to use undefined values until [Azure/autorest.csharp#583](https://github.com/Azure/autorest.csharp/issues/583) is fixed.
+searchindex.json needs odata.metadata=none and searchservice.json needs odata.metadata=minimal in the Accept header.
 
 ```yaml
 directive:
-- from: searchservice.json
-  where: $.definitions.Suggester.properties.searchMode
-  transform: $["x-ms-enum"].name = "SuggesterMode";
+- from: swagger-document
+  where: $.paths
+  transform: >
+    for (var path in $) {
+      for (var opName in $[path]) {
+        var accept = "application/json; odata.metadata=";
+        accept += path.startsWith("/docs") ? "none" : "minimal";
+
+        var op = $[path][opName];
+        op.parameters.push({
+          name: "Accept",
+          "in": "header",
+          required: true,
+          type: "string",
+          enum: [ accept ],
+          "x-ms-parameter-location": "method"
+        });
+      }
+    }
+
+    return $;
+```
+
+### Move service models to Azure.Search.Documents.Indexes.Models
+
+Models in searchservice.json should be moved to Azure.Search.Documents.Indexes.Models.
+
+```yaml
+directive:
+  from: searchservice.json
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Search.Documents.Indexes.Models"
+```
+
+### Relocate x-ms-client-request-id parameter
+
+Remove the `x-ms-client-request-id` parameter from all methods and put it on the client.
+This will be later removed when https://github.com/Azure/autorest.csharp/issues/782 is resolved.
+Several attempts at just removing the parameter have caused downstream issues, so relocating it for now.
+
+```yaml
+directive:
+  from: swagger-document
+  where: $.parameters.ClientRequestIdParameter
+  transform: $["x-ms-parameter-location"] = "client";
 ```
