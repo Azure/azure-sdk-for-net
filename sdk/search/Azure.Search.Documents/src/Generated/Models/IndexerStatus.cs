@@ -5,16 +5,16 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the overall indexer status. </summary>
     public enum IndexerStatus
     {
-        /// <summary> unknown. </summary>
+        /// <summary> Indicates that the indexer is in an unknown state. </summary>
         Unknown,
-        /// <summary> error. </summary>
+        /// <summary> Indicates that the indexer experienced an error that cannot be corrected without human intervention. </summary>
         Error,
-        /// <summary> running. </summary>
+        /// <summary> Indicates that the indexer is running normally. </summary>
         Running
     }
 }

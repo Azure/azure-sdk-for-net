@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Management;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-    using System.Xml.Linq;
-    using Azure.Messaging.ServiceBus.Management;
-
     internal static class FilterExtensions
     {
         public static Filter ParseFromXElement(XElement xElement)
@@ -28,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 case "FalseFilter":
                     return new FalseFilter();
                 default:
-                    MessagingEventSource.Log.ManagementSerializationException(
+                    ServiceBusEventSource.Log.ManagementSerializationException(
                         $"{nameof(FilterExtensions)}_{nameof(ParseFromXElement)}",
                         xElement.ToString());
                     return null;

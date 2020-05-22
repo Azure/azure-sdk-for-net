@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Moq;
 using NUnit.Framework;
@@ -569,28 +569,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(calledCredentials.Count, 1);
 
             Assert.AreEqual(calledCredentials[0], availableCredential);
-        }
-
-        internal class PartialMockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
-        {
-            private EnvironmentCredential _environmentCredential;
-            private ManagedIdentityCredential _managedIdentityCredential;
-
-            public PartialMockDefaultAzureCredentialFactory(CredentialPipeline pipeline=null, EnvironmentCredential environmentCredential = null, ManagedIdentityCredential managedIdentityCredential = null) : base(pipeline ?? CredentialPipeline.GetInstance(null))
-            {
-                _environmentCredential = environmentCredential;
-                _managedIdentityCredential = managedIdentityCredential;
-            }
-
-            public override TokenCredential CreateEnvironmentCredential()
-            {
-                return _environmentCredential ?? base.CreateEnvironmentCredential();
-            }
-
-            public override TokenCredential CreateManagedIdentityCredential(string clientId)
-            {
-                return _managedIdentityCredential ?? base.CreateManagedIdentityCredential(clientId);
-            }
         }
     }
 }

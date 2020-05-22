@@ -19,17 +19,30 @@ namespace Microsoft.Azure.Management.Peering
           {
               return new Tuple<string, string, string>[]
               {
-
+                new Tuple<string, string, string>("Peering", "CheckServiceProviderAvailability", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "LegacyPeerings", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "Operations", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeerAsns", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeeringLocations", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceCountries", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceLocations", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServiceProviders", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "PeeringServices", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "Peerings", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "Prefixes", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "ReceivedRoutes", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "RegisteredAsns", "2020-04-01"),
+                new Tuple<string, string, string>("Peering", "RegisteredPrefixes", "2020-04-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/peering/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=F:\\azure\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/peering/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "57ba23526b8ef2ddd52165d54e20d66f5563e8f4";
+      public static readonly String GithubCommidId = "8b2e977ca30ce0d9b44e8f6b90d569c7a0334d59";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

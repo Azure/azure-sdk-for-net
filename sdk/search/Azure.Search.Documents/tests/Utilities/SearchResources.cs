@@ -5,19 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
-using Microsoft.Azure.Management.Search;
-using Microsoft.Azure.Management.Search.Models;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -30,114 +25,33 @@ namespace Azure.Search.Documents.Tests
     public partial class SearchResources : IAsyncDisposable
     {
         /// <summary>
-        /// Settings used to create test resources.
+        /// A source of randomness for creating live test resources.  This
+        /// should not be tied into test recordings because live resource
+        /// creation is independent and not recorded.
         /// </summary>
-        private static class Settings
-        {
-            /// <summary>
-            /// A source of randomness for creating live test resources.  This
-            /// should not be tied into test recordings because live resource
-            /// creation is independent and not recorded.
-            /// </summary>
-            public static Random Random { get; } = new Random(Environment.TickCount);
+        public static Random Random { get; } = new Random(Environment.TickCount);
 
-            /// <summary>
-            /// The prefix we use when creating resources - which can help make
-            /// it a little easier to identify anything that leaks while
-            /// debugging locally.
-            /// </summary>
-            public const string ResourcePrefix = "azs-net-";
-
-            /// <summary>
-            /// The name of the RP for Search Services.
-            /// </summary>
-            public const string ResourceProviderNamespace = "Microsoft.Search";
-
-            /// <summary>
-            /// The AD Tenant of our Service Principal.
-            /// </summary>
-            public static string TenantId { get; } = GetEnvVar("AZURE_TENANT_ID");
-
-            /// <summary>
-            /// The Client ID of our Service Principal.
-            /// </summary>
-            public static string ClientId { get; } = GetEnvVar("AZURE_CLIENT_ID");
-
-            /// <summary>
-            /// The Client Secret for our Service Principal.
-            /// </summary>
-            public static string ClientSecret { get; } = GetEnvVar("AZURE_CLIENT_SECRET");
-
-            /// <summary>
-            /// The Subscription ID to use when creating resources.
-            /// </summary>
-            public static string SubscriptionId { get; } = GetEnvVar("AZURE_SUBSCRIPTION_ID");
-
-            /// <summary>
-            /// The Resource Group to use for creating resources (so they can
-            /// be easily marked for cleanup in the event of a leak).
-            /// </summary>
-            public static string ResourceGroup { get; } = GetEnvVar("AZURE_RESOURCE_GROUP");
-
-            /// <summary>
-            /// The location to create our test resources.
-            /// </summary>
-            public static string Location { get; } = GetEnvVar("AZURE_LOCATION");
-
-            /// <summary>
-            /// The timeout for cancellation.
-            /// </summary>
-            public static TimeSpan Timeout => Debugger.IsAttached ?
-                System.Threading.Timeout.InfiniteTimeSpan :
-                TimeSpan.FromSeconds(60);
-
-            /// <summary>
-            /// Get the value of an environment variable and fail the test if
-            /// not found.
-            /// </summary>
-            /// <param name="name">
-            /// The name of the environment variable.
-            /// </param>
-            /// <returns>The value of the environment variable.</returns>
-            private static string GetEnvVar(string name)
-            {
-                string value = Environment.GetEnvironmentVariable(name);
-                if (string.IsNullOrEmpty(value))
-                {
-                    Assert.Inconclusive($"Could not find environment variable {name} required to run these tests live.");
-                }
-                return value;
-            }
-        }
+        /// <summary>
+        /// The timeout for cancellation.
+        /// </summary>
+        public static TimeSpan Timeout => Debugger.IsAttached ?
+            System.Threading.Timeout.InfiniteTimeSpan :
+            TimeSpan.FromMinutes(2);
 
         /// <summary>
         /// The name of the Search service.
         /// </summary>
-        public string SearchServiceName
-        {
-            get => TestFixture.Recording.GetVariable("SearchServiceName", _searchServiceName);
-            set
-            {
-                TestFixture.Recording.SetVariable("SearchServiceName", value);
-                _searchServiceName = value;
-            }
-        }
-        private string _searchServiceName = null;
+        public string SearchServiceName => TestFixture.TestEnvironment.SearchServiceName;
 
         /// <summary>
         /// The storage account name.
         /// </summary>
-        public string StorageAccountName => TestFixture.Recording.GetVariableFromEnvironment("AZURE_SEARCH_STORAGE_NAME");
+        public string StorageAccountName => TestFixture.TestEnvironment.SearchStorageName;
 
         /// <summary>
         /// The storage account key.
         /// </summary>
-        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment(StorageAccountKeyVariableName);
-
-        /// <summary>
-        /// The name of the <see cref="StorageAccountKey"/> environment variable.
-        /// </summary>
-        internal const string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
+        public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
         /// The storage account connection string.
@@ -181,12 +95,12 @@ namespace Azure.Search.Documents.Tests
         /// The Primary or Admin API key to authenticate requests to the
         /// service.
         /// </summary>
-        public string PrimaryApiKey { get; private set; } = "Sanitized";
+        public string PrimaryApiKey => TestFixture.TestEnvironment.SearchAdminKey;
 
         /// <summary>
         /// The Query API key to authenticate requests to the service.
         /// </summary>
-        public string QueryApiKey { get; private set; } = "Sanitized";
+        public string QueryApiKey => TestFixture.TestEnvironment.SearchQueryKey;
 
         /// <summary>
         /// Flag indicating whether these resources need to be cleaned up.
@@ -224,11 +138,13 @@ namespace Azure.Search.Documents.Tests
         /// recordings, instrumentation, etc.
         /// </param>
         /// <returns>A new TestResources context.</returns>
-        public static async Task<SearchResources> CreateWithNoIndexesAsync(SearchTestBase fixture)
+        public static SearchResources CreateWithNoIndexes(SearchTestBase fixture)
         {
-            var resources = new SearchResources(fixture);
-            await resources.CreateSearchServiceAsync();
-            return resources;
+            return new SearchResources(fixture)
+            {
+                // We created no index, but others tests might. We'll check when cleaning up.
+                RequiresCleanup = fixture.Recording.Mode != RecordedTestMode.Playback,
+            };
         }
 
         /// <summary>
@@ -302,49 +218,58 @@ namespace Azure.Search.Documents.Tests
             // will create the recording ServiceName/IndexName/etc. variables)
             return new SearchResources(fixture)
             {
-                SearchServiceName = SharedSearchResources.Search.SearchServiceName,
                 IndexName = SharedSearchResources.Search.IndexName,
-                PrimaryApiKey = SharedSearchResources.Search.PrimaryApiKey,
-                QueryApiKey = SharedSearchResources.Search.QueryApiKey
             };
         }
         #endregion Create Test Resources
 
         #region Get Clients
         /// <summary>
-        /// Get a SearchServiceClient to use for testing.
+        /// Get a <see cref="SearchIndexClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchServiceClient instance.</returns>
-        public SearchServiceClient GetServiceClient(SearchClientOptions options = null) =>
+        /// <returns>A <see cref="SearchIndexClient"/> instance.</returns>
+        public SearchIndexClient GetIndexClient(SearchClientOptions options = null) =>
             TestFixture.InstrumentClient(
-                new SearchServiceClient(
+                new SearchIndexClient(
                     Endpoint,
                     new AzureKeyCredential(PrimaryApiKey),
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
-        /// Get a SearchIndexClient to use for testing with an Admin API key.
+        /// Get a <see cref="SearchIndexerClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchIndexClient instance.</returns>
-        public SearchIndexClient GetIndexClient(SearchClientOptions options = null)
+        /// <returns>A <see cref="SearchIndexerClient"/> instance.</returns>
+        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null) =>
+            TestFixture.InstrumentClient(
+                new SearchIndexerClient(
+                    Endpoint,
+                    new AzureKeyCredential(PrimaryApiKey),
+                    TestFixture.GetSearchClientOptions(options)));
+
+        /// <summary>
+        /// Get a <see cref="SearchClient"/> to use for testing with an Admin API key.
+        /// </summary>
+        /// <param name="options">Optional client options.</param>
+        /// <returns>A <see cref="SearchClient"/> instance.</returns>
+        public SearchClient GetSearchClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
-                GetServiceClient(options).GetSearchIndexClient(IndexName));
+                GetIndexClient(options).GetSearchClient(IndexName));
         }
 
         /// <summary>
-        /// Get a SearchIndexClient to use for testing with a query API key.
+        /// Get a <see cref="SearchClient"/> to use for testing with a query API key.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchIndexClient instance.</returns>
-        public SearchIndexClient GetQueryClient(SearchClientOptions options = null)
+        /// <returns>A <see cref="SearchClient"/> instance.</returns>
+        public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
-                new SearchIndexClient(
+                new SearchClient(
                     Endpoint,
                     IndexName,
                     new AzureKeyCredential(QueryApiKey),
@@ -354,42 +279,26 @@ namespace Azure.Search.Documents.Tests
 
         #region Service Management
         /// <summary>
-        /// Create a client that can be used to create and delete Search
-        /// Services.
-        /// </summary>
-        /// <returns>
-        /// A client that can be used to create and delete Search Services.
-        /// </returns>
-        private static SearchManagementClient GetManagementClient() =>
-                new SearchManagementClient(
-                    new AzureCredentialsFactory().FromServicePrincipal(
-                        Settings.ClientId,
-                        Settings.ClientSecret,
-                        Settings.TenantId,
-                        AzureEnvironment.AzureGlobalCloud))
-                {
-                    SubscriptionId = Settings.SubscriptionId
-                };
-
-        /// <summary>
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
         public async ValueTask DisposeAsync() => await Task.WhenAll(
-            DeleteSearchSeviceAsync(),
+            DeleteIndexAsync(),
             DeleteBlobContainerAsync());
 
         /// <summary>
-        /// Delete the Search Service created as a test resource.
+        /// Deletes the index created as a test resource.
         /// </summary>
-        private async Task DeleteSearchSeviceAsync()
+        /// <returns></returns>
+        private async Task DeleteIndexAsync()
         {
-            // Only delete the Search Service if we own it
-            if (RequiresCleanup)
+            if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
-                SearchManagementClient client = GetManagementClient();
-                await client.Services.DeleteAsync(Settings.ResourceGroup, SearchServiceName);
+                SearchIndexClient client = GetIndexClient();
+                await client.DeleteIndexAsync(IndexName);
                 RequiresCleanup = false;
+
+                await WaitForIndexDeletionAsync();
             }
         }
 
@@ -404,84 +313,9 @@ namespace Azure.Search.Documents.Tests
                 BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
                 await client.DeleteIfExistsAsync();
                 RequiresBlobContainerCleanup = false;
+
+                await WaitForBlobContainerDeletionAsync();
             }
-        }
-
-        /// <summary>
-        /// Create a new Search Service.
-        /// </summary>
-        /// <returns>This TestResources context.</returns>
-        private async Task<SearchResources> CreateSearchServiceAsync()
-        {
-            // We don't create any live resources during playback
-            if (TestFixture.Mode != RecordedTestMode.Playback)
-            {
-                SearchManagementClient client = GetManagementClient();
-
-                // Ensuring a Search Service involves creating it, and then
-                // waiting until its DNS resolves.  Since reliability is
-                // paramount we retry the entire sequence several times,
-                // deleting and trying to re-create the service each time.
-                int maxAttempts = 10;
-                for (int attempt = 0; attempt <= maxAttempts; attempt++)
-                {
-                    if (attempt == maxAttempts)
-                    {
-                        throw new InvalidOperationException("Failed to provision a Search Service in a timely manner.");
-                    }
-
-                    // Use a new random name for the Search Service every time
-                    // we try to create it
-                    SearchServiceName = Settings.ResourcePrefix + Settings.Random.GetName(8);
-
-                    // Create a free Search Service
-                    await client.Services.CreateOrUpdateAsync(
-                        Settings.ResourceGroup,
-                        SearchServiceName,
-                        new SearchService
-                        {
-                            Location = Settings.Location,
-                            Sku = new Microsoft.Azure.Management.Search.Models.Sku
-                            {
-                                Name = Microsoft.Azure.Management.Search.Models.SkuName.Free
-                            }
-                        });
-
-                    // In the common case, DNS propagation happens in less than
-                    // 15 seconds. In the uncommon case, it can take many
-                    // minutes.  Deleting and recreating the service is often
-                    // faster than waiting a long time for DNS propagation.
-                    if (await WaitForSearchServiceDnsAsync(Endpoint, TimeSpan.FromSeconds(15)))
-                    {
-                        break;
-                    }
-
-                    // If the service DNS isn't resolvable in a timely manner,
-                    // delete it and try to create another one.  We need to
-                    // delete it since there can be only a few free services
-                    // per subscription.
-                    await client.Services.DeleteAsync(Settings.ResourceGroup, SearchServiceName);
-                }
-
-                // Make sure we delete this resource when we're finished
-                RequiresCleanup = true;
-
-                // Get the primary admin key
-                AdminKeyResult admin = await client.AdminKeys.GetAsync(
-                    Settings.ResourceGroup,
-                    SearchServiceName);
-                Assert.NotNull(admin);
-                PrimaryApiKey = admin.PrimaryKey;
-
-                // Get a query key
-                IEnumerable<QueryKey> queryKeys = await client.QueryKeys.ListBySearchServiceAsync(
-                    Settings.ResourceGroup,
-                    SearchServiceName);
-                Assert.NotNull(queryKeys);
-                QueryApiKey = queryKeys.First().Key;
-            }
-
-            return this;
         }
 
         /// <summary>
@@ -490,17 +324,16 @@ namespace Azure.Search.Documents.Tests
         /// <returns>This TestResources context.</returns>
         private async Task<SearchResources> CreateSearchServiceAndIndexAsync()
         {
-            // Create the Search Service first
-            await CreateSearchServiceAsync();
-
             // Create the index
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
                 // Generate a random Index Name
-                IndexName = Settings.Random.GetName(8);
+                IndexName = Random.GetName(8);
 
-                SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
                 await client.CreateIndexAsync(GetHotelIndex(IndexName));
+
+                RequiresCleanup = true;
 
                 // Give the index time to stabilize before running tests.
                 await WaitForIndexCreationAsync();
@@ -522,7 +355,7 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                SearchIndexClient client = new SearchIndexClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                SearchClient client = new SearchClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(TestDocuments);
                 await client.IndexDocumentsAsync(batch);
 
@@ -540,9 +373,9 @@ namespace Azure.Search.Documents.Tests
         {
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                BlobContainerName = Settings.Random.GetName(8);
+                BlobContainerName = Random.GetName(8);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
+                using CancellationTokenSource cts = new CancellationTokenSource(Timeout);
 
                 BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
                 await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);
@@ -599,61 +432,40 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Wait for the index to be deleted.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForIndexDeletionAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
+
+        /// <summary>
+        /// Wait for blob containers to be deleted.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForBlobContainerDeletionAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
+
+        /// <summary>
         /// Wait for uploaded documents to be indexed.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForIndexingAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
 
         /// <summary>
         /// Wait for the synonym map to be updated.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForSynonymMapUpdateAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(5));
 
         /// <summary>
         /// Wait for the Search Service to be provisioned.
         /// </summary>
-        /// <returns>A Task to wait.</returns>
+        /// <returns>A Task to await.</returns>
         public async Task WaitForServiceProvisioningAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(10));
 
-        /// <summary>
-        /// Wait for DNS to propagate.
-        /// </summary>
-        /// <param name="endpoint">The URI to check for.</param>
-        /// <param name="maxDelay">The maximum delay to wait</param>
-        /// <returns>True if the DNS resolves, false otherwise.</returns>
-        private static async Task<bool> WaitForSearchServiceDnsAsync(Uri endpoint, TimeSpan maxDelay)
-        {
-            // Check once a second
-            TimeSpan retryDelay = TimeSpan.FromSeconds(1);
-            int maxRetries = (int)(maxDelay.TotalSeconds / retryDelay.TotalSeconds);
-            int retries = 0;
-            while (retries < maxRetries)
-            {
-                try
-                {
-                    CancellationTokenSource cancel = new CancellationTokenSource();
-                    cancel.CancelAfter(retryDelay);
-                    TaskFactory factory = new TaskFactory(cancel.Token);
-                    await factory.FromAsync(Dns.BeginGetHostEntry, Dns.EndGetHostEntry, endpoint.Host, null);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.Contains("No such host is known"))
-                    {
-                        return false;
-                    }
-                }
-                await Task.Delay(retryDelay);
-                retries++;
-            }
-
-            return false;
-        }
         #endregion Service Management
     }
 }

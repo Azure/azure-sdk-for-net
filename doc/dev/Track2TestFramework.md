@@ -50,15 +50,92 @@ You can disable the sync-forwarding for an individual test by applying the `[Asy
 
 __Limitation__: all method calls/properties that are being used have to be `virtual`.
 
+# Test environment and live test resources
+
+Follow the [live test resources management](../../eng/common/TestResources/README.md) to create a live test resources deployment template and get id deployed.
+
+To use the environment provided by the `New-TestResources.ps1` create a class that inherits from `TestEnvironment` and exposes required values as properties:
+
+``` C#
+public class AppConfigurationTestEnvironment : TestEnvironment
+{
+    // Call the base constructor passing the service directory name
+    public AppConfigurationTestEnvironment() : base("appconfiguration")
+    {
+    }
+
+    // Variables retrieved using GetRecordedVariable would be recorded in recorded tests
+    // Argument is the output name in the test-resources.json
+    public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING");
+    // Variables retrieved using GetVariable would not be recorded but the method would throw if variable is not set
+    public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
+    // Variables retrieved using GetOptionalVariable would not be recorded and the method would return null if variable is not set
+    public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
+}
+```
+
+**NOTE:** Make sure that variables containing secret values are not recorded or are sanitized.
+
+You can now retrieve these values in tests:
+
+``` C#
+public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
+{
+    [Test]
+    public async Task DeleteSetting()
+    {
+        var connectionString = TestEnvironment.ConnectionString;
+        var password = TestEnvironment.TestPassword;
+        //...
+    }
+}
+```
+
+And samples:
+
+``` C#
+public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
+{
+    [Test]
+    public void HelloWorld()
+    {
+        var connectionString = TestEnvironment.ConnectionString;
+
+        #region Snippet:AzConfigSample1_CreateConfigurationClient
+        var client = new ConfigurationClient(connectionString);
+        #endregion
+    }
+}
+```
+
+## TokenCredential
+
+If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.
+
+``` C#
+    public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    {
+        internal KeyClient GetClient()
+        {
+            return InstrumentClient
+                (new KeyClient(
+                    new Uri(TestEnvironment.KeyVaultUrl),
+/* --------> */     TestEnvironment.Credential,
+                    recording.InstrumentClientOptions(new KeyClientOptions())));
+        }
+    }
+
+```
+
 # Recorded tests
 
 Test framework provides an ability to record HTTP requests and responses and replay them for offline test runs.
 
-To use recorded test functionality inherit from `RecordedTestBase` class and use `Recording.InstrumentClientOptions` method when creating the client instance.
+To use recorded test functionality inherit from `RecordedTestBase<T>` class and use `Recording.InstrumentClientOptions` method when creating the client instance. Pass the test environment class as a generic argument to `RecordedTestBase`.
 
 
 ``` C#
-public class ConfigurationLiveTests: RecordedTestBase
+public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
 {
     public ConfigurationLiveTests(bool isAsync) : base(isAsync)
     {
@@ -89,7 +166,7 @@ By default tests are run in playback mode. To change the mode use `AZURE_TEST_MO
 In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
 
 ``` C#
-public class ConfigurationLiveTests: RecordedTestBase
+public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
 {
     public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
     {
@@ -155,24 +232,6 @@ When tests are ran in replay mode HTTP method, uri and headers are used to match
         }
     }
 ```
-## TokenCredential
-
-If test uses `TokenCredential` to construct the client use `Recording.GetCredential(...)` to wrap it:
-
-``` C#
-    public abstract class KeysTestBase : RecordedTestBase
-    {
-        internal KeyClient GetClient()
-        {
-            return InstrumentClient
-                (new KeyClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-/* --------> */     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
-        }
-    }
-
-```
 
 ## Misc
 
@@ -182,7 +241,7 @@ You should only use `Recording.Random` for random values (and you MUST make the 
 
 You can use `Recording.Now` and `Recording.UtcNow` if you need certain values to capture the time the test was recorded
 
-It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) but using `Recording.GetVariableFromEnvironment`, `Recording.GetVariable` or `Recording.GetConnectionStringFromEnvironment`.
+It's possible to add additional recording variables for advanced scenarios (like custom test configuration, etc.) by using `Recording.SetVariable` or `Recording.GetVariable`.
 
 You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
 

@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/docs(\u00273\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs(\u00273\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-c1f65de6796b0e469a4d3bd9dcd0ed29-5b7e73e3045dd049-00",
+        "traceparent": "00-95add1c5459e7448a047d445c87aaa90-477b7121c1f1cb43-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "b12bf8433d0f2619d56f5cefa1b09e5f",
         "x-ms-return-client-request-id": "true"
@@ -17,10 +18,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "541",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Thu, 12 Mar 2020 00:47:08 GMT",
-        "elapsed-time": "142",
+        "Content-Length": "326",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 06:48:20 GMT",
+        "elapsed-time": "117",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -29,7 +30,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/$metadata#docs(*)/$entity",
         "hotelId": "3",
         "hotelName": "EconoStay",
         "description": "Very popular hotel in town",
@@ -43,19 +43,7 @@
         "smokingAllowed": false,
         "lastRenovationDate": "1995-07-01T00:00:00Z",
         "rating": 4,
-        "location": {
-          "type": "Point",
-          "coordinates": [
-            -122.131577,
-            46.678581
-          ],
-          "crs": {
-            "type": "name",
-            "properties": {
-              "name": "EPSG:4326"
-            }
-          }
-        },
+        "location": null,
         "address": null,
         "rooms": []
       }
@@ -63,7 +51,8 @@
   ],
   "Variables": {
     "RandomSeed": "554905365",
-    "SearchIndexName": "eifefphf",
-    "SearchServiceName": "azs-net-gyqqmobj"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

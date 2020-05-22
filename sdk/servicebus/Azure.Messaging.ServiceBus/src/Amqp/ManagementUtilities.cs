@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp
@@ -17,23 +18,29 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
+        /// <param name="connectionScope"></param>
         /// <param name="managementLink"></param>
         /// <param name="amqpRequestMessage"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
         internal static async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
+           AmqpConnectionScope connectionScope,
            FaultTolerantAmqpObject<RequestResponseAmqpLink> managementLink,
            AmqpRequestMessage amqpRequestMessage,
            TimeSpan timeout)
         {
-            var amqpMessage = amqpRequestMessage.AmqpMessage;
+            AmqpMessage amqpMessage = amqpRequestMessage.AmqpMessage;
 
             ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-            //var ambientTransaction = Transaction.Current;
-            //if (ambientTransaction != null)
-            //{
-            //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
-            //}
+            var ambientTransaction = Transaction.Current;
+            if (ambientTransaction != null)
+            {
+                transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
+                    ambientTransaction,
+                    connectionScope,
+                    timeout)
+                    .ConfigureAwait(false);
+            }
 
             if (!managementLink.TryGetOpenedObject(out var requestResponseAmqpLink))
             {

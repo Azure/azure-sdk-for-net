@@ -10,13 +10,13 @@ namespace Azure.Search.Documents.Models
     /// <summary> The operation to perform on a document in an indexing batch. </summary>
     public enum IndexActionType
     {
-        /// <summary> upload. </summary>
+        /// <summary> Inserts the document into the index if it is new and updates it if it exists. All fields are replaced in the update case. </summary>
         Upload,
-        /// <summary> merge. </summary>
+        /// <summary> Merges the specified field values with an existing document. If the document does not exist, the merge will fail. Any field you specify in a merge will replace the existing field in the document. This also applies to collections of primitive and complex types. </summary>
         Merge,
-        /// <summary> mergeOrUpload. </summary>
+        /// <summary> Behaves like merge if a document with the given key already exists in the index. If the document does not exist, it behaves like upload with a new document. </summary>
         MergeOrUpload,
-        /// <summary> delete. </summary>
+        /// <summary> Removes the specified document from the index. Any field you specify in a delete operation other than the key field will be ignored. If you want to remove an individual field from a document, use merge instead and set the field explicitly to null. </summary>
         Delete
     }
 }

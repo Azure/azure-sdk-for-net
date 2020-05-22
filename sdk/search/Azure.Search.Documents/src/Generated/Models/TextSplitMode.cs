@@ -5,14 +5,14 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating which split mode to perform. </summary>
     public enum TextSplitMode
     {
-        /// <summary> pages. </summary>
+        /// <summary> Split the text into individual pages. </summary>
         Pages,
-        /// <summary> sentences. </summary>
+        /// <summary> Split the text into individual sentences. </summary>
         Sentences
     }
 }

@@ -6,31 +6,44 @@ using System;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
+    /// Describes a model trained in a Cognitive Services Account and its status.
     /// </summary>
     public class CustomFormModelInfo
     {
         internal CustomFormModelInfo(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
-            CreatedOn = new DateTime(modelInfo.CreatedDateTime.Ticks, DateTimeKind.Utc);
-            LastUpdatedOn = new DateTime(modelInfo.LastUpdatedDateTime.Ticks, DateTimeKind.Utc);
+            CreatedOn = modelInfo.CreatedDateTime;
+            LastModified = modelInfo.LastUpdatedDateTime;
             Status = modelInfo.Status;
         }
 
+        internal CustomFormModelInfo(string modelId, DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, CustomFormModelStatus status)
+        {
+            ModelId = modelId;
+            CreatedOn = createdOn;
+            LastModified = lastModifiedOn;
+            Status = status;
+        }
+
         /// <summary>
+        /// The unique identifier of the model.
         /// </summary>
         public string ModelId { get; }
 
         /// <summary>
+        /// The status of the model.
         /// </summary>
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
+        /// The date and time (UTC) when model training was started.
         /// </summary>
-        public DateTime CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
+        /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTime LastUpdatedOn { get; }
+        public DateTimeOffset LastModified { get; }
     }
 }

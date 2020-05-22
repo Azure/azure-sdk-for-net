@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all top-level domains supported for registration.
             /// </summary>
             /// <remarks>
-            /// Get all top-level domains supported for registration.
+            /// Description for Get all top-level domains supported for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all top-level domains supported for registration.
             /// </summary>
             /// <remarks>
-            /// Get all top-level domains supported for registration.
+            /// Description for Get all top-level domains supported for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get details of a top-level domain.
             /// </summary>
             /// <remarks>
-            /// Get details of a top-level domain.
+            /// Description for Get details of a top-level domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get details of a top-level domain.
             /// </summary>
             /// <remarks>
-            /// Get details of a top-level domain.
+            /// Description for Get details of a top-level domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -100,8 +100,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// domain.
             /// </summary>
             /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
+            /// Description for Gets all legal agreements that user needs to accept before
+            /// purchasing a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -122,8 +122,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// domain.
             /// </summary>
             /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
+            /// Description for Gets all legal agreements that user needs to accept before
+            /// purchasing a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all top-level domains supported for registration.
             /// </summary>
             /// <remarks>
-            /// Get all top-level domains supported for registration.
+            /// Description for Get all top-level domains supported for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all top-level domains supported for registration.
             /// </summary>
             /// <remarks>
-            /// Get all top-level domains supported for registration.
+            /// Description for Get all top-level domains supported for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,8 +190,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// domain.
             /// </summary>
             /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
+            /// Description for Gets all legal agreements that user needs to accept before
+            /// purchasing a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -209,8 +209,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// domain.
             /// </summary>
             /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
+            /// Description for Gets all legal agreements that user needs to accept before
+            /// purchasing a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a tag scoring function. </summary>
     public partial class TagScoringParameters
@@ -25,6 +25,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the list of tags to compare against the target field. </summary>
-        public string TagsParameter { get; }
+        public string TagsParameter { get; set; }
     }
 }

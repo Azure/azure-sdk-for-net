@@ -23,6 +23,9 @@ namespace SnippetGenerator
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
             RegexOptions.Compiled | RegexOptions.Singleline);
         private const string _codeOnlyPattern = "/*@@*/";
+        private static readonly Regex _regionRegex = new Regex(
+            @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
+            RegexOptions.Compiled | RegexOptions.Singleline);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -34,35 +37,50 @@ namespace SnippetGenerator
 
         public void Process()
         {
-            foreach (var mdFile in Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories))
+
+            List<string> files = new List<string>();
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.md", SearchOption.AllDirectories));
+            files.AddRange(Directory.EnumerateFiles(_directory, "*.cs", SearchOption.AllDirectories));
+
+            foreach (var file in files)
             {
-                Console.WriteLine($"Processing {mdFile}");
-
-                var text = File.ReadAllText(mdFile);
-                bool changed = false;
-
-                text = MarkdownProcessor.Process(text, s =>
+                string SnippetProvider(string s)
                 {
                     var selectedSnippets = _snippets.Value.Where(snip => snip.Name == s).ToArray();
                     if (selectedSnippets.Length > 1)
                     {
                         throw new InvalidOperationException($"Multiple snippets with the name '{s}' defined '{_directory}'");
                     }
+
                     if (selectedSnippets.Length == 0)
                     {
                         throw new InvalidOperationException($"Snippet '{s}' not found in directory '{_directory}'");
                     }
 
                     var selectedSnippet = selectedSnippets.Single();
-                    Console.WriteLine($"Replaced {selectedSnippet.Name}");
-                    changed = true;
+                    Console.WriteLine($"Replaced {selectedSnippet.Name} in {file}");
                     return FormatSnippet(selectedSnippet.Text);
-                });
+                }
 
-                if (changed)
+                var originalText = File.ReadAllText(file);
+
+                string text;
+                switch (Path.GetExtension(file))
+                {
+                    case ".md":
+                        text = MarkdownProcessor.Process(originalText, SnippetProvider);
+                        break;
+                    case ".cs":
+                        text = CSharpProcessor.Process(originalText, SnippetProvider);
+                        break;
+                    default:
+                        throw new NotSupportedException(file);
+                }
+
+                if (text != originalText)
                 {
                     _utf8EncodingWithoutBOM = new UTF8Encoding(false);
-                    File.WriteAllText(mdFile, text, _utf8EncodingWithoutBOM);
+                    File.WriteAllText(file, text, _utf8EncodingWithoutBOM);
                 }
             }
         }
@@ -122,7 +140,7 @@ namespace SnippetGenerator
                 var line = lines[index];
                 line = string.IsNullOrWhiteSpace(line) ? string.Empty : line.Substring(minIndent);
                 line = RemoveMarkdownOnlyPrefix(line);
-                if (!IsCodeOnlyLine(line))
+                if (!IsCodeOnlyLine(line) && !IsRegionLine(line))
                 {
                     stringBuilder.AppendLine(line);
                 }
@@ -171,6 +189,15 @@ namespace SnippetGenerator
         /// </returns>
         private static bool IsCodeOnlyLine(string line) =>
             line.IndexOf(_codeOnlyPattern) >= 0;
+
+        /// <summary>
+        /// Detects whether the line being processed is actually the region header or footer.
+        /// These lines should be stripped out in order to support nested regions.
+        /// </summary>
+        /// <param name="line">The line of text.</param>
+        /// <returns>Whether this is a region line.</returns>
+        private static bool IsRegionLine(string line) =>
+            _regionRegex.IsMatch(line);
 
         private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
         {

@@ -6,13 +6,14 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventHub</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.</Description>
-		<Version>2.5.0</Version>
+		<Version>2.6.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 		Event Hubs:
-    1) added NetworkRuleSet operations
+    1) added support for 2018-01-01-preview API - Namespace, Clusters, NetworkRuleSets 
+    2) Also supports 2017-04-01 API for AuthorizationRules, Eventhubs, ConsumerGroups and DisasterRecovery
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

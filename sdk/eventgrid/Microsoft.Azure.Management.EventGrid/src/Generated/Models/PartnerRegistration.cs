@@ -49,8 +49,27 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// type.</param>
         /// <param name="partnerResourceTypeDisplayName">Display name of the
         /// partner resource type.</param>
-        /// <param name="partnerResourceTypeDescription">Description of the
-        /// partner resource type.</param>
+        /// <param name="partnerResourceTypeDescription">Short description of
+        /// the partner resource type. The length of this description should
+        /// not exceed 256 characters.</param>
+        /// <param name="longDescription">Long description for the custom
+        /// scenarios and integration to be displayed in the portal if needed.
+        /// Length of this description should not exceed 2048
+        /// characters.</param>
+        /// <param name="partnerCustomerServiceNumber">The customer service
+        /// number of the publisher. The expected phone format should start
+        /// with a '+' sign
+        /// followed by the country code. The remaining digits are then
+        /// followed. Only digits and spaces are allowed and its
+        /// length cannot exceed 16 digits including country code. Examples of
+        /// valid phone numbers are: +1 515 123 4567 and
+        /// +966 7 5115 2471. Examples of invalid phone numbers are: +1 (515)
+        /// 123-4567, 1 515 123 4567 and +966 121 5115 24 7 551 1234 43</param>
+        /// <param name="partnerCustomerServiceExtension">The extension of the
+        /// customer service number of the publisher. Only digits are allowed
+        /// and number of digits should not exceed 10.</param>
+        /// <param name="customerServiceUri">The extension of the customer
+        /// service URI of the publisher.</param>
         /// <param name="setupUri">URI of the partner website that can be used
         /// by Azure customers to setup Event Grid
         /// integration on an event source.</param>
@@ -65,7 +84,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// partner namespaces is always permitted under the same Azure
         /// subscription as the one used
         /// for creating the partner registration.</param>
-        public PartnerRegistration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerName = default(string), string partnerResourceTypeName = default(string), string partnerResourceTypeDisplayName = default(string), string partnerResourceTypeDescription = default(string), string setupUri = default(string), string logoUri = default(string), string visibilityState = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>))
+        public PartnerRegistration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerName = default(string), string partnerResourceTypeName = default(string), string partnerResourceTypeDisplayName = default(string), string partnerResourceTypeDescription = default(string), string longDescription = default(string), string partnerCustomerServiceNumber = default(string), string partnerCustomerServiceExtension = default(string), string customerServiceUri = default(string), string setupUri = default(string), string logoUri = default(string), string visibilityState = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -73,6 +92,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             PartnerResourceTypeName = partnerResourceTypeName;
             PartnerResourceTypeDisplayName = partnerResourceTypeDisplayName;
             PartnerResourceTypeDescription = partnerResourceTypeDescription;
+            LongDescription = longDescription;
+            PartnerCustomerServiceNumber = partnerCustomerServiceNumber;
+            PartnerCustomerServiceExtension = partnerCustomerServiceExtension;
+            CustomerServiceUri = customerServiceUri;
             SetupUri = setupUri;
             LogoUri = logoUri;
             VisibilityState = visibilityState;
@@ -113,10 +136,47 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string PartnerResourceTypeDisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the partner resource type.
+        /// Gets or sets short description of the partner resource type. The
+        /// length of this description should not exceed 256 characters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerResourceTypeDescription")]
         public string PartnerResourceTypeDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets long description for the custom scenarios and
+        /// integration to be displayed in the portal if needed.
+        /// Length of this description should not exceed 2048 characters.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.longDescription")]
+        public string LongDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the customer service number of the publisher. The
+        /// expected phone format should start with a '+' sign
+        /// followed by the country code. The remaining digits are then
+        /// followed. Only digits and spaces are allowed and its
+        /// length cannot exceed 16 digits including country code. Examples of
+        /// valid phone numbers are: +1 515 123 4567 and
+        /// +966 7 5115 2471. Examples of invalid phone numbers are: +1 (515)
+        /// 123-4567, 1 515 123 4567 and +966 121 5115 24 7 551 1234 43
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerCustomerServiceNumber")]
+        public string PartnerCustomerServiceNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extension of the customer service number of the
+        /// publisher. Only digits are allowed and number of digits should not
+        /// exceed 10.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerCustomerServiceExtension")]
+        public string PartnerCustomerServiceExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extension of the customer service URI of the
+        /// publisher.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerServiceUri")]
+        public string CustomerServiceUri { get; set; }
 
         /// <summary>
         /// Gets or sets URI of the partner website that can be used by Azure

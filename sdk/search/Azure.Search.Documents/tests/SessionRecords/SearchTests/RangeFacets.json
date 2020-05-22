@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-amyysbpg.search.windows.net/indexes(\u0027gerhvwda\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "128",
         "Content-Type": "application/json",
-        "traceparent": "00-1f030ec9bc863847b99d6164379f8105-062a5e5416bf4f48-00",
+        "traceparent": "00-35ac3e032e62924b9b5ea0f119f9912d-8732d540950ebe46-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "d4f7f71a4e616f30a50a994591b9bc06",
         "x-ms-return-client-request-id": "true"
@@ -26,10 +27,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "7446",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 11 Mar 2020 18:37:47 GMT",
-        "elapsed-time": "145",
+        "Content-Length": "6606",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 07:07:32 GMT",
+        "elapsed-time": "134",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -38,7 +39,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-amyysbpg.search.windows.net/indexes(\u0027gerhvwda\u0027)/$metadata#docs(*)",
         "@search.facets": {
           "lastRenovationDate": [
             {
@@ -89,19 +89,7 @@
             "smokingAllowed": false,
             "lastRenovationDate": "2010-06-27T00:00:00Z",
             "rating": 5,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                47.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -120,19 +108,7 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1982-04-28T00:00:00Z",
             "rating": 1,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                49.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -151,19 +127,7 @@
             "smokingAllowed": false,
             "lastRenovationDate": "1995-07-01T00:00:00Z",
             "rating": 4,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                46.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -182,19 +146,7 @@
             "smokingAllowed": false,
             "lastRenovationDate": "1995-07-01T00:00:00Z",
             "rating": 4,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                48.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -213,19 +165,7 @@
             "smokingAllowed": false,
             "lastRenovationDate": "2012-08-12T00:00:00Z",
             "rating": 4,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -122.131577,
-                48.678581
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -293,19 +233,7 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1970-01-18T05:00:00Z",
             "rating": 4,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -73.975403,
-                40.760586
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": {
               "streetAddress": "677 5th Ave",
               "city": "New York",
@@ -357,19 +285,7 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1999-09-06T00:00:00Z",
             "rating": 3,
-            "location": {
-              "type": "Point",
-              "coordinates": [
-                -78.940483,
-                35.90416
-              ],
-              "crs": {
-                "type": "name",
-                "properties": {
-                  "name": "EPSG:4326"
-                }
-              }
-            },
+            "location": null,
             "address": {
               "streetAddress": "6910 Fayetteville Rd",
               "city": "Durham",
@@ -410,7 +326,8 @@
   ],
   "Variables": {
     "RandomSeed": "1958082955",
-    "SearchIndexName": "gerhvwda",
-    "SearchServiceName": "azs-net-amyysbpg"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

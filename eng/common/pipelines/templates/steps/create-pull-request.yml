@@ -16,8 +16,8 @@ parameters:
 steps:
 
 - pwsh: |
-    echo "git add ."
-    git add .
+    echo "git add -A"
+    git add -A
 
     echo "git diff --name-status --cached --exit-code"
     git diff --name-status --cached --exit-code

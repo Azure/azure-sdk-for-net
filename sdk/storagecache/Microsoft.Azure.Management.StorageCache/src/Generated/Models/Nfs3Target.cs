@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// An NFSv3 mount point for use as a Storage Target.
+    /// Properties pertained to Nfs3Target
     /// </summary>
     public partial class Nfs3Target
     {

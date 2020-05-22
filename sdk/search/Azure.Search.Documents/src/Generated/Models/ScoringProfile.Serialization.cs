@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class ScoringProfile : IUtf8JsonSerializable
     {
@@ -72,7 +72,14 @@ namespace Azure.Search.Documents.Models
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        }
                     }
                     functions = array;
                     continue;

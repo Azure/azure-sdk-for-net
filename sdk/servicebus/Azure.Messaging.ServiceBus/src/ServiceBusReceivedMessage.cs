@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus
@@ -12,6 +13,11 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
+        /// <summary>
+        /// Indicates whether the user has settled the message as part of their callback.
+        /// If they have done so, we will not autocomplete.
+        /// </summary>
+        internal bool IsSettled { get; set; }
 
         internal ServiceBusMessage SentMessage { get; set; } = new ServiceBusMessage();
 
@@ -153,7 +159,7 @@ namespace Azure.Messaging.ServiceBus
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
-        public IDictionary<string, object> Properties => SentMessage.Properties;
+        public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object> (SentMessage.Properties);
 
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.

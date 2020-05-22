@@ -64,8 +64,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="uniqueId">Specifies the ID which uniquely identifies a
         /// Virtual Machine Scale Set.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
-        /// set to a single placement group, of max size 100 virtual
-        /// machines.</param>
+        /// set to a single placement group, of max size 100 virtual machines.
+        /// NOTE: If singlePlacementGroup is true, it may be modified to false.
+        /// However, if singlePlacementGroup is false, it may not be modified
+        /// to true.</param>
         /// <param name="zoneBalance">Whether to force strictly even Virtual
         /// Machine distribution cross x-zones in case there is zone
         /// outage.</param>
@@ -85,7 +87,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set is scaled-in.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        /// <param name="zones">The virtual machine scale set zones.</param>
+        /// <param name="zones">The virtual machine scale set zones. NOTE:
+        /// Availability zones can only be set when you create the scale
+        /// set</param>
         public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
@@ -181,7 +185,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets when true this limits the scale set to a single
-        /// placement group, of max size 100 virtual machines.
+        /// placement group, of max size 100 virtual machines. NOTE: If
+        /// singlePlacementGroup is true, it may be modified to false. However,
+        /// if singlePlacementGroup is false, it may not be modified to true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
@@ -234,7 +240,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set zones.
+        /// Gets or sets the virtual machine scale set zones. NOTE:
+        /// Availability zones can only be set when you create the scale set
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }

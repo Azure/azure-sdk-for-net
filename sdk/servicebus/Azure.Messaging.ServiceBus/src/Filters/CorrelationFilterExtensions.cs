@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -48,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                         }
                         break;
                     default:
-                        MessagingEventSource.Log.ManagementSerializationException(
+                        ServiceBusEventSource.Log.ManagementSerializationException(
                             $"{nameof(CorrelationFilterExtensions)}_{nameof(ParseFromXElement)}",
                             element.ToString());
                         break;

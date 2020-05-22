@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/$count?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-ff8f707e4b397448bc2b394ce2879fbf-0a87b17c91d54940-00",
+        "traceparent": "00-6f2be1b6d4b2d7498838d3516f3af4af-61d7cdc3bf7df84b-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200308.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "236582ddb742189bb152143ee3f98722",
         "x-ms-return-client-request-id": "true"
@@ -19,8 +20,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "5",
         "Content-Type": "text/plain",
-        "Date": "Sun, 08 Mar 2020 23:05:23 GMT",
-        "elapsed-time": "2",
+        "Date": "Fri, 08 May 2020 07:01:32 GMT",
+        "elapsed-time": "42",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -33,7 +34,8 @@
   ],
   "Variables": {
     "RandomSeed": "495571034",
-    "SearchIndexName": "grurisvf",
-    "SearchServiceName": "azs-net-gjxdhkdl"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

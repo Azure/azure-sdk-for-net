@@ -7,20 +7,31 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents the strongly-typed value of a field recognized from the input document and provides
+    /// methods for converting it to the appropriate type.
     /// </summary>
-    public struct FieldValue
+    public readonly struct FieldValue
     {
-#pragma warning disable CS0649 // Add readonly modifier
-        private FieldValue_internal _fieldValue;
-#pragma warning restore CS0649 // Add readonly modifier
+        private readonly FieldValue_internal _fieldValue;
+        private readonly IReadOnlyList<ReadResult_internal> _readResults;
 
-        /// <summary> Type of field value. </summary>
-        public FieldValueType Type { get; internal set; }
+        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            Type = fieldValue.Type;
+            _fieldValue = fieldValue;
+            _readResults = readResults;
+        }
+
+        /// <summary>
+        /// The data type of the field value.
+        /// </summary>
+        public FieldValueType Type { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The value of the field converted to a <see cref="string"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
         public string AsString()
         {
             if (Type != FieldValueType.StringType)
@@ -34,7 +45,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Gets the value of the field as an <see cref="int"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The value of the field converted to an <see cref="int"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.IntegerType"/> or when the value is <c>null</c>.</exception>
         public int AsInt32()
         {
             if (Type != FieldValueType.IntegerType)
@@ -53,7 +65,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The value of the field converted to a <see cref="float"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.FloatType"/>.</exception>
         public float AsFloat()
         {
             if (Type != FieldValueType.FloatType)
@@ -63,41 +76,65 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueNumber.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
+                // workaround to get the value from Text if ValueNumber isn't there.
+                // https://github.com/Azure/azure-sdk-for-net/issues/10333
+                float parsedFloat;
+                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out parsedFloat))
+                {
+                    return parsedFloat;
+                }
             }
 
             return _fieldValue.ValueNumber.Value;
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
+        /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
+        /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DateType"/> or when the value is <c>null</c>.</exception>
         public DateTime AsDate()
-#pragma warning restore CA1822
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.DateType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {Type}.");
+            }
+
+            if (!_fieldValue.ValueDate.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueDate.Value.UtcDateTime;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
+        /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.TimeType"/> or when the value is <c>null</c>.</exception>
         public TimeSpan AsTime()
-#pragma warning restore CA1822
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.TimeType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {Type}.");
+            }
+
+            if (!_fieldValue.ValueTime.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueTime.Value;
         }
 
         /// <summary>
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
+        /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
         public string AsPhoneNumber()
-#pragma warning restore CA1822
         {
             if (Type != FieldValueType.PhoneNumberType)
             {
@@ -108,23 +145,46 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as an <see cref="IReadOnlyList{T}"/>.
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
-        public IReadOnlyList<FieldValue> AsList()
-#pragma warning restore CA1822
+        /// <returns>The value of the field converted to an <see cref="IReadOnlyList{T}"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.ListType"/>.</exception>
+        public IReadOnlyList<FormField> AsList()
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.ListType)
+            {
+                throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {Type}.");
+            }
+
+            List<FormField> fieldList = new List<FormField>();
+            foreach (var fieldValue in _fieldValue.ValueArray)
+            {
+                fieldList.Add(new FormField(null, fieldValue, _readResults));
+            }
+
+            return fieldList;
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
-        public IReadOnlyDictionary<string, FieldValue> AsDictionary()
-#pragma warning restore CA1822
+        /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DictionaryType"/>.</exception>
+        public IReadOnlyDictionary<string, FormField> AsDictionary()
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.DictionaryType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {Type}.");
+            }
+
+            Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
+
+            foreach (var kvp in _fieldValue.ValueObject)
+            {
+                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
+            }
+
+            return fieldDictionary;
         }
     }
 }

@@ -9,12 +9,12 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.AutocompleteAsync"/> that
+    /// Options for <see cref="SearchClient.AutocompleteAsync"/> that
     /// allow specifying autocomplete behaviors, like fuzzy matching.
     /// </summary>
     [CodeGenModel("AutocompleteRequest")]
     [CodeGenSuppress(nameof(AutocompleteOptions), typeof(string), typeof(string))]
-    public partial class AutocompleteOptions : SearchRequestOptions
+    public partial class AutocompleteOptions
     {
         /// <summary>
         /// Initializes new instance of <see cref="AutocompleteOptions"/>
@@ -98,7 +98,6 @@ namespace Azure.Search.Documents
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 UseFuzzyMatching = UseFuzzyMatching,
-                ClientRequestId = ClientRequestId
             };
     }
 }

@@ -47,14 +47,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure subscription ID.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
-        public string SubscriptionId1 { get; set; }
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -163,6 +158,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IGremlinResourcesOperations.
         /// </summary>
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
+
+        /// <summary>
+        /// Gets the INotebookWorkspacesOperations.
+        /// </summary>
+        public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -433,6 +433,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
+            NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

@@ -4,7 +4,7 @@ This sample demonstrates how to detect the language that one or more documents a
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to detect the language a document is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to detect the language a document is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -21,7 +21,7 @@ string document = "Este documento está en español.";
 
 DetectedLanguage language = client.DetectLanguage(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
 
 ## Detecting the language of multiple documents

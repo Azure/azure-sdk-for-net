@@ -48,11 +48,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="databaseAccountOfferType">The offer type for the
         /// Cosmos DB database account. Default value: Standard. Possible
         /// values include: 'Standard'</param>
-        /// <param name="ipRangeFilter">Cosmos DB Firewall Support: This value
-        /// specifies the set of IP addresses or IP address ranges in CIDR form
-        /// to be included as the allowed list of client IPs for a given
-        /// database account. IP addresses/ranges must be comma separated and
-        /// must not contain any spaces.</param>
+        /// <param name="ipRules">List of IpRules.</param>
         /// <param name="isVirtualNetworkFilterEnabled">Flag to indicate
         /// whether to enable/disable Virtual Network ACL rules.</param>
         /// <param name="enableAutomaticFailover">Enables automatic failover of
@@ -74,6 +70,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// ordered by their failover priorities.</param>
         /// <param name="virtualNetworkRules">List of Virtual Network ACL rules
         /// configured for the Cosmos DB account.</param>
+        /// <param name="privateEndpointConnections">List of Private Endpoint
+        /// Connections configured for the Cosmos DB account.</param>
         /// <param name="enableMultipleWriteLocations">Enables the account to
         /// write in multiple locations</param>
         /// <param name="enableCassandraConnector">Enables the cassandra
@@ -88,14 +86,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="publicNetworkAccess">Whether requests from Public
         /// Network are allowed. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), string ipRangeFilter = default(string), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string))
+        /// <param name="enableFreeTier">Flag to indicate whether Free Tier is
+        /// enabled.</param>
+        /// <param name="apiProperties">API specific properties.</param>
+        /// <param name="enableAnalyticalStorage">Flag to indicate whether to
+        /// enable storage analytics.</param>
+        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
             DocumentEndpoint = documentEndpoint;
             DatabaseAccountOfferType = databaseAccountOfferType;
-            IpRangeFilter = ipRangeFilter;
+            IpRules = ipRules;
             IsVirtualNetworkFilterEnabled = isVirtualNetworkFilterEnabled;
             EnableAutomaticFailover = enableAutomaticFailover;
             ConsistencyPolicy = consistencyPolicy;
@@ -105,12 +108,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             Locations = locations;
             FailoverPolicies = failoverPolicies;
             VirtualNetworkRules = virtualNetworkRules;
+            PrivateEndpointConnections = privateEndpointConnections;
             EnableMultipleWriteLocations = enableMultipleWriteLocations;
             EnableCassandraConnector = enableCassandraConnector;
             ConnectorOffer = connectorOffer;
             DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
             KeyVaultKeyUri = keyVaultKeyUri;
             PublicNetworkAccess = publicNetworkAccess;
+            EnableFreeTier = enableFreeTier;
+            ApiProperties = apiProperties;
+            EnableAnalyticalStorage = enableAnalyticalStorage;
             CustomInit();
         }
 
@@ -146,14 +153,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public DatabaseAccountOfferType? DatabaseAccountOfferType { get; private set; }
 
         /// <summary>
-        /// Gets or sets cosmos DB Firewall Support: This value specifies the
-        /// set of IP addresses or IP address ranges in CIDR form to be
-        /// included as the allowed list of client IPs for a given database
-        /// account. IP addresses/ranges must be comma separated and must not
-        /// contain any spaces.
+        /// Gets or sets list of IpRules.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipRangeFilter")]
-        public string IpRangeFilter { get; set; }
+        [JsonProperty(PropertyName = "properties.ipRules")]
+        public IList<IpAddressOrRange> IpRules { get; set; }
 
         /// <summary>
         /// Gets or sets flag to indicate whether to enable/disable Virtual
@@ -221,6 +224,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
 
         /// <summary>
+        /// Gets list of Private Endpoint Connections configured for the Cosmos
+        /// DB account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets or sets enables the account to write in multiple locations
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableMultipleWriteLocations")]
@@ -259,6 +269,24 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether Free Tier is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFreeTier")]
+        public bool? EnableFreeTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets API specific properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiProperties")]
+        public ApiProperties ApiProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether to enable storage analytics.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAnalyticalStorage")]
+        public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
         /// Validate the object.

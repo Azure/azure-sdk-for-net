@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -20,33 +21,28 @@ namespace Azure.Search.Documents.Tests
         private const string ApiKeyHeaderName = "api-key";
 
         /// <summary>
-        /// Secret values to sanitize from body.
+        /// Sanitizes all headers, variables, and body content of a <see cref="RecordSession"/>.
         /// </summary>
-        private readonly HashSet<string> _secrets = new HashSet<string>();
-
-        /// <summary>
-        /// Redact sensitive body content.
-        /// </summary>
-        /// <param name="contentType">The Content-Type of the body content.</param>
-        /// <param name="body">The body content.</param>
-        /// <returns>The sanitized body content.</returns>
-        public override string SanitizeTextBody(string contentType, string body)
+        /// <param name="session">The <see cref="RecordSession"/> to sanitize.</param>
+        public override void Sanitize(RecordSession session)
         {
-            if (_secrets.Count > 0 &&
-                !string.IsNullOrEmpty(body) &&
-                contentType != null &&
-                contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
-            {
-                StringBuilder sanitized = new StringBuilder(body);
-                foreach (string secret in _secrets)
-                {
-                    sanitized.Replace(secret, SanitizeValue);
-                }
+            HashSet<string> secrets = new HashSet<string>();
 
-                return sanitized.ToString();
+            foreach (KeyValuePair<string, string> variable in session.Variables.ToArray())
+            {
+                session.Variables[variable.Key] = SanitizeVariable(secrets, variable.Key, variable.Value);
             }
 
-            return base.SanitizeTextBody(contentType, body);
+            foreach (RecordEntry entry in session.Entries)
+            {
+                if (secrets.Count > 0)
+                {
+                    SanitizeBody(secrets, entry.Request);
+                    SanitizeBody(secrets, entry.Response);
+                }
+            }
+
+            base.Sanitize(session);
         }
 
         /// <summary>
@@ -59,28 +55,61 @@ namespace Azure.Search.Documents.Tests
             {
                 headers[ApiKeyHeaderName] = new string[] { SanitizeValue };
             }
+
             base.SanitizeHeaders(headers);
+        }
+
+        /// <summary>
+        /// Redact sensitive body content.
+        /// </summary>
+        /// <param name="secrets">Any secrets found in <see cref="SanitizeVariable(ISet{string}, string, string)"/>.</param>
+        /// <param name="message">The <see cref="RecordEntryMessage"/> to sanitize.</param>
+        private static void SanitizeBody(ISet<string> secrets, RecordEntryMessage message)
+        {
+            if (message.Body != null &&
+                message.TryGetContentType(out string contentType) &&
+                contentType != null &&
+                contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) &&
+                message.TryGetBodyAsText(out string body) &&
+                !string.IsNullOrEmpty(body))
+            {
+                StringBuilder sanitized = new StringBuilder(body);
+                foreach (string secret in secrets)
+                {
+                    sanitized.Replace(secret, SanitizeValue);
+                }
+
+                message.Body = Encoding.UTF8.GetBytes(sanitized.ToString());
+            }
         }
 
         /// <summary>
         /// Redact sensitive variables.
         /// </summary>
-        /// <param name="variableName">The name of the variable.</param>
-        /// <param name="environmentVariableValue">The value of the variable.</param>
+        /// <param name="secrets"><see cref="ISet{T}"/> to add any found secrets.</param>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="value">The value of the variable.</param>
         /// <returns>The sanitized variable value.</returns>
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
+        private static string SanitizeVariable(ISet<string> secrets, string name, string value)
         {
-            if (SearchResources.StorageAccountKeyVariableName.Equals(variableName, StringComparison.OrdinalIgnoreCase))
+            if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 // Assumes the secret content is destined to appear in JSON, for which certain common characters in account keys are escaped.
                 // See https://github.com/dotnet/runtime/blob/8640eed0/src/libraries/System.Text.Json/src/System/Text/Json/Writer/JsonWriterHelper.Escaping.cs
-                string encoded = JavaScriptEncoder.Default.Encode(environmentVariableValue);
-                _secrets.Add(encoded);
+                string encoded = JavaScriptEncoder.Default.Encode(value);
+                secrets.Add(encoded);
 
                 return SanitizeValue;
             }
 
-            return base.SanitizeVariable(variableName, environmentVariableValue);
+            if (SearchTestEnvironment.SearchAdminKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase) ||
+                SearchTestEnvironment.SearchQueryKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                // No need to scan the body since they values should be found only in the header.
+                return SanitizeValue;
+            }
+
+            return value;
         }
     }
 }

@@ -41,13 +41,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="type">Resource type</param>
         /// <param name="lastModifiedUtc">Describes the last UTC time the
         /// policy was modified.</param>
+        /// <param name="version">Describes the version of the policy.</param>
         /// <param name="labels">Dictionary of sensitivity labels.</param>
         /// <param name="informationTypes">The sensitivity information
         /// types.</param>
-        public InformationProtectionPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>))
+        public InformationProtectionPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string version = default(string), IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>))
             : base(id, name, type)
         {
             LastModifiedUtc = lastModifiedUtc;
+            Version = version;
             Labels = labels;
             InformationTypes = informationTypes;
             CustomInit();
@@ -63,6 +65,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedUtc")]
         public System.DateTime? LastModifiedUtc { get; private set; }
+
+        /// <summary>
+        /// Gets describes the version of the policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; private set; }
 
         /// <summary>
         /// Gets or sets dictionary of sensitivity labels.

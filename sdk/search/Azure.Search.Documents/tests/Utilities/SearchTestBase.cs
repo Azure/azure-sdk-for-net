@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -19,20 +19,15 @@ namespace Azure.Search.Documents.Tests
     /// of the Azure.Core testing framework.
     /// </summary>
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
-    public abstract partial class SearchTestBase : RecordedTestBase
+    public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
-        /// <summary>
-        /// The maximum number of retries for service requests.
-        /// </summary>
-        private const int MaxRetries = 5;
-
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
         /// gratuitously long for the sake of live tests in a hammered
         /// environment.
         /// </summary>
         private static readonly HttpClient s_httpClient =
-            new HttpClient() { Timeout = TimeSpan.FromSeconds(1000) };
+            new HttpClient() { Timeout = TimeSpan.FromMinutes(5) };
 
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
@@ -59,7 +54,7 @@ namespace Azure.Search.Documents.Tests
         {
             ServiceVersion = serviceVersion;
             Sanitizer = new SearchRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         /// <summary>
@@ -73,59 +68,12 @@ namespace Azure.Search.Documents.Tests
             options ??= new SearchClientOptions(ServiceVersion);
             options.Diagnostics.IsLoggingEnabled = true;
             options.Retry.Mode = RetryMode.Exponential;
-            options.Retry.MaxRetries = MaxRetries;
-            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5);
-            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10);
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
             return Recording.InstrumentClientOptions(options);
         }
-
-        #region Log Failures
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// </summary>
-        private static TestLogger Logger { get; set; }
-
-        /// <summary>
-        /// Start logging events to the console if debugging or in Live mode.
-        /// This will run once before any tests.
-        /// </summary>
-        [OneTimeSetUp]
-        public void StartLoggingEvents()
-        {
-            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
-            {
-                Logger = new TestLogger();
-            }
-        }
-
-        /// <summary>
-        /// Stop logging events and do necessary cleanup.
-        /// This will run once after all tests have finished.
-        /// </summary>
-        [OneTimeTearDown]
-        public void StopLoggingEvents()
-        {
-            Logger?.Dispose();
-            Logger = null;
-        }
-
-        /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// This will run prior to the start of each test.
-        /// </summary>
-        [SetUp]
-        public void SetupEventsForTest() => Logger?.SetupEventsForTest();
-
-        /// <summary>
-        /// Output the Events to the console in the case of test failure.
-        /// This will include the HTTP requests and responses.
-        /// This will run after each test finishes.
-        /// </summary>
-        [TearDown]
-        public void OutputEventsForTest() => Logger?.OutputEventsForTest();
-        #endregion Log Failures
 
         /// <summary>
         /// A number of our tests have built in delays while we wait an expected

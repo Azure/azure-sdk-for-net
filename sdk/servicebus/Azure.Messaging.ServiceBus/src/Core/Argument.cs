@@ -82,6 +82,24 @@ namespace Azure.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is a positive value, throwing an
+        ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is not positive <see cref="TimeSpan"/> value.</exception>
+        ///
+        public static void AssertPositive(TimeSpan argumentValue, string argumentName)
+        {
+            if (argumentValue <= TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, $"Argument {argumentName} must be a positive timespan value. The provided value was {argumentValue}.");
+            }
+        }
+
+        /// <summary>
         ///   Ensures that an argument's value is at least as large as a given lower bound, throwing
         ///   <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>

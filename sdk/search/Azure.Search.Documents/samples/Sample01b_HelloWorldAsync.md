@@ -3,7 +3,7 @@
 ## Import the namespaces
 ```C# Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 ```
 
 ## Create a client
@@ -15,7 +15,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 // Create a new SearchServiceClient
-SearchServiceClient search = new SearchServiceClient(endpoint, credential);
+SearchIndexClient search = new SearchIndexClient(endpoint, credential);
 
 // Perform an operation
 Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
@@ -29,12 +29,12 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-// Create an invalid SearchIndexClientClient
+// Create an invalid SearchClient
 string fakeIndexName = "doesnotexist";
-SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
+SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
 try
 {
-    await index.GetDocumentCountAsync();
+    await client.GetDocumentCountAsync();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

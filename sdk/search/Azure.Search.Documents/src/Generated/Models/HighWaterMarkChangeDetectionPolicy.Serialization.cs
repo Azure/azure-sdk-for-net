@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class HighWaterMarkChangeDetectionPolicy : IUtf8JsonSerializable
     {
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element)
         {
             string highWaterMarkColumnName = default;
-            string odatatype = default;
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("highWaterMarkColumnName"))
@@ -35,11 +35,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new HighWaterMarkChangeDetectionPolicy(odatatype, highWaterMarkColumnName);
+            return new HighWaterMarkChangeDetectionPolicy(odataType, highWaterMarkColumnName);
         }
     }
 }

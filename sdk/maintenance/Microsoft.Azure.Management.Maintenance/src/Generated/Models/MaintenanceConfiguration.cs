@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// resource</param>
         /// <param name="tags">Gets or sets tags of the resource</param>
         /// <param name="namespaceProperty">Gets or sets namespace of the
-        /// resource</param>
+        /// resource e.g. Microsoft.Maintenance or Microsoft.Sql</param>
         /// <param name="extensionProperties">Gets or sets extensionProperties
-        /// of the maintenanceConfiguration</param>
+        /// of the maintenanceConfiguration. This is for future use only and
+        /// would be a set of key value pairs for additional information e.g.
+        /// whether to follow SDP etc.</param>
         /// <param name="maintenanceScope">Gets or sets maintenanceScope of the
-        /// configuration. Possible values include: 'All', 'Host', 'Resource',
+        /// configuration. It represent the impact area of the maintenance.
+        /// Possible values include: 'All', 'Host', 'Resource',
         /// 'InResource'</param>
         public MaintenanceConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string namespaceProperty = default(string), IDictionary<string, string> extensionProperties = default(IDictionary<string, string>), string maintenanceScope = default(string))
             : base(id, name, type)
@@ -76,20 +79,24 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets namespace of the resource
+        /// Gets or sets namespace of the resource e.g. Microsoft.Maintenance
+        /// or Microsoft.Sql
         /// </summary>
         [JsonProperty(PropertyName = "properties.namespace")]
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets extensionProperties of the maintenanceConfiguration
+        /// Gets or sets extensionProperties of the maintenanceConfiguration.
+        /// This is for future use only and would be a set of key value pairs
+        /// for additional information e.g. whether to follow SDP etc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.extensionProperties")]
         public IDictionary<string, string> ExtensionProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets maintenanceScope of the configuration. Possible values
-        /// include: 'All', 'Host', 'Resource', 'InResource'
+        /// Gets or sets maintenanceScope of the configuration. It represent
+        /// the impact area of the maintenance. Possible values include: 'All',
+        /// 'Host', 'Resource', 'InResource'
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceScope")]
         public string MaintenanceScope { get; set; }

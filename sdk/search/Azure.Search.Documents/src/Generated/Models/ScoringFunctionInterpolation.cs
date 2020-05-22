@@ -5,18 +5,18 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the function used to interpolate score boosting across a range of documents. </summary>
     public enum ScoringFunctionInterpolation
     {
-        /// <summary> linear. </summary>
+        /// <summary> Boosts scores by a linearly decreasing amount. This is the default interpolation for scoring functions. </summary>
         Linear,
-        /// <summary> constant. </summary>
+        /// <summary> Boosts scores by a constant factor. </summary>
         Constant,
-        /// <summary> quadratic. </summary>
+        /// <summary> Boosts scores by an amount that decreases quadratically. Boosts decrease slowly for higher scores, and more quickly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
         Quadratic,
-        /// <summary> logarithmic. </summary>
+        /// <summary> Boosts scores by an amount that decreases logarithmically. Boosts decrease quickly for higher scores, and more slowly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
         Logarithmic
     }
 }
