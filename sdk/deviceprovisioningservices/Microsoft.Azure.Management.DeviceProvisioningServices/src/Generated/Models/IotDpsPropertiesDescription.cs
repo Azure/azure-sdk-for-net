@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// the service specific properties of a provisoning service, including
+    /// the service specific properties of a provisioning service, including
     /// keys, linked iot hubs, current state, and system generated properties
     /// such as hostname and idScope
     /// </summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// 'FailoverFailed'</param>
         /// <param name="provisioningState">The ARM provisioning state of the
         /// provisioning service.</param>
-        /// <param name="iotHubs">List of IoT hubs assosciated with this
+        /// <param name="iotHubs">List of IoT hubs associated with this
         /// provisioning service.</param>
         /// <param name="allocationPolicy">Allocation policy to be used by this
         /// provisioning service. Possible values include: 'Hashed',
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets list of IoT hubs assosciated with this provisioning
+        /// Gets or sets list of IoT hubs associated with this provisioning
         /// service.
         /// </summary>
         [JsonProperty(PropertyName = "iotHubs")]
