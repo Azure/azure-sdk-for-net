@@ -55,6 +55,7 @@ APIs for managing module identities, module twins, and querying modules
 </details>
 
 <details><summary><b>Jobs</b></summary>
+Import/Export Jobs APIs: Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
 
 ```csharp
 public class Jobs
