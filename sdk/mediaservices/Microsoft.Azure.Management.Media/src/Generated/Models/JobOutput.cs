@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Media.Models
     /// <summary>
     /// Describes all the properties of a JobOutput.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("JobOutput")]
     public partial class JobOutput
     {
         /// <summary>
