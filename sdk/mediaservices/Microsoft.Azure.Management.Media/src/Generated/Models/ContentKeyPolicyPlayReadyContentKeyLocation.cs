@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for content key ID location. A derived class must be used to
     /// represent the location.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ContentKeyPolicyPlayReadyContentKeyLocation")]
     public partial class ContentKeyPolicyPlayReadyContentKeyLocation
     {
         /// <summary>

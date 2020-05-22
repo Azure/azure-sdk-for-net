@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Media.Models
     /// <summary>
     /// Base class for output.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Format")]
     public partial class Format
     {
         /// <summary>

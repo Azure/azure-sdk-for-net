@@ -13,27 +13,37 @@ namespace Microsoft.Azure.Management.Media.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Base class for Content Key Policy restrictions. A derived class must be
-    /// used to create a restriction.
-    /// </summary>
-    [Newtonsoft.Json.JsonObject("ContentKeyPolicyRestriction")]
-    public partial class ContentKeyPolicyRestriction
+    public partial class ListEdgePoliciesInput
     {
         /// <summary>
-        /// Initializes a new instance of the ContentKeyPolicyRestriction
-        /// class.
+        /// Initializes a new instance of the ListEdgePoliciesInput class.
         /// </summary>
-        public ContentKeyPolicyRestriction()
+        public ListEdgePoliciesInput()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the ListEdgePoliciesInput class.
+        /// </summary>
+        /// <param name="deviceId">Unique identifier of the edge
+        /// device.</param>
+        public ListEdgePoliciesInput(string deviceId = default(string))
+        {
+            DeviceId = deviceId;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unique identifier of the edge device.
+        /// </summary>
+        [JsonProperty(PropertyName = "deviceId")]
+        public string DeviceId { get; set; }
 
     }
 }
