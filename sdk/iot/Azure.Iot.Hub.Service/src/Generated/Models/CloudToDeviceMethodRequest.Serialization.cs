@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class CloudToDeviceMethod : IUtf8JsonSerializable
+    public partial class CloudToDeviceMethodRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.Iot.Hub.Service.Models
             writer.WriteEndObject();
         }
 
-        internal static CloudToDeviceMethod DeserializeCloudToDeviceMethod(JsonElement element)
+        internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element)
         {
             string methodName = default;
             object payload = default;
@@ -83,7 +83,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethod(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
         }
     }
 }
