@@ -61,38 +61,69 @@ APIs for managing module identities, module twins, and querying modules
 Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
 
 ```csharp
+/// <summary>
+/// An object representing the properties needed in the payload to an export devices job.
+/// </summary>
+public class ExportJobProperties 
+{
+    /// <summary>
+    /// URI containing SAS token to a blob container. This is used to output the status of the job and the results.
+    /// </summary>
+    public string OutputBlobContainerUri { get; set; }
+
+    /// <summary>
+    /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.
+    /// </summary>
+    public string OutputBlobName { get; set; }
+
+    /// <summary>
+    /// Specifies authentication type being used for connecting to storage account.
+    /// </summary>
+    public StorageAuthenticationType AuthenticationType { get; set; }
+}
+
+/// <summary>
+/// An object representing the properties needed in the payload to an import devices job.
+/// </summary>
+public class ImportJobProperties : ExportJobProperties
+{
+    /// <summary>
+    /// URI containing SAS token to a blob container that contains registry data to sync.
+    /// </summary>
+    public string ImportBlobContainerUri { get; set; }
+
+    /// <summary>
+    /// The name of the blob that will be used when importing from the provided input blob container.
+    /// </summary>
+    public string ImportBlobName { get; set; }
+}
+
 public class Jobs
 {
     /// <summary>
     /// Creates a job to export device registrations to the container.
     /// </summary>
-    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the status of the job and the results.</param>
-    /// <param name="outputBlobName">The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.</param>
+    /// <param name="exportJobProperties">Job parameters to export devices.</param>
     /// <param name="excludeKeys">If false, authorization keys are included in export output.  Keys are exported as null otherwise.</param>
-    /// <param name="storageAuthenticationType">Specifies authentication type being used for connecting to storage account.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
     /// <example>
     /// <code snippet="Snippet:JobsSampleExportDevicesAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual Task<Response<JobProperties>> ExportDevicesAsync(string outputBlobContainerUri, string outputBlobName, bool excludeKeys, StorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> ExportDevicesAsync(ExportJobProperties exportJobProperties, bool excludeKeys, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a job to import device registrations into the IoT Hub.
     /// </summary>
-    /// <param name="importBlobContainerUri">URI containing SAS token to a blob container that contains registry data to sync.</param>
-    /// <param name="importBlobName">The blob name to be used when importing from the provided input blob container.</param>
-    /// <param name="outputBlobContainerUri">URI containing SAS token to a blob container. This is used to output the status of the job.</param>
-    /// <param name="outputBlobName">The name of the blob that will be created in the provided output blob container.</param>
-    /// <param name="storageAuthenticationType">Specifies authentication type being used for connecting to storage account.</param>
+    /// <param name="importJobProperties">Job parameters to import devices.</param>
     /// <param name="cancellationToken">Task cancellation token.</param>
     /// <returns>JobProperties of the newly created job.</returns>
     /// <example>
     /// <code snippet="Snippet:JobsSampleImportDevicesAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual Task<Response<JobProperties>> ImportDevicesAsync(string importBlobContainerUri, string importBlobName, string outputBlobContainerUri, string outputBlobName, StorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> ImportDevicesAsync(ImportJobProperties importJobProperties, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List all import and export jobs for the IoT Hub.
