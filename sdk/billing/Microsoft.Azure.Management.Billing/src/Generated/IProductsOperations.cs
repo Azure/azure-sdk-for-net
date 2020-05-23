@@ -197,8 +197,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a product.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the transfer product
-        /// operation.
+        /// Request parameters that are provided to the move product operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -230,7 +229,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a product.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the validate transfer
+        /// Request parameters that are provided to the validate move
         /// eligibility operation.
         /// </param>
         /// <param name='customHeaders'>

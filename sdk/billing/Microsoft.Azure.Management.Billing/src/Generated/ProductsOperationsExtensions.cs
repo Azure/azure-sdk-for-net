@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the transfer product operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
             public static Product Move(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
             {
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the transfer product operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the validate transfer eligibility
+            /// Request parameters that are provided to the validate move eligibility
             /// operation.
             /// </param>
             public static ValidateProductTransferEligibilityResult ValidateMove(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the validate transfer eligibility
+            /// Request parameters that are provided to the validate move eligibility
             /// operation.
             /// </param>
             /// <param name='cancellationToken'>

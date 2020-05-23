@@ -35,7 +35,7 @@ namespace Billing.Tests.ScenarioTests
                 // Verify the response
                 Assert.NotNull(billingAccount);
                 Assert.Equal(BillingAccountName, billingAccount.Name);
-                Assert.Equal(1, billingAccount.BillingProfiles.Count);
+                Assert.Equal(1, billingAccount.BillingProfiles.Value.Count);
             }
         }
 
@@ -57,9 +57,9 @@ namespace Billing.Tests.ScenarioTests
                 // Verify the response
                 Assert.NotNull(billingAccount);
                 Assert.Equal(BillingAccountName, billingAccount.Name);
-                var billingProfile = Assert.Single(billingAccount.BillingProfiles);
+                var billingProfile = Assert.Single(billingAccount.BillingProfiles.Value);
                 Assert.Equal(BillingProfileName, billingProfile.Name);
-                Assert.True(billingProfile.InvoiceSections.Count > 0);
+                Assert.True(billingProfile.InvoiceSections.Value.Count > 0);
             }
         }
 
@@ -125,9 +125,9 @@ namespace Billing.Tests.ScenarioTests
                 Assert.NotNull(billingAccounts);
                 var billingAccount = Assert.Single(billingAccounts);
                 Assert.Equal(BillingAccountName, billingAccount.Name);
-                var billingProfile = Assert.Single(billingAccount.BillingProfiles);
+                var billingProfile = Assert.Single(billingAccount.BillingProfiles.Value);
                 Assert.Equal(BillingProfileName, billingProfile.Name);
-                Assert.True(billingProfile.InvoiceSections.Count > 0);
+                Assert.True(billingProfile.InvoiceSections.Value.Count > 0);
             }
         }
     }
