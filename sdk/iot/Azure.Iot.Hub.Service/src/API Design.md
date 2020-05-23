@@ -61,43 +61,6 @@ APIs for managing module identities, module twins, and querying modules
 Import and export operations take place in the context of Jobs that enable you to execute bulk service operations against an IoT hub. Exports are long-running jobs that use a customer-supplied blob container to save device identity data read from the identity registry. In addition, imports are long-running jobs that use data in a customer-supplied blob container to write device identity data into the identity registry.
 
 ```csharp
-/// <summary>
-/// An object representing the properties needed in the payload to an export devices job.
-/// </summary>
-public class ExportJobProperties 
-{
-    /// <summary>
-    /// URI containing SAS token to a blob container. This is used to output the status of the job and the results.
-    /// </summary>
-    public string OutputBlobContainerUri { get; set; }
-
-    /// <summary>
-    /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.
-    /// </summary>
-    public string OutputBlobName { get; set; }
-
-    /// <summary>
-    /// Specifies authentication type being used for connecting to storage account.
-    /// </summary>
-    public StorageAuthenticationType AuthenticationType { get; set; }
-}
-
-/// <summary>
-/// An object representing the properties needed in the payload to an import devices job.
-/// </summary>
-public class ImportJobProperties : ExportJobProperties
-{
-    /// <summary>
-    /// URI containing SAS token to a blob container that contains registry data to sync.
-    /// </summary>
-    public string ImportBlobContainerUri { get; set; }
-
-    /// <summary>
-    /// The name of the blob that will be used when importing from the provided input blob container.
-    /// </summary>
-    public string ImportBlobName { get; set; }
-}
-
 public class Jobs
 {
     /// <summary>
@@ -238,7 +201,90 @@ public class Jobs
     /// </remarks>
     public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Query the IoT hub to retrieve information regarding scheduled jobs.
+    /// </summary>
+    /// <param name="jobType">The job type to query.</param>
+    /// <param name="jobStatus">The job status to query.</param>
+    /// <param name="cancellationToken">Task cancellation token</param>
+    /// <returns>The pageable list of query results and the raw HTTP response.</returns>
+    /// <example>
+    /// <code snippet="Snippet:JobsSampleQueryScheduledJobsAsync" language="csharp">
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
+    /// </remarks>
+    public virtual AsyncPageable<string> QueryScheduledJobsAsync(JobType? jobType = null, JobStatus? jobStatus = null, CancellationToken cancellationToken = default);
+}
 
+/// <summary>
+/// An object representing the properties needed in the payload to an export devices job.
+/// </summary>
+public class ExportJobProperties 
+{
+    /// <summary>
+    /// URI containing SAS token to a blob container. This is used to output the status of the job and the results.
+    /// </summary>
+    public string OutputBlobContainerUri { get; set; }
+
+    /// <summary>
+    /// The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub.
+    /// </summary>
+    public string OutputBlobName { get; set; }
+
+    /// <summary>
+    /// Specifies authentication type being used for connecting to storage account.
+    /// </summary>
+    public StorageAuthenticationType AuthenticationType { get; set; }
+}
+
+/// <summary>
+/// An object representing the properties needed in the payload to an import devices job.
+/// </summary>
+public class ImportJobProperties : ExportJobProperties
+{
+    /// <summary>
+    /// URI containing SAS token to a blob container that contains registry data to sync.
+    /// </summary>
+    public string ImportBlobContainerUri { get; set; }
+
+    /// <summary>
+    /// The name of the blob that will be used when importing from the provided input blob container.
+    /// </summary>
+    public string ImportBlobName { get; set; }
+}
+
+/// <summary>
+/// The type of job to query for
+/// </summary>
+public static class JobType
+{
+    public const string ExportDevices = "export";
+    public const string ImportDevices = "import";
+    public const string ScheduleDeviceMethod = "scheduleDeviceMethod";
+    public const string ScheduleUpdateTwin = "scheduleUpdateTwin";
+}
+
+/// <summary>
+/// The job status to query for
+/// </summary>
+public static class JobStatus
+{
+    public const string UnknownValue = "unknown";
+    public const string ExportValue = "export";
+    public const string ImportValue = "import";
+    public const string BackupValue = "backup";
+    public const string ReadDevicePropertiesValue = "readDeviceProperties";
+    public const string WriteDevicePropertiesValue = "writeDeviceProperties";
+    public const string UpdateDeviceConfigurationValue = "updateDeviceConfiguration";
+    public const string RebootDeviceValue = "rebootDevice";
+    public const string FactoryResetDeviceValue = "factoryResetDevice";
+    public const string FirmwareUpdateValue = "firmwareUpdate";
+    public const string ScheduleDeviceMethodValue = "scheduleDeviceMethod";
+    public const string ScheduleUpdateTwinValue = "scheduleUpdateTwin";
+    public const string RestoreFromBackupValue = "restoreFromBackup";
+    public const string FailoverDataCopyValue = "failoverDataCopy";
 }
 ```
 
