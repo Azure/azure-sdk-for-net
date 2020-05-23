@@ -447,7 +447,7 @@ namespace Compute.Tests
             {
                 Extensions = new List<VirtualMachineScaleSetExtension>()
                 {
-                    GetTestVMSSVMExtension(),
+                    GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                 }
             };
 

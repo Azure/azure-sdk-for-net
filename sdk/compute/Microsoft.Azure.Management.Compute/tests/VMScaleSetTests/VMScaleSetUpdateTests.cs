@@ -114,7 +114,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                             {
-                                GetTestVMSSVMExtension(),
+                                GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                             }
                     };
                     inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
@@ -176,7 +176,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                             {
-                                GetTestVMSSVMExtension(),
+                                GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                             }
                     };
                  

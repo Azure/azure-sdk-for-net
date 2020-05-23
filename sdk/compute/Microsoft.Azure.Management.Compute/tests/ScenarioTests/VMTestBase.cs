@@ -81,14 +81,21 @@ namespace Compute.Tests
             };
         }
 
-        protected ImageReference GetPlatformVMImage(bool useWindowsImage)
+        protected ImageReference GetPlatformVMImage(bool useWindowsImage, bool smallDisk = false)
         {
             if (useWindowsImage)
             {
                 if (m_windowsImageReference == null)
                 {
                     Trace.TraceInformation("Querying available Windows Server image from PIR...");
-                    m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
+                    if (smallDisk)
+                    {
+                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2019-Datacenter-smalldisk");
+                    }
+                    else
+                    {
+                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
+                    }                    
                 }
                 return m_windowsImageReference;
             }

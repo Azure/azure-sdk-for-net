@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// The filter to apply on the operation. Only **location** filter is supported
+            /// currently.
             /// </param>
             public static IPage<ResourceSku> List(this IResourceSkusOperations operations, string filter = default(string))
             {
@@ -42,7 +43,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// The filter to apply on the operation. Only **location** filter is supported
+            /// currently.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
