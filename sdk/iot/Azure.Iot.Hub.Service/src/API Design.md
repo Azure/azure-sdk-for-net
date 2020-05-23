@@ -304,6 +304,11 @@ public class Jobs
     /// </remarks>
     public virtual AsyncPageable<string> QueryScheduledJobsAsync(JobType? jobType = null, JobStatus? jobStatus = null, CancellationToken cancellationToken = default);
 }
+```
+
+## Models
+
+```csharp
 
 /// <summary>
 /// An object representing the properties needed in the payload to an export devices job.
