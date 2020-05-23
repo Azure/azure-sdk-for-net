@@ -76,7 +76,7 @@ public class Jobs
     /// <code snippet="Snippet:JobsSampleExportDevicesAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual async Task<JobProperties> ExportDevicesAsync(string outputBlobContainerUri, string outputBlobName, bool excludeKeys, JobPropertiesStorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> ExportDevicesAsync(string outputBlobContainerUri, string outputBlobName, bool excludeKeys, StorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a job to import device registrations into the IoT Hub.
@@ -92,7 +92,7 @@ public class Jobs
     /// <code snippet="Snippet:JobsSampleImportDevicesAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual async Task<JobProperties> ImportDevicesAsync(string importBlobContainerUri, string importBlobName, string outputBlobContainerUri, string outputBlobName, JobPropertiesStorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobProperties>> ImportDevicesAsync(string importBlobContainerUri, string importBlobName, string outputBlobContainerUri, string outputBlobName, StorageAuthenticationType storageAuthenticationType, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List all import and export jobs for the IoT Hub.
@@ -103,7 +103,7 @@ public class Jobs
     /// <code snippet="Snippet:JobsSampleGetImportExportJobsAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual async Task<IEnumerable<JobProperties>> GetImportExportJobsAsync(CancellationToken cancellationToken);
+    public virtual Task<Response<IReadOnlyList<JobProperties>>> GetImportExportJobsAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the import or export job with the specified ID.
@@ -115,19 +115,19 @@ public class Jobs
     /// <code snippet="Snippet:JobsSampleGetImportExportJobAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual async Task<JobProperties> GetImportExportJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<JobProperties>> GetImportExportJobAsync(string jobId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Cancels/Deletes the job with the specified ID.
     /// </summary>
     /// <param name="jobId">Id of the job to cancel</param>
     /// <param name="cancellationToken">Task cancellation token</param>
-    /// <returns>A response object.</returns>
+    /// <returns>A response string object indicating result of the cancellation.</returns>
     /// <example>
     /// <code snippet="Snippet:JobsSampleCancelImportExportJobAsync" language="csharp">
     /// </code>
     /// </example>
-    public virtual async ValueTask<Response<object>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<string>> CancelImportExportJobAsync(string jobId, CancellationToken cancellationToken);
 
 }
 
@@ -152,7 +152,7 @@ public class Jobs
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual async ValueTask<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Creates a new scheduled job to update twin tags and desired properties on one or multiple devices.
@@ -171,7 +171,7 @@ public class Jobs
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual async ValueTask<Response<JobResponse>> ScheduleTwinUpdateAsync(string jobId, string queryCondition, Twin twin, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> ScheduleTwinUpdateAsync(string jobId, string queryCondition, Twin twin, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
 
     /// <summary>
     /// Creates a new scheduled job to run a device method on one or multiple devices.
@@ -190,7 +190,7 @@ public class Jobs
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual async ValueTask<Response<JobResponse>> ScheduleDeviceMethodAsync(string jobId, string queryCondition, CloudToDeviceMethod cloudToDeviceMethod, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodAsync(string jobId, string queryCondition, CloudToDeviceMethod cloudToDeviceMethod, DateTime startTimeUtc, long maxExecutionTimeInSeconds, CancellationToken cancellationToken);
 
     /// <summary>
     /// Cancels/Deletes the job with the specified ID.
@@ -205,7 +205,7 @@ public class Jobs
     /// <remarks>
     /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
     /// </remarks>
-    public virtual async ValueTask<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken);
+    public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken);
 
 
 }
