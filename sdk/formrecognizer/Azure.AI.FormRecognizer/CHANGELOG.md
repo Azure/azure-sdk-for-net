@@ -23,10 +23,11 @@
 
 ### Fixes
 
-- Custom form recognition without labels can now handle multipaged forms.
+- Custom form recognition without labels can now handle multipaged forms ([#11881](https://github.com/Azure/azure-sdk-for-net/issues/11881)).
 - `RecognizedForm.Pages` now only contains pages whose numbers are within `RecognizedForm.PageRange`.
 - `FieldText.TextContent` cannot be `null` anymore, and it will be empty when no element is returned from the service.
 - Custom form recognition with labels can now parse results from forms that do not contain all of the expected labels ([#11821](https://github.com/Azure/azure-sdk-for-net/issues/11821)).
+- `FormRecognizerClient.StartRecognizeCustomFormsFromUri` now works with URIs that contain blank spaces, encoded or not ([#11564](https://github.com/Azure/azure-sdk-for-net/issues/11564)).
 
 ## 1.0.0-preview.2 (05-06-2020)
 
