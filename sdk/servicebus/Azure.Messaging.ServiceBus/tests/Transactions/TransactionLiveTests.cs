@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Messaging.ServiceBus.Filters;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -59,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sender.SendAsync(message1);
-                    await sender.ScheduleMessageAsync(message2, DateTimeOffset.UtcNow);
+                    await sender.ScheduleAsync(message2, DateTimeOffset.UtcNow);
                     ts.Complete();
                 }
 
@@ -97,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sender.SendAsync(message1);
-                    await sender.ScheduleMessageAsync(message2, DateTimeOffset.UtcNow.AddMinutes(1));
+                    await sender.ScheduleAsync(message2, DateTimeOffset.UtcNow.AddMinutes(1));
                 }
                 Assert.That(
                     async () =>
@@ -120,10 +117,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage();
-                long seq = await sender.ScheduleMessageAsync(message, DateTimeOffset.UtcNow.AddMinutes(1));
+                long seq = await sender.ScheduleAsync(message, DateTimeOffset.UtcNow.AddMinutes(1));
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.CancelScheduledMessageAsync(seq);
+                    await sender.CancelScheduledAsync(seq);
                 }
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekAsync();

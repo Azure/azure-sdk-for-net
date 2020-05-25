@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -724,8 +723,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-
-
         #endregion region
 
         #region Rule management
@@ -821,7 +818,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(SessionReceiverLinkClosedEvent, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
+        [Event(SessionReceiverLinkClosedEvent, Level = EventLevel.Informational, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
         public virtual void SessionReceiverLinkClosed(string identifier, string sessionId, string linkException)
         {
             if (IsEnabled())

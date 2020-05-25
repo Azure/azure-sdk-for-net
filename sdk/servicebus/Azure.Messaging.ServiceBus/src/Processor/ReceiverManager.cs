@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
@@ -25,6 +26,8 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions _processorOptions;
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
+        protected readonly EntityScopeFactory _scopeFactory;
+
         protected bool AutoRenewLock => _processorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
@@ -34,7 +37,8 @@ namespace Azure.Messaging.ServiceBus
             string identifier,
             ServiceBusProcessorOptions processorOptions,
             Func<ProcessMessageEventArgs, Task> messageHandler,
-            Func<ProcessErrorEventArgs, Task> errorHandler)
+            Func<ProcessErrorEventArgs, Task> errorHandler,
+            EntityScopeFactory scopeFactory)
         {
             _connection = connection;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
@@ -54,6 +58,7 @@ namespace Azure.Messaging.ServiceBus
                 options: _receiverOptions);
             _errorHandler = errorHandler;
             _messageHandler = messageHandler;
+            _scopeFactory = scopeFactory;
         }
 
         public virtual async Task CloseReceiverIfNeeded(
@@ -86,11 +91,10 @@ namespace Azure.Messaging.ServiceBus
                     {
                         continue;
                     }
-
-                    await ProcessOneMessage(
+                    await ProcessOneMessageWithinScope(
                         message,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                        DiagnosticProperty.ProcessMessageActivityName,
+                        cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception ex) when (!(ex is TaskCanceledException))
@@ -109,13 +113,32 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        protected async Task ProcessOneMessageWithinScope(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
+            scope.Start();
+            scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
+            try
+            {
+                await ProcessOneMessage(
+                    message,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
         /// <param name="processorCancellationToken"></param>
         /// <returns></returns>
-        public async Task ProcessOneMessage(
+        private async Task ProcessOneMessage(
             ServiceBusReceivedMessage message,
             CancellationToken processorCancellationToken)
         {
@@ -260,9 +283,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationSource">CancellationTokenSource to cancel</param>
         /// <param name="task">Associated task to await</param>
-        private static async Task CancelTask(
-                CancellationTokenSource cancellationSource,
-                Task task)
+        protected async Task CancelTask(
+            CancellationTokenSource cancellationSource,
+            Task task)
         {
             try
             {

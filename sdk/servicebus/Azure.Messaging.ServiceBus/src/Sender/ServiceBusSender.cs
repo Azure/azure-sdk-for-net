@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -84,6 +86,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         private readonly TransportSender _innerSender;
+        private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
@@ -117,6 +120,7 @@ namespace Azure.Messaging.ServiceBus
                     ViaEntityPath,
                     _retryPolicy,
                     Identifier);
+                _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             }
             catch (Exception ex)
             {
@@ -179,19 +183,63 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: messageList.Count);
+            using DiagnosticScope scope = CreateDiagnosticScope(messages, DiagnosticProperty.SendActivityName);
+            scope.Start();
+
             try
             {
                 await _innerSender.SendAsync(
                     messageList,
                     cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+
+            catch (Exception exception)
             {
-                Logger.SendMessageException(Identifier, ex.ToString());
+                Logger.SendMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageComplete(Identifier);
+        }
+
+        private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
+        {
+            InstrumentMessages(messages);
+
+            // create a new scope for the specified operation
+            DiagnosticScope scope = _scopeFactory.CreateScope(
+                activityName,
+                DiagnosticProperty.ClientKind);
+
+            scope.SetMessageData(messages);
+            return scope;
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to instrument a set of events.
+        /// </summary>
+        ///
+        /// <param name="messages">The events to instrument.</param>
+        ///
+        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
+        {
+            foreach (ServiceBusMessage message in messages)
+            {
+                if (!message.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+                {
+                    using DiagnosticScope messageScope = _scopeFactory.CreateScope(
+                        DiagnosticProperty.MessageActivityName,
+                        DiagnosticProperty.SenderKind);
+                    messageScope.Start();
+
+                    Activity activity = Activity.Current;
+                    if (activity != null)
+                    {
+                        message.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -270,14 +318,20 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
+            using DiagnosticScope scope = CreateDiagnosticScope(
+                messageBatch.AsEnumerable<ServiceBusMessage>(),
+                DiagnosticProperty.SendActivityName);
+            scope.Start();
+
             try
             {
                 messageBatch.Lock();
                 await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Logger.SendMessageException(Identifier, ex.ToString());
+                Logger.SendMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
             finally
@@ -299,7 +353,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long> ScheduleMessageAsync(
+        public virtual async Task<long> ScheduleAsync(
             ServiceBusMessage message,
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
@@ -308,6 +362,10 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime.ToString());
+            using DiagnosticScope scope = CreateDiagnosticScope(
+                new ServiceBusMessage[] { message },
+                DiagnosticProperty.ScheduleActivityName);
+            scope.Start();
 
             long sequenceNumber;
             try
@@ -315,14 +373,16 @@ namespace Azure.Messaging.ServiceBus
                 message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
                 sequenceNumber = await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Logger.ScheduleMessageException(Identifier, ex.ToString());
+                Logger.ScheduleMessageException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessageComplete(Identifier);
+            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumber);
             return sequenceNumber;
         }
 
@@ -331,14 +391,19 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public virtual async Task CancelScheduledMessageAsync(
+        public virtual async Task CancelScheduledAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CancelScheduledMessageStart(Identifier, sequenceNumber);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.CancelActivityName,
+                DiagnosticProperty.ClientKind);
 
+            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumber);
+            scope.Start();
             try
             {
                 await _innerSender.CancelScheduledMessageAsync(sequenceNumber, cancellationToken).ConfigureAwait(false);
@@ -407,19 +472,5 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of events.
-        /// </summary>
-        ///
-        /// <param name="messages">The events to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusMessage message in messages)
-            {
-                //EventDataInstrumentation.InstrumentEvent(message);
-            }
-        }
     }
 }

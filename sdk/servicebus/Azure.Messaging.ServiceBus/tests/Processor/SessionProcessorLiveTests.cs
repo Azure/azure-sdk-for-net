@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(5, true)]
         [TestCase(10, false)]
         [TestCase(20, false)]
-        public async Task ProcessSessionEvent(int numThreads, bool autoComplete)
+        public async Task ProcessSessionMessage(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(5, false)]
         [TestCase(10, true)]
         [TestCase(20, false)]
-        public async Task ProcessEventConsumesAllMessages(int numThreads, bool autoComplete)
+        public async Task ProcessConsumesAllMessages(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -408,6 +408,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
 
                 Assert.True(exceptionReceivedHandlerCalled);
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -450,6 +451,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
 
                 Assert.True(exceptionReceivedHandlerCalled);
+                await processor.StopProcessingAsync();
             }
         }
 
@@ -458,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(5, false)]
         [TestCase(10, true)]
         [TestCase(20, false)]
-        public async Task Process_Event_SessionId(int numThreads, bool autoComplete)
+        public async Task ProcessSessionMessageUsingNamedSessionId(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -655,31 +657,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
-                    try
+                    var message = args.Message;
+                    var lockedUntil = args.SessionLockedUntil;
+                    // wait 2x lock duration in case the
+                    // lock was renewed already
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    if (!args.CancellationToken.IsCancellationRequested)
                     {
-                        var message = args.Message;
-                        var lockedUntil = args.SessionLockedUntil;
-                        // wait 2x lock duration in case the
-                        // lock was renewed already
-                        await Task.Delay(lockDuration.Add(lockDuration));
-                        if (!args.CancellationToken.IsCancellationRequested)
-                        {
-                            // only do the assertion if cancellation wasn't requested as otherwise
-                            // the exception we would get is a TaskCanceledException rather than ServiceBusException
-                            Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
-                            Assert.That(
-                                async () => await args.CompleteAsync(message, args.CancellationToken),
-                                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
-                            Interlocked.Increment(ref messageCt);
-                        }
-                    }
-                    finally
-                    {
+                        // only do the assertion if cancellation wasn't requested as otherwise
+                        // the exception we would get is a TaskCanceledException rather than ServiceBusException
+                        Assert.AreEqual(lockedUntil, args.SessionLockedUntil);
+                        Assert.That(
+                            async () => await args.CompleteAsync(message, args.CancellationToken),
+                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+                        Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        if (setIndex < numThreads)
-                        {
-                            completionSources[setIndex].SetResult(true);
-                        }
+                        completionSources[setIndex].SetResult(true);
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));

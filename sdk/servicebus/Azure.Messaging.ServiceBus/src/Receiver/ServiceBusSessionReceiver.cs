@@ -4,10 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Core;
-using Microsoft.Identity.Client;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -100,6 +100,11 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.GetSessionStateActivityName,
+                sessionId: SessionId);
+            scope.Start();
+
             byte[] sessionState = null;
 
             try
@@ -112,7 +117,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateComplete(Identifier);
             return sessionState;
         }
@@ -134,6 +138,10 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.SetSessionStateActivityName,
+                sessionId: SessionId);
+            scope.Start();
 
             try
             {
@@ -142,10 +150,10 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.SetSessionStateException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateComplete(Identifier);
         }
 
@@ -170,6 +178,10 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.RenewSessionLockActivityName,
+                sessionId: SessionId);
+            scope.Start();
 
             try
             {
@@ -178,10 +190,10 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.RenewSessionLockException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockComplete(Identifier);
         }
     }
