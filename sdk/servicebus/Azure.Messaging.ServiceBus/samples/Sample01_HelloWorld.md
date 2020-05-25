@@ -75,7 +75,7 @@ until that time, though it can still be peeked before that. We get back the mess
 which can be used to cancel the scheduled message.
 
 ```C# Snippet:ServiceBusSchedule
-long seq = await sender.ScheduleMessageAsync(
+long seq = await sender.ScheduleAsync(
     message,
     DateTimeOffset.Now.AddDays(1));
 ```
@@ -85,7 +85,7 @@ long seq = await sender.ScheduleMessageAsync(
 Cancelling the scheduled message will delete it from the service.
 
 ```C# Snippet:ServiceBusCancelScheduled
-await sender.CancelScheduledMessageAsync(seq);
+await sender.CancelScheduledAsync(seq);
 ```
 
 ## Source
