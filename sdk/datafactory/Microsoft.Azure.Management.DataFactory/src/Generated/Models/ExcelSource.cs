@@ -16,21 +16,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Json source.
+    /// A copy activity excel source.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("JsonSource")]
-    public partial class JsonSource : CopySource
+    [Newtonsoft.Json.JsonObject("ExcelSource")]
+    public partial class ExcelSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the JsonSource class.
+        /// Initializes a new instance of the ExcelSource class.
         /// </summary>
-        public JsonSource()
+        public ExcelSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the JsonSource class.
+        /// Initializes a new instance of the ExcelSource class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -42,16 +42,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="storeSettings">Json store settings.</param>
-        /// <param name="formatSettings">Json format settings.</param>
+        /// <param name="storeSettings">Excel store settings.</param>
         /// <param name="additionalColumns">Specifies the additional columns to
         /// be added to source data. Type: array of objects (or Expression with
         /// resultType array of objects).</param>
-        public JsonSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), JsonReadSettings formatSettings = default(JsonReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+        public ExcelSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
-            FormatSettings = formatSettings;
             AdditionalColumns = additionalColumns;
             CustomInit();
         }
@@ -62,16 +60,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets json store settings.
+        /// Gets or sets excel store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
         public StoreReadSettings StoreSettings { get; set; }
-
-        /// <summary>
-        /// Gets or sets json format settings.
-        /// </summary>
-        [JsonProperty(PropertyName = "formatSettings")]
-        public JsonReadSettings FormatSettings { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the additional columns to be added to source

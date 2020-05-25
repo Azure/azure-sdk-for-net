@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure Data Lake source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureDataLakeStoreSource")]
     public partial class AzureDataLakeStoreSource : CopySource
     {
         /// <summary>

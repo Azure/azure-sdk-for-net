@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity QuickBooks server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("QuickBooksSource")]
     public partial class QuickBooksSource : TabularSource
     {
         /// <summary>

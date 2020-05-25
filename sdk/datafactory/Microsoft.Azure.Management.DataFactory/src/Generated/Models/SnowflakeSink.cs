@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity snowflake sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SnowflakeSink")]
     public partial class SnowflakeSink : CopySink
     {
         /// <summary>

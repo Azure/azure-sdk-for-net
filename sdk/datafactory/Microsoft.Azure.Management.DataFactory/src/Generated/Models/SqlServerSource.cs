@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity SQL server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SqlServerSource")]
     public partial class SqlServerSource : TabularSource
     {
         /// <summary>

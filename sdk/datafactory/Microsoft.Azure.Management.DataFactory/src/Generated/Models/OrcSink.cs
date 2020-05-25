@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity ORC sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OrcSink")]
     public partial class OrcSink : CopySink
     {
         /// <summary>

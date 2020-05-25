@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for SapBW server via MDX.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SapBwSource")]
     public partial class SapBwSource : TabularSource
     {
         /// <summary>

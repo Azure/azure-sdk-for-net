@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for Microsoft Access.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MicrosoftAccessSource")]
     public partial class MicrosoftAccessSource : CopySource
     {
         /// <summary>

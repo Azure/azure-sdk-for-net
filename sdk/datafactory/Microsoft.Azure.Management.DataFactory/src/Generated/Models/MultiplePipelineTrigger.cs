@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Base class for all triggers that support one to many model for trigger
     /// to pipeline.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MultiplePipelineTrigger")]
     public partial class MultiplePipelineTrigger : Trigger
     {
         /// <summary>

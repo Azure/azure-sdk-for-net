@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Xero Service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("XeroSource")]
     public partial class XeroSource : TabularSource
     {
         /// <summary>
