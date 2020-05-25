@@ -37,10 +37,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="category">The category of the saved search. This helps
         /// the user to find a saved search faster. </param>
         /// <param name="displayName">Saved search display name.</param>
-        /// <param name="query">The query expression for the saved search.
-        /// Please see
-        /// https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-search-reference
-        /// for reference.</param>
+        /// <param name="query">The query expression for the saved
+        /// search.</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -98,9 +96,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the query expression for the saved search. Please see
-        /// https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-search-reference
-        /// for reference.
+        /// Gets or sets the query expression for the saved search.
         /// </summary>
         [JsonProperty(PropertyName = "properties.query")]
         public string Query { get; set; }
