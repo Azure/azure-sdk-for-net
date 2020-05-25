@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -53,7 +52,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     // loop in case we don't receive all messages in one attempt
                     var received = await receiver.ReceiveBatchAsync(remaining);
-                    remaining -= received.Count;
                     receivedMsgs.AddRange(received);
                     (string Key, object Value, DiagnosticListener) receiveStart = listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.ReceiveActivityName + ".Start", receiveStart.Key);
@@ -64,17 +62,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         receiveActivity.Tags,
                         new KeyValuePair<string, string>(
                             DiagnosticProperty.RequestedMessageCountAttribute,
-                            numMessages.ToString()));
+                            remaining.ToString()));
+                    CollectionAssert.Contains(
+                        receiveActivity.Tags,
+                        new KeyValuePair<string, string>(
+                            DiagnosticProperty.MessageIdAttribute,
+                            string.Join(",", received.Select(m => m.MessageId).ToArray())));
+                    remaining -= received.Count;
 
-                    // can only do this assertion if all messages were received at once
-                    if (receivedMsgs.Count == numMessages)
-                    {
-                        CollectionAssert.Contains(
-                            receiveActivity.Tags,
-                            new KeyValuePair<string, string>(
-                                DiagnosticProperty.MessageIdAttribute,
-                                string.Join(",", msgs.Select(m => m.MessageId).ToArray())));
-                    }
                     if (useSessions)
                     {
                         CollectionAssert.Contains(
@@ -104,7 +99,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 AssertLockTokensTag(completeActivity, completed.LockToken);
                 (string Key, object Value, DiagnosticListener) completeStop = listener.Events.Dequeue();
                 Assert.AreEqual(DiagnosticProperty.CompleteActivityName + ".Stop", completeStop.Key);
-
 
                 var deferred = receivedMsgs[++msgIndex];
                 await receiver.DeferAsync(deferred);
@@ -388,7 +382,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
                 (string Key, object Value, DiagnosticListener) startMessage = listener.Events.Dequeue();
-                TestContext.Out.WriteLine(startMessage.Value);
                 messageActivities.Add((Activity)startMessage.Value);
                 AssertCommonTags((Activity)startMessage.Value, sender.EntityPath, sender.FullyQualifiedNamespace);
                 Assert.AreEqual(DiagnosticProperty.MessageActivityName + ".Start", startMessage.Key);

@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         public const string DiagnosticNamespace = "Azure.Messaging.ServiceBus";
 
         /// <summary>The namespace used for the Azure Resource Manager provider namespace.</summary>
-        public const string ResourceProviderNamespace = "Microsoft.ServiceBus";
+        private const string _resourceProviderNamespace = "Microsoft.ServiceBus";
         private readonly string _entityPath;
         private readonly string _fullyQualifiedNamespace;
 
@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   The client diagnostics instance responsible for managing scope.
         /// </summary>
         ///
-        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, ResourceProviderNamespace, true);
+        private static DiagnosticScopeFactory _scopeFactory { get; } = new DiagnosticScopeFactory(DiagnosticNamespace, _resourceProviderNamespace, true);
 
         public EntityScopeFactory(
             string entityPath,
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             string sessionId = default,
             int? requestedMessageCount = default)
         {
-            DiagnosticScope scope = ScopeFactory.CreateScope(activityName);
+            DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
             scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute ?? DiagnosticProperty.ClientKind);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
@@ -85,14 +85,5 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
             return scope;
         }
-
-        /// <summary>
-        ///   Resets the instrumentation associated with a given event.
-        /// </summary>
-        ///
-        /// <param name="message">The event to reset.</param>
-        ///
-        public static void ResetEvent(ServiceBusMessage message) =>
-            message.Properties.Remove(DiagnosticProperty.DiagnosticIdAttribute);
     }
 }
