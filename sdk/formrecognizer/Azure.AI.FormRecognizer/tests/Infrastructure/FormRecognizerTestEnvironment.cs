@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using Azure.Core.TestFramework;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -24,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
         internal const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS Url use for storing documents used for live tests.</summary>
+        /// <summary>The name of the environment variable for the Blob Container SAS URL use for storing documents used for live tests.</summary>
         internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the environment variable for the target resource identifier use for copying custom models live tests.</summary>
@@ -46,21 +45,47 @@ namespace Azure.AI.FormRecognizer.Tests
         public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 
         /// <summary>
-        /// The name of the directory where the running assembly is located.
+        /// The absolute path of the directory where the running assembly is located.
         /// </summary>
-        /// <value>The name of the current working directory.</value>
+        /// <value>The absolute path of the current working directory.</value>
         private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        public static string CreatePath(string fileName, string assetFolder = default) =>
-            Path.Combine(CurrentWorkingDirectory, assetFolder ?? AssetsFolderName, fileName);
+        /// <summary>
+        /// Creates an absolute path to a file contained in the local test assets folder.
+        /// </summary>
+        /// <param name="filename">The name of the file to create a path to.</param>
+        /// <returns>An absolute path to the specified file.</returns>
+        public static string CreatePath(string filename) =>
+            Path.Combine(CurrentWorkingDirectory, AssetsFolderName, filename);
 
-        public static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default) =>
-            string.Format(fileUriFormat ?? FileUriFormat, assetFolder ?? AssetsFolderName, fileName);
+        /// <summary>
+        /// Creates a URI string to a file contained in the test assets folder stored in
+        /// the azure-sdk-for-net GitHub repo.
+        /// </summary>
+        /// <param name="filename">The name of the file to create a URI string to.</param>
+        /// <returns>A URI string to the specified file.</returns>
+        public static string CreateUriString(string filename) =>
+            string.Format(FileUriFormat, AssetsFolderName, filename);
 
+        /// <summary>
+        /// Creates a <see cref="FileStream"/> to read file contained in the local test
+        /// assets folder.
+        /// </summary>
+        /// <param name="filename">The name of the file to read with the stream.</param>
+        /// <returns>A <see cref="FileStream"/> to read the specified file.</returns>
+        /// <remarks>
+        /// The returned stream needs to be disposed of by the calling method.
+        /// </remarks>
         public static FileStream CreateStream(string filename) =>
             new FileStream(CreatePath(filename), FileMode.Open);
 
-        public static Uri CreateUriInstance(string filename) =>
-            new Uri(CreateUri(filename));
+        /// <summary>
+        /// Creates a URI to a file contained in the test assets folder stored in the
+        /// azure-sdk-for-net GitHub repo.
+        /// </summary>
+        /// <param name="filename">The name of the file to create a URI to.</param>
+        /// <returns>A URI to the specified file.</returns>
+        public static Uri CreateUri(string filename) =>
+            new Uri(CreateUriString(filename));
     }
 }

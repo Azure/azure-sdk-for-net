@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string receiptUri = FormRecognizerTestEnvironment.CreateUri(FormName.PngReceiptFilename);
+            string receiptUri = FormRecognizerTestEnvironment.CreateUriString(TestForm.ReceiptPng);
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
             RecognizedReceiptCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();

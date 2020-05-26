@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Samples
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
-            string receiptPath = FormRecognizerTestEnvironment.CreatePath(FormName.JpgReceiptFilename);
+            string receiptPath = FormRecognizerTestEnvironment.CreatePath(TestForm.ReceiptJpg);
 
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))

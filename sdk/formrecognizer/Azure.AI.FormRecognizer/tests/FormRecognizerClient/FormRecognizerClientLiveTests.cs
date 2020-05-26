@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -61,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient(useTokenCredential: true);
             RecognizeContentOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.JpgReceiptFilename);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.ReceiptJpg);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeContentAsync(stream);
@@ -90,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.InvoiceFilenameFormat);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeContentAsync(stream);
@@ -98,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.InvoiceFilenameFormat);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.InvoicePdf);
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -183,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.MultipageFormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeContentAsync(stream);
@@ -191,7 +190,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.MultipageFormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.InvoiceMultipage);
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -244,7 +243,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.JpgReceiptFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.ReceiptJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeReceiptsAsync(stream);
@@ -252,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.JpgReceiptFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.ReceiptJpg);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
@@ -329,7 +328,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.MultipageFormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -337,7 +336,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.MultipageFormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.InvoiceMultipage);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
@@ -395,7 +394,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.FormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
@@ -403,7 +402,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.FormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.Form1);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
             }
 
@@ -448,7 +447,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.MultipageFormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -456,7 +455,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.MultipageFormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.InvoiceMultipage);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
@@ -487,7 +486,7 @@ namespace Azure.AI.FormRecognizer.Tests
             // Attempt to recognize a different type of form: Invoice_1.pdf. This form does not contain all the labels
             // the newly trained model expects.
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.InvoiceFilenameFormat);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoicePdf);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
@@ -517,7 +516,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.FormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
@@ -525,7 +524,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.FormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.Form1);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri);
             }
 
@@ -570,7 +569,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(FormName.MultipageFormFilename);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -578,7 +577,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUriInstance(FormName.MultipageFormFilename);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestForm.InvoiceMultipage);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
