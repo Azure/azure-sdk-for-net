@@ -519,15 +519,12 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        [Ignore("Blocked by #11821, since some fields cannot be parsed.")]
-        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForms(bool useStream, bool includeTextContent)
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForms(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
+            var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
@@ -550,13 +547,21 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var recognizedForm = recognizedForms.Single();
 
-            ValidateRecognizedForm(recognizedForm, includeTextContent,
+            ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                 expectedFirstPageNumber: 1, expectedLastPageNumber: 2);
 
-            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
+            // Add fields assertions when https://github.com/Azure/azure-sdk-for-net/issues/12139
+            // is solved.
+
+            // Basic sanity test to make sure pages are ordered correctly.
+
+            for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
-                // Basic sanity test to make sure pages are ordered correctly.
-                // TODO: implement sanity check once #11821 is solved.
+                var formPage = recognizedForm.Pages[pageIndex];
+                var sampleLine = formPage.Lines[3];
+                var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+
+                Assert.AreEqual(expectedText, sampleLine.Text);
             }
         }
 
@@ -582,11 +587,22 @@ namespace Azure.AI.FormRecognizer.Tests
             ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                 expectedFirstPageNumber: 1, expectedLastPageNumber: 3);
 
-            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
+            for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
-                // Basic sanity test to make sure pages are ordered correctly.
-                // TODO: implement sanity check once #11821 is solved.
+                if (pageIndex == 0 || pageIndex == 2)
+                {
+                    var formPage = recognizedForm.Pages[pageIndex];
+                    var sampleLine = formPage.Lines[3];
+                    var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+
+                    Assert.AreEqual(expectedText, sampleLine.Text);
+                }
             }
+
+            var blankPage = recognizedForm.Pages[1];
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
         [Test]
