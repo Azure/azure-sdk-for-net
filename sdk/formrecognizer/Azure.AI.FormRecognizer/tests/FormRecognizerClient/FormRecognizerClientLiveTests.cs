@@ -353,14 +353,12 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream, bool includeTextContent)
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
+            var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeReceiptsOperation operation;
 
             if (useStream)
@@ -389,7 +387,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
                 Assert.NotNull(recognizedReceipt.RecognizedForm);
 
-                ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent,
+                ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
@@ -687,14 +685,12 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true, Ignore = "Service returning 'Unsupported media type' error.")]
-        [TestCase(false, false, Ignore = "Service returning 'Unsupported media type' error.")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForms(bool useStream, bool includeTextContent)
+        [TestCase(true)]
+        [TestCase(false, Ignore = "Service returning 'Unsupported media type' error.")]
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForms(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
-            var options = new RecognizeOptions() { IncludeTextContent = includeTextContent };
+            var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
@@ -722,7 +718,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedForm = recognizedForms[formIndex];
                 var expectedPageNumber = formIndex + 1;
 
-                ValidateRecognizedForm(recognizedForm, includeTextContent,
+                ValidateRecognizedForm(recognizedForm, includeTextContent: true,
                     expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
