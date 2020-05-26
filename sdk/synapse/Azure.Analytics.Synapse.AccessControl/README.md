@@ -12,6 +12,41 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
+### Install the package
+Install the Azure Synapse Analytics access control client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+Install-Package Azure.Analytics.Synapse.AccessControl -IncludePrerelease
+```
+
+### Prerequisites
+* An [Azure subscription][azure_sub].
+* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
+
+If you use the Azure CLI, the command looks like below:
+
+```PowerShell
+az synapse workspace create \
+    --name <your-workspace-name> \
+    --resource-group <your-resource-group-name> \
+    --storage-account <your-storage-account-name> \
+    --file-system <your-storage-file-system-name> \
+    --sql-admin-login-user <your-sql-admin-user-name> \
+    --sql-admin-login-password <your-sql-admin-user-password> \
+    --location <your-workspace-location>
+```
+
+### Authenticate the client
+In order to interact with the Azure Key Vault service, you'll need to create an instance of the [CertificateClient][certificate_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
+ and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
 ## Prerequisites
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, including Azure Synapse, you need to first [create an account](https://account.windowsazure.com/Home/Index). If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits.

@@ -12,11 +12,40 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
-## Prerequisites
+### Install the package
+Install the Azure Synapse Analytics development client library for .NET with [NuGet][nuget]:
 
-- Microsoft Azure Subscription: To call Microsoft Azure services, including Azure Synapse, you need to first [create an account](https://account.windowsazure.com/Home/Index). If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits.
+```PowerShell
+Install-Package Azure.Analytics.Synapse.Development -IncludePrerelease
+```
 
-- The Azure Synapse client library shares the same [Prerequisites](https://github.com/azure/azure-sdk-for-net#prerequisites) as the Microsoft Azure SDK for .NET.
+### Prerequisites
+* An [Azure subscription][azure_sub].
+* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
+
+If you use the Azure CLI, the command looks like below:
+
+```PowerShell
+az synapse workspace create \
+    --name <your-workspace-name> \
+    --resource-group <your-resource-group-name> \
+    --storage-account <your-storage-account-name> \
+    --file-system <your-storage-file-system-name> \
+    --sql-admin-login-user <your-sql-admin-user-name> \
+    --sql-admin-login-password <your-sql-admin-user-password> \
+    --location <your-workspace-location>
+```
+
+### Authenticate the client
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [DevelopmentClient][development_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+ and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
 
 ## Examples
 The Azure.Analytics.Synapse.Development package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics development related tasks:
