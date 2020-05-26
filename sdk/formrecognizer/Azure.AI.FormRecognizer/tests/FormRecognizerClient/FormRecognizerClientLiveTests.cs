@@ -215,7 +215,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartRecognizeContentCanParseBlankPage()
+        public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeContentOperation operation;
@@ -401,7 +401,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task StartRecognizeReceiptsCanParseBlankPage()
+        public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -519,7 +519,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForms(bool useStream)
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -565,6 +565,34 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.SingleBlankPageFormPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+
+            var recognizedForm = recognizedForms.Single();
+
+            ValidateRecognizedForm(recognizedForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 1);
+
+            var blankPage = recognizedForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
+        [Test]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -687,7 +715,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false, Ignore = "Service returning 'Unsupported media type' error.")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForms(bool useStream)
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
@@ -735,7 +763,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [Test]
         [Ignore("Service bug: information about the blank page is not being returned.")]
-        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateInstrumentedFormRecognizerClient();
             var options = new RecognizeOptions() { IncludeTextContent = true };
