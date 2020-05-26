@@ -281,7 +281,7 @@
       "post": {
         "summary": "Create, update, or delete the identities of multiple devices from the IoT hub identity registry.",
         "description": "Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).",
-        "operationId": "Devices_BulkDeviceOperations",
+        "operationId": "Devices_BulkRegistryOperations",
         "consumes": [
           "application/json"
         ],
@@ -387,7 +387,7 @@
       "get": {
         "summary": "Retrieve a device from the identity registry of an IoT hub.",
         "description": "Get a device from the identity registry of an IoT hub.",
-        "operationId": "Devices_Get",
+        "operationId": "Devices_GetIdentity",
         "consumes": [],
         "produces": [
           "application/json"
@@ -416,7 +416,7 @@
       "put": {
         "summary": "Create or update the identity of a device in the identity registry of an IoT hub.",
         "description": "Create or update the identity of a device in the identity registry of an IoT hub.",
-        "operationId": "Devices_CreateOrUpdate",
+        "operationId": "Devices_CreateOrUpdateIdentity",
         "consumes": [
           "application/json"
         ],
@@ -463,7 +463,7 @@
       "delete": {
         "summary": "Delete the identity of a device from the identity registry of an IoT hub.",
         "description": "Delete the identity of a device from the identity registry of an IoT hub.",
-        "operationId": "Devices_Delete",
+        "operationId": "Devices_DeleteIdentity",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1157,7 +1157,7 @@
       "get": {
         "summary": "This method is used to retrieve feedback of a cloud-to-device message.",
         "description": "This method is used to retrieve feedback for cloud-to-device messages. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information. This capability is only available in the standard tier IoT Hub. For more information, see [Choose the right IoT Hub tier](https://aka.ms/scaleyouriotsolution).",
-        "operationId": "Messages_ReceiveFeedbackNotification",
+        "operationId": "CloudToDeviceMessages_ReceiveFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1181,7 +1181,7 @@
       "delete": {
         "summary": "This method completes a feedback message.",
         "description": "This method completes a cloud-to-device feedback message. A completed message is deleted from the service's feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
-        "operationId": "Messages_CompleteFeedbackNotification",
+        "operationId": "CloudToDeviceMessages_CompleteFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1209,7 +1209,7 @@
       "post": {
         "summary": "This method abandons a feedback message.",
         "description": "This method abandons a cloud-to-device feedback message. An abandoned message is deleted from the service's feedback queue. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging for more information.",
-        "operationId": "Messages_AbandonFeedbackNotification",
+        "operationId": "CloudToDeviceMessages_AbandonFeedbackNotification",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1411,7 +1411,7 @@
       "get": {
         "summary": "Retrieve the specified module identity on the device.",
         "description": "Get the specified module identity of the device.",
-        "operationId": "Modules_Get",
+        "operationId": "Modules_GetIdentity",
         "consumes": [],
         "produces": [
           "application/json"
@@ -1447,7 +1447,7 @@
       "put": {
         "summary": "Create or update the module identity for device in IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that moduleId and generation cannot be updated by the user.",
         "description": "Create or update the module identity for device in IoT hub. The moduleId and generation cannot be updated by the user.",
-        "operationId": "Modules_CreateOrUpdate",
+        "operationId": "Modules_CreateOrUpdateIdentity",
         "consumes": [
           "application/json"
         ],
@@ -1507,7 +1507,7 @@
       "delete": {
         "summary": "Delete the module identity for device of an IoT hub. This request requires the If-Match header. The client may specify the ETag for the device identity on the request in order to compare to the ETag maintained by the service for the purpose of optimistic concurrency. The delete operation is performed only if the ETag sent by the client matches the value maintained by the server, indicating that the device identity has not been modified since it was retrieved by the client. To force an unconditional delete, set If-Match to the wildcard character (*).",
         "description": "Delete the module identity for device of an IoT hub.",
-        "operationId": "Modules_Delete",
+        "operationId": "Modules_DeleteIdentity",
         "consumes": [],
         "produces": [
           "application/json"
