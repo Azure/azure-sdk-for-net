@@ -692,6 +692,58 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [Test]
+        [Ignore("Service bug: information about the blank page is not being returned.")]
+        public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(3, recognizedForms.Count);
+
+            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
+            {
+                var recognizedForm = recognizedForms[formIndex];
+                var expectedPageNumber = formIndex + 1;
+
+                ValidateRecognizedForm(recognizedForm, includeTextContent: true,
+                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+
+                // Basic sanity test to make sure pages are ordered correctly.
+
+                if (formIndex == 0 || formIndex == 2)
+                {
+                    var sampleField = recognizedForm.Fields["field-0"];
+                    var expectedValueText = formIndex == 0 ? "300.00" : "3000.00";
+
+                    Assert.IsNotNull(sampleField.LabelText);
+                    Assert.AreEqual("Subtotal:", sampleField.LabelText.Text);
+                    Assert.IsNotNull(sampleField.ValueText);
+                    Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
+                }
+            }
+
+            var blankForm = recognizedForms[1];
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
