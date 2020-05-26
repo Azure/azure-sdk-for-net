@@ -14,28 +14,25 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// The kind of the security setting
+    /// Describes an Azure resource with kind
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SettingResource")]
-    public partial class SettingResource : Resource
+    public partial class AzureResourceLink
     {
         /// <summary>
-        /// Initializes a new instance of the SettingResource class.
+        /// Initializes a new instance of the AzureResourceLink class.
         /// </summary>
-        public SettingResource()
+        public AzureResourceLink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SettingResource class.
+        /// Initializes a new instance of the AzureResourceLink class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public SettingResource(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="id">Azure resource Id</param>
+        public AzureResourceLink(string id = default(string))
         {
+            Id = id;
             CustomInit();
         }
 
@@ -43,6 +40,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets azure resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

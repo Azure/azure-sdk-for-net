@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of cloud to device messages (AMQP protocol) is not in allowed
     /// range.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AmqpC2DMessagesNotInAllowedRange")]
     public partial class AmqpC2DMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>
