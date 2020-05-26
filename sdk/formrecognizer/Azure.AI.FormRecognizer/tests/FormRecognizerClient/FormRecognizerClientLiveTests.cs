@@ -561,6 +561,35 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
+
+            var recognizedForm = recognizedForms.Single();
+
+            ValidateRecognizedForm(recognizedForm, includeTextContent: true,
+                expectedFirstPageNumber: 1, expectedLastPageNumber: 3);
+
+            for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
+            {
+                // Basic sanity test to make sure pages are ordered correctly.
+                // TODO: implement sanity check once #11821 is solved.
+            }
+        }
+
+        [Test]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
             var client = CreateInstrumentedFormRecognizerClient();
@@ -891,6 +920,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
             foreach (var field in recognizedForm.Fields.Values)
             {
+                if (field == null)
+                {
+                    continue;
+                }
+
                 Assert.NotNull(field.Name);
 
                 Assert.That(field.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
