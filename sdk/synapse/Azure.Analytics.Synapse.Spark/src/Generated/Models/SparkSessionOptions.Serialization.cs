@@ -31,11 +31,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WritePropertyName("artifactId");
                 writer.WriteStringValue(ArtifactId);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             if (File != null)
             {
                 writer.WritePropertyName("file");

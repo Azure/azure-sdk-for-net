@@ -21,9 +21,9 @@ namespace Azure.Analytics.Synapse.Development.Models
                 writer.WriteStringValue(ContinuationToken);
             }
             writer.WritePropertyName("lastUpdatedAfter");
-            writer.WriteStringValue(LastUpdatedAfter, "S");
+            writer.WriteStringValue(LastUpdatedAfter, "O");
             writer.WritePropertyName("lastUpdatedBefore");
-            writer.WriteStringValue(LastUpdatedBefore, "S");
+            writer.WriteStringValue(LastUpdatedBefore, "O");
             if (Filters != null)
             {
                 writer.WritePropertyName("filters");

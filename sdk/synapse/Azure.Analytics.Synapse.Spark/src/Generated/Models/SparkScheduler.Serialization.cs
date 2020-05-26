@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    submittedAt = property.Value.GetDateTimeOffset("S");
+                    submittedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("scheduledAt"))
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    scheduledAt = property.Value.GetDateTimeOffset("S");
+                    scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endedAt"))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    endedAt = property.Value.GetDateTimeOffset("S");
+                    endedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cancellationRequestedAt"))
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    cancellationRequestedAt = property.Value.GetDateTimeOffset("S");
+                    cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))

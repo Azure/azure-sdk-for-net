@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> Execute pipeline activity. </summary>
-    public partial class ExecutePipelineActivity : ControlActivity
+    public partial class ExecutePipelineActivity : Activity
     {
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
         /// <param name="name"> Activity name. </param>

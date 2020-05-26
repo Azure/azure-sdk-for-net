@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -13,8 +14,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkBatchJobOptions
     {
         /// <summary> Initializes a new instance of SparkBatchJobOptions. </summary>
-        public SparkBatchJobOptions()
+        /// <param name="name"> . </param>
+        /// <param name="file"> . </param>
+        public SparkBatchJobOptions(string name, string file)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
+            Name = name;
+            File = file;
         }
 
         /// <summary> Initializes a new instance of SparkBatchJobOptions. </summary>
@@ -57,8 +71,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; set; }
         public string ArtifactId { get; set; }
-        public string Name { get; set; }
-        public string File { get; set; }
+        public string Name { get; }
+        public string File { get; }
         public string ClassName { get; set; }
         public IList<string> Arguments { get; set; }
         public IList<string> Jars { get; set; }

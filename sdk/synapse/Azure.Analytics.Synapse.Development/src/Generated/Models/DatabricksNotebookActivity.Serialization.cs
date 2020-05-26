@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Development.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("NotebookPath");
+            writer.WritePropertyName("notebookPath");
             writer.WriteObjectValue(NotebookPath);
             if (BaseParameters != null)
             {
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                 {
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("NotebookPath"))
+                        if (property0.NameEquals("notebookPath"))
                         {
                             notebookPath = property0.Value.GetObject();
                             continue;

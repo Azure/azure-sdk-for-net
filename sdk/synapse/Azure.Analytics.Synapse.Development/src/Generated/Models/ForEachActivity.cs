@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> This activity is used for iterating over a collection and execute given activities. </summary>
-    public partial class ForEachActivity : ControlActivity
+    public partial class ForEachActivity : Activity
     {
         /// <summary> Initializes a new instance of ForEachActivity. </summary>
         /// <param name="name"> Activity name. </param>

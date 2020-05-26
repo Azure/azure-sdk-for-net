@@ -33,6 +33,6 @@ namespace Azure.Analytics.Synapse.Development.Models
         }
 
         /// <summary> Data flow properties. </summary>
-        public DataFlow Properties { get; set; }
+        public DataFlow Properties { get; }
     }
 }

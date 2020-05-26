@@ -33,6 +33,6 @@ namespace Azure.Analytics.Synapse.Development.Models
         }
 
         /// <summary> Properties of linked service. </summary>
-        public LinkedService Properties { get; set; }
+        public LinkedService Properties { get; }
     }
 }

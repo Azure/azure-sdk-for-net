@@ -47,9 +47,9 @@ namespace Azure.Analytics.Synapse.Development.Models
                 writer.WriteObjectValue(ParentTrigger);
             }
             writer.WritePropertyName("requestedStartTime");
-            writer.WriteStringValue(RequestedStartTime, "S");
+            writer.WriteStringValue(RequestedStartTime, "O");
             writer.WritePropertyName("requestedEndTime");
-            writer.WriteStringValue(RequestedEndTime, "S");
+            writer.WriteStringValue(RequestedEndTime, "O");
             writer.WritePropertyName("maxConcurrency");
             writer.WriteNumberValue(MaxConcurrency);
             writer.WriteEndObject();
@@ -134,12 +134,12 @@ namespace Azure.Analytics.Synapse.Development.Models
                         }
                         if (property0.NameEquals("requestedStartTime"))
                         {
-                            requestedStartTime = property0.Value.GetDateTimeOffset("S");
+                            requestedStartTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("requestedEndTime"))
                         {
-                            requestedEndTime = property0.Value.GetDateTimeOffset("S");
+                            requestedEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrency"))

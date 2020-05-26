@@ -23,6 +23,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                 throw new ArgumentNullException(nameof(content));
             }
 
+            Type = "SqlQuery";
             Content = content;
             AdditionalProperties = new Dictionary<string, object>();
         }

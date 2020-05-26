@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    notStartedAt = property.Value.GetDateTimeOffset("S");
+                    notStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("startingAt"))
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    startingAt = property.Value.GetDateTimeOffset("S");
+                    startingAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runningAt"))
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    runningAt = property.Value.GetDateTimeOffset("S");
+                    runningAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deadAt"))
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    deadAt = property.Value.GetDateTimeOffset("S");
+                    deadAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("successAt"))
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    successAt = property.Value.GetDateTimeOffset("S");
+                    successAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("killedAt"))
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    killedAt = property.Value.GetDateTimeOffset("S");
+                    killedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("recoveringAt"))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    recoveringAt = property.Value.GetDateTimeOffset("S");
+                    recoveringAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))

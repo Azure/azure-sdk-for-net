@@ -29,6 +29,7 @@ namespace Azure.Analytics.Synapse.Development.Models
 
             Server = server;
             Database = database;
+            AuthenticationType = "Basic";
             Type = "Db2";
         }
 

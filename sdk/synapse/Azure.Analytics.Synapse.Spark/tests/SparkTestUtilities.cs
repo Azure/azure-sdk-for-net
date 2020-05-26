@@ -18,10 +18,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// <returns></returns>
         internal static SparkBatchJobOptions CreateSparkJobRequestParameters(this SparkClientTestBase test)
         {
-            return new SparkBatchJobOptions
+            string name = test.Recording.GenerateName("dontnetbatch");
+            string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", test.TestEnvironment.StorageFileSystemName, test.TestEnvironment.StorageAccountName);
+            return new SparkBatchJobOptions(name, file)
             {
-                Name = test.Recording.GenerateName("dontnetbatch"),
-                File = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", test.TestEnvironment.StorageFileSystemName, test.TestEnvironment.StorageAccountName),
                 ClassName = "WordCount",
                 Arguments = new List<string>
                 {
@@ -43,9 +43,9 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// <returns></returns>
         internal static SparkSessionOptions CreateSparkSessionRequestParameters(this SparkClientTestBase test)
         {
-            return new SparkSessionOptions
+            string name = test.Recording.GenerateName("dotnetsession");
+            return new SparkSessionOptions(name)
             {
-                Name = test.Recording.GenerateName("dotnetsession"),
                 DriverMemory = "28g",
                 DriverCores = 4,
                 ExecutorMemory = "28g",

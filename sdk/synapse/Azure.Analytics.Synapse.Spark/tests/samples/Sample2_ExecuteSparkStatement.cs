@@ -29,9 +29,8 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:SparkSessionSample1StartSparkSession
-            var request = new SparkSessionOptions
+            var request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {
-                Name = $"session-{Guid.NewGuid()}",
                 DriverMemory = "28g",
                 DriverCores = 4,
                 ExecutorMemory = "28g",

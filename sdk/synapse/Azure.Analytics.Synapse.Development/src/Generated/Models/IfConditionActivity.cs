@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property depending on the result of the expression. </summary>
-    public partial class IfConditionActivity : ControlActivity
+    public partial class IfConditionActivity : Activity
     {
         /// <summary> Initializes a new instance of IfConditionActivity. </summary>
         /// <param name="name"> Activity name. </param>

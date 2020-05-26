@@ -42,10 +42,10 @@ namespace Azure.Analytics.Synapse.Development.Models
         }
 
         /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
-        public RunQueryFilterOperand Operand { get; set; }
+        public RunQueryFilterOperand Operand { get; }
         /// <summary> Operator to be used for filter. </summary>
-        public RunQueryFilterOperator Operator { get; set; }
+        public RunQueryFilterOperator Operator { get; }
         /// <summary> List of filter values. </summary>
-        public IList<string> Values { get; set; }
+        public IList<string> Values { get; }
     }
 }

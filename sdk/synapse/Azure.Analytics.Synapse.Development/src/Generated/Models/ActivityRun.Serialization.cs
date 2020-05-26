@@ -102,7 +102,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    activityRunStart = property.Value.GetDateTimeOffset("S");
+                    activityRunStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("activityRunEnd"))
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    activityRunEnd = property.Value.GetDateTimeOffset("S");
+                    activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -13,8 +14,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkSessionOptions
     {
         /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
-        public SparkSessionOptions()
+        /// <param name="name"> . </param>
+        public SparkSessionOptions(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
@@ -57,7 +65,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; set; }
         public string ArtifactId { get; set; }
-        public string Name { get; set; }
+        public string Name { get; }
         public string File { get; set; }
         public string ClassName { get; set; }
         public IList<string> Arguments { get; set; }

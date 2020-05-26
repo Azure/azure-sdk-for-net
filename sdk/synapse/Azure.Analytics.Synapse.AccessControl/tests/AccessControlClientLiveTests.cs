@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
             var principalId = Guid.NewGuid().ToString();
 
             // Create role assignment.
-            RoleAssignmentDetails actualRoleAssignment = await AccessControlClient.CreateRoleAssignmentAsync(new RoleAssignmentRequest(roleId:sqlAdminRoleId, principalId: principalId));
+            RoleAssignmentDetails actualRoleAssignment = await AccessControlClient.CreateRoleAssignmentAsync(new RoleAssignmentOptions(roleId:sqlAdminRoleId, principalId: principalId));
 
             // Verify the role assignment exists.
             Assert.NotNull(actualRoleAssignment);

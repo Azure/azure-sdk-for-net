@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Development.Models
     {
         /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="notebookPath"> The absolute path of the Notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
+        /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         public DatabricksNotebookActivity(string name, object notebookPath) : base(name)
         {
             if (name == null)
@@ -40,8 +40,8 @@ namespace Azure.Analytics.Synapse.Development.Models
         /// <param name="additionalProperties"> . </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="notebookPath"> The absolute path of the Notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
-        /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the Notebook takes a parameter that is not specified, the default value from the Notebook will be used. </param>
+        /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
+        /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         internal DatabricksNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object notebookPath, IDictionary<string, object> baseParameters, IList<IDictionary<string, object>> libraries) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Development.Models
             Type = type ?? "DatabricksNotebook";
         }
 
-        /// <summary> The absolute path of the Notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public object NotebookPath { get; set; }
-        /// <summary> Base parameters to be used for each run of this job.If the Notebook takes a parameter that is not specified, the default value from the Notebook will be used. </summary>
+        /// <summary> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </summary>
         public IDictionary<string, object> BaseParameters { get; set; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
         public IList<IDictionary<string, object>> Libraries { get; set; }

@@ -36,10 +36,10 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:SparkBatchSample1SubmitSparkJob
-            var request = new SparkBatchJobOptions
+            string name = $"batch-{Guid.NewGuid()}";
+            string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
+            var request = new SparkBatchJobOptions(name, file)
             {
-                Name = $"batch-{Guid.NewGuid()}",
-                File = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount),
                 ClassName = "WordCount",
                 Arguments = new List<string>
                 {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> This activity verifies that an external resource exists. </summary>
-    public partial class ValidationActivity : ControlActivity
+    public partial class ValidationActivity : Activity
     {
         /// <summary> Initializes a new instance of ValidationActivity. </summary>
         /// <param name="name"> Activity name. </param>

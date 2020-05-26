@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> Append value for a Variable of type Array. </summary>
-    public partial class AppendVariableActivity : ControlActivity
+    public partial class AppendVariableActivity : Activity
     {
         /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
         /// <param name="name"> Activity name. </param>

@@ -40,9 +40,9 @@ namespace Azure.Analytics.Synapse.Development.Models
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
         public string ContinuationToken { get; set; }
         /// <summary> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </summary>
-        public DateTimeOffset LastUpdatedAfter { get; set; }
+        public DateTimeOffset LastUpdatedAfter { get; }
         /// <summary> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </summary>
-        public DateTimeOffset LastUpdatedBefore { get; set; }
+        public DateTimeOffset LastUpdatedBefore { get; }
         /// <summary> List of filters. </summary>
         public IList<RunQueryFilter> Filters { get; set; }
         /// <summary> List of OrderBy option. </summary>

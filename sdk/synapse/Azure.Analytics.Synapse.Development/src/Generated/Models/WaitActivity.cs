@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> This activity suspends pipeline execution for the specified interval. </summary>
-    public partial class WaitActivity : ControlActivity
+    public partial class WaitActivity : Activity
     {
         /// <summary> Initializes a new instance of WaitActivity. </summary>
         /// <param name="name"> Activity name. </param>

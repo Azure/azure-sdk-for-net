@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:AccessControlSample1AddRoleAssignment
             string principalId = Guid.NewGuid().ToString();
-            var request = new RoleAssignmentRequest(roleId:role.Id, principalId:principalId);
+            var request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
             RoleAssignmentDetails roleAssignmentAdded = client.CreateRoleAssignment(request);
             #endregion
 

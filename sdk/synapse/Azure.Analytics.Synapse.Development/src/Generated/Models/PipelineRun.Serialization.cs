@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    lastUpdated = property.Value.GetDateTimeOffset("S");
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runStart"))
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    runStart = property.Value.GetDateTimeOffset("S");
+                    runStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("runEnd"))
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    runEnd = property.Value.GetDateTimeOffset("S");
+                    runEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))

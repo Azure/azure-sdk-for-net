@@ -17,9 +17,9 @@ namespace Azure.Analytics.Synapse.Development.Models
     {
         /// <summary> Initializes a new instance of Notebook. </summary>
         /// <param name="metadata"> Notebook root-level metadata. </param>
-        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the Notebook format. </param>
-        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the Notebook format. </param>
-        /// <param name="cells"> Array of cells of the current Notebook. </param>
+        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
+        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
+        /// <param name="cells"> Array of cells of the current notebook. </param>
         public Notebook(NotebookMetadata metadata, int nbformat, int nbformatMinor, IEnumerable<NotebookCell> cells)
         {
             if (metadata == null)
@@ -39,13 +39,13 @@ namespace Azure.Analytics.Synapse.Development.Models
         }
 
         /// <summary> Initializes a new instance of Notebook. </summary>
-        /// <param name="description"> The description of the Notebook. </param>
+        /// <param name="description"> The description of the notebook. </param>
         /// <param name="bigDataPool"> Big data pool reference. </param>
         /// <param name="sessionProperties"> Session properties. </param>
         /// <param name="metadata"> Notebook root-level metadata. </param>
-        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the Notebook format. </param>
-        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the Notebook format. </param>
-        /// <param name="cells"> Array of cells of the current Notebook. </param>
+        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
+        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
+        /// <param name="cells"> Array of cells of the current notebook. </param>
         /// <param name="additionalProperties"> . </param>
         internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int nbformat, int nbformatMinor, IList<NotebookCell> cells, IDictionary<string, object> additionalProperties)
         {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Development.Models
             AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
-        /// <summary> The description of the Notebook. </summary>
+        /// <summary> The description of the notebook. </summary>
         public string Description { get; set; }
         /// <summary> Big data pool reference. </summary>
         public BigDataPoolReference BigDataPool { get; set; }
@@ -67,11 +67,11 @@ namespace Azure.Analytics.Synapse.Development.Models
         public NotebookSessionProperties SessionProperties { get; set; }
         /// <summary> Notebook root-level metadata. </summary>
         public NotebookMetadata Metadata { get; set; }
-        /// <summary> Notebook format (major number). Incremented between backwards incompatible changes to the Notebook format. </summary>
+        /// <summary> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </summary>
         public int Nbformat { get; set; }
-        /// <summary> Notebook format (minor number). Incremented for backward compatible changes to the Notebook format. </summary>
+        /// <summary> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </summary>
         public int NbformatMinor { get; set; }
-        /// <summary> Array of cells of the current Notebook. </summary>
+        /// <summary> Array of cells of the current notebook. </summary>
         public IList<NotebookCell> Cells { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />

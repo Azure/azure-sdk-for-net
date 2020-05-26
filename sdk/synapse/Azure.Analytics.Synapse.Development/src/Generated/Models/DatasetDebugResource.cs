@@ -33,6 +33,6 @@ namespace Azure.Analytics.Synapse.Development.Models
         }
 
         /// <summary> Dataset properties. </summary>
-        public Dataset Properties { get; set; }
+        public Dataset Properties { get; }
     }
 }

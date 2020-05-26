@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    triggerRunTimestamp = property.Value.GetDateTimeOffset("S");
+                    triggerRunTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"))

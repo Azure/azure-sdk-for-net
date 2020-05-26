@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Analytics.Synapse.AccessControl;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.IO;

@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Development.Models
 {
-    /// <summary> An item of the Notebook cell execution output. </summary>
+    /// <summary> An item of the notebook cell execution output. </summary>
     public partial class NotebookCellOutputItem
     {
         /// <summary> Initializes a new instance of NotebookCellOutputItem. </summary>

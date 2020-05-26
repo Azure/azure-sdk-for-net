@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Development.Models
 {
     /// <summary> This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation expected in the equals property. </summary>
-    public partial class SwitchActivity : ControlActivity
+    public partial class SwitchActivity : Activity
     {
         /// <summary> Initializes a new instance of SwitchActivity. </summary>
         /// <param name="name"> Activity name. </param>

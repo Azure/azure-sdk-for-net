@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    preparationStartedAt = property.Value.GetDateTimeOffset("S");
+                    preparationStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("resourceAcquisitionStartedAt"))
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("S");
+                    resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("submissionStartedAt"))
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    submissionStartedAt = property.Value.GetDateTimeOffset("S");
+                    submissionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("monitoringStartedAt"))
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    monitoringStartedAt = property.Value.GetDateTimeOffset("S");
+                    monitoringStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cleanupStartedAt"))
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Development.Models
                     {
                         continue;
                     }
-                    cleanupStartedAt = property.Value.GetDateTimeOffset("S");
+                    cleanupStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))

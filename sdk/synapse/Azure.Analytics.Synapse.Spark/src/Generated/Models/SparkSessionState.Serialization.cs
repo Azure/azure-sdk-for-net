@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    notStartedAt = property.Value.GetDateTimeOffset("S");
+                    notStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("startingAt"))
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    startingAt = property.Value.GetDateTimeOffset("S");
+                    startingAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("idleAt"))
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    idleAt = property.Value.GetDateTimeOffset("S");
+                    idleAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deadAt"))
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    deadAt = property.Value.GetDateTimeOffset("S");
+                    deadAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("shuttingDownAt"))
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    shuttingDownAt = property.Value.GetDateTimeOffset("S");
+                    shuttingDownAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("killedAt"))
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    killedAt = property.Value.GetDateTimeOffset("S");
+                    killedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("recoveringAt"))
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    recoveringAt = property.Value.GetDateTimeOffset("S");
+                    recoveringAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("busyAt"))
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    busyAt = property.Value.GetDateTimeOffset("S");
+                    busyAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("errorAt"))
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     {
                         continue;
                     }
-                    errorAt = property.Value.GetDateTimeOffset("S");
+                    errorAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("currentState"))
