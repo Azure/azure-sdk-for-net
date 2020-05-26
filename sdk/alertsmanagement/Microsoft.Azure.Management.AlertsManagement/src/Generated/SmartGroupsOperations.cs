@@ -139,7 +139,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -158,7 +157,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 tracingParameters.Add("pageCount", pageCount);
                 tracingParameters.Add("sortBy", sortBy);
                 tracingParameters.Add("sortOrder", sortOrder);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAll", tracingParameters);
             }
@@ -211,9 +209,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 _queryParameters.Add(string.Format("sortOrder={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(sortOrder, Client.SerializationSettings).Trim('"'))));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -382,7 +380,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "smartGroupId");
             }
-            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -391,7 +388,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("smartGroupId", smartGroupId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
@@ -401,9 +397,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{smartGroupId}", System.Uri.EscapeDataString(smartGroupId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -590,7 +586,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "newState");
             }
-            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -599,7 +594,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("smartGroupId", smartGroupId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("newState", newState);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ChangeState", tracingParameters);
@@ -610,9 +604,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{smartGroupId}", System.Uri.EscapeDataString(smartGroupId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (newState != null)
             {
@@ -796,7 +790,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "smartGroupId");
             }
-            string apiVersion = "2019-05-05-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -805,7 +798,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("smartGroupId", smartGroupId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetHistory", tracingParameters);
             }
@@ -815,9 +807,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{smartGroupId}", System.Uri.EscapeDataString(smartGroupId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
