@@ -189,10 +189,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Constants.KB, progressReporter.List[1]);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        [Explicit]
         public async Task QueryAsync_QueryTextConfigurations()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -275,10 +274,9 @@ namespace Azure.Storage.Blobs.Test
             s = await streamReader2.ReadToEndAsync();
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        [Explicit]
         public async Task QueryAsync_FatalError()
         {
             // Arrange
