@@ -68,7 +68,7 @@ var notebook = new Notebook(new NotebookMetadata
 nbformat: 4,
 nbformatMinor: 2,
 new List<NotebookCell>());
-NotebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
+NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
 ```
 
 ### Retrieve a notebook
@@ -76,14 +76,14 @@ NotebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(noteboo
 `GetNoteBook` retrieves a notebook.
 
 ```C# Snippet:RetrieveNotebook
-NotebookResource notebook = NotebookClient.GetNotebook("MyNotebook");
+NotebookResource notebook = notebookClient.GetNotebook("MyNotebook");
 ```
 
 ### List notebooks
 `GetNotebooksByWorkspace` enumerates the notebooks in the Synapse workspace.
 
-```C# Snippet:ListRoleAssignments
-var notebooks = NotebookClient.GetNotebooksByWorkspace();
+```C# Snippet:ListNotbooks
+var notebooks = notebookClient.GetNotebooksByWorkspace();
 foreach (var notebook in notebooks)
 {
     System.Console.WriteLine(notebook.Name);

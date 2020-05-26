@@ -37,7 +37,7 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Key Vault service, you'll need to create an instance of the [CertificateClient][certificate_client_class] class. You need a **vault url**, which you may see as "DNS Name" in the portal,
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [AccessControlClient][accesscontrol_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
@@ -46,12 +46,6 @@ or other credential providers provided with the Azure SDK, you should install th
 ```PowerShell
 Install-Package Azure.Identity
 ```
-
-## Prerequisites
-
-- Microsoft Azure Subscription: To call Microsoft Azure services, including Azure Synapse, you need to first [create an account](https://account.windowsazure.com/Home/Index). If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits.
-
-- The Azure Synapse client library shares the same [Prerequisites](https://github.com/azure/azure-sdk-for-net#prerequisites) as the Microsoft Azure SDK for .NET.
 
 ## Examples
 The Azure.Analytics.Synapse.AccessControl package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics access control related tasks:
@@ -67,8 +61,8 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 `CreateRoleAssignment` creates a role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-var request = new RoleAssignmentRequest(roleId:role.Id, principalId:principalId);
-RoleAssignmentDetails roleAssignmentAdded = client.CreateRoleAssignment(request);
+var options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
 ```
 
 ### Retrieve a role assignment

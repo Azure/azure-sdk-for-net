@@ -16,5 +16,6 @@ namespace Azure.Analytics.Synapse.Tests
         public string SparkPoolName => GetRecordedVariable("AZURE_SYNAPSE_SPARK_POOL_NAME");
         public string StorageAccountName => GetRecordedVariable("AZURE_STORAGE_ACCOUNT_NAME");
         public string StorageFileSystemName => GetRecordedVariable("AZURE_STORAGE_FILE_SYSTEM_NAME");
+        public string PrincipalId => GetRecordedVariable("AZURE_SYNAPSE_PRINCIPAL_ID");
     }
 }
