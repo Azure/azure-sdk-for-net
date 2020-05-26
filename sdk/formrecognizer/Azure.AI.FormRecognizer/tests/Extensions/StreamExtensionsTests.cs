@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void TryGetContentTypeDetectsPdf()
         {
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoicePdf);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFilename.InvoicePdf);
 
             Assert.True(stream.TryGetContentType(out var contentType));
             Assert.AreEqual(ContentType.Pdf, contentType);
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void TryGetContentTypeDetectsPng()
         {
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.ReceiptPng);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFilename.ReceiptPng);
 
             Assert.True(stream.TryGetContentType(out var contentType));
             Assert.AreEqual(ContentType.Png, contentType);
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void TryGetContentTypeDetectsJpeg()
         {
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.ReceiptJpg);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFilename.ReceiptJpg);
 
             Assert.True(stream.TryGetContentType(out var contentType));
             Assert.AreEqual(ContentType.Jpeg, contentType);
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void TryGetContentTypeDetectsLittleEndianTiff()
         {
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestForm.InvoiceLeTiff);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFilename.InvoiceLeTiff);
 
             Assert.True(stream.TryGetContentType(out var contentType));
             Assert.AreEqual(ContentType.Tiff, contentType);

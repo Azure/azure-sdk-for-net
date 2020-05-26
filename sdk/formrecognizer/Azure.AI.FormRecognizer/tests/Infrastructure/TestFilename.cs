@@ -8,7 +8,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// A single constant string must be added to this class for each new form added to the
     /// test assets folder.
     /// </summary>
-    public static class TestForm
+    public static class TestFilename
     {
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
