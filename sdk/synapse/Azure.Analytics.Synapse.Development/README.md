@@ -63,7 +63,7 @@ The Azure.Analytics.Synapse.Development package supports synchronous and asynchr
 ```C# Snippet:CreateNotebook
 var notebook = new Notebook(new NotebookMetadata
 {
-    LanguageInfo = new NotebookLanguageInfo(name:"Python")
+    LanguageInfo = new NotebookLanguageInfo(name: "Python")
 },
 nbformat: 4,
 nbformatMinor: 2,
@@ -82,7 +82,7 @@ NotebookResource notebook = notebookClient.GetNotebook("MyNotebook");
 ### List notebooks
 `GetNotebooksByWorkspace` enumerates the notebooks in the Synapse workspace.
 
-```C# Snippet:ListNotbooks
+```C# Snippet:ListNotebooks
 var notebooks = notebookClient.GetNotebooksByWorkspace();
 foreach (var notebook in notebooks)
 {
@@ -95,7 +95,7 @@ foreach (var notebook in notebooks)
 `DeleteNotebook` deletes a notebook.
 
 ```C# Snippet:DeleteNotebook
-NotebookClient.DeleteNotebook("MyNotebook");
+notebookClient.DeleteNotebook("MyNotebook");
 ```
 
 ## To build

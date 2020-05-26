@@ -61,7 +61,7 @@ The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 List the spark batch job under the specific spark pool of a specific synapse workspace
 
 ```C# Snippet:ListSparkBatchJobs
-var jobs = client.GetSparkBatchJobs();
+var jobs = batchClient.GetSparkBatchJobs();
 foreach (var job in jobs.Value.Sessions)
 {
     Console.WriteLine(job.Name);
