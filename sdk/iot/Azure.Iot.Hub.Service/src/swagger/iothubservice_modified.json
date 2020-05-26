@@ -178,7 +178,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ConfigurationQueriesTestInput"
+              "$ref": "#/definitions/TwinConfigurationQueriesTestInput"
             },
             "description": "Configuration query for target condition or custom metrics."
           },
@@ -190,7 +190,7 @@
           "200": {
             "description": "Returns the configuration queries test response.",
             "schema": {
-              "$ref": "#/definitions/ConfigurationQueriesTestResponse"
+              "$ref": "#/definitions/TwinConfigurationQueriesTestResponse"
             }
           }
         }
@@ -519,7 +519,7 @@
             "description": "Configuration Content.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ConfigurationContent"
+              "$ref": "#/definitions/TwinConfigurationContent"
             }
           },
           {
@@ -1796,7 +1796,7 @@
     }
   },
   "definitions": {
-    "ConfigurationMetrics": {
+    "TwinConfigurationMetrics": {
       "description": "Configuration Metrics for IotHub devices and modules.",
       "type": "object",
       "properties": {
@@ -1837,7 +1837,7 @@
           }
         },
         "content": {
-          "$ref": "#/definitions/ConfigurationContent",
+          "$ref": "#/definitions/TwinConfigurationContent",
           "description": "Content of the configuration."
         },
         "targetCondition": {
@@ -1862,11 +1862,11 @@
           "type": "integer"
         },
         "systemMetrics": {
-          "$ref": "#/definitions/ConfigurationMetrics",
+          "$ref": "#/definitions/TwinConfigurationMetrics",
           "description": "Metrics calculated by IoT Hub that cannot be customized."
         },
         "metrics": {
-          "$ref": "#/definitions/ConfigurationMetrics",
+          "$ref": "#/definitions/TwinConfigurationMetrics",
           "description": "Custom metrics specified by developer as queries against twin reported properties"
         },
         "etag": {
@@ -1875,7 +1875,7 @@
         }
       }
     },
-    "ConfigurationContent": {
+    "TwinConfigurationContent": {
       "description": "Configuration Content for Devices or Modules on Edge Devices.",
       "type": "object",
       "properties": {
@@ -1905,7 +1905,7 @@
         }
       }
     },
-    "ConfigurationQueriesTestInput": {
+    "TwinConfigurationQueriesTestInput": {
       "type": "object",
       "properties": {
         "targetCondition": {
@@ -1921,7 +1921,7 @@
         }
       }
     },
-    "ConfigurationQueriesTestResponse": {
+    "TwinConfigurationQueriesTestResponse": {
       "type": "object",
       "properties": {
         "targetConditionError": {
