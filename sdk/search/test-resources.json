@@ -40,13 +40,45 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "searchSku": {
+            "type": "string",
+            "defaultValue": "free",
+            "allowedValues": [
+                "free",
+                "basic",
+                "standard"
+            ],
+            "metadata": {
+                "description": "The Search service SKU to create."
+            }
         }
     },
     "variables": {
+        "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
+        "searchApiVersion": "2020-03-13",
         "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
         "storageApiVersion": "2019-06-01"
     },
     "resources": [
+        {
+            "name": "[variables('searchServiceName')]",
+            "type": "Microsoft.Search/searchServices",
+            "apiVersion": "[variables('searchApiVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('searchSku')]"
+            },
+            "properties": {
+                "replicaCount": 1,
+                "partitionCount": 1,
+                "hostingMode": "Default",
+                "publicNetworkAccess": "Enabled",
+                "networkRuleSet": {
+                    "ipRules": []
+                }
+            }
+        },
         {
             "name": "[variables('storageAccountName')]",
             "type": "Microsoft.Storage/storageAccounts",
@@ -63,6 +95,18 @@
         }
     ],
     "outputs": {
+        "SEARCH_SERVICE_NAME": {
+            "type": "string",
+            "value": "[variables('searchServiceName')]"
+        },
+        "SEARCH_ADMIN_API_KEY": {
+            "type": "string",
+            "value": "[listAdminKeys(variables('searchServiceName'), variables('searchApiVersion')).primaryKey]"
+        },
+        "SEARCH_QUERY_API_KEY": {
+            "type": "string",
+            "value": "[listQueryKeys(variables('searchServiceName'), variables('searchApiVersion')).value[0].key]"
+        },
         "SEARCH_STORAGE_NAME": {
             "type": "string",
             "value": "[variables('storageAccountName')]"

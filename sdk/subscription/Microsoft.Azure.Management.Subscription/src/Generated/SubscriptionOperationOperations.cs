@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2018-11-01-preview";
+            string apiVersion = "2019-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

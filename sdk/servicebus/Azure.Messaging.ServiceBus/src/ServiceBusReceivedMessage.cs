@@ -13,6 +13,11 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
+        /// <summary>
+        /// Indicates whether the user has settled the message as part of their callback.
+        /// If they have done so, we will not autocomplete.
+        /// </summary>
+        internal bool IsSettled { get; set; }
 
         internal ServiceBusMessage SentMessage { get; set; } = new ServiceBusMessage();
 

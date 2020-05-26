@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
     internal partial class DataSourceCredentials

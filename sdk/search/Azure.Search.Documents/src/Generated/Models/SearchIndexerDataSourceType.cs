@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the type of a datasource. </summary>
     public readonly partial struct SearchIndexerDataSourceType : IEquatable<SearchIndexerDataSourceType>

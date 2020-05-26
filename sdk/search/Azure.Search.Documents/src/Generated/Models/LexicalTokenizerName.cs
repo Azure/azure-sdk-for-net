@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all tokenizers supported by Azure Cognitive Search. </summary>
     public readonly partial struct LexicalTokenizerName : IEquatable<LexicalTokenizerName>

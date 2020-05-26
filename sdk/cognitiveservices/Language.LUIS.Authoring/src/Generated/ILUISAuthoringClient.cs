@@ -76,11 +76,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         ITrain Train { get; }
 
         /// <summary>
-        /// Gets the IPermissions.
-        /// </summary>
-        IPermissions Permissions { get; }
-
-        /// <summary>
         /// Gets the IPattern.
         /// </summary>
         IPattern Pattern { get; }

@@ -3,7 +3,9 @@
 
 using System;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -35,14 +37,57 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormTrainingClient"/> constructors.
+        /// </summary>
         [Test]
-        public void CreateClientArgumentValidation()
+        public void ConstructorRequiresTheEndpoint()
         {
-            var uri = new Uri("http://localhost");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(null, new AzureKeyCredential("apiKey")));
-            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(uri, null));
-            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(uri, new AzureKeyCredential("apiKey"), null));
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(null, tokenCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(null, tokenCredential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(null, keyCredential));
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(null, keyCredential, new FormRecognizerClientOptions()));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormTrainingClient"/> constructors.
+        /// </summary>
+        [Test]
+        public void ConstructorRequiresTheTokenCredential()
+        {
+            var endpoint = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(endpoint, default(TokenCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormTrainingClient(endpoint, default(TokenCredential), new FormRecognizerClientOptions()));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormTrainingClient"/> constructors.
+        /// </summary>
+        [Test]
+        public void ConstructorRequiresTheAzureKeyCredential()
+        {
+            var endpoint = new Uri("http://localhost");
+
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential)));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, default(AzureKeyCredential), new FormRecognizerClientOptions()));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormTrainingClient"/> constructors.
+        /// </summary>
+        [Test]
+        public void ConstructorRequiresTheOptions()
+        {
+            var endpoint = new Uri("http://localhost");
+            var tokenCredential = new DefaultAzureCredential();
+            var keyCredential = new AzureKeyCredential("key");
+
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, tokenCredential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
         [Test]
@@ -77,12 +122,36 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void CreateFormRecognizerClientFromFormTrainingClient()
         {
-            FormTrainingClient trainingClient = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri("http://localhost"), new AzureKeyCredential("key"));
             FormRecognizerClient formRecognizerClient = trainingClient.GetFormRecognizerClient();
 
             Assert.IsNotNull(formRecognizerClient);
             Assert.IsNotNull(formRecognizerClient.Diagnostics);
             Assert.IsNotNull(formRecognizerClient.ServiceClient);
+        }
+
+        [Test]
+        public void StartCopyModelArgumentValidation()
+        {
+            FormTrainingClient client = CreateInstrumentedClient();
+            var copyAuth = new CopyAuthorization("<modelId>", "<accesstoken>", default, "<resourceId>", "<region>");
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync(null, copyAuth));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync(string.Empty, copyAuth));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync("<modelId>", default));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync("1975-04-04", copyAuth));
+        }
+
+        [Test]
+        public void GetCopyAuthorizationArgumentValidation()
+        {
+            FormTrainingClient client = CreateInstrumentedClient();
+            var text = "text";
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCopyAuthorizationAsync(null, text));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCopyAuthorizationAsync(string.Empty, text));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCopyAuthorizationAsync(text, null));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCopyAuthorizationAsync(text, string.Empty));
         }
     }
 }

@@ -7665,7 +7665,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -7931,7 +7931,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-requires-sync", "true");
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -8354,9 +8354,9 @@ namespace Azure.Storage.Blobs
             }
             #endregion Blob.SetAccessTierAsync
 
-            #region Blob.QuickQueryAsync
+            #region Blob.QueryAsync
             /// <summary>
-            /// The QuickQuery operation enables users to select/project on blob data by providing simple query expressions.
+            /// The Query operation enables users to select/project on blob data by providing simple query expressions.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
@@ -8377,8 +8377,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobQuickQueryResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobQuickQueryResult>> QuickQueryAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobQueryResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobQueryResult>> QueryAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8396,7 +8396,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "BlobClient.QuickQuery",
+                string operationName = "BlobClient.Query",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -8404,7 +8404,7 @@ namespace Azure.Storage.Blobs
                 {
                     _scope.AddAttribute("url", resourceUri);
                     _scope.Start();
-                    using (Azure.Core.HttpMessage _message = QuickQueryAsync_CreateMessage(
+                    using (Azure.Core.HttpMessage _message = QueryAsync_CreateMessage(
                         pipeline,
                         resourceUri,
                         version,
@@ -8434,7 +8434,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return QuickQueryAsync_CreateResponse(clientDiagnostics, _response);
+                        return QueryAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8449,7 +8449,7 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.QuickQueryAsync request.
+            /// Create the Blob.QueryAsync request.
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
@@ -8466,8 +8466,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <returns>The Blob.QuickQueryAsync Message.</returns>
-            internal static Azure.Core.HttpMessage QuickQueryAsync_CreateMessage(
+            /// <returns>The Blob.QueryAsync Message.</returns>
+            internal static Azure.Core.HttpMessage QueryAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string version,
@@ -8531,12 +8531,12 @@ namespace Azure.Storage.Blobs
             }
 
             /// <summary>
-            /// Create the Blob.QuickQueryAsync response or throw a failure exception.
+            /// Create the Blob.QueryAsync response or throw a failure exception.
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.QuickQueryAsync Azure.Response{Azure.Storage.Blobs.Models.BlobQuickQueryResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobQuickQueryResult> QuickQueryAsync_CreateResponse(
+            /// <returns>The Blob.QueryAsync Azure.Response{Azure.Storage.Blobs.Models.BlobQueryResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobQueryResult> QueryAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -8546,7 +8546,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobQuickQueryResult _value = new Azure.Storage.Blobs.Models.BlobQuickQueryResult();
+                        Azure.Storage.Blobs.Models.BlobQueryResult _value = new Azure.Storage.Blobs.Models.BlobQueryResult();
                         _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
@@ -8674,7 +8674,7 @@ namespace Azure.Storage.Blobs
                     case 206:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobQuickQueryResult _value = new Azure.Storage.Blobs.Models.BlobQuickQueryResult();
+                        Azure.Storage.Blobs.Models.BlobQueryResult _value = new Azure.Storage.Blobs.Models.BlobQueryResult();
                         _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
@@ -8819,7 +8819,7 @@ namespace Azure.Storage.Blobs
                     }
                 }
             }
-            #endregion Blob.QuickQueryAsync
+            #endregion Blob.QueryAsync
 
             #region Blob.GetTagsAsync
             /// <summary>
@@ -10213,7 +10213,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-source-range", sourceRange);
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-range", range);
@@ -10671,7 +10671,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
-                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.ToString()); }
+                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.AbsoluteUri); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11279,7 +11279,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -12119,7 +12119,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", version);
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
@@ -13154,7 +13154,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
@@ -15224,13 +15224,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobGetAccessControlResult
 
-#region class BlobQuickQueryResult
+#region class BlobQueryResult
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Blob QuickQueryResult
+    /// Blob QueryResult
     /// </summary>
-    internal partial class BlobQuickQueryResult
+    internal partial class BlobQueryResult
     {
         /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -15389,15 +15389,15 @@ namespace Azure.Storage.Blobs.Models
         public System.IO.Stream Body { get; internal set; }
 
         /// <summary>
-        /// Creates a new BlobQuickQueryResult instance
+        /// Creates a new BlobQueryResult instance
         /// </summary>
-        public BlobQuickQueryResult()
+        public BlobQueryResult()
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
-#endregion class BlobQuickQueryResult
+#endregion class BlobQueryResult
 
 #region class BlobRenameResult
 namespace Azure.Storage.Blobs.Models
@@ -20350,7 +20350,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The service error response object.
         /// </summary>
-        public Azure.Storage.Blobs.Models.Error Error { get; internal set; }
+        public Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails DataLakeStorageErrorDetails { get; internal set; }
 
         /// <summary>
         /// Creates a new DataLakeStorageError instance
@@ -20368,7 +20368,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Error = new Azure.Storage.Blobs.Models.Error();
+                DataLakeStorageErrorDetails = new Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails();
             }
         }
 
@@ -20385,7 +20385,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("error", ""));
             if (_child != null)
             {
-                _value.Error = Azure.Storage.Blobs.Models.Error.FromXml(_child);
+                _value.DataLakeStorageErrorDetails = Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -20395,6 +20395,59 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class DataLakeStorageError
+
+#region class DataLakeStorageErrorDetails
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The service error response object.
+    /// </summary>
+    internal partial class DataLakeStorageErrorDetails
+    {
+        /// <summary>
+        /// The service error code.
+        /// </summary>
+        public string Code { get; internal set; }
+
+        /// <summary>
+        /// The service error message.
+        /// </summary>
+        public string Message { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of DataLakeStorageErrorDetails instances.
+        /// You can use BlobsModelFactory.DataLakeStorageErrorDetails instead.
+        /// </summary>
+        internal DataLakeStorageErrorDetails() { }
+
+        /// <summary>
+        /// Deserializes XML into a new DataLakeStorageErrorDetails instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized DataLakeStorageErrorDetails instance.</returns>
+        internal static Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails _value = new Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails();
+            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
+            if (_child != null)
+            {
+                _value.Code = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
+            if (_child != null)
+            {
+                _value.Message = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.DataLakeStorageErrorDetails value);
+    }
+}
+#endregion class DataLakeStorageErrorDetails
 
 #region enum DeleteSnapshotsOption
 namespace Azure.Storage.Blobs.Models
@@ -22247,86 +22300,18 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum PublicAccessType
 
-#region class QueryRequest
+#region class QueryFormat
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// the quick query body
+    /// QueryFormat
     /// </summary>
-    internal partial class QueryRequest
-    {
-        /// <summary>
-        /// the query type
-        /// </summary>
-        public string QueryType { get; set; }
-
-        /// <summary>
-        /// a query statement
-        /// </summary>
-        public string Expression { get; set; }
-
-        /// <summary>
-        /// InputSerialization
-        /// </summary>
-        public Azure.Storage.Blobs.Models.QuickQuerySerialization InputSerialization { get; set; }
-
-        /// <summary>
-        /// OutputSerialization
-        /// </summary>
-        public Azure.Storage.Blobs.Models.QuickQuerySerialization OutputSerialization { get; set; }
-
-        /// <summary>
-        /// Creates a new QueryRequest instance
-        /// </summary>
-        public QueryRequest()
-        {
-            InputSerialization = new Azure.Storage.Blobs.Models.QuickQuerySerialization();
-            OutputSerialization = new Azure.Storage.Blobs.Models.QuickQuerySerialization();
-        }
-
-        /// <summary>
-        /// Serialize a QueryRequest instance as XML.
-        /// </summary>
-        /// <param name="value">The QueryRequest instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QueryRequest".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QueryRequest value, string name = "QueryRequest", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("QueryType", ""),
-                value.QueryType));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Expression", ""),
-                value.Expression));
-            if (value.InputSerialization != null)
-            {
-                _element.Add(Azure.Storage.Blobs.Models.QuickQuerySerialization.ToXml(value.InputSerialization, "InputSerialization", ""));
-            }
-            if (value.OutputSerialization != null)
-            {
-                _element.Add(Azure.Storage.Blobs.Models.QuickQuerySerialization.ToXml(value.OutputSerialization, "OutputSerialization", ""));
-            }
-            return _element;
-        }
-    }
-}
-#endregion class QueryRequest
-
-#region class QuickQueryFormat
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// QuickQueryFormat
-    /// </summary>
-    internal partial class QuickQueryFormat
+    internal partial class QueryFormat
     {
         /// <summary>
         /// The quick query format type.
         /// </summary>
-        public Azure.Storage.Blobs.Models.QuickQueryFormatType? Type { get; set; }
+        public Azure.Storage.Blobs.Models.QueryFormatType? Type { get; set; }
 
         /// <summary>
         /// delimited text configuration
@@ -22339,22 +22324,22 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
 
         /// <summary>
-        /// Creates a new QuickQueryFormat instance
+        /// Creates a new QueryFormat instance
         /// </summary>
-        public QuickQueryFormat()
+        public QueryFormat()
         {
             DelimitedTextConfiguration = new Azure.Storage.Blobs.Models.DelimitedTextConfigurationInternal();
             JsonTextConfiguration = new Azure.Storage.Blobs.Models.JsonTextConfigurationInternal();
         }
 
         /// <summary>
-        /// Serialize a QuickQueryFormat instance as XML.
+        /// Serialize a QueryFormat instance as XML.
         /// </summary>
-        /// <param name="value">The QuickQueryFormat instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QuickQueryFormat".</param>
+        /// <param name="value">The QueryFormat instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "QueryFormat".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QuickQueryFormat value, string name = "QuickQueryFormat", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QueryFormat value, string name = "QueryFormat", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
@@ -22376,15 +22361,15 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class QuickQueryFormat
+#endregion class QueryFormat
 
-#region enum QuickQueryFormatType
+#region enum QueryFormatType
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// The quick query format type.
     /// </summary>
-    internal enum QuickQueryFormatType
+    internal enum QueryFormatType
     {
         /// <summary>
         /// delimited
@@ -22404,68 +22389,136 @@ namespace Azure.Storage.Blobs
     {
         public static partial class Serialization
         {
-            public static string ToString(Azure.Storage.Blobs.Models.QuickQueryFormatType value)
+            public static string ToString(Azure.Storage.Blobs.Models.QueryFormatType value)
             {
                 return value switch
                 {
-                    Azure.Storage.Blobs.Models.QuickQueryFormatType.Delimited => "delimited",
-                    Azure.Storage.Blobs.Models.QuickQueryFormatType.Json => "json",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryFormatType value.")
+                    Azure.Storage.Blobs.Models.QueryFormatType.Delimited => "delimited",
+                    Azure.Storage.Blobs.Models.QueryFormatType.Json => "json",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QueryFormatType value.")
                 };
             }
 
-            public static Azure.Storage.Blobs.Models.QuickQueryFormatType ParseQuickQueryFormatType(string value)
+            public static Azure.Storage.Blobs.Models.QueryFormatType ParseQueryFormatType(string value)
             {
                 return value switch
                 {
-                    "delimited" => Azure.Storage.Blobs.Models.QuickQueryFormatType.Delimited,
-                    "json" => Azure.Storage.Blobs.Models.QuickQueryFormatType.Json,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryFormatType value.")
+                    "delimited" => Azure.Storage.Blobs.Models.QueryFormatType.Delimited,
+                    "json" => Azure.Storage.Blobs.Models.QueryFormatType.Json,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QueryFormatType value.")
                 };
             }
         }
     }
 }
-#endregion enum QuickQueryFormatType
+#endregion enum QueryFormatType
 
-#region class QuickQuerySerialization
+#region class QueryRequest
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// QuickQuerySerialization
+    /// the quick query body
     /// </summary>
-    internal partial class QuickQuerySerialization
+    internal partial class QueryRequest
     {
         /// <summary>
-        /// Format
+        /// the query type
         /// </summary>
-        public Azure.Storage.Blobs.Models.QuickQueryFormat Format { get; set; }
+        public string QueryType { get; set; }
 
         /// <summary>
-        /// Creates a new QuickQuerySerialization instance
+        /// a query statement
         /// </summary>
-        public QuickQuerySerialization()
+        public string Expression { get; set; }
+
+        /// <summary>
+        /// InputSerialization
+        /// </summary>
+        public Azure.Storage.Blobs.Models.QuerySerialization InputSerialization { get; set; }
+
+        /// <summary>
+        /// OutputSerialization
+        /// </summary>
+        public Azure.Storage.Blobs.Models.QuerySerialization OutputSerialization { get; set; }
+
+        /// <summary>
+        /// Creates a new QueryRequest instance
+        /// </summary>
+        public QueryRequest()
         {
-            Format = new Azure.Storage.Blobs.Models.QuickQueryFormat();
+            InputSerialization = new Azure.Storage.Blobs.Models.QuerySerialization();
+            OutputSerialization = new Azure.Storage.Blobs.Models.QuerySerialization();
         }
 
         /// <summary>
-        /// Serialize a QuickQuerySerialization instance as XML.
+        /// Serialize a QueryRequest instance as XML.
         /// </summary>
-        /// <param name="value">The QuickQuerySerialization instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "QuickQuerySerialization".</param>
+        /// <param name="value">The QueryRequest instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "QueryRequest".</param>
         /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
         /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QuickQuerySerialization value, string name = "QuickQuerySerialization", string ns = "")
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QueryRequest value, string name = "QueryRequest", string ns = "")
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(Azure.Storage.Blobs.Models.QuickQueryFormat.ToXml(value.Format, "Format", ""));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("QueryType", ""),
+                value.QueryType));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Expression", ""),
+                value.Expression));
+            if (value.InputSerialization != null)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.QuerySerialization.ToXml(value.InputSerialization, "InputSerialization", ""));
+            }
+            if (value.OutputSerialization != null)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.QuerySerialization.ToXml(value.OutputSerialization, "OutputSerialization", ""));
+            }
             return _element;
         }
     }
 }
-#endregion class QuickQuerySerialization
+#endregion class QueryRequest
+
+#region class QuerySerialization
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// QuerySerialization
+    /// </summary>
+    internal partial class QuerySerialization
+    {
+        /// <summary>
+        /// Format
+        /// </summary>
+        public Azure.Storage.Blobs.Models.QueryFormat Format { get; set; }
+
+        /// <summary>
+        /// Creates a new QuerySerialization instance
+        /// </summary>
+        public QuerySerialization()
+        {
+            Format = new Azure.Storage.Blobs.Models.QueryFormat();
+        }
+
+        /// <summary>
+        /// Serialize a QuerySerialization instance as XML.
+        /// </summary>
+        /// <param name="value">The QuerySerialization instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "QuerySerialization".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.QuerySerialization value, string name = "QuerySerialization", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(Azure.Storage.Blobs.Models.QueryFormat.ToXml(value.Format, "Format", ""));
+            return _element;
+        }
+    }
+}
+#endregion class QuerySerialization
 
 #region enum RehydratePriority
 namespace Azure.Storage.Blobs.Models
@@ -22880,58 +22933,5 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class UserDelegationKey
-
-#region class Error
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The service error response object.
-    /// </summary>
-    internal partial class Error
-    {
-        /// <summary>
-        /// The service error code.
-        /// </summary>
-        public string Code { get; internal set; }
-
-        /// <summary>
-        /// The service error message.
-        /// </summary>
-        public string Message { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of Error instances.
-        /// You can use BlobsModelFactory.Error instead.
-        /// </summary>
-        internal Error() { }
-
-        /// <summary>
-        /// Deserializes XML into a new Error instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized Error instance.</returns>
-        internal static Azure.Storage.Blobs.Models.Error FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.Error _value = new Azure.Storage.Blobs.Models.Error();
-            _child = element.Element(System.Xml.Linq.XName.Get("Code", ""));
-            if (_child != null)
-            {
-                _value.Code = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Message", ""));
-            if (_child != null)
-            {
-                _value.Message = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Error value);
-    }
-}
-#endregion class Error
 #endregion Models
 

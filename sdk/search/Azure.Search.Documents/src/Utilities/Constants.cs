@@ -88,6 +88,11 @@ namespace Azure.Search.Documents
         public const string ODataNextLinkKey = "@odata.nextLink";
 
         /// <summary>
+        /// The name key.
+        /// </summary>
+        public const string NameKey = "name";
+
+        /// <summary>
         /// The value key.
         /// </summary>
         public const string ValueKey = "value";

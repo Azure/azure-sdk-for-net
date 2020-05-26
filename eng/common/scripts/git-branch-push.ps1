@@ -137,7 +137,6 @@ do
             }
         }
     }
-
 } while($needsRetry -and $tryNumber -le $numberOfRetries)
 
 if ($LASTEXITCODE -ne 0)

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -34,6 +35,14 @@ namespace Azure.Data.Tables.Tests
         protected TableClient client { get; private set; }
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
+        protected const string StringTypePropertyName = "SomeStringProperty";
+        protected const string DateTypePropertyName = "SomeDateProperty";
+        protected const string GuidTypePropertyName = "SomeGuidProperty";
+        protected const string BinaryTypePropertyName = "SomeBinaryProperty";
+        protected const string Int64TypePropertyName = "SomeInt64Property";
+        protected const string DoubleTypePropertyName = "SomeDoubleProperty0";
+        protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
+        protected const string IntTypePropertyName = "SomeIntProperty";
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -45,9 +54,9 @@ namespace Azure.Data.Tables.Tests
             service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
                                                               new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
                                                               Recording.InstrumentClientOptions(new TableClientOptions())));
-            tableName = Recording.GenerateId("testtable", 15);
+            tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
             await service.CreateTableAsync(tableName).ConfigureAwait(false);
-            client = InstrumentClient(service.GetTableClient(tableName));
+            client = service.GetTableClient(tableName);
         }
 
         [TearDown]
@@ -77,16 +86,69 @@ namespace Azure.Data.Tables.Tests
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
-                        {"SomeStringProperty", $"This is table entity number {n:D2}"},
-                        {"SomeDateProperty", new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
-                        {"SomeGuidProperty", new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
-                        {"SomeBinaryProperty", new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
-                        {"SomeInt64Property", long.Parse(number)},
-                        {"SomeDoubleProperty0", (double)n},
-                        {"SomeDoubleProperty1", n + 0.1},
-                        {"SomeIntProperty", int.Parse(number)},
+                        {StringTypePropertyName, $"This is table entity number {n:D2}"},
+                        {DateTypePropertyName, new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
+                        {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
+                        {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
+                        {Int64TypePropertyName, long.Parse(number)},
+                        {DoubleTypePropertyName, (double)n},
+                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {IntTypePropertyName, n},
                     };
             }).ToList();
+        }
+
+        /// <summary>
+        /// Creates a list of strongly typed table entities.
+        /// </summary>
+        /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
+        /// <param name="count">The number of entities to create</param>
+        /// <returns></returns>
+        protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
+        {
+
+            // Create some entities.
+            return Enumerable.Range(1, count).Select(n =>
+            {
+                string number = n.ToString();
+                return new TestEntity
+                {
+                    PartitionKey = partitionKeyValue,
+                    RowKey = n.ToString("D2"),
+                    StringTypeProperty = $"This is table entity number {n:D2}",
+                    DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                    DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                    GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
+                    BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
+                    Int64TypeProperty = long.Parse(number),
+                    DoubleTypeProperty = (double)n,
+                    IntTypeProperty = n,
+                };
+            }).ToList();
+        }
+
+        public class TestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
+
+            public DateTime DatetimeTypeProperty { get; set; }
+
+            public DateTimeOffset DatetimeOffsetTypeProperty { get; set; }
+
+            public Guid GuidTypeProperty { get; set; }
+
+            public byte[] BinaryTypeProperty { get; set; }
+
+            public long Int64TypeProperty { get; set; }
+
+            public double DoubleTypeProperty { get; set; }
+
+            public int IntTypeProperty { get; set; }
+        }
+
+        public class SimpleTestEntity : TableEntity
+        {
+            public string StringTypeProperty { get; set; }
         }
     }
 }
