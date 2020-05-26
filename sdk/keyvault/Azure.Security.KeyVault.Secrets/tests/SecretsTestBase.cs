@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
