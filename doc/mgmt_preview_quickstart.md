@@ -95,20 +95,22 @@ More information and different authentication approaches using Azure
 Identity can be found in [this
 document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
-Managing Resources
+Interacting with Azure Resources
 ------------------
 
-Now that we are authenticated, we can use our management client to make
-API calls. Let's create a resource group and demonstrate management
-client's usage
+Now that we are authenticated, we can use our management client to make API calls. Let's demonstrate management client's usage by showing concrete examples
 
-**Create a resource group**
+**Managing Resource Groups**
+
+We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we have created to perform operations on Resource Group. In this example, we will show to manage Resource Groups.
+
+***Create a resource group***
 
     location = "myLocation";
     groupName = "myResourceGroupName";
     var result = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
 
-**Update a resource group**
+***Update a resource group***
 
     ...
     var tags = new Dictionary<string,string>();
@@ -118,7 +120,7 @@ client's usage
 
     var updated = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, resourceGroup);
 
-**List all resource groups**
+***List all resource groups***
     
     AsyncPageable<ResourceGroup> response = resourceClient.ResourceGroups.ListAsync();
     await foreach (ResourceGroup resourceGroup in response)
@@ -126,7 +128,7 @@ client's usage
         Console.WriteLine(resourceGroup.Name);
     }
 
-**Delete a resource group**
+***Delete a resource group***
 
     await resourceClient.ResourceGroups.DeleteAsync(groupName);
     
