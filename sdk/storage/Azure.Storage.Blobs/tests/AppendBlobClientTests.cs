@@ -18,6 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
+    // Minor change to triggle CI, will remove this comment later.
     public class AppendBlobClientTests : BlobTestBase
     {
         public AppendBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
