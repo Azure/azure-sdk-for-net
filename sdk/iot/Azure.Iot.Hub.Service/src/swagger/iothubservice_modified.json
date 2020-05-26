@@ -2954,7 +2954,7 @@
         "type"
       ]
     },
-    "CloudToDeviceMethod": {
+    "CloudToDeviceMethodRequest": {
       "description": "Parameters to execute a direct method on the device.",
       "type": "object",
       "properties": {
