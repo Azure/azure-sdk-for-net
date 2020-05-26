@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Language specific stemming filter. This token filter is implemented using Apache Lucene. </summary>
     public partial class StemmerTokenFilter : TokenFilter

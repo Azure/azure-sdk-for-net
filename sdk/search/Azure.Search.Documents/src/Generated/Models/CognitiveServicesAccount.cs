@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for describing any cognitive service resource attached to a skillset. </summary>
     public partial class CognitiveServicesAccount

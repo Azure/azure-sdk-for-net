@@ -48,3 +48,5 @@ stages:
       safeName: MicrosoftAzureEventHubsProcessor
     - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
       safeName: MicrosoftAzureEventHubsServiceFabricProcessor
+    - name: Azure.Management.EventHub
+      safeName: AzureManagementEventHub

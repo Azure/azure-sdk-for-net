@@ -190,7 +190,19 @@
             ],
             "x-ms-enum": {
               "name": "QueryType",
-              "modelAsString": false
+              "modelAsString": false,
+              "values": [
+                {
+                  "value": "simple",
+                  "name": "Simple",
+                  "description": "Uses the simple query syntax for searches. Search text is interpreted using a simple query language that allows for symbols such as +, * and \"\". Queries are evaluated across all searchable fields by default, unless the searchFields parameter is specified."
+                },
+                {
+                  "value": "full",
+                  "name": "Full",
+                  "description": "Uses the full Lucene query syntax for searches. Search text is interpreted using the Lucene query language which allows field-specific and weighted searches, as well as other advanced features."
+                }
+              ]
             },
             "x-nullable": false,
             "description": "A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax.",
@@ -243,7 +255,19 @@
             ],
             "x-ms-enum": {
               "name": "SearchMode",
-              "modelAsString": false
+              "modelAsString": false,
+              "values": [
+                {
+                  "value": "any",
+                  "name": "Any",
+                  "description": "Any of the search terms must be matched in order to count the document as a match."
+                },
+                {
+                  "value": "all",
+                  "name": "All",
+                  "description": "All of the search terms must be matched in order to count the document as a match."
+                }
+              ]
             },
             "x-nullable": false,
             "description": "A value that specifies whether any or all of the search terms must be matched in order to count the document as a match.",
@@ -716,7 +740,24 @@
             ],
             "x-ms-enum": {
               "name": "AutocompleteMode",
-              "modelAsString": false
+              "modelAsString": false,
+              "values": [
+                {
+                  "value": "oneTerm",
+                  "name": "OneTerm",
+                  "description": "Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'."
+                },
+                {
+                  "value": "twoTerms",
+                  "name": "TwoTerms",
+                  "description": "Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'."
+                },
+                {
+                  "value": "oneTermWithContext",
+                  "name": "OneTermWithContext",
+                  "description": "Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'."
+                }
+              ]
             },
             "description": "Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context while producing auto-completed terms.",
             "x-ms-parameter-grouping": {
@@ -1024,7 +1065,29 @@
           ],
           "x-ms-enum": {
             "name": "IndexActionType",
-            "modelAsString": false
+            "modelAsString": false,
+            "values": [
+              {
+                "value": "upload",
+                "name": "Upload",
+                "description": "Inserts the document into the index if it is new and updates it if it exists. All fields are replaced in the update case."
+              },
+              {
+                "value": "merge",
+                "name": "Merge",
+                "description": "Merges the specified field values with an existing document. If the document does not exist, the merge will fail. Any field you specify in a merge will replace the existing field in the document. This also applies to collections of primitive and complex types."
+              },
+              {
+                "value": "mergeOrUpload",
+                "name": "MergeOrUpload",
+                "description": "Behaves like merge if a document with the given key already exists in the index. If the document does not exist, it behaves like upload with a new document."
+              },
+              {
+                "value": "delete",
+                "name": "Delete",
+                "description": "Removes the specified document from the index. Any field you specify in a delete operation other than the key field will be ignored. If you want to remove an individual field from a document, use merge instead and set the field explicitly to null."
+              }
+            ]
           },
           "x-ms-client-name": "ActionType",
           "x-nullable": false,
@@ -1093,7 +1156,19 @@
       ],
       "x-ms-enum": {
         "name": "SearchMode",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "any",
+            "name": "Any",
+            "description": "Any of the search terms must be matched in order to count the document as a match."
+          },
+          {
+            "value": "all",
+            "name": "All",
+            "description": "All of the search terms must be matched in order to count the document as a match."
+          }
+        ]
       },
       "description": "Specifies whether any or all of the search terms must be matched in order to count the document as a match."
     },
@@ -1105,7 +1180,19 @@
       ],
       "x-ms-enum": {
         "name": "QueryType",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "simple",
+            "name": "Simple",
+            "description": "Uses the simple query syntax for searches. Search text is interpreted using a simple query language that allows for symbols such as +, * and \"\". Queries are evaluated across all searchable fields by default, unless the searchFields parameter is specified."
+          },
+          {
+            "value": "full",
+            "name": "Full",
+            "description": "Uses the full Lucene query syntax for searches. Search text is interpreted using the Lucene query language which allows field-specific and weighted searches, as well as other advanced features."
+          }
+        ]
       },
       "description": "Specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax."
     },
@@ -1118,7 +1205,24 @@
       ],
       "x-ms-enum": {
         "name": "AutocompleteMode",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "oneTerm",
+            "name": "OneTerm",
+            "description": "Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'."
+          },
+          {
+            "value": "twoTerms",
+            "name": "TwoTerms",
+            "description": "Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'."
+          },
+          {
+            "value": "oneTermWithContext",
+            "name": "OneTermWithContext",
+            "description": "Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'."
+          }
+        ]
       },
       "description": "Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context in producing autocomplete terms."
     },

@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Diagnostics;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    using System;
-    using System.Threading.Tasks;
-
     internal static class TaskExtensionHelper
     {
         public static void Schedule(Func<Task> func)
@@ -21,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
             }
             catch (Exception ex)
             {
-                MessagingEventSource.Log.ScheduleTaskFailed(func, ex);
+                ServiceBusEventSource.Log.ScheduleTaskFailed(func, ex);
             }
         }
 

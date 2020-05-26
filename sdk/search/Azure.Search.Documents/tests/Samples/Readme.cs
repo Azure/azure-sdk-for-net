@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
@@ -192,8 +193,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a service client
             AzureKeyCredential credential = new AzureKeyCredential(key);
-            SearchServiceClient client = new SearchServiceClient(endpoint, credential);
-            /*@@*/ client = resources.GetServiceClient();
+            SearchIndexClient client = new SearchIndexClient(endpoint, credential);
+            /*@@*/ client = resources.GetIndexClient();
 
             // Create the index
             //@@SearchIndex index = new SearchIndex("hotels")
@@ -203,7 +204,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                    new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+                    new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new ComplexField("address")
                     {
@@ -220,7 +221,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Suggesters =
                 {
                     // Suggest query terms from both the hotelName and description fields.
-                    new Suggester("sg", "hotelName", "description")
+                    new SearchSuggester("sg", "hotelName", "description")
                 }
             };
 
