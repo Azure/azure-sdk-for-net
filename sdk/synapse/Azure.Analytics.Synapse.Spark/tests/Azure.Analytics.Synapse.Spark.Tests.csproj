@@ -3,7 +3,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
   <Import Project="..\..\Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems" Label="Shared" />
 
   <ItemGroup>
@@ -21,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Analytics.Synapse.Spark.csproj" />
   </ItemGroup>
 </Project>

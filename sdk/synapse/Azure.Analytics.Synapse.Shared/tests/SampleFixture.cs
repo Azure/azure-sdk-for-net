@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Analytics.Synapse.Tests;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Samples

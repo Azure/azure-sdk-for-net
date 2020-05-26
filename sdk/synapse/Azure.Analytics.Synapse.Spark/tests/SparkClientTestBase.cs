@@ -3,7 +3,7 @@
 
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Tests;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.IO;
