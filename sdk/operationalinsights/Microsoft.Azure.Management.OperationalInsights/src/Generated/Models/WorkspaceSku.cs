@@ -33,9 +33,20 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="name">The name of the SKU. Possible values include:
         /// 'Free', 'Standard', 'Premium', 'PerNode', 'PerGB2018',
         /// 'Standalone', 'CapacityReservation'</param>
-        public WorkspaceSku(string name)
+        /// <param name="capacityReservationLevel">The capacity reservation
+        /// level for this workspace, when CapacityReservation sku is
+        /// selected.</param>
+        /// <param name="maxCapacityReservationLevel">The maximum capacity
+        /// reservation level available for this workspace, when
+        /// CapacityReservation sku is selected.</param>
+        /// <param name="lastSkuUpdate">The last time when the sku was
+        /// updated.</param>
+        public WorkspaceSku(string name, int? capacityReservationLevel = default(int?), int? maxCapacityReservationLevel = default(int?), System.DateTime? lastSkuUpdate = default(System.DateTime?))
         {
             Name = name;
+            CapacityReservationLevel = capacityReservationLevel;
+            MaxCapacityReservationLevel = maxCapacityReservationLevel;
+            LastSkuUpdate = lastSkuUpdate;
             CustomInit();
         }
 
@@ -51,6 +62,26 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the capacity reservation level for this workspace,
+        /// when CapacityReservation sku is selected.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacityReservationLevel")]
+        public int? CapacityReservationLevel { get; set; }
+
+        /// <summary>
+        /// Gets the maximum capacity reservation level available for this
+        /// workspace, when CapacityReservation sku is selected.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxCapacityReservationLevel")]
+        public int? MaxCapacityReservationLevel { get; private set; }
+
+        /// <summary>
+        /// Gets the last time when the sku was updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastSkuUpdate")]
+        public System.DateTime? LastSkuUpdate { get; private set; }
 
         /// <summary>
         /// Validate the object.
