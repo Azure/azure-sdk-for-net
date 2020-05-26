@@ -11,7 +11,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
     - HTTP pipeline with custom policies
-    - Better Error-handling
+    - Better error-handling
     - Support uniform telemetry across all languages
 
 > NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
@@ -23,7 +23,7 @@ The package name has been changed from `Microsoft.Azure.Management.KeyVault` to 
 
 #### Management Client Changes
 
-Example: Create a Key Vault Instace:
+Example: Create a Key Vault Instance:
 
 Before upgrade:
 ```csharp
