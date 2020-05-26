@@ -1,0 +1,580 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyze?includeTextDetails=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "163",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Request-Id": "|4c387988-456f7feca73d9b95.",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200515.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "ec8a49d7ee695aee10619b6fe1caf92f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/Assets/multipage_invoice_noblank.pdf"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+        "Content-Length": "0",
+        "Date": "Fri, 15 May 2020 17:19:40 GMT",
+        "Operation-Location": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "426"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200515.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9603191ac4b90c8080805c79a7ec9943",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4d4cdb55-3891-4b8e-8146-0866291da36a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 May 2020 17:19:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-05-15T17:19:40Z",
+        "lastUpdatedDateTime": "2020-05-15T17:19:41Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200515.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c246076b5a6c0a4f68fee2522fb8d458",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "75c74c25-c7a1-424a-a057-0562fcacaa20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 May 2020 17:19:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-05-15T17:19:40Z",
+        "lastUpdatedDateTime": "2020-05-15T17:19:41Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200515.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "fd2aa74c038b1344c87e6ce99174b224",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7aba380d-0ae8-40f1-afec-00af83663ee9",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 May 2020 17:19:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2020-05-15T17:19:40Z",
+        "lastUpdatedDateTime": "2020-05-15T17:19:41Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaior-formrec.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/9a97bb7a-2197-4c1f-b9d6-1d3601df7ef5",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200515.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d90358c83683c0c3c9f82dbae22dddc7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f3b2f665-4e1d-41ee-a04f-ef79525dd155",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 15 May 2020 17:19:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2020-05-15T17:19:40Z",
+        "lastUpdatedDateTime": "2020-05-15T17:19:44Z",
+        "analyzeResult": {
+          "version": "2.0.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch",
+              "language": "en"
+            },
+            {
+              "page": 2,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch",
+              "language": "en"
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "prebuilt:receipt",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.99
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Bilbo Baggins",
+                  "text": "Bilbo Baggins",
+                  "boundingBox": [
+                    6.0164,
+                    1.4503,
+                    6.8967,
+                    1.4503,
+                    6.8967,
+                    1.5931,
+                    6.0164,
+                    1.5931
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
+                  "text": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
+                  "boundingBox": [
+                    0.8852,
+                    1.6707,
+                    7.1006,
+                    1.6707,
+                    7.1006,
+                    2.1975,
+                    0.8852,
+                    2.1975
+                  ],
+                  "page": 1,
+                  "confidence": 0.99
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B15555555555",
+                  "text": "555-555-5555",
+                  "boundingBox": [
+                    6.0105,
+                    2.1187,
+                    6.9371,
+                    2.1187,
+                    6.9371,
+                    2.2254,
+                    6.0105,
+                    2.2254
+                  ],
+                  "page": 1,
+                  "confidence": 0.99
+                },
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "F",
+                          "text": "F",
+                          "boundingBox": [
+                            1.0943,
+                            4.2661,
+                            1.1497,
+                            4.2661,
+                            1.1497,
+                            4.3717,
+                            1.0943,
+                            4.3717
+                          ],
+                          "page": 1,
+                          "confidence": 0.965
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 12,
+                          "text": "12.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.2646,
+                            5.7809,
+                            4.2646,
+                            5.7809,
+                            4.3727,
+                            5.4232,
+                            4.3727
+                          ],
+                          "page": 1,
+                          "confidence": 0.947
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 22,
+                          "text": "22.00",
+                          "boundingBox": [
+                            5.4184,
+                            4.4746,
+                            5.781,
+                            4.4746,
+                            5.781,
+                            4.5827,
+                            5.4184,
+                            4.5827
+                          ],
+                          "page": 1,
+                          "confidence": 0.936
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Subtotal": {
+                  "type": "number",
+                  "valueNumber": 300,
+                  "text": "300.00",
+                  "boundingBox": [
+                    6.1794,
+                    4.9042,
+                    6.632,
+                    4.9042,
+                    6.632,
+                    5.0131,
+                    6.1794,
+                    5.0131
+                  ],
+                  "page": 1,
+                  "confidence": 0.99
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 100,
+                  "text": "100.00",
+                  "boundingBox": [
+                    5.811,
+                    5.3445,
+                    6.2587,
+                    5.3445,
+                    6.2587,
+                    5.4533,
+                    5.811,
+                    5.4533
+                  ],
+                  "page": 1,
+                  "confidence": 0.99
+                }
+              }
+            },
+            {
+              "docType": "prebuilt:receipt",
+              "pageRange": [
+                2,
+                2
+              ],
+              "fields": {
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.99
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Frodo Baggins",
+                  "text": "Frodo Baggins",
+                  "boundingBox": [
+                    6.0164,
+                    1.4506,
+                    6.9506,
+                    1.4506,
+                    6.9506,
+                    1.5931,
+                    6.0164,
+                    1.5931
+                  ],
+                  "page": 2,
+                  "confidence": 0.98
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
+                  "text": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
+                  "boundingBox": [
+                    0.8852,
+                    1.6707,
+                    7.1006,
+                    1.6707,
+                    7.1006,
+                    2.1975,
+                    0.8852,
+                    2.1975
+                  ],
+                  "page": 2,
+                  "confidence": 0.99
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B15555555555",
+                  "text": "555-555-5555",
+                  "boundingBox": [
+                    6.0105,
+                    2.1187,
+                    6.9371,
+                    2.1187,
+                    6.9371,
+                    2.2254,
+                    6.0105,
+                    2.2254
+                  ],
+                  "page": 2,
+                  "confidence": 0.99
+                },
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "E",
+                          "text": "E",
+                          "boundingBox": [
+                            1.0943,
+                            4.0561,
+                            1.153,
+                            4.0561,
+                            1.153,
+                            4.1614,
+                            1.0943,
+                            4.1614
+                          ],
+                          "page": 2,
+                          "confidence": 0.935
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "text": "40",
+                          "boundingBox": [
+                            3.2486,
+                            4.0546,
+                            3.4067,
+                            4.0546,
+                            3.4067,
+                            4.1627,
+                            3.2486,
+                            4.1627
+                          ],
+                          "page": 2,
+                          "confidence": 0
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 100,
+                          "text": "100.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.0546,
+                            5.8644,
+                            4.0546,
+                            5.8644,
+                            4.1627,
+                            5.4232,
+                            4.1627
+                          ],
+                          "page": 2,
+                          "confidence": 0.721
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "F",
+                          "text": "F",
+                          "boundingBox": [
+                            1.0943,
+                            4.2661,
+                            1.1497,
+                            4.2661,
+                            1.1497,
+                            4.3717,
+                            1.0943,
+                            4.3717
+                          ],
+                          "page": 2,
+                          "confidence": 0.912
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 120,
+                          "text": "120.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.2646,
+                            5.8642,
+                            4.2646,
+                            5.8642,
+                            4.3727,
+                            5.4232,
+                            4.3727
+                          ],
+                          "page": 2,
+                          "confidence": 0.967
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Name": {
+                          "type": "string",
+                          "valueString": "G",
+                          "text": "G",
+                          "boundingBox": [
+                            1.0877,
+                            4.4746,
+                            1.1735,
+                            4.4746,
+                            1.1735,
+                            4.5827,
+                            1.0877,
+                            4.5827
+                          ],
+                          "page": 2,
+                          "confidence": 0.903
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 220,
+                          "text": "220.00",
+                          "boundingBox": [
+                            5.4184,
+                            4.4746,
+                            5.8644,
+                            4.4746,
+                            5.8644,
+                            4.5827,
+                            5.4184,
+                            4.5827
+                          ],
+                          "page": 2,
+                          "confidence": 0.959
+                        }
+                      }
+                    }
+                  ]
+                },
+                "Subtotal": {
+                  "type": "number",
+                  "valueNumber": 3000,
+                  "text": "3000.00",
+                  "boundingBox": [
+                    6.1794,
+                    4.9042,
+                    6.7158,
+                    4.9042,
+                    6.7158,
+                    5.0131,
+                    6.1794,
+                    5.0131
+                  ],
+                  "page": 2,
+                  "confidence": 0.99
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 1000,
+                  "text": "1000.00",
+                  "boundingBox": [
+                    5.811,
+                    5.3445,
+                    6.3422,
+                    5.3445,
+                    6.3422,
+                    5.4533,
+                    5.811,
+                    5.4533
+                  ],
+                  "page": 2,
+                  "confidence": 0.985
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaior-formrec.cognitiveservices.azure.com/",
+    "RandomSeed": "1759246652"
+  }
+}

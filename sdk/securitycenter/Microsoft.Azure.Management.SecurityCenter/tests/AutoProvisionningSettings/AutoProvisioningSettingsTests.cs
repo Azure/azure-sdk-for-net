@@ -44,7 +44,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void AutoProvisioningSettings_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var autoProvisioningSettings = securityCenterClient.AutoProvisioningSettings.List();
@@ -55,7 +55,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void AutoProvisioningSettings_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var autoProvisioningSetting = securityCenterClient.AutoProvisioningSettings.Get("default");
@@ -66,7 +66,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void AutoProvisioningSettings_Create()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var autoProvisioningSetting = securityCenterClient.AutoProvisioningSettings.Create("default", "On");

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,14 +7,14 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Files;
-using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     [TestFixture]
     public class UtilityTests
@@ -31,6 +30,7 @@ namespace Azure.Storage.Common.Test
         /// </summary>
         [Test]
         [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task CollectGarbage_Explicit()
         {
             // Get all of our configs
@@ -40,22 +40,22 @@ namespace Azure.Storage.Common.Test
             try { configs.Add(TestConfigurations.DefaultTargetPremiumBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetPreviewBlobTenant); } catch (InconclusiveException) { }
             try { configs.Add(TestConfigurations.DefaultTargetOAuthTenant); } catch (InconclusiveException) { }
-            foreach (var config in configs)
+            foreach (TenantConfiguration config in configs)
             {
                 // Blobs
                 var blobs = new BlobServiceClient(config.ConnectionString);
-                await foreach (var container in blobs.GetContainersAsync())
+                await foreach (BlobContainerItem container in blobs.GetBlobContainersAsync())
                 {
                     try
                     {
-                        await blobs.DeleteBlobContainerAsync(container.Value.Name);
+                        await blobs.DeleteBlobContainerAsync(container.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.LeaseIdMissing)
                     {
                         // Break any lingering leases
-                        await blobs.GetBlobContainerClient(container.Value.Name).GetLeaseClient().BreakAsync();
+                        await blobs.GetBlobContainerClient(container.Name).GetBlobLeaseClient().BreakAsync();
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }
@@ -63,27 +63,27 @@ namespace Azure.Storage.Common.Test
 
                 // Queues
                 var queues = new QueueServiceClient(config.ConnectionString);
-                await foreach (var queue in queues.GetQueuesAsync())
+                await foreach (QueueItem queue in queues.GetQueuesAsync())
                 {
                     try
                     {
-                        await queues.DeleteQueueAsync(queue.Value.Name);
+                        await queues.DeleteQueueAsync(queue.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == QueueErrorCode.QueueBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }
                 }
 
                 // Files
-                var files = new FileServiceClient(config.ConnectionString);
-                await foreach (var share in files.GetSharesAsync())
+                var files = new ShareServiceClient(config.ConnectionString);
+                await foreach (ShareItem share in files.GetSharesAsync())
                 {
                     try
                     {
-                        await files.DeleteShareAsync(share.Value.Name);
+                        await files.DeleteShareAsync(share.Name);
                     }
-                    catch (StorageRequestFailedException ex) when (ex.ErrorCode == FileErrorCode.ShareBeingDeleted)
+                    catch (RequestFailedException ex) when (ex.ErrorCode == ShareErrorCode.ShareBeingDeleted)
                     {
                         // Ignore anything already being deleted
                     }

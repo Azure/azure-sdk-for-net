@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the FtpReadSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
@@ -44,14 +43,26 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">Ftp wildcardFileName. Type: string
         /// (or Expression with resultType string).</param>
+        /// <param name="enablePartitionDiscovery">Indicates whether to enable
+        /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="fileListPath">Point to a text file that lists each
+        /// file (relative path to the path configured in the dataset) that you
+        /// want to copy. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="useBinaryTransfer">Specify whether to use binary
         /// transfer mode for FTP stores.</param>
-        public FtpReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
-            : base(type, additionalProperties, maxConcurrentConnections)
+        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), bool? useBinaryTransfer = default(bool?))
+            : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
+            FileListPath = fileListPath;
             UseBinaryTransfer = useBinaryTransfer;
             CustomInit();
         }
@@ -84,21 +95,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object WildcardFileName { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether to enable partition discovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
+        public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets point to a text file that lists each file (relative
+        /// path to the path configured in the dataset) that you want to copy.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileListPath")]
+        public object FileListPath { get; set; }
+
+        /// <summary>
         /// Gets or sets specify whether to use binary transfer mode for FTP
         /// stores.
         /// </summary>
         [JsonProperty(PropertyName = "useBinaryTransfer")]
         public bool? UseBinaryTransfer { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

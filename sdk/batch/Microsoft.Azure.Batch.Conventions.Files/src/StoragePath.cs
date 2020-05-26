@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string sourcePath = Path.Combine(baseFolder.FullName, relativePath);
             string destinationPath = GetDestinationBlobPath(relativePath);
 
-            await SaveAsync(kind, sourcePath, destinationPath, cancellationToken);
+            await SaveAsync(kind, sourcePath, destinationPath, cancellationToken).ConfigureAwait(false);
         }
 
         // Uploads a file to blob storage.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadFromFileAsync(sourcePath, null, null, null, cancellationToken);
+            await blob.UploadFromFileAsync(sourcePath, null, null, null, cancellationToken).ConfigureAwait(false);
         }
 
         // Uploads text to blob storage.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadTextAsync(text, null, null, null, null, cancellationToken);
+            await blob.UploadTextAsync(text, null, null, null, null, cancellationToken).ConfigureAwait(false);
         }
 
         // Uploads a file and tracks appends to that file. The implementation creates an append blob to
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             }
 
             var destinationPath = GetDestinationBlobPath(relativePath);
-            return await SaveTrackedAsync(kind, relativePath, destinationPath, flushInterval);
+            return await SaveTrackedAsync(kind, relativePath, destinationPath, flushInterval).ConfigureAwait(false);
         }
 
         // Uploads a file and tracks appends to that file. The implementation creates an append blob to
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetAppendBlobReference(blobName);
-            await blob.EnsureExistsAsync();
+            await blob.EnsureExistsAsync().ConfigureAwait(false);
             return new TrackedFile(sourcePath, blob, flushInterval);
         }
 
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             Validate.IsNotNullOrEmpty(filePath, nameof(filePath));
 
-            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), null, null, null, cancellationToken);
+            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), null, null, null, cancellationToken).ConfigureAwait(false);
 
             return new OutputFileReference(blob);
         }
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         internal abstract string BlobNamePrefix(IOutputKind kind);
 
         internal string BlobName(IOutputKind kind, string relativePath)
-            => $"{BlobNamePrefix(kind)}{relativePath}";
+            => $"{BlobNamePrefix(kind)}/{relativePath}";
 
         private static string GetDestinationBlobPath(string relativeSourcePath)
         {
@@ -221,8 +221,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             {
             }
 
-            internal override string BlobNamePrefix(IOutputKind kind)
-                => $"${kind.Text}/";
+            internal override string BlobNamePrefix(IOutputKind kind) => BlobNamePrefixImpl(kind);
+
+            internal static string BlobNamePrefixImpl(IOutputKind kind) => $"${kind.Text}";
         }
 
         internal sealed class TaskStoragePath : StoragePath
@@ -236,8 +237,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                 _taskId = taskId;
             }
 
-            internal override string BlobNamePrefix(IOutputKind kind)
-                => $"{_taskId}/${kind.Text}/";
+            internal override string BlobNamePrefix(IOutputKind kind) => BlobNamePrefixImpl(kind, _taskId);
+
+            internal static string BlobNamePrefixImpl(IOutputKind kind, string taskId) => $"{taskId}/${kind.Text}";
         }
     }
 }

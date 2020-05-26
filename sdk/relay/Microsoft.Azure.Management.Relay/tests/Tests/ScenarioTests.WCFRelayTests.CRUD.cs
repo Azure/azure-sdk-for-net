@@ -1,4 +1,4 @@
-﻿//  
+//  
 //  
 // Copyright (c) Microsoft.  All rights reserved.
 // 
@@ -28,7 +28,7 @@ namespace Relay.Tests.ScenarioTests
         [Fact]
         public void WCFRelayCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
 
@@ -146,3 +146,4 @@ namespace Relay.Tests.ScenarioTests
         }
     }
 }
+

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -17,7 +17,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void GeoReplicationFunctionalTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGroupName = TestUtilities.GenerateName("RedisGeo");
                 var redisCacheName1 = TestUtilities.GenerateName("RedisGeo1");
@@ -43,7 +43,7 @@ namespace AzureRedisCache.Tests
 
                 Assert.Contains(redisCacheName1, ncResponse.Id);
                 Assert.Equal(redisCacheName1, ncResponse.Name);
-                Assert.Equal("creating", ncResponse.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Creating, ncResponse.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, ncResponse.Sku.Name);
                 Assert.Equal(SkuFamily.P, ncResponse.Sku.Family);
 
@@ -62,7 +62,7 @@ namespace AzureRedisCache.Tests
 
                 Assert.Contains(redisCacheName2, scResponse.Id);
                 Assert.Equal(redisCacheName2, scResponse.Name);
-                Assert.Equal("creating", scResponse.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Creating, scResponse.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, scResponse.Sku.Name);
                 Assert.Equal(SkuFamily.P, scResponse.Sku.Family);
 
@@ -71,8 +71,8 @@ namespace AzureRedisCache.Tests
                 {
                     ncResponse = _client.Redis.Get(resourceGroupName, redisCacheName1);
                     scResponse = _client.Redis.Get(resourceGroupName, redisCacheName2);
-                    if ("succeeded".Equals(ncResponse.ProvisioningState, StringComparison.OrdinalIgnoreCase) &&
-                        "succeeded".Equals(scResponse.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                    if (ProvisioningState.Succeeded.Equals(ncResponse.ProvisioningState, StringComparison.OrdinalIgnoreCase) &&
+                        ProvisioningState.Succeeded.Equals(scResponse.ProvisioningState, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }
@@ -80,8 +80,8 @@ namespace AzureRedisCache.Tests
                 }
 
                 // Fail if any of 2 cache is not created successfully
-                Assert.Equal("succeeded", ncResponse.ProvisioningState, ignoreCase: true);
-                Assert.Equal("succeeded", scResponse.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Succeeded, ncResponse.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Succeeded, scResponse.ProvisioningState, ignoreCase: true);
                 
                 // Set up replication link
                 RedisLinkedServerWithProperties linkServerWithProperties = _client.LinkedServer.Create(resourceGroupName, redisCacheName1, redisCacheName2, new RedisLinkedServerCreateParameters
@@ -143,3 +143,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Dynamics AX source.
     /// </summary>
-    public partial class DynamicsAXSource : CopySource
+    public partial class DynamicsAXSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the DynamicsAXSource class.
@@ -41,12 +41,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="query">A query to retrieve data from source. Type:
         /// string (or Expression with resultType string).</param>
-        public DynamicsAXSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
+        /// HTTP response. It is the timeout to get a response, not the timeout
+        /// to read response data. Default value: 00:05:00. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        public DynamicsAXSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object httpRequestTimeout = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
+            HttpRequestTimeout = httpRequestTimeout;
             CustomInit();
         }
 
@@ -61,6 +73,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is
+        /// the timeout to get a response, not the timeout to read response
+        /// data. Default value: 00:05:00. Type: string (or Expression with
+        /// resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// </summary>
+        [JsonProperty(PropertyName = "httpRequestTimeout")]
+        public object HttpRequestTimeout { get; set; }
 
     }
 }

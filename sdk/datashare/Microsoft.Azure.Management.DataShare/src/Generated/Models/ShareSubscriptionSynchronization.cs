@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="message">message of Synchronization</param>
         /// <param name="startTime">start time of synchronization</param>
         /// <param name="status">Raw Status</param>
-        public ShareSubscriptionSynchronization(string synchronizationId, int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), string message = default(string), System.DateTime? startTime = default(System.DateTime?), string status = default(string))
+        /// <param name="synchronizationMode">Synchronization Mode. Possible
+        /// values include: 'Incremental', 'FullSync'</param>
+        public ShareSubscriptionSynchronization(string synchronizationId, int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), string message = default(string), System.DateTime? startTime = default(System.DateTime?), string status = default(string), string synchronizationMode = default(string))
         {
             DurationMs = durationMs;
             EndTime = endTime;
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
             StartTime = startTime;
             Status = status;
             SynchronizationId = synchronizationId;
+            SynchronizationMode = synchronizationMode;
             CustomInit();
         }
 
@@ -89,6 +92,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "synchronizationId")]
         public string SynchronizationId { get; set; }
+
+        /// <summary>
+        /// Gets synchronization Mode. Possible values include: 'Incremental',
+        /// 'FullSync'
+        /// </summary>
+        [JsonProperty(PropertyName = "synchronizationMode")]
+        public string SynchronizationMode { get; private set; }
 
         /// <summary>
         /// Validate the object.

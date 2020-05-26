@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="connectionProtocol">Connection protocol used for this
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
+        /// <param name="dpdTimeoutSeconds">The dead peer detection timeout of
+        /// this connection in seconds.</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
         /// <param name="connectionStatus">Virtual Network Gateway connection
         /// status. Possible values include: 'Unknown', 'Connecting',
@@ -66,20 +68,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// in this connection.</param>
         /// <param name="peer">The reference to peerings resource.</param>
         /// <param name="enableBgp">EnableBgp flag.</param>
+        /// <param name="useLocalAzureIpAddress">Use private local Azure IP for
+        /// the connection.</param>
         /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
         /// this connection.</param>
+        /// <param name="trafficSelectorPolicies">The Traffic Selector Policies
+        /// to be considered by this connection.</param>
         /// <param name="resourceGuid">The resource GUID property of the
-        /// VirtualNetworkGatewayConnection resource.</param>
+        /// virtual network gateway connection resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// VirtualNetworkGatewayConnection resource. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// virtual network gateway connection resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="expressRouteGatewayBypass">Bypass ExpressRoute Gateway
         /// for data forwarding.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -89,6 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ConnectionType = connectionType;
             ConnectionProtocol = connectionProtocol;
             RoutingWeight = routingWeight;
+            DpdTimeoutSeconds = dpdTimeoutSeconds;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
             TunnelConnectionStatus = tunnelConnectionStatus;
@@ -96,8 +103,10 @@ namespace Microsoft.Azure.Management.Network.Models
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
             EnableBgp = enableBgp;
+            UseLocalAzureIpAddress = useLocalAzureIpAddress;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
+            TrafficSelectorPolicies = trafficSelectorPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
@@ -155,6 +164,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? RoutingWeight { get; set; }
 
         /// <summary>
+        /// Gets or sets the dead peer detection timeout of this connection in
+        /// seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
+        public int? DpdTimeoutSeconds { get; set; }
+
+        /// <summary>
         /// Gets or sets the IPSec shared key.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedKey")]
@@ -198,6 +214,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary>
+        /// Gets or sets use private local Azure IP for the connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useLocalAzureIpAddress")]
+        public bool? UseLocalAzureIpAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets enable policy-based traffic selectors.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usePolicyBasedTrafficSelectors")]
@@ -211,16 +233,23 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<IpsecPolicy> IpsecPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the
-        /// VirtualNetworkGatewayConnection resource.
+        /// Gets or sets the Traffic Selector Policies to be considered by this
+        /// connection.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        [JsonProperty(PropertyName = "properties.trafficSelectorPolicies")]
+        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the VirtualNetworkGatewayConnection
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the resource GUID property of the virtual network gateway
+        /// connection resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; private set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the virtual network gateway
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -236,7 +265,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -254,6 +283,18 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
             }
+            if (VirtualNetworkGateway1 != null)
+            {
+                VirtualNetworkGateway1.Validate();
+            }
+            if (VirtualNetworkGateway2 != null)
+            {
+                VirtualNetworkGateway2.Validate();
+            }
+            if (LocalNetworkGateway2 != null)
+            {
+                LocalNetworkGateway2.Validate();
+            }
             if (IpsecPolicies != null)
             {
                 foreach (var element in IpsecPolicies)
@@ -261,6 +302,16 @@ namespace Microsoft.Azure.Management.Network.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (TrafficSelectorPolicies != null)
+            {
+                foreach (var element1 in TrafficSelectorPolicies)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

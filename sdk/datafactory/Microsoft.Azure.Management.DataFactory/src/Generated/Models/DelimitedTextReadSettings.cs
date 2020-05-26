@@ -31,16 +31,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DelimitedTextReadSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="skipLineCount">Indicates the number of non-empty rows
         /// to skip when reading data from input files. Type: integer (or
         /// Expression with resultType integer).</param>
-        public DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object))
-            : base(type, additionalProperties)
+        /// <param name="compressionProperties">Compression settings.</param>
+        public DelimitedTextReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object), CompressionReadSettings compressionProperties = default(CompressionReadSettings))
+            : base(additionalProperties)
         {
             SkipLineCount = skipLineCount;
+            CompressionProperties = compressionProperties;
             CustomInit();
         }
 
@@ -58,14 +59,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object SkipLineCount { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets compression settings.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "compressionProperties")]
+        public CompressionReadSettings CompressionProperties { get; set; }
+
     }
 }

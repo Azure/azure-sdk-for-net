@@ -2,31 +2,43 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public class UsernamePasswordCredentialTests
+    public class UsernamePasswordCredentialTests : ClientTestBase
     {
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
+        {
+        }
+
 
         [Test]
-        [Ignore("This test requires a user account which doesn't have MFA enabled.")]
-        public async Task AuthenticateUsernamePasswordLiveAsync()
+        public async Task VerifyMsalClientExceptionAsync()
         {
-            var username = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME");
+            string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var password = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD");
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
 
-            var tenantId = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
+            var username = Guid.NewGuid().ToString();
+            var password = Guid.NewGuid().ToString();
 
-            var cred = new UsernamePasswordCredential(username, password.ToSecureString(), ClientId, tenantId);
+            var credential = InstrumentClient(new UsernamePasswordCredential(username, password, CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            AccessToken token = await cred.GetTokenAsync(new string[] { "https://vault.azure.net/.default" });
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.IsNotNull(token.Token);
+            Assert.IsNotNull(ex.InnerException);
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
+
+            await Task.CompletedTask;
         }
+
     }
 }

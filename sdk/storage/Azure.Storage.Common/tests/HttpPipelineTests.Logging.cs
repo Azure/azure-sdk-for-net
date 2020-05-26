@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
-    partial class HttpPipelineTests
+    internal partial class HttpPipelineTests
     {
         /*
         [Test]
@@ -70,7 +69,7 @@ namespace Azure.Storage.Common.Test
         [NonParallelizable]
         public async Task Logging_EventLog()
         {
-            var serviceCollection = 
+            var serviceCollection =
                 new ServiceCollection()
                 .AddLogging(
                     builder =>
@@ -90,7 +89,7 @@ namespace Azure.Storage.Common.Test
             {
                 Console.SetOut(textWriter);
 
-                var serviceCollection = 
+                var serviceCollection =
                     new ServiceCollection()
                     .AddLogging(
                         builder =>
@@ -103,7 +102,6 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        
         [Test]
         [NonParallelizable]
         public async Task Logging_TraceLog()
@@ -114,7 +112,7 @@ namespace Azure.Storage.Common.Test
             using (var textWriterListener = new TextWriterTraceListener(textWriter))
             using (var consoleListener = new TextWriterTraceListener(Console.Out))
             {
-                var serviceCollection = 
+                var serviceCollection =
                     new ServiceCollection()
                     .AddLogging(
                         builder =>

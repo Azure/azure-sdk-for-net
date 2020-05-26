@@ -38,23 +38,26 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the public IP
+        /// <param name="subnet">The reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference to the public IP
         /// resource.</param>
+        /// <param name="privateIPAddress">Private IP Address for this
+        /// gateway.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// virtual network gateway IP configuration resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string privateIPAddress = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -74,20 +77,27 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets the reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the public IP resource.
+        /// Gets or sets the reference to the public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets private IP Address for this gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        public string PrivateIPAddress { get; private set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the virtual network gateway IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -100,11 +110,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

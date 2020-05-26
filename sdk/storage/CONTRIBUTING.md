@@ -12,7 +12,7 @@ comments.
 
 ## Azure SDK Design Guidelines for .NET
 
-These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html)
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html)
 and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
@@ -34,7 +34,11 @@ PS C:\src\azure-sdk-for-net\sdk\storage> .\generate.ps1
 ```
 
 The generator uses [AutoRest](https://github.com/Azure/autorest) which requires
-node.js.  There's known flakiness that results in an `ERROR: Did not find any
+node.js. It is recommended to use the beta version as it increases the max usable memory:
+```
+npm install -g autorest@beta
+```
+There's known flakiness that results in an `ERROR: Did not find any
 input files to generate!` message that can be safely ignored -- just run the
 generator one more time.
 
@@ -62,10 +66,12 @@ different service features.  We specify all of them via a
 `TestConfigurations.xml` file.  It includes:
 
 * `TargetTestTenant` - the default Storage account for our tests
-* `TargetSecondaryTestTenant` - a Storage account with Read Access Geo-Redundant Storage enabled
+* `TargetSecondaryTestTenant` - A Storage account with Read Access Geo-Redundant Storage enabled
 * `TargetPremiumBlobTenant` - A Storage account using Premium SSDs
 * `TargetPreviewBlobTenant` - A Storage account with access to preview features
 * `TargetOAuthTenant` - A Storage account configured to authenticate with Azure Active Directory
+* `TargetHierarchicalNamespaceTenant` - A Storage account with hierarchical namespace enabled
+   and configured to authenticate with Azure Active Directory (OAuth access)
 
 If you want to run live tests against your own account, you can edit the
 [`TestConfigurationsTemplate.xml`](.\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml)

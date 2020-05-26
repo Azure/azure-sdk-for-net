@@ -15,10 +15,11 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TenantGitTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task ValidateSaveDeploy()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();

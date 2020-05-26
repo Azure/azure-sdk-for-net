@@ -128,7 +128,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 MaxFrameSize = maxFrameSize,
                 ContainerId = containerId,
-                HostName = hostName
+                HostName = hostName,
+                IdleTimeOut = (uint)Constants.DefaultOperationTimeout.TotalMilliseconds
             };
 
             connectionSettings.AddProperty("product", ClientInfo.Product);

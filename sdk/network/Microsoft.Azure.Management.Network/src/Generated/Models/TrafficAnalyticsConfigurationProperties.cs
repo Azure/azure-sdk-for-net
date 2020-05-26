@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -43,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="trafficAnalyticsInterval">The interval in minutes
         /// which would decide how frequently TA service should do flow
         /// analytics.</param>
-        public TrafficAnalyticsConfigurationProperties(bool enabled, string workspaceId, string workspaceRegion, string workspaceResourceId, int? trafficAnalyticsInterval = default(int?))
+        public TrafficAnalyticsConfigurationProperties(bool? enabled = default(bool?), string workspaceId = default(string), string workspaceRegion = default(string), string workspaceResourceId = default(string), int? trafficAnalyticsInterval = default(int?))
         {
             Enabled = enabled;
             WorkspaceId = workspaceId;
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets flag to enable/disable traffic analytics.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the resource guid of the attached workspace.
@@ -89,26 +88,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "trafficAnalyticsInterval")]
         public int? TrafficAnalyticsInterval { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (WorkspaceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "WorkspaceId");
-            }
-            if (WorkspaceRegion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "WorkspaceRegion");
-            }
-            if (WorkspaceResourceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "WorkspaceResourceId");
-            }
-        }
     }
 }

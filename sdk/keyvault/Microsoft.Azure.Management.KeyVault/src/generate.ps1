@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "keyvault/resource-manager" -AutoRestVersion "latest" -SpecsRepoBranch "keyvault_preview" -SdkGenerationDirectory "$PSScriptRoot\Generated"
+Start-AutoRestCodeGeneration -ResourceProvider "keyvault/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated"

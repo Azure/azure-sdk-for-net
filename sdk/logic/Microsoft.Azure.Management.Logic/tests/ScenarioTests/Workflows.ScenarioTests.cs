@@ -179,7 +179,7 @@ namespace Test.Azure.Management.Logic
                     workflow);
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
-                Assert.Throws<CloudException>(() => client.Workflows.Get(Constants.DefaultResourceGroup, workflowName));
+                Assert.Throws<ErrorResponseException>(() => client.Workflows.Get(Constants.DefaultResourceGroup, workflowName));
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
@@ -258,7 +258,7 @@ namespace Test.Azure.Management.Logic
                 var workflow = this.CreateWorkflow(workflowName);
                 workflow.Definition = "Invalid Definition";
 
-                Assert.Throws<CloudException>(() => client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
+                Assert.Throws<ErrorResponseException>(() => client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
                     Constants.DefaultLocation,
                     workflowName,
                     workflow));

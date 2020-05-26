@@ -132,7 +132,7 @@ namespace Test.Azure.Management.Logic
                     batchConfiguration);
 
                 client.IntegrationAccountBatchConfigurations.Delete(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -160,7 +160,7 @@ namespace Test.Azure.Management.Logic
                     batchConfiguration);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
             }
         }
 

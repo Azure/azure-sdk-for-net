@@ -46,7 +46,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// managed dedicated integration runtime.</param>
         /// <param name="edition">The edition for the SSIS Integration Runtime.
         /// Possible values include: 'Standard', 'Enterprise'</param>
-        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), IntegrationRuntimeDataProxyProperties dataProxyProperties = default(IntegrationRuntimeDataProxyProperties), string edition = default(string))
+        /// <param name="expressCustomSetupProperties">Custom setup without
+        /// script properties for a SSIS integration runtime.</param>
+        /// <param name="packageStores">Package stores for the SSIS Integration
+        /// Runtime.</param>
+        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), IntegrationRuntimeDataProxyProperties dataProxyProperties = default(IntegrationRuntimeDataProxyProperties), string edition = default(string), IList<CustomSetupBase> expressCustomSetupProperties = default(IList<CustomSetupBase>), IList<PackageStore> packageStores = default(IList<PackageStore>))
         {
             AdditionalProperties = additionalProperties;
             CatalogInfo = catalogInfo;
@@ -54,6 +58,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             CustomSetupScriptProperties = customSetupScriptProperties;
             DataProxyProperties = dataProxyProperties;
             Edition = edition;
+            ExpressCustomSetupProperties = expressCustomSetupProperties;
+            PackageStores = packageStores;
             CustomInit();
         }
 
@@ -105,6 +111,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string Edition { get; set; }
 
         /// <summary>
+        /// Gets or sets custom setup without script properties for a SSIS
+        /// integration runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "expressCustomSetupProperties")]
+        public IList<CustomSetupBase> ExpressCustomSetupProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets package stores for the SSIS Integration Runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "packageStores")]
+        public IList<PackageStore> PackageStores { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -119,6 +138,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (CustomSetupScriptProperties != null)
             {
                 CustomSetupScriptProperties.Validate();
+            }
+            if (PackageStores != null)
+            {
+                foreach (var element in PackageStores)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

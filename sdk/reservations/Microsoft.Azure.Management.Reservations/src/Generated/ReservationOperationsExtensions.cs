@@ -24,6 +24,58 @@ namespace Microsoft.Azure.Management.Reservations
     public static partial class ReservationOperationsExtensions
     {
             /// <summary>
+            /// Get Available Scopes for `Reservation`.
+            /// </summary>
+            /// <remarks>
+            /// Get Available Scopes for `Reservation`.
+            ///
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the Reservation Item
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static Properties AvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body)
+            {
+                return operations.AvailableScopesAsync(reservationOrderId, reservationId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Available Scopes for `Reservation`.
+            /// </summary>
+            /// <remarks>
+            /// Get Available Scopes for `Reservation`.
+            ///
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the Reservation Item
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Properties> AvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Split the `Reservation`.
             /// </summary>
             /// <remarks>
@@ -174,9 +226,12 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
             /// </param>
-            public static ReservationResponse Get(this IReservationOperations operations, string reservationId, string reservationOrderId)
+            /// <param name='expand'>
+            /// Supported value of this query is renewProperties
+            /// </param>
+            public static ReservationResponse Get(this IReservationOperations operations, string reservationId, string reservationOrderId, string expand = default(string))
             {
-                return operations.GetAsync(reservationId, reservationOrderId).GetAwaiter().GetResult();
+                return operations.GetAsync(reservationId, reservationOrderId, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,12 +249,15 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
             /// </param>
+            /// <param name='expand'>
+            /// Supported value of this query is renewProperties
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReservationResponse> GetAsync(this IReservationOperations operations, string reservationId, string reservationOrderId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReservationResponse> GetAsync(this IReservationOperations operations, string reservationId, string reservationOrderId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(reservationId, reservationOrderId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(reservationId, reservationOrderId, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,6 +356,58 @@ namespace Microsoft.Azure.Management.Reservations
             public static async Task<IPage<ReservationResponse>> ListRevisionsAsync(this IReservationOperations operations, string reservationId, string reservationOrderId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRevisionsWithHttpMessagesAsync(reservationId, reservationOrderId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get Available Scopes for `Reservation`.
+            /// </summary>
+            /// <remarks>
+            /// Get Available Scopes for `Reservation`.
+            ///
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the Reservation Item
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static Properties BeginAvailableScopes(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body)
+            {
+                return operations.BeginAvailableScopesAsync(reservationOrderId, reservationId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Available Scopes for `Reservation`.
+            /// </summary>
+            /// <remarks>
+            /// Get Available Scopes for `Reservation`.
+            ///
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the Reservation Item
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Properties> BeginAvailableScopesAsync(this IReservationOperations operations, string reservationOrderId, string reservationId, SubscriptionScopeProperties body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginAvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.10.0-preview</Version>
+		<Version>1.13.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Using new 2019-04-01 api-version contract and adding Calculate and Purchase Reservation
+			Update billing plan sdk
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

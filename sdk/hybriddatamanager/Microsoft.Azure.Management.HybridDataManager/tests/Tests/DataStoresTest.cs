@@ -1,4 +1,4 @@
-﻿namespace HybridData.Tests.Tests
+namespace HybridData.Tests.Tests
 {
     using Microsoft.Azure.Management.HybridData;
     using Microsoft.Azure.Management.HybridData.Models;
@@ -61,12 +61,12 @@
             {
                 string dataStoreName = TestConstants.DefaultDataSourceName;
                 DataStore dataStore = Client.DataStores.CreateStorSimpleDataStore(subscriptionIdOfDataManager: SubscriptionId,
-                    subscriptionIdOfStorSimpleDevice: SubscriptionId,
+                    subscriptionIdOfStorSimpleDevice: TestConstants.DefaultStorSimpleResourceSubscriptionId,
                     resourceGroupOfDataManager: ResourceGroupName,
                     resourceGroupOfStorSimpleDevice: TestConstants.DefaultStorSimpleDeviceResourceGroup,
                     dataManagerName: DataManagerName,
                     serviceEncryptionKey: StorSimpleDeviceServiceEncryptionKey,
-                    storSimpleDeviceName: TestConstants.DefaultStorSimpleDeviceName,
+                    storSimpleResourceName: TestConstants.DefaultStorSimpleResourceName,
                     client: Client);
                 var returnedDataStore = Client.DataStores.CreateOrUpdate(dataStoreName, dataStore, ResourceGroupName, DataManagerName);
                 Assert.NotNull(returnedDataStore);
@@ -170,3 +170,4 @@
         }
     }
 }
+

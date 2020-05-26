@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2019-10-01&$filter=IsCompliant%20eq%20false%20and%20PolicyDefinitionAction%20eq%20'deny'",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5U3RhdGVzL2xhdGVzdC9xdWVyeVJlc3VsdHM/YXBpLXZlcnNpb249MjAxOS0xMC0wMSYkZmlsdGVyPUlzQ29tcGxpYW50JTIwZXElMjBmYWxzZSUyMGFuZCUyMFBvbGljeURlZmluaXRpb25BY3Rpb24lMjBlcSUyMCUyN2RlbnklMjc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2a73bec4-4f80-4cbd-9228-d578824a2a18"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/3.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 19 Mar 2020 23:49:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-policy-insights-requests": [
+          "597"
+        ],
+        "x-ms-request-id": [
+          ":cb0ba023-c05b-4567-bff0-2c15628e8a92"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "a952862b-2a45-485e-8bb4-18f16012204a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20200319T234959Z:a952862b-2a45-485e-8bb4-18f16012204a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "3595"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.nextLink\": null,\r\n  \"@odata.context\": \"https://management.azure.com/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.PolicyInsights/policyStates/$metadata#latest\",\r\n  \"@odata.count\": 2,\r\n  \"value\": [\r\n    {\r\n      \"@odata.id\": null,\r\n      \"@odata.context\": \"https://management.azure.com/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.PolicyInsights/policyStates/$metadata#latest/$entity\",\r\n      \"timestamp\": \"2020-03-19T23:41:14.0106728Z\",\r\n      \"resourceId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourcegroups/keyvault-amp-demo-rg/providers/microsoft.keyvault/vaults/keyvault1-amp-demo\",\r\n      \"policyAssignmentId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/88c08e678a504eec8471d660\",\r\n      \"policyDefinitionId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policydefinitions/3520924f-7a65-4cbf-83e6-e2ed67bbf0da\",\r\n      \"effectiveParameters\": \"\",\r\n      \"isCompliant\": false,\r\n      \"subscriptionId\": \"e78961ba-36fe-4739-9212-e3031b4c8db7\",\r\n      \"resourceType\": \"Microsoft.KeyVault/vaults\",\r\n      \"resourceLocation\": \"westcentralus\",\r\n      \"resourceGroup\": \"KeyVault-AMP-demo-RG\",\r\n      \"resourceTags\": \"tbd\",\r\n      \"policyAssignmentName\": \"88c08e678a504eec8471d660\",\r\n      \"policyAssignmentOwner\": \"tbd\",\r\n      \"policyAssignmentParameters\": \"\",\r\n      \"policyAssignmentScope\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7\",\r\n      \"policyDefinitionName\": \"3520924f-7a65-4cbf-83e6-e2ed67bbf0da\",\r\n      \"policyDefinitionAction\": \"deny\",\r\n      \"policyDefinitionCategory\": \"tbd\",\r\n      \"policySetDefinitionId\": \"\",\r\n      \"policySetDefinitionName\": \"\",\r\n      \"policySetDefinitionOwner\": \"\",\r\n      \"policySetDefinitionCategory\": \"\",\r\n      \"policySetDefinitionParameters\": \"\",\r\n      \"managementGroupIds\": \"PolicyUIMG,AzGovTest5,72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"policyDefinitionReferenceId\": \"\",\r\n      \"complianceState\": \"NonCompliant\",\r\n      \"policyDefinitionGroupNames\": [\r\n        \"\"\r\n      ],\r\n      \"policyDefinitionVersion\": \"\",\r\n      \"policySetDefinitionVersion\": \"\",\r\n      \"policyAssignmentVersion\": \"\"\r\n    },\r\n    {\r\n      \"@odata.id\": null,\r\n      \"@odata.context\": \"https://management.azure.com/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.PolicyInsights/policyStates/$metadata#latest/$entity\",\r\n      \"timestamp\": \"2020-03-19T23:41:14.0106728Z\",\r\n      \"resourceId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourcegroups/keyvault-amp-demo-rg/providers/microsoft.keyvault/vaults/keyvault2-amp-demo\",\r\n      \"policyAssignmentId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/88c08e678a504eec8471d660\",\r\n      \"policyDefinitionId\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policydefinitions/3520924f-7a65-4cbf-83e6-e2ed67bbf0da\",\r\n      \"effectiveParameters\": \"\",\r\n      \"isCompliant\": false,\r\n      \"subscriptionId\": \"e78961ba-36fe-4739-9212-e3031b4c8db7\",\r\n      \"resourceType\": \"Microsoft.KeyVault/vaults\",\r\n      \"resourceLocation\": \"westcentralus\",\r\n      \"resourceGroup\": \"KeyVault-AMP-demo-RG\",\r\n      \"resourceTags\": \"tbd\",\r\n      \"policyAssignmentName\": \"88c08e678a504eec8471d660\",\r\n      \"policyAssignmentOwner\": \"tbd\",\r\n      \"policyAssignmentParameters\": \"\",\r\n      \"policyAssignmentScope\": \"/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7\",\r\n      \"policyDefinitionName\": \"3520924f-7a65-4cbf-83e6-e2ed67bbf0da\",\r\n      \"policyDefinitionAction\": \"deny\",\r\n      \"policyDefinitionCategory\": \"tbd\",\r\n      \"policySetDefinitionId\": \"\",\r\n      \"policySetDefinitionName\": \"\",\r\n      \"policySetDefinitionOwner\": \"\",\r\n      \"policySetDefinitionCategory\": \"\",\r\n      \"policySetDefinitionParameters\": \"\",\r\n      \"managementGroupIds\": \"PolicyUIMG,AzGovTest5,72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"policyDefinitionReferenceId\": \"\",\r\n      \"complianceState\": \"NonCompliant\",\r\n      \"policyDefinitionGroupNames\": [\r\n        \"\"\r\n      ],\r\n      \"policyDefinitionVersion\": \"\",\r\n      \"policySetDefinitionVersion\": \"\",\r\n      \"policyAssignmentVersion\": \"\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f67cc918-f64f-4c3f-aa24-a855465f9d41"
+  }
+}

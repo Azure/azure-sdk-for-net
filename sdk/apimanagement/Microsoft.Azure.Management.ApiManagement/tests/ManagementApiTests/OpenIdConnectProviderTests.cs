@@ -17,14 +17,15 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class OpenIdConnectProviderTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                
+
                 string openIdNoSecret = TestUtilities.GenerateName("openId");
                 string openId2 = TestUtilities.GenerateName("openId");
 
@@ -54,7 +55,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         openIdNoSecret);
 
                     Assert.NotNull(openIdConnectProviderContract);
-                    
+
                     Assert.Equal(openIdProviderName, openIdConnectProviderContract.DisplayName);
                     Assert.Equal(metadataEndpoint, openIdConnectProviderContract.MetadataEndpoint);
                     Assert.Equal(clientId, openIdConnectProviderContract.ClientId);
@@ -89,10 +90,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(openIdProviderName2, getResponse2.DisplayName);
                     Assert.Equal(clientId2, getResponse2.ClientId);
                     Assert.Equal(metadataEndpoint2, getResponse2.MetadataEndpoint);
-                    Assert.NotNull(getResponse2.ClientSecret);
-                    Assert.Equal(clientSecret, getResponse2.ClientSecret);
+                    Assert.Null(getResponse2.ClientSecret);
                     Assert.NotNull(getResponse2.Description);
                     Assert.Equal(openId2, getResponse2.Name);
+
+                    var secretResponse = testBase.client.OpenIdConnectProvider.ListSecrets(testBase.rgName, testBase.serviceName, openId2);
+                    Assert.Equal(clientSecret, secretResponse.ClientSecret);
 
                     // list the openId Connect Providers
                     var listResponse = testBase.client.OpenIdConnectProvider.ListByService(testBase.rgName, testBase.serviceName, null);
@@ -112,6 +115,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(listResponse);
                     Assert.Single(listResponse);
                     Assert.NotNull(listResponse.NextPageLink);
+                    Assert.Null(listResponse.First().ClientSecret);
 
                     // get the openid connect provider tag
                     var openIdConnectProviderTag = await testBase.client.OpenIdConnectProvider.GetEntityTagAsync(
@@ -125,7 +129,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     await testBase.client.OpenIdConnectProvider.DeleteAsync(
                         testBase.rgName,
                         testBase.serviceName,
-                        openIdNoSecret, 
+                        openIdNoSecret,
                         openIdConnectProviderTag.ETag);
 
                     // get the deleted openId Connect Provider to make sure it was deleted
@@ -171,11 +175,17 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponseOpendId2.Body);
                     Assert.NotNull(getResponseOpendId2.Headers.ETag);
 
-                    Assert.Equal(openId2, getResponseOpendId2.Body.Name);                    
+                    Assert.Equal(openId2, getResponseOpendId2.Body.Name);
                     Assert.Equal(updatedClientId, getResponseOpendId2.Body.ClientId);
                     Assert.Equal(updateMetadataEndpoint, getResponseOpendId2.Body.MetadataEndpoint);
-                    Assert.Equal(clientSecret, getResponseOpendId2.Body.ClientSecret);
+                    Assert.Null(getResponseOpendId2.Body.ClientSecret);
                     Assert.NotNull(getResponseOpendId2.Body.Description);
+
+                    var secretsResponse = await testBase.client.OpenIdConnectProvider.ListSecretsAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        openId2);
+                    Assert.Equal(clientSecret, secretsResponse.ClientSecret);
 
                     // delete the openId Connect Provider 
                     testBase.client.OpenIdConnectProvider.Delete(

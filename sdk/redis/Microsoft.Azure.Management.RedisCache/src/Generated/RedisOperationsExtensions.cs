@@ -22,6 +22,39 @@ namespace Microsoft.Azure.Management.Redis
     public static partial class RedisOperationsExtensions
     {
             /// <summary>
+            /// Checks that the redis cache name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CheckNameAvailability Redis operation. The only
+            /// supported resource type is 'Microsoft.Cache/redis'
+            /// </param>
+            public static void CheckNameAvailability(this IRedisOperations operations, CheckNameAvailabilityParameters parameters)
+            {
+                operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the redis cache name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CheckNameAvailability Redis operation. The only
+            /// supported resource type is 'Microsoft.Cache/redis'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CheckNameAvailabilityAsync(this IRedisOperations operations, CheckNameAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }            
+
+            /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an existing
             /// Redis cache.
             /// </summary>

@@ -1,7 +1,9 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using DataBox.Tests.Helpers;
 using Microsoft.Azure.Management.DataBox;
 using Microsoft.Azure.Management.DataBox.Models;
+using Microsoft.Azure.Management.Resources.Models;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,12 +41,18 @@ namespace DataBox.Tests.Tests
         }
 
         [Fact]
+        [Obsolete]
         public void TestValidateAddress()
         {
             var shippingAddress = GetDefaultShippingAddress();
 
-            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation, 
-                shippingAddress, SkuName.DataBox);
+            var validateAddress = new ValidateAddress()
+            {
+                ShippingAddress = shippingAddress,
+                DeviceType = SkuName.DataBox
+            };
+            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation,
+                validateAddress);
 
             Assert.NotNull(addressValidation);
             Assert.NotNull(addressValidation.AlternateAddresses);
@@ -58,5 +66,80 @@ namespace DataBox.Tests.Tests
             Assert.Equal(shippingAddress.StreetAddress1, validatedAddress.StreetAddress1, true);
             Assert.Equal(shippingAddress.StreetAddress2, validatedAddress.StreetAddress2, true);
         }
+
+        [Fact]
+        public void TestValidateInputs()
+        {
+            var validateInput = new CreateJobValidations
+            {
+                IndividualRequestDetails = new List<ValidationInputRequest>() {
+                        new DataDestinationDetailsValidationRequest()
+                        {
+                            DestinationAccountDetails = GetDestinationAccountsList(),
+                            Location = "westus"
+                        },
+                        new ValidateAddress()
+                        {
+                            ShippingAddress = GetDefaultShippingAddress(),
+                            DeviceType = SkuName.DataBox,
+                            TransportPreferences = new TransportPreferences
+                            {
+                                PreferredShipmentType = TransportShipmentTypes.MicrosoftManaged
+                            }
+                        },
+                        new SubscriptionIsAllowedToCreateJobValidationRequest()
+                        {
+                        },
+                        new SkuAvailabilityValidationRequest()
+                        {
+                            DeviceType = SkuName.DataBox,
+                            Country = "US",
+                            Location = "westus"
+                        },
+                        new CreateOrderLimitForSubscriptionValidationRequest()
+                        {
+                            DeviceType = SkuName.DataBox
+                        },
+                        new PreferencesValidationRequest()
+                        {
+                            DeviceType = SkuName.DataBox,
+                            Preference = new Preferences
+                            {
+                                TransportPreferences = new TransportPreferences
+                                {
+                                    PreferredShipmentType = TransportShipmentTypes.MicrosoftManaged
+                                }
+                            }
+                        }
+                }
+            };
+            var validateResponse = this.Client.Service.ValidateInputs(TestConstants.DefaultResourceLocation, validateInput);
+            Assert.True(validateResponse != null, "Call for ValidateInputs is successful.");
+            Assert.True(validateResponse.Status == OverallValidationStatus.AllValidToProceed);
+            ValidateIndividualValidateResponse(validateResponse.IndividualResponseDetails);
+        }
+
+        [Fact]
+        public void TestRegionConfiguration()
+        {
+            var regionConfigurationRequest = new RegionConfigurationRequest
+            {
+                ScheduleAvailabilityRequest = new DataBoxScheduleAvailabilityRequest
+                {
+                    StorageLocation = "westus"
+                },
+
+                TransportAvailabilityRequest = new TransportAvailabilityRequest
+                {
+                    SkuName = SkuName.DataBox
+                }
+            };
+
+            var regionconfigurationResponse = this.Client.Service.RegionConfiguration(TestConstants.DefaultResourceLocation, regionConfigurationRequest.ScheduleAvailabilityRequest, regionConfigurationRequest.TransportAvailabilityRequest);
+            Assert.True(regionconfigurationResponse != null, "Call for RegionConfiguration request is successful");
+            Assert.True(regionconfigurationResponse.ScheduleAvailabilityResponse.AvailableDates != null);
+            Assert.True(regionconfigurationResponse.TransportAvailabilityResponse.TransportAvailabilityDetails != null);
+        }
     }
 }
+

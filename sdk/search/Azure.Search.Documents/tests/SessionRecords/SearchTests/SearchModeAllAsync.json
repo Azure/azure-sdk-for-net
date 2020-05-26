@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
+        "api-key": "Sanitized",
+        "Content-Length": "102",
+        "Content-Type": "application/json",
+        "traceparent": "00-9b6c092e771889419e2451194b345e62-fb6e00f0cb2f554a-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "e1351a5bbc8b244d32e5d5fa7d7ac951",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "facets": [],
+        "queryType": "simple",
+        "scoringParameters": [],
+        "search": "Cheapest hotel",
+        "searchMode": "all"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "396",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 07:10:19 GMT",
+        "elapsed-time": "34",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "e1351a5b-bc8b-244d-32e5-d5fa7d7ac951",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "@search.score": 0.30154645,
+            "hotelId": "2",
+            "hotelName": "Roach Motel",
+            "description": "Cheapest hotel in town. Infact, a motel.",
+            "descriptionFr": "H\u00F4tel le moins cher en ville. Infact, un motel.",
+            "category": "Budget",
+            "tags": [
+              "motel",
+              "budget"
+            ],
+            "parkingIncluded": true,
+            "smokingAllowed": true,
+            "lastRenovationDate": "1982-04-28T00:00:00Z",
+            "rating": 1,
+            "location": null,
+            "address": null,
+            "rooms": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1552992714",
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+  }
+}

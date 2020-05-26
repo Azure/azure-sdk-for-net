@@ -5,16 +5,17 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelSimpleEntitiesTests : BaseTest
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListEntities()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Existing Entity Test"
                 });
@@ -28,12 +29,12 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetEntity()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "New Entity Test"
                 });
@@ -48,12 +49,12 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddEntity()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "New Entity Test"
                 });
@@ -68,36 +69,12 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
-                {
-                    Name = "Rename Entity Test"
-                });
-
-                await client.Model.UpdateEntityAsync(GlobalAppId, versionId, entityId, new ModelUpdateObject
-                {
-                    Name = "Entity Test Renamed"
-                });
-
-                var result = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
-
-                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
-
-                Assert.NotNull(result);
-                Assert.Equal("Entity Test Renamed", result.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteEntity()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Delete Entity Test"
                 });
@@ -110,12 +87,12 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetEntitySuggestions_ReturnsEmpty()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Suggestions Entity Test"
                 });

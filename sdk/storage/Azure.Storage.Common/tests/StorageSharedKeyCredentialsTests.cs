@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Test
+namespace Azure.Storage.Test
 {
     public class StorageSharedKeyCredentialsTests : CommonTestBase
     {
@@ -25,25 +26,25 @@ namespace Azure.Storage.Common.Test
         {
             // Create a service client
             var credential = new StorageSharedKeyCredential(
-                this.TestConfigDefault.AccountName,
-                this.TestConfigDefault.AccountKey);
-            var service =
-                this.InstrumentClient(
+                TestConfigDefault.AccountName,
+                TestConfigDefault.AccountKey);
+            BlobServiceClient service =
+                InstrumentClient(
                     new BlobServiceClient(
-                        new Uri(this.TestConfigDefault.BlobServiceEndpoint),
+                        new Uri(TestConfigDefault.BlobServiceEndpoint),
                         credential,
-                        this.GetBlobOptions()));
+                        GetBlobOptions()));
 
             // Verify the credential works (i.e., doesn't throw)
             await service.GetAccountInfoAsync();
 
             // Roll the credential to an Invalid value and make sure it fails
             credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await service.GetAccountInfoAsync());
 
             // Re-roll the credential and make sure it succeeds again
-            credential.SetAccountKey(this.TestConfigDefault.AccountKey);
+            credential.SetAccountKey(TestConfigDefault.AccountKey);
             await service.GetAccountInfoAsync();
         }
 
@@ -56,17 +57,17 @@ namespace Azure.Storage.Common.Test
         {
             // Create a service client
             var credential = new StorageSharedKeyCredential(
-                this.TestConfigDefault.AccountName,
-                this.TestConfigDefault.AccountKey);
-            var service =
-                this.InstrumentClient(
+                TestConfigDefault.AccountName,
+                TestConfigDefault.AccountKey);
+            BlobServiceClient service =
+                InstrumentClient(
                     new BlobServiceClient(
-                        new Uri(this.TestConfigDefault.BlobServiceEndpoint),
+                        new Uri(TestConfigDefault.BlobServiceEndpoint),
                         credential,
-                        this.GetBlobOptions()));
+                        GetBlobOptions()));
 
             // Create a child container
-            BlobContainerClient container = await service.CreateBlobContainerAsync(this.GetNewContainerName());
+            BlobContainerClient container = await service.CreateBlobContainerAsync(GetNewContainerName());
             try
             {
                 // Verify the credential works (i.e., doesn't throw)
@@ -75,13 +76,13 @@ namespace Azure.Storage.Common.Test
 
                 // Roll the credential to an Invalid value and make sure it fails
                 credential.SetAccountKey(Convert.ToBase64String(Encoding.UTF8.GetBytes("Invalid")));
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.GetAccountInfoAsync());
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await container.GetPropertiesAsync());
 
                 // Re-roll the credential and make sure it succeeds again
-                credential.SetAccountKey(this.TestConfigDefault.AccountKey);
+                credential.SetAccountKey(TestConfigDefault.AccountKey);
                 await service.GetAccountInfoAsync();
                 await container.GetPropertiesAsync();
             }

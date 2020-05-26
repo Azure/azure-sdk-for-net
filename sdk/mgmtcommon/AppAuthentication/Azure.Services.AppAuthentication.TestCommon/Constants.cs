@@ -49,6 +49,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NotSupportedInNetCoreError = "not supported for .NET Core";
 
         // Connection strings
+        //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Secret is used for tests only")]
         public static readonly string ClientSecret = "Secret";
         public static readonly string IntegratedAuthConnectionString = "RunAs = CurrentUser;";
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";
@@ -87,8 +88,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AppType = "App";
 
         // MSI related constants
-        public static readonly string MsiAppServiceEndpointEnv = "MSI_ENDPOINT";
-        public static readonly string MsiAppServiceSecretEnv = "MSI_SECRET";
+        public static readonly string MsiAppServiceEndpointEnv = "IDENTITY_ENDPOINT";
+        public static readonly string MsiAppServiceHeaderEnv = "IDENTITY_HEADER";
         public static readonly string MsiEndpoint = "http://localhost:3748/oauth2/token";
 
         // Unit test certificate

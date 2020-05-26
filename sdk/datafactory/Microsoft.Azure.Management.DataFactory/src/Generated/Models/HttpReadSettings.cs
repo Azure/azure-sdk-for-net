@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the HttpReadSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
@@ -48,13 +47,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="requestTimeout">Specifies the timeout for a HTTP
         /// client to get HTTP response from HTTP server.</param>
-        public HttpReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object))
-            : base(type, additionalProperties, maxConcurrentConnections)
+        /// <param name="enablePartitionDiscovery">Indicates whether to enable
+        /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
+        public HttpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object))
+            : base(additionalProperties, maxConcurrentConnections)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;
             AdditionalHeaders = additionalHeaders;
             RequestTimeout = requestTimeout;
+            EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
             CustomInit();
         }
 
@@ -94,14 +100,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object RequestTimeout { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets indicates whether to enable partition discovery.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
+        public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
+
     }
 }

@@ -431,9 +431,8 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='settingName'>
         /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
         /// </param>
-        /// <param name='kind'>
-        /// the kind of the settings string (DataExportSetting). Possible values
-        /// include: 'DataExportSetting', 'AlertSuppressionSetting'
+        /// <param name='setting'>
+        /// Setting object
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -456,7 +455,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, Setting setting, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -473,16 +472,11 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
             }
-            if (kind == null)
+            if (setting == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kind");
+                throw new ValidationException(ValidationRules.CannotBeNull, "setting");
             }
             string apiVersion = "2019-01-01";
-            Setting setting = new Setting();
-            if (kind != null)
-            {
-                setting.Kind = kind;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

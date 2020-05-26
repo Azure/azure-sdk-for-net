@@ -6,76 +6,106 @@
     using System.Linq;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelPrebuiltDomainTests: BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltDomain()
         {
             UseClientFor(async client =>
             {
-                var versionsApp = await client.Versions.ListAsync(GlobalAppId);
+                var testAppId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+                var versionsApp = await client.Versions.ListAsync(testAppId);
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomainToAdd = new PrebuiltDomainCreateBaseObject
                 {
-                    DomainName = "Gaming"
+                    DomainName = "Communication"
                 };
 
-                var results = await client.Model.AddCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomainToAdd);
-                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(GlobalAppId, version);
+                var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomainToAdd);
+                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(testAppId, version);
+                await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, "Communication");
+                await client.Apps.DeleteAsync(testAppId);
 
-                foreach (var result in results)
+                foreach (var result in prebuiltModels)
                 {
-                    Assert.True(result != Guid.Empty);
-                    Assert.Contains(prebuiltModels, m => m.Id.Equals(result));
+                    Assert.Contains(results, m => m == result.Id);
                 }
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCustomPrebuiltDomain()
         {
             UseClientFor(async client =>
             {
-                var versionsApp = await client.Versions.ListAsync(GlobalAppId);
+                var testAppId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+                var versionsApp = await client.Versions.ListAsync(testAppId);
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomain = new PrebuiltDomainCreateBaseObject
                 {
-                    DomainName = "Gaming"
+                    DomainName = "Communication"
                 };
 
-                var results = await client.Model.AddCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomain);
-                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(GlobalAppId, version);
+                var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain);
+                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(testAppId, version);
 
-                Assert.Contains(prebuiltModels, o => o.CustomPrebuiltDomainName == "Gaming");
+                Assert.Contains(prebuiltModels, o => o.CustomPrebuiltDomainName == "Communication");
 
-                await client.Model.DeleteCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomain.DomainName);
+                await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain.DomainName);
 
-                prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(GlobalAppId, version);
+                prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(testAppId, version);
+                await client.Apps.DeleteAsync(testAppId);
 
-                Assert.DoesNotContain(prebuiltModels, o => o.CustomPrebuiltDomainName == "Gaming");
+
+                Assert.DoesNotContain(prebuiltModels, o => o.CustomPrebuiltDomainName == "Communication");
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltEntities()
         {
             UseClientFor(async client =>
             {
-                var versionsApp = await client.Versions.ListAsync(GlobalAppId);
+                var testAppId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+                var versionsApp = await client.Versions.ListAsync(testAppId);
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomain = new PrebuiltDomainCreateBaseObject
                 {
-                    DomainName = "Gaming"
+                    DomainName = "Communication"
                 };
 
-                var results = await client.Model.AddCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomain);
-                var prebuiltEntities = await client.Model.ListCustomPrebuiltEntitiesAsync(GlobalAppId, version);
+                var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain);
+                var prebuiltEntities = await client.Model.ListCustomPrebuiltEntitiesAsync(testAppId, version);
+                await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, "Communication");
+                await client.Apps.DeleteAsync(testAppId);
 
                 Assert.Contains(prebuiltEntities, entity => entity.CustomPrebuiltDomainName == prebuiltDomain.DomainName);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltEntity()
         {
             UseClientFor(async client =>
@@ -84,37 +114,48 @@
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltModel = new PrebuiltDomainModelCreateObject
                 {
-                    DomainName = "Camera",
-                    ModelName = "AppName"
+                    DomainName = "Communication",
+                    ModelName = "Category"
                 };
 
                 var guidModel = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, version, prebuiltModel);
                 var prebuiltEntities = await client.Model.ListCustomPrebuiltEntitiesAsync(GlobalAppId, version);
+                await client.Model.DeleteEntityAsync(GlobalAppId, version, guidModel);
 
                 Assert.Contains(prebuiltEntities, entity => entity.Id == guidModel);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltIntents()
         {
             UseClientFor(async client =>
             {
-                var versionsApp = await client.Versions.ListAsync(GlobalAppId);
+                var testAppId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+                var versionsApp = await client.Versions.ListAsync(testAppId);
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomain = new PrebuiltDomainCreateBaseObject
                 {
-                    DomainName = "Gaming"
+                    DomainName = "Communication"
                 };
 
-                var results = await client.Model.AddCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomain);
-                var prebuiltIntents = await client.Model.ListCustomPrebuiltIntentsAsync(GlobalAppId, version);
+                var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain);
+                var prebuiltIntents = await client.Model.ListCustomPrebuiltIntentsAsync(testAppId, version);
+                await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, "Communication");
+                await client.Apps.DeleteAsync(testAppId);
 
                 Assert.Contains(prebuiltIntents, entity => entity.CustomPrebuiltDomainName == prebuiltDomain.DomainName);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltIntent()
         {
             UseClientFor(async client =>
@@ -124,34 +165,43 @@
                 var prebuiltModel = new PrebuiltDomainModelCreateObject
                 {
                     DomainName = "Calendar",
-                    ModelName = "Add"
+                    ModelName = "Cancel"
                 };
 
                 var guidModel = await client.Model.AddCustomPrebuiltIntentAsync(GlobalAppId, version, prebuiltModel);
                 var prebuiltIntents = await client.Model.ListCustomPrebuiltIntentsAsync(GlobalAppId, version);
-
                 await client.Model.DeleteIntentAsync(GlobalAppId, version, guidModel);
 
                 Assert.Contains(prebuiltIntents, entity => entity.Id == guidModel);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListCustomPrebuiltModels()
         {
             UseClientFor(async client =>
             {
-                var versionsApp = await client.Versions.ListAsync(GlobalAppId);
+                var testAppId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "New LUIS App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+                var versionsApp = await client.Versions.ListAsync(testAppId);
                 var version = versionsApp.FirstOrDefault().Version;
                 var prebuiltDomain = new PrebuiltDomainCreateBaseObject
                 {
                     DomainName = "Calendar"
                 };
 
-                var results = await client.Model.AddCustomPrebuiltDomainAsync(GlobalAppId, version, prebuiltDomain);
-                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(GlobalAppId, version);
-                
-                var validTypes = new string[] { "Intent Classifier", "Entity Extractor" };
+                var results = await client.Model.AddCustomPrebuiltDomainAsync(testAppId, version, prebuiltDomain);
+                var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(testAppId, version);
+                await client.Model.DeleteCustomPrebuiltDomainAsync(testAppId, version, "Communication");
+                await client.Apps.DeleteAsync(testAppId);
+
+                var validTypes = new string[] { "Intent Classifier", "Closed List Entity Extractor", "Entity Extractor" };
 
                 Assert.True(prebuiltModels.All(m => validTypes.Contains(m.ReadableType)));
             });

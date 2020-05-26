@@ -167,7 +167,7 @@ namespace Test.Azure.Management.Logic
                     schema);
 
                 client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, integrationAccountName, schemaName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -193,7 +193,7 @@ namespace Test.Azure.Management.Logic
                     schema);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
             }
         }
 

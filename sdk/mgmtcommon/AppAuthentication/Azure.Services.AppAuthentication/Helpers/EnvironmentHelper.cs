@@ -18,20 +18,24 @@ namespace Microsoft.Azure.Services.AppAuthentication
         static extern int GetSystemDirectoryW([Out] StringBuilder lpBuffer, int jSize);
 
         const int MaxShortPath = 260;
-        
+#endif
+
         public static string SystemDirectory
         {
             get
             {
+#if !FullNetFx
                 StringBuilder sb = new StringBuilder();
                 if (GetSystemDirectoryW(sb, MaxShortPath) == 0)
                 {
                     throw new Exception("Unable to get system directory");
                 }
                 return sb.ToString();
+#else
+                return Environment.SystemDirectory;
+#endif
             }
         }
-#endif
 
         /// <summary>
         /// Method to get environment variable value. For supported frameworks, the method looks in both process and machine target locations.

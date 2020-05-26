@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("<null>", method.ToString());
         }
 
-        public static object[][] Methods => new []
+        public static object[][] Methods => new[]
         {
             new object[] { RequestMethod.Delete, "DELETE" },
             new object[] { RequestMethod.Get, "GET" },
@@ -25,6 +25,8 @@ namespace Azure.Core.Tests
             new object[] { RequestMethod.Post, "POST" },
             new object[] { RequestMethod.Put, "PUT" },
             new object[] { RequestMethod.Head, "HEAD" },
+            new object[] { RequestMethod.Options, "OPTIONS" },
+            new object[] { RequestMethod.Trace, "TRACE" },
         };
 
         [Theory]

@@ -1,19 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Keys client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Keys client library</AssemblyTitle>
-    <VersionPrefix>4.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Key Vault Keys</PackageTags>
-    <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
-    </PackageReleaseNotes>
+    <Version>4.1.0-preview.2</Version>
+    <PackageTags>Microsoft Azure Key Vault Keys;$(PackageCommonTags)</PackageTags>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
   </PropertyGroup>
+
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+  </ItemGroup>
 
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
@@ -25,8 +27,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
   </ItemGroup>
 
 </Project>

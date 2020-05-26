@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the ClusterUpgradePolicy class.
         /// </summary>
         /// <param name="upgradeReplicaSetCheckTimeout">The maximum amount of
-        /// time to block processing of an upgrade domain and revent loss of
+        /// time to block processing of an upgrade domain and prevent loss of
         /// availability when there are unexpected issues. When this timeout
         /// expires, processing of the upgrade domain will proceed regardless
         /// of availability loss issues. The timeout is reset at the start of
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 
         /// <summary>
         /// Gets or sets the maximum amount of time to block processing of an
-        /// upgrade domain and revent loss of availability when there are
+        /// upgrade domain and prevent loss of availability when there are
         /// unexpected issues. When this timeout expires, processing of the
         /// upgrade domain will proceed regardless of availability loss issues.
         /// The timeout is reset at the start of each upgrade domain. The

@@ -6,11 +6,11 @@
       by task and job id and the type of output.
     </Description>
     <AssemblyTitle>Microsoft Azure Batch File Conventions</AssemblyTitle>
-    <VersionPrefix>3.4.0</VersionPrefix>
+    <Version>3.6.0-preview.1</Version>
     <PackageTags>Microsoft,Azure,Batch,windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageReleaseNotes>
-      Updated Microsoft.Azure.Batch dependency to 11.0.
+      Improve usability of GetOutputStoragePath.
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

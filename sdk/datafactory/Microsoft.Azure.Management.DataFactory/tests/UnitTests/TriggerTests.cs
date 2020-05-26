@@ -29,5 +29,13 @@ namespace DataFactory.Tests.UnitTests
         {
             TestJsonSample<TriggerResource>(jsonSample);
         }
+
+        [Theory]
+        [ClassData(typeof(TriggerRunJsonSamples))]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        public void TriggerRun_SerializationTest(JsonSampleInfo jsonSample)
+        {
+            TestJsonSample<TriggerRunsQueryResponse>(jsonSample);
+        }
     }
 }

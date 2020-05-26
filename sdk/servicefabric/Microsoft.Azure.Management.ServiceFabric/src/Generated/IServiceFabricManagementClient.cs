@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
         /// <summary>
         /// The version of the Service Fabric resource provider API. This is a
-        /// required parameter and it's value must be "2019-03-01-preview" for
-        /// this specification.
+        /// required parameter and it's value must be "2019-03-01" for this
+        /// specification.
         /// </summary>
         string ApiVersion { get; }
 

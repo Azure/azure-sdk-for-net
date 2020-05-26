@@ -12,7 +12,21 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class ManagedIdentityTokenProvider : TokenProvider
     {
-        static readonly AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
+        readonly AzureServiceTokenProvider azureServiceTokenProvider;
+
+        /// <summary>
+        /// Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with default <see cref="AzureServiceTokenProvider"/> configuration.
+        /// </summary>
+        public ManagedIdentityTokenProvider() : this(new AzureServiceTokenProvider()){}
+
+        /// <summary>
+        /// Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with <see cref="AzureServiceTokenProvider"/>.
+        /// </summary>
+        /// <param name="azureServiceTokenProvider">The <see cref="AzureServiceTokenProvider"/> to be used to fetch access tokens.</param>
+        public ManagedIdentityTokenProvider(AzureServiceTokenProvider azureServiceTokenProvider)
+        {
+            this.azureServiceTokenProvider = azureServiceTokenProvider;
+        }
 
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
@@ -22,7 +36,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.EventHubsAudience);
+            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.EventHubsAudience).ConfigureAwait(false);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

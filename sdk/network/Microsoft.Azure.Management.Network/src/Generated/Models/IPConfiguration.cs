@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the public IP
+        /// <param name="subnet">The reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference to the public IP
         /// resource.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -81,23 +81,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets the reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the public IP resource.
+        /// Gets or sets the reference to the public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddress PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the IP configuration resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
@@ -107,11 +108,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

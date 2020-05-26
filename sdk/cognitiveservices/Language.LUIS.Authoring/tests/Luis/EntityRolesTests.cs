@@ -9,14 +9,15 @@ namespace LUIS.Authoring.Tests.Luis
     using System.Text;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class EntityRolesTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddSimpleEntityRole()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -31,7 +32,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -48,7 +49,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -72,7 +73,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -93,38 +94,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Contains(roles, r => r.Name == "simple role");
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -145,29 +115,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddHierarchicalEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Contains(roles, r => r.Name == "simple role");
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -189,12 +137,12 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetSimpleEntityRole()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -209,7 +157,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -226,7 +174,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -250,7 +198,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -271,38 +219,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role", role.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -323,29 +240,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetHierarchicalEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var role = await client.Model.GetHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Equal("simple role", role.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -367,12 +262,12 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetSimpleEntityRoles()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -387,7 +282,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPrebuiltEntityRoles()
         {
             UseClientFor(async client =>
@@ -404,7 +299,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetClosedListEntityRoles()
         {
             UseClientFor(async client =>
@@ -428,7 +323,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetRegexEntityRoles()
         {
             UseClientFor(async client =>
@@ -449,38 +344,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetCompositeEntityRoles()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role", Assert.Single(roles).Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatternAnyEntityRoles()
         {
             UseClientFor(async client =>
@@ -501,29 +365,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetHierarchicalEntityRoles()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Equal("simple role", Assert.Single(roles).Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetCustomPrebuiltDomainEntityRoles()
         {
             UseClientFor(async client =>
@@ -545,12 +387,12 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateSimpleEntityRole()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -569,7 +411,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -590,7 +432,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -618,7 +460,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -643,42 +485,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.UpdateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
-                {
-                    Name = "simple role 2"
-                });
-                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Equal("simple role 2", role.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -703,33 +510,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateHierarchicalEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.UpdateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
-                {
-                    Name = "simple role 2"
-                });
-                var role = await client.Model.GetHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Equal("simple role 2", role.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>
@@ -755,12 +536,12 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteSimpleEntityRole()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new EntityModelCreateObject
                 {
                     Name = "simple entity"
                 });
@@ -776,7 +557,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePrebuiltEntityRole()
         {
             UseClientFor(async client =>
@@ -794,7 +575,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteClosedListEntityRole()
         {
             UseClientFor(async client =>
@@ -819,7 +600,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteRegexEntityRole()
         {
             UseClientFor(async client =>
@@ -841,39 +622,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteCompositeEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var version = "0.1";
-                var prebuiltEntitiesToAdd = new string[]
-                {
-                    "datetimeV2"
-                };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
-                {
-                    Name = "composite model",
-                    Children = new[] { "datetimeV2" }
-                });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.DeleteCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
-                foreach (var added in prebuiltEntitiesAdded)
-                {
-                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
-                }
-
-                Assert.Empty(roles);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePatternAnyEntityRole()
         {
             UseClientFor(async client =>
@@ -895,30 +644,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteHierarchicalEntityRole()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
-                {
-                    Name = "Pattern.Any model",
-                    Children = new[] { "child1" }
-                });
-
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
-                {
-                    Name = "simple role"
-                });
-                await client.Model.DeleteHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
-
-                Assert.Empty(roles);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteCustomPrebuiltDomainEntityRole()
         {
             UseClientFor(async client =>

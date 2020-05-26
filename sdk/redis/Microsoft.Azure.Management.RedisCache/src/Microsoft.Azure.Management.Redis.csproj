@@ -6,10 +6,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Redis</PackageId>
     <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
-    <Version>4.4.1</Version>
+    <Version>6.0.0-preview.1</Version>
     <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added "ReplicasPerMaster" property for Cache Create, Update operations
+Added "ReplicasPerMaster" and "instances" property to the output of Cache Create, Update and Get operations</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

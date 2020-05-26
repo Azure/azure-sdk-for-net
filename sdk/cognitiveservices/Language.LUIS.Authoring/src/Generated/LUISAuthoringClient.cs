@@ -78,11 +78,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public virtual ITrain Train { get; private set; }
 
         /// <summary>
-        /// Gets the IPermissions.
-        /// </summary>
-        public virtual IPermissions Permissions { get; private set; }
-
-        /// <summary>
         /// Gets the IPattern.
         /// </summary>
         public virtual IPattern Pattern { get; private set; }
@@ -230,11 +225,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             Apps = new Apps(this);
             Versions = new Versions(this);
             Train = new Train(this);
-            Permissions = new Permissions(this);
             Pattern = new Pattern(this);
             Settings = new Settings(this);
             AzureAccounts = new AzureAccounts(this);
-            BaseUri = "{Endpoint}/luis/api/v2.0";
+            BaseUri = "{Endpoint}/luis/authoring/v3.0-preview";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

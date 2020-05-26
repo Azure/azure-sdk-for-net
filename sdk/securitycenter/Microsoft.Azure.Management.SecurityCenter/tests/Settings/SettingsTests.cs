@@ -47,7 +47,7 @@ namespace SecurityCenter.Tests
         [Fact]
         public void Settings_List()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
@@ -59,11 +59,25 @@ namespace SecurityCenter.Tests
         [Fact]
         public void Settings_Get()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var setting = securityCenterClient.Settings.Get(SettingName);
                 ValidateSetting(setting);
+            }
+        }
+
+        [Fact]
+        public void Settings_Update()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var setting = securityCenterClient.Settings.Get(SettingName);
+                ValidateSetting(setting);
+
+                var updatedSetting = securityCenterClient.Settings.Update(SettingName, setting);
+                ValidateSetting(updatedSetting);
             }
         }
 

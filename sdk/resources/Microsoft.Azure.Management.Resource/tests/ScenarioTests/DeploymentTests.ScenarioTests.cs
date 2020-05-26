@@ -51,7 +51,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -83,7 +83,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -111,7 +111,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -126,9 +126,10 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                         JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
-                    }
+                    },
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
@@ -152,6 +153,8 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
                 Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Tags);
+                Assert.True(deploymentListResult.First().Tags.ContainsKey("tagKey1"));
             }
         }
 
@@ -160,7 +163,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -176,7 +179,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -201,7 +204,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -238,7 +241,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -285,7 +288,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -325,7 +328,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -373,7 +376,7 @@ namespace ResourceGroups.Tests
         public void CreateLargeWebDeploymentTemplateWorks()
         {
             var handler = new RecordedDelegatingHandler();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -389,7 +392,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -410,7 +413,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = "SDK-test";
@@ -426,7 +429,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "WestUS"
+                    Location = "WestUS",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
@@ -444,6 +448,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtSubscriptionScope(deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
             }
         }
 
@@ -452,22 +458,23 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
-                string groupId = "tiano-mgtest01";
+                string groupId = "tag-mg1";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
-                var parameters = new Deployment
+                var parameters = new ScopedDeployment
                 {
                     Properties = new DeploymentProperties()
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tianosatestgl'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "East US"
+                    Location = "East US",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 //Validate
@@ -483,7 +490,242 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtManagementGroupScope(groupId, deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+            }
+        }
+
+        [Fact]
+        public void TenantLevelDeployment()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new ScopedDeployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US 2",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtTenantScope(deploymentName, parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtTenantScope(deploymentName, parameters);
+
+                var deployment = client.Deployments.GetAtTenantScope(deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+
+                var deploymentOperations = client.DeploymentOperations.ListAtTenantScope(deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtTenant()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US 2",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: "", deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: "", deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: "", deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: "", deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtManagementGroup()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupId = "tag-mg1";
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+
+                var managementGroupScope = $"/providers/Microsoft.Management/managementGroups/{groupId}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: managementGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: managementGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: managementGroupScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: managementGroupScope, deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtSubscription()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = "SDK-test";
+                string deploymentName = TestUtilities.GenerateName("csmd");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "subscription_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "WestUS",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
+
+                var subscriptionScope = $"/subscriptions/{client.SubscriptionId}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: subscriptionScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: subscriptionScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: subscriptionScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: subscriptionScope, deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtResourceGroup()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = "SDK-test-01";
+                string deploymentName = TestUtilities.GenerateName("csmd");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "simple-storage-account.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'tianotest105'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
+
+                var resourceGroupScope = $"/subscriptions/{client.SubscriptionId}/resourceGroups/{groupName}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: resourceGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: resourceGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
+                Assert.Equal(2, deploymentOperations.Count());
             }
         }
     }
 }
+

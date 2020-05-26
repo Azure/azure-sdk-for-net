@@ -194,5 +194,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             });
         }
+
+        [Fact]
+        [LiveTest]
+        public async Task CreatingLinkToNonExistingEntityShouldThrowEntityNotFoundException()
+        {
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, "nonExistingEntity"); // Covers queue and topic
+            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () => await receiver.ReceiveAsync());
+
+            await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
+            {
+                receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, "nonexistingsub"));
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () => await receiver.ReceiveAsync());
+            });
+        }
     }
 }

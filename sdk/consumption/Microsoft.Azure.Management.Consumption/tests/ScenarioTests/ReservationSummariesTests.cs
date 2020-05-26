@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Consumption.Tests.Helpers;
@@ -20,7 +20,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListReservationSummariesMonthlyWithReservationOrderIdTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -38,7 +38,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListReservationSummariesMonthlyWithReservationOrderIdAndReservationIdTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -56,7 +56,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListReservationSummariesDailyWithReservationOrderIdTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -75,7 +75,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListReservationSummariesDailyWithReservationOrderIdAndReservationIdTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -109,3 +109,4 @@ namespace Consumption.Tests.ScenarioTests
         }
     }
 }
+

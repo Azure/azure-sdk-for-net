@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Initializes a new instance of the CertificateBaseProperties class.
         /// </summary>
         /// <param name="thumbprintAlgorithm">The algorithm of the certificate
-        /// thumbprint</param>
-        /// <param name="thumbprint">The thumbprint of the certificate</param>
+        /// thumbprint.</param>
+        /// <param name="thumbprint">The thumbprint of the certificate.</param>
         /// <param name="format">The format of the certificate - either Pfx or
         /// Cer. If omitted, the default is Pfx. Possible values include:
         /// 'Pfx', 'Cer'</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the algorithm of the certificate thumbprint
+        /// Gets or sets the algorithm of the certificate thumbprint.
         /// </summary>
         /// <remarks>
         /// This must match the first portion of the certificate name.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the thumbprint of the certificate
+        /// Gets or sets the thumbprint of the certificate.
         /// </summary>
         /// <remarks>
         /// This must match the thumbprint from the name.

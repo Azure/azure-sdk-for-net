@@ -8,9 +8,10 @@
     using Xunit;
     using System.Linq;
 
+    [Collection("TestCollection")]
     public class AppsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListApplications()
         {
             UseClientFor(async client =>
@@ -36,7 +37,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddApplication()
         {
             UseClientFor(async client =>
@@ -64,7 +65,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetApplication()
         {
             UseClientFor(async client =>
@@ -91,7 +92,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateApplication()
         {
             UseClientFor(async client =>
@@ -122,7 +123,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteApplication()
         {
             UseClientFor(async client =>
@@ -145,7 +146,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListEndpoints()
         {
             UseClientFor(async client =>
@@ -172,7 +173,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void PublishApplication()
         {
             UseClientFor(async client =>
@@ -189,7 +190,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DownloadQueryLogs()
         {
             UseClientFor(async client =>
@@ -215,7 +216,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetSettings()
         {
             UseClientFor(async client =>
@@ -240,7 +241,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateSettings()
         {
             UseClientFor(async client =>
@@ -269,7 +270,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPublishSettings()
         {
             UseClientFor(async client =>
@@ -296,7 +297,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePublishSettings()
         {
             UseClientFor(async client =>
@@ -329,7 +330,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListDomains()
         {
             UseClientFor(async client =>
@@ -342,7 +343,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListSupportedCultures()
         {
             UseClientFor(async client =>
@@ -356,7 +357,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListUsageScenarios()
         {
             UseClientFor(async client =>
@@ -369,7 +370,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListAvailableCustomPrebuiltDomains()
         {
             UseClientFor(async client =>
@@ -385,7 +386,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListAvailableCustomPrebuiltDomainsForCulture()
         {
             UseClientFor(async client =>
@@ -404,7 +405,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddCustomPrebuiltApplication()
         {
             UseClientFor(async client =>

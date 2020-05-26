@@ -49,16 +49,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ipPrefix">The allocated Prefix.</param>
         /// <param name="publicIPAddresses">The list of all referenced
         /// PublicIPAddresses.</param>
+        /// <param name="loadBalancerFrontendIpConfiguration">The reference to
+        /// load balancer frontend IP configuration associated with the public
+        /// IP prefix.</param>
         /// <param name="resourceGuid">The resource GUID property of the public
         /// IP prefix resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// Public IP prefix resource. Possible values are: 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
+        /// public IP prefix resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public PublicIPPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PublicIPPrefixSku sku = default(PublicIPPrefixSku), string publicIPAddressVersion = default(string), IList<IpTag> ipTags = default(IList<IpTag>), int? prefixLength = default(int?), string ipPrefix = default(string), IList<ReferencedPublicIpAddress> publicIPAddresses = default(IList<ReferencedPublicIpAddress>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public PublicIPPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PublicIPPrefixSku sku = default(PublicIPPrefixSku), string publicIPAddressVersion = default(string), IList<IpTag> ipTags = default(IList<IpTag>), int? prefixLength = default(int?), string ipPrefix = default(string), IList<ReferencedPublicIpAddress> publicIPAddresses = default(IList<ReferencedPublicIpAddress>), SubResource loadBalancerFrontendIpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
             PrefixLength = prefixLength;
             IpPrefix = ipPrefix;
             PublicIPAddresses = publicIPAddresses;
+            LoadBalancerFrontendIpConfiguration = loadBalancerFrontendIpConfiguration;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -105,38 +109,44 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? PrefixLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the allocated Prefix.
+        /// Gets the allocated Prefix.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipPrefix")]
-        public string IpPrefix { get; set; }
+        public string IpPrefix { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of all referenced PublicIPAddresses.
+        /// Gets the list of all referenced PublicIPAddresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddresses")]
-        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; set; }
+        public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the public IP prefix
-        /// resource.
+        /// Gets the reference to load balancer frontend IP configuration
+        /// associated with the public IP prefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIpConfiguration")]
+        public SubResource LoadBalancerFrontendIpConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the resource GUID property of the public IP prefix resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the Public IP prefix
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the public IP prefix resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting the IP allocated

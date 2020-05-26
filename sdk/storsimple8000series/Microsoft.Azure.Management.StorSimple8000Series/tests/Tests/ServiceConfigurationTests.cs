@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.Management.StorSimple8000Series;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.StorSimple8000Series.Models;
@@ -209,3 +209,4 @@ namespace StorSimple8000Series.Tests
         }
     }
 }
+

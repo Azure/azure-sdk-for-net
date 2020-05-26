@@ -111,5 +111,53 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 }
             }
 
+            /// <summary>
+            /// Updates vault security config.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='parameters'>
+            /// resource config request
+            /// </param>
+            public static BackupResourceVaultConfigResource Put(this IBackupResourceVaultConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceVaultConfigResource parameters)
+            {
+                return operations.PutAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates vault security config.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='parameters'>
+            /// resource config request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupResourceVaultConfigResource> PutAsync(this IBackupResourceVaultConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceVaultConfigResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PutWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

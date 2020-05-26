@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -917,7 +917,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jitNetworkAccessPolicyName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1149,7 +1149,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 body.Validate();
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1375,7 +1375,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jitNetworkAccessPolicyName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1521,6 +1521,9 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='virtualMachines'>
         /// A list of virtual machines &amp; ports to open access for
         /// </param>
+        /// <param name='justification'>
+        /// The justification for making the initiate request
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1542,7 +1545,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1597,11 +1600,12 @@ namespace Microsoft.Azure.Management.Security
                 }
             }
             string jitNetworkAccessPolicyInitiateType = "initiate";
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             JitNetworkAccessPolicyInitiateRequest body = new JitNetworkAccessPolicyInitiateRequest();
-            if (virtualMachines != null)
+            if (virtualMachines != null || justification != null)
             {
                 body.VirtualMachines = virtualMachines;
+                body.Justification = justification;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

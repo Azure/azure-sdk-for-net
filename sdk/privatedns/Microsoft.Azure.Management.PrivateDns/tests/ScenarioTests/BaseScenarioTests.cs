@@ -1,4 +1,4 @@
-﻿// ------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // <copyright file="BaseScenarioTests.cs" company="Microsoft Corporation">
 //   Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
@@ -27,7 +27,7 @@ namespace PrivateDns.Tests.ScenarioTests
         {
             var testName = GetTestName(output);
 
-            this.TestContext = MockContext.Start(this.GetType().FullName, testName);
+            this.TestContext = MockContext.Start(this.GetType(), testName);
             this.ResourceHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             this.ResourceManagementClient = ClientFactory.GetResourcesClient(this.TestContext, this.ResourceHandler);
             this.PrivateDnsManagementClient = ClientFactory.GetPrivateDnsClient(this.TestContext, this.ResourceHandler);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -21,7 +21,7 @@ namespace DataLakeAnalytics.Tests
         public void GetCatalogItemsTest()
         {
             // This test currently tests for Database, table TVF, view, types and procedure, and ACLs
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
@@ -413,7 +413,7 @@ namespace DataLakeAnalytics.Tests
         [Fact]
         public void CredentialCRUDTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
@@ -545,3 +545,4 @@ namespace DataLakeAnalytics.Tests
         }
     }
 }
+

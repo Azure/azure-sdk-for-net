@@ -3,7 +3,7 @@
   <Choose>
     <When Condition="'$(IsDataPlaneProject)' == 'true'">
       <PropertyGroup>
-        <VersionPrefix>10.0.0</VersionPrefix>
+        <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
       </PropertyGroup>
     </When>
   </Choose>

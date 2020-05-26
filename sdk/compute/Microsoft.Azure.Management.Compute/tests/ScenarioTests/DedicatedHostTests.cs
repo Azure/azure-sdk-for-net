@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Compute.Tests
         public void TestDedicatedHostOperations()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 EnsureClientsInitialized(context);
@@ -44,6 +44,7 @@ namespace Compute.Tests
                         Tags = new Dictionary<string, string>() { { "testKey", "testValue" } }
                     };
                     createdDHG.Tags = updateDHGInput.Tags;
+                    updateDHGInput.PlatformFaultDomainCount = returnedDHG.PlatformFaultDomainCount; // There is a bug in PATCH.  PlatformFaultDomainCount is a required property now.
                     returnedDHG =  m_CrpClient.DedicatedHostGroups.Update(rgName, dhgName, updateDHGInput);
                     ValidateDedicatedHostGroup(createdDHG, returnedDHG);
 

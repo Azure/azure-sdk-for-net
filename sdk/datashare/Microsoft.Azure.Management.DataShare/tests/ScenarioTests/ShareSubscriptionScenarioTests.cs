@@ -1,4 +1,4 @@
-﻿namespace DataShare.Tests.ScenarioTests
+namespace DataShare.Tests.ScenarioTests
 {
     using System;
     using System.Net;
@@ -68,9 +68,9 @@
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
         }
 
-        internal static ShareSubscription GetShareSubscription(string invitationId)
+        internal static ShareSubscription GetShareSubscription(string invitationId, string sourceShareLocation)
         {
-            return new ShareSubscription(invitationId);
+            return new ShareSubscription(invitationId, sourceShareLocation);
         }
     }
 }

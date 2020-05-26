@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains a batch of document write actions to send to the Azure Search
-    /// index.
+    /// Contains a batch of document write actions to send to the index.
     /// </summary>
     public partial class IndexBatch<T>
     {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -45,6 +46,13 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
         public abstract bool TryAdd(EventData eventData);
+
+        /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public abstract void Clear();
 
         /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific

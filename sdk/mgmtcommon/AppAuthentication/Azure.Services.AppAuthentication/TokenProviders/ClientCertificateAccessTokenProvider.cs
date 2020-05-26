@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="tenantId"></param>
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
             string certificateIdentifier, CertificateIdentifierType certificateIdentifierType, string storeLocation,
-            string azureAdInstance, string tenantId = default(string), int msiRetryTimeoutInSeconds = 0,
+            string azureAdInstance, string tenantId = default, int msiRetryTimeoutInSeconds = 0,
             IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="authority">Authority where resource is.</param>
         /// <returns></returns>
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // If authority is not specified and tenantId was present in connection string, create it using azureAdInstance and tenantId. 
             if (string.IsNullOrWhiteSpace(authority) && !string.IsNullOrWhiteSpace(_tenantId))
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     // Get certificate for the given Key Vault secret identifier
                     try
                     {
-                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken);
+                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken).ConfigureAwait(false);
                         certs = new List<X509Certificate2>() { keyVaultCert };
 
                         // If authority is still not specified, create it using azureAdInstance and tenantId. Tenant ID comes from Key Vault access token.

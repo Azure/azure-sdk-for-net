@@ -9,7 +9,7 @@ namespace Microsoft.Azure.EventHubs
     public sealed class MessagingEntityNotFoundException : EventHubsException
     {
         internal MessagingEntityNotFoundException(string message)
-            : base(false, message, null)
+            : base(false, message, null, ErrorSourceType.UserError)
         {
         }
     }

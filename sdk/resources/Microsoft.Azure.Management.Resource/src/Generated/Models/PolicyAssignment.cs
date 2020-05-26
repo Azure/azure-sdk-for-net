@@ -41,11 +41,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// policy set definition being assigned.</param>
         /// <param name="scope">The scope for the policy assignment.</param>
         /// <param name="notScopes">The policy's excluded scopes.</param>
-        /// <param name="parameters">Required if a parameter is used in policy
-        /// rule.</param>
+        /// <param name="parameters">The parameter values for the assigned
+        /// policy rule. The keys are the parameter names.</param>
         /// <param name="description">This message will be part of response in
         /// case of policy violation.</param>
-        /// <param name="metadata">The policy assignment metadata.</param>
+        /// <param name="metadata">The policy assignment metadata. Metadata is
+        /// an open ended object and is typically a collection of key value
+        /// pairs.</param>
+        /// <param name="enforcementMode">The policy assignment enforcement
+        /// mode. Possible values are Default and DoNotEnforce. Possible values
+        /// include: 'Default', 'DoNotEnforce'</param>
         /// <param name="id">The ID of the policy assignment.</param>
         /// <param name="type">The type of the policy assignment.</param>
         /// <param name="name">The name of the policy assignment.</param>
@@ -55,7 +60,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// required when utilizing managed identity.</param>
         /// <param name="identity">The managed identity associated with the
         /// policy assignment.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string description = default(string), object metadata = default(object), string enforcementMode = default(string), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -64,6 +69,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Parameters = parameters;
             Description = description;
             Metadata = metadata;
+            EnforcementMode = enforcementMode;
             Id = id;
             Type = type;
             Name = name;
@@ -104,10 +110,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public IList<string> NotScopes { get; set; }
 
         /// <summary>
-        /// Gets or sets required if a parameter is used in policy rule.
+        /// Gets or sets the parameter values for the assigned policy rule. The
+        /// keys are the parameter names.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public object Parameters { get; set; }
+        public IDictionary<string, ParameterValuesValue> Parameters { get; set; }
 
         /// <summary>
         /// Gets or sets this message will be part of response in case of
@@ -117,10 +124,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy assignment metadata.
+        /// Gets or sets the policy assignment metadata. Metadata is an open
+        /// ended object and is typically a collection of key value pairs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy assignment enforcement mode. Possible
+        /// values are Default and DoNotEnforce. Possible values include:
+        /// 'Default', 'DoNotEnforce'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enforcementMode")]
+        public string EnforcementMode { get; set; }
 
         /// <summary>
         /// Gets the ID of the policy assignment.

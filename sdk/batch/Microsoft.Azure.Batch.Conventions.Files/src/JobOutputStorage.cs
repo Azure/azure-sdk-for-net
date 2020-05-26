@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string relativePath,
             CancellationToken cancellationToken = default(CancellationToken)
         )
-            => await SaveAsyncImpl(kind, new DirectoryInfo(Directory.GetCurrentDirectory()), relativePath, cancellationToken);
+            => await SaveAsyncImpl(kind, new DirectoryInfo(Directory.GetCurrentDirectory()), relativePath, cancellationToken).ConfigureAwait(false);
 
         internal async Task SaveAsyncImpl(
             JobOutputKind kind,
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string destinationRelativePath,
             CancellationToken cancellationToken = default(CancellationToken)
         )
-            => await _storagePath.SaveAsync(kind, sourcePath, destinationRelativePath, cancellationToken);
+            => await _storagePath.SaveAsync(kind, sourcePath, destinationRelativePath, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Lists the job outputs of the specified kind.
@@ -183,6 +183,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string filePath,
             CancellationToken cancellationToken = default(CancellationToken)
         )
-            => await _storagePath.GetOutputAsync(kind, filePath, cancellationToken);
+            => await _storagePath.GetOutputAsync(kind, filePath, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Gets the Blob name prefix/folder where files of the given kind are stored
+        /// </summary>
+        /// <param name="kind">The output kind.</param>
+        /// <returns>The Blob name prefix/folder where files of the given kind are stored.</returns>
+        public string GetOutputStoragePath(JobOutputKind kind) => _storagePath.BlobNamePrefix(kind);
     }
 }

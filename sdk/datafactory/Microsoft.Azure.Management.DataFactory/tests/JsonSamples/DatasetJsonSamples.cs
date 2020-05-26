@@ -254,6 +254,24 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string CosmosDbSqlApiCollection = @"
+{ 
+    name: ""CosmosDbSqlApiCollection"", 
+    properties: { 
+        type: ""CosmosDbSqlApiCollection"", 
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties: { 
+            collectionName: ""fake collection""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string FileShare = @"
 {
     name: ""FileTableWithUseBinaryTransfer"",
@@ -968,6 +986,50 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string AvroDataset = @"
+{
+  ""name"": ""MyDataset"",
+  ""properties"": {
+	""type"": ""Avro"",
+	""typeProperties"": {
+	  ""location"": {
+		""type"": ""AzureBlobStorageLocation"",
+		""folderPath"": ""fakedContainerName"",
+		""fileName"": ""*.avro""
+	  },
+	  ""avroCompressionCodec"": ""deflate"",
+	  ""avroCompressionLevel"": 4
+	},
+	""linkedServiceName"": {
+	  ""referenceName"": ""MyLinkedService"",
+	  ""type"": ""LinkedServiceReference""
+	},
+	""schema"": {
+	  ""type"": ""record"",
+	  ""namespace"": ""com.example"",
+	  ""name"": ""test"",
+	  ""fields"": [
+		{
+		  ""name"": ""first"",
+		  ""type"": ""string""
+		},
+		{
+		  ""name"": ""last"",
+		  ""type"": ""int""
+		},
+		{
+		  ""name"": ""Hobby"",
+		  ""type"": {
+			""type"": ""array"",
+			""items"": ""string""
+		  }
+		}
+	  ]
+	}
+  }
+}";
+
+        [JsonSample]
         public const string ParquetDataset = @"
 {
   ""name"": ""ParquetDataset"",
@@ -1062,6 +1124,52 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string Json = @"
+{
+  name: ""MyJson"",
+  properties: {
+    type: ""Json"",
+    linkedServiceName: 
+    {  
+        referenceName : ""ls"",
+        type : ""LinkedServiceReference""
+    },
+    schema: {
+        type: ""object"",
+        properties: {
+          name: {
+            type: ""object"",
+            properties: {
+              firstName: {
+                type: ""string""
+              },
+              lastName: {
+                type: ""string""
+              }
+            }
+          },
+          age: {
+            type: ""integer""
+          }
+        }
+    },
+    typeProperties: {
+        location: {
+            type: ""AzureBlobStorageLocation"",
+            folderPath: ""testFolder"",
+            fileName: ""test.json"",
+            container: ""MyContainer""
+        },
+        encodingName: ""UTF-8"",
+        compression: {
+            type: ""GZip"",
+            level: ""Optimal""
+        }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string BinaryDataset = @"
 {
   ""name"": ""BinaryDataset"",
@@ -1083,6 +1191,40 @@ namespace DataFactory.Tests.JsonSamples
         ""level"": ""Fastest""
       }
     }
+  }
+}";
+
+        [JsonSample]
+        public const string OrcDataset = @"
+{
+  ""name"": ""OrcDataset"",
+  ""properties"": {
+    ""type"": ""Orc"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.orc""
+      },
+      ""orcCompressionCodec"": ""snappy""
+    },
+    ""schema"": [
+      {
+        ""name"": ""col1"",
+        ""type"": ""INT_32""
+      },
+      {
+        ""name"": ""col2"",
+        ""type"": ""Decimal"",
+        ""precision"": ""38"",
+        ""scale"": ""2""
+      }
+    ]
   }
 }";
 
@@ -1563,6 +1705,172 @@ namespace DataFactory.Tests.JsonSamples
         {            
             schema: ""dbo"",
             table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string NetezzaDatasetV2 = @"
+{
+    name: ""NetezzaDataset"",
+    properties: {
+        type: ""NetezzaTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlDataset = @"
+{
+    name: ""PostgreSqlDataset"",
+    properties: {
+        type: ""PostgreSqlTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AmazonRedshiftTableDataset = @"
+{
+    name: ""AmazonRedshiftTableDataset"",
+    properties: {
+        type: ""AmazonRedshiftTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string Db2TableDataset = @"
+{
+    name: ""Db2TableDataset"",
+    properties: {
+        type: ""Db2Table"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureMySqlTableWithTable = @"
+{
+    name: ""AzureMySqlTable"",
+    properties:
+    {
+        type: ""AzureMySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            table: ""$EncryptedString$MyEncryptedTable""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureFileStorage = @"
+{
+    name: ""AzureFileStorageWithTextDataset"",
+    properties:
+    {
+        type: ""DelimitedText"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {
+            ""location"": {
+                ""type"": ""AzureFileStorageLocation"",
+                ""bucketName"": ""bucketname"",
+                ""folderPath"": ""folder/subfolder""
+            },
+            ""columnDelimiter"": "","",
+            ""quoteChar"": ""\"""",
+            ""firstRowAsHeader"": true,
+            ""compressionCodec"": ""gzip""
+        },
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleCloudStorageDataset = @"
+{
+    name: ""GoogleCloudStorageWithTextDataset"",
+    properties:
+    {
+        type: ""DelimitedText"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {
+            ""location"": {
+                ""type"": ""GoogleCloudStorageLocation"",
+                ""bucketName"": ""bucketname"",
+                ""folderPath"": ""folder/subfolder""
+            },
+            ""columnDelimiter"": "","",
+            ""quoteChar"": ""\"""",
+            ""firstRowAsHeader"": true,
+            ""compressionCodec"": ""gzip""
+        },
+    }
+}";
+
+        [JsonSample]
+        public const string SharePointOnlineListResource = @"
+{
+    name: ""SharePointOnlineListResourceDataset"",
+    properties:
+    {
+        type: ""SharePointOnlineListResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            listName: ""listName""
         }
     }
 }

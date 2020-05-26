@@ -15,11 +15,12 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class NotificationTests : TestBase
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task UpdateDeleteRecipientEmail()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -30,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.Equal(7, notifications.Count());
 
                 var firstNotification = notifications.First();
-                Assert.NotNull(firstNotification);                
+                Assert.NotNull(firstNotification);
                 Assert.NotNull(firstNotification.Title);
                 Assert.NotNull(firstNotification.Recipients);
                 Assert.Empty(firstNotification.Recipients.Emails);
@@ -78,21 +79,22 @@ namespace ApiManagement.Tests.ManagementApiTests
                             testBase.rgName,
                             testBase.serviceName,
                             firstNotification.Name,
-                            userEmail);                    
+                            userEmail);
                 }
                 finally
                 {
-                    
+
                 }
             }
         }
 
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task UpdateDeleteRecipientUser()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();

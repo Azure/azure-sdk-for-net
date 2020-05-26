@@ -19,10 +19,11 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class BackendTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -145,7 +146,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task ServiceFabricCreateUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -174,8 +175,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     
                     string backendName = TestUtilities.GenerateName("backendName");
                     string urlParameter = new UriBuilder("https", backendName, 443).Uri.ToString();
+                    string servicefabricUrl = "fabric:/mytestapp/mytestservice";
 
-                    var backendCreateParameters = new BackendContract(urlParameter, BackendProtocol.Http);
+                    var backendCreateParameters = new BackendContract(servicefabricUrl, BackendProtocol.Http);
                     backendCreateParameters.Description = TestUtilities.GenerateName("description");
                     backendCreateParameters.Properties = new BackendProperties();
                     backendCreateParameters.Properties.ServiceFabricCluster = new BackendServiceFabricClusterProperties();

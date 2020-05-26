@@ -15,7 +15,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class TypeExtensionsTests
     {
         /// <summary>
@@ -69,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(ValidTypeTestCases))]
         public void ToAmqpPropertyMapsKnownTypes(Type knownType)
         {
-            var amqpType = knownType.ToAmqpPropertyType();
+            AmqpProperty.Type amqpType = knownType.ToAmqpPropertyType();
 
             Assert.That(amqpType, Is.Not.EqualTo(AmqpProperty.Type.Null), "Known types should not map to Null");
             Assert.That(amqpType, Is.Not.EqualTo(AmqpProperty.Type.Unknown), "Known types should not map to Unknown");
@@ -81,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(typeof(GuardTests))]
+        [TestCase(typeof(TypeExtensionsTests))]
         [TestCase(typeof(DBNull))]
         [TestCase(typeof(Exception))]
         public void ToAmqpPropertyDoesNotMapUnknownTypes(Type unknownType)

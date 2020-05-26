@@ -5,7 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -57,6 +57,26 @@ namespace Azure.Core.Tests
         }
 
         [NonParallelizable]
+        [Theory]
+        [TestCase("true")]
+        [TestCase("TRUE")]
+        [TestCase("1")]
+        public void CanDisableDistributedTracingWithEnvironmentVariable(string value)
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", value);
+
+                var testOptions = new TestOptions();
+                Assert.False(testOptions.Diagnostics.IsDistributedTracingEnabled);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", null);
+            }
+        }
+
+        [NonParallelizable]
         [Test]
         public void UsesDefaultApplicationId()
         {
@@ -73,9 +93,15 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void ApplicationIdLimitedTo24Chars()
+        {
+            var options = new DiagnosticsOptions();
+            Assert.Throws<ArgumentOutOfRangeException>(() => options.ApplicationId = "0123456789012345678912345");
+        }
+
         private class TestOptions : ClientOptions
         {
-
         }
     }
 }

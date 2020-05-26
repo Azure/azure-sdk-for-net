@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Search
     public partial interface IDataSourcesOperations
     {
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it
-        /// already exists.
+        /// Creates a new datasource or updates a datasource if it already
+        /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an Azure Search datasource.
+        /// Deletes a datasource.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves a datasource definition from Azure Search.
+        /// Retrieves a datasource definition.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DataSource>> GetWithHttpMessagesAsync(string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all datasources available for an Azure Search service.
+        /// Lists all datasources available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Data-Sources" />
         /// </summary>
         /// <param name='searchRequestOptions'>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DataSourceListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Azure Search datasource.
+        /// Creates a new datasource.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Data-Source" />
         /// </summary>
         /// <param name='dataSource'>

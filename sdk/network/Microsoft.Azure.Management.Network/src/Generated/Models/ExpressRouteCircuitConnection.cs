@@ -45,25 +45,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="addressPrefix">/29 IP address space to carve out
         /// Customer addresses for tunnels.</param>
         /// <param name="authorizationKey">The authorization key.</param>
+        /// <param name="ipv6CircuitConnectionConfig">IPv6 Address
+        /// PrefixProperties of the express route circuit connection.</param>
         /// <param name="circuitConnectionStatus">Express Route Circuit
         /// connection state. Possible values include: 'Connected',
         /// 'Connecting', 'Disconnected'</param>
-        /// <param name="provisioningState">Provisioning state of the circuit
-        /// connection resource. Possible values are: 'Succeeded', 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
-        /// <param name="name">Gets name of the resource that is unique within
-        /// a resource group. This name can be used to access the
+        /// <param name="provisioningState">The provisioning state of the
+        /// express route circuit connection resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of the resource that is unique within a
+        /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string authorizationKey = default(string), string circuitConnectionStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string authorizationKey = default(string), Ipv6CircuitConnectionConfig ipv6CircuitConnectionConfig = default(Ipv6CircuitConnectionConfig), string circuitConnectionStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
             AddressPrefix = addressPrefix;
             AuthorizationKey = authorizationKey;
+            Ipv6CircuitConnectionConfig = ipv6CircuitConnectionConfig;
             CircuitConnectionStatus = circuitConnectionStatus;
             ProvisioningState = provisioningState;
             Name = name;
@@ -105,6 +108,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AuthorizationKey { get; set; }
 
         /// <summary>
+        /// Gets or sets iPv6 Address PrefixProperties of the express route
+        /// circuit connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipv6CircuitConnectionConfig")]
+        public Ipv6CircuitConnectionConfig Ipv6CircuitConnectionConfig { get; set; }
+
+        /// <summary>
         /// Gets or sets express Route Circuit connection state. Possible
         /// values include: 'Connected', 'Connecting', 'Disconnected'
         /// </summary>
@@ -112,16 +122,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string CircuitConnectionStatus { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the circuit connection resource.
-        /// Possible values are: 'Succeeded', 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the express route circuit connection
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets or sets the name of the resource that is unique within a
+        /// resource group. This name can be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

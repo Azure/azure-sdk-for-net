@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DeploymentManager.Tests", "tests\Microsoft.Azure.Management.DeploymentManager.Tests.csproj", "{23CD2878-1A27-4ECD-80F9-8B9BB1539F7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagedServiceIdentity", "..\ManagedServiceIdentity\Management.ManagedServiceIdentity\Microsoft.Azure.Management.ManagedServiceIdentity.csproj", "{15BB052A-CEF6-49BA-8010-E6D1FAD30099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ManagedServiceIdentity", "..\..\managedserviceidentity\Microsoft.Azure.Management.ManagedServiceIdentity\src\Microsoft.Azure.Management.ManagedServiceIdentity.csproj", "{15BB052A-CEF6-49BA-8010-E6D1FAD30099}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Authorization", "..\Authorization\Management.Authorization\Microsoft.Azure.Management.Authorization.csproj", "{99EF70BF-5689-4175-8848-602904ADE9FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Authorization", "..\..\authorization\Microsoft.Azure.Management.Authorization\src\Microsoft.Azure.Management.Authorization.csproj", "{99EF70BF-5689-4175-8848-602904ADE9FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

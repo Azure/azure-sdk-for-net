@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IDedicatedHostsOperations DedicatedHosts { get; private set; }
 
         /// <summary>
+        /// Gets the ISshPublicKeysOperations.
+        /// </summary>
+        public virtual ISshPublicKeysOperations SshPublicKeys { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -147,6 +152,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
@@ -177,6 +187,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ISnapshotsOperations Snapshots { get; private set; }
 
         /// <summary>
+        /// Gets the IDiskEncryptionSetsOperations.
+        /// </summary>
+        public virtual IDiskEncryptionSetsOperations DiskEncryptionSets { get; private set; }
+
+        /// <summary>
         /// Gets the IGalleriesOperations.
         /// </summary>
         public virtual IGalleriesOperations Galleries { get; private set; }
@@ -190,6 +205,16 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryImageVersionsOperations.
         /// </summary>
         public virtual IGalleryImageVersionsOperations GalleryImageVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleryApplicationsOperations.
+        /// </summary>
+        public virtual IGalleryApplicationsOperations GalleryApplications { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleryApplicationVersionsOperations.
+        /// </summary>
+        public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.
@@ -442,6 +467,7 @@ namespace Microsoft.Azure.Management.Compute
             ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             DedicatedHostGroups = new DedicatedHostGroupsOperations(this);
             DedicatedHosts = new DedicatedHostsOperations(this);
+            SshPublicKeys = new SshPublicKeysOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
@@ -452,15 +478,19 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
+            VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
+            DiskEncryptionSets = new DiskEncryptionSetsOperations(this);
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
+            GalleryApplications = new GalleryApplicationsOperations(this);
+            GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

@@ -3,13 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Metadata;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An introduction to Event Hubs, illustrating how to connect and query the service.
+    ///   An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.
     /// </summary>
     ///
     public class Sample01_HelloWorld : IEventHubsSample
@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample01_HelloWorld);
+        public string Name => nameof(Sample01_HelloWorld);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to Event Hubs, illustrating how to connect and query the service.";
+        public string Description => "An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -36,21 +36,23 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // To interact with Event Hubs, a client is needed.  The client manages resources and should be
-            // explicitly closed or disposed, but it is not necessary to do both.  In our case, we will take
-            // advantage of the new asynchronous dispose to ensure that we clean up our client when we are
-            // done or when an exception is encountered.
+            // To interact with an Event Hubs, a client is needed.  There are clients associated with each of the core areas of functionality
+            // with an Event Hub, naming publishing events and consuming events.  Each of these clients manages resources and should be
+            // explicitly closed or disposed, but it is not necessary to do both.
+            //
+            // In this example, we will create a producer client and use it to inspect the properties of an Event Hub.  When complete, we take
+            // advantage of the new asynchronous dispose to ensure that clean-up is performed when we are done or when an exception is encountered.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
                 // Using the client, we will inspect the Event Hub that it is connected to, getting
                 // access to its informational properties.
 
-                EventHubProperties properties = await client.GetPropertiesAsync();
+                EventHubProperties properties = await producerClient.GetEventHubPropertiesAsync();
 
                 Console.WriteLine("The Event Hub has the following properties:");
                 Console.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Name }");
-                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
+                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedOn.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                 Console.WriteLine();
 
                 // Partitions of an Event Hub are an important concept.  Using the Event Hub properties, we'll inspect each of its partitions,
@@ -58,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 foreach (string partitionId in properties.PartitionIds)
                 {
-                    PartitionProperties partitionProperties = await client.GetPartitionPropertiesAsync(partitionId);
+                    PartitionProperties partitionProperties = await producerClient.GetPartitionPropertiesAsync(partitionId);
 
                     Console.WriteLine($"\tPartition: { partitionProperties.Id }");
                     Console.WriteLine($"\t\tThe partition contains no events: { partitionProperties.IsEmpty }");

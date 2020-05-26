@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AzureRedisCache.Tests.ScenarioTests;
@@ -29,9 +29,16 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void CreateUpdateDeleteTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             { 
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
+
+                _client.Redis.CheckNameAvailability(
+                    parameters: new CheckNameAvailabilityParameters
+                    {
+                        Name = fixture.RedisCacheName,
+                        Type = "Microsoft.Cache/Redis"
+                    });
 
                 var responseCreate = _client.Redis.Create(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
                                         parameters: new RedisCreateParameters
@@ -95,3 +102,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

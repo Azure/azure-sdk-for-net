@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DataBox.Tests.Helpers;
 using Microsoft.Azure.Management.DataBox;
 using Microsoft.Azure.Management.DataBox.Models;
@@ -43,9 +43,10 @@ namespace DataBox.Tests.Tests
             }
             catch (Exception e)
             {
-                Assert.Null(e);
+                Assert.NotNull(e);
             }
         }
 
     }
 }
+

@@ -166,7 +166,7 @@ namespace Test.Azure.Management.Logic
                     session);
 
                 client.IntegrationAccountSessions.Delete(Constants.DefaultResourceGroup, integrationAccountName, sessionName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, integrationAccountName, sessionName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, integrationAccountName, sessionName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -192,7 +192,7 @@ namespace Test.Azure.Management.Logic
                     session);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, integrationAccountName, sessionName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, integrationAccountName, sessionName));
             }
         }
 

@@ -12,6 +12,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,11 +38,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// the extracted entity starts.</param>
         /// <param name="endCharIndex">The index within the utterance where the
         /// extracted entity ends.</param>
-        public EntityLabelObject(string entityName, int startCharIndex, int endCharIndex)
+        /// <param name="role">The role the entity plays in the
+        /// utterance.</param>
+        /// <param name="children">The identified entities within the example
+        /// utterance.</param>
+        public EntityLabelObject(string entityName, int startCharIndex, int endCharIndex, string role = default(string), IList<EntityLabelObject> children = default(IList<EntityLabelObject>))
         {
             EntityName = entityName;
             StartCharIndex = startCharIndex;
             EndCharIndex = endCharIndex;
+            Role = role;
+            Children = children;
             CustomInit();
         }
 
@@ -70,6 +78,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public int EndCharIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets the role the entity plays in the utterance.
+        /// </summary>
+        [JsonProperty(PropertyName = "role")]
+        public string Role { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identified entities within the example utterance.
+        /// </summary>
+        [JsonProperty(PropertyName = "children")]
+        public IList<EntityLabelObject> Children { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -80,6 +100,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
             if (EntityName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "EntityName");
+            }
+            if (Children != null)
+            {
+                foreach (var element in Children)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

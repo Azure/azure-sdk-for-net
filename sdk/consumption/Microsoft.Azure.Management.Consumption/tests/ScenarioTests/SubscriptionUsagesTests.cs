@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Consumption.Tests.Helpers;
@@ -22,7 +22,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListUsagesTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -42,7 +42,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListUsagesWithDateTimeFilterTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -62,7 +62,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListUsagesForBillingPeriodTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
@@ -79,7 +79,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListUsagesWithExpandTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
@@ -99,7 +99,7 @@ namespace Consumption.Tests.ScenarioTests
         [Fact]
         public void ListUsagesWithInstanceNameFilterTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var instanceName = "D1v2";
                 var filter = $"properties/instanceName eq '{instanceName}'";

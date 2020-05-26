@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The blob service properties for soft delete.
+    /// The service properties for soft delete.
     /// </summary>
     public partial class DeleteRetentionPolicy
     {
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the DeleteRetentionPolicy class.
         /// </summary>
         /// <param name="enabled">Indicates whether DeleteRetentionPolicy is
-        /// enabled for the Blob service.</param>
+        /// enabled.</param>
         /// <param name="days">Indicates the number of days that the deleted
-        /// blob should be retained. The minimum specified value can be 1 and
+        /// item should be retained. The minimum specified value can be 1 and
         /// the maximum value can be 365.</param>
         public DeleteRetentionPolicy(bool? enabled = default(bool?), int? days = default(int?))
         {
@@ -48,14 +48,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates whether DeleteRetentionPolicy is enabled for
-        /// the Blob service.
+        /// Gets or sets indicates whether DeleteRetentionPolicy is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates the number of days that the deleted blob
+        /// Gets or sets indicates the number of days that the deleted item
         /// should be retained. The minimum specified value can be 1 and the
         /// maximum value can be 365.
         /// </summary>

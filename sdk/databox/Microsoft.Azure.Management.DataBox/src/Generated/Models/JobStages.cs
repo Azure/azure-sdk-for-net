@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'Delivered', 'PickedUp', 'AtAzureDC', 'DataCopy', 'Completed',
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
-        /// 'Aborted'</param>
+        /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
+        /// 'ReadyToReceiveAtAzureDC'</param>
         /// <param name="displayName">Display name of the job stage.</param>
         /// <param name="stageStatus">Status of the job stage. Possible values
         /// include: 'None', 'InProgress', 'Succeeded', 'Failed', 'Cancelled',
@@ -67,7 +68,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'PickedUp', 'AtAzureDC', 'DataCopy', 'Completed',
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
-        /// 'Aborted'
+        /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
+        /// 'ReadyToReceiveAtAzureDC'
         /// </summary>
         [JsonProperty(PropertyName = "stageName")]
         public StageName? StageName { get; private set; }

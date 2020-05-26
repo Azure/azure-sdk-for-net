@@ -41,11 +41,6 @@ namespace Microsoft.Azure.Management.Subscription
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Subscription Id.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -65,11 +60,6 @@ namespace Microsoft.Azure.Management.Subscription
 
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the ISubscriptionsOperations.
         /// </summary>
         ISubscriptionsOperations Subscriptions { get; }
@@ -78,6 +68,21 @@ namespace Microsoft.Azure.Management.Subscription
         /// Gets the ITenantsOperations.
         /// </summary>
         ITenantsOperations Tenants { get; }
+
+        /// <summary>
+        /// Gets the ISubscriptionOperations.
+        /// </summary>
+        ISubscriptionOperations Subscription { get; }
+
+        /// <summary>
+        /// Gets the ISubscriptionOperationOperations.
+        /// </summary>
+        ISubscriptionOperationOperations SubscriptionOperation { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
     }
 }
