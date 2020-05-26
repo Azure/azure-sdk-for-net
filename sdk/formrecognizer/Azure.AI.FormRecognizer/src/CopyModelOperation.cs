@@ -105,6 +105,11 @@ namespace Azure.AI.FormRecognizer.Training
 
             string[] substrs = operationLocation.Split('/');
 
+            if (substrs.Length < 3)
+            {
+                throw new ArgumentException($"Invalid {operationLocation}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationLocation);
+            }
+
             _resultId = substrs[substrs.Length - 1];
             _modelId = substrs[substrs.Length - 3];
 
@@ -193,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Training
             }
             else
             {
-                errorMessage = "Get copy model operation failed.";
+                errorMessage = "Copy model operation failed.";
             }
 
             var errorInfo = new Dictionary<string, string>();
