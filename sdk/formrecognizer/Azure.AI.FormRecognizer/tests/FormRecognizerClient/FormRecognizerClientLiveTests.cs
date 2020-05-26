@@ -220,7 +220,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeContentOperation operation;
 
-            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageBlankFormPath, FileMode.Open);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeContentAsync(stream);
@@ -407,7 +407,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeOptions() { IncludeTextContent = true };
             RecognizeReceiptsOperation operation;
 
-            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageBlankFormPath, FileMode.Open);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -572,7 +572,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
-            using var stream = new FileStream(FormRecognizerTestEnvironment.SingleBlankPageFormPath, FileMode.Open);
+            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankFormPath, FileMode.Open);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -600,7 +600,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
 
-            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageBlankFormPath, FileMode.Open);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
@@ -771,7 +771,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
 
-            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using var stream = new FileStream(FormRecognizerTestEnvironment.MultipageBlankFormPath, FileMode.Open);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
