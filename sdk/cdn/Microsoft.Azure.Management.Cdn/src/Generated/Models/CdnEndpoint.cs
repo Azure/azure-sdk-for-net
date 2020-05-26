@@ -14,24 +14,38 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// An action for the delivery rule.
+    /// Defines the ARM Resource ID for the linked endpoints
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DeliveryRuleAction")]
-    public partial class DeliveryRuleAction
+    public partial class CdnEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the DeliveryRuleAction class.
+        /// Initializes a new instance of the CdnEndpoint class.
         /// </summary>
-        public DeliveryRuleAction()
+        public CdnEndpoint()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the CdnEndpoint class.
+        /// </summary>
+        /// <param name="id">ARM Resource ID string.</param>
+        public CdnEndpoint(string id = default(string))
+        {
+            Id = id;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets ARM Resource ID string.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

@@ -11,27 +11,43 @@
 namespace Microsoft.Azure.Management.Cdn.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An action for the delivery rule.
+    /// Defines contents of custom rules
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DeliveryRuleAction")]
-    public partial class DeliveryRuleAction
+    public partial class CustomRuleList
     {
         /// <summary>
-        /// Initializes a new instance of the DeliveryRuleAction class.
+        /// Initializes a new instance of the CustomRuleList class.
         /// </summary>
-        public DeliveryRuleAction()
+        public CustomRuleList()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the CustomRuleList class.
+        /// </summary>
+        /// <param name="rules">List of rules</param>
+        public CustomRuleList(IList<CustomRule> rules = default(IList<CustomRule>))
+        {
+            Rules = rules;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets list of rules
+        /// </summary>
+        [JsonProperty(PropertyName = "rules")]
+        public IList<CustomRule> Rules { get; set; }
 
     }
 }
