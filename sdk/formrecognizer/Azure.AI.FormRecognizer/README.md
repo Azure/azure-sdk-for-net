@@ -233,8 +233,8 @@ CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Created On: {model.CreatedOn}");
-Console.WriteLine($"    Last Modified: {model.LastModified}");
+Console.WriteLine($"    Requested on: {model.RequestedOn}");
+Console.WriteLine($"    Completed on: {model.CompletedOn}");
 
 foreach (CustomFormSubModel subModel in model.Models)
 {
@@ -270,8 +270,8 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-    Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+    Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+    Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
 }
 
 // Create a new model to store in the account
