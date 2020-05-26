@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;

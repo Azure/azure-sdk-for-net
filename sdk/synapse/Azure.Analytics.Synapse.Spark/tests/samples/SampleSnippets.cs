@@ -1,5 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
