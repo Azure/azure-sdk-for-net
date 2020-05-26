@@ -35,7 +35,7 @@ namespace Azure.Core
         /// <inheritdoc />
         public override void Serialize(Stream stream, object? value, Type inputType)
         {
-            var buffer = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, inputType, _options));
+            var buffer = JsonSerializer.SerializeToUtf8Bytes(value, inputType, _options);
             stream.Write(buffer, 0, buffer.Length);
         }
 
