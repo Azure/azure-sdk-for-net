@@ -2,6 +2,7 @@
 
 ## 1.0.0-preview.5 (Unreleased)
 ### Breaking changes
+- Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
 - `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
 - `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
