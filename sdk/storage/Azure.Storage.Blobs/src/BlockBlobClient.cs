@@ -1798,6 +1798,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobInfo> ScheduleDeletion(
             BlobScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
@@ -1823,6 +1824,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobInfo>> ScheduleDeletionAsync(
             BlobScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
