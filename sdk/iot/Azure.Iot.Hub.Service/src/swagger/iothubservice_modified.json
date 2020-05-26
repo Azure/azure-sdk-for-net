@@ -214,7 +214,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/RegistryStatistics"
+              "$ref": "#/definitions/DeviceStatistics"
             }
           }
         }
@@ -1937,7 +1937,7 @@
         }
       }
     },
-    "RegistryStatistics": {
+    "DeviceStatistics": {
       "type": "object",
       "properties": {
         "totalDeviceCount": {
