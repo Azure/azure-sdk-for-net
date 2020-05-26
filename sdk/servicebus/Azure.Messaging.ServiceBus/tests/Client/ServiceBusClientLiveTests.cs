@@ -37,6 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
 
                 await client.DisposeAsync();
+                Assert.IsTrue(client.IsDisposed);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));

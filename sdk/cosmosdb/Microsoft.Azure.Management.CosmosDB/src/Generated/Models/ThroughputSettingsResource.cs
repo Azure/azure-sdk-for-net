@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
     /// <summary>
     /// Cosmos DB resource throughput object. Either throughput is required or
-    /// provisionedThroughputSettings is required, but not both.
+    /// autoscaleSettings is required, but not both.
     /// </summary>
     public partial class ThroughputSettingsResource
     {
@@ -31,19 +31,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the ThroughputSettingsResource class.
         /// </summary>
         /// <param name="throughput">Value of the Cosmos DB resource
-        /// throughput. Either throughput is required or
-        /// provisionedThroughputSettings is required, but not both.</param>
-        /// <param name="provisionedThroughputSettings">Cosmos DB resource for
-        /// provisioned throughput settings. Either throughput is required or
-        /// provisionedThroughputSettings is required, but not both.</param>
+        /// throughput. Either throughput is required or autoscaleSettings is
+        /// required, but not both.</param>
+        /// <param name="autoscaleSettings">Cosmos DB resource for autoscale
+        /// settings. Either throughput is required or autoscaleSettings is
+        /// required, but not both.</param>
         /// <param name="minimumThroughput">The minimum throughput of the
         /// resource</param>
         /// <param name="offerReplacePending">The throughput replace is
         /// pending</param>
-        public ThroughputSettingsResource(int? throughput = default(int?), ProvisionedThroughputSettingsResource provisionedThroughputSettings = default(ProvisionedThroughputSettingsResource), string minimumThroughput = default(string), string offerReplacePending = default(string))
+        public ThroughputSettingsResource(int? throughput = default(int?), AutoscaleSettingsResource autoscaleSettings = default(AutoscaleSettingsResource), string minimumThroughput = default(string), string offerReplacePending = default(string))
         {
             Throughput = throughput;
-            ProvisionedThroughputSettings = provisionedThroughputSettings;
+            AutoscaleSettings = autoscaleSettings;
             MinimumThroughput = minimumThroughput;
             OfferReplacePending = offerReplacePending;
             CustomInit();
@@ -56,19 +56,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets value of the Cosmos DB resource throughput. Either
-        /// throughput is required or provisionedThroughputSettings is
-        /// required, but not both.
+        /// throughput is required or autoscaleSettings is required, but not
+        /// both.
         /// </summary>
         [JsonProperty(PropertyName = "throughput")]
         public int? Throughput { get; set; }
 
         /// <summary>
-        /// Gets or sets cosmos DB resource for provisioned throughput
-        /// settings. Either throughput is required or
-        /// provisionedThroughputSettings is required, but not both.
+        /// Gets or sets cosmos DB resource for autoscale settings. Either
+        /// throughput is required or autoscaleSettings is required, but not
+        /// both.
         /// </summary>
-        [JsonProperty(PropertyName = "provisionedThroughputSettings")]
-        public ProvisionedThroughputSettingsResource ProvisionedThroughputSettings { get; set; }
+        [JsonProperty(PropertyName = "autoscaleSettings")]
+        public AutoscaleSettingsResource AutoscaleSettings { get; set; }
 
         /// <summary>
         /// Gets the minimum throughput of the resource
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ProvisionedThroughputSettings != null)
+            if (AutoscaleSettings != null)
             {
-                ProvisionedThroughputSettings.Validate();
+                AutoscaleSettings.Validate();
             }
         }
     }

@@ -34,17 +34,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// table</param>
         /// <param name="schema">Schema of the Cosmos DB Cassandra
         /// table</param>
+        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
         /// <param name="_rid">A system generated property. A unique
         /// identifier.</param>
         /// <param name="_ts">A system generated property that denotes the last
         /// updated timestamp of the resource.</param>
         /// <param name="_etag">A system generated property representing the
         /// resource etag required for optimistic concurrency control.</param>
-        public CassandraTableGetPropertiesResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema), string _rid = default(string), object _ts = default(object), string _etag = default(string))
+        public CassandraTableGetPropertiesResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema), int? analyticalStorageTtl = default(int?), string _rid = default(string), object _ts = default(object), string _etag = default(string))
         {
             Id = id;
             DefaultTtl = defaultTtl;
             Schema = schema;
+            AnalyticalStorageTtl = analyticalStorageTtl;
             this._rid = _rid;
             this._ts = _ts;
             this._etag = _etag;
@@ -73,6 +75,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "schema")]
         public CassandraSchema Schema { get; set; }
+
+        /// <summary>
+        /// Gets or sets analytical TTL.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyticalStorageTtl")]
+        public int? AnalyticalStorageTtl { get; set; }
 
         /// <summary>
         /// Gets a system generated property. A unique identifier.

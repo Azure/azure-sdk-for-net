@@ -8,9 +8,7 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
     {
-        public MockDefaultAzureCredentialFactory(CredentialPipeline pipeline) : base(pipeline)
-        {
-        }
+        public MockDefaultAzureCredentialFactory(CredentialPipeline pipeline) : base(pipeline) {}
 
         public Action<TokenCredential> OnCreateEnvironmentCredential { get; set; }
         public Action<TokenCredential> OnCreateAzureCliCredential { get; set; }

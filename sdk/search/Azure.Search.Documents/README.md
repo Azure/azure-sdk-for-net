@@ -89,7 +89,7 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 ```
 
 ### Send your first search query
@@ -280,7 +280,7 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a service client
 AzureKeyCredential credential = new AzureKeyCredential(key);
-SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
 // Create the index
 SearchIndex index = new SearchIndex("hotels")
@@ -289,7 +289,7 @@ SearchIndex index = new SearchIndex("hotels")
     {
         new SimpleField("hotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
         new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-        new SearchableField("description") { Analyzer = LexicalAnalyzerName.EnLucene },
+        new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
         new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
         new ComplexField("address")
         {
@@ -306,7 +306,7 @@ SearchIndex index = new SearchIndex("hotels")
     Suggesters =
     {
         // Suggest query terms from both the hotelName and description fields.
-        new Suggester("sg", "hotelName", "description")
+        new SearchSuggester("sg", "hotelName", "description")
     }
 };
 

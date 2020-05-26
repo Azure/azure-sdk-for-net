@@ -48,5 +48,7 @@ stages:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
+    - name: Azure.Core.Experimental
+      safeName: AzureCoreExperimental
     - name: Microsoft.Extensions.Azure
       safeName: MicrosoftExtensionsAzure

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Create tokens for phonetic matches. This token filter is implemented using Apache Lucene. </summary>
     public partial class PhoneticTokenFilter : TokenFilter

@@ -243,7 +243,8 @@ namespace Azure.Core.TestFramework
 
         public string GenerateId(string prefix, int maxLength)
         {
-            return $"{prefix}{Random.Next()}".Substring(0, maxLength);
+            var id = $"{prefix}{Random.Next()}";
+            return id.Length > maxLength ? id.Substring(0, maxLength): id;
         }
 
         public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
