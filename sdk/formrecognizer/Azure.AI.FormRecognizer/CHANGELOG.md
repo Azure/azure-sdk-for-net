@@ -6,6 +6,8 @@
 
 - `FormRecognizerError.Code` renamed to `FormRecognizerError.ErrorCode`.
 - `FormTrainingClient.GetModelInfos` renamed to `FormTrainingClient.GetCustomModels`.
+- Property `CreatedOn` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `RequestedOn`.
+- Property `LastModified` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `CompletedOn`.
 - Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
 - Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
 
