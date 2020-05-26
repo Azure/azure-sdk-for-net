@@ -248,7 +248,7 @@
       "get": {
         "summary": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query language to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
         "description": "Get the identities of multiple devices from the IoT hub identity registry. Not recommended. Use the IoT Hub query API to retrieve device twin and device identity information. See https://docs.microsoft.com/en-us/rest/api/iothub/service/queryiothub and https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language for more information.",
-        "operationId": "Devices_Get",
+        "operationId": "Devices_GetIdentities",
         "consumes": [],
         "produces": [
           "application/json"
