@@ -32,10 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="modelName">The name of the model used.</param>
         /// <param name="featureName">The name of the feature used.</param>
-        public ModelFeatureInformation(string modelName = default(string), string featureName = default(string))
+        public ModelFeatureInformation(string modelName = default(string), string featureName = default(string), bool? isRequired = default(bool?))
         {
             ModelName = modelName;
             FeatureName = featureName;
+            IsRequired = isRequired;
             CustomInit();
         }
 
@@ -55,6 +56,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "featureName")]
         public string FeatureName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isRequired")]
+        public bool? IsRequired { get; set; }
 
     }
 }

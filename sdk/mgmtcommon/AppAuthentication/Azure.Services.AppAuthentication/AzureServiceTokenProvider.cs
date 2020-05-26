@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -37,6 +39,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public delegate Task<string> TokenCallback(string authority, string resource, string scope);
 
         /// <summary>
+        /// HTTP client factory to support HTTP proxy in ADAL
+        /// Implemented as a static so that client apps can gain proxy support without having to wait for intermediate packages to support it.
+        /// </summary>
+        public static IHttpClientFactory HttpClientFactory { get; set; }
+
+        /// <summary>
         /// Property to get authentication callback to be used with KeyVaultClient.  
         /// </summary>
         /// <example>
@@ -62,14 +70,15 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="connectionString">Connection string to specify which option to use to get the token.</param>
         /// <param name="azureAdInstance">Specify a value for clouds other than the Public Cloud.</param>
-        public AzureServiceTokenProvider(string connectionString = default(string), string azureAdInstance = "https://login.microsoftonline.com/")
+        /// <param name="httpClientFactory">Passed to ADAL to allow proxied connections. Takes precedence over the static <see cref="HttpClientFactory"/> property</param>
+        public AzureServiceTokenProvider(string connectionString = default, string azureAdInstance = "https://login.microsoftonline.com/", IHttpClientFactory httpClientFactory = default)
         {
             if (string.IsNullOrEmpty(azureAdInstance))
             {
                 throw new ArgumentNullException(nameof(azureAdInstance));
             }
 
-            if (!azureAdInstance.ToLower().StartsWith("https"))
+            if (!azureAdInstance.ToLowerInvariant().StartsWith("https"))
             {
                 throw new ArgumentException($"azureAdInstance {azureAdInstance} is not valid. It must use https.");
             }
@@ -77,15 +86,17 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _azureAdInstance = azureAdInstance;
 
             // Check the environment variable to see if a connection string is specified. 
-            if (connectionString == default(string))
+            if (connectionString == default)
             {
                 connectionString = EnvironmentHelper.GetEnvironmentVariable("AzureServicesAuthConnectionString");
             }
 
+            // prefer parameter over static property
+            var factory = httpClientFactory ?? HttpClientFactory;
+
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
-                _selectedAccessTokenProvider = AzureServiceTokenProviderFactory.Create(connectionString, azureAdInstance);
-
+                _selectedAccessTokenProvider = AzureServiceTokenProviderFactory.Create(connectionString, azureAdInstance, factory);
                 _connectionString = connectionString;
             }
             else
@@ -96,10 +107,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
                     new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx
-                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance)
+                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(factory), azureAdInstance)
 #endif
                 };
             }
+
+        }
+
+        public AzureServiceTokenProvider(string connectionString, string azureAdInstance)
+            : this(connectionString, azureAdInstance, default)
+        {
 
         }
 
@@ -128,7 +145,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="scope"></param>
         /// <returns></returns>
         private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             // Check if the auth result is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
@@ -216,7 +233,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         /// <summary>
         /// If a connection string was specified, or discovery of provider has already happened (in which case _selectedAccessTokenProvider would have been set),
-        /// Use the approproate access token provider. 
+        /// Use the appropriate access token provider. 
         /// </summary>
         /// <returns></returns>
         private List<NonInteractiveAzureServiceTokenProviderBase> GetTokenProviders()
@@ -240,8 +257,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
-            CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId = default,
+            CancellationToken cancellationToken = default)
         {
             var authResult = await GetAuthenticationResultAsync(resource, tenantId, cancellationToken).ConfigureAwait(false);
 
@@ -250,7 +267,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public virtual Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
+            return GetAccessTokenAsync(resource, tenantId, default);
         }
 
         /// <summary>
@@ -267,8 +284,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
-            CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default,
+            CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(resource))
             {
@@ -282,7 +299,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
-            return GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
+            return GetAuthenticationResultAsync(resource, tenantId, default);
         }
     }
 }

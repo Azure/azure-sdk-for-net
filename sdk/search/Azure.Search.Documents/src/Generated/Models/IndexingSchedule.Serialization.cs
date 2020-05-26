@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class IndexingSchedule : IUtf8JsonSerializable
     {
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
             if (StartTime != null)
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "S");
+                writer.WriteStringValue(StartTime.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("S");
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

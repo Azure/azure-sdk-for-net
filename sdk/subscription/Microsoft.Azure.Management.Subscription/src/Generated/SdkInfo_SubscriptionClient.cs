@@ -19,24 +19,22 @@ namespace Microsoft.Azure.Management.Subscription
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Billing", "SubscriptionFactory", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Billing", "SubscriptionFactory", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Subscription", "Operations", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Subscription", "SubscriptionOperation", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Subscription", "SubscriptionOperations", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Subscription", "Subscriptions", "2019-03-01-preview"),
+                new Tuple<string, string, string>("Billing", "Subscription", "2019-10-01-preview"),
+                new Tuple<string, string, string>("Subscription", "Operations", "2019-10-01-preview"),
+                new Tuple<string, string, string>("Subscription", "Subscription", "2019-10-01-preview"),
+                new Tuple<string, string, string>("Subscription", "SubscriptionOperation", "2019-10-01-preview"),
                 new Tuple<string, string, string>("SubscriptionClient", "Subscriptions", "2016-06-01"),
                 new Tuple<string, string, string>("SubscriptionClient", "Tenants", "2016-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/subscription/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\github2\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/subscription/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\github2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ae48ce6edc05501e9b78d93d6e36862599cdedb5";
+      public static readonly String GithubCommidId = "3e8fb815e2e4f149fbfcdaab64efc4d45dcc0690";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

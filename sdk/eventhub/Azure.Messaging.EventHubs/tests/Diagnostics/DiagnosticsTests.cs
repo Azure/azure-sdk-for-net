@@ -15,7 +15,6 @@ using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -37,9 +36,6 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     public class DiagnosticsTests
     {
-        /// <summary>The name of the diagnostics source being tested.</summary>
-        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
-
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
@@ -48,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -92,21 +88,24 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
+            var eventCount = 0;
             var eventHubName = "SomeName";
             var endpoint = "endpoint";
+            var batchEvent = default(EventData);
             var fakeConnection = new MockConnection(endpoint, eventHubName);
-            var eventCount = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
+
 
             batchTransportMock
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
+                .Callback<EventData>(addedEvent => batchEvent = addedEvent)
                 .Returns(() =>
                 {
                     eventCount++;
-                    return eventCount <= 3;
+                    return eventCount <= 1;
                 });
 
             var transportMock = new Mock<TransportProducer>();
@@ -122,11 +121,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
-            EventDataBatch batch = await producer.CreateBatchAsync();
+            var batch = await producer.CreateBatchAsync();
             Assert.True(batch.TryAdd(eventData));
 
             await producer.SendAsync(batch);
-
             activity.Stop();
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
@@ -139,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
-            Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
+            Assert.That(batchEvent.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
             Assert.That(sendScope.Activity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
             Assert.That(messageScope.Activity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
@@ -256,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
@@ -290,7 +288,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var writtenEventsData = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
@@ -345,9 +343,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventProcesorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = 12;
@@ -402,9 +400,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventProcesorAddsAttributesToLinkedActivitiesForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "OMGHAI2U!";

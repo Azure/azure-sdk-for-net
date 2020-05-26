@@ -1,10 +1,29 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.5 (Unreleased)
+### Breaking changes
+- Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
+- `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
+- `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
+- `TextAnalyticsError` property `Code` has been renamed to `ErrorCode` and it is an `TextAnalyticsErrorCode` instead of a string.
+- Single operation method `RecognizeEntitiesAsync` and `RecognizeEntities` now returns a `CategorizedEntityCollection`.
+- Single operation method `ExtractKeyPhrasesAsync` and `ExtractKeyPhrases` now returns a `KeyPhraseCollection`.
+- Single operation method `RecognizeLinkedEntitiesAsync` and `RecognizeLinkedEntities` now returns a `LinkedEntityCollection`.
+
+### Added
+- Added `Text` property to `SentenceSentiment`.
+- `Warnings` property added to each document-level response object returned from the endpoints. It is a list of `TextAnalyticsWarnings`.
+
+## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes
 - Replaced `TextAnalyticsApiKeyCredential` with `AzureKeyCredential`.
-- Rename all input parameters `inputText` to `document`, and `inputs` to `documents`.
+- Renamed all input parameters `inputText` to `document`, and `inputs` to `documents`.
 - Removed the `RecognizePiiEntities` endpoint and all related models (`RecognizePiiEntitiesResult` and `PiiEntity`) from this library.
+
+### Added
+- Refactor common properties from `DetectLanguageInput` and `TextDocumentInput` into it's own type `TextAnalyticsInput`.
+- Mock support for the Text Analytics client with respective samples.
+- Integration for ASP.NET Core.
 
 ## 1.0.0-preview.3 (2020-03-10)
 ### Breaking changes

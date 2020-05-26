@@ -74,27 +74,5 @@
           "scope": "[resourceGroup().id]"
         }
       }
-    ],
-    "outputs": {
-        "SERVICE_BUS_SUBSCRIPTION": {
-            "type": "string",
-            "value": "[parameters('subscriptionId')]"
-        },
-        "SERVICE_BUS_TENANT": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "SERVICE_BUS_CLIENT": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "SERVICE_BUS_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "SERVICE_BUS_RESOURCEGROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        }
-    }
+    ]
 }

@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-wjjoqhus.search.windows.net/indexes(\u0027twyypove\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027hqmrjpke\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "39",
         "Content-Type": "application/json",
-        "traceparent": "00-8b5c079fe8a182418e71adc1a4d990c9-c83c6b007f3f6a44-00",
+        "traceparent": "00-efbbbc0d742f034bb1709c8f78fe4c99-06f1e981c7e9204b-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "671adb4c286def740ec75df15d888225",
         "x-ms-return-client-request-id": "true"
@@ -27,9 +28,9 @@
         "Cache-Control": "no-cache",
         "Content-Language": "en",
         "Content-Length": "124",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 06:42:53 GMT",
-        "elapsed-time": "270",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 08 May 2020 07:00:48 GMT",
+        "elapsed-time": "69",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -43,11 +44,39 @@
           "message": "The request is invalid. Details: actions : 0: Document key cannot be missing or empty.\r\n"
         }
       }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027hqmrjpke\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-3958d7aef3a9f747bfd828913552e0c1-1a52a555b24a0b4d-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "5e694e5d4ec42448bf589ed00ab0ddd0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Fri, 08 May 2020 07:00:50 GMT",
+        "elapsed-time": "177",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "5e694e5d-4ec4-2448-bf58-9ed00ab0ddd0",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1159546087",
-    "SearchIndexName": "twyypove",
-    "SearchServiceName": "azs-net-wjjoqhus"
+    "SearchIndexName": "hqmrjpke",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

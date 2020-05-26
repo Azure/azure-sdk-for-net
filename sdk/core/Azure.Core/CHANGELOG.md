@@ -1,6 +1,19 @@
 # Release History
 
-## 1.2.0-preview.1 (Unreleased)
+## 1.3.0-preview.1 (Unreleased)
+
+### Bugfix
+- Retry server timeouts on .NET Framework.
+
+## 1.2.1  (2020-04-30)
+
+### Changed
+- Read client request ID value used for logging and tracing off the initial request object if available.
+
+### Bugfix
+- Fixed a bug when using Azure.Core based libraries in Blazor WebAssembly apps.
+
+## 1.2.0 (2020-04-03)
 
 ### Added
 - `AzureKeyCredential` and its respective policy.

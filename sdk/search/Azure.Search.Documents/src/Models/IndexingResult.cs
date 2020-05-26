@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("IndexingResult")]
+    [CodeGenModel("IndexingResult")]
     public partial class IndexingResult
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
         /// found, 409 for a version conflict, 422 when the index is
         /// temporarily unavailable, or 503 for when the service is too busy.
         /// </summary>
-        [CodeGenSchemaMember("statusCode")]
+        [CodeGenMember("statusCode")]
         public int Status { get; internal set; }
     }
 }

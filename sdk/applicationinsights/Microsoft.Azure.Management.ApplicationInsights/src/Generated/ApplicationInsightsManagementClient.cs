@@ -47,11 +47,6 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -120,11 +115,6 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public virtual IProactiveDetectionConfigurationsOperations ProactiveDetectionConfigurations { get; private set; }
 
         /// <summary>
-        /// Gets the IComponentsOperations.
-        /// </summary>
-        public virtual IComponentsOperations Components { get; private set; }
-
-        /// <summary>
         /// Gets the IWorkItemConfigurationsOperations.
         /// </summary>
         public virtual IWorkItemConfigurationsOperations WorkItemConfigurations { get; private set; }
@@ -153,6 +143,16 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Gets the IWorkbooksOperations.
         /// </summary>
         public virtual IWorkbooksOperations Workbooks { get; private set; }
+
+        /// <summary>
+        /// Gets the IComponentsOperations.
+        /// </summary>
+        public virtual IComponentsOperations Components { get; private set; }
+
+        /// <summary>
+        /// Gets the IComponentLinkedStorageAccountsOperations.
+        /// </summary>
+        public virtual IComponentLinkedStorageAccountsOperations ComponentLinkedStorageAccounts { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationInsightsManagementClient class.
@@ -404,15 +404,15 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             ComponentFeatureCapabilities = new ComponentFeatureCapabilitiesOperations(this);
             ComponentAvailableFeatures = new ComponentAvailableFeaturesOperations(this);
             ProactiveDetectionConfigurations = new ProactiveDetectionConfigurationsOperations(this);
-            Components = new ComponentsOperations(this);
             WorkItemConfigurations = new WorkItemConfigurationsOperations(this);
             Favorites = new FavoritesOperations(this);
             WebTestLocations = new WebTestLocationsOperations(this);
             WebTests = new WebTestsOperations(this);
             AnalyticsItems = new AnalyticsItemsOperations(this);
             Workbooks = new WorkbooksOperations(this);
+            Components = new ComponentsOperations(this);
+            ComponentLinkedStorageAccounts = new ComponentLinkedStorageAccountsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

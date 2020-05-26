@@ -1,36 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Primitives;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml.Linq;
-    using Azure.Messaging.ServiceBus.Management;
-    using Azure.Messaging.ServiceBus.Primitives;
-
     internal static class RuleDescriptionExtensions
     {
         public static void ValidateDescriptionName(this RuleDescription description)
         {
-            if (string.IsNullOrWhiteSpace(description.Name))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(description.Name));
-            }
-
-            if (description.Name.Length > Constants.RuleNameMaximumLength)
-            {
-                throw Fx.Exception.ArgumentOutOfRange(
-                    nameof(description.Name),
-                    description.Name,
-                    Resources.EntityNameLengthExceedsLimit.FormatForUser(description.Name, Constants.RuleNameMaximumLength));
-            }
+            Argument.AssertNotNullOrWhiteSpace(description.Name, nameof(description.Name));
+            Argument.AssertNotTooLong(description.Name, Constants.RuleNameMaximumLength, nameof(description.Name));
 
             if (description.Name.Contains(Constants.PathDelimiter) || description.Name.Contains(@"\"))
             {
-                throw Fx.Exception.Argument(
-                    nameof(description.Name),
-                    Resources.InvalidCharacterInEntityName.FormatForUser(Constants.PathDelimiter, description.Name));
+                throw new ArgumentException(
+                    Resources.InvalidCharacterInEntityName.FormatForUser(Constants.PathDelimiter, description.Name),
+                    nameof(description.Name));
             }
 
             string[] uriSchemeKeys = { "@", "?", "#" };
@@ -38,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             {
                 if (description.Name.Contains(uriSchemeKey))
                 {
-                    throw Fx.Exception.Argument(
+                    throw new ArgumentException(
                         nameof(description.Name),
                         Resources.CharacterReservedForUriScheme.FormatForUser(nameof(description.Name), uriSchemeKey));
                 }

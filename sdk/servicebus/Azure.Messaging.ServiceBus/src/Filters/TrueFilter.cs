@@ -6,7 +6,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Matches all the messages arriving to be selected for the subscription.
     /// </summary>
-    public sealed class TrueFilter : SqlFilter
+    internal sealed class TrueFilter : SqlFilter
     {
         internal static readonly TrueFilter Default = new TrueFilter();
 

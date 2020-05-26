@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CjkBigramTokenFilter : IUtf8JsonSerializable
     {
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Models
         {
             IList<CjkBigramTokenFilterScripts> ignoreScripts = default;
             bool? outputUnigrams = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CjkBigramTokenFilter(ignoreScripts, outputUnigrams, odatatype, name);
+            return new CjkBigramTokenFilter(odataType, name, ignoreScripts, outputUnigrams);
         }
     }
 }

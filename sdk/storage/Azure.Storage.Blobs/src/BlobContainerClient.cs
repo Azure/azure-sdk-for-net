@@ -585,7 +585,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -636,7 +636,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -686,7 +686,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -737,7 +737,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>

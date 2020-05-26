@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped IndexBatch
-    [CodeGenSchema("IndexBatch")]
+    [CodeGenModel("IndexBatch")]
     internal partial class IndexBatch { }
 
     /// <summary>
     /// Contains a batch of document write actions to send to a search index
-    /// via <see cref="SearchIndexClient.IndexDocuments"/>.
+    /// via <see cref="SearchClient.IndexDocuments"/>.
     /// </summary>
     public partial class IndexDocumentsBatch<T> : IUtf8JsonSerializable
     {
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Models
 
     /// <summary>
     /// Creates <see cref="IndexDocumentsBatch{T}"/> instances to update
-    /// search indexes via <see cref="SearchIndexClient.IndexDocuments"/>.
+    /// search indexes via <see cref="SearchClient.IndexDocuments"/>.
     /// </summary>
     public static partial class IndexDocumentsBatch
     {

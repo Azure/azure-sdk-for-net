@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application newApp = new Application
             {
                 DisplayName = $"Microsoft.Azure.Services.AppAuthentication.Test{guid}",
-                IdentifierUris = new List<string> { $"https://Microsoft.Azure.Services.AppAuthentication/{guid}"},
+                IdentifierUris = new List<string> { $"https://Microsoft.Azure.Services.AppAuthentication/{guid}" },
                 ReplyUrls = new List<string> { "https://Microsoft.Azure.Services.AppAuthentication/" },
                 OdataType = "Microsoft.DirectoryServices.Application",
                 AppRolesODataType = "Collection(Microsoft.DirectoryServices.AppRole)",
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                 EndDate = DateTime.Now.AddDays(2)
             };
 
-            newApp.PasswordCredentials = new List<PasswordCredential> {keyCredential};
+            newApp.PasswordCredentials = new List<PasswordCredential> { keyCredential };
 
             return await CreateApplication(newApp).ConfigureAwait(false);
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application newApp = new Application
             {
                 DisplayName = $"Microsoft.Azure.Services.AppAuthentication.Test{guid}",
-                IdentifierUris = new List<string> { $"https://localhost/demo/{guid}"},
+                IdentifierUris = new List<string> { $"https://localhost/demo/{guid}" },
                 ReplyUrls = new List<string> { "https://localhost/demo" },
                 OdataType = "Microsoft.DirectoryServices.Application",
                 AppRolesODataType = "Collection(Microsoft.DirectoryServices.AppRole)",
@@ -157,7 +157,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 
             await SendHttpRequest(HttpMethod.Delete,
                     $"{Constants.GraphResourceId}{_directory}/applications/{app.ObjectId}?api-version=1.6").ConfigureAwait(false);
-            
         }
 
         /// <summary>

@@ -129,6 +129,8 @@ export function convertToString(expr: string, model: IModelType, service: IServi
             return `${expr}.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()`;
         case 'byte':
             return `System.Convert.ToBase64String(${expr})`;
+        case 'url':
+            return `${expr}.AbsoluteUri`;
         case 'dictionary':
         case 'binary': // stream
             throw `Cannot convert ${model.type} to string`;

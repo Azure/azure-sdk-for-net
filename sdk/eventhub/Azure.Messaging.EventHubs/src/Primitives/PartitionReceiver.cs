@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,8 +31,11 @@ namespace Azure.Messaging.EventHubs.Primitives
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
     ///
-    internal class PartitionReceiver : IAsyncDisposable
+    public class PartitionReceiver : IAsyncDisposable
     {
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the client is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -74,7 +78,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed { get; protected set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            protected set => _closed = value;
+        }
 
         /// <summary>
         ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
@@ -88,6 +96,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         private bool OwnsConnection { get; } = true;
+
+        /// <summary>
+        ///   The default maximum amount of time to wait to build up the requested message count for the batch.
+        /// </summary>
+        ///
+        private TimeSpan? DefaultMaximumWaitTime { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -174,8 +188,13 @@ namespace Azure.Messaging.EventHubs.Primitives
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
             InitialPosition = eventPosition;
+            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+
         }
 
         /// <summary>
@@ -210,8 +229,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
             InitialPosition = eventPosition;
+            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -241,8 +264,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
             InitialPosition = eventPosition;
+            DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -265,8 +292,33 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
             return await Connection.GetPartitionPropertiesAsync(PartitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   A set of information about the last enqueued event of the partition associated with this receiver, observed as events
+        ///   are received from the Event Hubs service.  This is only available if the receiver was created with <see cref="PartitionReceiverOptions.TrackLastEnqueuedEventProperties" />
+        ///   set.  Otherwise, the properties will contain default values.
+        /// </summary>
+        ///
+        /// <returns>The set of properties for the last event that was enqueued to the partition.  If no events were read or tracking was not set, the properties will be returned with default values.</returns>
+        ///
+        /// <remarks>
+        ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
+        ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of
+        ///   additional network bandwidth consumption that is generally a favorable trade-off when considered
+        ///   against periodically making requests for partition properties using an Event Hub client.
+        /// </remarks>
+        ///
+        /// <exception cref="EventHubsException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
+        ///
+        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties()
+        {
+            Argument.AssertNotClosed(InnerConsumer.IsClosed, Resources.ClientNeededForThisInformationNotAvailable);
+            return new LastEnqueuedEventProperties(InnerConsumer.LastReceivedEvent);
         }
 
         /// <summary>
@@ -274,25 +326,28 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified by the options when the client was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
-                                                                      TimeSpan maximumWaitTime,
-                                                                      CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+        public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
+                                                                            CancellationToken cancellationToken = default) =>
+            await ReceiveBatchInternalAsync(maximumEventCount, null, cancellationToken).ConfigureAwait(false);
 
-            Argument.AssertInRange(maximumEventCount, 1, int.MaxValue, nameof(maximumEventCount));
-            Argument.AssertNotNegative(maximumWaitTime, nameof(maximumWaitTime));
-
-            // TODO: implement method.
-
-            return default;
-        }
+        /// <summary>
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.
+        /// </summary>
+        ///
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        ///
+        public virtual async Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
+                                                                            TimeSpan maximumWaitTime,
+                                                                            CancellationToken cancellationToken = default) =>
+            await ReceiveBatchInternalAsync(maximumEventCount, maximumWaitTime, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Closes the client.
@@ -311,8 +366,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             IsClosed = true;
 
-            var clientHash = GetHashCode().ToString();
-            Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
+            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -325,7 +380,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -341,12 +396,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the transport
@@ -412,5 +467,29 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    PartitionReceiverOptions options) =>
             Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
+
+        /// <summary>
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.
+        /// </summary>
+        ///
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified by the options when the client was created will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        ///
+        private Task<IReadOnlyList<EventData>> ReceiveBatchInternalAsync(int maximumEventCount,
+                                                                         TimeSpan? maximumWaitTime,
+                                                                         CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            maximumWaitTime ??= DefaultMaximumWaitTime;
+
+            Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
+            Argument.AssertInRange(maximumEventCount, 1, int.MaxValue, nameof(maximumEventCount));
+            Argument.AssertNotNegative(maximumWaitTime ?? TimeSpan.Zero, nameof(maximumWaitTime));
+
+            return InnerConsumer.ReceiveAsync(maximumEventCount, maximumWaitTime, cancellationToken);
+        }
     }
 }

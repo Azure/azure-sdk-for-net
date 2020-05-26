@@ -10,10 +10,8 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Newtonsoft.Json;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A copy activity tabular translator.
@@ -54,7 +52,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// {\"source\":{\"path\":\"$.CustomerAddress\",\"type\":\"String\"},\"sink\":
         /// {\"name\":\"ClientAddress\",\"type\":\"String\"}}]. Type: object 
         /// (or Expression with resultType object).</param>
-        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mappings = default(object))
+        /// <param name="typeConversion">Whether to enable the advanced type conversion
+        /// feature in the Copy activity. Type: boolean (or Expression with resultType
+        /// boolean).</param>
+        /// <param name="typeConversionSettings">Type conversion settings</param>
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mappings = default(object), object typeConversion = default(object), TypeConversionSettings typeConversionSettings = default(TypeConversionSettings))
             : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
@@ -107,5 +109,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "mappings")]
         public object Mappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets typeConversion indicating whether to enable the advanced type conversion
+        /// feature in the Copy activity. Type: boolean (or Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeConversion")]
+        public object TypeConversion { get; set; }
+
+        /// <summary>
+        /// Gets or sets typeConversionSettings.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeConversionSettings")]
+        public TypeConversionSettings TypeConversionSettings { get; set; }
     }
 }

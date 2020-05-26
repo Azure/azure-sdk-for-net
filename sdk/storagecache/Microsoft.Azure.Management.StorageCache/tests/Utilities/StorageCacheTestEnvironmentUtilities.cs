@@ -26,6 +26,17 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Utilities
             new TestEnvironment(System.Environment.GetEnvironmentVariable(EnvironmentVariableName));
 
         /// <summary>
+        /// Gets API version.
+        /// </summary>
+        public static string APIVersion
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultAPIVersion");
+            }
+        }
+
+        /// <summary>
         /// Gets location.
         /// </summary>
         public static string Location

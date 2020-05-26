@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -28,10 +27,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
@@ -63,11 +59,31 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
+                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
                 _maxAutoRenewDuration = value;
             }
         }
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
+
+        /// <summary>
+        ///   The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        /// <remarks>When using a <see cref="ServiceBusSessionProcessor"/>, if no message is returned for a call to Receive, a new session will be requested by the processor. Hence, if this value is set to be too low, it could cause new sessions to be requested more often than necessary.</remarks>
+        public TimeSpan? MaxReceiveWaitTime
+        {
+            get => _maxReceiveWaitTime;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertPositive(value.Value, nameof(MaxReceiveWaitTime));
+                }
+
+                _maxReceiveWaitTime = value;
+            }
+        }
+        private TimeSpan? _maxReceiveWaitTime;
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate. The default value when used with a session processor is 8. For a non-session processor, the default is 1.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
@@ -77,15 +93,10 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
-                }
-
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCalls));
                 _maxConcurrentCalls = value;
             }
         }
-
         private int _maxConcurrentCalls;
 
         /// <summary>
@@ -129,6 +140,7 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = PrefetchCount,
                 AutoComplete = AutoComplete,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
+                MaxReceiveWaitTime = MaxReceiveWaitTime
             };
             if (MaxConcurrentCalls > 0)
             {

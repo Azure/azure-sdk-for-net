@@ -285,4 +285,7 @@
   <data name="OperationSurrenderOwnership" xml:space="preserve">
     <value>Surrendering ownership of a partition.</value>
   </data>
+  <data name="AggregateEventProcessingExceptionMessage" xml:space="preserve">
+    <value>One or more exceptions occured during event processing.  Please see the inner exceptions for more detail.</value>
+  </data>
 </root>

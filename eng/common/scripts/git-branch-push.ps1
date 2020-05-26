@@ -28,6 +28,8 @@ param(
     [string] $PushArgs = ""
 )
 
+Write-Host "> $PSCommandPath $args"
+
 # This is necessay because of the janky git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
@@ -73,8 +75,8 @@ if ($LASTEXITCODE -ne 0)
 $numberOfRetries = 10
 $needsRetry = $false
 $tryNumber = 0
-do 
-{ 
+do
+{
     $needsRetry = $false
     Write-Host "git push azure-sdk-fork $PRBranchName $PushArgs"
     git push azure-sdk-fork $PRBranchName $PushArgs
@@ -91,7 +93,7 @@ do
             exit $LASTEXITCODE
         }
 
-        try 
+        try
         {
             $TempPatchFile = New-TemporaryFile
             Write-Host "git diff ${PRBranchName}~ ${PRBranchName} --output $TempPatchFile"
@@ -135,8 +137,7 @@ do
             }
         }
     }
-
-} while($needsRetry -and $tryNumber -le $numberOfRetries) 
+} while($needsRetry -and $tryNumber -le $numberOfRetries)
 
 if ($LASTEXITCODE -ne 0)
 {

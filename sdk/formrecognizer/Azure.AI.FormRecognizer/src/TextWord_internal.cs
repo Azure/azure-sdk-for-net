@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("TextWord")]
+    [CodeGenModel("TextWord")]
     internal partial class TextWord_internal
     {
     }

@@ -13,6 +13,11 @@ namespace Azure.Search.Documents
         // TODO: #10596 - Switch constants to use JsonEncodedText
 
         /// <summary>
+        /// Gets "*" to select all fields, properties, or rows.
+        /// </summary>
+        public const string All = "*";
+
+        /// <summary>
         /// The name of the API key header used for signing requests.
         /// </summary>
         public const string ApiKeyHeaderName = "api-key";
@@ -81,6 +86,11 @@ namespace Azure.Search.Documents
         /// The @odata.nextLink key.
         /// </summary>
         public const string ODataNextLinkKey = "@odata.nextLink";
+
+        /// <summary>
+        /// The name key.
+        /// </summary>
+        public const string NameKey = "name";
 
         /// <summary>
         /// The value key.

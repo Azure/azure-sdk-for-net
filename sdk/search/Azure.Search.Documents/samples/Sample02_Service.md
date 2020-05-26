@@ -17,9 +17,9 @@ reflect changes caused by recent indexing operations.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
-SearchServiceClient search = new SearchServiceClient(endpoint, credential);
+SearchIndexClient search = new SearchIndexClient(endpoint, credential);
 
 // Get and report the Search Service statistics
-Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
 ```

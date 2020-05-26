@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EdgeNGramTokenizer : IUtf8JsonSerializable
     {
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Models
             int? minGram = default;
             int? maxGram = default;
             IList<TokenCharacterKind> tokenChars = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new EdgeNGramTokenizer(minGram, maxGram, tokenChars, odatatype, name);
+            return new EdgeNGramTokenizer(odataType, name, minGram, maxGram, tokenChars);
         }
     }
 }

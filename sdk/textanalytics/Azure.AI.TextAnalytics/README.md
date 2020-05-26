@@ -1,5 +1,5 @@
 # Azure Cognitive Services Text Analytics client library for .NET
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes six main functions: 
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
@@ -10,11 +10,18 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 
 ## Getting started
 
+### Install the package
+Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+dotnet add package Azure.AI.TextAnalytics --version 1.0.0-preview.5
+```
+
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Cognitive Services or Text Analytics resource.
 
-### Create a Cognitive Services or Text Analytics resource
+#### Create a Cognitive Services or Text Analytics resource
 Text Analytics supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Text Analytics access only, create a Text Analytics resource.
 
 You can create either resource using: 
@@ -42,13 +49,6 @@ az cognitiveservices account create \
     --yes
 ```
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
-
-### Install the package
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
-
-```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
-```
 
 ### Authenticate the client
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
@@ -116,7 +116,7 @@ Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analyti
 A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the document batch and how it was processed.
 
 ## Examples
-The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
+The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient-with-azure-active-directory-credential), and covers the main functions of Text Analytics.
 
 ### Sync examples
 * [Detect Language](#detect-language)
@@ -137,9 +137,9 @@ string document = "Este documento está en español.";
 
 DetectedLanguage language = client.DetectLanguage(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
-For samples on using the production recommended option `DetectLanguageBatch` see [here](#detect-language-1).
+For samples on using the production recommended option `DetectLanguageBatch` see [here][detect_language_sample].
 
 Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
@@ -156,7 +156,7 @@ Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScore
 Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
 Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
-For samples on using the production recommended option `AnalyzeSentimentBatch` see [here](#analyze-sentiment-1).
+For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
@@ -166,7 +166,7 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string document = "My cat might need to see a veterinarian.";
 
-IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
+KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
 
 Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -174,7 +174,7 @@ foreach (string keyPhrase in keyPhrases)
     Console.WriteLine(keyPhrase);
 }
 ```
-For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here](#extract-key-phrases-1).
+For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here][extract_key_phrases_sample].
 
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
@@ -184,7 +184,7 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
+CategorizedEntityCollection entities = client.RecognizeEntities(document);
 
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -192,7 +192,7 @@ foreach (CategorizedEntity entity in entities)
     Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
-For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
+For samples on using the production recommended option `RecognizeEntitiesBatch` see [here][recognize_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
@@ -202,7 +202,7 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
+LinkedEntityCollection linkedEntities = client.RecognizeLinkedEntities(document);
 
 Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
@@ -214,7 +214,7 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     }
 }
 ```
-For samples on using the production recommended option `RecognizeLinkedEntitiesBatch` see [here](#recognize-linked-entities-1).
+For samples on using the production recommended option `RecognizeLinkedEntitiesBatch` see [here][recognize_linked_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [entity linking][named_entity_recognition].
 
@@ -226,7 +226,7 @@ string document = "Este documento está en español.";
 
 DetectedLanguage language = await client.DetectLanguageAsync(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
 
 ### Recognize Entities Asynchronously
@@ -235,10 +235,10 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(document);
+CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
-Console.WriteLine($"Recognized {entities.Value.Count} entities:");
-foreach (CategorizedEntity entity in entities.Value)
+Console.WriteLine($"Recognized {entities.Count} entities:");
+foreach (CategorizedEntity entity in entities)
 {
     Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
@@ -297,36 +297,17 @@ To learn more about other logging mechanisms see [here][logging].
 ## Next steps
 
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
-Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single document, and a collection of documents.
+Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single document, and a collection of documents in both sync and async mode.
 
-### Detect Language
-* [Sample1_DetectLanguage.cs][detect_language_sample0] - Detect the language of a document.
-* [Sample1_DetectLanguageBatchConvenience.cs][detect_language_sample1] - Detect the language of each document in a collection of documents.
-* [Sample1_DetectLanguageBatch.cs][detect_language_sample2] - Detect the language of each document in a collection of documents. This method allows to provide more information about each document.
-* [Sample1_DetectLanguageAsync.cs][detect_language_sample_async] - Make an asynchronous call to detect the language of a document.
-
-### Analyze Sentiment
-* [Sample2_AnalyzeSentiment.cs][analyze_sentiment_sample0] - Analyze sentiment in a document.
-* [Sample2_AnalyzeSentimentBatchConvenience.cs][analyze_sentiment_sample1] - Analyze sentiment in a collection of documents.
-* [Sample2_AnalyzeSentimentBatch.cs][analyze_sentiment_sample2] - Analyze the sentiment of a collection of documents in different languages.
-
-### Extract Key Phrases
-* [Sample3_ExtractKeyPhrases.cs][extract_key_phrases_sample0] - Extract key phrases from a document.
-* [Sample3_ExtractKeyPhrasesBatchConvenience.cs][extract_key_phrases_sample1] - Extract key phrases from each document in a collection of documents.
-* [Sample3_ExtractKeyPhrasesBatch.cs][extract_key_phrases_sample2] - Extract the key phrases of a collection of documents in different languages.
-
-### Recognize Entities
-* [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a document.
-* [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each document in a collection of documents.
-* [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities of a collection of documents in different languages.
-* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to recognize entities in a document.
-
-### Recognize Linked Entities
-* [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a document.
-* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each document in a collection of documents.
-* [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities of a collection of documents in different languages.
+- [Detect Language][detect_language_sample]
+- [Analyze Sentiment][analyze_sentiment_sample]
+- [Extract Key Phrases][extract_key_phrases_sample]
+- [Recognize Entities][recognize_entities_sample]
+- [Recognize Linked Entities][recognize_linked_entities_sample]
+- [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
@@ -342,7 +323,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_docs]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
-[textanalytics_samples]: tests/samples
+[textanalytics_samples]: /samples/README.md
 [textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
@@ -362,29 +343,20 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
+[contributing]: ../../../CONTRIBUTING.md
 
-[detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
-[detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
-[detect_language_sample2]: tests/samples/Sample1_DetectLanguageBatch.cs
-[detect_language_sample_async]: tests/samples/Sample1_DetectLanguageAsync.cs
-[analyze_sentiment_sample0]: tests/samples/Sample2_AnalyzeSentiment.cs
-[analyze_sentiment_sample1]: tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs
-[analyze_sentiment_sample2]: tests/samples/Sample2_AnalyzeSentimentBatch.cs
-[extract_key_phrases_sample0]: tests/samples/Sample3_ExtractKeyPhrases.cs
-[extract_key_phrases_sample1]: tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs
-[extract_key_phrases_sample2]: tests/samples/Sample3_ExtractKeyPhrasesBatch.cs
-[recognize_entities_sample0]: tests/samples/Sample4_RecognizeEntities.cs
-[recognize_entities_sample1]: tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs
-[recognize_entities_sample2]: tests/samples/Sample4_RecognizeEntitiesBatch.cs
-[recognize_entities_sample_async]: tests/samples/Sample4_RecognizeEntitiesAsync.cs
-[recognize_linked_entities_sample0]: tests/samples/Sample6_RecognizeLinkedEntities.cs
-[recognize_linked_entities_sample1]: tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs
-[recognize_linked_entities_sample2]: tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs
+[detect_language_sample]: samples/Sample1_DetectLanguage.md
+[analyze_sentiment_sample]: samples/Sample2_AnalyzeSentiment.md
+[extract_key_phrases_sample]: samples/Sample3_ExtractKeyPhrases.md
+[recognize_entities_sample]: samples/Sample4_RecognizeEntities.md
+[recognize_linked_entities_sample]: samples/Sample6_RecognizeLinkedEntities.md
+[mock_client_sample]: samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
+[moq]: https://github.com/Moq/moq4/
 
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

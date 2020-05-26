@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Splits words into subwords and performs optional transformations on subword groups. This token filter is implemented using Apache Lucene. </summary>
     public partial class WordDelimiterTokenFilter : TokenFilter
@@ -26,6 +26,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of WordDelimiterTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="generateWordParts"> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example &quot;AzureSearch&quot; becomes &quot;Azure&quot; &quot;Search&quot;. Default is true. </param>
         /// <param name="generateNumberParts"> A value indicating whether to generate number subwords. Default is true. </param>
         /// <param name="catenateWords"> A value indicating whether maximum runs of word parts will be catenated. For example, if this is set to true, &quot;Azure-Search&quot; becomes &quot;AzureSearch&quot;. Default is false. </param>
@@ -36,9 +38,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="splitOnNumerics"> A value indicating whether to split on numbers. For example, if this is set to true, &quot;Azure1Search&quot; becomes &quot;Azure&quot; &quot;1&quot; &quot;Search&quot;. Default is true. </param>
         /// <param name="stemEnglishPossessive"> A value indicating whether to remove trailing &quot;&apos;s&quot; for each subword. Default is true. </param>
         /// <param name="protectedWords"> A list of tokens to protect from being delimited. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal WordDelimiterTokenFilter(bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords, string oDataType, string name) : base(oDataType, name)
+        internal WordDelimiterTokenFilter(string oDataType, string name, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(oDataType, name)
         {
             GenerateWordParts = generateWordParts;
             GenerateNumberParts = generateNumberParts;

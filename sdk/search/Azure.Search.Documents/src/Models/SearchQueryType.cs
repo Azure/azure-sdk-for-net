@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Models
     /// Specifies the syntax of the search query.  The default is "simple".
     /// Use "full" if your query uses the Lucene query syntax.
     /// </summary>
-    [CodeGenSchema("QueryType")]
+    [CodeGenModel("QueryType")]
     public enum SearchQueryType
     {
         /// <summary>

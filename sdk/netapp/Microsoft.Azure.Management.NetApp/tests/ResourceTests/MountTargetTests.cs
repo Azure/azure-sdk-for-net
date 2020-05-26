@@ -25,8 +25,8 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.CreateVolume(netAppMgmtClient);
 
                 // get the account list and check
-                var mountTargets = netAppMgmtClient.MountTargets.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
-                Assert.Single(mountTargets);
+                var volume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                Assert.Single(volume.MountTargets);
                 
                 // clean up - delete the volumes, pool and account
                 netAppMgmtClient.Volumes.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);

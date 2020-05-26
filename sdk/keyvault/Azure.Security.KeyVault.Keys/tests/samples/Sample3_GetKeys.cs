@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -16,14 +16,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// and list deleted keys in a soft-delete enabled Key Vault
     /// using the synchronous methods of the KeyClient.
     /// </summary>
-    [LiveOnly]
     public partial class GetKeys
     {
         [Test]
         public void GetKeysSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample3KeyClient
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -52,6 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             IEnumerable<KeyProperties> keys = client.GetPropertiesOfKeys();
             foreach (KeyProperties key in keys)
             {
+                /*@@*/ if (key.Managed) continue;
                 KeyVaultKey keyWithType = client.GetKey(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");
             }

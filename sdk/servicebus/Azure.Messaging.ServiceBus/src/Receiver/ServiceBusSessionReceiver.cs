@@ -6,13 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Core;
+using Microsoft.Identity.Client;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
     ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
-    ///  <see cref="ServiceBusClient.GetSessionReceiverAsync(string, ServiceBusReceiverOptions, string, CancellationToken)"/>.
+    ///  <see cref="ServiceBusClient.CreateSessionReceiverAsync(string, ServiceBusReceiverOptions, string, CancellationToken)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
@@ -44,14 +46,21 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
-
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
                 options: options,
                 sessionId: sessionId);
-
-            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.FullyQualifiedNamespace, entityPath, ex);
+                throw;
+            }
+            receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
             return receiver;
         }
 
@@ -74,21 +83,42 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for mocking.
+        /// </summary>
+        ///
+        protected ServiceBusSessionReceiver() : base() { }
+
+        /// <summary>
         /// Gets the session state.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The session state as byte array.</returns>
-        public virtual async Task<byte[]> GetStateAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
-            return await Task.FromResult(new byte[4]).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.GetSessionStateStart(Identifier, SessionId);
+            byte[] sessionState = null;
+
+            try
+            {
+                sessionState = await InnerReceiver.GetStateAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                Logger.GetSessionStateException(Identifier, exception.ToString());
+                throw;
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.GetSessionStateComplete(Identifier);
+            return sessionState;
         }
 
         /// <summary>
-        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetSessionStateAsync"/>
         /// </summary>
         ///
         /// <param name="sessionState">A byte array of session state</param>
@@ -97,11 +127,26 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task SetStateAsync(byte[] sessionState,
+        public virtual async Task SetSessionStateAsync(
+            byte[] sessionState,
             CancellationToken cancellationToken = default)
         {
-            await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.SetSessionStateStart(Identifier, SessionId);
+
+            try
+            {
+                await InnerReceiver.SetStateAsync(sessionState, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                Logger.SetSessionStateException(Identifier, exception.ToString());
+                throw;
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.SetSessionStateComplete(Identifier);
         }
 
         /// <summary>
@@ -122,19 +167,22 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockStart(Identifier, SessionId);
+            Logger.RenewSessionLockStart(Identifier, SessionId);
+
             try
             {
                 await InnerReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RenewSessionLockException(Identifier, exception);
+                Logger.RenewSessionLockException(Identifier, exception.ToString());
                 throw;
             }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockComplete(Identifier);
+            Logger.RenewSessionLockComplete(Identifier);
         }
     }
 }

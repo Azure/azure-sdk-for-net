@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class FreshnessScoringFunction : IUtf8JsonSerializable
     {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new FreshnessScoringFunction(freshness, type, fieldName, boost, interpolation);
+            return new FreshnessScoringFunction(type, fieldName, boost, interpolation, freshness);
         }
     }
 }

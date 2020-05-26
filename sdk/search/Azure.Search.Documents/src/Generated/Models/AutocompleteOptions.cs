@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -12,6 +13,7 @@ namespace Azure.Search.Documents
     /// <summary> Parameters for fuzzy matching, and other autocomplete query behaviors. </summary>
     public partial class AutocompleteOptions
     {
+
         /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
         /// <param name="searchText"> The search text on which to base autocomplete results. </param>
         /// <param name="mode"> Specifies the mode for Autocomplete. The default is &apos;oneTerm&apos;. Use &apos;twoTerms&apos; to get shingles and &apos;oneTermWithContext&apos; to use the current context while producing auto-completed terms. </param>
@@ -36,7 +38,6 @@ namespace Azure.Search.Documents
             SuggesterName = suggesterName;
             Size = size;
         }
-
         /// <summary> A value indicating whether to use fuzzy matching for the autocomplete query. Default is false. When set to true, the query will autocomplete terms even if there&apos;s a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy autocomplete queries are slower and consume more resources. </summary>
         public bool? UseFuzzyMatching { get; set; }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting is disabled. </summary>

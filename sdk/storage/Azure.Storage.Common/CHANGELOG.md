@@ -1,7 +1,13 @@
 # Release History
 
-## 12.4.0-preview.1 (Unreleased)
+## 12.5.0-preview.1 (Unreleased)
 
+
+## 12.4.1 (2020-05)
+- This release contains bug fixes to improve quality.
+
+## 12.4.0 (2020-04)
+- This release contains bug fixes to improve quality.
 
 ## 12.3.0 (2020-03)
 - Added InitialTransferLength to StorageTransferOptions

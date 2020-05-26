@@ -52,9 +52,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// information about the connection to the remote resource. Used when
         /// the network admin does not have access to approve connections to
         /// the remote resource.</param>
+        /// <param name="customDnsConfigs">An array of custom dns
+        /// configurations.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), string etag = default(string))
+        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<CustomDnsConfigPropertiesFormat> customDnsConfigs = default(IList<CustomDnsConfigPropertiesFormat>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Subnet = subnet;
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
+            CustomDnsConfigs = customDnsConfigs;
             Etag = etag;
             CustomInit();
         }
@@ -107,6 +110,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.manualPrivateLinkServiceConnections")]
         public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of custom dns configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDnsConfigs")]
+        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
