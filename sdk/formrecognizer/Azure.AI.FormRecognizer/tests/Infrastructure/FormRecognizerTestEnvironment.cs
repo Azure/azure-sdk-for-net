@@ -118,12 +118,6 @@ namespace Azure.AI.FormRecognizer.Tests
         public static string BlankPageFormPath => CreatePath(BlankPageFormFilename);
 
         /// <summary>
-        /// The URI string to the PDF file which contains the multipage form with a blank page to be used for tests.
-        /// </summary>
-        /// <value>The URI string to the PDF file.</value>
-        public static string BlankPageFormUri => CreateUri(BlankPageFormFilename);
-
-        /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.
         /// </summary>
         /// <param name="index">The index to specify the form to be retrieved.</param>

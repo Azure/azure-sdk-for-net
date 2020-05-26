@@ -402,6 +402,56 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [Test]
+        public async Task StartRecognizeReceiptsCanParseBlankPage()
+        {
+            var client = CreateInstrumentedFormRecognizerClient();
+            var options = new RecognizeOptions() { IncludeTextContent = true };
+            RecognizeReceiptsOperation operation;
+
+            using var stream = new FileStream(FormRecognizerTestEnvironment.BlankPageFormPath, FileMode.Open);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, options);
+            }
+
+            RecognizedReceiptCollection recognizedReceipts = await operation.WaitForCompletionAsync();
+
+            Assert.AreEqual(3, recognizedReceipts.Count);
+
+            for (int receiptIndex = 0; receiptIndex < recognizedReceipts.Count; receiptIndex++)
+            {
+                var recognizedReceipt = recognizedReceipts[receiptIndex];
+                var expectedPageNumber = receiptIndex + 1;
+
+                Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
+                Assert.NotNull(recognizedReceipt.RecognizedForm);
+
+                ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
+                    expectedFirstPageNumber: expectedPageNumber, expectedLastPageNumber: expectedPageNumber);
+
+                // Basic sanity test to make sure pages are ordered correctly.
+
+                if (receiptIndex == 0 || receiptIndex == 2)
+                {
+                    var sampleField = recognizedReceipt.RecognizedForm.Fields["MerchantName"];
+                    var expectedValueText = receiptIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
+
+                    Assert.IsNotNull(sampleField.ValueText);
+                    Assert.AreEqual(expectedValueText, sampleField.ValueText.Text);
+                }
+            }
+
+            var blankForm = recognizedReceipts[1].RecognizedForm;
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+        }
+
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
