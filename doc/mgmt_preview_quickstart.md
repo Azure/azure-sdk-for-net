@@ -171,7 +171,6 @@ Let's show a concrete example of how you would create a virtual machine using .N
         .CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
 
     // Create IP Address
-    // TODO verify why lack of (location) ctor.
     var ipAddress = new PublicIPAddress()
     {
         PublicIPAddressVersion = IPVersion.IPv4,
@@ -251,6 +250,7 @@ Let's show a concrete example of how you would create a virtual machine using .N
     await computeClient.VirtualMachines
         .StartCreateOrUpdate(resourceGroup, vmName, vm)
         .WaitForCompletionAsync();
+        
 Need help?
 ----------
 
