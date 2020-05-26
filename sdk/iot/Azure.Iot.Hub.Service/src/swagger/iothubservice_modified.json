@@ -557,7 +557,7 @@
             "description": "Specifies the job specification.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           },
           {
@@ -568,7 +568,7 @@
           "200": {
             "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           }
         }
@@ -594,7 +594,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/JobProperties"
+                "$ref": "#/definitions/ImportExportJobProperties"
               }
             }
           }
@@ -626,7 +626,7 @@
           "200": {
             "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           }
         }
@@ -2659,7 +2659,7 @@
         }
       }
     },
-    "JobProperties": {
+    "ImportExportJobProperties": {
       "type": "object",
       "properties": {
         "jobId": {
