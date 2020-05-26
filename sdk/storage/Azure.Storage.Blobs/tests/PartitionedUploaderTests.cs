@@ -247,6 +247,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Explicit]
+        [Ignore("Makes running unit tests locally extremely slow")]
         public async Task CanHandleLongBlockBufferedUpload()
         {
             const long blockSize = int.MaxValue + 1024L;

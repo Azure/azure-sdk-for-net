@@ -117,6 +117,7 @@ namespace Azure.Storage.Tests
 
         [Test]
         [Explicit]
+        [Ignore("Makes running unit tests locally extremely slow")]
         public void StreamCanHoldLongData()
         {
             const long dataSize = 4000L * Constants.MB;
