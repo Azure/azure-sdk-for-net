@@ -18,7 +18,7 @@
 - `RecognizeContentOperation` now returns a `FormPageCollection`.
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
-- `FieldValue.AsInt32` replaced by `FieldValue.AsInt64`, which returns a `long` value.
+- In preparation for service-side changes, `FieldValue.AsInt32` has been replaced by `FieldValue.AsInt64`, which returns a `long`.
 
 ### New Features
 
