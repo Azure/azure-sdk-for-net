@@ -21,5 +21,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
             Values = events;
             ContinuationToken = continuationToken;
         }
+
+        public static BlobChangeFeedEventPage Empty()
+            => new BlobChangeFeedEventPage(
+                new List<BlobChangeFeedEvent>(),
+                null);
     }
 }

@@ -99,12 +99,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (_currentSegment.DateTime > _endTime)
             {
-                return new BlobChangeFeedEventPage();
+                return BlobChangeFeedEventPage.Empty();
             }
 
-            if (_currentSegment.DateTime > _lastConsumable)
+            if (!_currentSegment.Finalized)
             {
-                return new BlobChangeFeedEventPage();
+                return BlobChangeFeedEventPage.Empty();
             }
 
             // Get next page
