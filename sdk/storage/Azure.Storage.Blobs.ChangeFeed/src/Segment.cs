@@ -23,14 +23,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public DateTimeOffset DateTime { get; private set; }
 
         /// <summary>
-        /// Container client for listing Shards.
-        /// </summary>
-        private readonly BlobContainerClient _containerClient;
-
-        /// <summary>
         /// The Shards associated with this Segment.
         /// </summary>
         private readonly List<Shard> _shards;
+
+        /// <summary>
+        /// The Shards we have finished reading from.
+        /// </summary>
+        private readonly HashSet<int> _finishedShards;
 
         /// <summary>
         /// The index of the Shard we will return the next event from.
@@ -38,17 +38,16 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private int _shardIndex;
 
         public Segment(
-            BlobContainerClient containerClient,
             List<Shard> shards,
             int shardIndex,
             DateTimeOffset dateTime,
             bool finalized)
         {
-            _containerClient = containerClient;
             _shards = shards;
             _shardIndex = shardIndex;
             DateTime = dateTime;
             Finalized = finalized;
+            _finishedShards = new HashSet<int>();
         }
 
         public virtual SegmentCursor GetCursor()
@@ -79,6 +78,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             int i = 0;
             while (i < pageSize && _shards.Count > 0)
             {
+                // If this Shard is finished, skip it.
+                if (_finishedShards.Contains(_shardIndex))
+                {
+                    _shardIndex++;
+                    continue;
+                }
+
                 Shard currentShard = _shards[_shardIndex];
 
                 BlobChangeFeedEvent changeFeedEvent = await currentShard.Next(async, cancellationToken).ConfigureAwait(false);
@@ -88,7 +94,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 // If the current shard is completed, remove it from _shards
                 if (!currentShard.HasNext())
                 {
-                    _shards.RemoveAt(_shardIndex);
+                    _finishedShards.Add(_shardIndex);
                 }
 
                 i++;
@@ -97,13 +103,19 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 {
                     _shardIndex = 0;
                 }
+
+                // If all the Shards are finished, we need to break out early.
+                if (_finishedShards.Count == _shards.Count)
+                {
+                    break;
+                }
             }
 
             return changeFeedEventList;
         }
 
         public virtual bool HasNext()
-            =>  _shards.Count > 0;
+            => _finishedShards.Count < _shards.Count;
 
         /// <summary>
         /// Constructor for mocking.

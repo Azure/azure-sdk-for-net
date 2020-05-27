@@ -83,7 +83,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             return new Segment(
-                containerClient,
                 shards,
                 shardIndex,
                 dateTime,
