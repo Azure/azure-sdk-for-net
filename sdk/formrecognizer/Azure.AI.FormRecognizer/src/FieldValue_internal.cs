@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal FieldValue_internal(string value)
         {
-            Type = FieldValueType.StringType;
+            Type = FieldValueType.String;
             ValueString = value;
             Text = value;
         }
