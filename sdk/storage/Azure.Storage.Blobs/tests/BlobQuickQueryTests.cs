@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
-        //[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task QueryAsync_QueryTextConfigurations()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -276,7 +276,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
-        //[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task QueryAsync_FatalError()
         {
             // Arrange
