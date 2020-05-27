@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// If this Segment is finalized.
         /// </summary>
-        public bool Finalized { get; private set; }
+        public virtual bool Finalized { get; private set; }
 
         /// <summary>
         /// The time (to the nearest hour) associated with this Segment.

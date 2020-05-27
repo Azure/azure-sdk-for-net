@@ -433,6 +433,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     events[7]
                 }));
 
+            for (int i = 0; i < segments.Count; i++)
+            {
+                segments[i].Setup(r => r.Finalized)
+                    .Returns(true);
+            }
+
             long chunkIndex = 1;
             long blockOffset = 2;
             long eventIndex = 3;
@@ -595,6 +601,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segments[1].Verify(r => r.GetCursor());
             segments[3].Verify(r => r.GetCursor());
+
+            segments[0].Verify(r => r.Finalized, Times.Exactly(1));
+            segments[1].Verify(r => r.Finalized, Times.Exactly(1));
+            segments[2].Verify(r => r.Finalized, Times.Exactly(0));
+            segments[3].Verify(r => r.Finalized, Times.Exactly(0));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
         }
@@ -864,6 +875,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segments[1].Setup(r => r.GetCursor())
                 .Returns(new SegmentCursor());
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                segments[i].Setup(r => r.Finalized)
+                    .Returns(true);
+            }
 
             ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
