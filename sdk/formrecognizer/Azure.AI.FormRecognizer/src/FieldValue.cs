@@ -43,11 +43,11 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as an <see cref="int"/>.
+        /// Gets the value of the field as a <see cref="long"/>.
         /// </summary>
-        /// <returns>The value of the field converted to an <see cref="int"/>.</returns>
+        /// <returns>The value of the field converted to a <see cref="long"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Integer"/> or when the value is <c>null</c>.</exception>
-        public int AsInt32()
+        public long AsInt64()
         {
             if (Type != FieldValueType.Integer)
             {
