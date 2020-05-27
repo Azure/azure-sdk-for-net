@@ -22,6 +22,7 @@
 
 - `FormRecognizerClient` and `FormTrainingClient` support authentication with Azure Active Directory.
 - Support to copy a custom model from one Form Recognizer resource to another.
+- Headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 
 ### Fixes
 
