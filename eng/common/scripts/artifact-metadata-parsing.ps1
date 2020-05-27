@@ -292,22 +292,16 @@ function ParseCArtifact($pkg, $workingDirectory) {
   $packageInfo = Get-Content -Raw -Path $pkg | ConvertFrom-JSON
   $packageArtifactLocation = (Get-ItemProperty $pkg).Directory.FullName
 
-  $releaseNotes = ExtractReleaseNotes -changeLogLocation @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
-
-  $readmeContentLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "README.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
-    $readmeContent = Get-Content -Raw $readmeContentLoc
-  }
+  $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
 
   return New-Object PSObject -Property @{
-    PackageId      = $packageInfo.name
+    PackageId      = ''
     PackageVersion = $packageInfo.version
     # Artifact info is always considered deployable for C becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
     # CheckArtifactShaAgainstTagsList
     Deployable     = $true
     ReleaseNotes   = $releaseNotes
-    ReadmeContent  = $readmeContent
   }
 }
 
@@ -410,10 +404,16 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         exit(1)
       }
 
+      $tag = if ($parsedPackage.packageId) {
+        "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
+      } else {
+        $parsedPackage.PackageVersion
+      }
+
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
-        Tag            = ($parsedPackage.PackageId + "_" + $parsedPackage.PackageVersion)
+        Tag            = $tag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
       }
