@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Summary of cancel product operation
+    /// Result of the update auto renew operation
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class UpdateAutoRenewOperation
@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the UpdateAutoRenewOperation class.
         /// </summary>
-        /// <param name="endDate">The end date of this asset</param>
+        /// <param name="endDate">The date at which the product will be
+        /// canceled.</param>
         public UpdateAutoRenewOperation(System.DateTime? endDate = default(System.DateTime?))
         {
             EndDate = endDate;
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the end date of this asset
+        /// Gets or sets the date at which the product will be canceled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endDate")]
         public System.DateTime? EndDate { get; set; }

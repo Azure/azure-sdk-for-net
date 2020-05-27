@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingPermissionsOperations
     {
         /// <summary>
-        /// Lists all billing permissions the caller has for a customer.
+        /// Lists the billing permissions the caller has for a customer.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,11 +49,10 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingPermissionsListResult>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions for the caller under a billing
-        /// account.
+        /// Lists the billing permissions the caller has on a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,16 +71,16 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingPermissionsListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions for the caller under invoice section.
+        /// Lists the billing permissions the caller has on an invoice section.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,13 +99,13 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billing permissions the caller has for a billing account.
+        /// Lists the billing permissions the caller has on a billing profile.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

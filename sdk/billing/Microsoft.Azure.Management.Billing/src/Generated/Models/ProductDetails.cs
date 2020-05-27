@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the product to be transferred.
+    /// Details of the product that is transferred.
     /// </summary>
     public partial class ProductDetails
     {
@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the ProductDetails class.
         /// </summary>
-        /// <param name="productType">Type of the product to be transferred.
+        /// <param name="productType">Type of the product that is transferred.
         /// Possible values include: 'AzureSubscription',
         /// 'AzureReservation'</param>
-        /// <param name="productId">Id of product to be transferred.</param>
+        /// <param name="productId">The ID of the product that is
+        /// transferred.</param>
         public ProductDetails(string productType = default(string), string productId = default(string))
         {
             ProductType = productType;
@@ -46,14 +47,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the product to be transferred. Possible values
-        /// include: 'AzureSubscription', 'AzureReservation'
+        /// Gets or sets type of the product that is transferred. Possible
+        /// values include: 'AzureSubscription', 'AzureReservation'
         /// </summary>
         [JsonProperty(PropertyName = "productType")]
         public string ProductType { get; set; }
 
         /// <summary>
-        /// Gets or sets id of product to be transferred.
+        /// Gets or sets the ID of the product that is transferred.
         /// </summary>
         [JsonProperty(PropertyName = "productId")]
         public string ProductId { get; set; }

@@ -29,17 +29,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the AddressDetails class.
         /// </summary>
-        /// <param name="firstName">First Name.</param>
-        /// <param name="lastName">Last Name.</param>
-        /// <param name="companyName">Company Name.</param>
-        /// <param name="addressLine1">Address Line1.</param>
-        /// <param name="addressLine2">Address Line2.</param>
-        /// <param name="addressLine3">Address Line3.</param>
-        /// <param name="city">Address City.</param>
-        /// <param name="region">Address Region.</param>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="companyName">Company name.</param>
+        /// <param name="addressLine1">Address line 1.</param>
+        /// <param name="addressLine2">Address line 2.</param>
+        /// <param name="addressLine3">Address line 3.</param>
+        /// <param name="city">Address city.</param>
+        /// <param name="region">Address region.</param>
         /// <param name="country">Country code uses ISO2, 2-digit
         /// format.</param>
-        /// <param name="postalCode">Address Postal Code.</param>
+        /// <param name="postalCode">Postal code.</param>
         public AddressDetails(string firstName = default(string), string lastName = default(string), string companyName = default(string), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string city = default(string), string region = default(string), string country = default(string), string postalCode = default(string))
         {
             FirstName = firstName;
@@ -61,49 +61,49 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets first Name.
+        /// Gets or sets first name.
         /// </summary>
         [JsonProperty(PropertyName = "firstName")]
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Gets or sets last Name.
+        /// Gets or sets last name.
         /// </summary>
         [JsonProperty(PropertyName = "lastName")]
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets company Name.
+        /// Gets or sets company name.
         /// </summary>
         [JsonProperty(PropertyName = "companyName")]
         public string CompanyName { get; set; }
 
         /// <summary>
-        /// Gets or sets address Line1.
+        /// Gets or sets address line 1.
         /// </summary>
         [JsonProperty(PropertyName = "addressLine1")]
         public string AddressLine1 { get; set; }
 
         /// <summary>
-        /// Gets or sets address Line2.
+        /// Gets or sets address line 2.
         /// </summary>
         [JsonProperty(PropertyName = "addressLine2")]
         public string AddressLine2 { get; set; }
 
         /// <summary>
-        /// Gets or sets address Line3.
+        /// Gets or sets address line 3.
         /// </summary>
         [JsonProperty(PropertyName = "addressLine3")]
         public string AddressLine3 { get; set; }
 
         /// <summary>
-        /// Gets or sets address City.
+        /// Gets or sets address city.
         /// </summary>
         [JsonProperty(PropertyName = "city")]
         public string City { get; set; }
 
         /// <summary>
-        /// Gets or sets address Region.
+        /// Gets or sets address region.
         /// </summary>
         [JsonProperty(PropertyName = "region")]
         public string Region { get; set; }
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Country { get; set; }
 
         /// <summary>
-        /// Gets or sets address Postal Code.
+        /// Gets or sets postal code.
         /// </summary>
         [JsonProperty(PropertyName = "postalCode")]
         public string PostalCode { get; set; }

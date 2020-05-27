@@ -22,17 +22,18 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingSubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Lists billing subscription by customer id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the subscriptions for a customer. The operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             public static IPage<BillingSubscription> ListByCustomer(this IBillingSubscriptionsOperations operations, string billingAccountName, string customerName)
             {
@@ -40,17 +41,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscription by customer id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the subscriptions for a customer. The operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,20 +66,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single billing subscription by id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Gets a subscription by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             public static BillingSubscription GetByCustomer(this IBillingSubscriptionsOperations operations, string billingAccountName, string customerName, string billingSubscriptionName)
             {
@@ -85,20 +88,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single billing subscription by id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Gets a subscription by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -112,14 +116,16 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing account name.
+            /// Lists the subscriptions for a billing account. The operation is supported
+            /// for billing accounts with agreement type Microsoft Customer Agreement or
+            /// Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             public static IPage<BillingSubscription> ListByBillingAccount(this IBillingSubscriptionsOperations operations, string billingAccountName)
             {
@@ -127,14 +133,16 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing account name.
+            /// Lists the subscriptions for a billing account. The operation is supported
+            /// for billing accounts with agreement type Microsoft Customer Agreement or
+            /// Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -148,17 +156,19 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing profile name.
+            /// Lists the subscriptions that are billed to a billing profile. The operation
+            /// is supported for billing accounts with agreement type Microsoft Customer
+            /// Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static BillingSubscriptionsListResult ListByBillingProfile(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -166,17 +176,19 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing profile name.
+            /// Lists the subscriptions that are billed to a billing profile. The operation
+            /// is supported for billing accounts with agreement type Microsoft Customer
+            /// Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -190,20 +202,22 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscription by invoice section name.
+            /// Lists the subscriptions that are billed to an invoice section. The
+            /// operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             public static BillingSubscriptionsListResult ListByInvoiceSection(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
@@ -211,20 +225,22 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscription by invoice section name.
+            /// Lists the subscriptions that are billed to an invoice section. The
+            /// operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -238,23 +254,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single billing subscription by name.
+            /// Gets a subscription by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             public static BillingSubscription Get(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName)
             {
@@ -262,23 +279,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single billing subscription by name.
+            /// Gets a subscription by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -292,26 +310,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Transfers the subscription from one invoice section to another within a
-            /// billing account.
+            /// Moves a subscription's charges to a new invoice section. The new invoice
+            /// section must belong to the same billing profile as the existing invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             public static TransferBillingSubscriptionResult Transfer(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters)
             {
@@ -319,26 +340,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Transfers the subscription from one invoice section to another within a
-            /// billing account.
+            /// Moves a subscription's charges to a new invoice section. The new invoice
+            /// section must belong to the same billing profile as the existing invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -352,25 +376,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Validates the transfer of billing subscriptions across invoice sections.
+            /// Validates if a subscription's charges can be moved to a new invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the validate transfer eligibility
+            /// operation.
             /// </param>
             public static ValidateSubscriptionTransferEligibilityResult ValidateTransfer(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters)
             {
@@ -378,25 +406,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Validates the transfer of billing subscriptions across invoice sections.
+            /// Validates if a subscription's charges can be moved to a new invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the validate transfer eligibility
+            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -410,26 +442,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Transfers the subscription from one invoice section to another within a
-            /// billing account.
+            /// Moves a subscription's charges to a new invoice section. The new invoice
+            /// section must belong to the same billing profile as the existing invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             public static TransferBillingSubscriptionResult BeginTransfer(this IBillingSubscriptionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters)
             {
@@ -437,26 +472,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Transfers the subscription from one invoice section to another within a
-            /// billing account.
+            /// Moves a subscription's charges to a new invoice section. The new invoice
+            /// section must belong to the same billing profile as the existing invoice
+            /// section. This operation is supported only for products that are purchased
+            /// with a recurring charge and for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters supplied to the Transfer Billing Subscription operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -470,8 +508,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscription by customer id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the subscriptions for a customer. The operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -485,8 +524,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscription by customer id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the subscriptions for a customer. The operation is supported only for
+            /// billing accounts with agreement type Microsoft Partner Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -506,7 +546,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing account name.
+            /// Lists the subscriptions for a billing account. The operation is supported
+            /// for billing accounts with agreement type Microsoft Customer Agreement or
+            /// Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -521,7 +563,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists billing subscriptions by billing account name.
+            /// Lists the subscriptions for a billing account. The operation is supported
+            /// for billing accounts with agreement type Microsoft Customer Agreement or
+            /// Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>

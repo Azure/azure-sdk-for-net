@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get billing property by subscription Id.
+        /// Get the billing properties for a subscription. This operation is not
+        /// supported for billing accounts with agreement type Enterprise Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='customHeaders'>

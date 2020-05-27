@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for Status.
+    /// Defines values for RebillDocumentType.
     /// </summary>
-    public static class Status
+    public static class RebillDocumentType
     {
-        public const string Approved = "Approved";
-        public const string Rejected = "Rejected";
+        public const string Credit = "Credit";
+        public const string Rebill = "Rebill";
+        public const string Original = "Original";
     }
 }

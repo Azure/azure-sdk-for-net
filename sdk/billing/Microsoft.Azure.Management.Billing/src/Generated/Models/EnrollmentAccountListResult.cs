@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing enrollment accounts.
+    /// The list of enrollment accounts.
     /// </summary>
     public partial class EnrollmentAccountListResult
     {

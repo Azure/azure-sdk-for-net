@@ -24,13 +24,15 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IInvoiceSectionsOperations
     {
         /// <summary>
-        /// Lists all invoice sections for a user which he has access to.
+        /// Lists the invoice sections that a user has access to. The operation
+        /// is supported only for billing accounts with agreement type
+        /// Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,16 +51,18 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<InvoiceSectionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the InvoiceSection by id.
+        /// Gets an invoice section by its ID. The operation is supported only
+        /// for billing accounts with agreement type Microsoft Customer
+        /// Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,16 +81,85 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<InvoiceSection>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Elevates the caller's access to match their billing profile access.
+        /// Creates an invoice section. The operation is supported only for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the create invoice section
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<InvoiceSection,InvoiceSectionsCreateHeaders>> CreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSectionCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates an invoice section. Currently, only displayName can be
+        /// updated. The operation is supported only for billing accounts with
+        /// agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// The ID that uniquely identifies a billing profile.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The ID that uniquely identifies an invoice section.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the update invoice section
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<InvoiceSection,InvoiceSectionsUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gives the caller permissions on an invoice section based on their
+        /// billing profile access.  The operation is supported only for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// The ID that uniquely identifies a billing profile.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,5 +174,72 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> ElevateToBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates an invoice section. The operation is supported only for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// The ID that uniquely identifies a billing profile.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The ID that uniquely identifies an invoice section.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the create invoice section
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<InvoiceSection,InvoiceSectionsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSectionCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates an invoice section. Currently, only displayName can be
+        /// updated. The operation is supported only for billing accounts with
+        /// agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// The ID that uniquely identifies a billing profile.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The ID that uniquely identifies an invoice section.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the update invoice section
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<InvoiceSection,InvoiceSectionsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, InvoiceSection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

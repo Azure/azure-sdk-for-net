@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A payment method resource.
+    /// A payment method.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PaymentMethod : Resource
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="paymentMethodType">Payment method type. Possible
-        /// values include: 'Credits', 'ChequeWire'</param>
+        /// <param name="paymentMethodType">The type of payment method.
+        /// Possible values include: 'Credits', 'ChequeWire'</param>
         /// <param name="details">Details about the payment method.</param>
         /// <param name="expiration">Expiration month and year.</param>
         /// <param name="currency">The currency associated with the payment
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets payment method type. Possible values include:
+        /// Gets or sets the type of payment method. Possible values include:
         /// 'Credits', 'ChequeWire'
         /// </summary>
         [JsonProperty(PropertyName = "properties.paymentMethodType")]

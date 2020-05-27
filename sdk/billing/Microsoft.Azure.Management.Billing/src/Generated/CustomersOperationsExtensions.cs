@@ -22,17 +22,18 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class CustomersOperationsExtensions
     {
             /// <summary>
-            /// Lists customers by billing profile which the current user can work with
-            /// on-behalf of a partner.
+            /// Lists the customers that are billed to a billing profile. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter the list of customers.
@@ -49,17 +50,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers by billing profile which the current user can work with
-            /// on-behalf of a partner.
+            /// Lists the customers that are billed to a billing profile. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter the list of customers.
@@ -82,14 +84,15 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers which the current user can work with on-behalf of a
-            /// partner.
+            /// Lists the customers that are billed to a billing account. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter the list of customers.
@@ -106,14 +109,15 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers which the current user can work with on-behalf of a
-            /// partner.
+            /// Lists the customers that are billed to a billing account. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter the list of customers.
@@ -136,19 +140,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets a customer by its id.
+            /// Gets a customer by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Partner Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand enabledAzurePlans, resellers.
+            /// May be used to expand enabledAzurePlans and resellers
             /// </param>
             public static Customer Get(this ICustomersOperations operations, string billingAccountName, string customerName, string expand = default(string))
             {
@@ -156,19 +161,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets a customer by its id.
+            /// Gets a customer by its ID. The operation is supported only for billing
+            /// accounts with agreement type Microsoft Partner Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand enabledAzurePlans, resellers.
+            /// May be used to expand enabledAzurePlans and resellers
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -182,8 +188,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers by billing profile which the current user can work with
-            /// on-behalf of a partner.
+            /// Lists the customers that are billed to a billing profile. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,8 +204,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers by billing profile which the current user can work with
-            /// on-behalf of a partner.
+            /// Lists the customers that are billed to a billing profile. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,8 +226,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers which the current user can work with on-behalf of a
-            /// partner.
+            /// Lists the customers that are billed to a billing account. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,8 +242,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists customers which the current user can work with on-behalf of a
-            /// partner.
+            /// Lists the customers that are billed to a billing account. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Partner
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="status">The status of validation</param>
         /// <param name="productId">The product id for which this result
         /// applies.</param>
-        /// <param name="results">Array of validation results.</param>
+        /// <param name="results">The array of validation results.</param>
         public ValidateTransferResponse(string status = default(string), string productId = default(string), IList<ValidationResultProperties> results = default(IList<ValidationResultProperties>))
         {
             Status = status;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string ProductId { get; private set; }
 
         /// <summary>
-        /// Gets or sets array of validation results.
+        /// Gets or sets the array of validation results.
         /// </summary>
         [JsonProperty(PropertyName = "properties.results")]
         public IList<ValidationResultProperties> Results { get; set; }

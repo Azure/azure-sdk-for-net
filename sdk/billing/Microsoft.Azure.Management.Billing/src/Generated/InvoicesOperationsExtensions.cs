@@ -22,19 +22,24 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class InvoicesOperationsExtensions
     {
             /// <summary>
-            /// List of invoices for a billing account.
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             public static InvoiceListResult ListByBillingAccount(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate)
             {
@@ -42,19 +47,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// List of invoices for a billing account.
+            /// Lists the invoices for a billing account for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -68,22 +78,70 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// List of invoices for a billing profile.
+            /// Gets an invoice by billing account name and ID. The operation is supported
+            /// for billing accounts with agreement type Microsoft Partner Agreement,
+            /// Microsoft Customer Agreement or Enterprise Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            public static Invoice GetBillingAccountInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName)
+            {
+                return operations.GetBillingAccountInvoiceAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an invoice by billing account name and ID. The operation is supported
+            /// for billing accounts with agreement type Microsoft Partner Agreement,
+            /// Microsoft Customer Agreement or Enterprise Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Invoice> GetBillingAccountInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBillingAccountInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             public static InvoiceListResult ListByBillingProfile(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate)
             {
@@ -91,22 +149,26 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// List of invoices for a billing profile.
+            /// Lists the invoices for a billing profile for a given start date and end
+            /// date. The operation is supported for billing accounts with agreement type
+            /// Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Invoice period start date.
+            /// The start date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// Invoice period end date.
+            /// The end date to fetch the invoices. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -120,19 +182,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the invoice by name.
+            /// Gets an invoice by ID. The operation is supported for billing accounts with
+            /// agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             public static Invoice Get(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
@@ -140,19 +203,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the invoice by name.
+            /// Gets an invoice by ID. The operation is supported for billing accounts with
+            /// agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -166,17 +230,17 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='periodStartDate'>
             /// Invoice period start date.
@@ -190,17 +254,17 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='periodStartDate'>
             /// Invoice period start date.
@@ -220,20 +284,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the invoice by name.
+            /// Gets an invoice by ID.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             public static Invoice GetById(this IInvoicesOperations operations, string billingAccountName, string billingSubscriptionName, string invoiceName)
             {
@@ -241,20 +305,20 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the invoice by name.
+            /// Gets an invoice by ID.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingSubscriptionName'>
-            /// Billing Subscription Id.
+            /// The ID that uniquely identifies a subscription.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -268,7 +332,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -283,7 +347,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists invoices by billing subscriptions name.
+            /// Lists the invoices for a subscription.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>

@@ -51,13 +51,15 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -237,19 +239,21 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on an invoice section. The operation is
+        /// supported only for billing accounts with agreement type Microsoft Customer
+        /// Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -441,16 +445,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Gets the role definition for a role
+        /// Gets the definition for a role on a billing profile. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='billingRoleDefinitionName'>
-        /// role definition id.
+        /// The ID that uniquely identifies a role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -636,10 +642,12 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists the role definition for a billing account
+        /// Lists the role definitions for a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -813,16 +821,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists the role definition for an invoice Section
+        /// Lists the role definitions for an invoice section. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1008,13 +1018,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists the role definition for a Billing Profile
+        /// Lists the role definitions for a billing profile. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

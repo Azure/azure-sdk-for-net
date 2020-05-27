@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A billing account resource.
+    /// A billing account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BillingAccount : Resource
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">The billing account name.</param>
-        /// <param name="address">The address associated with billing
+        /// <param name="address">The address associated with the billing
         /// account.</param>
         /// <param name="agreementType">The type of agreement. Possible values
         /// include: 'MicrosoftCustomerAgreement', 'EnterpriseAgreement',
@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// 'MicrosoftPartnerAgreement'</param>
         /// <param name="customerType">The type of customer. Possible values
         /// include: 'Enterprise', 'Individual', 'Partner'</param>
-        /// <param name="billingProfiles">The billing profiles associated to
+        /// <param name="accountType">The type of customer. Possible values
+        /// include: 'Enterprise', 'Individual', 'Partner'</param>
+        /// <param name="billingProfiles">The billing profiles associated with
         /// the billing account. By default this is not populated, unless it's
         /// specified in $expand.</param>
         /// <param name="enrollmentDetails">The details about the associated
@@ -57,13 +59,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="enrollmentAccounts">The accounts associated to the
         /// enrollment.</param>
         /// <param name="organizationId">Organization id.</param>
-        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails address = default(AddressDetails), string agreementType = default(string), string customerType = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), string organizationId = default(string))
+        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails address = default(AddressDetails), string agreementType = default(string), string customerType = default(string), string accountType = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), string organizationId = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Address = address;
             AgreementType = agreementType;
             CustomerType = customerType;
+            AccountType = accountType;
             BillingProfiles = billingProfiles;
             EnrollmentDetails = enrollmentDetails;
             Departments = departments;
@@ -84,7 +87,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the address associated with billing account.
+        /// Gets or sets the address associated with the billing account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.address")]
         public AddressDetails Address { get; set; }
@@ -105,7 +108,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string CustomerType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the billing profiles associated to the billing
+        /// Gets the type of customer. Possible values include: 'Enterprise',
+        /// 'Individual', 'Partner'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountType")]
+        public string AccountType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the billing profiles associated with the billing
         /// account. By default this is not populated, unless it's specified in
         /// $expand.
         /// </summary>

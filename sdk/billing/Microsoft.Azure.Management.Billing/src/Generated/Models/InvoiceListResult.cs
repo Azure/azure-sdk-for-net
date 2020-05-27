@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing invoices.
+    /// The list of invoices.
     /// </summary>
     public partial class InvoiceListResult
     {

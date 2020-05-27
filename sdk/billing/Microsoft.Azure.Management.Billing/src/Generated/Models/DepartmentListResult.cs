@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing departments.
+    /// The list of departments.
     /// </summary>
     public partial class DepartmentListResult
     {

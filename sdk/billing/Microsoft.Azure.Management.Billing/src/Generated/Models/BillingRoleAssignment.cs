@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// a role assignment
+    /// The role assignment
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BillingRoleAssignment : Resource
@@ -35,18 +35,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="createdOn">the date the role assignment is
-        /// created</param>
-        /// <param name="createdByPrincipalTenantId">the creator's tenant
-        /// Id</param>
-        /// <param name="createdByPrincipalId">the creator's principal
-        /// Id</param>
-        /// <param name="billingRoleAssignmentName">the name of the role
-        /// assignment</param>
-        /// <param name="principalId">The user's principal id that the role
-        /// gets assigned to</param>
-        /// <param name="roleDefinitionName">The role definition id</param>
-        /// <param name="scope">The scope the role get assigned to</param>
+        /// <param name="createdOn">The date the role assignment was
+        /// created.</param>
+        /// <param name="createdByPrincipalTenantId">The tenant Id of the user
+        /// who created the role assignment.</param>
+        /// <param name="createdByPrincipalId">The principal Id of the user who
+        /// created the role assignment.</param>
+        /// <param name="billingRoleAssignmentName">The name of the role
+        /// assignment.</param>
+        /// <param name="principalId">The principal id of the user to whom the
+        /// role was assigned.</param>
+        /// <param name="roleDefinitionName">The ID of the role
+        /// definition.</param>
+        /// <param name="scope">The scope at which the role was
+        /// assigned.</param>
         public BillingRoleAssignment(string id = default(string), string name = default(string), string type = default(string), string createdOn = default(string), string createdByPrincipalTenantId = default(string), string createdByPrincipalId = default(string), string billingRoleAssignmentName = default(string), string principalId = default(string), string roleDefinitionName = default(string), string scope = default(string))
             : base(id, name, type)
         {
@@ -66,43 +68,43 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the date the role assignment is created
+        /// Gets the date the role assignment was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdOn")]
         public string CreatedOn { get; private set; }
 
         /// <summary>
-        /// Gets the creator's tenant Id
+        /// Gets the tenant Id of the user who created the role assignment.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdByPrincipalTenantId")]
         public string CreatedByPrincipalTenantId { get; private set; }
 
         /// <summary>
-        /// Gets the creator's principal Id
+        /// Gets the principal Id of the user who created the role assignment.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdByPrincipalId")]
         public string CreatedByPrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the name of the role assignment
+        /// Gets the name of the role assignment.
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
         public string BillingRoleAssignmentName { get; private set; }
 
         /// <summary>
-        /// Gets the user's principal id that the role gets assigned to
+        /// Gets the principal id of the user to whom the role was assigned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the role definition id
+        /// Gets the ID of the role definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.roleDefinitionName")]
         public string RoleDefinitionName { get; private set; }
 
         /// <summary>
-        /// Gets the scope the role get assigned to
+        /// Gets the scope at which the role was assigned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
         public string Scope { get; private set; }

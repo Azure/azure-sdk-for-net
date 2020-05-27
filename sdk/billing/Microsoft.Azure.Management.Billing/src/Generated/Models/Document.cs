@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.Billing.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The properties of the invoice download.
+    /// The properties of a document.
     /// </summary>
     public partial class Document
     {
@@ -29,13 +31,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the Document class.
         /// </summary>
-        /// <param name="kind">Document type. Possible values include:
-        /// 'Invoice', 'VoidNote', 'Receipt', 'CreditNote'</param>
+        /// <param name="kind">The type of the document. Possible values
+        /// include: 'Invoice', 'VoidNote', 'TaxReceipt', 'CreditNote'</param>
         /// <param name="url">Document URL.</param>
-        public Document(string kind = default(string), string url = default(string))
+        /// <param name="documentNumbers">Document numbers for an Enterprise
+        /// Agreement invoice.</param>
+        public Document(string kind = default(string), string url = default(string), IList<string> documentNumbers = default(IList<string>))
         {
             Kind = kind;
             Url = url;
+            DocumentNumbers = documentNumbers;
             CustomInit();
         }
 
@@ -45,8 +50,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets document type. Possible values include: 'Invoice', 'VoidNote',
-        /// 'Receipt', 'CreditNote'
+        /// Gets the type of the document. Possible values include: 'Invoice',
+        /// 'VoidNote', 'TaxReceipt', 'CreditNote'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; private set; }
@@ -56,6 +61,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; private set; }
+
+        /// <summary>
+        /// Gets document numbers for an Enterprise Agreement invoice.
+        /// </summary>
+        [JsonProperty(PropertyName = "documentNumbers")]
+        public IList<string> DocumentNumbers { get; private set; }
 
     }
 }
