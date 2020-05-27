@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="autoRenew">Indicates whether auto renewal is turned on
+        /// or off for a product. Possible values include: 'Off', 'On'</param>
         /// <param name="displayName">The display name of the product.</param>
         /// <param name="purchaseDate">The date when the product was
         /// purchased.</param>
@@ -75,9 +77,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// the product was purchased. The field is applicable only for
         /// Microsoft Partner Agreement billing account.</param>
         /// <param name="reseller">Reseller for this product.</param>
-        public Product(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string tenantId = default(string), string availabilityId = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), Reseller reseller = default(Reseller))
+        public Product(string id = default(string), string name = default(string), string type = default(string), string autoRenew = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string tenantId = default(string), string availabilityId = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), Reseller reseller = default(Reseller))
             : base(id, name, type)
         {
+            AutoRenew = autoRenew;
             DisplayName = displayName;
             PurchaseDate = purchaseDate;
             ProductTypeId = productTypeId;
@@ -106,6 +109,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets indicates whether auto renewal is turned on or off for
+        /// a product. Possible values include: 'Off', 'On'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoRenew")]
+        public string AutoRenew { get; set; }
 
         /// <summary>
         /// Gets the display name of the product.
