@@ -170,6 +170,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IWorkspacePurgeOperations WorkspacePurge { get; private set; }
 
         /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        public virtual ITablesOperations Tables { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the OperationalInsightsManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -429,6 +434,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             Gateways = new GatewaysOperations(this);
             Schema = new SchemaOperations(this);
             WorkspacePurge = new WorkspacePurgeOperations(this);
+            Tables = new TablesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2020-03-01-preview";
             AcceptLanguage = "en-US";
