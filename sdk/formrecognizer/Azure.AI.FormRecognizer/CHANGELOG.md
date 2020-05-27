@@ -10,6 +10,7 @@
 - Property `LastModified` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `CompletedOn`.
 - Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
 - Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
+- Removed `Type` suffix from all `FieldValueType` values.
 
 ### Other breaking changes
 
