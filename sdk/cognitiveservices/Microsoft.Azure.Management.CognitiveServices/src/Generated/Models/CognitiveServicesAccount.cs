@@ -143,6 +143,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
             if (Sku != null)
             {
                 Sku.Validate();

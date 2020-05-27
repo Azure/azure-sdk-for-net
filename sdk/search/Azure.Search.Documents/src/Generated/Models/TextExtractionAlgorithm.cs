@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A value indicating which algorithm to use. Default is printed. </summary>
     public enum TextExtractionAlgorithm

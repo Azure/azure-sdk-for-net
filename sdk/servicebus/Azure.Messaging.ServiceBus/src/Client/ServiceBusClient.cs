@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace { get; }
+        public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been disposed.
@@ -53,6 +53,12 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusClientOptions Options { get; set; }
 
         /// <summary>
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
+        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
         ///   including ensuring that the connection itself has been closed.
         /// </summary>
@@ -61,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusConnection), Identifier);
+            Logger.ClientDisposeStart(typeof(ServiceBusClient), Identifier);
             IsDisposed = true;
             try
             {
@@ -69,12 +75,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusConnection), Identifier, ex);
+                Logger.ClientDisposeException(typeof(ServiceBusClient), Identifier, ex);
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusConnection), Identifier);
+                Logger.ClientDisposeComplete(typeof(ServiceBusClient), Identifier);
             }
         }
 
@@ -124,8 +130,10 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
+            Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Options = Connection.Options;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
@@ -153,12 +161,14 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
                 options);
             Options = Connection.Options;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>

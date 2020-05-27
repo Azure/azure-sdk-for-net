@@ -127,3 +127,28 @@ directive:
 
     return $;
 ```
+
+### Move service models to Azure.Search.Documents.Indexes.Models
+
+Models in searchservice.json should be moved to Azure.Search.Documents.Indexes.Models.
+
+```yaml
+directive:
+  from: searchservice.json
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Search.Documents.Indexes.Models"
+```
+
+### Relocate x-ms-client-request-id parameter
+
+Remove the `x-ms-client-request-id` parameter from all methods and put it on the client.
+This will be later removed when https://github.com/Azure/autorest.csharp/issues/782 is resolved.
+Several attempts at just removing the parameter have caused downstream issues, so relocating it for now.
+
+```yaml
+directive:
+  from: swagger-document
+  where: $.parameters.ClientRequestIdParameter
+  transform: $["x-ms-parameter-location"] = "client";
+```

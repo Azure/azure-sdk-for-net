@@ -36,7 +36,7 @@ namespace Azure.Identity
         public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
 
         internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, pipeline, pipeline.CreateMsalPublicClient(ClientId), fileSystem, vscAdapter)
+            : this(tenantId, pipeline, default, fileSystem, vscAdapter)
         {
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Identity
         {
             _tenantId = tenantId ?? "common";
             _pipeline = pipeline;
-            _client = client;
+            _client = client ?? pipeline.CreateMsalPublicClient(ClientId);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
@@ -76,14 +76,13 @@ namespace Azure.Identity
                 var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
-            catch (OperationCanceledException e)
+            catch (MsalUiRequiredException e)
             {
-                scope.Failed(e);
-                throw;
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
             }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 

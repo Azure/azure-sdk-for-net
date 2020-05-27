@@ -13,11 +13,11 @@ namespace Azure.Data.Tables.Models
     public partial class LoggingSettings
     {
         /// <summary> Initializes a new instance of LoggingSettings. </summary>
-        /// <param name="version"> The version of Storage Analytics to configure. </param>
+        /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
         /// <param name="read"> Indicates whether all read requests should be logged. </param>
         /// <param name="write"> Indicates whether all write requests should be logged. </param>
-        /// <param name="retentionPolicy"> the retention policy. </param>
+        /// <param name="retentionPolicy"> The retention policy. </param>
         public LoggingSettings(string version, bool delete, bool read, bool write, RetentionPolicy retentionPolicy)
         {
             if (version == null)
@@ -36,7 +36,7 @@ namespace Azure.Data.Tables.Models
             RetentionPolicy = retentionPolicy;
         }
 
-        /// <summary> The version of Storage Analytics to configure. </summary>
+        /// <summary> The version of Analytics to configure. </summary>
         public string Version { get; set; }
         /// <summary> Indicates whether all delete requests should be logged. </summary>
         public bool Delete { get; set; }
@@ -44,7 +44,7 @@ namespace Azure.Data.Tables.Models
         public bool Read { get; set; }
         /// <summary> Indicates whether all write requests should be logged. </summary>
         public bool Write { get; set; }
-        /// <summary> the retention policy. </summary>
+        /// <summary> The retention policy. </summary>
         public RetentionPolicy RetentionPolicy { get; set; }
     }
 }

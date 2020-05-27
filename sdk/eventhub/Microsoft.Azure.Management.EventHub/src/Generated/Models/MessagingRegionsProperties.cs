@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Properties of Messaging Region
+    /// </summary>
     public partial class MessagingRegionsProperties
     {
         /// <summary>

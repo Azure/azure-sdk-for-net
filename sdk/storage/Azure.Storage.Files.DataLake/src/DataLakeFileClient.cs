@@ -2746,6 +2746,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -2779,6 +2780,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             DataLakeFileUploadOptions options,
@@ -2861,6 +2863,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task<Response<PathInfo>> UploadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2894,6 +2897,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             bool overwrite = false,
@@ -2927,6 +2931,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             DataLakeFileUploadOptions options,
@@ -2974,6 +2979,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             PathHttpHeaders httpHeaders = default,
@@ -3016,6 +3022,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Upload(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3049,6 +3056,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             bool overwrite = false,
@@ -3082,6 +3090,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             DataLakeFileUploadOptions options,
@@ -3134,6 +3143,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             PathHttpHeaders httpHeaders = default,
@@ -3169,6 +3179,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> UploadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3202,6 +3213,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             bool overwrite = false,
@@ -3523,6 +3535,10 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken).ConfigureAwait(false),
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -3556,6 +3572,11 @@ namespace Azure.Storage.Files.DataLake
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
                 {
                     (var offset, var size) = partitions.LastOrDefault();
+
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     return await client.FlushInternal(
                         offset + size,
                         retainUncommittedData: default,

@@ -28,15 +28,15 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
 
             // List the models currently stored in the account.
-            AsyncPageable<CustomFormModelInfo> models = client.GetModelInfosAsync();
+            AsyncPageable<CustomFormModelInfo> models = client.GetCustomModelsAsync();
 
             await foreach (CustomFormModelInfo modelInfo in models)
             {
                 Console.WriteLine($"Custom Model Info:");
                 Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
                 Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-                Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+                Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+                Console.WriteLine($"    Completed on: : {modelInfo.CompletedOn}");
             }
 
             // Create a new model to store in the account

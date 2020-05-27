@@ -34,15 +34,15 @@ Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
 Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
-Pageable<CustomFormModelInfo> models = client.GetModelInfos();
+Pageable<CustomFormModelInfo> models = client.GetCustomModels();
 
 foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-    Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+    Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+    Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
 }
 
 // Create a new model to store in the account

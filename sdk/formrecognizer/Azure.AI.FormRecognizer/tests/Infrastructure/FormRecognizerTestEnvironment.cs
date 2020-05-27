@@ -27,6 +27,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable for the Blob Container SAS Url use for storing documents used for live tests.</summary>
         internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
+        /// <summary>The name of the environment variable for the target resource identifier use for copying custom models live tests.</summary>
+        internal const string TargetResourceIdEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_ID";
+
+        /// <summary>The name of the environment variable for the target resource region use for copying custom models live tests.</summary>
+        internal const string TargetResourceRegionEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_REGION";
+
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
 
@@ -42,12 +48,17 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
         private const string FormFilename = "Form_1.jpg";
 
+        /// <summary>The name of the PDF file which contains the multipage form to be used for tests.</summary>
+        private const string MultipageFormFilename = "multipage_invoice_noblank.pdf";
+
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
+        public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
+        public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
 
         /// <summary>
         /// The name of the directory where the running assembly is located.
@@ -84,6 +95,18 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <value>The URI string to the JPG file.</value>
         public static string JpgReceiptUri => CreateUri(JpgReceiptFilename);
+
+        /// <summary>
+        /// The relative path to the PDF file which contains the multipage form to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the PDF file.</value>
+        public static string MultipageFormPath => CreatePath(MultipageFormFilename);
+
+        /// <summary>
+        /// The URI string to the PDF file which contains the multipage form to be used for tests.
+        /// </summary>
+        /// <value>The URI string to the PDF file.</value>
+        public static string MultipageFormUri => CreateUri(MultipageFormFilename);
 
         /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by SplitSkill. </summary>
     public readonly partial struct SplitSkillLanguage : IEquatable<SplitSkillLanguage>

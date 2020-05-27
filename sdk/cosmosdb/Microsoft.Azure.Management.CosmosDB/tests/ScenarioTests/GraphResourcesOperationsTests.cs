@@ -57,10 +57,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters
                 {
                     Resource = new GremlinDatabaseResource {Id = databaseName},
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 GremlinDatabaseGetResults gremlinDatabaseGetResults = cosmosDBManagementClient.GremlinResources.CreateUpdateGremlinDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -80,7 +77,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new GremlinDatabaseResource { Id = databaseName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 
@@ -137,7 +134,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 

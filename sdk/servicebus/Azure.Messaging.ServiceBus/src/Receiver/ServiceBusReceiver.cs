@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -85,6 +86,12 @@ namespace Azure.Messaging.ServiceBus
         internal readonly TransportReceiver InnerReceiver;
 
         /// <summary>
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
@@ -102,27 +109,42 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiverOptions options,
             string sessionId = default)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
-            Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
-            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
-            connection.ThrowIfClosed();
-
-            options = options?.Clone() ?? new ServiceBusReceiverOptions();
-            Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
-            _connection = connection;
-            _retryPolicy = connection.RetryOptions.ToRetryPolicy();
-            ReceiveMode = options.ReceiveMode;
-            PrefetchCount = options.PrefetchCount;
-            EntityPath = entityPath;
-            IsSessionReceiver = isSessionEntity;
-            InnerReceiver = _connection.CreateTransportReceiver(
-                entityPath: EntityPath,
-                retryPolicy: _retryPolicy,
-                receiveMode: ReceiveMode,
-                prefetchCount: (uint)PrefetchCount,
-                identifier: Identifier,
-                sessionId: sessionId,
-                isSessionReceiver: IsSessionReceiver);
+            Type type = GetType();
+            Logger.ClientCreateStart(type, connection?.FullyQualifiedNamespace, entityPath);
+            try
+            {
+                Argument.AssertNotNull(connection, nameof(connection));
+                Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
+                Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
+                connection.ThrowIfClosed();
+                options = options?.Clone() ?? new ServiceBusReceiverOptions();
+                Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
+                _connection = connection;
+                _retryPolicy = connection.RetryOptions.ToRetryPolicy();
+                ReceiveMode = options.ReceiveMode;
+                PrefetchCount = options.PrefetchCount;
+                EntityPath = entityPath;
+                IsSessionReceiver = isSessionEntity;
+                InnerReceiver = _connection.CreateTransportReceiver(
+                    entityPath: EntityPath,
+                    retryPolicy: _retryPolicy,
+                    receiveMode: ReceiveMode,
+                    prefetchCount: (uint)PrefetchCount,
+                    identifier: Identifier,
+                    sessionId: sessionId,
+                    isSessionReceiver: IsSessionReceiver);
+                if (!isSessionEntity)
+                {
+                    // don't log client completion for session receiver here as it is not complete until
+                    // the link is opened.
+                    Logger.ClientCreateComplete(type, Identifier);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ClientCreateException(type, connection?.FullyQualifiedNamespace, entityPath, ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -149,8 +171,13 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
+            if (maxWaitTime.HasValue)
+            {
+                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ReceiveMessageStart(Identifier, maxMessages);
+            Logger.ReceiveMessageStart(Identifier, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;
 
             try
@@ -162,12 +189,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.ReceiveMessageException(Identifier, exception);
+                Logger.ReceiveMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ReceiveMessageComplete(Identifier, maxMessages);
+            Logger.ReceiveMessageComplete(Identifier, messages.Count);
             return messages;
         }
 
@@ -303,8 +330,8 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
-            IList<ServiceBusReceivedMessage> messages = null;
+            Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
+            IList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
 
             try
             {
@@ -316,12 +343,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.PeekMessageException(Identifier, exception);
+                Logger.PeekMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.PeekMessageComplete(Identifier, maxMessages);
+            Logger.PeekMessageComplete(Identifier, messages.Count);
             return messages;
         }
 
@@ -421,7 +448,10 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var lockTokenList = lockTokens.ToList();
-            ServiceBusEventSource.Log.CompleteMessageStart(Identifier, lockTokenList.Count, lockTokenList);
+            Logger.CompleteMessageStart(
+                Identifier,
+                lockTokenList.Count,
+                StringUtility.GetFormattedLockTokens(lockTokenList));
 
             try
             {
@@ -431,12 +461,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.CompleteMessageException(Identifier, exception);
+                Logger.CompleteMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.CompleteMessageComplete(Identifier);
+            Logger.CompleteMessageComplete(Identifier);
         }
 
         /// <summary>
@@ -490,7 +520,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.AbandonMessageStart(Identifier, 1, lockToken);
+            Logger.AbandonMessageStart(Identifier, 1, lockToken);
 
             try
             {
@@ -501,12 +531,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AbandonMessageException(Identifier, exception);
+                Logger.AbandonMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.AbandonMessageComplete(Identifier);
+            Logger.AbandonMessageComplete(Identifier);
         }
 
         /// <summary>
@@ -645,7 +675,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
-            ServiceBusEventSource.Log.DeadLetterMessageStart(Identifier, 1, lockToken);
+            Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
 
             try
             {
@@ -658,12 +688,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.DeadLetterMessageException(Identifier, exception);
+                Logger.DeadLetterMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.DeadLetterMessageComplete(Identifier);
+            Logger.DeadLetterMessageComplete(Identifier);
         }
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -719,7 +749,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.DeferMessageStart(Identifier, 1, lockToken);
+            Logger.DeferMessageStart(Identifier, 1, lockToken);
 
             try
             {
@@ -730,12 +760,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.DeferMessageException(Identifier, ex);
+                Logger.DeferMessageException(Identifier, ex.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.DeferMessageComplete(Identifier);
+            Logger.DeferMessageComplete(Identifier);
         }
 
         /// <summary>
@@ -802,7 +832,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
-            ServiceBusEventSource.Log.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList.Count, sequenceNumbersList);
+            Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList.Count, sequenceNumbersList);
 
             IList<ServiceBusReceivedMessage> deferredMessages = null;
             try
@@ -813,12 +843,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.ReceiveDeferredMessageException(Identifier, exception);
+                Logger.ReceiveDeferredMessageException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ReceiveDeferredMessageStop(Identifier, sequenceNumbersList.Count);
+            Logger.ReceiveDeferredMessageComplete(Identifier, sequenceNumbersList.Count);
             return deferredMessages;
         }
 
@@ -868,7 +898,7 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewMessageLockStart(Identifier, 1, lockToken);
+            Logger.RenewMessageLockStart(Identifier, 1, lockToken);
             DateTimeOffset lockedUntil;
             try
             {
@@ -878,12 +908,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RenewMessageLockException(Identifier, exception);
+                Logger.RenewMessageLockException(Identifier, exception.ToString());
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewMessageLockComplete(Identifier);
+            Logger.RenewMessageLockComplete(Identifier);
             return lockedUntil;
         }
 
@@ -907,19 +937,20 @@ namespace Azure.Messaging.ServiceBus
         public virtual async ValueTask DisposeAsync()
         {
             IsDisposed = true;
+            Type clientType = GetType();
 
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusReceiver), Identifier);
+            Logger.ClientDisposeStart(clientType, Identifier);
             try
             {
                 await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusReceiver), Identifier, ex);
+                Logger.ClientDisposeException(clientType, Identifier, ex);
                 throw;
             }
 
-            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+            Logger.ClientDisposeComplete(clientType, Identifier);
         }
 
         /// <summary>

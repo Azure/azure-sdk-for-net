@@ -53,7 +53,7 @@ namespace ResourceGroups.Tests
                 Owners = new List<AdPrincipal> () { testPrincipal }
             };
             var subscriptionResult = await GetSubscriptionClient(handler)
-                .SubscriptionFactory.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(Guid.NewGuid().ToString(), body);
+                .Subscription.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(Guid.NewGuid().ToString(), body);
             Assert.NotNull(subscriptionResult);
             Assert.NotNull(subscriptionResult.Response);
             Assert.True(subscriptionResult.Response.IsSuccessStatusCode);
