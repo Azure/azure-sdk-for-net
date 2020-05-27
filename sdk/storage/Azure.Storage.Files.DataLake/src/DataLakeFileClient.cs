@@ -3535,6 +3535,10 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken).ConfigureAwait(false),
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -3568,6 +3572,11 @@ namespace Azure.Storage.Files.DataLake
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
                 {
                     (var offset, var size) = partitions.LastOrDefault();
+
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     return await client.FlushInternal(
                         offset + size,
                         retainUncommittedData: default,

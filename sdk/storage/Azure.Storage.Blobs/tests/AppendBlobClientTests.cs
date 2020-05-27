@@ -688,7 +688,10 @@ namespace Azure.Storage.Blobs.Test
                 await WaitForProgressAsync(progressList, data.LongLength);
                 Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                if (progressList.Count > 0)
+                {
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                }
             }
 
             // Assert

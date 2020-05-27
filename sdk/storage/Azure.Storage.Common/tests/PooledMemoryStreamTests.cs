@@ -117,6 +117,7 @@ namespace Azure.Storage.Tests
 
         [Test]
         [Explicit]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public void StreamCanHoldLongData()
         {
             const long dataSize = 4000L * Constants.MB;
