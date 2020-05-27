@@ -58,12 +58,12 @@ namespace Azure.AI.FormRecognizer.Models
             return null;
         }
 
-        internal static FormField<int> ConvertIntField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        internal static FormField<long> ConvertInt64Field(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
             FormField field;
             if (fields.TryGetValue(fieldName, out field))
             {
-                return new FormField<int>(field, field.Value.AsInt32());
+                return new FormField<long>(field, field.Value.AsInt64());
             }
 
             return null;
