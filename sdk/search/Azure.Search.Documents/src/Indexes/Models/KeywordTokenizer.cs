@@ -11,7 +11,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KeywordTokenizer : IUtf8JsonSerializable
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeywordTokenizer"/> class.
+        /// Initializes a new instance of KeywordTokenizer.
         /// </summary>
         /// <param name="name">
         /// The name of the tokenizer. It must only contain letters, digits, spaces,
@@ -26,14 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary>
-        /// Gets or sets the read buffer size in bytes.
+        /// The read buffer size in bytes. Default is 256.
         /// Setting this property on new instances of <see cref="KeywordTokenizer"/> may result in an error
         /// when sending new requests to the Azure Cognitive Search service.
         /// </summary>
         public int? BufferSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum token length.
+        /// The maximum token length. Default is 256.
         /// Tokens longer than the maximum length are split.
         /// The maximum token length that can be used is 300 characters.
         /// </summary>
