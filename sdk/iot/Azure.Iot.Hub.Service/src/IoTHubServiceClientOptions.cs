@@ -17,13 +17,14 @@ namespace Azure.Iot.Hub.Service
         /// The versions of IoTHub Service supported by this client
         /// library.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "Service version is not controlled by the SDK")]
         public enum ServiceVersion
         {
             /// <summary>
             /// 2020-03-13
             /// </summary>
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             V2020_03_13 = 1
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
