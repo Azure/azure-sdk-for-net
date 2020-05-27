@@ -2,28 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
-    /// A <see cref="SearchFieldDataType.String"/> or "Collection(String)" field that can be searched.
+    /// Attributes a simple field using a primitive type or a collection of a primitive type.
     /// </summary>
-    public class SearchableField : SimpleField
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    public class SearchableFieldAttribute : SimpleFieldAttribute, ISearchFieldAttribute
     {
-        private readonly List<string> _synonymMapNames;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="SearchableField"/> class.
+        /// Gets the data type of the field.
         /// </summary>
-        /// <param name="name">The name of the field, which must be unique within the index or parent field.</param>
         /// <param name="collection">Whether the field is a collection of strings.</param>
-        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public SearchableField(string name, bool collection = false) : base(name, collection ? SearchFieldDataType.Collection(SearchFieldDataType.String) : SearchFieldDataType.String)
+        public SearchableFieldAttribute(bool collection = false) : base(SearchFieldDataType.String, collection)
         {
-            // NOTE: Types other than string may be searchable one day. Could add an overload in the future.
-            _synonymMapNames = new List<string>();
         }
 
         /// <summary>
@@ -47,41 +41,27 @@ namespace Azure.Search.Documents.Indexes.Models
         public LexicalAnalyzerName? IndexAnalyzerName { get; set; }
 
         /// <summary>
-        /// Gets a list of names of synonym maps to associate with this field.
+        /// Gets or sets a list of names of synonym maps to associate with this field.
         /// Currently, only one synonym map per field is supported.
         /// </summary>
         /// <remarks>
         /// Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map.
         /// This attribute can be changed on existing fields.
         /// </remarks>
-        public IList<string> SynonymMapNames
-        {
-            get => _synonymMapNames;
-            internal set
-            {
-                _synonymMapNames.Clear();
-
-                if (value != null)
-                {
-                    _synonymMapNames.AddRange(value);
-                }
-            }
-        }
+        public string[] SynonymMapNames { get; set; }
 
         /// <inheritdoc/>
-        private protected override void Save(SearchField field)
+        SearchField ISearchFieldAttribute.CreateField(string name) => new SearchableField(name, Type.IsCollection)
         {
-            base.Save(field);
-
-            field.IsSearchable = true;
-            field.AnalyzerName = AnalyzerName;
-            field.SearchAnalyzerName = SearchAnalyzerName;
-            field.IndexAnalyzerName = IndexAnalyzerName;
-
-            if (SynonymMapNames.Count > 0)
-            {
-                field.SynonymMapNames = SynonymMapNames;
-            }
-        }
+            IsKey = IsKey,
+            IsHidden = IsHidden,
+            IsFilterable = IsFilterable,
+            IsFacetable = IsFacetable,
+            IsSortable = IsSortable,
+            AnalyzerName = AnalyzerName,
+            SearchAnalyzerName = SearchAnalyzerName,
+            IndexAnalyzerName = IndexAnalyzerName,
+            SynonymMapNames = SynonymMapNames,
+        };
     }
 }

@@ -65,6 +65,59 @@ namespace Azure.Search.Documents
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
     }
+    public partial class SearchOptions
+    {
+        public SearchOptions() { }
+        public SearchOptions(string continuationToken) { }
+        public System.Collections.Generic.IList<string> Facets { get { throw null; } }
+        public string Filter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
+        public string HighlightPostTag { get { throw null; } set { } }
+        public string HighlightPreTag { get { throw null; } set { } }
+        public bool? IncludeTotalCount { get { throw null; } set { } }
+        public double? MinimumCoverage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }
+        public string ScoringProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
+        public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Select { get { throw null; } }
+        public int? Size { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+    }
+    public partial class SuggestOptions
+    {
+        public SuggestOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string HighlightPostTag { get { throw null; } set { } }
+        public string HighlightPreTag { get { throw null; } set { } }
+        public double? MinimumCoverage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
+        public System.Collections.Generic.IList<string> Select { get { throw null; } }
+        public int? Size { get { throw null; } set { } }
+        public bool? UseFuzzyMatching { get { throw null; } set { } }
+    }
+}
+namespace Azure.Search.Documents.Indexes
+{
+    public static partial class FieldBuilder
+    {
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type) { throw null; }
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type, System.Text.Json.JsonNamingPolicy namingPolicy) { throw null; }
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>() { throw null; }
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>(System.Text.Json.JsonNamingPolicy namingPolicy) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SearchableFieldAttribute : Azure.Search.Documents.Indexes.SimpleFieldAttribute
+    {
+        public SearchableFieldAttribute(bool collection = false) : base (default(Azure.Search.Documents.Indexes.Models.SearchFieldDataType), default(bool)) { }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? AnalyzerName { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzerName { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
+        public string[] SynonymMapNames { get { throw null; } set { } }
+    }
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
@@ -164,39 +217,16 @@ namespace Azure.Search.Documents
         public virtual Azure.Response RunIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SearchOptions
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SimpleFieldAttribute : System.Attribute
     {
-        public SearchOptions() { }
-        public SearchOptions(string continuationToken) { }
-        public System.Collections.Generic.IList<string> Facets { get { throw null; } }
-        public string Filter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
-        public string HighlightPostTag { get { throw null; } set { } }
-        public string HighlightPreTag { get { throw null; } set { } }
-        public bool? IncludeTotalCount { get { throw null; } set { } }
-        public double? MinimumCoverage { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }
-        public string ScoringProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
-        public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public int? Size { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-    }
-    public partial class SuggestOptions
-    {
-        public SuggestOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string HighlightPostTag { get { throw null; } set { } }
-        public string HighlightPreTag { get { throw null; } set { } }
-        public double? MinimumCoverage { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
-        public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public int? Size { get { throw null; } set { } }
-        public bool? UseFuzzyMatching { get { throw null; } set { } }
+        public SimpleFieldAttribute(Azure.Search.Documents.Indexes.Models.SearchFieldDataType type, bool collection = false) { }
+        public bool IsFacetable { get { throw null; } set { } }
+        public bool IsFilterable { get { throw null; } set { } }
+        public bool IsHidden { get { throw null; } set { } }
+        public bool IsKey { get { throw null; } set { } }
+        public bool IsSortable { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
