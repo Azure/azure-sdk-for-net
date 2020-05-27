@@ -34,7 +34,7 @@
           "200": {
             "description": "Returns the Configuration.",
             "schema": {
-              "$ref": "#/definitions/Configuration"
+              "$ref": "#/definitions/TwinConfiguration"
             }
           }
         }
@@ -62,7 +62,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Configuration"
+              "$ref": "#/definitions/TwinConfiguration"
             },
             "description": "The configuration to be created or updated."
           },
@@ -81,13 +81,13 @@
           "200": {
             "description": "Returns the updated configuration",
             "schema": {
-              "$ref": "#/definitions/Configuration"
+              "$ref": "#/definitions/TwinConfiguration"
             }
           },
           "201": {
             "description": "Returns the created configuration",
             "schema": {
-              "$ref": "#/definitions/Configuration"
+              "$ref": "#/definitions/TwinConfiguration"
             }
           }
         }
@@ -154,7 +154,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Configuration"
+                "$ref": "#/definitions/TwinConfiguration"
               }
             }
           }
@@ -178,7 +178,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ConfigurationQueriesTestInput"
+              "$ref": "#/definitions/TwinConfigurationQueriesTestInput"
             },
             "description": "Configuration query for target condition or custom metrics."
           },
@@ -190,7 +190,7 @@
           "200": {
             "description": "Returns the configuration queries test response.",
             "schema": {
-              "$ref": "#/definitions/ConfigurationQueriesTestResponse"
+              "$ref": "#/definitions/TwinConfigurationQueriesTestResponse"
             }
           }
         }
@@ -214,7 +214,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/RegistryStatistics"
+              "$ref": "#/definitions/DeviceStatistics"
             }
           }
         }
@@ -272,7 +272,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Device"
+                "$ref": "#/definitions/DeviceIdentity"
               }
             }
           }
@@ -296,7 +296,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ExportImportDevice"
+                "$ref": "#/definitions/RegistryOperationRequest"
               },
               "description": "The set of registry operations to perform."
             }
@@ -366,7 +366,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Twin"
+                "$ref": "#/definitions/TwinData"
               }
             },
             "headers": {
@@ -408,7 +408,7 @@
           "200": {
             "description": "Returns the Device.",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             }
           }
         }
@@ -436,7 +436,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             },
             "description": "The contents of the device to create."
           },
@@ -455,7 +455,7 @@
           "200": {
             "description": "Returns the Device",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             }
           }
         }
@@ -519,7 +519,7 @@
             "description": "Configuration Content.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ConfigurationContent"
+              "$ref": "#/definitions/TwinConfigurationContent"
             }
           },
           {
@@ -557,7 +557,7 @@
             "description": "Specifies the job specification.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           },
           {
@@ -568,7 +568,7 @@
           "200": {
             "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           }
         }
@@ -594,7 +594,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/JobProperties"
+                "$ref": "#/definitions/ImportExportJobProperties"
               }
             }
           }
@@ -626,7 +626,7 @@
           "200": {
             "description": "Returns the JobProperties",
             "schema": {
-              "$ref": "#/definitions/JobProperties"
+              "$ref": "#/definitions/ImportExportJobProperties"
             }
           }
         }
@@ -773,7 +773,7 @@
           "200": {
             "description": "OK.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -802,7 +802,7 @@
             "description": "The twin object that will replace the current device twin.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           },
           {
@@ -820,7 +820,7 @@
           "200": {
             "description": "The updated device twin.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -849,7 +849,7 @@
             "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           },
           {
@@ -867,7 +867,7 @@
           "200": {
             "description": "The updated device twin.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -905,7 +905,7 @@
           "200": {
             "description": "The module state information.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -941,7 +941,7 @@
             "description": "The twin object that will replace the current module twin.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           },
           {
@@ -959,7 +959,7 @@
           "200": {
             "description": "The updated module twin.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -995,7 +995,7 @@
             "description": "The twin object containing the tags and desired properties to be updated.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           },
           {
@@ -1013,7 +1013,7 @@
           "200": {
             "description": "The updated module twin.",
             "schema": {
-              "$ref": "#/definitions/Twin"
+              "$ref": "#/definitions/TwinData"
             }
           }
         }
@@ -1400,7 +1400,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Module"
+                "$ref": "#/definitions/ModuleIdentity"
               }
             }
           }
@@ -1439,7 +1439,7 @@
           "200": {
             "description": "Returns the module.",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           }
         }
@@ -1474,7 +1474,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             },
             "description": "The module identity."
           },
@@ -1493,13 +1493,13 @@
           "200": {
             "description": "Returns the updated module.",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           },
           "201": {
             "description": "Returns the created module.",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           }
         }
@@ -1646,7 +1646,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CloudToDeviceMethod"
+              "$ref": "#/definitions/CloudToDeviceMethodRequest"
             },
             "description": "Parameters to execute a direct method on the device."
           },
@@ -1695,7 +1695,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CloudToDeviceMethod"
+              "$ref": "#/definitions/CloudToDeviceMethodRequest"
             },
             "description": "Parameters to execute a direct method on the module."
           },
@@ -1796,7 +1796,7 @@
     }
   },
   "definitions": {
-    "ConfigurationMetrics": {
+    "TwinConfigurationMetrics": {
       "description": "Configuration Metrics for IotHub devices and modules.",
       "type": "object",
       "properties": {
@@ -1817,8 +1817,8 @@
         }
       }
     },
-    "Configuration": {
-      "description": "Configuration for IotHub devices and modules.",
+    "TwinConfiguration": {
+      "description": "Configuration for IotHub device and module twins.",
       "type": "object",
       "properties": {
         "id": {
@@ -1837,7 +1837,7 @@
           }
         },
         "content": {
-          "$ref": "#/definitions/ConfigurationContent",
+          "$ref": "#/definitions/TwinConfigurationContent",
           "description": "Content of the configuration."
         },
         "targetCondition": {
@@ -1862,11 +1862,11 @@
           "type": "integer"
         },
         "systemMetrics": {
-          "$ref": "#/definitions/ConfigurationMetrics",
+          "$ref": "#/definitions/TwinConfigurationMetrics",
           "description": "Metrics calculated by IoT Hub that cannot be customized."
         },
         "metrics": {
-          "$ref": "#/definitions/ConfigurationMetrics",
+          "$ref": "#/definitions/TwinConfigurationMetrics",
           "description": "Custom metrics specified by developer as queries against twin reported properties"
         },
         "etag": {
@@ -1875,7 +1875,7 @@
         }
       }
     },
-    "ConfigurationContent": {
+    "TwinConfigurationContent": {
       "description": "Configuration Content for Devices or Modules on Edge Devices.",
       "type": "object",
       "properties": {
@@ -1905,7 +1905,7 @@
         }
       }
     },
-    "ConfigurationQueriesTestInput": {
+    "TwinConfigurationQueriesTestInput": {
       "type": "object",
       "properties": {
         "targetCondition": {
@@ -1921,7 +1921,7 @@
         }
       }
     },
-    "ConfigurationQueriesTestResponse": {
+    "TwinConfigurationQueriesTestResponse": {
       "type": "object",
       "properties": {
         "targetConditionError": {
@@ -1937,7 +1937,7 @@
         }
       }
     },
-    "RegistryStatistics": {
+    "DeviceStatistics": {
       "type": "object",
       "properties": {
         "totalDeviceCount": {
@@ -1971,7 +1971,7 @@
         }
       }
     },
-    "Device": {
+    "DeviceIdentity": {
       "type": "object",
       "properties": {
         "deviceId": {
@@ -2115,7 +2115,7 @@
         }
       }
     },
-    "ExportImportDevice": {
+    "RegistryOperationRequest": {
       "type": "object",
       "properties": {
         "id": {
@@ -2524,7 +2524,7 @@
         }
       }
     },
-    "Twin": {
+    "TwinData": {
       "description": "The state information for a device or module. Implicitly created and deleted when the corresponding device/ module identity is created or deleted in IoT Hub.",
       "type": "object",
       "properties": {
@@ -2659,7 +2659,7 @@
         }
       }
     },
-    "JobProperties": {
+    "ImportExportJobProperties": {
       "type": "object",
       "properties": {
         "jobId": {
@@ -2929,11 +2929,11 @@
           "type": "string"
         },
         "cloudToDeviceMethod": {
-          "$ref": "#/definitions/CloudToDeviceMethod",
+          "$ref": "#/definitions/CloudToDeviceMethodRequest",
           "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters."
         },
         "updateTwin": {
-          "$ref": "#/definitions/Twin"
+          "$ref": "#/definitions/TwinData"
         },
         "queryCondition": {
           "description": "Required if jobType is updateTwin or cloudToDeviceMethod. Condition for device query to get devices to execute the job on.",
@@ -2954,7 +2954,7 @@
         "type"
       ]
     },
-    "CloudToDeviceMethod": {
+    "CloudToDeviceMethodRequest": {
       "description": "Parameters to execute a direct method on the device.",
       "type": "object",
       "properties": {
@@ -3039,12 +3039,12 @@
           "type": "string"
         },
         "cloudToDeviceMethod": {
-          "$ref": "#/definitions/CloudToDeviceMethod",
+          "$ref": "#/definitions/CloudToDeviceMethodRequest",
           "description": "Required if jobType is cloudToDeviceMethod. The method type and parameters.",
           "readOnly": true
         },
         "updateTwin": {
-          "$ref": "#/definitions/Twin",
+          "$ref": "#/definitions/TwinData",
           "readOnly": true
         },
         "status": {
@@ -3144,7 +3144,7 @@
         }
       }
     },
-    "Module": {
+    "ModuleIdentity": {
       "description": "Module identity on a device.",
       "type": "object",
       "properties": {
