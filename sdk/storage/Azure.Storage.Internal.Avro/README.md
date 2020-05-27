@@ -4,6 +4,15 @@
 ## Getting started
 - For internal use only.
 
+### Install the package
+- For internal use only.
+
+### Prerequisites
+- For internal use only.
+
+### Authenticate the Client
+- For internal use only.
+
 ## Key concepts
 - For internal use only.
 

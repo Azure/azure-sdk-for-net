@@ -247,6 +247,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Explicit]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public async Task CanHandleLongBlockBufferedUpload()
         {
             const long blockSize = int.MaxValue + 1024L;
