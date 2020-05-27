@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
@@ -150,7 +150,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
@@ -210,7 +210,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
@@ -230,7 +230,7 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
@@ -298,7 +298,7 @@ namespace Azure.AI.FormRecognizer
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
@@ -346,7 +346,7 @@ namespace Azure.AI.FormRecognizer
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             recognizeOptions ??= new RecognizeOptions();
-            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
@@ -379,16 +379,16 @@ namespace Azure.AI.FormRecognizer
         #endregion
 
         /// <summary>
-        /// Used as part of argument validation. Detects the <see cref="ContentType"/> of a stream and
+        /// Used as part of argument validation. Detects the <see cref="FormContentType"/> of a stream and
         /// throws an <see cref="ArgumentException"/> in case of failure.
         /// </summary>
         /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
         /// <param name="paramName">The original parameter name of the <paramref name="stream"/>. Used to create exceptions in case of failure.</param>
-        /// <returns>The detected <see cref="ContentType"/>.</returns>
+        /// <returns>The detected <see cref="FormContentType"/>.</returns>
         /// <exception cref="ArgumentException">Thrown when detection fails or cannot be performed.</exception>
-        private static ContentType DetectContentType(Stream stream, string paramName)
+        private static FormContentType DetectContentType(Stream stream, string paramName)
         {
-            ContentType contentType;
+            FormContentType contentType;
 
             if (!stream.CanSeek)
             {

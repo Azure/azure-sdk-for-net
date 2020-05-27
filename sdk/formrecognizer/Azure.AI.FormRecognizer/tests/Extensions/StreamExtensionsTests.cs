@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
 
             Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(ContentType.Pdf, contentType);
+            Assert.AreEqual(FormContentType.Pdf, contentType);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptPng);
 
             Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(ContentType.Png, contentType);
+            Assert.AreEqual(FormContentType.Png, contentType);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
 
             Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(ContentType.Jpeg, contentType);
+            Assert.AreEqual(FormContentType.Jpeg, contentType);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
 
             Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(ContentType.Tiff, contentType);
+            Assert.AreEqual(FormContentType.Tiff, contentType);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = new MemoryStream(Encoding.ASCII.GetBytes("MM\0*I am a completely normal TIFF file. Trust me."));
 
             Assert.True(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(ContentType.Tiff, contentType);
+            Assert.AreEqual(FormContentType.Tiff, contentType);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes("I am probably unknown."));
 
             Assert.False(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(default(ContentType), contentType);
+            Assert.AreEqual(default(FormContentType), contentType);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = new MemoryStream(Array.Empty<byte>());
 
             Assert.False(stream.TryGetContentType(out var contentType));
-            Assert.AreEqual(default(ContentType), contentType);
+            Assert.AreEqual(default(FormContentType), contentType);
         }
     }
 }

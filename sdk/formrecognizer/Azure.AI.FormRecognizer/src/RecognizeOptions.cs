@@ -26,6 +26,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// When set, specifies the content type for uploaded streams and skips automatic
         /// content type detection.
         /// </summary>
-        public ContentType? ContentType { get; set; } = null;
+        public FormContentType? ContentType { get; set; } = null;
     }
 }
