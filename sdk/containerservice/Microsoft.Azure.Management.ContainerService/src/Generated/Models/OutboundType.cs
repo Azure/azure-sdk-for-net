@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for OutboundType.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class OutboundType
     {
-        public const string Spot = "Spot";
-        public const string Regular = "Regular";
+        public const string LoadBalancer = "loadBalancer";
+        public const string UserDefinedRouting = "userDefinedRouting";
     }
 }
