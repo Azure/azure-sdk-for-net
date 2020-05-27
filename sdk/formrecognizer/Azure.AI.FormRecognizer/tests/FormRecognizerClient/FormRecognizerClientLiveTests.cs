@@ -428,7 +428,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(form.Fields);
             var name = "PurchaseOrderNumber";
             Assert.IsNotNull(form.Fields[name]);
-            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.Type);
             Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
         }
 
@@ -551,7 +551,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "field-0";
             Assert.IsNotNull(form.Fields[name]);
             Assert.IsNotNull(form.Fields[name].LabelText.Text);
-            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+            Assert.AreEqual(FieldValueType.String, form.Fields[name].Value.Type);
             Assert.AreEqual("Hero Limited", form.Fields[name].LabelText.Text);
         }
 
