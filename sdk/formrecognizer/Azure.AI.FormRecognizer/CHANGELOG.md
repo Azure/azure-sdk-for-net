@@ -6,6 +6,8 @@
 
 - `FormRecognizerError.Code` renamed to `FormRecognizerError.ErrorCode`.
 - `FormTrainingClient.GetModelInfos` renamed to `FormTrainingClient.GetCustomModels`.
+- Property `CreatedOn` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `RequestedOn`.
+- Property `LastModified` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `CompletedOn`.
 - Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
 - Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
 
@@ -20,6 +22,7 @@
 
 - `FormRecognizerClient` and `FormTrainingClient` support authentication with Azure Active Directory.
 - Support to copy a custom model from one Form Recognizer resource to another.
+- Headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 
 ### Fixes
 
@@ -28,6 +31,7 @@
 - `FieldText.TextContent` cannot be `null` anymore, and it will be empty when no element is returned from the service.
 - Custom form recognition with labels can now parse results from forms that do not contain all of the expected labels ([#11821](https://github.com/Azure/azure-sdk-for-net/issues/11821)).
 - `FormRecognizerClient.StartRecognizeCustomFormsFromUri` now works with URIs that contain blank spaces, encoded or not ([#11564](https://github.com/Azure/azure-sdk-for-net/issues/11564)).
+- Receipt recognition can now parse results from forms that contain blank pages.
 
 ## 1.0.0-preview.2 (05-06-2020)
 

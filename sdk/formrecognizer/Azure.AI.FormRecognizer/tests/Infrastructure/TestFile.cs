@@ -10,6 +10,9 @@ namespace Azure.AI.FormRecognizer.Tests
     /// </summary>
     public static class TestFile
     {
+        /// <summary>A single-page blank form.</summary>
+        public const string Blank = "blank.pdf";
+
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
 
@@ -27,5 +30,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A two-page invoice file.</summary>
         public const string InvoiceMultipage = "multipage_invoice_noblank.pdf";
+
+        /// <summary>A three-page invoice file in which the second page is blank.</summary>
+        public const string InvoiceMultipageBlank = "multipage_invoice1.pdf";
     }
 }

@@ -1,3 +1,23 @@
+namespace Azure.Core
+{
+    public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer
+    {
+        public JsonObjectSerializer() { }
+        public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
+        public override object Deserialize(System.IO.Stream stream, System.Type returnType) { throw null; }
+        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType) { throw null; }
+        public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType) { }
+        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType) { throw null; }
+    }
+    public abstract partial class ObjectSerializer
+    {
+        protected ObjectSerializer() { }
+        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType);
+        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType);
+        public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType);
+        public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType);
+    }
+}
 namespace Azure.Core.Spatial
 {
     public sealed partial class CollectionGeometry : Azure.Core.Spatial.Geometry
