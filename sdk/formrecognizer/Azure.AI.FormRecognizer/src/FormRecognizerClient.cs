@@ -119,57 +119,57 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+            Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="form">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream form, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+            Argument.AssertNotNull(form, nameof(form));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(contentType, form, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="formUrl">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formUrl, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+            Argument.AssertNotNull(formUrl, nameof(formUrl));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal(formUrl.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -177,17 +177,17 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="formUrl">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formUrl, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+            Argument.AssertNotNull(formUrl, nameof(formUrl));
 
-            SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal(formUrl.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -199,59 +199,59 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
+        /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receipt, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
+            Argument.AssertNotNull(receipt, nameof(receipt));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
+        /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receipt, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
+            Argument.AssertNotNull(receipt, nameof(receipt));
 
             recognizeOptions ??= new RecognizeOptions();
-            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
+            FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="receiptUrl">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptUrl, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(receiptFileUri, nameof(receiptFileUri));
+            Argument.AssertNotNull(receiptUrl, nameof(receiptUrl));
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal(receiptUrl.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
@@ -259,19 +259,19 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="receiptUrl">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeOptions">A set of options available for configuring the recognize request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptUrl, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(receiptFileUri, nameof(receiptFileUri));
+            Argument.AssertNotNull(receiptUrl, nameof(receiptUrl));
 
             recognizeOptions ??= new RecognizeOptions();
 
-            SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.AbsoluteUri);
+            SourcePath_internal sourcePath = new SourcePath_internal(receiptUrl.AbsoluteUri);
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
