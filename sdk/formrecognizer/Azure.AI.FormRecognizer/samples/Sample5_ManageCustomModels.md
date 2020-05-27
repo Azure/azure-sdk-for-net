@@ -53,10 +53,10 @@ CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
 Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-foreach (CustomFormSubModel subModel in modelCopy.Models)
+foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
-    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-    foreach (CustomFormModelField field in subModel.Fields.Values)
+    Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+    foreach (CustomFormModelField field in submodel.Fields.Values)
     {
         Console.Write($"    FieldName: {field.Name}");
         if (field.Label != null)

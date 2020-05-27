@@ -8,9 +8,9 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Represents a submodel that extracts fields from a specific type of form.
     /// </summary>
-    public class CustomFormSubModel
+    public class CustomFormSubmodel
     {
-        internal CustomFormSubModel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
+        internal CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
         {
             FormType = formType;
             Accuracy = accuracy;

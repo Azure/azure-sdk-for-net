@@ -8,9 +8,14 @@
 - `FormTrainingClient.GetModelInfos` renamed to `FormTrainingClient.GetCustomModels`.
 - Property `CreatedOn` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `RequestedOn`.
 - Property `LastModified` in types `CustomFormModel` and `CustomFormModelInfo` renamed to `CompletedOn`.
+- Property `Models` in `CustomFormModel` renamed to `Submodels`.
+- Type `CustomFormSubModel` renamed to `CustomFormSubmodel`.
+- `ContentType` renamed to `FormContentType`.
 - Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
 - Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
 - Removed `Type` suffix from all `FieldValueType` values.
+- Parameters `formFileStream` and `formFileUri` in `StartRecognizeContent` have been renamed to `form` and `formUrl` respectively.
+- Parameters `receiptFileStream` and `receiptFileUri` in `StartRecognizeReceipts` have been renamed to `receipt` and `receiptUrl` respectively.
 
 ### Other breaking changes
 

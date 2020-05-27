@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// The content type for local form files.
     /// </summary>
     [CodeGenModel("ContentType")]
-    public enum ContentType
+    public enum FormContentType
     {
         /// <summary>
         /// Used for JSON files.
