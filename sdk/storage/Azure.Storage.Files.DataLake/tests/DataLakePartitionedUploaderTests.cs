@@ -230,7 +230,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [Explicit]
-        [Ignore("Makes running the unit tests locally extremely slow")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12312")]
         public async Task CanHandleLongAppendBufferedUpload()
         {
             const long blockSize = int.MaxValue + 1024L;
