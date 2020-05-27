@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-            foreach (CustomFormSubModel subModel in modelCopy.Models)
+            foreach (CustomFormSubModel subModel in modelCopy.Submodels)
             {
                 Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
                 foreach (CustomFormModelField field in subModel.Fields.Values)

@@ -236,7 +236,7 @@ Console.WriteLine($"    Model Status: {model.Status}");
 Console.WriteLine($"    Requested on: {model.RequestedOn}");
 Console.WriteLine($"    Completed on: {model.CompletedOn}");
 
-foreach (CustomFormSubModel subModel in model.Models)
+foreach (CustomFormSubModel subModel in model.Submodels)
 {
     Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
     foreach (CustomFormModelField field in subModel.Fields.Values)
@@ -282,7 +282,7 @@ CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
 Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-foreach (CustomFormSubModel subModel in modelCopy.Models)
+foreach (CustomFormSubModel subModel in modelCopy.Submodels)
 {
     Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
     foreach (CustomFormModelField field in subModel.Fields.Values)

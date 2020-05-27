@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
             Status = model.ModelInfo.Status;
             RequestedOn = model.ModelInfo.CreatedDateTime;
             CompletedOn = model.ModelInfo.LastUpdatedDateTime;
-            Models = ConvertToSubmodels(model);
+            Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);
         }
@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.
         /// </summary>
-        public IReadOnlyList<CustomFormSubModel> Models { get; }
+        public IReadOnlyList<CustomFormSubModel> Submodels { get; }
 
         /// <summary>
         /// A list of meta-data about each of the documents used to train the model.
