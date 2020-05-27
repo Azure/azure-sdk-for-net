@@ -51,6 +51,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the PDF file which contains the multipage form to be used for tests.</summary>
         private const string MultipageFormFilename = "multipage_invoice_noblank.pdf";
 
+        /// <summary>The name of the PDF file which contains the multipage form with a blank page to be used for tests.</summary>
+        private const string MultipageBlankFormFilename = "multipage_invoice1.pdf";
+
+        /// <summary>The name of the PDF file which contains the single-page form with a blank page to be used for tests.</summary>
+        private const string BlankFormFilename = "blank.pdf";
+
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
@@ -107,6 +113,18 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <value>The URI string to the PDF file.</value>
         public static string MultipageFormUri => CreateUri(MultipageFormFilename);
+
+        /// <summary>
+        /// The relative path to the PDF file which contains the multipage form with a blank page to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the PDF file.</value>
+        public static string MultipageBlankFormPath => CreatePath(MultipageBlankFormFilename);
+
+        /// <summary>
+        /// The relative path to the PDF file which contains the single-page form with a blank page to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the PDF file.</value>
+        public static string BlankFormPath => CreatePath(BlankFormFilename);
 
         /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.
