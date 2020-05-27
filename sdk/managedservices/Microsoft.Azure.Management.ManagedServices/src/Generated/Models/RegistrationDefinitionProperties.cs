@@ -40,6 +40,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <param name="managedByTenantId">Id of the managedBy tenant.</param>
         /// <param name="description">Description of the registration
         /// definition.</param>
+        /// <param name="eligibleAuthorizations">Eligible PIM authorization
+        /// tuple containing principal id of the user/security group or service
+        /// principal, id of the built-in role, and just-in-time access policy
+        /// setting</param>
         /// <param name="registrationDefinitionName">Name of the registration
         /// definition.</param>
         /// <param name="provisioningState">Current state of the registration
@@ -48,10 +52,11 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// 'Canceled', 'Failed', 'Succeeded', 'Updating'</param>
         /// <param name="managedByTenantName">Name of the managedBy
         /// tenant.</param>
-        public RegistrationDefinitionProperties(IList<Authorization> authorizations, string managedByTenantId, string description = default(string), string registrationDefinitionName = default(string), string provisioningState = default(string), string managedByTenantName = default(string))
+        public RegistrationDefinitionProperties(IList<Authorization> authorizations, string managedByTenantId, string description = default(string), IList<EligibleAuthorization> eligibleAuthorizations = default(IList<EligibleAuthorization>), string registrationDefinitionName = default(string), string provisioningState = default(string), string managedByTenantName = default(string))
         {
             Description = description;
             Authorizations = authorizations;
+            EligibleAuthorizations = eligibleAuthorizations;
             RegistrationDefinitionName = registrationDefinitionName;
             ManagedByTenantId = managedByTenantId;
             ProvisioningState = provisioningState;
@@ -77,6 +82,14 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "authorizations")]
         public IList<Authorization> Authorizations { get; set; }
+
+        /// <summary>
+        /// Gets or sets eligible PIM authorization tuple containing principal
+        /// id of the user/security group or service principal, id of the
+        /// built-in role, and just-in-time access policy setting
+        /// </summary>
+        [JsonProperty(PropertyName = "eligibleAuthorizations")]
+        public IList<EligibleAuthorization> EligibleAuthorizations { get; set; }
 
         /// <summary>
         /// Gets or sets name of the registration definition.
@@ -128,6 +141,16 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (EligibleAuthorizations != null)
+            {
+                foreach (var element1 in EligibleAuthorizations)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

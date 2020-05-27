@@ -12,48 +12,43 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Authorization tuple containing principal Id (of user/service
-    /// principal/security group) and role definition id.
+    /// Eligible authorization tuple containing principle Id (of user/service
+    /// principal/security group), role definition id, and the just-in-time
+    /// access setting.
     /// </summary>
-    public partial class Authorization
+    public partial class EligibleAuthorization
     {
         /// <summary>
-        /// Initializes a new instance of the Authorization class.
+        /// Initializes a new instance of the EligibleAuthorization class.
         /// </summary>
-        public Authorization()
+        public EligibleAuthorization()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Authorization class.
+        /// Initializes a new instance of the EligibleAuthorization class.
         /// </summary>
         /// <param name="principalId">Principal Id of the security
-        /// group/service principal/user that would be assigned permissions to
+        /// group/service principal/user that would be delegated permissions to
         /// the projected subscription</param>
         /// <param name="roleDefinitionId">The role definition identifier. This
-        /// role will define all the permissions that the security
+        /// role will delegate all the permissions that the security
         /// group/service principal/user must have on the projected
         /// subscription. This role cannot be an owner role.</param>
         /// <param name="principalIdDisplayName">Display name of the principal
         /// Id.</param>
-        /// <param name="delegatedRoleDefinitionIds">The
-        /// delegatedRoleDefinitionIds field is required when the
-        /// roleDefinitionId refers to the User Access Administrator Role. It
-        /// is the list of role definition ids which define all the permissions
-        /// that the user in the authorization can assign to other security
-        /// groups/service principals/users.</param>
-        public Authorization(string principalId, string roleDefinitionId, string principalIdDisplayName = default(string), IList<System.Guid?> delegatedRoleDefinitionIds = default(IList<System.Guid?>))
+        /// <param name="justInTimeAccessPolicy">Just-in-time access policy
+        /// setting.</param>
+        public EligibleAuthorization(string principalId, string roleDefinitionId, string principalIdDisplayName = default(string), JustInTimeAccessPolicy justInTimeAccessPolicy = default(JustInTimeAccessPolicy))
         {
             PrincipalId = principalId;
             PrincipalIdDisplayName = principalIdDisplayName;
             RoleDefinitionId = roleDefinitionId;
-            DelegatedRoleDefinitionIds = delegatedRoleDefinitionIds;
+            JustInTimeAccessPolicy = justInTimeAccessPolicy;
             CustomInit();
         }
 
@@ -64,7 +59,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
 
         /// <summary>
         /// Gets or sets principal Id of the security group/service
-        /// principal/user that would be assigned permissions to the projected
+        /// principal/user that would be delegated permissions to the projected
         /// subscription
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
@@ -77,23 +72,19 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         public string PrincipalIdDisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the role definition identifier. This role will define
-        /// all the permissions that the security group/service principal/user
-        /// must have on the projected subscription. This role cannot be an
-        /// owner role.
+        /// Gets or sets the role definition identifier. This role will
+        /// delegate all the permissions that the security group/service
+        /// principal/user must have on the projected subscription. This role
+        /// cannot be an owner role.
         /// </summary>
         [JsonProperty(PropertyName = "roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the delegatedRoleDefinitionIds field is required when
-        /// the roleDefinitionId refers to the User Access Administrator Role.
-        /// It is the list of role definition ids which define all the
-        /// permissions that the user in the authorization can assign to other
-        /// security groups/service principals/users.
+        /// Gets or sets just-in-time access policy setting.
         /// </summary>
-        [JsonProperty(PropertyName = "delegatedRoleDefinitionIds")]
-        public IList<System.Guid?> DelegatedRoleDefinitionIds { get; set; }
+        [JsonProperty(PropertyName = "justInTimeAccessPolicy")]
+        public JustInTimeAccessPolicy JustInTimeAccessPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -110,6 +101,10 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
             if (RoleDefinitionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RoleDefinitionId");
+            }
+            if (JustInTimeAccessPolicy != null)
+            {
+                JustInTimeAccessPolicy.Validate();
             }
         }
     }
