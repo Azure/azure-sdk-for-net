@@ -15,7 +15,9 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// place holder
         /// </summary>
-        protected StatisticsClient()
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public StatisticsClient()
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
 
         }

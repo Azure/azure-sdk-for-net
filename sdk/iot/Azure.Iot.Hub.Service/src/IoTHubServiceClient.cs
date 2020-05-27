@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.Core;
 
 namespace Azure.Iot.Hub.Service
 {
@@ -40,9 +38,24 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Initializes a new instance of the <see cref="IoTHubServiceClient"/> class.
         /// </summary>
-        protected IoTHubServiceClient()
+        public IoTHubServiceClient()
+            : this(new IoTHubServiceClientOptions())
         {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IoTHubServiceClient"/> class.
+        /// </summary>
+        public IoTHubServiceClient(IoTHubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Devices = new DevicesClient();
+            Modules = new ModulesClient();
+            Statistics = new StatisticsClient();
+            Messages = new CloudToDeviceMessagesClient();
+            Files = new FilesClient();
+            Jobs = new JobsClient();
         }
     }
 }

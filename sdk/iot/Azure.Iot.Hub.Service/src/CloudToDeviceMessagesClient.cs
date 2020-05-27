@@ -11,7 +11,9 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// place holder
         /// </summary>
-        protected CloudToDeviceMessagesClient()
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public CloudToDeviceMessagesClient()
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
 
         }
