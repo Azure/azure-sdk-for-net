@@ -38,8 +38,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
             DateTimeOffset lastConsumable;
-            Queue<string> years;
-            Queue<string> segments;
+            Queue<string> years = new Queue<string>();
+            Queue<string> segments = new Queue<string>();
             ChangeFeedCursor cursor = null;
 
             // Create cursor
@@ -111,21 +111,29 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
             }
 
+            // There are no years.
             if (years.Count == 0)
             {
-                return new ChangeFeed();
+                return ChangeFeed.Empty();
             }
 
-            string firstYearPath = years.Dequeue();
+            while (segments.Count == 0 && years.Count > 0)
+            {
+                // Get Segments for year
+                segments = await BlobChangeFeedExtensions.GetSegmentsInYear(
+                    async: async,
+                    containerClient: containerClient,
+                    yearPath: years.Dequeue(),
+                    startTime: startTime,
+                    endTime: BlobChangeFeedExtensions.MinDateTime(lastConsumable, endTime))
+                    .ConfigureAwait(false);
+            }
 
-            // Get Segments for first year
-            segments = await BlobChangeFeedExtensions.GetSegmentsInYear(
-                async: async,
-                containerClient: containerClient,
-                yearPath: firstYearPath,
-                startTime: startTime,
-                endTime: BlobChangeFeedExtensions.MinDateTime(lastConsumable, endTime))
-                .ConfigureAwait(false);
+            // We were on the last year, and there were no more segments.
+            if (segments.Count == 0)
+            {
+                return ChangeFeed.Empty();
+            }
 
             Segment currentSegment = await _segmentFactory.BuildSegment(
                 async,

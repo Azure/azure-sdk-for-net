@@ -462,8 +462,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segments[1].Setup(r => r.GetCursor()).Returns(segmentCursor);
             segments[3].Setup(r => r.GetCursor()).Returns(segmentCursor);
 
-
-
             ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
                 IsAsync,
@@ -599,6 +597,380 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segments[3].Verify(r => r.GetCursor());
 
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task NoYearsAfterStartTime()
+        {
+            // Arrange
+            Mock<BlobServiceClient> serviceClient = new Mock<BlobServiceClient>(MockBehavior.Strict);
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<SegmentFactory> segmentFactory = new Mock<SegmentFactory>(MockBehavior.Strict);
+            Mock<Segment> segment = new Mock<Segment>(MockBehavior.Strict);
+
+            Uri containerUri = new Uri("https://account.blob.core.windows.net/$blobchangefeed");
+
+            serviceClient.Setup(r => r.GetBlobContainerClient(It.IsAny<string>())).Returns(containerClient.Object);
+
+            if (IsAsync)
+            {
+                containerClient.Setup(r => r.ExistsAsync(default)).ReturnsAsync(Response.FromValue(true, new MockResponse(200)));
+            }
+            else
+            {
+                containerClient.Setup(r => r.Exists(default)).Returns(Response.FromValue(true, new MockResponse(200)));
+            }
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
+            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
+            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+            }
+
+            if (IsAsync)
+            {
+                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathFuncAsync);
+
+                containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default)).Returns(asyncPageable);
+            }
+            else
+            {
+                Pageable<BlobHierarchyItem> pageable =
+                    PageResponseEnumerator.CreateEnumerable(GetYearPathFunc);
+
+                containerClient.Setup(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default)).Returns(pageable);
+            }
+
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
+                IsAsync,
+                serviceClient.Object,
+                startTime: new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
+
+            // Act
+            bool hasNext = changeFeed.HasNext();
+
+            // Assert
+            Assert.IsFalse(hasNext);
+
+            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
+
+            if (IsAsync)
+            {
+                containerClient.Verify(r => r.ExistsAsync(default));
+            }
+            else
+            {
+                containerClient.Verify(r => r.Exists(default));
+            }
+
+            containerClient.Verify(r => r.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath));
+
+            if (IsAsync)
+            {
+                blobClient.Verify(r => r.DownloadAsync());
+            }
+            else
+            {
+                blobClient.Verify(r => r.Download());
+            }
+
+            if (IsAsync)
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default));
+            }
+            else
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default));
+            }
+        }
+
+        [Test]
+        public async Task NoSegmentsRemainingInStartYear()
+        {
+            // Arrange
+            int eventCount = 2;
+            int segmentCount = 2;
+            Mock<BlobServiceClient> serviceClient = new Mock<BlobServiceClient>(MockBehavior.Strict);
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            Mock<SegmentFactory> segmentFactory = new Mock<SegmentFactory>(MockBehavior.Strict);
+            Uri containerUri = new Uri("https://account.blob.core.windows.net/$blobchangefeed");
+
+            List<Mock<Segment>> segments = new List<Mock<Segment>>();
+            for (int i = 0; i < segmentCount; i++)
+            {
+                segments.Add(new Mock<Segment>(MockBehavior.Strict));
+            }
+
+            // ChangeFeedFactory.BuildChangeFeed() setups.
+            serviceClient.Setup(r => r.GetBlobContainerClient(It.IsAny<string>())).Returns(containerClient.Object);
+            containerClient.SetupSequence(r => r.Uri)
+                .Returns(containerUri)
+                .Returns(containerUri);
+
+            if (IsAsync)
+            {
+                containerClient.Setup(r => r.ExistsAsync(default)).ReturnsAsync(Response.FromValue(true, new MockResponse(200)));
+            }
+            else
+            {
+                containerClient.Setup(r => r.Exists(default)).Returns(Response.FromValue(true, new MockResponse(200)));
+            }
+
+            containerClient.Setup(r => r.GetBlobClient(It.IsAny<string>())).Returns(blobClient.Object);
+
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
+            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
+            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+
+            if (IsAsync)
+            {
+                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+            }
+            else
+            {
+                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+            }
+
+            if (IsAsync)
+            {
+                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathShortFuncAsync);
+
+                containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default)).Returns(asyncPageable);
+            }
+            else
+            {
+                Pageable<BlobHierarchyItem> pageable =
+                    PageResponseEnumerator.CreateEnumerable(GetYearsPathShortFunc);
+
+                containerClient.Setup(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default)).Returns(pageable);
+            }
+
+            if (IsAsync)
+            {
+                AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYear2019FuncAsync);
+                AsyncPageable<BlobHierarchyItem> asyncPageable2 = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYear2020FuncAsync);
+
+                containerClient.SetupSequence(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    default,
+                    It.IsAny<string>(),
+                    default))
+                    .Returns(asyncPageable)
+                    .Returns(asyncPageable2);
+            }
+            else
+            {
+                Pageable<BlobHierarchyItem> pageable =
+                    PageResponseEnumerator.CreateEnumerable(GetSegmentsInYear2019Func);
+
+                Pageable<BlobHierarchyItem> pageable2 =
+                    PageResponseEnumerator.CreateEnumerable(GetSegmentsInYear2020Func);
+
+                containerClient.SetupSequence(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    default,
+                    It.IsAny<string>(),
+                    default))
+                    .Returns(pageable)
+                    .Returns(pageable2);
+            }
+
+            segmentFactory.SetupSequence(r => r.BuildSegment(
+                It.IsAny<bool>(),
+                It.IsAny<BlobContainerClient>(),
+                It.IsAny<string>(),
+                default))
+                .Returns(Task.FromResult(segments[0].Object))
+                .Returns(Task.FromResult(segments[1].Object));
+
+            List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>();
+            for (int i = 0; i < eventCount; i++)
+            {
+                events.Add(new BlobChangeFeedEvent
+                {
+                    Id = Guid.NewGuid()
+                });
+            }
+
+            segments[0].SetupSequence(r => r.GetPage(
+                It.IsAny<bool>(),
+                It.IsAny<int?>(),
+                default))
+                .Returns(Task.FromResult(new List<BlobChangeFeedEvent>
+                {
+                    events[0]
+                }));
+
+            segments[1].SetupSequence(r => r.GetPage(
+                It.IsAny<bool>(),
+                It.IsAny<int?>(),
+                default))
+                .Returns(Task.FromResult(new List<BlobChangeFeedEvent>
+                {
+                    events[1]
+                }));
+
+            segments[0].SetupSequence(r => r.HasNext())
+                .Returns(false);
+            segments[1].SetupSequence(r => r.HasNext())
+                .Returns(true)
+                .Returns(false);
+
+            segments[1].Setup(r => r.GetCursor())
+                .Returns(new SegmentCursor());
+
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
+                IsAsync,
+                serviceClient.Object,
+                startTime: new DateTimeOffset(2019, 6, 1, 0, 0, 0, TimeSpan.Zero));
+
+            // Act
+            Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync);
+
+            // Assert
+            Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual(events[0].Id, page.Values[0].Id);
+            Assert.AreEqual(events[1].Id, page.Values[1].Id);
+
+            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
+            containerClient.Verify(r => r.Uri);
+
+            if (IsAsync)
+            {
+                containerClient.Verify(r => r.ExistsAsync(default));
+            }
+            else
+            {
+                containerClient.Verify(r => r.Exists(default));
+            }
+
+            containerClient.Verify(r => r.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath));
+
+            if (IsAsync)
+            {
+                blobClient.Verify(r => r.DownloadAsync());
+            }
+            else
+            {
+                blobClient.Verify(r => r.Download());
+            }
+
+            if (IsAsync)
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default));
+            }
+            else
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    "/",
+                    Constants.ChangeFeed.SegmentPrefix,
+                    default));
+            }
+
+            if (IsAsync)
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    default,
+                    "idx/segments/2019/",
+                    default));
+
+                containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
+                    default,
+                    default,
+                    default,
+                    "idx/segments/2020/",
+                    default));
+            }
+            else
+            {
+                containerClient.Verify(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    default,
+                    "idx/segments/2019/",
+                    default));
+
+                containerClient.Verify(r => r.GetBlobsByHierarchy(
+                    default,
+                    default,
+                    default,
+                    "idx/segments/2020/",
+                    default));
+            }
+
+            // ChangeFeeed.Next() verifies.
+            segments[0].Verify(r => r.HasNext(), Times.Exactly(1));
+
+            segments[0].Verify(r => r.GetPage(
+                IsAsync,
+                512,
+                default));
+
+            segments[1].Verify(r => r.HasNext(), Times.Exactly(3));
+
+            segments[1].Verify(r => r.GetPage(
+                IsAsync,
+                511,
+                default));
+
+            containerClient.Verify(r => r.Uri, Times.Exactly(1));
+
         }
 
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)

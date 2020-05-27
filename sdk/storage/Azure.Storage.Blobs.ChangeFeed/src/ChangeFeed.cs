@@ -55,6 +55,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private DateTimeOffset? _endTime;
 
+        /// <summary>
+        /// If this Change Feed has no events.
+        /// </summary>
+        private bool _empty;
+
         public ChangeFeed(
             BlobContainerClient containerClient,
             SegmentFactory segmentFactory,
@@ -73,6 +78,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _lastConsumable = lastConsumable;
             _startTime = startTime;
             _endTime = endTime;
+            _empty = false;
         }
 
         /// <summary>
@@ -122,6 +128,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public bool HasNext()
         {
+            if (_empty)
+            {
+                return false;
+            }
+
             // We have no more segments, years, and the current segment doesn't have hext.
             if (_segments.Count == 0 && _years.Count == 0  && !_currentSegment.HasNext())
             {
@@ -229,5 +240,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 }
             }
         }
+
+        public static ChangeFeed Empty()
+             => new ChangeFeed
+             {
+                 _empty = true
+             };
     }
 }
