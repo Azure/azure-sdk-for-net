@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.6 (Unreleased)
+
+
 ## 1.0.0-preview.5 (Unreleased)
 ### Breaking changes
 - Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
