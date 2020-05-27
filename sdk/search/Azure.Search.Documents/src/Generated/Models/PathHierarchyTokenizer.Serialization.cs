@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PathHierarchyTokenizerV2 : IUtf8JsonSerializable
+    public partial class PathHierarchyTokenizer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static PathHierarchyTokenizerV2 DeserializePathHierarchyTokenizerV2(JsonElement element)
+        internal static PathHierarchyTokenizer DeserializePathHierarchyTokenizer(JsonElement element)
         {
             char? delimiter = default;
             char? replacement = default;
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizerV2(odataType, name, delimiter, replacement, maxTokenLength, reverse, skip);
+            return new PathHierarchyTokenizer(odataType, name, delimiter, replacement, maxTokenLength, reverse, skip);
         }
     }
 }
