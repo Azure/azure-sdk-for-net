@@ -24,6 +24,7 @@
 - `RecognizeReceiptsOperation` now returns a `RecognizedReceiptCollection`.
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 - In preparation for service-side changes, `FieldValue.AsInt32` has been replaced by `FieldValue.AsInt64`, which returns a `long`.
+- The order of the values for `USReceiptType` have changed so that `Other` has now a value of `1`.
 
 ### New Features
 
