@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// Action rule properties defining scope, conditions, suppression logic
     /// for action rule
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ActionRuleProperties")]
     public partial class ActionRuleProperties
     {
         /// <summary>

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// <remarks>
     /// Action rule with action group configuration
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("ActionGroup")]
     public partial class ActionGroup : ActionRuleProperties
     {
         /// <summary>
