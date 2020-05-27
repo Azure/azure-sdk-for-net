@@ -87,10 +87,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(0, doc.Errors.Count);
             }
 
-            foreach (var subModel in model.Submodels)
+            foreach (var submodel in model.Submodels)
             {
-                Assert.IsNotNull(subModel.FormType);
-                foreach (var fields in subModel.Fields)
+                Assert.IsNotNull(submodel.FormType);
+                foreach (var fields in submodel.Fields)
                 {
                     Assert.IsNotNull(fields.Value.Name);
                     if (labeled)
