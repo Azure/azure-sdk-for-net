@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to delete an App.
         /// </summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a Service.
         /// </summary>
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to update an exiting App.
         /// </summary>
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource = default(AppResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a Service.
         /// </summary>

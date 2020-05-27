@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeploymentResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DeploymentResource> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeploymentResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DeploymentResource> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -577,10 +577,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("version", version);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("appName", appName);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -592,6 +592,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{appName}", System.Uri.EscapeDataString(appName));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (version != null)
             {
                 if (version.Count == 0)
@@ -605,10 +609,6 @@ namespace Microsoft.Azure.Management.AppPlatform
                         _queryParameters.Add(string.Format("version={0}", System.Uri.EscapeDataString("" + _item)));
                     }
                 }
-            }
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -790,9 +790,9 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("version", version);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListClusterAllDeployments", tracingParameters);
             }
@@ -803,6 +803,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (version != null)
             {
                 if (version.Count == 0)
@@ -816,10 +820,6 @@ namespace Microsoft.Azure.Management.AppPlatform
                         _queryParameters.Add(string.Format("version={0}", System.Uri.EscapeDataString("" + _item)));
                     }
                 }
-            }
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1284,12 +1284,8 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (deploymentResource != null)
-            {
-                deploymentResource.Validate();
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1310,6 +1306,14 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "deploymentName");
             }
+            if (deploymentResource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "deploymentResource");
+            }
+            if (deploymentResource != null)
+            {
+                deploymentResource.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1317,11 +1321,11 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("deploymentResource", deploymentResource);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("deploymentResource", deploymentResource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
@@ -1527,7 +1531,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1549,6 +1553,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "deploymentName");
             }
+            if (deploymentResource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "deploymentResource");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1556,11 +1564,11 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("deploymentResource", deploymentResource);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("deploymentResource", deploymentResource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
