@@ -498,9 +498,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
             QueryAsync<T>(Bind(filter), top, select, cancellationToken);
 
         /// <summary>

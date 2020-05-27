@@ -3,14 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
-using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
