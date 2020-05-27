@@ -219,7 +219,8 @@ namespace Compute.Tests
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null,
             string ppgName = null,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            bool? encryptionAtHostEnabled = null)
         {
             try
             {
@@ -260,6 +261,14 @@ namespace Compute.Tests
                     osDisk.DiffDiskSettings = new DiffDiskSettings {
                         Option = DiffDiskOptions.Local,
                         Placement = DiffDiskPlacement.ResourceDisk
+                    };
+                }
+
+                if (encryptionAtHostEnabled != null)
+                {
+                    inputVM.SecurityProfile = new SecurityProfile
+                    {
+                        EncryptionAtHost = encryptionAtHostEnabled.Value
                     };
                 }
 
@@ -311,7 +320,8 @@ namespace Compute.Tests
 
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
+                    hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled);
 
                 return getResponse;
             }
@@ -944,7 +954,8 @@ namespace Compute.Tests
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
-            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null)
+            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
+            bool? encryptionAtHostEnabled = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -997,6 +1008,15 @@ namespace Compute.Tests
                     else
                     {
                         Assert.Null(vm.StorageProfile.OsDisk.DiffDiskSettings);
+                    }
+
+                    if(encryptionAtHostEnabled != null)
+                    {
+                        Assert.True(vmOut.SecurityProfile.EncryptionAtHost == vm.SecurityProfile.EncryptionAtHost);
+                    }
+                    else
+                    {
+                        Assert.Null(vmOut.SecurityProfile?.EncryptionAtHost);
                     }
 
                     if (writeAcceleratorEnabled.HasValue)

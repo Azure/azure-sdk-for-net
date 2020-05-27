@@ -106,6 +106,29 @@ namespace Compute.Tests
         }
 
         /// <summary>
+        /// To record this test case, you need to run it in region which support encryption at host 
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_EncryptionAtHost")]
+        public void TestVMScaleSetScenarioOperations_EncryptionAtHost()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                        encryptionAtHostEnabled: true);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
         /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
         /// </summary>
         [Fact]
@@ -432,7 +455,8 @@ namespace Compute.Tests
 
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
-            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null)
+            Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
+            bool? encryptionAtHostEnabled = null)
         {
             EnsureClientsInitialized(context);
 
@@ -486,7 +510,8 @@ namespace Compute.Tests
                     osDiskSizeInGB: osDiskSizeInGB,
                     ppgId: ppgId,
                     enableUltraSSD: enableUltraSSD,
-                    diskEncryptionSetId: diskEncryptionSetId);
+                    diskEncryptionSetId: diskEncryptionSetId,
+                    encryptionAtHostEnabled: encryptionAtHostEnabled);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -498,6 +523,12 @@ namespace Compute.Tests
                     Assert.True(getResponse.VirtualMachineProfile.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet != null, ".DataDisks.ManagedDisk.DiskEncryptionSet is null");
                     Assert.True(string.Equals(diskEncryptionSetId, getResponse.VirtualMachineProfile.StorageProfile.DataDisks[0].ManagedDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
                         "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
+                }
+
+                if (encryptionAtHostEnabled != null)
+                {
+                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value, 
+                        "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
                 ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId);
