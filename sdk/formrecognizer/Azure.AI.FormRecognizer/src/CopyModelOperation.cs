@@ -167,7 +167,7 @@ namespace Azure.AI.FormRecognizer.Training
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-
+                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Invalid);
                     throw await CreateExceptionForFailedOperationAsync(async, update.Value.CopyResult.Errors).ConfigureAwait(false);
                 }
             }
