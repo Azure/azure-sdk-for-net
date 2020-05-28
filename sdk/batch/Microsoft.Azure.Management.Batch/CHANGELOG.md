@@ -1,6 +1,11 @@
 # Release History
 
 ## 10.1.0-preview.1 (Unreleased)
+### REST API version
+- This version targets REST API version 2020-05-01.
+
+### Features
+- TODO: add necessary changes
 
 ## 10.0.0 (2020-04-11)
 ### REST API version
