@@ -58,6 +58,7 @@ namespace Azure.Core.Experimental.Primitives
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         public static BinaryData Create(Stream stream)
         {
+            Argument.AssertNotNull(stream, nameof(stream));
             using (var memoryStream = new MemoryStream())
             {
                 stream.CopyTo(memoryStream);

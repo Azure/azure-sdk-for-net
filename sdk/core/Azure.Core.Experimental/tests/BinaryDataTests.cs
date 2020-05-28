@@ -81,6 +81,14 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CreateThrowsOnNullStream()
+        {
+            Assert.That(
+                () => BinaryData.Create(stream: null),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
         public void AsThrowsExceptionOnIncompatibleType()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
