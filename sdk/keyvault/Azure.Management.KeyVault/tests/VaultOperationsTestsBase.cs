@@ -77,8 +77,9 @@ namespace Azure.Management.KeyVault.Tests
                 }
                 ).First().Locations.FirstOrDefault();
 
-            ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Resources.Models.ResourceGroup(Location));
+            var resGroupName = Recording.GenerateAssetName("sdktestrg");
+            await ResourceGroupsClient.CreateOrUpdateAsync(resGroupName, new Resources.Models.ResourceGroup(Location));
+            ResGroupName = resGroupName;
             VaultName = Recording.GenerateAssetName("sdktestvault");
 
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
