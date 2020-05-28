@@ -4,6 +4,7 @@
 
 - Support Table and Queue create/get/list/remove
 - Support list deleted blob containers
+- Support create/update File share with access tier
 
 **Breaking changes**
 
