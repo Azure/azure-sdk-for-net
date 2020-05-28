@@ -8,6 +8,7 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
@@ -28,6 +29,17 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string apiKey = "<apiKey>";
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [Test]
+        public void CreateFormRecognizerClientTokenCredential()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+
+            #region Snippet:CreateFormRecognizerClientTokenCredential
+            //@@ string endpoint = "<endpoint>";
+            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
@@ -97,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Samples
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
-            string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
+            string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))

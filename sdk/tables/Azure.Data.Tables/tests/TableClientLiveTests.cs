@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ namespace Azure.Data.Tables.Tests
             // Create the TableServiceClient using the SAS URI.
 
             var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, Recording.InstrumentClientOptions(new TableClientOptions())));
-            var sasTableclient = InstrumentClient(sasAuthedService.GetTableClient(tableName));
+            var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Validate that we are able to query the table from the service.
 
@@ -483,6 +482,300 @@ namespace Azure.Data.Tables.Tests
             entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(entityResults.First().Keys.Count(k => k.EndsWith(TableConstants.Odata.OdataTypeString)), Is.Zero, "The entity should not containt any odata data annotation properties");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        [TestCase(null)]
+        [TestCase(5)]
+        public async Task InsertedCustomEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
+        {
+            List<TestEntity> entityResults;
+            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities.
+
+            entityResults = (await client.QueryAsync<TestEntity>(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
+            entityResults.Clear();
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task InsertedCustomEntitiesCanBeQueriedWithFilters()
+        {
+            List<TestEntity> entityResults;
+            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 20);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = (await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+            Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CustomEntityCanBeUpserted()
+        {
+            string tableName = $"testtable{Recording.GenerateId()}";
+
+            const string rowKeyValue = "1";
+            const string propertyName = "SomeStringProperty";
+            const string originalValue = "This is the original";
+            const string updatedValue = "This is new and improved!";
+
+            var entity = new SimpleTestEntity
+            {
+                PartitionKey = PartitionKeyValue,
+                RowKey = rowKeyValue,
+                StringTypeProperty = originalValue,
+            };
+
+            // Insert the new entity.
+
+            await client.UpsertAsync(entity).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+
+            var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            entityToUpdate[propertyName] = updatedValue;
+            await client.UpsertAsync(entityToUpdate).ConfigureAwait(false);
+
+            // Fetch the updated entity from the service.
+
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CustomEntityUpdateRespectsEtag()
+        {
+            string tableName = $"testtable{Recording.GenerateId()}";
+
+            const string rowKeyValue = "1";
+            const string propertyName = "SomeStringProperty";
+            const string originalValue = "This is the original";
+            const string updatedValue = "This is new and improved!";
+            const string updatedValue2 = "This changed due to a matching Etag";
+            var entity = new SimpleTestEntity
+            {
+                PartitionKey = PartitionKeyValue,
+                RowKey = rowKeyValue,
+                StringTypeProperty = originalValue,
+            };
+
+            // Insert the new entity.
+
+            await client.UpsertAsync(entity).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            originalEntity[propertyName] = updatedValue;
+
+            // Use a wildcard ETag to update unconditionally.
+
+            await client.UpdateAsync(originalEntity, "*").ConfigureAwait(false);
+
+            // Fetch the updated entity from the service.
+
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
+
+            updatedEntity[propertyName] = updatedValue2;
+
+            // Use a non-matching ETag.
+
+            Assert.That(async () => await client.UpdateAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+
+            // Use a matching ETag.
+
+            await client.UpdateAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+
+            // Fetch the newly updated entity from the service.
+
+            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue2), $"The property value should be {updatedValue2}");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CustomEntityMergeRespectsEtag()
+        {
+            string tableName = $"testtable{Recording.GenerateId()}";
+
+            const string rowKeyValue = "1";
+            const string propertyName = "SomeStringProperty";
+            const string originalValue = "This is the original";
+            const string updatedValue = "This is new and improved!";
+            const string updatedValue2 = "This changed due to a matching Etag";
+            var entity = new SimpleTestEntity
+            {
+                PartitionKey = PartitionKeyValue,
+                RowKey = rowKeyValue,
+                StringTypeProperty = originalValue,
+            };
+
+            // Insert the new entity.
+
+            await client.UpsertAsync(entity).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            originalEntity[propertyName] = updatedValue;
+
+            // Use a wildcard ETag to update unconditionally.
+
+            await client.MergeAsync(originalEntity, "*").ConfigureAwait(false);
+
+            // Fetch the updated entity from the service.
+
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
+
+            updatedEntity[propertyName] = updatedValue2;
+
+            // Use a non-matching ETag.
+
+            Assert.That(async () => await client.MergeAsync(updatedEntity, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+
+            // Use a matching ETag.
+
+            await client.MergeAsync(updatedEntity, updatedEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+
+            // Fetch the newly updated entity from the service.
+
+            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue2), $"The property value should be {updatedValue2}");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task CustomEntityDeleteRespectsEtag()
+        {
+            string tableName = $"testtable{Recording.GenerateId()}";
+
+            const string rowKeyValue = "1";
+            const string originalValue = "This is the original";
+            var entity = new SimpleTestEntity
+            {
+                PartitionKey = PartitionKeyValue,
+                RowKey = rowKeyValue,
+                StringTypeProperty = originalValue,
+            };
+
+            // Insert the new entity.
+
+            await client.UpsertAsync(entity).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var staleEtag = originalEntity[TableConstants.PropertyNames.Etag] as string;
+
+            // Use a wildcard ETag to delete unconditionally.
+
+            await client.DeleteAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
+
+            // Validate that the entity is deleted.
+
+            var emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+
+            Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
+
+            // Insert the new entity again.
+
+            await client.UpsertAsync(entity).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+
+            originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+
+            // Use a non-matching ETag.
+
+            Assert.That(async () => await client.DeleteAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+
+            // Use a matching ETag.
+
+            await client.DeleteAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+
+            // Validate that the entity is deleted.
+
+            emptyresult = await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [Test]
+        public async Task InsertedCustomEntitiesAreRoundtrippedProprly()
+        {
+            List<TestEntity> entityResults;
+            var entitiesToInsert = CreateCustomTableEntities(PartitionKeyValue, 1);
+
+            // Insert the new entities.
+
+            foreach (var entity in entitiesToInsert)
+            {
+                await client.InsertAsync(entity).ConfigureAwait(false);
+            }
+
+            // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
+
+            entityResults = (await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults.Sort((first, second) => first.IntTypeProperty.CompareTo(second.IntTypeProperty));
+
+            for (int i = 0; i < entityResults.Count; i++)
+            {
+                Assert.That(entityResults[i].BinaryTypeProperty, Is.EqualTo(entitiesToInsert[i].BinaryTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DatetimeOffsetTypeProperty, Is.EqualTo(entitiesToInsert[i].DatetimeOffsetTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DatetimeTypeProperty, Is.EqualTo(entitiesToInsert[i].DatetimeTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].DoubleTypeProperty, Is.EqualTo(entitiesToInsert[i].DoubleTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].GuidTypeProperty, Is.EqualTo(entitiesToInsert[i].GuidTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].Int64TypeProperty, Is.EqualTo(entitiesToInsert[i].Int64TypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].IntTypeProperty, Is.EqualTo(entitiesToInsert[i].IntTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToInsert[i].PartitionKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToInsert[i].RowKey), "The entities should be equivalent");
+                Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToInsert[i].StringTypeProperty), "The entities should be equivalent");
+            }
         }
 
         /// <summary>

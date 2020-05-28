@@ -1143,12 +1143,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='take'>
             /// The number of entries to return. Maximum page size is 500. Default is 100.
             /// </param>
+            /// <param name='enableNestedChildren'>
+            /// Toggles nested/flat format
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IntentsSuggestionExample>> ListIntentSuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentsSuggestionExample>> ListIntentSuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, bool? enableNestedChildren = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListIntentSuggestionsWithHttpMessagesAsync(appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIntentSuggestionsWithHttpMessagesAsync(appId, versionId, intentId, take, enableNestedChildren, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1173,12 +1176,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='take'>
             /// The number of entries to return. Maximum page size is 500. Default is 100.
             /// </param>
+            /// <param name='enableNestedChildren'>
+            /// Toggles nested/flat format
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntitiesSuggestionExample>> ListEntitySuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntitiesSuggestionExample>> ListEntitySuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, bool? enableNestedChildren = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListEntitySuggestionsWithHttpMessagesAsync(appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListEntitySuggestionsWithHttpMessagesAsync(appId, versionId, entityId, take, enableNestedChildren, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

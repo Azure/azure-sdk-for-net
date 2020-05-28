@@ -32,13 +32,13 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine($"Custom Model Info:");
             Console.WriteLine($"    Model Id: {model.ModelId}");
             Console.WriteLine($"    Model Status: {model.Status}");
-            Console.WriteLine($"    Created On: {model.CreatedOn}");
-            Console.WriteLine($"    Last Modified: {model.LastModified}");
+            Console.WriteLine($"    Requested on: {model.RequestedOn}");
+            Console.WriteLine($"    Completed on: {model.CompletedOn}");
 
-            foreach (CustomFormSubModel subModel in model.Models)
+            foreach (CustomFormSubmodel submodel in model.Submodels)
             {
-                Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-                foreach (CustomFormModelField field in subModel.Fields.Values)
+                Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+                foreach (CustomFormModelField field in submodel.Fields.Values)
                 {
                     Console.Write($"    FieldName: {field.Name}");
                     if (field.Accuracy != null)

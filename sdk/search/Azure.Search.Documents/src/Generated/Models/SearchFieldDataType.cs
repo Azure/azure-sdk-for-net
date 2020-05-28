@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the data type of a field in a search index. </summary>
     public readonly partial struct SearchFieldDataType : IEquatable<SearchFieldDataType>

@@ -19,37 +19,37 @@ namespace Microsoft.Azure.Management.CosmosDB
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "Collection", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "Database", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "NotebookWorkspaces", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "Operations", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "Percentile", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "Collection", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "Database", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "NotebookWorkspaces", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "Operations", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "Percentile", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2020-04-01"),
                 new Tuple<string, string, string>("DocumentDB", "PrivateEndpointConnections", "2019-08-01-preview"),
                 new Tuple<string, string, string>("DocumentDB", "PrivateLinkResources", "2019-08-01-preview"),
-                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2020-03-01"),
-                new Tuple<string, string, string>("DocumentDB", "TableResources", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2020-04-01"),
+                new Tuple<string, string, string>("DocumentDB", "TableResources", "2020-04-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "94e82241deb262a5bd60added152f5c9175fdd82";
+      public static readonly String GithubCommidId = "ce803289277d358f93198de894e4f5ae080aba0c";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

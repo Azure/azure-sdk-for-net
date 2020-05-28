@@ -16,9 +16,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             ModelId = model.ModelInfo.ModelId.ToString();
             Status = model.ModelInfo.Status;
-            CreatedOn = model.ModelInfo.CreatedDateTime;
-            LastModified = model.ModelInfo.LastUpdatedDateTime;
-            Models = ConvertToSubmodels(model);
+            RequestedOn = model.ModelInfo.CreatedDateTime;
+            CompletedOn = model.ModelInfo.LastUpdatedDateTime;
+            Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);
         }
@@ -34,19 +34,19 @@ namespace Azure.AI.FormRecognizer.Training
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when model training was started.
+        /// The date and time (UTC) when the training model request started.
         /// </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset RequestedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTimeOffset LastModified { get; }
+        public DateTimeOffset CompletedOn { get; }
 
         /// <summary>
         /// A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.
         /// </summary>
-        public IReadOnlyList<CustomFormSubModel> Models { get; }
+        public IReadOnlyList<CustomFormSubmodel> Submodels { get; }
 
         /// <summary>
         /// A list of meta-data about each of the documents used to train the model.
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertToSubmodels(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model_internal model)
         {
             if (model.Keys != null)
                 return ConvertFromUnlabeled(model.Keys);
@@ -69,9 +69,9 @@ namespace Azure.AI.FormRecognizer.Training
             return null;
         }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertFromUnlabeled(KeysResult_internal keys)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromUnlabeled(KeysResult_internal keys)
         {
-            var subModels = new List<CustomFormSubModel>();
+            var subModels = new List<CustomFormSubmodel>();
 
             foreach (var cluster in keys.Clusters)
             {
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Training
                     string fieldLabel = cluster.Value[i];
                     fieldMap.Add(fieldName, new CustomFormModelField(fieldName, fieldLabel, default));
                 }
-                subModels.Add(new CustomFormSubModel(
+                subModels.Add(new CustomFormSubmodel(
                     $"form-{cluster.Key}",
                     default,
                     fieldMap));
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Training
             return subModels;
         }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertFromLabeled(Model_internal model)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model_internal model)
         {
             var fieldMap = new Dictionary<string, CustomFormModelField>();
 
@@ -102,8 +102,8 @@ namespace Azure.AI.FormRecognizer.Training
                 }
             }
 
-            return new List<CustomFormSubModel> {
-                new CustomFormSubModel(
+            return new List<CustomFormSubmodel> {
+                new CustomFormSubmodel(
                     $"form-{model.ModelInfo.ModelId}",
                     model.TrainResult.AverageModelAccuracy,
                     fieldMap)};

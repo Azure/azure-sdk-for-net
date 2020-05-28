@@ -31,28 +31,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the EventChannelFilter class.
         /// </summary>
-        /// <param name="subjectBeginsWith">An optional string to filter events
-        /// for an event channel based on a resource path prefix.
-        /// The format of this depends on the publisher of the events. Wildcard
-        /// characters are not supported in this path.</param>
-        /// <param name="subjectEndsWith">An optional string to filter events
-        /// for an event channel based on a resource path suffix.
-        /// Wildcard characters are not supported in this path.</param>
-        /// <param name="includedEventTypes">A list of applicable event types
-        /// that need to be part of the event channel. If it is desired to
-        /// subscribe to all default event types, set the IncludedEventTypes to
-        /// null.</param>
-        /// <param name="isSubjectCaseSensitive">Specifies if the
-        /// SubjectBeginsWith and SubjectEndsWith properties of the filter
-        /// should be compared in a case sensitive manner.</param>
         /// <param name="advancedFilters">An array of advanced filters that are
         /// used for filtering event channels.</param>
-        public EventChannelFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
+        public EventChannelFilter(IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
         {
-            SubjectBeginsWith = subjectBeginsWith;
-            SubjectEndsWith = subjectEndsWith;
-            IncludedEventTypes = includedEventTypes;
-            IsSubjectCaseSensitive = isSubjectCaseSensitive;
             AdvancedFilters = advancedFilters;
             CustomInit();
         }
@@ -61,39 +43,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets an optional string to filter events for an event
-        /// channel based on a resource path prefix.
-        /// The format of this depends on the publisher of the events. Wildcard
-        /// characters are not supported in this path.
-        /// </summary>
-        [JsonProperty(PropertyName = "subjectBeginsWith")]
-        public string SubjectBeginsWith { get; set; }
-
-        /// <summary>
-        /// Gets or sets an optional string to filter events for an event
-        /// channel based on a resource path suffix.
-        /// Wildcard characters are not supported in this path.
-        /// </summary>
-        [JsonProperty(PropertyName = "subjectEndsWith")]
-        public string SubjectEndsWith { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of applicable event types that need to be part
-        /// of the event channel. If it is desired to subscribe to all default
-        /// event types, set the IncludedEventTypes to null.
-        /// </summary>
-        [JsonProperty(PropertyName = "includedEventTypes")]
-        public IList<string> IncludedEventTypes { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies if the SubjectBeginsWith and SubjectEndsWith
-        /// properties of the filter
-        /// should be compared in a case sensitive manner.
-        /// </summary>
-        [JsonProperty(PropertyName = "isSubjectCaseSensitive")]
-        public bool? IsSubjectCaseSensitive { get; set; }
 
         /// <summary>
         /// Gets or sets an array of advanced filters that are used for

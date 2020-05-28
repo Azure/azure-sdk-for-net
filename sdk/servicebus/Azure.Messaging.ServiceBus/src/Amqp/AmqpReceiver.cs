@@ -135,22 +135,50 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    _connectionScope.OpenReceiverLinkAsync(
-                        entityPath: _entityPath,
+                    OpenReceiverLinkAsync(
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         sessionId: sessionId,
-                        isSessionReceiver: isSessionReceiver,
-                        cancellationToken: CancellationToken.None),
+                        isSessionReceiver: isSessionReceiver),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
                     _entityPath,
+                    _identifier,
                     timeout,
                     CancellationToken.None),
                 link => CloseLink(link));
+        }
+
+        private async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
+            TimeSpan timeout,
+            uint prefetchCount,
+            ReceiveMode receiveMode,
+            string sessionId,
+            bool isSessionReceiver)
+        {
+            ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
+
+            try
+            {
+                ReceivingAmqpLink link = await _connectionScope.OpenReceiverLinkAsync(
+                    entityPath: _entityPath,
+                    timeout: timeout,
+                    prefetchCount: prefetchCount,
+                    receiveMode: receiveMode,
+                    sessionId: sessionId,
+                    isSessionReceiver: isSessionReceiver,
+                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier);
+                return link;
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateReceiveLinkException(_identifier, ex.ToString());
+                throw;
+            }
         }
 
         private void CloseLink(ReceivingAmqpLink link)
@@ -173,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
@@ -195,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
+        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages to receive in this batch.</param>
@@ -204,7 +232,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
         ///
         private async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsyncInternal(
             int maxMessages,
@@ -215,6 +243,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
+            if (_isSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
+
             try
             {
                 link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
@@ -257,7 +290,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -384,9 +417,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ServiceBusEventSource.Log.LinkStateLost(
                         _identifier,
                         receiveLink.Name,
-                        receiveLink.State,
+                        receiveLink.State.ToString(),
                         _isSessionReceiver,
-                        exception);
+                        exception.ToString());
                     ThrowLockLostException();
                 }
 
@@ -936,7 +969,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private async Task<AmqpResponseMessage> ExecuteRequest(TimeSpan timeout, AmqpRequestMessage amqpRequestMessage)
         {
-            ThrowIfSessionLockLost();
+            if (_isSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
             AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,
                 _managementLink,
@@ -1221,7 +1257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.SessionReceiverLinkClosed(
                     _identifier,
                     SessionId,
-                    LinkException);
+                    LinkException.ToString());
             }
         }
 
@@ -1276,5 +1312,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             }
         }
+
+        private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

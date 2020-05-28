@@ -1,10 +1,18 @@
 # Release History
 
+## 1.0.0-preview.6 (Unreleased)
+
+
 ## 1.0.0-preview.5 (Unreleased)
 ### Breaking changes
+- Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
 - `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
 - `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.
+- `TextAnalyticsError` property `Code` has been renamed to `ErrorCode` and it is an `TextAnalyticsErrorCode` instead of a string.
+- Single operation method `RecognizeEntitiesAsync` and `RecognizeEntities` now returns a `CategorizedEntityCollection`.
+- Single operation method `ExtractKeyPhrasesAsync` and `ExtractKeyPhrases` now returns a `KeyPhraseCollection`.
+- Single operation method `RecognizeLinkedEntitiesAsync` and `RecognizeLinkedEntities` now returns a `LinkedEntityCollection`.
 
 ### Added
 - Added `Text` property to `SentenceSentiment`.

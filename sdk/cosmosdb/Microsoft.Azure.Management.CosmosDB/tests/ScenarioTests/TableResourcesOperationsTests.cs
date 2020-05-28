@@ -56,10 +56,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 TableCreateUpdateParameters tableCreateUpdateParameters = new TableCreateUpdateParameters
                 {
                     Resource = new TableResource { Id = tableName },
-                    Options = new CreateUpdateOptions
-                    {
-                        AdditionalProperties = additionalProperties
-                    }
+                    Options = new CreateUpdateOptions()
                 };
 
                 TableGetResults tableGetResults = cosmosDBManagementClient.TableResources.CreateUpdateTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, tableName, tableCreateUpdateParameters).GetAwaiter().GetResult().Body;
@@ -79,7 +76,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Resource = new TableResource { Id = tableName2 },
                     Options = new CreateUpdateOptions
                     {
-                        Throughput = sampleThroughput.ToString()
+                        Throughput = sampleThroughput
                     }
                 };
 

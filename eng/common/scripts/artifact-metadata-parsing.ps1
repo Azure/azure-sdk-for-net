@@ -86,16 +86,21 @@ function ParseMavenPackage($pkg, $workingDirectory) {
   $pkgId = $contentXML.project.artifactId
   $pkgVersion = $contentXML.project.version
   $groupId = if ($contentXML.project.groupId -eq $null) { $contentXML.project.parent.groupId } else { $contentXML.project.groupId }
+  $releaseNotes = ""
+  $readmeContent = ""
 
   # if it's a snapshot. return $null (as we don't want to create tags for this, but we also don't want to fail)
   if ($pkgVersion.Contains("SNAPSHOT")) {
     return $null
   }
 
-  $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation @(Get-ChildItem -Path $pkg.DirectoryName -Recurse -Include "$($pkg.Basename)-changelog.md")[0]
+  $changeLogLoc = @(Get-ChildItem -Path $pkg.DirectoryName -Recurse -Include "$($pkg.Basename)-changelog.md")[0]
+  if ($changeLogLoc) {
+    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+  }
 
   $readmeContentLoc = @(Get-ChildItem -Path $pkg.DirectoryName -Recurse -Include "$($pkg.Basename)-readme.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
+  if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
 
@@ -155,15 +160,23 @@ function ResolvePkgJson($workFolder) {
 function ParseNPMPackage($pkg, $workingDirectory) {
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
+  $releaseNotes = ""
+  $readmeContent = ""
+
   New-Item -ItemType Directory -Force -Path $workFolder
   cd $workFolder
 
   tar -xzf $pkg
 
   $packageJSON = ResolvePkgJson -workFolder $workFolder | Get-Content | ConvertFrom-Json
-  $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+
+  $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+  if ($changeLogLoc) {
+    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+  }
+
   $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
+  if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
 
@@ -208,15 +221,22 @@ function ParseNugetPackage($pkg, $workingDirectory) {
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
+  $releaseNotes = ""
+  $readmeContent = ""
+
   New-Item -ItemType Directory -Force -Path $workFolder
 
   Copy-Item -Path $pkg -Destination $zipFileLocation
   Expand-Archive -Path $zipFileLocation -DestinationPath $workFolder
   [xml] $packageXML = Get-ChildItem -Path "$workFolder/*.nuspec" | Get-Content
-  $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+
+  $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+  if ($changeLogLoc) {
+    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+  }
 
   $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
+  if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
 
@@ -269,12 +289,19 @@ function ParsePyPIPackage($pkg, $workingDirectory) {
 
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $origFolder = Get-Location
-  New-Item -ItemType Directory -Force -Path $workFolder
+  $releaseNotes = ""
+  $readmeContent = ""
 
+  New-Item -ItemType Directory -Force -Path $workFolder
   Expand-Archive -Path $pkg -DestinationPath $workFolder
-  $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+
+  $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
+  if ($changeLogLoc) {
+    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+  }
+
   $readmeContentLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "README.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
+  if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
   Remove-Item $workFolder -Force  -Recurse -ErrorAction SilentlyContinue
@@ -291,23 +318,28 @@ function ParsePyPIPackage($pkg, $workingDirectory) {
 function ParseCArtifact($pkg, $workingDirectory) {
   $packageInfo = Get-Content -Raw -Path $pkg | ConvertFrom-JSON
   $packageArtifactLocation = (Get-ItemProperty $pkg).Directory.FullName
+  $releaseNotes = ""
+  $readmeContent = ""
 
-  $releaseNotes = ExtractReleaseNotes -changeLogLocation @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
-
+  $changeLogLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "CHANGELOG.md")[0]
+  if ($changeLogLoc)
+  {
+    $releaseNotes = &"${PSScriptRoot}/../Extract-ReleaseNotes.ps1" -ChangeLogLocation $changeLogLoc
+  }
+  
   $readmeContentLoc = @(Get-ChildItem -Path $packageArtifactLocation -Recurse -Include "README.md")[0]
-  if (Test-Path -Path $readmeContentLoc) {
+  if ($readmeContentLoc) {
     $readmeContent = Get-Content -Raw $readmeContentLoc
   }
 
   return New-Object PSObject -Property @{
-    PackageId      = $packageInfo.name
+    PackageId      = ''
     PackageVersion = $packageInfo.version
     # Artifact info is always considered deployable for C becasue it is not
     # deployed anywhere. Dealing with duplicate tags happens downstream in
     # CheckArtifactShaAgainstTagsList
     Deployable     = $true
     ReleaseNotes   = $releaseNotes
-    ReadmeContent  = $readmeContent
   }
 }
 
@@ -358,7 +390,7 @@ function GetExistingTags($apiUrl) {
 }
 
 # Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha, $exitOnError = $True) {
+function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
   $pkgList = [array]@()
   $ParsePkgInfoFn = ""
   $packagePattern = ""
@@ -404,16 +436,22 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
         continue
       }
 
-      if ($parsedPackage.Deployable -ne $True -and $exitOnError) {
+      if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
         Write-Host "Maybe a pkg version wasn't updated properly?"
         exit(1)
       }
 
+      $tag = if ($parsedPackage.packageId) {
+        "$($parsedPackage.packageId)_$($parsedPackage.PackageVersion)"
+      } else {
+        $parsedPackage.PackageVersion
+      }
+
       $pkgList += New-Object PSObject -Property @{
         PackageId      = $parsedPackage.PackageId
         PackageVersion = $parsedPackage.PackageVersion
-        Tag            = ($parsedPackage.PackageId + "_" + $parsedPackage.PackageVersion)
+        Tag            = $tag
         ReleaseNotes   = $parsedPackage.ReleaseNotes
         ReadmeContent  = $parsedPackage.ReadmeContent
       }
@@ -430,8 +468,8 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
   
   $intersect = $results | % { $_.Tag } | ? { $existingTags -contains $_ }
 
-  if ($intersect.Length -gt 0 -and $exitOnError) {
-    CheckArtifactShaAgainstTagsList -priorExistingTagList $intersect -releaseSha $releaseSha -apiUrl $apiUrl -exitOnError $exitOnError
+  if ($intersect.Length -gt 0 -and !$continueOnError) {
+    CheckArtifactShaAgainstTagsList -priorExistingTagList $intersect -releaseSha $releaseSha -apiUrl $apiUrl -continueOnError $continueOnError
 
     # all the tags are clean. remove them from the list of releases we will publish.
     $results = $results | ? { -not ($intersect -contains $_.Tag ) }
@@ -443,7 +481,7 @@ function VerifyPackages($pkgRepository, $artifactLocation, $workingDirectory, $a
 # given a set of tags that we want to release, we need to ensure that if they already DO exist.
 # if they DO exist, quietly exit if the commit sha of the artifact matches that of the tag
 # if the commit sha does not match, exit with error and report both problem shas
-function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $exitOnError) {
+function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $continueOnError) {
   $headers = @{
     "Content-Type"  = "application/json"
     "Authorization" = "token $($env:GH_TOKEN)"
@@ -465,7 +503,7 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
     }
   }
 
-  if ($unmatchedTags.Length -gt 0 -and $exitOnError) {
+  if ($unmatchedTags.Length -gt 0 -and !$continueOnError) {
     Write-Host "Tags already existing with different SHA versions. Exiting."
     exit(1)
   }

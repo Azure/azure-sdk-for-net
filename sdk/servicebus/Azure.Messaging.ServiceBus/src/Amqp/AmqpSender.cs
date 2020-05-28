@@ -10,6 +10,7 @@ using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -49,6 +50,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _entityPath;
 
         /// <summary>
+        /// The identifier for the sender.
+        /// </summary>
+        private readonly string _identifier;
+
+        /// <summary>
         /// An optional entity path to route the message through. Useful for transactions.
         /// </summary>
         private readonly string _viaEntityPath;
@@ -86,6 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -100,13 +107,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             string viaEntityPath,
             AmqpConnectionScope connectionScope,
-            ServiceBusRetryPolicy retryPolicy)
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
+            _identifier = identifier;
             _viaEntityPath = viaEntityPath;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
@@ -122,6 +131,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
                     _entityPath,
+                    identifier,
                     timeout,
                     CancellationToken.None),
                 link =>
@@ -274,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -456,7 +466,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -531,7 +541,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -560,27 +570,36 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                _entityPath,
-                _viaEntityPath,
-                timeout,
-                cancellationToken).ConfigureAwait(false);
-
-            if (!MaxMessageSize.HasValue)
+            ServiceBusEventSource.Log.CreateSendLinkStart(_identifier);
+            try
             {
-                // This delay is necessary to prevent the link from causing issues for subsequent
-                // operations after creating a batch.  Without it, operations using the link consistently
-                // timeout.  The length of the delay does not appear significant, just the act of introducing
-                // an asynchronous delay.
-                //
-                // For consistency the value used by the legacy Service Bus client has been brought forward and
-                // used here.
+                SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
+                    _entityPath,
+                    _viaEntityPath,
+                    timeout,
+                    cancellationToken).ConfigureAwait(false);
 
-                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                MaxMessageSize = (long)link.Settings.MaxMessageSize;
+                if (!MaxMessageSize.HasValue)
+                {
+                    // This delay is necessary to prevent the link from causing issues for subsequent
+                    // operations after creating a batch.  Without it, operations using the link consistently
+                    // timeout.  The length of the delay does not appear significant, just the act of introducing
+                    // an asynchronous delay.
+                    //
+                    // For consistency the value used by the legacy Service Bus client has been brought forward and
+                    // used here.
+
+                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                    MaxMessageSize = (long)link.Settings.MaxMessageSize;
+                }
+                ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                return link;
             }
-
-            return link;
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -595,5 +614,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan UseMinimum(TimeSpan firstOption,
                                            TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
 
+        private bool HasLinkCommunicationError(SendingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

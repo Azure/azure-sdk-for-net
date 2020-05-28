@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex : IUtf8JsonSerializable
     {
@@ -127,13 +127,13 @@ namespace Azure.Search.Documents.Models
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
             CorsOptions corsOptions = default;
-            IList<Suggester> suggesters = default;
+            IList<SearchSuggester> suggesters = default;
             IList<LexicalAnalyzer> analyzers = default;
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            Similarity similarity = default;
+            SimilarityAlgorithm similarity = default;
             string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -212,7 +212,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<Suggester> array = new List<Suggester>();
+                    List<SearchSuggester> array = new List<SearchSuggester>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -221,7 +221,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            array.Add(Suggester.DeserializeSuggester(item));
+                            array.Add(SearchSuggester.DeserializeSearchSuggester(item));
                         }
                     }
                     suggesters = array;
@@ -326,7 +326,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    similarity = Similarity.DeserializeSimilarity(property.Value);
+                    similarity = SimilarityAlgorithm.DeserializeSimilarityAlgorithm(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))

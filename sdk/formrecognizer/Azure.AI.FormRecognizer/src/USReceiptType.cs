@@ -14,6 +14,11 @@ namespace Azure.AI.FormRecognizer.Models
         Unrecognized,
 
         /// <summary>
+        /// Used for other types of US sales receipts.
+        /// </summary>
+        Other,
+
+        /// <summary>
         /// Used for receipts with an item list.
         /// </summary>
         Itemized,
@@ -32,10 +37,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// Used for parking receipts.
         /// </summary>
         Parking,
-
-        /// <summary>
-        /// Used for other types of US sales receipts.
-        /// </summary>
-        Other,
     }
 }

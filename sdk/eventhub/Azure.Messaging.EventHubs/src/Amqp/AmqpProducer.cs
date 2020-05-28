@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            var clientType = GetType();
+            var clientType = GetType().Name;
 
             try
             {

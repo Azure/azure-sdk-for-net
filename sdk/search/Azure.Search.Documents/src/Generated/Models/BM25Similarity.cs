@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the &apos;b&apos; parameter) as well as term frequency saturation (controlled by the &apos;k1&apos; parameter). </summary>
-    public partial class BM25Similarity : Similarity
+    public partial class BM25Similarity : SimilarityAlgorithm
     {
         /// <summary> Initializes a new instance of BM25Similarity. </summary>
         public BM25Similarity()

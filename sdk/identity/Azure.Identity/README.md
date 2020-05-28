@@ -44,7 +44,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 #### Authenticate the client
 
-* Use the returned credentials above to set  **AZURE_CLIENT_ID**(appId), **AZURE_CLIENT_SECRET**(password) and **AZURE_TENANT_ID**(tenant) [environment variables](#environment-variables).
+* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password) and **AZURE_TENANT_ID** (tenant) [environment variables](#environment-variables).
 
 ## Key concepts
 ### Credentials
@@ -114,19 +114,19 @@ When executing this in a development machine you need to first [configure the en
 
 ### Chaining Credentials
 
-The `ChainedTokenCredential` class provides the ability to link together multiple credential instances to be tried sequentially when authenticating. The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to certificate authentication if a managed identity is unavailable in the current environment.  This example authenticates an `EventHubClient` from the [Azure.Messaging.EventHubs][eventhubs_client_library] client library using the `ChainedTokenCredential`.
+The `ChainedTokenCredential` class provides the ability to link together multiple credential instances to be tried sequentially when authenticating. The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to certificate authentication if a managed identity is unavailable in the current environment.  This example authenticates an `EventHubProducerClient` from the [Azure.Messaging.EventHubs][eventhubs_client_library] client library using the `ChainedTokenCredential`.
 ```c#
 using Azure.Identity;
 using Azure.Messaging.EventHubs;
 
 var managedCredential = new ManagedIdentityCredential(clientId);
 
-var certCredential = new CertificateCredential(tenantId, clientId, certificate);
+var certCredential = new ClientCertificateCredential(tenantId, clientId, certificate);
 
 // authenticate using managed identity if it is available otherwise use certificate auth
 var credential = new ChainedTokenCredential(managedCredential, certCredential);
 
-var eventHubClient = new EventHubClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
+var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
 ### Authenticating a service principal with a client secret
@@ -146,11 +146,12 @@ This example demonstrates authenticating the `KeyClient` from the [Azure.Securit
 ```c#
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys;
+using System.Security.Cryptography.X509Certificates;
 
 // authenticating a service principal with a certificate
 var certificate = new X509Certificate2("./app/certs/certificate.pfx");
 
-var credential = new CertificateCredential(tenantId, clientId, certificate);
+var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 
 var keyClient = new KeyClient(new Uri("https://myvault.azure.vaults.net/"), credential);
 ```
@@ -161,12 +162,12 @@ The `InteractiveBrowserCredential` allows an application to authenticate a user 
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-// authenticating a service principal with a client secret
+// authenticating a service principal with InteractiveBrowserCredential
 var credential = new InteractiveBrowserCredential(clientId);
 
 var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
 ```
-__Note:__ If a default browser is not available in the system, or the current application does not have permissions to create a process authentication with the `DefaultBrowserCredential` will fail with an `AuthenticationFailedException`.
+__Note:__ If a default browser is not available in the system, or the current application does not have permissions to create a process authentication with the `InteractiveBrowserCredential` will fail with an `AuthenticationFailedException`.
 ### Authenticating a user with the device code flow
 
 The device code authentication flow allows an application to display a device code to a user, and then the user will authenticate using this code through a browser, typically on another client.  This authentication flow is most often used on clients that have limited UI and no available browser, such as terminal clients and certain IoT devices.  
@@ -184,8 +185,8 @@ Func<DeviceCodeInfo, Task> PrintDeviceCode = code =>
     return Task.CompletedTask;
 }
 
-// Create a secret client using the DefaultAzureCredential
-var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new DeviceCodeCredential(clientId, PrintDeviceCode));
+// Create a secret client using the DeviceCodeCredential
+var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new DeviceCodeCredential((code, cancellationToken) => PrintDeviceCode(code), clientId));
 ```
 ## Troubleshooting
 

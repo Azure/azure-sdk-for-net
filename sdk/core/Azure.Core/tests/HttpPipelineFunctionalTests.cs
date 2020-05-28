@@ -183,7 +183,6 @@ namespace Azure.Core.Tests
             testDoneTcs.Cancel();
         }
 
-#if NETCOREAPP
         [Test]
         public async Task RetriesBufferedBodyTimeout()
         {
@@ -267,7 +266,6 @@ namespace Azure.Core.Tests
 
              testDoneTcs.Cancel();
         }
-#endif
 
         private class TestOptions : ClientOptions
         {
