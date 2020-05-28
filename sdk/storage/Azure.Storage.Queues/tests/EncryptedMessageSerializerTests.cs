@@ -25,7 +25,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void SerializeEncryptedMessage()
         {
-            var result = Utility.BufferedEncryptInternal(
+            var result = ClientSideEncryptor.BufferedEncryptInternal(
                 new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
                 new MockKeyEncryptionKey(),
                 KeyWrapAlgorithm,
@@ -45,7 +45,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void DeserializeEncryptedMessage()
         {
-            var result = Utility.BufferedEncryptInternal(
+            var result = ClientSideEncryptor.BufferedEncryptInternal(
                    new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
                    new MockKeyEncryptionKey(),
                    KeyWrapAlgorithm,
@@ -66,7 +66,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void TryDeserializeEncryptedMessage()
         {
-            var result = Utility.BufferedEncryptInternal(
+            var result = ClientSideEncryptor.BufferedEncryptInternal(
                    new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
                    new MockKeyEncryptionKey(),
                    KeyWrapAlgorithm,

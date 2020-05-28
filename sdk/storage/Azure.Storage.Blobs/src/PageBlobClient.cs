@@ -2617,13 +2617,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         public static PageBlobClient GetPageBlobClient(
             this BlobContainerClient client,
-            string blobName) =>
-            new PageBlobClient(
+            string blobName)
+        {
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
+            }
+            return new PageBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);
+        }
     }
 }

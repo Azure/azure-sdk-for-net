@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" Link="Shared\ClientsideEncryption\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" Link="Shared\ClientsideEncryption\Models\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Remove="C:\Repos\azure-sdk-for-net\sdk\storage\Azure.Storage.Common\src\Shared\ClientsideEncryption\Models\EncryptedBlobRange.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)ChunkedStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

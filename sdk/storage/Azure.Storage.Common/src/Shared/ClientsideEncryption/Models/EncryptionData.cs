@@ -44,21 +44,6 @@ namespace Azure.Storage.Cryptography.Models
         public Metadata KeyWrappingMetadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
 
-        /// <summary>
-        /// Serializes this object to JSON.
-        /// </summary>
-        /// <returns></returns>
-        public string Serialize()
-            => EncryptionDataSerializer.Serialize(this);
-
-        /// <summary>
-        /// Deserializes an <see cref="EncryptionData"/> from JSON.
-        /// </summary>
-        /// <param name="json">JSON to deserialize.</param>
-        /// <returns></returns>
-        public static EncryptionData Deserialize(string json)
-            => EncryptionDataSerializer.Deserialize(json);
-
         internal static async Task<EncryptionData> CreateInternalV1_0(
             byte[] contentEncryptionIv,
             string keyWrapAlgorithm,
@@ -92,11 +77,13 @@ namespace Azure.Storage.Cryptography.Models
         /// <summary>
         /// Singleton string identifying this encryption library.
         /// </summary>
-        private static string AgentString { get; } = new Func<string>(() =>
+        private static string AgentString { get; } = GenerateAgentString();
+
+        private static string GenerateAgentString()
         {
             Assembly assembly = typeof(EncryptionData).Assembly;
             var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
             return $"azsdk-net-{assembly.GetName().Name}/{assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion} {platformInformation}";
-        }).Invoke();
+        }
     }
 }

@@ -5,6 +5,11 @@ namespace Azure.Storage.Cryptography.Models
 {
     /// <summary>
     /// Represents the envelope key details stored on the service.
+    /// In the envelope technique, a securely generated content encryption key (CEK) is generated
+    /// for every encryption operation. It is then encrypted (wrapped) with the user-provided key
+    /// encryption key (KEK), using a key-wrap algorithm. The wrapped CEK is stored with the
+    /// encrypted data, and needs the KEK to be unwrapped. The KEK and key-wrapping operation is
+    /// never seen by this SDK.
     /// </summary>
     internal class KeyEnvelope
     {
@@ -19,7 +24,7 @@ namespace Azure.Storage.Cryptography.Models
         public byte[] EncryptedKey { get; set; }
 
         /// <summary>
-        /// The algorithm used for wrapping.
+        /// The algorithm used to wrap the content encryption key.
         /// </summary>
         public string Algorithm { get; set; }
     }

@@ -11,31 +11,8 @@ using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
 {
-    internal static class Utility
+    internal static class ClientSideDecryptor
     {
-        public static ClientSideEncryptionOptions Clone(this ClientSideEncryptionOptions other)
-            => new ClientSideEncryptionOptions(other.Version)
-            {
-                KeyEncryptionKey = other.KeyEncryptionKey,
-                KeyResolver = other.KeyResolver,
-                KeyWrapAlgorithm = other.KeyWrapAlgorithm,
-            };
-
-        /// <summary>
-        /// Securely generate a key.
-        /// </summary>
-        /// <param name="numBits">Key size.</param>
-        /// <returns>The generated key bytes.</returns>
-        public static byte[] CreateKey(int numBits)
-        {
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                var buff = new byte[numBits / 8];
-                rng.GetBytes(buff);
-                return buff;
-            }
-        }
-
         /// <summary>
         /// Decrypts the given stream if decryption information is provided.
         /// Does not shave off unwanted start/end bytes, but will shave off padding.
@@ -80,7 +57,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var contentEncryptionKey = await GetContentEncryptionKeyOrDefaultAsync(
+            var contentEncryptionKey = await GetContentEncryptionKeyAsync(
                 encryptionData,
                 keyResolver,
                 potentialCachedKeyWrapper,
@@ -143,7 +120,7 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        private static async Task<Memory<byte>> GetContentEncryptionKeyOrDefaultAsync(
+        private static async Task<Memory<byte>> GetContentEncryptionKeyAsync(
 #pragma warning restore CS1587 // XML comment is not placed on a valid language element
             EncryptionData encryptionData,
             IKeyEncryptionKeyResolver keyResolver,
@@ -213,99 +190,6 @@ namespace Azure.Storage.Cryptography
             }
 
             throw EncryptionErrors.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
-        }
-
-        /// <summary>
-        /// Wraps the given read-stream in a CryptoStream and provides the metadata used to create
-        /// that stream.
-        /// </summary>
-        /// <param name="plaintext">Stream to wrap.</param>
-        /// <param name="keyWrapper">Key encryption key (KEK).</param>
-        /// <param name="keyWrapAlgorithm">Algorithm to encrypt the content encryption key (CEK) with.</param>
-        /// <param name="async">Whether to wrap the CEK asynchronously.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The wrapped stream to read from and the encryption metadata for the wrapped stream.</returns>
-        public static async Task<(Stream ciphertext, EncryptionData encryptionData)> EncryptInternal(
-            Stream plaintext,
-            IKeyEncryptionKey keyWrapper,
-            string keyWrapAlgorithm,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
-            EncryptionData encryptionData = default;
-            Stream ciphertext = default;
-
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
-            {
-                encryptionData = await EncryptionData.CreateInternalV1_0(
-                    contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: keyWrapAlgorithm,
-                    contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: keyWrapper,
-                    async: async,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                ciphertext = new CryptoStream(
-                    plaintext,
-                    aesProvider.CreateEncryptor(),
-                    CryptoStreamMode.Read);
-            }
-
-            return (ciphertext, encryptionData);
-        }
-
-        /// <summary>
-        /// Encrypts the given stream and provides the metadata used to encrypt.
-        /// </summary>
-        /// <param name="plaintext">Stream to encrypt.</param>
-        /// <param name="keyWrapper">Key encryption key (KEK).</param>
-        /// <param name="keyWrapAlgorithm">Algorithm to encrypt the content encryption key (CEK) with.</param>
-        /// <param name="async">Whether to wrap the CEK asynchronously.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The encrypted data and the encryption metadata for the wrapped stream.</returns>
-        public static async Task<(byte[] ciphertext, EncryptionData encryptionData)> BufferedEncryptInternal(
-            Stream plaintext,
-            IKeyEncryptionKey keyWrapper,
-            string keyWrapAlgorithm,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
-            EncryptionData encryptionData = default;
-            var ciphertext = new MemoryStream();
-            byte[] bufferedCiphertext = default;
-
-            using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
-            {
-                encryptionData = await EncryptionData.CreateInternalV1_0(
-                    contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: keyWrapAlgorithm,
-                    contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: keyWrapper,
-                    async: async,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                var transformStream = new CryptoStream(
-                    ciphertext,
-                    aesProvider.CreateEncryptor(),
-                    CryptoStreamMode.Write);
-
-                if (async)
-                {
-                    await plaintext.CopyToAsync(transformStream).ConfigureAwait(false);
-                }
-                else
-                {
-                    plaintext.CopyTo(transformStream);
-                }
-
-                transformStream.FlushFinalBlock();
-
-                bufferedCiphertext = ciphertext.ToArray();
-            }
-
-            return (bufferedCiphertext, encryptionData);
         }
     }
 }

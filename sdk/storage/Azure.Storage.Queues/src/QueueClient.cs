@@ -2110,7 +2110,7 @@ namespace Azure.Storage.Queues
         private async Task<string> ClientSideEncryptInternal(string messageToUpload, bool async, CancellationToken cancellationToken)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(messageToUpload);
-            (byte[] ciphertext, EncryptionData encryptionData) = await Utility.BufferedEncryptInternal(
+            (byte[] ciphertext, EncryptionData encryptionData) = await ClientSideEncryptor.BufferedEncryptInternal(
                 new MemoryStream(bytesToEncrypt),
                 ClientSideEncryption.KeyEncryptionKey,
                 ClientSideEncryption.KeyWrapAlgorithm,
@@ -2181,7 +2181,7 @@ namespace Azure.Storage.Queues
             }
 
             var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents));
-            var decryptedMessageStream = await Utility.DecryptInternal(
+            var decryptedMessageStream = await ClientSideDecryptor.DecryptInternal(
                 encryptedMessageStream,
                 encryptedMessage.EncryptionData,
                 ivInStream: false,

@@ -1047,13 +1047,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
         public static AppendBlobClient GetAppendBlobClient(
             this BlobContainerClient client,
-            string blobName) =>
-            new AppendBlobClient(
+            string blobName)
+        {
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
+            }
+            return new AppendBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);
+        }
     }
 }

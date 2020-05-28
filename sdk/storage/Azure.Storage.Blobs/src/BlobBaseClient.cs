@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized.Models;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Shared;
@@ -666,7 +665,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     if (UsingClientSideEncryption)
                     {
-                        range = new EncryptedBlobRange(range).AdjustedRange;
+                        range = GetEncryptedBlobRange(range);
                     }
 
                     // Start downloading the blob
@@ -3007,7 +3006,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool ivInStream = originalRange.Offset >= 16;
 
             // this method throws when key cannot be resolved. Blobs is intended to throw on this failure.
-            var plaintext = await Utility.DecryptInternal(
+            var plaintext = await ClientSideDecryptor.DecryptInternal(
                 content,
                 encryptionData,
                 ivInStream,
@@ -3053,7 +3052,7 @@ namespace Azure.Storage.Blobs.Specialized
                 return default;
             }
 
-            EncryptionData encryptionData = EncryptionData.Deserialize(encryptedDataString);
+            EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(encryptedDataString);
 
             _ = encryptionData.ContentEncryptionIV ?? throw EncryptionErrors.MissingEncryptionMetadata(
                 nameof(EncryptionData.ContentEncryptionIV));
@@ -3096,6 +3095,50 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             return true;
+        }
+
+        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange)
+        {
+            int offsetAdjustment = 0;
+            long? adjustedDownloadCount = originalRange.Length;
+
+            // Calculate offsetAdjustment.
+            if (originalRange.Offset != 0)
+            {
+                // Align with encryption block boundary.
+                int diff;
+                if ((diff = (int)(originalRange.Offset % EncryptionConstants.EncryptionBlockSize)) != 0)
+                {
+                    offsetAdjustment += diff;
+                    if (adjustedDownloadCount != default)
+                    {
+                        adjustedDownloadCount += diff;
+                    }
+                }
+
+                // Account for IV.
+                if (originalRange.Offset >= EncryptionConstants.EncryptionBlockSize)
+                {
+                    offsetAdjustment += EncryptionConstants.EncryptionBlockSize;
+                    // Increment adjustedDownloadCount if necessary.
+                    if (adjustedDownloadCount != default)
+                    {
+                        adjustedDownloadCount += EncryptionConstants.EncryptionBlockSize;
+                    }
+                }
+            }
+
+            // Align adjustedDownloadCount with encryption block boundary at the end of the range. Note that it is impossible
+            // to adjust past the end of the blob as an encrypted blob was padded to align to an encryption block boundary.
+            if (adjustedDownloadCount != null)
+            {
+                adjustedDownloadCount += (
+                    EncryptionConstants.EncryptionBlockSize - (int)(adjustedDownloadCount
+                    % EncryptionConstants.EncryptionBlockSize)
+                ) % EncryptionConstants.EncryptionBlockSize;
+            }
+
+            return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
         }
     }
 

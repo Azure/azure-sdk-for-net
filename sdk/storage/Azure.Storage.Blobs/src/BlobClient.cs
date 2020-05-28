@@ -1097,7 +1097,7 @@ namespace Azure.Storage.Blobs
 
             //long originalLength = content.Length;
 
-            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await Utility.EncryptInternal(
+            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await ClientSideEncryptor.EncryptInternal(
                 content,
                 ClientSideEncryption.KeyEncryptionKey,
                 ClientSideEncryption.KeyWrapAlgorithm,
@@ -1110,7 +1110,7 @@ namespace Azure.Storage.Blobs
             //        GetExpectedCryptoStreamLength(originalLength));
 
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata.Add(EncryptionConstants.EncryptionDataKey, encryptionData.Serialize());
+            metadata.Add(EncryptionConstants.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
 
             return (nonSeekableCiphertext, metadata);
         }
