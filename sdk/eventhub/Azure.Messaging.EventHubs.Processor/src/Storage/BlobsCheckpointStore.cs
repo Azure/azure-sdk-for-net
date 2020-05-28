@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             ContainerClient = blobContainerClient;
             RetryPolicy = retryPolicy;
-            Logger.BlobsCheckpointStoreCreated(blobContainerClient.AccountName, blobContainerClient.Name);
+            Logger.BlobsCheckpointStoreCreated(nameof(BlobsCheckpointStore), blobContainerClient.AccountName, blobContainerClient.Name);
         }
 
         /// <summary>
