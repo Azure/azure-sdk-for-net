@@ -1,5 +1,32 @@
 namespace Azure.Core
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct BinaryData
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
+        public static Azure.Core.BinaryData Create(System.IO.Stream stream) { throw null; }
+        public static Azure.Core.BinaryData Create(string data) { throw null; }
+        public static Azure.Core.BinaryData Create(string data, System.Text.Encoding encoding) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream) { throw null; }
+        public static Azure.Core.BinaryData Create<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
+        public static implicit operator string (Azure.Core.BinaryData data) { throw null; }
+    }
+    public static partial class BinaryDataExtensions
+    {
+        public static System.Threading.Tasks.ValueTask<T> AsAsync<T>(this Azure.Core.BinaryData data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static System.ReadOnlyMemory<byte> AsBytes(this Azure.Core.BinaryData data) { throw null; }
+        public static System.IO.Stream AsStream(this Azure.Core.BinaryData data) { throw null; }
+        public static string AsString(this Azure.Core.BinaryData data) { throw null; }
+        public static string AsString(this Azure.Core.BinaryData data, System.Text.Encoding encoding) { throw null; }
+        public static T As<T>(this Azure.Core.BinaryData data, Azure.Core.ObjectSerializer serializer) { throw null; }
+    }
     public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer
     {
         public JsonObjectSerializer() { }
