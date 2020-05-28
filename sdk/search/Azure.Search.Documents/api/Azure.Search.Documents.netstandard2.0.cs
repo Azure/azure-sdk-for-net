@@ -339,13 +339,6 @@ namespace Azure.Search.Documents.Indexes.Models
         Front = 0,
         Back = 1,
     }
-    public partial class EdgeNGramTokenFilterV2 : Azure.Search.Documents.Indexes.Models.TokenFilter
-    {
-        public EdgeNGramTokenFilterV2(string name) { }
-        public int? MaxGram { get { throw null; } set { } }
-        public int? MinGram { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.EdgeNGramTokenFilterSide? Side { get { throw null; } set { } }
-    }
     public partial class EdgeNGramTokenizer : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
     {
         public EdgeNGramTokenizer(string name) { }
@@ -579,10 +572,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public KeywordTokenizer(string name) { }
         public int? BufferSize { get { throw null; } set { } }
-    }
-    public partial class KeywordTokenizerV2 : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
-    {
-        public KeywordTokenizerV2(string name) { }
         public int? MaxTokenLength { get { throw null; } set { } }
     }
     public partial class LanguageDetectionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
@@ -760,11 +749,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public LuceneStandardTokenizer(string name) { }
         public int? MaxTokenLength { get { throw null; } set { } }
     }
-    public partial class LuceneStandardTokenizerV2 : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
-    {
-        public LuceneStandardTokenizerV2(string name) { }
-        public int? MaxTokenLength { get { throw null; } set { } }
-    }
     public partial class MagnitudeScoringFunction : Azure.Search.Documents.Indexes.Models.ScoringFunction
     {
         public MagnitudeScoringFunction(string fieldName, double boost, Azure.Search.Documents.Indexes.Models.MagnitudeScoringParameters parameters) { }
@@ -901,12 +885,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MaxGram { get { throw null; } set { } }
         public int? MinGram { get { throw null; } set { } }
     }
-    public partial class NGramTokenFilterV2 : Azure.Search.Documents.Indexes.Models.TokenFilter
-    {
-        public NGramTokenFilterV2(string name) { }
-        public int? MaxGram { get { throw null; } set { } }
-        public int? MinGram { get { throw null; } set { } }
-    }
     public partial class NGramTokenizer : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
     {
         public NGramTokenizer(string name) { }
@@ -969,9 +947,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } set { } }
         public string TargetName { get { throw null; } set { } }
     }
-    public partial class PathHierarchyTokenizerV2 : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
+    public partial class PathHierarchyTokenizer : Azure.Search.Documents.Indexes.Models.LexicalTokenizer
     {
-        public PathHierarchyTokenizerV2(string name) { }
+        public PathHierarchyTokenizer(string name) { }
         public char? Delimiter { get { throw null; } set { } }
         public int? MaxTokenLength { get { throw null; } set { } }
         public int? NumberOfTokensToSkip { get { throw null; } set { } }

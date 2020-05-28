@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
+            string formUri = FormRecognizerTestEnvironment.CreateUriString("Form_1.jpg");
             string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DigitalTwins.Tests.Helpers
+﻿namespace DigitalTwins.Tests.Helpers
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+
     public class RecordedDelegatingHandler : DelegatingHandler
     {
         private HttpResponseMessage _response;

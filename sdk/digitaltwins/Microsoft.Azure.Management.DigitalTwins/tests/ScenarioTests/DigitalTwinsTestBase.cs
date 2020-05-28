@@ -1,16 +1,13 @@
-﻿using DigitalTwins.Tests.Helpers;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.DigitalTwins;
-using Microsoft.Azure.Management.DigitalTwins.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-
-namespace DigitalTwins.Tests.ScenarioTests
+﻿namespace DigitalTwins.Tests.ScenarioTests
 {
+    using DigitalTwins.Tests.Helpers;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
+    using Microsoft.Azure.Management.DigitalTwins;
+    using Microsoft.Azure.Management.DigitalTwins.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Net;
     public class DigitalTwinsTestBase
     {
         protected ResourceManagementClient resourcesClient;
@@ -31,6 +28,7 @@ namespace DigitalTwins.Tests.ScenarioTests
                     {
                         testEnv = TestEnvironmentFactory.GetTestEnvironment();
                         resourcesClient = DigitalTwinsTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        digitalTwinsClient = DigitalTwinsTestUtilities.GetDigitalTwinsClient(context,  new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
                         {

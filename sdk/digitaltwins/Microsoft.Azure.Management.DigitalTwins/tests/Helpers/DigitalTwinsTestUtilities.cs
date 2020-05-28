@@ -1,14 +1,10 @@
-﻿
-using Microsoft.Azure.Management.DigitalTwins;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-
-namespace DigitalTwins.Tests.Helpers
+﻿namespace DigitalTwins.Tests.Helpers
 {
+
+    using Microsoft.Azure.Management.DigitalTwins;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System.Net;
     class DigitalTwinsTestUtilities
     {
         public static string DefaultLocation = "WestUS";
@@ -22,7 +18,7 @@ namespace DigitalTwins.Tests.Helpers
             {
                 handler.IsPassThrough = true;
             }
-
+ 
             return context.GetServiceClient<AzureDigitalTwinsManagementClient>(handlers: handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
 
