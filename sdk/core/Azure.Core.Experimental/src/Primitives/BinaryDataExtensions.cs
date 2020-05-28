@@ -32,8 +32,11 @@ namespace Azure.Core.Experimental.Primitives
         /// <returns>The string representation of the data.</returns>
         public static string AsString(
             this BinaryData data,
-            Encoding encoding) =>
-            encoding.GetString(data.Memory.ToArray());
+            Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            return encoding.GetString(data.Memory.ToArray());
+        }
 
         /// <summary>
         /// Converts the BinaryData to bytes.
@@ -63,8 +66,11 @@ namespace Azure.Core.Experimental.Primitives
         ///<returns>The data converted to the specified type.</returns>
         public static T As<T>(
             this BinaryData data,
-            ObjectSerializer serializer) =>
-            (T)serializer.Deserialize(data.AsStream(), typeof(T));
+            ObjectSerializer serializer)
+        {
+            Argument.AssertNotNull(serializer, nameof(serializer));
+            return (T)serializer.Deserialize(data.AsStream(), typeof(T));
+        }
 
         /// <summary>
         /// Converts the BinaryData to the specified type.

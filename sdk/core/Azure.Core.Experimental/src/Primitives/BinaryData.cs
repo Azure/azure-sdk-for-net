@@ -78,6 +78,7 @@ namespace Azure.Core.Experimental.Primitives
             T data,
             ObjectSerializer serializer)
         {
+            Argument.AssertNotNull(serializer, nameof(serializer));
             using var memoryStream = new MemoryStream();
             serializer.Serialize(memoryStream, data, typeof(T));
             memoryStream.Position = 0;

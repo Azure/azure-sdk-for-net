@@ -38,6 +38,16 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void AsStringThrowsOnNullEncoding()
+        {
+            var payload = "some data";
+            var data = BinaryData.Create(payload);
+            Assert.That(
+                () => data.AsString(null),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
         public void CanCreateBinaryDataFromStream()
         {
             var buffer = Encoding.UTF8.GetBytes("some data");
@@ -62,22 +72,34 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void GenericCreateThrowsOnNullSerializer()
+        {
+            var payload = new TestModel { A = "value", B = 5, C = true };
+            Assert.That(
+                () => BinaryData.Create(payload, null),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
         public void AsThrowsExceptionOnIncompatibleType()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             var serializer = new JsonObjectSerializer();
             var data = BinaryData.Create(payload, serializer);
+            Assert.That(
+                () => data.As<string>(serializer),
+                Throws.InstanceOf<Exception>());
+        }
 
-            try
-            {
-                // Throws.InstanceOf doesn't seem to work with generic methods
-                data.As<string>(serializer);
-            }
-            catch (Exception)
-            {
-                return;
-            }
-            Assert.Fail("No exception thrown.");
+        [Test]
+        public void AsThrowsOnNullSerializer ()
+        {
+            var payload = new TestModel { A = "value", B = 5, C = true };
+            var serializer = new JsonObjectSerializer();
+            var data = BinaryData.Create(payload, serializer);
+            Assert.That(
+                () => data.As<TestModel>(null),
+                Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
