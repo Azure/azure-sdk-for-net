@@ -305,9 +305,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(target, nameof(target));
 
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target._resourceId,
-                                          target._region,
-                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+            var request = new CopyRequest(target.ResourceId,
+                                          target.Region,
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
 
             ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
             return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
@@ -329,9 +329,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(target, nameof(target));
 
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target._resourceId,
-                                          target._region,
-                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+            var request = new CopyRequest(target.ResourceId,
+                                          target.Region,
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
             ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
             return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
         }
