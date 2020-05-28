@@ -38,7 +38,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The paths's blob <see cref="Uri"/> endpoint.
         /// </summary>
-        private readonly Uri _blobUri;
+#pragma warning disable CA1051 // Do not declare visible instance fields
+        protected readonly Uri _blobUri;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
         /// <summary>
         /// The path's dfs <see cref="Uri"/> endpoint.
