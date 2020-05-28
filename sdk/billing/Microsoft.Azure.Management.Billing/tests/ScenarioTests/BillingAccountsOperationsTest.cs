@@ -16,7 +16,33 @@ namespace Billing.Tests.ScenarioTests
     {
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        
+
+        [Fact]
+        public void ExpandBillingAccountByAllTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the Billing Accounts and expand soldTo,billingProfiles,billingProfiles/invoiceSections
+                var billingAccount = billingMgmtClient.BillingAccounts.Get(BillingAccountName, "soldTo,billingProfiles,billingProfiles/invoiceSections");
+
+                // Verify the response
+                Assert.NotNull(billingAccount);
+                Assert.Equal(BillingAccountName, billingAccount.Name);
+                Assert.NotNull(billingAccount.SoldTo);
+                Assert.NotNull(billingAccount.BillingProfiles.Value);
+                Assert.Equal(1, billingAccount.BillingProfiles.Value.Count);
+                Assert.NotNull(billingAccount.BillingProfiles.Value[0].InvoiceSections);
+                Assert.Equal(1, billingAccount.BillingProfiles.Value[0].InvoiceSections.Value.Count);
+            }
+        }
+
         [Fact]
         public void ExpandBillingAccountByBillingProfileTest()
         {
