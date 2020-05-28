@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -3330,33 +3331,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<PathInfo> ScheduleDeletion(
+        internal virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
-            try
-            {
-                scope.Start();
-
-                Response<BlobInfo> response = _blockBlobClient.ScheduleDeletion(
-                    options.ToBlobScheduleDeletionOptions(),
-                    cancellationToken);
-
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
+            => ScheduleDeletionInternal(
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// Schedules the file for deletation.
@@ -3375,34 +3357,112 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+        internal virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
+            => await ScheduleDeletionInternal(
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Schedules the file for deletion.
+        /// </summary>
+        /// <param name="options">
+        /// Schedule deletion parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> ScheduleDeletionInternal(
+            DataLakeFileScheduleDeletionOptions options,
+            bool async,
+            CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
-            try
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
-                scope.Start();
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakeFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options.TimeToExpire)}: {options.TimeToExpire}\n" +
+                    $"{nameof(options.SetExpiryRelativeTo)}: {options.SetExpiryRelativeTo}\n" +
+                    $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
+                try
+                {
 
-                Response<BlobInfo> response = await _blockBlobClient.ScheduleDeletionAsync(
-                    options.ToBlobScheduleDeletionOptions(),
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    PathExpiryOptions blobExpiryOptions;
+                    string expiresOn = null;
 
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
+                    // Relative
+                    if (options.TimeToExpire.HasValue)
+                    {
+                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOffset.CreationTime)
+                        {
+                            blobExpiryOptions = PathExpiryOptions.RelativeToCreation;
+                        }
+                        else
+                        {
+                            blobExpiryOptions = PathExpiryOptions.RelativeToNow;
+                        }
+                        expiresOn = options.TimeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                    }
+                    // Absolute
+                    else
+                    {
+                        if (options.ExpiresOn.HasValue)
+                        {
+                            blobExpiryOptions = PathExpiryOptions.Absolute;
+                            expiresOn = options.ExpiresOn?.ToString("R", CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            blobExpiryOptions = PathExpiryOptions.NeverExpire;
+                        }
+                    }
+
+                    Response<PathSetExpiryInternal> response = await DataLakeRestClient.Path.SetExpiryAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        BlobUri,
+                        Version.ToVersionString(),
+                        blobExpiryOptions,
+                        expiresOn: expiresOn,
+                        async: async,
+                        operationName: $"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}",
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                }
             }
         }
+
         #endregion ScheduleDeletion
 
         #region Query

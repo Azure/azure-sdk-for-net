@@ -341,30 +341,6 @@ namespace Azure.Storage.Files.DataLake
             ? BlobExpirationOffset.Now
             : BlobExpirationOffset.CreationTime;
 
-        internal static BlobScheduleDeletionOptions ToBlobScheduleDeletionOptions(
-            this DataLakeFileScheduleDeletionOptions options)
-        {
-            // Cancel deletion
-            if (!options.ExpiresOn.HasValue
-                && !options.SetExpiryRelativeTo.HasValue
-                && !options.TimeToExpire.HasValue)
-            {
-                return new BlobScheduleDeletionOptions();
-            }
-            // Absolute
-            else if (options.ExpiresOn.HasValue)
-            {
-                return new BlobScheduleDeletionOptions(options.ExpiresOn);
-            }
-            // Relative
-            else
-            {
-                return new BlobScheduleDeletionOptions(
-                    options.TimeToExpire.Value,
-                    options.SetExpiryRelativeTo.Value.ToBlobExpirationOffset());
-            }
-        }
-
         internal static BlobQueryOptions ToBlobQueryOptions(this DataLakeQueryOptions options)
         {
             if (options == null)

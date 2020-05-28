@@ -41,6 +41,11 @@ namespace Azure.Storage.Files.DataLake
         private readonly Uri _blobUri;
 
         /// <summary>
+        /// The paths's blob <see cref="Uri"/> endpoint.
+        /// </summary>
+        internal virtual Uri BlobUri => _blobUri;
+
+        /// <summary>
         /// The path's dfs <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _dfsUri;
