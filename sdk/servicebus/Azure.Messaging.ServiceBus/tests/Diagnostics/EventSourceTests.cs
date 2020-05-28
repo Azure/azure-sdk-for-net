@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
-            await sender.ScheduleAsync(GetMessage(), scheduleTime);
+            await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
             mockLogger
                 .Verify(
@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
             Assert.That(
-                async () => await sender.ScheduleAsync(GetMessage(), scheduleTime),
+                async () => await sender.ScheduleMessageAsync(GetMessage(), scheduleTime),
                 Throws.InstanceOf<Exception>());
 
             mockLogger
@@ -225,7 +225,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Logger = mockLogger.Object
             };
             var sequenceNumber = 1;
-            await sender.CancelScheduledAsync(sequenceNumber);
+            await sender.CancelScheduledMessageAsync(sequenceNumber);
 
             mockLogger
                 .Verify(
@@ -260,7 +260,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Throws(new Exception());
 
             Assert.That(
-                async () => await sender.CancelScheduledAsync(sequenceNumber),
+                async () => await sender.CancelScheduledMessageAsync(sequenceNumber),
                 Throws.InstanceOf<Exception>());
 
             mockLogger

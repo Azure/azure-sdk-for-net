@@ -353,7 +353,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long> ScheduleAsync(
+        public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
@@ -391,7 +391,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public virtual async Task CancelScheduledAsync(
+        public virtual async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default)
         {

@@ -221,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 foreach (var msg in msgs)
                 {
-                    var seq = await sender.ScheduleAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
+                    var seq = await sender.ScheduleMessageAsync(msg, DateTimeOffset.UtcNow.AddMinutes(1));
                     Assert.IsNotNull(msg.Properties[DiagnosticProperty.DiagnosticIdAttribute]);
 
                     (string Key, object Value, DiagnosticListener) startMessage = listener.Events.Dequeue();
@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.AreEqual(1, linkedActivities.Length);
                     Assert.AreEqual(messageActivity.Id, linkedActivities[0].ParentId);
 
-                    await sender.CancelScheduledAsync(seq);
+                    await sender.CancelScheduledMessageAsync(seq);
                     (string Key, object Value, DiagnosticListener) startCancel = listener.Events.Dequeue();
                     AssertCommonTags((Activity)startCancel.Value, sender.EntityPath, sender.FullyQualifiedNamespace);
                     Assert.AreEqual(DiagnosticProperty.CancelActivityName + ".Start", startCancel.Key);

@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 #region Snippet:ServiceBusSchedule
-                long seq = await sender.ScheduleAsync(
+                long seq = await sender.ScheduleMessageAsync(
                     message,
                     DateTimeOffset.Now.AddDays(1));
                 #endregion
@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // cancel the scheduled messaged, thereby deleting from the service
                 #region Snippet:ServiceBusCancelScheduled
-                await sender.CancelScheduledAsync(seq);
+                await sender.CancelScheduledMessageAsync(seq);
                 #endregion
                 Assert.IsNull(await receiver.PeekAsync());
             }
