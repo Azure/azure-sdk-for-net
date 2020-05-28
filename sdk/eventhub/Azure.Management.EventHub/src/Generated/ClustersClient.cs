@@ -237,7 +237,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ClustersPutOperation> StartPutAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClustersPutOperation> StartPutAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -296,7 +296,7 @@ namespace Azure.Management.EventHub
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ClustersPatchOperation> StartPatchAsync(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ClustersPatchOperation> StartPatchAsync(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -363,7 +363,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ClustersDeleteOperation> StartDeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClustersDeleteOperation> StartDeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

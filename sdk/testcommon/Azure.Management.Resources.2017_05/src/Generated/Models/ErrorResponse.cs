@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Management.Resources.Models
 {
     /// <summary> The resource management error response. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

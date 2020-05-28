@@ -69,7 +69,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceNavigationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceNavigationLinksListResult>> ListAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

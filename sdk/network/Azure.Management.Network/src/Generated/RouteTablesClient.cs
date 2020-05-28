@@ -281,7 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<RouteTablesDeleteOperation> StartDeleteAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<RouteTablesDeleteOperation> StartDeleteAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<RouteTablesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string routeTableName, RouteTable parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<RouteTablesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string routeTableName, RouteTable parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

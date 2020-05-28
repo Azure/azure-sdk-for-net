@@ -73,7 +73,7 @@ namespace Azure.Management.KeyVault
         /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateLinkResourceListResult>> ListByVaultAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListByVaultAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

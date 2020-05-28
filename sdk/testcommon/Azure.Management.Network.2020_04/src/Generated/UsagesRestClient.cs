@@ -63,7 +63,7 @@ namespace Azure.Management.Network
         /// <summary> List network usages for a subscription. </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UsagesListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<UsagesListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location where resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UsagesListResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<UsagesListResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

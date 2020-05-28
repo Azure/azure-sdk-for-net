@@ -50,7 +50,7 @@ namespace Azure.Management.Compute
 
         /// <summary> Gets a list of compute operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ComputeOperationListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ComputeOperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

@@ -281,7 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<NatGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<NatGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string natGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<NatGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<NatGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string natGatewayName, NatGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

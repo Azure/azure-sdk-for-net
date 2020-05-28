@@ -178,7 +178,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionPeeringsDeleteOperation> StartDeleteAsync(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionPeeringsDeleteOperation> StartDeleteAsync(string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="peeringParameters"> Parameters supplied to the create or update ExpressRouteCrossConnection peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeering peeringParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeering peeringParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

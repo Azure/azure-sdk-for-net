@@ -8,7 +8,7 @@
 namespace Azure.Management.Network.Models
 {
     /// <summary> The error object. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

@@ -63,7 +63,7 @@ namespace Azure.Management.Network
         /// <summary> Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region. </summary>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailablePrivateEndpointTypesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -149,7 +149,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -237,7 +237,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailablePrivateEndpointTypesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -326,7 +326,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> ListByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

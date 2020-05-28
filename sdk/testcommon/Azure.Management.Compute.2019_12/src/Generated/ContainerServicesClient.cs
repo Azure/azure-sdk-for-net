@@ -240,7 +240,7 @@ namespace Azure.Management.Compute
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="parameters"> Parameters supplied to the Create or Update a Container Service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ContainerServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string containerServiceName, ContainerService parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ContainerServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string containerServiceName, ContainerService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ContainerServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<ContainerServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class GraphError
+    internal partial class GraphError
     {
         internal static GraphError DeserializeGraphError(JsonElement element)
         {

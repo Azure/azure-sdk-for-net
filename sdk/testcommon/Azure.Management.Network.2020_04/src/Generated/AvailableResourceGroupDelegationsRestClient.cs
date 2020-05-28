@@ -66,7 +66,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableDelegationsResult>> ListAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> ListAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Management.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

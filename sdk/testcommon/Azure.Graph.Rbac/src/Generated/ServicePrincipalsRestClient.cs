@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Creates a service principal in the directory. </summary>
         /// <param name="parameters"> Parameters to create a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipal>> CreateAsync(ServicePrincipalCreateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipal>> CreateAsync(ServicePrincipalCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of service principals from the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipalListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipalListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -234,7 +234,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Deletes a service principal from the directory. </summary>
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -359,7 +359,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets service principal information from the directory. Query by objectId or pass a filter to query by appId. </summary>
         /// <param name="objectId"> The object ID of the service principal to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipal>> GetAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipal>> GetAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -442,7 +442,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -525,7 +525,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with the specified service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal for which to get keyCredentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<KeyCredentialListResult>> ListKeyCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyCredentialListResult>> ListKeyCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -613,7 +613,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID for which to get service principal information. </param>
         /// <param name="parameters"> Parameters to update the keyCredentials of an existing service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateKeyCredentialsAsync(string objectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateKeyCredentialsAsync(string objectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -681,7 +681,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the passwordCredentials associated with a service principal. </summary>
         /// <param name="objectId"> The object ID of the service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PasswordCredentialListResult>> ListPasswordCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<PasswordCredentialListResult>> ListPasswordCredentialsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -769,7 +769,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal. </param>
         /// <param name="parameters"> Parameters to update the passwordCredentials of an existing service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdatePasswordCredentialsAsync(string objectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePasswordCredentialsAsync(string objectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -836,7 +836,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of service principals from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipalListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipalListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -915,7 +915,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1002,7 +1002,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of service principals from the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipalListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipalListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

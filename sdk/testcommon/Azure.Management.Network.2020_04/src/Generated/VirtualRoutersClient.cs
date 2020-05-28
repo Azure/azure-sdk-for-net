@@ -241,7 +241,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualRoutersDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualRoutersDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.Management.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualRoutersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, VirtualRouter parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualRoutersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, VirtualRouter parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

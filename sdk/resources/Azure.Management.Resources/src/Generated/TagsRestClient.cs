@@ -65,7 +65,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -137,7 +137,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -230,7 +230,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -314,7 +314,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation allows deleting a name from the list of predefined tag names for the given subscription. The name being deleted must not be in use as a tag name for any resource. All predefined values for the given name must have already been deleted. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -372,7 +372,7 @@ namespace Azure.Management.Resources
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<TagsListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -447,7 +447,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="parameters"> The TagsResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsResource>> CreateOrUpdateAtScopeAsync(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResource>> CreateOrUpdateAtScopeAsync(string scope, TagsResource parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -542,7 +542,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="parameters"> The TagsPatchResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsResource>> UpdateAtScopeAsync(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResource>> UpdateAtScopeAsync(string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -632,7 +632,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets the entire set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsResource>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsResource>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -713,7 +713,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes the entire set of tags on a resource or subscription. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -767,7 +767,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
