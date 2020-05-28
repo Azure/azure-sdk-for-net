@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -53,8 +54,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="data">The BinaryData instance.</param>
         /// <returns>A stream representing the data.</returns>
-        public static Stream AsStream(this BinaryData data) =>
-            new MemoryStream(data.Data.ToArray());
+        public static Stream AsStream(this BinaryData data)
+        {
+            if (MemoryMarshal.TryGetArray(
+                data.Data,
+                out ArraySegment<byte> bytes))
+            {
+                return new MemoryStream(bytes.Array);
+            }
+            return new MemoryStream(data.Data.ToArray());
+        }
 
         /// <summary>
         /// Converts the BinaryData to the specified type.
@@ -81,6 +90,8 @@ namespace Azure.Core
         ///<returns>The data cast to the specified type. If the cast cannot
         ///be performed, an <see cref="InvalidCastException"/> will be
         ///thrown.</returns>
+        /// TODO - add cancellation token support
+        /// once ObjectSerializer.DeserializeAsync adds it.
         public static async ValueTask<T> AsAsync<T>(
             this BinaryData data,
             ObjectSerializer serializer) =>

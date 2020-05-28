@@ -1,16 +1,18 @@
 namespace Azure.Core
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct BinaryData
+    public readonly partial struct BinaryData : System.IEquatable<Azure.Core.BinaryData>
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
         public static Azure.Core.BinaryData Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.BinaryData Create(string data) { throw null; }
         public static Azure.Core.BinaryData Create(string data, System.Text.Encoding encoding) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
         public static Azure.Core.BinaryData Create<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public bool Equals(Azure.Core.BinaryData other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

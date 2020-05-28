@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -13,8 +14,10 @@ namespace Azure.Core
     /// <summary>
     /// Abstraction for a payload of binary data.
     /// </summary>
-    public struct BinaryData
+    public readonly struct BinaryData : IEquatable<BinaryData>
     {
+        private const int CopyToBufferSize = 81920;
+
         /// <summary>
         /// The backing store for the <see cref="BinaryData"/> instance.
         /// </summary>
@@ -64,11 +67,18 @@ namespace Azure.Core
         /// Creates a binary data instance from the specified stream.
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
+        /// <param name="cancellationToken">An optional<see cref="CancellationToken"/> instance to signal
+        /// the request to cancel the operation.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static async Task<BinaryData> CreateAsync(Stream stream) =>
-            await CreateAsync(stream, true).ConfigureAwait(false);
+        public static async Task<BinaryData> CreateAsync(
+            Stream stream,
+            CancellationToken cancellationToken = default) =>
+            await CreateAsync(stream, true, cancellationToken).ConfigureAwait(false);
 
-        private static async Task<BinaryData> CreateAsync(Stream stream, bool async)
+        private static async Task<BinaryData> CreateAsync(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             if (stream.CanSeek && stream.Length > int.MaxValue)
@@ -81,7 +91,7 @@ namespace Azure.Core
             {
                 if (async)
                 {
-                    await stream.CopyToAsync(memoryStream).ConfigureAwait(false);
+                    await stream.CopyToAsync(memoryStream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -102,11 +112,40 @@ namespace Azure.Core
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
         public static BinaryData Create<T>(
             T data,
-            ObjectSerializer serializer)
+            ObjectSerializer serializer) =>
+            CreateAsync<T>(data, serializer, false).EnsureCompleted();
+
+        /// <summary>
+        /// Creates a BinaryData instance from the specified data using
+        /// the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the data.</typeparam>
+        /// <param name="data">The data to use.</param>
+        /// <param name="serializer">The serializer to serialize
+        /// the data.</param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        /// TODO - add cancellation token support
+        /// once ObjectSerializer.SerializeAsync adds it.
+        public static async Task<BinaryData> CreateAsync<T>(
+            T data,
+            ObjectSerializer serializer) =>
+            await CreateAsync<T>(data, serializer, true).ConfigureAwait(false);
+
+        private static async Task<BinaryData> CreateAsync<T>(
+            T data,
+            ObjectSerializer serializer,
+            bool async)
         {
             Argument.AssertNotNull(serializer, nameof(serializer));
             using var memoryStream = new MemoryStream();
-            serializer.Serialize(memoryStream, data, typeof(T));
+            if (async)
+            {
+                await serializer.SerializeAsync(memoryStream, data, typeof(T)).ConfigureAwait(false);
+            }
+            else
+            {
+                serializer.Serialize(memoryStream, data, typeof(T));
+            }
             return new BinaryData(memoryStream.ToArray());
         }
 
@@ -127,19 +166,16 @@ namespace Azure.Core
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj)
-        {
-            if (obj is BinaryData data)
-            {
-                return data.Data.Equals(Data);
-            }
-
-            return false;
-        }
+        public override bool Equals(object? obj) =>
+            (obj is BinaryData other) && Equals(other);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             Data.GetHashCode();
+
+        /// <inheritdoc />
+        public bool Equals(BinaryData other) =>
+            other.Data.Equals(Data);
     }
 }

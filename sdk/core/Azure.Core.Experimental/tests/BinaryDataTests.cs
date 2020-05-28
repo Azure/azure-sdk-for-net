@@ -79,13 +79,18 @@ namespace Azure.Core.Tests
         {
             var payload = new TestModel { A = "value", B = 5, C = true};
             var serializer = new JsonObjectSerializer();
-            var data = BinaryData.Create(payload, serializer);
-            Assert.AreEqual(payload.A, data.As<TestModel>(serializer).A);
-            Assert.AreEqual(payload.B, data.As<TestModel>(serializer).B);
-            Assert.AreEqual(payload.C, data.As<TestModel>(serializer).C);
-            Assert.AreEqual(payload.A, (await data.AsAsync<TestModel>(serializer)).A);
-            Assert.AreEqual(payload.B, (await data.AsAsync<TestModel>(serializer)).B);
-            Assert.AreEqual(payload.C, (await data.AsAsync<TestModel>(serializer)).C);
+            await AssertData(BinaryData.Create(payload, serializer));
+            await AssertData(await BinaryData.CreateAsync(payload, serializer));
+
+            async Task AssertData(BinaryData data)
+            {
+                Assert.AreEqual(payload.A, data.As<TestModel>(serializer).A);
+                Assert.AreEqual(payload.B, data.As<TestModel>(serializer).B);
+                Assert.AreEqual(payload.C, data.As<TestModel>(serializer).C);
+                Assert.AreEqual(payload.A, (await data.AsAsync<TestModel>(serializer)).A);
+                Assert.AreEqual(payload.B, (await data.AsAsync<TestModel>(serializer)).B);
+                Assert.AreEqual(payload.C, (await data.AsAsync<TestModel>(serializer)).C);
+            }
         }
 
         [Test]
@@ -94,6 +99,9 @@ namespace Azure.Core.Tests
             var payload = new TestModel { A = "value", B = 5, C = true };
             Assert.That(
                 () => BinaryData.Create(payload, null),
+                Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(
+                async () => await BinaryData.CreateAsync(payload, null),
                 Throws.InstanceOf<ArgumentNullException>());
         }
 
@@ -110,17 +118,22 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AsThrowsExceptionOnIncompatibleType()
+        public async Task AsThrowsExceptionOnIncompatibleType()
         {
             var payload = new TestModel { A = "value", B = 5, C = true };
             var serializer = new JsonObjectSerializer();
-            var data = BinaryData.Create(payload, serializer);
-            Assert.That(
-                () => data.As<string>(serializer),
-                Throws.InstanceOf<Exception>());
-            Assert.That(
-                async () => await data.AsAsync<string>(serializer),
-                Throws.InstanceOf<Exception>());
+            AssertData(BinaryData.Create(payload, serializer));
+            AssertData(await BinaryData.CreateAsync(payload, serializer));
+
+            void AssertData(BinaryData data)
+            {
+                Assert.That(
+                    () => data.As<string>(serializer),
+                    Throws.InstanceOf<Exception>());
+                Assert.That(
+                    async () => await data.AsAsync<string>(serializer),
+                    Throws.InstanceOf<Exception>());
+            }
         }
 
         [Test]
