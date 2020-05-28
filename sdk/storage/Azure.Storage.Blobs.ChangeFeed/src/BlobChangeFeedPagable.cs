@@ -22,8 +22,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
-        private ChangeFeed _changeFeed;
-
         internal BlobChangeFeedPagable(
             BlobServiceClient blobBerviceClient,
             DateTimeOffset? startTime = default,
@@ -45,27 +43,36 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         /// <summary>
-        /// AsPages.
+        /// Returns <see cref="BlobChangeFeedEvent"/>s as Pages.
         /// </summary>
-        /// <param name="continuationToken"></param>
-        /// <param name="pageSizeHint"></param>
-        /// <returns></returns>
+        /// <param name="continuationToken">
+        /// Throws an <see cref="ArgumentException"/>.  To use contination, call
+        /// <see cref="BlobChangeFeedClient.GetChanges(string)"/>.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Page size.
+        /// </param>
+        /// <returns>
+        /// <see cref="IEnumerable{Page}"/>.
+        /// </returns>
         public override IEnumerable<Page<BlobChangeFeedEvent>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
-            if (_changeFeed == null)
+            if (continuationToken != null)
             {
-                _changeFeed = _changeFeedFactory.BuildChangeFeed(
-                    async: false,
-                    _blobServiceClient,
-                    _startTime,
-                    _endTime,
-                    _continuation)
-                    .EnsureCompleted();
+                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChanges(string) instead");
             }
 
-            while (_changeFeed.HasNext())
+            ChangeFeed changeFeed = _changeFeedFactory.BuildChangeFeed(
+                async: false,
+                _blobServiceClient,
+                _startTime,
+                _endTime,
+                _continuation)
+                .EnsureCompleted();
+
+            while (changeFeed.HasNext())
             {
-                yield return _changeFeed.GetPage(
+                yield return changeFeed.GetPage(
                     async: false,
                     pageSize: pageSizeHint ?? 512).EnsureCompleted();
             }
