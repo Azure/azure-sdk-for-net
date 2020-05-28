@@ -33,9 +33,13 @@ namespace Microsoft.Azure.Management.Search.Models
         /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
         /// <param name="ipRules">A list of IP restriction rules that defines
-        /// the inbound network access to the search service endpoint. These
-        /// restriction rules are applied only when the EndpointAccess of the
-        /// search service is Public.</param>
+        /// the inbound network(s) with allowing access to the search service
+        /// endpoint. At the meantime, all other public IP networks are blocked
+        /// by the firewall. These restriction rules are applied only when the
+        /// 'publicNetworkAccess' of the search service is 'enabled';
+        /// otherwise, traffic over public interface is not allowed even with
+        /// any public IP rules, and private endpoint connections would be the
+        /// exclusive access method.</param>
         public NetworkRuleSet(IList<IpRule> ipRules = default(IList<IpRule>))
         {
             IpRules = ipRules;
@@ -49,9 +53,13 @@ namespace Microsoft.Azure.Management.Search.Models
 
         /// <summary>
         /// Gets or sets a list of IP restriction rules that defines the
-        /// inbound network access to the search service endpoint. These
-        /// restriction rules are applied only when the EndpointAccess of the
-        /// search service is Public.
+        /// inbound network(s) with allowing access to the search service
+        /// endpoint. At the meantime, all other public IP networks are blocked
+        /// by the firewall. These restriction rules are applied only when the
+        /// 'publicNetworkAccess' of the search service is 'enabled';
+        /// otherwise, traffic over public interface is not allowed even with
+        /// any public IP rules, and private endpoint connections would be the
+        /// exclusive access method.
         /// </summary>
         [JsonProperty(PropertyName = "ipRules")]
         public IList<IpRule> IpRules { get; set; }

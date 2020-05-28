@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.Management.Search.Models
     /// Describes an existing Private Endpoint connection to the Azure
     /// Cognitive Search service.
     /// </summary>
-    public partial class PrivateEndpointConnection
+    public partial class PrivateEndpointConnection : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
@@ -54,11 +56,11 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the private endpoint connection. This can be
-        /// used with the Azure Resource Manager to link resources together.
+        /// Gets the ID of the private endpoint connection. This can be used
+        /// with the Azure Resource Manager to link resources together.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the name of the private endpoint connection.
