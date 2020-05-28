@@ -68,7 +68,7 @@ namespace Azure.Management.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -87,8 +87,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -119,8 +120,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -152,7 +154,7 @@ namespace Azure.Management.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SecurityRule>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityRule>> GetAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -263,7 +265,7 @@ namespace Azure.Management.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -286,8 +288,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -323,8 +325,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -354,7 +356,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SecurityRuleListResult>> ListAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityRuleListResult>> ListAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -443,7 +445,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SecurityRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityRuleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -179,7 +179,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleryApplicationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleryApplicationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -257,7 +257,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleryApplicationsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleryApplicationsUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -334,7 +334,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Application Gallery in which the Application Definition is to be deleted. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleryApplicationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleryApplicationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

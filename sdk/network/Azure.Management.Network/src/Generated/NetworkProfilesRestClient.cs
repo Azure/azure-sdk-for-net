@@ -65,7 +65,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkProfileName"> The name of the NetworkProfile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -80,8 +80,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -107,8 +108,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -142,7 +144,7 @@ namespace Azure.Management.Network
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfile>> GetAsync(string resourceGroupName, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfile>> GetAsync(string resourceGroupName, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -242,7 +244,7 @@ namespace Azure.Management.Network
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfile>> CreateOrUpdateAsync(string resourceGroupName, string networkProfileName, NetworkProfile parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfile>> CreateOrUpdateAsync(string resourceGroupName, string networkProfileName, NetworkProfile parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -352,7 +354,7 @@ namespace Azure.Management.Network
         /// <param name="networkProfileName"> The name of the network profile. </param>
         /// <param name="parameters"> Parameters supplied to update network profile tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfile>> UpdateTagsAsync(string resourceGroupName, string networkProfileName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfile>> UpdateTagsAsync(string resourceGroupName, string networkProfileName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -450,7 +452,7 @@ namespace Azure.Management.Network
 
         /// <summary> Gets all the network profiles in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfileListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfileListResult>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -522,7 +524,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all network profiles in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfileListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfileListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -600,7 +602,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the network profiles in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfileListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfileListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -679,7 +681,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NetworkProfileListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkProfileListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

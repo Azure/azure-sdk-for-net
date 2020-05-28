@@ -73,7 +73,7 @@ namespace Azure.Management.Compute
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create VM scale set Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, VirtualMachineScaleSetExtension extensionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, VirtualMachineScaleSetExtension extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -96,8 +96,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -133,8 +133,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -171,7 +171,7 @@ namespace Azure.Management.Compute
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Update VM scale set Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, VirtualMachineScaleSetExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, VirtualMachineScaleSetExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -194,8 +194,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -231,8 +231,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -264,7 +264,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set where the extension should be deleted. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -283,8 +283,9 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -315,8 +316,9 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -353,7 +355,7 @@ namespace Azure.Management.Compute
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineScaleSetExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetExtension>> GetAsync(string resourceGroupName, string vmScaleSetName, string vmssExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -458,7 +460,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set containing the extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineScaleSetExtensionListResult>> ListAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetExtensionListResult>> ListAsync(string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -547,7 +549,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set containing the extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineScaleSetExtensionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetExtensionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

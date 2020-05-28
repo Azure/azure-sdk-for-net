@@ -70,7 +70,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network gateway connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -89,8 +89,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -121,8 +121,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -151,7 +151,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkGatewayConnection>> GetAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkGatewayConnection>> GetAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -245,7 +245,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -260,8 +260,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -287,8 +288,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -322,7 +324,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -341,8 +343,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -373,8 +375,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -409,7 +411,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection name. </param>
         /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> SetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> SetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -428,8 +430,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -460,8 +462,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -491,7 +493,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection shared key name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConnectionSharedKey>> GetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectionSharedKey>> GetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -583,7 +585,7 @@ namespace Azure.Management.Network
         /// <summary> The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkGatewayConnectionListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkGatewayConnectionListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -674,7 +676,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection reset shared key Name. </param>
         /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ResetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -693,8 +695,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -725,8 +727,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -764,7 +766,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -779,8 +781,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -807,8 +809,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -843,7 +845,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway Connection. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -862,8 +864,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -894,8 +896,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -918,7 +920,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkGatewayConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkGatewayConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

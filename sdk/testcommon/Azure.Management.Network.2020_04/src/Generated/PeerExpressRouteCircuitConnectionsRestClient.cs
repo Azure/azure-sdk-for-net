@@ -71,7 +71,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PeerExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string resourceGroupName, string circuitName, string peeringName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -187,7 +187,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PeerExpressRouteCircuitConnectionListResult>> ListAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -286,7 +286,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PeerExpressRouteCircuitConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -70,7 +70,7 @@ namespace Azure.Management.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSet diskEncryptionSet, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSet diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -89,8 +89,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -121,8 +121,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -156,7 +156,7 @@ namespace Azure.Management.Compute
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string diskEncryptionSetName, DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -175,8 +175,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -207,8 +207,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -237,7 +237,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSet>> GetAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -331,7 +331,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -346,8 +346,9 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -373,8 +374,9 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -401,7 +403,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all the disk encryption sets under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DiskEncryptionSetList>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSetList>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -481,7 +483,7 @@ namespace Azure.Management.Compute
 
         /// <summary> Lists all the disk encryption sets under a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DiskEncryptionSetList>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSetList>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -549,7 +551,7 @@ namespace Azure.Management.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DiskEncryptionSetList>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSetList>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -636,7 +638,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all the disk encryption sets under a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DiskEncryptionSetList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskEncryptionSetList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

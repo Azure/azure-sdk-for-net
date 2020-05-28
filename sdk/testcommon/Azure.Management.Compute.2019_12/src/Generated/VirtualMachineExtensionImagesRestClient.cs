@@ -72,7 +72,7 @@ namespace Azure.Management.Compute
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineExtensionImage>> GetAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineExtensionImage>> GetAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -185,7 +185,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListTypesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListTypesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -322,7 +322,7 @@ namespace Azure.Management.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {

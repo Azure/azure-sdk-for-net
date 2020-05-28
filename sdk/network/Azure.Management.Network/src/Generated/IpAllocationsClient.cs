@@ -281,7 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<IpAllocationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string ipAllocationName, CancellationToken cancellationToken = default)
+        public virtual async Task<IpAllocationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string ipAllocationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<IpAllocationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ipAllocationName, IpAllocation parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<IpAllocationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ipAllocationName, IpAllocation parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -63,7 +63,7 @@ namespace Azure.Management.Compute
         /// <summary> This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list). </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineSizeListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineSizeListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {

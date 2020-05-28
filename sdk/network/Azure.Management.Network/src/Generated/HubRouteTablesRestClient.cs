@@ -73,7 +73,7 @@ namespace Azure.Management.Network
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="routeTableParameters"> Parameters supplied to create or update RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, HubRouteTable routeTableParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, HubRouteTable routeTableParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -96,8 +96,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -133,8 +133,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -166,7 +166,7 @@ namespace Azure.Management.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<HubRouteTable>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
+        public async Task<Response<HubRouteTable>> GetAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -272,7 +272,7 @@ namespace Azure.Management.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -291,8 +291,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -323,8 +324,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -354,7 +356,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListHubRouteTablesResult>> ListAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubRouteTablesResult>> ListAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -443,7 +445,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListHubRouteTablesResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubRouteTablesResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

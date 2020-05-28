@@ -179,7 +179,7 @@ namespace Azure.Management.Compute
         /// <param name="hostName"> The name of the dedicated host . </param>
         /// <param name="parameters"> Parameters supplied to the Create Dedicated Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DedicatedHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<DedicatedHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -257,7 +257,7 @@ namespace Azure.Management.Compute
         /// <param name="hostName"> The name of the dedicated host . </param>
         /// <param name="parameters"> Parameters supplied to the Update Dedicated Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DedicatedHostsUpdateOperation> StartUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHostUpdate parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<DedicatedHostsUpdateOperation> StartUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHostUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -334,7 +334,7 @@ namespace Azure.Management.Compute
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DedicatedHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
+        public virtual async Task<DedicatedHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

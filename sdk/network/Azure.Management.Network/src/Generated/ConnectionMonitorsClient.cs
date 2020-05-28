@@ -191,7 +191,7 @@ namespace Azure.Management.Network
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConnectionMonitorsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ConnectionMonitorsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -268,7 +268,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConnectionMonitorsDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<ConnectionMonitorsDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -336,7 +336,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConnectionMonitorsStopOperation> StartStopAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<ConnectionMonitorsStopOperation> StartStopAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConnectionMonitorsStartOperation> StartStartAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<ConnectionMonitorsStartOperation> StartStartAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -472,7 +472,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name given to the connection monitor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConnectionMonitorsQueryOperation> StartQueryAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<ConnectionMonitorsQueryOperation> StartQueryAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

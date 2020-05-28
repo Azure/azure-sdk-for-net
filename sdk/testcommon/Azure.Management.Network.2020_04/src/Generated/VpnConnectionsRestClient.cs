@@ -68,7 +68,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VpnConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<VpnConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -179,7 +179,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -202,8 +202,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -239,8 +239,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -272,7 +272,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -291,8 +291,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -323,8 +324,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -354,7 +356,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListVpnConnectionsResult>> ListByVpnGatewayAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnConnectionsResult>> ListByVpnGatewayAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -443,7 +445,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListVpnConnectionsResult>> ListByVpnGatewayNextPageAsync(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnConnectionsResult>> ListByVpnGatewayNextPageAsync(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

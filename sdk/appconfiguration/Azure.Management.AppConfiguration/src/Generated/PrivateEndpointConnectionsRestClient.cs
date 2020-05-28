@@ -73,7 +73,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateEndpointConnectionListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -170,7 +170,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateEndpointConnection>> GetAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnection>> GetAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -281,7 +281,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="privateEndpointConnection"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -304,8 +304,8 @@ namespace Azure.Management.AppConfiguration
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -341,8 +341,8 @@ namespace Azure.Management.AppConfiguration
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -374,7 +374,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string configStoreName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,8 +393,9 @@ namespace Azure.Management.AppConfiguration
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -425,8 +426,9 @@ namespace Azure.Management.AppConfiguration
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -450,7 +452,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateEndpointConnectionListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

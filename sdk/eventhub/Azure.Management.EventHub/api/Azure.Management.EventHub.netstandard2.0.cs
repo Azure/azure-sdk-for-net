@@ -12,11 +12,11 @@ namespace Azure.Management.EventHub
         public virtual Azure.Response<Azure.Management.EventHub.Models.EHNamespaceIdListResult> ListNamespaces(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.EHNamespaceIdListResult>> ListNamespacesAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.EventHub.ClustersDeleteOperation StartDelete(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.EventHub.ClustersDeleteOperation> StartDeleteAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.EventHub.ClustersDeleteOperation> StartDeleteAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.EventHub.ClustersPatchOperation StartPatch(string resourceGroupName, string clusterName, Azure.Management.EventHub.Models.Cluster parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.EventHub.ClustersPatchOperation> StartPatchAsync(string resourceGroupName, string clusterName, Azure.Management.EventHub.Models.Cluster parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.EventHub.ClustersPatchOperation> StartPatchAsync(string resourceGroupName, string clusterName, Azure.Management.EventHub.Models.Cluster parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.EventHub.ClustersPutOperation StartPut(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.EventHub.ClustersPutOperation> StartPutAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.EventHub.ClustersPutOperation> StartPutAsync(string resourceGroupName, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ClustersDeleteOperation : Azure.Operation<Azure.Response>
     {
@@ -187,9 +187,9 @@ namespace Azure.Management.EventHub
         public virtual Azure.Response<Azure.Management.EventHub.Models.AccessKeys> RegenerateKeys(string resourceGroupName, string namespaceName, string authorizationRuleName, Azure.Management.EventHub.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.AccessKeys>> RegenerateKeysAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Azure.Management.EventHub.Models.RegenerateAccessKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.EventHub.NamespacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.EHNamespace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.EventHub.NamespacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.EHNamespace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.EventHub.NamespacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.EHNamespace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.EventHub.NamespacesDeleteOperation StartDelete(string resourceGroupName, string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.EventHub.NamespacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.EventHub.NamespacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.EventHub.Models.EHNamespace> Update(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.EHNamespace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.EventHub.Models.EHNamespace>> UpdateAsync(string resourceGroupName, string namespaceName, Azure.Management.EventHub.Models.EHNamespace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -442,12 +442,6 @@ namespace Azure.Management.EventHub.Models
         Deleting = 6,
         Renaming = 7,
         Unknown = 8,
-    }
-    public partial class ErrorResponse
-    {
-        internal ErrorResponse() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
     }
     public partial class Eventhub : Azure.Management.EventHub.Models.Resource
     {

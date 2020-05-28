@@ -265,7 +265,7 @@ namespace Azure.Management.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -334,7 +334,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsReimageAllOperation> StartReimageAllAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsReimageAllOperation> StartReimageAllAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -402,7 +402,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsDeallocateOperation> StartDeallocateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -471,7 +471,7 @@ namespace Azure.Management.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVM parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsUpdateOperation> StartUpdateAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVM parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -548,7 +548,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -617,7 +617,7 @@ namespace Azure.Management.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsPowerOffOperation> StartPowerOffAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -686,7 +686,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsRestartOperation> StartRestartAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsRestartOperation> StartRestartAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -754,7 +754,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsStartOperation> StartStartAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsStartOperation> StartStartAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -822,7 +822,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsRedeployOperation> StartRedeployAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -890,7 +890,7 @@ namespace Azure.Management.Compute
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsPerformMaintenanceOperation> StartPerformMaintenanceAsync(string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -959,7 +959,7 @@ namespace Azure.Management.Compute
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
         /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualMachineScaleSetVMsRunCommandOperation> StartRunCommandAsync(string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsRunCommandOperation> StartRunCommandAsync(string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

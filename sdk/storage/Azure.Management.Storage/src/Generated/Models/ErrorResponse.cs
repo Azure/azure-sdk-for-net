@@ -8,7 +8,7 @@
 namespace Azure.Management.Storage.Models
 {
     /// <summary> An error response from the storage resource provider. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

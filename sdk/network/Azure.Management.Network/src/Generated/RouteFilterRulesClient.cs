@@ -178,7 +178,7 @@ namespace Azure.Management.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<RouteFilterRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<RouteFilterRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Management.Network
         /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="routeFilterRuleParameters"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<RouteFilterRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<RouteFilterRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

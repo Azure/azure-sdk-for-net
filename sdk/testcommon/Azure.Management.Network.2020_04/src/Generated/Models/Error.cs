@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Management.Network.Models
 {
     /// <summary> Common error representation. </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary> Initializes a new instance of Error. </summary>
         internal Error()

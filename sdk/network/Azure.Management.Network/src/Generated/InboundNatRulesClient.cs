@@ -180,7 +180,7 @@ namespace Azure.Management.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<InboundNatRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<InboundNatRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -249,7 +249,7 @@ namespace Azure.Management.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<InboundNatRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<InboundNatRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, string inboundNatRuleName, InboundNatRule inboundNatRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -70,7 +70,7 @@ namespace Azure.Management.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="parameters"> Parameters supplied to the Create Proximity Placement Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroup>> CreateOrUpdateAsync(string resourceGroupName, string proximityPlacementGroupName, ProximityPlacementGroup parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroup>> CreateOrUpdateAsync(string resourceGroupName, string proximityPlacementGroupName, ProximityPlacementGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -180,7 +180,7 @@ namespace Azure.Management.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="parameters"> Parameters supplied to the Update Proximity Placement Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroup>> UpdateAsync(string resourceGroupName, string proximityPlacementGroupName, UpdateResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroup>> UpdateAsync(string resourceGroupName, string proximityPlacementGroupName, UpdateResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -283,7 +283,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string proximityPlacementGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string proximityPlacementGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -358,7 +358,7 @@ namespace Azure.Management.Compute
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroup>> GetAsync(string resourceGroupName, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroup>> GetAsync(string resourceGroupName, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -448,7 +448,7 @@ namespace Azure.Management.Compute
 
         /// <summary> Lists all proximity placement groups in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroupListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroupListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -520,7 +520,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all proximity placement groups in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroupListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroupListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -598,7 +598,7 @@ namespace Azure.Management.Compute
         /// <summary> Lists all proximity placement groups in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -677,7 +677,7 @@ namespace Azure.Management.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ProximityPlacementGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ProximityPlacementGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

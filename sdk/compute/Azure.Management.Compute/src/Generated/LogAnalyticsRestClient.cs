@@ -67,7 +67,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ExportRequestRateByIntervalAsync(string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportRequestRateByIntervalAsync(string location, RequestRateByIntervalInput parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -82,8 +82,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -109,8 +109,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -142,7 +142,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="parameters"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ExportThrottledRequestsAsync(string location, LogAnalyticsInputBase parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportThrottledRequestsAsync(string location, LogAnalyticsInputBase parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -157,8 +157,8 @@ namespace Azure.Management.Compute
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -184,8 +184,8 @@ namespace Azure.Management.Compute
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

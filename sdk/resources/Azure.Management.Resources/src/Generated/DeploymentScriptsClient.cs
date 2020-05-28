@@ -396,7 +396,7 @@ namespace Azure.Management.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DeploymentScriptsCreateOperation> StartCreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
+        public virtual async Task<DeploymentScriptsCreateOperation> StartCreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

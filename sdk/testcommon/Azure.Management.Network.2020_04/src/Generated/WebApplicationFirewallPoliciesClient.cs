@@ -279,7 +279,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<WebApplicationFirewallPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<WebApplicationFirewallPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string policyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

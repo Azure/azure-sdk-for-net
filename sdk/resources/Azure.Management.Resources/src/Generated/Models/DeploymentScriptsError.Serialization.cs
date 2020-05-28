@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Management.Resources.Models
 {
-    public partial class DeploymentScriptsError
+    internal partial class DeploymentScriptsError
     {
         internal static DeploymentScriptsError DeserializeDeploymentScriptsError(JsonElement element)
         {

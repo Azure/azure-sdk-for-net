@@ -120,7 +120,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnection putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, ExpressRouteConnection putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -197,7 +197,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRouteGatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

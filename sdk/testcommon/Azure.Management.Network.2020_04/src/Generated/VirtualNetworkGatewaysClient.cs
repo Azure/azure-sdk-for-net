@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to create or update virtual network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -407,7 +407,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -466,7 +466,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysUpdateTagsOperation> StartUpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysUpdateTagsOperation> StartUpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -534,7 +534,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysResetOperation> StartResetAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysResetOperation> StartResetAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -593,7 +593,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysResetVpnClientSharedKeyOperation> StartResetVpnClientSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysResetVpnClientSharedKeyOperation> StartResetVpnClientSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -652,7 +652,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGeneratevpnclientpackageOperation> StartGeneratevpnclientpackageAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGeneratevpnclientpackageOperation> StartGeneratevpnclientpackageAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -720,7 +720,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -787,7 +787,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation> StartGetVpnProfilePackageUrlAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation> StartGetVpnProfilePackageUrlAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -846,7 +846,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetBgpPeerStatusOperation> StartGetBgpPeerStatusAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetBgpPeerStatusOperation> StartGetBgpPeerStatusAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -905,7 +905,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetLearnedRoutesOperation> StartGetLearnedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetLearnedRoutesOperation> StartGetLearnedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -964,7 +964,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetAdvertisedRoutesOperation> StartGetAdvertisedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetAdvertisedRoutesOperation> StartGetAdvertisedRoutesAsync(string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1032,7 +1032,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysSetVpnclientIpsecParametersOperation> StartSetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysSetVpnclientIpsecParametersOperation> StartSetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1099,7 +1099,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The virtual network gateway name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation> StartGetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation> StartGetVpnclientIpsecParametersAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1158,7 +1158,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysStartPacketCaptureOperation> StartStartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysStartPacketCaptureOperation> StartStartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1218,7 +1218,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysStopPacketCaptureOperation> StartStopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysStopPacketCaptureOperation> StartStopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1285,7 +1285,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation> StartGetVpnclientConnectionHealthAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation> StartGetVpnclientConnectionHealthAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1344,7 +1344,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOperation> StartDisconnectVirtualNetworkGatewayVpnConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOperation> StartDisconnectVirtualNetworkGatewayVpnConnectionsAsync(string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

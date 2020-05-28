@@ -75,7 +75,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Table>> CreateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response<Table>> CreateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -181,7 +181,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Table>> UpdateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response<Table>> UpdateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Table>> GetAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response<Table>> GetAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,7 +393,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -473,7 +473,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListTableResource>> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListTableResource>> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -562,7 +562,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListTableResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListTableResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

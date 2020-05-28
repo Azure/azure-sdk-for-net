@@ -71,7 +71,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VpnSiteLinkConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<VpnSiteLinkConnection>> GetAsync(string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
