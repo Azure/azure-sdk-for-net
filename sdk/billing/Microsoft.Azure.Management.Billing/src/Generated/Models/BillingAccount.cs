@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// enrollment.</param>
         /// <param name="hasReadAccess">Indicates whether user has read access
         /// to the billing account.</param>
-        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails soldTo = default(AddressDetails), string agreementType = default(string), string accountType = default(string), string accountStatus = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?))
+        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails soldTo = default(AddressDetails), string agreementType = default(string), string accountType = default(string), string accountStatus = default(string), BillingProfilesOnExpand billingProfiles = default(BillingProfilesOnExpand), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// $expand.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfiles")]
-        public IList<BillingProfile> BillingProfiles { get; set; }
+        public BillingProfilesOnExpand BillingProfiles { get; set; }
 
         /// <summary>
         /// Gets the details about the associated legacy enrollment. By default
@@ -162,16 +162,6 @@ namespace Microsoft.Azure.Management.Billing.Models
             if (SoldTo != null)
             {
                 SoldTo.Validate();
-            }
-            if (BillingProfiles != null)
-            {
-                foreach (var element in BillingProfiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

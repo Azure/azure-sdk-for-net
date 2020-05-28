@@ -286,6 +286,56 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
+            /// Updates the properties of a Product. Currently, auto renew can be updated.
+            /// The operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='productName'>
+            /// The ID that uniquely identifies a product.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the update product operation.
+            /// </param>
+            public static Product Update(this IProductsOperations operations, string billingAccountName, string productName, Product parameters)
+            {
+                return operations.UpdateAsync(billingAccountName, productName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the properties of a Product. Currently, auto renew can be updated.
+            /// The operation is supported only for billing accounts with agreement type
+            /// Microsoft Customer Agreement.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='productName'>
+            /// The ID that uniquely identifies a product.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters that are provided to the update product operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Product> UpdateAsync(this IProductsOperations operations, string billingAccountName, string productName, Product parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Moves a product's charges to a new invoice section. The new invoice section
             /// must belong to the same billing profile as the existing invoice section.
             /// This operation is supported only for products that are purchased with a
@@ -303,7 +353,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the transfer product operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
             public static Product Move(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
             {
@@ -328,7 +378,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the transfer product operation.
+            /// Request parameters that are provided to the move product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -358,7 +408,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the validate transfer eligibility
+            /// Request parameters that are provided to the validate move eligibility
             /// operation.
             /// </param>
             public static ValidateProductTransferEligibilityResult ValidateMove(this IProductsOperations operations, string billingAccountName, string productName, TransferProductRequestProperties parameters)
@@ -383,7 +433,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Request parameters that are provided to the validate transfer eligibility
+            /// Request parameters that are provided to the validate move eligibility
             /// operation.
             /// </param>
             /// <param name='cancellationToken'>

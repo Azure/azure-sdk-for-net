@@ -183,6 +183,37 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<Product>> GetWithHttpMessagesAsync(string billingAccountName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates the properties of a Product. Currently, auto renew can be
+        /// updated. The operation is supported only for billing accounts with
+        /// agreement type Microsoft Customer Agreement.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The ID that uniquely identifies a billing account.
+        /// </param>
+        /// <param name='productName'>
+        /// The ID that uniquely identifies a product.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request parameters that are provided to the update product
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Product>> UpdateWithHttpMessagesAsync(string billingAccountName, string productName, Product parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Moves a product's charges to a new invoice section. The new invoice
         /// section must belong to the same billing profile as the existing
         /// invoice section. This operation is supported only for products that
@@ -197,8 +228,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a product.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the transfer product
-        /// operation.
+        /// Request parameters that are provided to the move product operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -230,7 +260,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a product.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the validate transfer
+        /// Request parameters that are provided to the validate move
         /// eligibility operation.
         /// </param>
         /// <param name='customHeaders'>

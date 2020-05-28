@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="enabledAzurePlans">Information about the enabled azure
         /// plans.</param>
         /// <param name="invoiceSections">The invoice sections associated to
-        /// the billing profile.</param>
+        /// the billing profile. By default this is not populated, unless it's
+        /// specified in $expand.</param>
         /// <param name="hasReadAccess">Indicates whether user has read access
         /// to the billing profile.</param>
         /// <param name="systemId">The system generated unique identifier for a
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// 'SpendingLimitReached', 'SpendingLimitExpired'</param>
         /// <param name="spendingLimit">The billing profile spending limit.
         /// Possible values include: 'Off', 'On'</param>
-        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails billTo = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>), bool? hasReadAccess = default(bool?), string systemId = default(string), string status = default(string), string statusReasonCode = default(string), string spendingLimit = default(string))
+        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails billTo = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), InvoiceSectionsOnExpand invoiceSections = default(InvoiceSectionsOnExpand), bool? hasReadAccess = default(bool?), string systemId = default(string), string status = default(string), string statusReasonCode = default(string), string spendingLimit = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -134,10 +135,11 @@ namespace Microsoft.Azure.Management.Billing.Models
 
         /// <summary>
         /// Gets or sets the invoice sections associated to the billing
-        /// profile.
+        /// profile. By default this is not populated, unless it's specified in
+        /// $expand.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSections")]
-        public IList<InvoiceSection> InvoiceSections { get; set; }
+        public InvoiceSectionsOnExpand InvoiceSections { get; set; }
 
         /// <summary>
         /// Gets indicates whether user has read access to the billing profile.

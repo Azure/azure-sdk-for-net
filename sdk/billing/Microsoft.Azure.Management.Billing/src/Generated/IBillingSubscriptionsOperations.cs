@@ -191,8 +191,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Moves a subscription's charges to a new invoice section. The new
         /// invoice section must belong to the same billing profile as the
-        /// existing invoice section. This operation is supported only for
-        /// products that are purchased with a recurring charge and for billing
+        /// existing invoice section. This operation is supported for billing
         /// accounts with agreement type Microsoft Customer Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -200,7 +199,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the transfer product
+        /// Request parameters that are provided to the move subscription
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -221,8 +220,7 @@ namespace Microsoft.Azure.Management.Billing
         Task<AzureOperationResponse<BillingSubscription,BillingSubscriptionsMoveHeaders>> MoveWithHttpMessagesAsync(string billingAccountName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Validates if a subscription's charges can be moved to a new invoice
-        /// section. This operation is supported only for products that are
-        /// purchased with a recurring charge and for billing accounts with
+        /// section. This operation is supported for billing accounts with
         /// agreement type Microsoft Customer Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -230,7 +228,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the validate transfer
+        /// Request parameters that are provided to the validate move
         /// eligibility operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -252,8 +250,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Moves a subscription's charges to a new invoice section. The new
         /// invoice section must belong to the same billing profile as the
-        /// existing invoice section. This operation is supported only for
-        /// products that are purchased with a recurring charge and for billing
+        /// existing invoice section. This operation is supported for billing
         /// accounts with agreement type Microsoft Customer Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -261,7 +258,7 @@ namespace Microsoft.Azure.Management.Billing
         /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters that are provided to the transfer product
+        /// Request parameters that are provided to the move subscription
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
