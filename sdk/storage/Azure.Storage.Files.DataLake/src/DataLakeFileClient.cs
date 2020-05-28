@@ -3366,7 +3366,7 @@ namespace Azure.Storage.Files.DataLake
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Schedules the blob for deletion.
+        /// Schedules the file for deletion.
         /// </summary>
         /// <param name="options">
         /// Schedule deletion parameters.
@@ -3379,7 +3379,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the blob.
+        /// A <see cref="Response{BlobInfo}"/> describing the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3435,7 +3435,7 @@ namespace Azure.Storage.Files.DataLake
                     Response<PathSetExpiryInternal> response = await DataLakeRestClient.Path.SetExpiryAsync(
                         ClientDiagnostics,
                         Pipeline,
-                        _blobUri,
+                        BlobUri,
                         Version.ToVersionString(),
                         blobExpiryOptions,
                         expiresOn: expiresOn,

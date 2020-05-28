@@ -192,7 +192,6 @@ namespace Azure.Storage.Files.DataLake
     }
     public partial class DataLakePathClient
     {
-        protected readonly System.Uri _blobUri;
         protected DataLakePathClient() { }
         public DataLakePathClient(Azure.Storage.Files.DataLake.DataLakeFileSystemClient fileSystemClient, string path) { }
         public DataLakePathClient(System.Uri pathUri) { }
