@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Checks whether the specified user, group, contact, or service principal is a direct or transitive member of the specified group. </summary>
         /// <param name="parameters"> The check group membership parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CheckGroupMembershipResult>> IsMemberOfAsync(CheckGroupMembershipParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckGroupMembershipResult>> IsMemberOfAsync(CheckGroupMembershipParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group from which to remove the member. </param>
         /// <param name="memberObjectId"> Member object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> RemoveMemberAsync(string groupObjectId, string memberObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveMemberAsync(string groupObjectId, string memberObjectId, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
             {
@@ -230,7 +230,7 @@ namespace Azure.Graph.Rbac
         /// <param name="groupObjectId"> The object ID of the group to which to add the member. </param>
         /// <param name="parameters"> The URL of the member object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> AddMemberAsync(string groupObjectId, GroupAddMemberParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> AddMemberAsync(string groupObjectId, GroupAddMemberParameters parameters, CancellationToken cancellationToken = default)
         {
             if (groupObjectId == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a group in the directory. </summary>
         /// <param name="parameters"> The parameters for the group to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ADGroup>> CreateAsync(GroupCreateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ADGroup>> CreateAsync(GroupCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -385,7 +385,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets list of groups for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GroupListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GroupListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -458,7 +458,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="objectId"> The object ID of the group whose members should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetGroupMembersAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetGroupMembersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -540,7 +540,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets group information from the directory. </summary>
         /// <param name="objectId"> The object ID of the user for which to get group information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ADGroup>> GetAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<ADGroup>> GetAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -622,7 +622,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a group from the directory. </summary>
         /// <param name="objectId"> The object ID of the group to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -686,7 +686,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group for which to get group membership. </param>
         /// <param name="parameters"> Group filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GroupGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, GroupGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<GroupGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, GroupGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -778,7 +778,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -866,7 +866,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> AddOwnerAsync(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> AddOwnerAsync(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -936,7 +936,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the group from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> RemoveOwnerAsync(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveOwnerAsync(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -1003,7 +1003,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GroupListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<GroupListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1085,7 +1085,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetGroupMembersNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetGroupMembersNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1164,7 +1164,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="objectId"> The object ID of the group for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string objectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1251,7 +1251,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of groups for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GroupListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<GroupListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1329,7 +1329,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the members of a group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetGroupMembersNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetGroupMembersNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -149,7 +149,7 @@ namespace Azure.Management.Network
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, ExpressRouteGateway putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRouteGatewayName, ExpressRouteGateway putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -216,7 +216,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

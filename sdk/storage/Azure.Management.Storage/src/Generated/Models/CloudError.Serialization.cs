@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class CloudError
+    internal partial class CloudError
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {

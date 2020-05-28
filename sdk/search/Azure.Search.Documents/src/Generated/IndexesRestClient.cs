@@ -74,7 +74,7 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateAsync(SearchIndex index, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> CreateAsync(SearchIndex index, CancellationToken cancellationToken = default)
         {
             if (index == null)
             {
@@ -162,7 +162,7 @@ namespace Azure.Search.Documents
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListIndexesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListIndexesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -259,7 +259,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -369,7 +369,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -435,7 +435,7 @@ namespace Azure.Search.Documents
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> GetAsync(string indexName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> GetAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -521,7 +521,7 @@ namespace Azure.Search.Documents
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -612,7 +612,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {

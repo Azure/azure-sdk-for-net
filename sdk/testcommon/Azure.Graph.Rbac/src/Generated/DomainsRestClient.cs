@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of domains for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DomainListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -144,7 +144,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a specific domain in the current tenant. </summary>
         /// <param name="domainName"> name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Domain>> GetAsync(string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<Domain>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             if (domainName == null)
             {

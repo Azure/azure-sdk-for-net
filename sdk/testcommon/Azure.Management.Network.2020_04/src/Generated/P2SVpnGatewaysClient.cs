@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to create or Update a virtual wan p2s vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, P2SVpnGateway p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, P2SVpnGateway p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the P2SVpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -406,7 +406,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(string resourceGroupName, string gatewayName, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(string resourceGroupName, string gatewayName, P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -473,7 +473,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysGetP2SVpnConnectionHealthOperation> StartGetP2SVpnConnectionHealthAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysGetP2SVpnConnectionHealthOperation> StartGetP2SVpnConnectionHealthAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -532,7 +532,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the P2SVpnGateway. </param>
         /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation> StartGetP2SVpnConnectionHealthDetailedAsync(string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation> StartGetP2SVpnConnectionHealthDetailedAsync(string resourceGroupName, string gatewayName, P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -600,7 +600,7 @@ namespace Azure.Management.Network
         /// <param name="p2SVpnGatewayName"> The name of the P2S Vpn Gateway. </param>
         /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation> StartDisconnectP2SVpnConnectionsAsync(string resourceGroupName, string p2SVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation> StartDisconnectP2SVpnConnectionsAsync(string resourceGroupName, string p2SVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

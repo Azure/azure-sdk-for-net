@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class Error
+    internal partial class Error
     {
         internal static Error DeserializeError(JsonElement element)
         {

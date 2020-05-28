@@ -279,7 +279,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DdosProtectionPlansDeleteOperation> StartDeleteAsync(string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<DdosProtectionPlansDeleteOperation> StartDeleteAsync(string resourceGroupName, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.Management.Network
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DdosProtectionPlansCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<DdosProtectionPlansCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

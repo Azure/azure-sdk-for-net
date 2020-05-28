@@ -75,7 +75,7 @@ namespace Azure.Management.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineImage>> GetAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.Management.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -358,7 +358,7 @@ namespace Azure.Management.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -474,7 +474,7 @@ namespace Azure.Management.Compute
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -587,7 +587,7 @@ namespace Azure.Management.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {

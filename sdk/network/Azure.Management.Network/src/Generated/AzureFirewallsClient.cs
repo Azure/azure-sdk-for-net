@@ -239,7 +239,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<AzureFirewallsDeleteOperation> StartDeleteAsync(string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
+        public virtual async Task<AzureFirewallsDeleteOperation> StartDeleteAsync(string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -298,7 +298,7 @@ namespace Azure.Management.Network
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<AzureFirewallsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string azureFirewallName, AzureFirewall parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<AzureFirewallsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string azureFirewallName, AzureFirewall parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -366,7 +366,7 @@ namespace Azure.Management.Network
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<AzureFirewallsUpdateTagsOperation> StartUpdateTagsAsync(string resourceGroupName, string azureFirewallName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<AzureFirewallsUpdateTagsOperation> StartUpdateTagsAsync(string resourceGroupName, string azureFirewallName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

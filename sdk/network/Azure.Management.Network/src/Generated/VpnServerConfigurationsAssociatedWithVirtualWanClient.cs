@@ -38,7 +38,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnServerConfigurationsAssociatedWithVirtualWanListOperation> StartListAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnServerConfigurationsAssociatedWithVirtualWanListOperation> StartListAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

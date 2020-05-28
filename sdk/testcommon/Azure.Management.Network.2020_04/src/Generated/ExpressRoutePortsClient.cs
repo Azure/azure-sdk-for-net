@@ -279,7 +279,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRoutePortsDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRoutePortsDeleteOperation> StartDeleteAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.Management.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="parameters"> Parameters supplied to the create ExpressRoutePort operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRoutePortsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRoutePortName, ExpressRoutePort parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRoutePortsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string expressRoutePortName, ExpressRoutePort parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

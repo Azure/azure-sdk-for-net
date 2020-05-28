@@ -240,7 +240,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, Gallery gallery, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string galleryName, Gallery gallery, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -308,7 +308,7 @@ namespace Azure.Management.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleriesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleriesUpdateOperation> StartUpdateAsync(string resourceGroupName, string galleryName, GalleryUpdate gallery, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<GalleriesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<GalleriesDeleteOperation> StartDeleteAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

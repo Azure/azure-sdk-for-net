@@ -357,7 +357,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="circuitName"> The name of the express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCircuitsDeleteOperation> StartDeleteAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCircuitsDeleteOperation> StartDeleteAsync(string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -416,7 +416,7 @@ namespace Azure.Management.Network
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCircuitsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string circuitName, ExpressRouteCircuit parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCircuitsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string circuitName, ExpressRouteCircuit parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -485,7 +485,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCircuitsListArpTableOperation> StartListArpTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCircuitsListArpTableOperation> StartListArpTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -563,7 +563,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCircuitsListRoutesTableOperation> StartListRoutesTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCircuitsListRoutesTableOperation> StartListRoutesTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -641,7 +641,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCircuitsListRoutesTableSummaryOperation> StartListRoutesTableSummaryAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCircuitsListRoutesTableSummaryOperation> StartListRoutesTableSummaryAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

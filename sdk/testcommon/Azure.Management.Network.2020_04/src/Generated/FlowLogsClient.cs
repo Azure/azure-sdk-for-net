@@ -179,7 +179,7 @@ namespace Azure.Management.Network
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<FlowLogsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<FlowLogsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -256,7 +256,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<FlowLogsDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
+        public virtual async Task<FlowLogsDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

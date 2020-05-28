@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Management.Network.Models
 {
-    public partial class ErrorDetails
+    internal partial class ErrorDetails
     {
         internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
         {

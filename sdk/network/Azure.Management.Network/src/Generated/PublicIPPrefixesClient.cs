@@ -281,7 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpPrefixName"> The name of the PublicIpPrefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PublicIPPrefixesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpPrefixName, CancellationToken cancellationToken = default)
+        public virtual async Task<PublicIPPrefixesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpPrefixName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PublicIPPrefixesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpPrefixName, PublicIPPrefix parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<PublicIPPrefixesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpPrefixName, PublicIPPrefix parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

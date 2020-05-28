@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection. </param>
         /// <param name="parameters"> Parameters supplied to the update express route crossConnection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, ExpressRouteCrossConnection parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string crossConnectionName, ExpressRouteCrossConnection parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -349,7 +349,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionsListArpTableOperation> StartListArpTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionsListArpTableOperation> StartListArpTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -427,7 +427,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionsListRoutesTableSummaryOperation> StartListRoutesTableSummaryAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionsListRoutesTableSummaryOperation> StartListRoutesTableSummaryAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -505,7 +505,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ExpressRouteCrossConnectionsListRoutesTableOperation> StartListRoutesTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public virtual async Task<ExpressRouteCrossConnectionsListRoutesTableOperation> StartListRoutesTableAsync(string resourceGroupName, string crossConnectionName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

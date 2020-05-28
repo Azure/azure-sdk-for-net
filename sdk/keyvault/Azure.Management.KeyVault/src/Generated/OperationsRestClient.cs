@@ -58,7 +58,7 @@ namespace Azure.Management.KeyVault
 
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,7 +125,7 @@ namespace Azure.Management.KeyVault
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<OperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

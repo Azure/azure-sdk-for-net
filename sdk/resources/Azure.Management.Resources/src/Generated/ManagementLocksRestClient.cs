@@ -70,7 +70,7 @@ namespace Azure.Management.Resources
         /// <param name="lockName"> The lock name. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> CreateOrUpdateAtResourceGroupLevelAsync(string resourceGroupName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> CreateOrUpdateAtResourceGroupLevelAsync(string resourceGroupName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -175,7 +175,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the lock. </param>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the locked resource group. </param>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> GetAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> GetAtResourceGroupLevelAsync(string resourceGroupName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -344,7 +344,7 @@ namespace Azure.Management.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="parameters"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -447,7 +447,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -517,7 +517,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The scope for the lock. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -628,7 +628,7 @@ namespace Azure.Management.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> Parameters for creating or updating a  management lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> CreateOrUpdateAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> CreateOrUpdateAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -781,7 +781,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource with the lock to delete. </param>
         /// <param name="lockName"> The name of the lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -901,7 +901,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> GetAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> GetAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1033,7 +1033,7 @@ namespace Azure.Management.Resources
         /// <param name="lockName"> The name of lock. The lock name can be a maximum of 260 characters. It cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters. </param>
         /// <param name="parameters"> The management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> CreateOrUpdateAtSubscriptionLevelAsync(string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> CreateOrUpdateAtSubscriptionLevelAsync(string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -1126,7 +1126,7 @@ namespace Azure.Management.Resources
         /// <summary> To delete management locks, you must have access to Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of the built-in roles, only Owner and User Access Administrator are granted those actions. </summary>
         /// <param name="lockName"> The name of lock to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -1186,7 +1186,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets a management lock at the subscription level. </summary>
         /// <param name="lockName"> The name of the lock to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockObject>> GetAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockObject>> GetAtSubscriptionLevelAsync(string lockName, CancellationToken cancellationToken = default)
         {
             if (lockName == null)
             {
@@ -1274,7 +1274,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtResourceGroupLevelAsync(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtResourceGroupLevelAsync(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1375,7 +1375,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtResourceLevelAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1497,7 +1497,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all the management locks for a subscription. </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtSubscriptionLevelAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtSubscriptionLevelAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListAtSubscriptionLevelRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1573,7 +1573,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListByScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListByScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -1654,7 +1654,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group containing the locks to get. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtResourceGroupLevelNextPageAsync(string nextLink, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtResourceGroupLevelNextPageAsync(string nextLink, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1748,7 +1748,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the locked resource. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtResourceLevelNextPageAsync(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtResourceLevelNextPageAsync(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1873,7 +1873,7 @@ namespace Azure.Management.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListAtSubscriptionLevelNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListAtSubscriptionLevelNextPageAsync(string nextLink, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1954,7 +1954,7 @@ namespace Azure.Management.Resources
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementLockListResult>> ListByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> ListByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -179,7 +179,7 @@ namespace Azure.Management.Network
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="routeTableParameters"> Parameters supplied to create or update RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<HubRouteTablesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, HubRouteTable routeTableParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<HubRouteTablesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualHubName, string routeTableName, HubRouteTable routeTableParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -256,7 +256,7 @@ namespace Azure.Management.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<HubRouteTablesDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<HubRouteTablesDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualHubName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

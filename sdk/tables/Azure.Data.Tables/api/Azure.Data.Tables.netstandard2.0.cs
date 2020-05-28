@@ -205,11 +205,6 @@ namespace Azure.Data.Tables.Models
         public string OdataMetadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.TableItem> Value { get { throw null; } }
     }
-    public partial class TableServiceError
-    {
-        internal TableServiceError() { }
-        public string Message { get { throw null; } }
-    }
     public partial class TableServiceProperties
     {
         public TableServiceProperties() { }
