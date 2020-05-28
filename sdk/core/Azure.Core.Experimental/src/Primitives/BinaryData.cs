@@ -4,20 +4,21 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Experimental.Primitives
+namespace Azure.Core
 {
     /// <summary>
     /// Abstraction for a payload of binary data.
     /// </summary>
-    public class BinaryData
+    public struct BinaryData
     {
         /// <summary>
         /// The backing store for the <see cref="BinaryData"/> instance.
         /// </summary>
-        internal ReadOnlyMemory<byte> Memory { get; }
+        internal ReadOnlyMemory<byte> Data { get; }
 
         /// <summary>
         /// Creates a binary data instance from bytes.
@@ -25,7 +26,7 @@ namespace Azure.Core.Experimental.Primitives
         /// <param name="data">Byte data.</param>
         public BinaryData(ReadOnlyMemory<byte> data)
         {
-            Memory = data;
+            Data = data;
         }
 
         /// <summary>
@@ -56,12 +57,30 @@ namespace Azure.Core.Experimental.Primitives
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A <see cref="BinaryData"/> instance.</returns>
-        public static BinaryData Create(Stream stream)
+        public static BinaryData Create(Stream stream) =>
+            CreateAsync(stream, false).EnsureCompleted();
+
+        /// <summary>
+        /// Creates a binary data instance from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream containing the data.</param>
+        /// <returns>A <see cref="BinaryData"/> instance.</returns>
+        public static async Task<BinaryData> CreateAsync(Stream stream) =>
+            await CreateAsync(stream, true).ConfigureAwait(false);
+
+        private static async Task<BinaryData> CreateAsync(Stream stream, bool async)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             using (var memoryStream = new MemoryStream())
             {
-                stream.CopyTo(memoryStream);
+                if (async)
+                {
+                    await stream.CopyToAsync(memoryStream).ConfigureAwait(false);
+                }
+                else
+                {
+                    stream.CopyTo(memoryStream);
+                }
                 return new BinaryData(memoryStream.ToArray());
             }
         }
@@ -82,8 +101,7 @@ namespace Azure.Core.Experimental.Primitives
             Argument.AssertNotNull(serializer, nameof(serializer));
             using var memoryStream = new MemoryStream();
             serializer.Serialize(memoryStream, data, typeof(T));
-            memoryStream.Position = 0;
-            return Create(memoryStream);
+            return new BinaryData(memoryStream.ToArray());
         }
 
         /// <summary>
@@ -107,7 +125,7 @@ namespace Azure.Core.Experimental.Primitives
         {
             if (obj is BinaryData data)
             {
-                return data.Memory.Equals(Memory);
+                return data.Data.Equals(Data);
             }
 
             return false;
@@ -116,6 +134,6 @@ namespace Azure.Core.Experimental.Primitives
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            Memory.GetHashCode();
+            Data.GetHashCode();
     }
 }

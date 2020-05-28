@@ -5,8 +5,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Experimental.Primitives
+namespace Azure.Core
 {
     /// <summary>
     /// A set of extension methods that can be used to access the payload
@@ -35,7 +36,7 @@ namespace Azure.Core.Experimental.Primitives
             Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
-            return encoding.GetString(data.Memory.ToArray());
+            return encoding.GetString(data.Data.ToArray());
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Azure.Core.Experimental.Primitives
         /// <returns>The data as bytes.</returns>
         public static ReadOnlyMemory<byte> AsBytes(
             this BinaryData data) =>
-            data.Memory;
+            data.Data;
 
         /// <summary>
         /// Converts the BinaryData to a stream.
@@ -53,7 +54,7 @@ namespace Azure.Core.Experimental.Primitives
         /// <param name="data">The BinaryData instance.</param>
         /// <returns>A stream representing the data.</returns>
         public static Stream AsStream(this BinaryData data) =>
-            new MemoryStream(data.Memory.ToArray());
+            new MemoryStream(data.Data.ToArray());
 
         /// <summary>
         /// Converts the BinaryData to the specified type.
@@ -66,11 +67,8 @@ namespace Azure.Core.Experimental.Primitives
         ///<returns>The data converted to the specified type.</returns>
         public static T As<T>(
             this BinaryData data,
-            ObjectSerializer serializer)
-        {
-            Argument.AssertNotNull(serializer, nameof(serializer));
-            return (T)serializer.Deserialize(data.AsStream(), typeof(T));
-        }
+            ObjectSerializer serializer) =>
+            data.AsAsync<T>(serializer, false).EnsureCompleted();
 
         /// <summary>
         /// Converts the BinaryData to the specified type.
@@ -86,9 +84,25 @@ namespace Azure.Core.Experimental.Primitives
         public static async ValueTask<T> AsAsync<T>(
             this BinaryData data,
             ObjectSerializer serializer) =>
-            (T)await serializer.DeserializeAsync(
-                data.AsStream(),
-                typeof(T))
-                .ConfigureAwait(false);
+            await data.AsAsync<T>(serializer, true).ConfigureAwait(false);
+
+        private static async ValueTask<T> AsAsync<T>(
+            this BinaryData data,
+            ObjectSerializer serializer,
+            bool async)
+        {
+            Argument.AssertNotNull(serializer, nameof(serializer));
+            if (async)
+            {
+                return (T)await serializer.DeserializeAsync(
+                    data.AsStream(),
+                    typeof(T))
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return (T)serializer.Deserialize(data.AsStream(), typeof(T));
+            }
+        }
     }
 }
