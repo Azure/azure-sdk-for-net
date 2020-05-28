@@ -976,14 +976,14 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segments[0].Verify(r => r.GetPage(
                 IsAsync,
-                512,
+                Constants.ChangeFeed.DefaultPageSize,
                 default));
 
             segments[1].Verify(r => r.HasNext(), Times.Exactly(3));
 
             segments[1].Verify(r => r.GetPage(
                 IsAsync,
-                511,
+                Constants.ChangeFeed.DefaultPageSize - 1,
                 default));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(1));

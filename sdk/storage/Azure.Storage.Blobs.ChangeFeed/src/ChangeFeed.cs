@@ -107,6 +107,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return BlobChangeFeedEventPage.Empty();
             }
 
+            if (pageSize > Constants.ChangeFeed.DefaultPageSize)
+            {
+                pageSize = Constants.ChangeFeed.DefaultPageSize;
+            }
+
             // Get next page
             List<BlobChangeFeedEvent> blobChangeFeedEvents = new List<BlobChangeFeedEvent>();
 
