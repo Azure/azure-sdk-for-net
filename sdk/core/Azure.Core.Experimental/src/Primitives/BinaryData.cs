@@ -71,6 +71,12 @@ namespace Azure.Core
         private static async Task<BinaryData> CreateAsync(Stream stream, bool async)
         {
             Argument.AssertNotNull(stream, nameof(stream));
+            if (stream.CanSeek && stream.Length > int.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(stream),
+                    "Stream length must be less than Int32.MaxValue");
+            }
             using (var memoryStream = new MemoryStream())
             {
                 if (async)

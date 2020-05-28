@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Experimental.Primitives;
+using Azure.Core;
+using Moq;
 using NUnit.Framework;
 
-namespace Azure.Core.Experimental.Tests
+namespace Azure.Core.Tests
 {
     public class BinaryDataTests
     {
@@ -48,13 +49,29 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanCreateBinaryDataFromStream()
+        public async Task CanCreateBinaryDataFromStream()
         {
             var buffer = Encoding.UTF8.GetBytes("some data");
             var payload = new MemoryStream(buffer);
             var data = BinaryData.Create(payload);
             Assert.AreEqual(buffer, data.AsBytes().ToArray());
             Assert.AreEqual(payload, data.AsStream());
+
+            payload.Position = 0;
+            data = await BinaryData.CreateAsync(payload);
+            Assert.AreEqual(buffer, data.AsBytes().ToArray());
+            Assert.AreEqual(payload, data.AsStream());
+        }
+
+        [Test]
+        public void MaxStreamLengthRespected()
+        {
+            var mockStream = new Mock<Stream>();
+            mockStream.Setup(s => s.CanSeek).Returns(true);
+            mockStream.Setup(s => s.Length).Returns((long)int.MaxValue + 1);
+            Assert.That(
+                () => BinaryData.Create(mockStream.Object),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test]
@@ -86,6 +103,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.That(
                 () => BinaryData.Create(stream: null),
                 Throws.InstanceOf<ArgumentNullException>());
+
+            Assert.That(
+                async () => await BinaryData.CreateAsync(stream: null),
+                Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -97,6 +118,9 @@ namespace Azure.Core.Experimental.Tests
             Assert.That(
                 () => data.As<string>(serializer),
                 Throws.InstanceOf<Exception>());
+            Assert.That(
+                async () => await data.AsAsync<string>(serializer),
+                Throws.InstanceOf<Exception>());
         }
 
         [Test]
@@ -107,6 +131,9 @@ namespace Azure.Core.Experimental.Tests
             var data = BinaryData.Create(payload, serializer);
             Assert.That(
                 () => data.As<TestModel>(null),
+                Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(
+                async () => await data.AsAsync<TestModel>(null),
                 Throws.InstanceOf<ArgumentNullException>());
         }
 
