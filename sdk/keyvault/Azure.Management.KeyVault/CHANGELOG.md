@@ -47,7 +47,8 @@ using Azure.Identity;
 using Azure.Management.KeyVault;
 using Azure.Management.KeyVault.Models;
 
-var keyVaultManagementClient = new KeyVaultManagementClient(SubscriptionId,
+var keyVaultManagementClient = new KeyVaultManagementClient(
+            SubscriptionId,
             new DefaultAzureCredential(),
             new KeyVaultManagementClientOptions());
 var vaultsClient = keyVaultManagementClient.GetVaultsClient();
@@ -80,9 +81,9 @@ After upgrade:
 ```csharp
 var permissions = new Permissions
             {
-                Keys = new KeyPermissions[] { new KeyPermissions("all") },
-                Secrets = new SecretPermissions[] { new SecretPermissions("all") },
-                Certificates = new CertificatePermissions[] { new CertificatePermissions("all") },
-                Storage = new StoragePermissions[] { new StoragePermissions("all") },
+                Keys = new [] { new KeyPermissions("all") },
+                Secrets = new [] { new SecretPermissions("all") },
+                Certificates = new [] { new CertificatePermissions("all") },
+                Storage = new [] { new StoragePermissions("all") },
             };
 ```
