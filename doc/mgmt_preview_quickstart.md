@@ -99,9 +99,12 @@ For more information and different authentication approaches using Azure
 Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
 Interacting with Azure Resources
-------------------
+--------------------------------
 
 Now that we are authenticated, we can use our management client to make API calls. Let's demonstrate management client's usage by showing concrete examples
+
+Example: Managing Resource Groups
+---------------------------------
 
 **Managing Resource Groups**
 
