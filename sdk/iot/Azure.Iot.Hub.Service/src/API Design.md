@@ -45,7 +45,7 @@ APIs for managing device identities, device twins, and querying devices
 public class Devices
 {
     /// <summary>
-    /// Create a device.
+    /// Create a device identity.
     /// </summary>
     /// <param name="deviceIdentity">The device to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
@@ -53,7 +53,7 @@ public class Devices
     public virtual async Task<Response<DeviceIdentity>> CreateIdentityAsync(DeviceIdentity deviceIdentity, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Update a device.
+    /// Update a device identity.
     /// </summary>
     /// <param name="deviceIdentity">The device to update.</param>
     /// <param name="ifMatch">A string representing a weak ETag for this device, as per RFC7232. The update operation is performed
@@ -64,7 +64,7 @@ public class Devices
     public virtual async Task<Response<DeviceIdentity>> UpdateIdentityAsync(DeviceIdentity deviceIdentity, string ifMatch = null, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Get a single device.
+    /// Get a single device identity.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device to get.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
@@ -72,7 +72,7 @@ public class Devices
     public virtual async Task<Response<DeviceIdentity>> GetIdentityAsync(string deviceId, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Delete a single device.
+    /// Delete a single device identity.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device to delete.</param>
     /// <param name="ifMatch">A string representing a weak ETag for this device, as per RFC7232. The delete operation is performed
@@ -83,7 +83,7 @@ public class Devices
     public virtual async Task<Response> DeleteIdentityAsync(string deviceId, string ifMatch = null, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
+    /// Create multiple device identities with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
     /// </summary>
     /// <param name="devices">The pairs of devices their twins that will be created. For fields such as deviceId
     /// where device and twin have a definition, the device value will override the twin value.</param>
@@ -92,7 +92,7 @@ public class Devices
     public async Task<Response<BulkRegistryOperationResult>> CreateIdentitiesWithTwinAsync(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Create multiple devices. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
+    /// Create multiple device identities. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
     /// </summary>
     /// <param name="deviceIdentities">The devices to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
@@ -100,7 +100,7 @@ public class Devices
     public virtual async Task<Response<BulkRegistryOperationResult>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
 
     /// <summary>
-    /// Update multiple devices. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
+    /// Update multiple device identities. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
     /// </summary>
     /// <param name="deviceIdentities">The devices to update.</param>
     /// <param name="force">If true, the devices will be updated even if their ETag is out of date.
@@ -110,7 +110,7 @@ public class Devices
     public virtual async Task<Response<BulkRegistryOperationResult>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, bool force, CancellationToken cancellationToken = default)
     
     /// <summary>
-    /// Delete multiple devices. A maximum of 100 deletions can be done per call. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
+    /// Delete multiple device identities. A maximum of 100 deletions can be done per call. For larger scale operations, consider using IoT Hub jobs (https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities).
     /// </summary>
     /// <param name="deviceIdentities">The devices to delete.</param>
     /// <param name="force">If true, the devices will be deleted even if their ETag is out of date.
