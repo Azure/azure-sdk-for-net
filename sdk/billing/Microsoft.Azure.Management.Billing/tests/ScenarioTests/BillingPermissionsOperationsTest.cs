@@ -17,7 +17,7 @@ namespace Billing.Tests.ScenarioTests
     {
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
+        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
         private const string OrganizationViewPermission = "50000000-aaaa-bbbb-cccc-200000000001";
         private const string ViewBillingProfilePermission = "40000000-aaaa-bbbb-cccc-200000000006";
         private const string ViewInvoiceSectionPropertiesPermission = "30000000-aaaa-bbbb-cccc-200000000001";

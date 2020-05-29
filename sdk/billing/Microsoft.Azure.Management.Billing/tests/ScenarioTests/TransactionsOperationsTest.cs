@@ -18,7 +18,7 @@ namespace Billing.Tests.ScenarioTests
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
         private const string InvoiceId = "G000492901";
-        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
+        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
         private const string TransactionName = "98ce813f-facd-43d4-a8fe-b6958fc0f5cf";
 
         [Fact]

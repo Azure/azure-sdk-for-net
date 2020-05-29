@@ -18,10 +18,10 @@ namespace Billing.Tests.ScenarioTests
     public class InvoicesOperationsTest : TestBase
     {
         private static readonly DateTime DueDate = DateTime.Parse("11/15/2019");
-        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string InvoiceNumber = "G000492901";
-        private const string InvoiceStatus = "OverDue";
+        private const string BillingAccountName = "c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31";
+        private const string BillingProfileName = "FQWV-S4GU-BG7-TGB";
+        private const string InvoiceNumber = "T000154489";
+        private const string InvoiceStatus = "Paid";
 
         [Fact]
         public void GetInvoiceByInvoiceNumberTest()
@@ -43,7 +43,6 @@ namespace Billing.Tests.ScenarioTests
                 Assert.Contains(BillingProfileName, invoice.BillingProfileId);
                 Assert.Equal(InvoiceNumber, invoice.Name);
                 Assert.Equal(InvoiceStatus, invoice.Status);
-                Assert.Equal(DueDate.Date, invoice.DueDate.Value.Date);
             }
         }
 

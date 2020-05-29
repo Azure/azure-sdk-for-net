@@ -19,7 +19,7 @@ namespace Billing.Tests.ScenarioTests
         private const string BillingAccountRoleDefinitionName = "50000000-aaaa-bbbb-cccc-100000000000";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
         private const string BillingProfileRoleDefinitionName = "40000000-aaaa-bbbb-cccc-100000000000";
-        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
+        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
         private const string InvoiceSectionRoleDefinitionName = "30000000-aaaa-bbbb-cccc-100000000000";
 
         [Fact]

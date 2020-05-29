@@ -16,8 +16,8 @@ namespace Billing.Tests.ScenarioTests
 {
     public class BillingProfilesOperationsTest : TestBase
     {
-        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
+        private const string BillingAccountName = "09fdb330-0b61-5cf6-3e5a-92828b8da4c0:83025e81-32ed-47e8-b420-359f05267fb9_2019-05-31";
+        private const string BillingProfileName = "TSYB-SQXK-BG7-PKDK-SGB";
         private const string BillingProfileCurrency = "USD";
 
         [Fact]
@@ -122,6 +122,39 @@ namespace Billing.Tests.ScenarioTests
                 Assert.Equal(poNumber, billingProfile.PoNumber);
                 Assert.NotNull(billingProfile.BillTo);
                 Assert.Equal(address.AddressLine1, billingProfile.BillTo.AddressLine1);
+            }
+        }
+
+        [Fact]
+        public void UpdateExistingBillingProfileTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var poNumber = Guid.NewGuid().ToString();
+                var displayName = Guid.NewGuid().ToString();
+
+                // Get the billing profile
+                var billingProfile = billingMgmtClient.BillingProfiles.CreateOrUpdate(
+                    BillingAccountName,
+                    BillingProfileName,
+                    new BillingProfile
+                    {
+                        DisplayName = displayName,
+                        PoNumber = poNumber
+                    });
+
+                // Verify the response
+                Assert.NotNull(billingProfile);
+                Assert.Equal(BillingProfileName, billingProfile.Name);
+                Assert.Equal(BillingProfileCurrency, billingProfile.Currency);
+                Assert.Equal(displayName, billingProfile.DisplayName);
+                Assert.Equal(poNumber, billingProfile.PoNumber);
             }
         }
     }
