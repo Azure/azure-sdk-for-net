@@ -133,7 +133,7 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 ***List all resource groups***
 
 ```csharp
-    AsyncPageable<ResourceGroup> response = resourceGroupClient.ResourceGroups.ListAsync();
+    AsyncPageable<ResourceGroup> response = resourceGroupClient.ListAsync();
     await foreach (ResourceGroup resourceGroup in response)
     {
         Console.WriteLine(resourceGroup.Name);
