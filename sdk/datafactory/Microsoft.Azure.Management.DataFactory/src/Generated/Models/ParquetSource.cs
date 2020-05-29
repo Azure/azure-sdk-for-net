@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Parquet source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ParquetSource")]
     public partial class ParquetSource : CopySource
     {
         /// <summary>

@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// triggered if the values for the runDimension match for all upstream
     /// pipeline runs.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ChainingTrigger")]
     [Rest.Serialization.JsonTransformation]
     public partial class ChainingTrigger : Trigger
     {

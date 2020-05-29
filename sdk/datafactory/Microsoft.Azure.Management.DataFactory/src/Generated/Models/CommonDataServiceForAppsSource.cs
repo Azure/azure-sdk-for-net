@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Common Data Service for Apps source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CommonDataServiceForAppsSource")]
     public partial class CommonDataServiceForAppsSource : CopySource
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Format write settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FormatWriteSettings")]
     public partial class FormatWriteSettings
     {
         /// <summary>

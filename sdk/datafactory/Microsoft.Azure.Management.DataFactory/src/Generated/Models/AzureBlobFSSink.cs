@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure Data Lake Storage Gen2 sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureBlobFSSink")]
     public partial class AzureBlobFSSink : CopySink
     {
         /// <summary>

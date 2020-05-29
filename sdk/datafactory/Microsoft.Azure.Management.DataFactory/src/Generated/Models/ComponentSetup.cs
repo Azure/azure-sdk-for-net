@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The custom setup of installing 3rd party components.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ComponentSetup")]
     [Rest.Serialization.JsonTransformation]
     public partial class ComponentSetup : CustomSetupBase
     {

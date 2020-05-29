@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for SAP Cloud for Customer source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SapCloudForCustomerSource")]
     public partial class SapCloudForCustomerSource : TabularSource
     {
         /// <summary>

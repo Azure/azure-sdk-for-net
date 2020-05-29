@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity SQL server sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SqlServerSink")]
     public partial class SqlServerSink : CopySink
     {
         /// <summary>
