@@ -10,10 +10,10 @@ using System;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
-    public partial class SearchIndexerDataSource
+    public partial class SearchIndexerDataSourceConnection
     {
 
-        /// <summary> Initializes a new instance of SearchIndexerDataSource. </summary>
+        /// <summary> Initializes a new instance of SearchIndexerDataSourceConnection. </summary>
         /// <param name="name"> The name of the datasource. </param>
         /// <param name="description"> The description of the datasource. </param>
         /// <param name="type"> The type of the datasource. </param>
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="dataChangeDetectionPolicy"> The data change detection policy for the datasource. </param>
         /// <param name="dataDeletionDetectionPolicy"> The data deletion detection policy for the datasource. </param>
         /// <param name="Etag"> The ETag of the data source. </param>
-        internal SearchIndexerDataSource(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string Etag)
+        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string Etag)
         {
             Name = name;
             Description = description;

@@ -6,21 +6,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [CodeGenSuppress(nameof(SearchIndexerDataSource), typeof(string), typeof(SearchIndexerDataSourceType), typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
-    public partial class SearchIndexerDataSource
+    [CodeGenModel("SearchIndexerDataSource")]
+    [CodeGenSuppress(nameof(SearchIndexerDataSourceConnection), typeof(string), typeof(SearchIndexerDataSourceType), typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
+    public partial class SearchIndexerDataSourceConnection
     {
         [CodeGenMember("etag")]
         private string _etag;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="SearchIndexerDataSource"/> class.
+        /// Creates a new instance of the <see cref="SearchIndexerDataSourceConnection"/> class.
         /// </summary>
         /// <param name="name">The name of the data source.</param>
         /// <param name="type">The type of the data source.</param>
         /// <param name="connectionString">The connection string to the data source.</param>
         /// <param name="container">The data container for the data source.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="connectionString"/>, or <paramref name="container"/> is null.</exception>
-        public SearchIndexerDataSource(string name, SearchIndexerDataSourceType type, string connectionString, SearchIndexerDataContainer container)
+        public SearchIndexerDataSourceConnection(string name, SearchIndexerDataSourceType type, string connectionString, SearchIndexerDataContainer container)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
@@ -29,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary>
-        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndexerDataSource"/>.
+        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndexerDataSourceConnection"/>.
         /// </summary>
         public ETag? ETag
         {
