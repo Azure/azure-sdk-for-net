@@ -146,12 +146,6 @@ namespace Azure.Messaging.ServiceBus
         /// depends on the queue's workload and its state.</remarks>
         public DateTimeOffset ScheduledEnqueueTime => SentMessage.ScheduledEnqueueTime;
 
-        // TODO: Calculate the size of the properties and body
-        /// <summary>
-        /// Gets the total size of the message body in bytes.
-        /// </summary>
-        public long Size => SentMessage.Size;
-
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.
         /// </summary>
