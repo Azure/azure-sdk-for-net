@@ -11,36 +11,29 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Represents a data export setting
-    /// </summary>
-    [Newtonsoft.Json.JsonObject("DataExportSettings")]
-    [Rest.Serialization.JsonTransformation]
-    public partial class DataExportSettings : Setting
+    public partial class SuppressionAlertsScope
     {
         /// <summary>
-        /// Initializes a new instance of the DataExportSettings class.
+        /// Initializes a new instance of the SuppressionAlertsScope class.
         /// </summary>
-        public DataExportSettings()
+        public SuppressionAlertsScope()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataExportSettings class.
+        /// Initializes a new instance of the SuppressionAlertsScope class.
         /// </summary>
-        /// <param name="enabled">Is the data export setting is enabled</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public DataExportSettings(bool enabled, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="allOf">All the conditions inside need to be true in
+        /// order to suppress the alert</param>
+        public SuppressionAlertsScope(IList<ScopeElement> allOf)
         {
-            Enabled = enabled;
+            AllOf = allOf;
             CustomInit();
         }
 
@@ -50,10 +43,11 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets is the data export setting is enabled
+        /// Gets or sets all the conditions inside need to be true in order to
+        /// suppress the alert
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool Enabled { get; set; }
+        [JsonProperty(PropertyName = "allOf")]
+        public IList<ScopeElement> AllOf { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -63,7 +57,10 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (AllOf == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AllOf");
+            }
         }
     }
 }
