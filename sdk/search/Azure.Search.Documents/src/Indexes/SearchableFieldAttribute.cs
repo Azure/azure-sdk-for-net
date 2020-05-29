@@ -54,17 +54,34 @@ namespace Azure.Search.Documents.Indexes
         public string[] SynonymMapNames { get; set; }
 
         /// <inheritdoc/>
-        SearchField ISearchFieldAttribute.CreateField(string name) => new SearchableField(name, Type.IsCollection)
+        SearchField ISearchFieldAttribute.CreateField(string name)
         {
-            IsKey = IsKey,
-            IsHidden = IsHidden,
-            IsFilterable = IsFilterable,
-            IsFacetable = IsFacetable,
-            IsSortable = IsSortable,
-            AnalyzerName = AnalyzerName,
-            SearchAnalyzerName = SearchAnalyzerName,
-            IndexAnalyzerName = IndexAnalyzerName,
-            SynonymMapNames = SynonymMapNames,
-        };
+            SearchableField field = new SearchableField(name, Type.IsCollection)
+            {
+                IsKey = IsKey,
+                IsHidden = IsHidden,
+                IsFilterable = IsFilterable,
+                IsFacetable = IsFacetable,
+                IsSortable = IsSortable,
+                SynonymMapNames = SynonymMapNames,
+            };
+
+            if (AnalyzerName != null)
+            {
+                field.AnalyzerName = AnalyzerName;
+            }
+
+            if (SearchAnalyzerName != null)
+            {
+                field.SearchAnalyzerName = SearchAnalyzerName;
+            }
+
+            if (IndexAnalyzerName != null)
+            {
+                field.IndexAnalyzerName = IndexAnalyzerName;
+            }
+
+            return field;
+        }
     }
 }
