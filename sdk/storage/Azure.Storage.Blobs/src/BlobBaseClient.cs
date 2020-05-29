@@ -1270,15 +1270,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// is read from.
         /// </returns>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Stream OpenReadAsync(
+        public virtual Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
             int bufferSize = Constants.DefaultStreamCopyBufferSize,
             BlobRequestConditions conditions = default)
-            => OpenReadInteral(
+            => Task.FromResult(OpenReadInteral(
                 position,
                 bufferSize,
-                conditions);
+                conditions));
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -1304,28 +1304,57 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int bufferSize = Constants.DefaultStreamCopyBufferSize,
             BlobRequestConditions conditions = default)
-            => new LazyLoadingReadOnlyStream<BlobDownloadInfo>(
-                (HttpRange range,
-                object conditions,
-                bool rangeGetContentHash,
-                CancellationToken cancellationToken)
-                    => DownloadAsync(
-                        range,
-                        (BlobRequestConditions)conditions,
-                        rangeGetContentHash,
-                        cancellationToken),
-                (HttpRange range,
-                object conditions,
-                bool rangeGetContentHash,
-                CancellationToken cancellationToken)
-                    => Download(
-                        range,
-                        (BlobRequestConditions)conditions,
-                        rangeGetContentHash,
-                        cancellationToken),
-                position,
-                bufferSize,
-                conditions);
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                Pipeline.LogMethodEnter(
+                nameof(BlobBaseClient),
+                message:
+                $"{nameof(position)}: {position}\n" +
+                $"{nameof(bufferSize)}: {bufferSize}\n" +
+                $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(OpenRead)}");
+                try
+                {
+                    scope.Start();
+                    return new LazyLoadingReadOnlyStream<BlobDownloadInfo>(
+                        (HttpRange range,
+                        object conditions,
+                        bool rangeGetContentHash,
+                        CancellationToken cancellationToken)
+                            => DownloadAsync(
+                                range,
+                                (BlobRequestConditions)conditions,
+                                rangeGetContentHash,
+                                cancellationToken),
+                        (HttpRange range,
+                        object conditions,
+                        bool rangeGetContentHash,
+                        CancellationToken cancellationToken)
+                            => Download(
+                                range,
+                                (BlobRequestConditions)conditions,
+                                rangeGetContentHash,
+                                cancellationToken),
+                        position,
+                        bufferSize,
+                        conditions);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    scope.Dispose();
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+
         #endregion OpenRead
 
         #region StartCopyFromUri

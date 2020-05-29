@@ -1538,10 +1538,10 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         internal virtual Response<ShareFileDownloadInfo> Download(
-            HttpRange range = default,
-            ShareFileRequestConditions conditions = default,
-            bool rangeGetContentHash = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange range,
+            ShareFileRequestConditions conditions,
+            bool rangeGetContentHash,
+            CancellationToken cancellationToken) =>
             Download(
                 range,
                 rangeGetContentHash,
@@ -1678,10 +1678,10 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         internal virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            HttpRange range = default,
-            ShareFileRequestConditions conditions = default,
-            bool rangeGetContentHash = default,
-            CancellationToken cancellationToken = default) =>
+            HttpRange range,
+            ShareFileRequestConditions conditions,
+            bool rangeGetContentHash,
+            CancellationToken cancellationToken) =>
             await DownloadAsync(
                 range,
                 rangeGetContentHash,

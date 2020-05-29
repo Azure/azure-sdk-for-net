@@ -45,12 +45,12 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Async DownloadTo() function.
         /// </summary>
-        private Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> _downloadToAsyncFunc;
+        private readonly Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> _downloadToAsyncFunc;
 
         /// <summary>
         /// Sync DownloadTo() function.
         /// </summary>
-        private Func<HttpRange, object, bool, CancellationToken, Response<T>> _downloadToFunc;
+        private readonly Func<HttpRange, object, bool, CancellationToken, Response<T>> _downloadToFunc;
 
         public LazyLoadingReadOnlyStream(
             Func<HttpRange, object, bool, CancellationToken, Task<Response<T>>> downloadToAsyncFunc,
@@ -105,6 +105,7 @@ namespace Azure.Storage.Shared
                     : _stream.Read(buffer, offset, count);
                 offset += copiedBytes;
                 count -= copiedBytes;
+                _position += copiedBytes;
                 totalCopiedBytes += copiedBytes;
 
                 // We've run out of bytes in the current block.
@@ -136,8 +137,9 @@ namespace Azure.Storage.Shared
                 ? await _downloadToAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
                 : _downloadToFunc(range, _requestConditions, default, cancellationToken);
 
-            _stream = response.GetRawResponse().ContentStream;
+            _stream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
             _lastDownloadBytes = response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
+            //_endOfLastDownloadPosition = _position + _lastDownloadBytes;
             _length = GetBlobLength(response);
         }
 
@@ -171,7 +173,7 @@ namespace Azure.Storage.Shared
 
         private static long GetBlobLength(Response<T> response)
         {
-            response.GetRawResponse().Headers.TryGetValue("ContentRange", out string lengthString);
+            response.GetRawResponse().Headers.TryGetValue("Content-Range", out string lengthString);
             string[] split = lengthString.Split('/');
             return Convert.ToInt64(split[1], CultureInfo.InvariantCulture);
         }
