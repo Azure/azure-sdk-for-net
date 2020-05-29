@@ -32,10 +32,6 @@ namespace Azure.Core.Tests
             var payload = "some data";
             var data = BinaryData.Create(payload);
             Assert.AreEqual(payload, data.AsString());
-
-            // using implicit conversion to string
-            string stringData = data;
-            Assert.AreEqual(payload, stringData);
         }
 
         [Test]
