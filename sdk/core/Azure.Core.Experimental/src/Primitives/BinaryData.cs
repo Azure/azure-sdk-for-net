@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Azure.Core
     /// <summary>
     /// Abstraction for a payload of binary data.
     /// </summary>
-    public readonly struct BinaryData : IEquatable<BinaryData>
+    public readonly struct BinaryData
     {
         private const int CopyToBufferSize = 81920;
 
@@ -150,11 +151,92 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Implicit conversion to string.
+        /// Converts the BinaryData to a string using UTF-8.
         /// </summary>
-        /// <param name="data"></param>
-        public static implicit operator string(BinaryData data) =>
-            data.AsString();
+        /// <returns>The string representation of the data.</returns>
+        public string AsString() =>
+           AsString(Encoding.UTF8);
+
+        /// <summary>
+        /// Converts the BinaryData to a string using the specified
+        /// encoding.
+        /// </summary>
+        /// <param name="encoding">The encoding to use when decoding
+        /// the bytes.</param>
+        /// <returns>The string representation of the data.</returns>
+        public string AsString(
+            Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            return encoding.GetString(Data.ToArray());
+        }
+
+        /// <summary>
+        /// Converts the BinaryData to bytes.
+        /// </summary>
+        /// <returns>The data as bytes.</returns>
+        public ReadOnlyMemory<byte> AsBytes() =>
+            Data;
+
+        /// <summary>
+        /// Converts the BinaryData to a stream.
+        /// </summary>
+        /// <returns>A stream representing the data.</returns>
+        public Stream AsStream()
+        {
+            if (MemoryMarshal.TryGetArray(
+                Data,
+                out ArraySegment<byte> bytes))
+            {
+                return new MemoryStream(bytes.Array);
+            }
+            return new MemoryStream(Data.ToArray());
+        }
+
+        /// <summary>
+        /// Converts the BinaryData to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type that the data should be
+        /// converted to.</typeparam>
+        /// <param name="serializer">The serializer to use
+        /// when deserializing the data.</param>
+        ///<returns>The data converted to the specified type.</returns>
+        public T As<T>(ObjectSerializer serializer) =>
+            AsAsync<T>(serializer, false).EnsureCompleted();
+
+        /// <summary>
+        /// Converts the BinaryData to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type that the data should be
+        /// converted to.</typeparam>
+        /// <param name="serializer">The serializer to use
+        /// when deserializing the data.</param>
+        ///<returns>The data cast to the specified type. If the cast cannot
+        ///be performed, an <see cref="InvalidCastException"/> will be
+        ///thrown.</returns>
+        /// TODO - add cancellation token support
+        /// once ObjectSerializer.DeserializeAsync adds it.
+        public async ValueTask<T> AsAsync<T>(
+            ObjectSerializer serializer) =>
+            await AsAsync<T>(serializer, true).ConfigureAwait(false);
+
+        private async ValueTask<T> AsAsync<T>(
+            ObjectSerializer serializer,
+            bool async)
+        {
+            Argument.AssertNotNull(serializer, nameof(serializer));
+            if (async)
+            {
+                return (T)await serializer.DeserializeAsync(
+                    AsStream(),
+                    typeof(T))
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return (T)serializer.Deserialize(AsStream(), typeof(T));
+            }
+        }
 
         /// <summary>
         /// Implicit conversion to bytes.
@@ -166,16 +248,17 @@ namespace Azure.Core
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) =>
-            (obj is BinaryData other) && Equals(other);
-
+        public override bool Equals(object? obj)
+        {
+            if (obj is BinaryData data)
+            {
+                return data.Data.Equals(Data);
+            }
+            return false;
+        }
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             Data.GetHashCode();
-
-        /// <inheritdoc />
-        public bool Equals(BinaryData other) =>
-            other.Data.Equals(Data);
     }
 }
