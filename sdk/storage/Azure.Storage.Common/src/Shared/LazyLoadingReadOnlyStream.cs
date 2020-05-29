@@ -40,7 +40,7 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Request conditions to send on the download requests.
         /// </summary>
-        private readonly RequestConditions _requestConditions;
+        private readonly object _requestConditions;
 
         /// <summary>
         /// Async DownloadTo() function.
@@ -57,7 +57,7 @@ namespace Azure.Storage.Shared
             Func<HttpRange, object, bool, CancellationToken, Response<T>> downloadToFunc,
             long position = 0,
             int bufferSize = Constants.DefaultDownloadCopyBufferSize,
-            RequestConditions requestConditions = default)
+            object requestConditions = default)
         {
             _downloadToAsyncFunc = downloadToAsyncFunc;
             _downloadToFunc = downloadToFunc;

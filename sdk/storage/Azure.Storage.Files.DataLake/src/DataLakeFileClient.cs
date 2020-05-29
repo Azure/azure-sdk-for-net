@@ -3442,5 +3442,70 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Upload
+
+        #region OpenRead
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long position = 0,
+            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            DataLakeRequestConditions conditions = default)
+            => _blockBlobClient.OpenRead(
+                position,
+                bufferSize,
+                conditions.ToBlobRequestConditions());
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of the file.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Stream OpenReadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long position = 0,
+            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            DataLakeRequestConditions conditions = default)
+            => _blockBlobClient.OpenReadAsync(
+                position,
+                bufferSize,
+                conditions?.ToBlobRequestConditions());
+
+        #endregion OpenRead
     }
 }

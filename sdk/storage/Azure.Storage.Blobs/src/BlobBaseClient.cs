@@ -1224,7 +1224,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="position">
         /// The position within the blob to begin the stream.
-        /// Defaults to the beginning of the stream.
+        /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
         /// The buffer size to use when the stream downloads parts
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the download of the blob.
         /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="position">
         /// The position within the blob to begin the stream.
-        /// Defaults to the beginning of the stream.
+        /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
         /// The buffer size to use when the stream downloads parts
@@ -1263,7 +1263,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the download of the blob.
         /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
@@ -1286,7 +1286,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="position">
         /// The position within the blob to begin the stream.
-        /// Defaults to the beginning of the stream.
+        /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
         /// The buffer size to use when the stream downloads parts
@@ -1294,7 +1294,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the download of the blob.
         /// </param>
         /// <returns>
         /// Returns a stream that will download the blob as the stream
