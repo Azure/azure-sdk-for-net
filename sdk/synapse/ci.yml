@@ -43,5 +43,5 @@ stages:
       safeName: AzureAnalyticsSynapseSpark
     - name: Azure.Analytics.Synapse.AccessControl
       safeName: AzureAnalyticsSynapseAccessControl
-    - name: Azure.Analytics.Synapse.Development
-      safeName: AzureAnalyticsSynapseDevelopment
+    - name: Azure.Analytics.Synapse.Artifacts
+      safeName: AzureAnalyticsSynapseArtifacts

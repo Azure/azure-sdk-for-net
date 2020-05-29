@@ -11,13 +11,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Analytics.Synapse.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.AccessControl", "Azure.Analytics.Synapse.AccessControl\src\Azure.Analytics.Synapse.AccessControl.csproj", "{E6060B85-1465-498E-8C3A-595C322D4C0E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Development", "Azure.Analytics.Synapse.Development\src\Azure.Analytics.Synapse.Development.csproj", "{5E1BFD9E-D39F-4EA3-8FDF-800085147BBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Artifacts", "Azure.Analytics.Synapse.Artifacts\src\Azure.Analytics.Synapse.Artifacts.csproj", "{5E1BFD9E-D39F-4EA3-8FDF-800085147BBE}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Analytics.Synapse.Shared.Tests", "Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.shproj", "{1AFA2644-A1D9-419F-B87D-9B519B673F24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.AccessControl.Tests", "Azure.Analytics.Synapse.AccessControl\tests\Azure.Analytics.Synapse.AccessControl.Tests.csproj", "{9F1E97DA-6F10-4CCC-A0FE-EE7663C02514}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Development.Tests", "Azure.Analytics.Synapse.Development\tests\Azure.Analytics.Synapse.Development.Tests.csproj", "{E07E4070-92D6-41E6-8360-F277A5682C48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Artifacts.Tests", "Azure.Analytics.Synapse.Artifacts\tests\Azure.Analytics.Synapse.Artifacts.Tests.csproj", "{E07E4070-92D6-41E6-8360-F277A5682C48}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{5F3EE47C-1F9F-427D-A6A8-60F032753BDE}"
 EndProject
