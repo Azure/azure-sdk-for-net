@@ -10,13 +10,14 @@
 
 namespace Microsoft.Azure.Management.ContainerService.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Profile of the managed cluster load balancer
+    /// Profile of the managed cluster load balancer.
     /// </summary>
     public partial class ManagedClusterLoadBalancerProfile
     {
@@ -41,12 +42,21 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// cluster load balancer.</param>
         /// <param name="effectiveOutboundIPs">The effective outbound IP
         /// resources of the cluster load balancer.</param>
-        public ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default(ManagedClusterLoadBalancerProfileManagedOutboundIPs), ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default(ManagedClusterLoadBalancerProfileOutboundIPPrefixes), ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default(ManagedClusterLoadBalancerProfileOutboundIPs), IList<ResourceReference> effectiveOutboundIPs = default(IList<ResourceReference>))
+        /// <param name="allocatedOutboundPorts">Desired number of allocated
+        /// SNAT ports per VM. Allowed values must be in the range of 0 to
+        /// 64000 (inclusive). The default value is 0 which results in Azure
+        /// dynamically allocating ports.</param>
+        /// <param name="idleTimeoutInMinutes">Desired outbound flow idle
+        /// timeout in minutes. Allowed values must be in the range of 4 to 120
+        /// (inclusive). The default value is 30 minutes.</param>
+        public ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default(ManagedClusterLoadBalancerProfileManagedOutboundIPs), ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default(ManagedClusterLoadBalancerProfileOutboundIPPrefixes), ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default(ManagedClusterLoadBalancerProfileOutboundIPs), IList<ResourceReference> effectiveOutboundIPs = default(IList<ResourceReference>), int? allocatedOutboundPorts = default(int?), int? idleTimeoutInMinutes = default(int?))
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
             OutboundIPs = outboundIPs;
             EffectiveOutboundIPs = effectiveOutboundIPs;
+            AllocatedOutboundPorts = allocatedOutboundPorts;
+            IdleTimeoutInMinutes = idleTimeoutInMinutes;
             CustomInit();
         }
 
@@ -84,9 +94,25 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public IList<ResourceReference> EffectiveOutboundIPs { get; set; }
 
         /// <summary>
+        /// Gets or sets desired number of allocated SNAT ports per VM. Allowed
+        /// values must be in the range of 0 to 64000 (inclusive). The default
+        /// value is 0 which results in Azure dynamically allocating ports.
+        /// </summary>
+        [JsonProperty(PropertyName = "allocatedOutboundPorts")]
+        public int? AllocatedOutboundPorts { get; set; }
+
+        /// <summary>
+        /// Gets or sets desired outbound flow idle timeout in minutes. Allowed
+        /// values must be in the range of 4 to 120 (inclusive). The default
+        /// value is 30 minutes.
+        /// </summary>
+        [JsonProperty(PropertyName = "idleTimeoutInMinutes")]
+        public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
@@ -94,6 +120,22 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (ManagedOutboundIPs != null)
             {
                 ManagedOutboundIPs.Validate();
+            }
+            if (AllocatedOutboundPorts > 64000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "AllocatedOutboundPorts", 64000);
+            }
+            if (AllocatedOutboundPorts < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "AllocatedOutboundPorts", 0);
+            }
+            if (IdleTimeoutInMinutes > 120)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "IdleTimeoutInMinutes", 120);
+            }
+            if (IdleTimeoutInMinutes < 4)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "IdleTimeoutInMinutes", 4);
             }
         }
     }
