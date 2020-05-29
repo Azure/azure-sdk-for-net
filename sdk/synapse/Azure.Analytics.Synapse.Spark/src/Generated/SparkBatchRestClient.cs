@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkBatchJobCollection>> GetSparkBatchJobsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkBatchJobCollection>> GetSparkBatchJobsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkBatchJobsRequest(@from, size, detailed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkBatchJobOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkBatchJob>> CreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkBatchJob>> CreateSparkBatchJobAsync(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkBatchJobOptions == null)
             {
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkBatchJob>> GetSparkBatchJobAsync(int batchId, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkBatchJobRequest(batchId, detailed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Cancels a running spark batch job. </summary>
         /// <param name="batchId"> Identifier for the batch job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CancelSparkBatchJobAsync(int batchId, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelSparkBatchJobAsync(int batchId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelSparkBatchJobRequest(batchId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

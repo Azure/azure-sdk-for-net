@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists linked services. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<LinkedServiceListResponse>> GetLinkedServicesByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedServiceListResponse>> GetLinkedServicesByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetLinkedServicesByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkedService"> Linked service resource definition. </param>
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<LinkedServiceResource>> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedServiceResource>> CreateOrUpdateLinkedServiceAsync(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (linkedServiceName == null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkedServiceName"> The linked service name. </param>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<LinkedServiceResource>> GetLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedServiceResource>> GetLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (linkedServiceName == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a linked service. </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
         {
             if (linkedServiceName == null)
             {
@@ -376,7 +376,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists linked services. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<LinkedServiceListResponse>> GetLinkedServicesByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedServiceListResponse>> GetLinkedServicesByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists pipelines. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineListResponse>> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineListResponse>> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPipelinesByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> Pipeline resource definition. </param>
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineResource>> CreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineResource>> CreateOrUpdatePipelineAsync(string pipelineName, PipelineResource pipeline, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineResource>> GetPipelineAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineResource>> GetPipelineAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -321,7 +321,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a pipeline. </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeletePipelineAsync(string pipelineName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeletePipelineAsync(string pipelineName, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -409,7 +409,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -491,7 +491,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists pipelines. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineListResponse>> GetPipelinesByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineListResponse>> GetPipelinesByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

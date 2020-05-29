@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
-    public partial class ErrorContract
+    internal partial class ErrorContract
     {
         internal static ErrorContract DeserializeErrorContract(JsonElement element)
         {

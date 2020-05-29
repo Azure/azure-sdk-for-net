@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> RerunTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
+        public async Task<Response> RerunTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerRunsQueryResponse>> QueryTriggerRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerRunsQueryResponse>> QueryTriggerRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
             {

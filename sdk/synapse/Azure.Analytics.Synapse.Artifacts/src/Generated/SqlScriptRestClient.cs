@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists sql scripts. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSqlScriptsByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScript"> Sql Script resource definition. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SqlScriptResource>> CreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlScriptResource>> CreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
             {
@@ -376,7 +376,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists sql scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

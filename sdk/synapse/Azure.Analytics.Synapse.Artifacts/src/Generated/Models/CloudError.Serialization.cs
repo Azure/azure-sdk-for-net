@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class CloudError
+    internal partial class CloudError
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {

@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Creates a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateDataFlowDebugSessionAsync(CreateDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -77,8 +77,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -99,8 +99,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Query all active data flow debug sessions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<QueryDataFlowDebugSessionsResponse>> QueryDataFlowDebugSessionsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<QueryDataFlowDebugSessionsResponse>> QueryDataFlowDebugSessionsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Add a data flow into debug session. </summary>
         /// <param name="request"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
+        public async Task<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -277,7 +277,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Execute a data flow debug command. </summary>
         /// <param name="request"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response> ExecuteCommandAsync(DataFlowDebugCommandRequest request, CancellationToken cancellationToken = default)
         {
             if (request == null)
             {
@@ -347,8 +347,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -369,8 +369,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -392,7 +392,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query all active data flow debug sessions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<QueryDataFlowDebugSessionsResponse>> QueryDataFlowDebugSessionsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<QueryDataFlowDebugSessionsResponse>> QueryDataFlowDebugSessionsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

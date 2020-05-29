@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists triggers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerListResponse>> GetTriggersByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerListResponse>> GetTriggersByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTriggersByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="trigger"> Trigger resource definition. </param>
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerResource>> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerResource>> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerResource>> GetTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -379,7 +379,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> SubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response> SubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -390,8 +390,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -412,8 +412,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -438,7 +438,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a trigger&apos;s event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -519,7 +519,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response> UnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -530,8 +530,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -552,8 +552,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -578,7 +578,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> StartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response> StartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -635,7 +635,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> StopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response> StopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -689,7 +689,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists triggers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TriggerListResponse>> GetTriggersByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerListResponse>> GetTriggersByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

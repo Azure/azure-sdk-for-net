@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
     /// <summary> The ErrorDetail. </summary>
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
         /// <param name="code"> . </param>

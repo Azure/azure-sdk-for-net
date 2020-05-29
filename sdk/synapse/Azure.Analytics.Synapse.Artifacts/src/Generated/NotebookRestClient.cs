@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists Notebooks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookListResponse>> GetNotebooksByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookListResponse>> GetNotebooksByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNotebooksByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists a summary of Notebooks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookListResponse>> GetNotebookSummaryByWorkSpaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookListResponse>> GetNotebookSummaryByWorkSpaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetNotebookSummaryByWorkSpaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="notebook"> Note book resource definition. </param>
         /// <param name="ifMatch"> ETag of the Note book entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookResource>> CreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookResource>> CreateOrUpdateNotebookAsync(string notebookName, NotebookResource notebook, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (notebookName == null)
             {
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="notebookName"> The notebook name. </param>
         /// <param name="ifNoneMatch"> ETag of the Notebook entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookResource>> GetNotebookAsync(string notebookName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookResource>> GetNotebookAsync(string notebookName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (notebookName == null)
             {
@@ -387,7 +387,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Note book. </summary>
         /// <param name="notebookName"> The notebook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteNotebookAsync(string notebookName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteNotebookAsync(string notebookName, CancellationToken cancellationToken = default)
         {
             if (notebookName == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists Notebooks. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookListResponse>> GetNotebooksByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookListResponse>> GetNotebooksByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists a summary of Notebooks. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NotebookListResponse>> GetNotebookSummaryByWorkSpaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<NotebookListResponse>> GetNotebookSummaryByWorkSpaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

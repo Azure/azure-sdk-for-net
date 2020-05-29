@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists datasets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DatasetListResponse>> GetDatasetsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DatasetListResponse>> GetDatasetsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDatasetsByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataset"> Dataset resource definition. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DatasetResource>> CreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DatasetResource>> CreateOrUpdateDatasetAsync(string datasetName, DatasetResource dataset, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DatasetResource>> GetDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DatasetResource>> GetDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a dataset. </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteDatasetAsync(string datasetName, CancellationToken cancellationToken = default)
         {
             if (datasetName == null)
             {
@@ -376,7 +376,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists datasets. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DatasetListResponse>> GetDatasetsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DatasetListResponse>> GetDatasetsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

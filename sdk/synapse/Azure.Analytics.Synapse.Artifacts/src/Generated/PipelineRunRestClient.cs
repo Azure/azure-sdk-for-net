@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineRunsQueryResponse>> QueryPipelineRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineRunsQueryResponse>> QueryPipelineRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (filterParameters == null)
             {
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             if (runId == null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
             {
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
         {
             if (runId == null)
             {

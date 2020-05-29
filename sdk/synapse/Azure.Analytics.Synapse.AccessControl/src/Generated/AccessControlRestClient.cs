@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
             if (createRoleAssignmentOptions == null)
             {
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<IReadOnlyList<RoleAssignmentDetails>, AccessControlGetRoleAssignmentsHeaders>> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<IReadOnlyList<RoleAssignmentDetails>, AccessControlGetRoleAssignmentsHeaders>> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRoleAssignmentsRequest(roleId, principalId, continuationToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             if (roleAssignmentId == null)
             {
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List role assignments of the caller. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<string>>> GetCallerRoleAssignmentsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<string>>> GetCallerRoleAssignmentsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCallerRoleAssignmentsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List roles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<RolesListResponse>> GetRoleDefinitionsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RolesListResponse>> GetRoleDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRoleDefinitionsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -554,7 +554,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Get role by role Id. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SynapseRole>> GetRoleDefinitionByIdAsync(string roleId, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseRole>> GetRoleDefinitionByIdAsync(string roleId, CancellationToken cancellationToken = default)
         {
             if (roleId == null)
             {
@@ -632,7 +632,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List roles. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<RolesListResponse>> GetRoleDefinitionsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<RolesListResponse>> GetRoleDefinitionsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

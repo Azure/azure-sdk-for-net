@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkSessionCollection>> GetSparkSessionsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkSessionCollection>> GetSparkSessionsAsync(int? @from = null, int? size = null, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkSessionsRequest(@from, size, detailed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkSession>> CreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkSession>> CreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkSessionOptions == null)
             {
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkSession>> GetSparkSessionAsync(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkSession>> GetSparkSessionAsync(int sessionId, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkSessionRequest(sessionId, detailed);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Cancels a running spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CancelSparkSessionAsync(int sessionId, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelSparkSessionAsync(int sessionId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelSparkSessionRequest(sessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -390,7 +390,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Sends a keep alive call to the current session to reset the session timeout. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ResetSparkSessionTimeoutAsync(int sessionId, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetSparkSessionTimeoutAsync(int sessionId, CancellationToken cancellationToken = default)
         {
             using var message = CreateResetSparkSessionTimeoutRequest(sessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -440,7 +440,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary> Gets a list of statements within a spark session. </summary>
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkStatementCollection>> GetSparkStatementsAsync(int sessionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkStatementCollection>> GetSparkStatementsAsync(int sessionId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkStatementsRequest(sessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -519,7 +519,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkStatement>> CreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkStatement>> CreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
         {
             if (sparkStatementOptions == null)
             {
@@ -606,7 +606,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkStatement>> GetSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkStatement>> GetSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSparkStatementRequest(sessionId, statementId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -684,7 +684,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="statementId"> Identifier for the statement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SparkStatementCancellationResult>> CancelSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkStatementCancellationResult>> CancelSparkStatementAsync(int sessionId, int statementId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelSparkStatementRequest(sessionId, statementId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlow"> Data flow resource definition. </param>
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataFlowResource>> CreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFlowResource>> CreateOrUpdateDataFlowAsync(string dataFlowName, DataFlowResource dataFlow, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
             {
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
             {
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow. </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteDataFlowAsync(string dataFlowName, CancellationToken cancellationToken = default)
         {
             if (dataFlowName == null)
             {
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <summary> Lists data flows. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataFlowListResponse>> GetDataFlowsByWorkspaceAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DataFlowListResponse>> GetDataFlowsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDataFlowsByWorkspaceRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -372,7 +372,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists data flows. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataFlowListResponse>> GetDataFlowsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFlowListResponse>> GetDataFlowsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
