@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl);
+            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
 
             await operation.WaitForCompletionAsync();
 

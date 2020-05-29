@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
@@ -134,7 +134,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
