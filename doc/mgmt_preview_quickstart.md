@@ -143,7 +143,7 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 ***Delete a resource group***
 
 ```csharp
-    await resourceClient.ResourceGroups.DeleteAsync(groupName);
+    await resourceGroupClient.DeleteAsync(groupName);
 ```
 
 Example: Creating a Virtual Machine
