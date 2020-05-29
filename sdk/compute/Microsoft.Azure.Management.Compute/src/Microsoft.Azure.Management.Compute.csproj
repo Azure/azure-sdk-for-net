@@ -11,7 +11,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are VM model change to add a property related to in-guest VM patching.
+        This is a public release of the Azure Compute SDK. Included with this release are VM model change to add a property related to in-guest VM patching and adding Disallowed property to VirtualMachineImage.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
