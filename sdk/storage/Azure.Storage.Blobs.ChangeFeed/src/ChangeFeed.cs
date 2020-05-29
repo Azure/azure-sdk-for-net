@@ -133,20 +133,23 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public bool HasNext()
         {
-            if (_empty)
+            // [If Change Feed is empty], or [current segment is not finalized]
+            // or ([segment count is 0] and [year count is 0] and [current segment doesn't have next])
+            if (_empty
+                || !_currentSegment.Finalized
+                || _segments.Count == 0
+                    && _years.Count == 0
+                    && !_currentSegment.HasNext())
             {
                 return false;
             }
 
-            // We have no more segments, years, and the current segment doesn't have hext.
-            if (_segments.Count == 0 && _years.Count == 0  && !_currentSegment.HasNext())
+            if (_endTime.HasValue)
             {
-                return false;
+                return _currentSegment.DateTime <= _endTime;
             }
 
-            DateTimeOffset end = BlobChangeFeedExtensions.MinDateTime(_lastConsumable, _endTime);
-
-            return _currentSegment.DateTime <= end;
+            return true;
         }
 
         public DateTimeOffset LastConsumable()
@@ -218,7 +221,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 _currentSegment = await _segmentFactory.BuildSegment(
                     async,
-                    _containerClient,
                     _segments.Dequeue()).ConfigureAwait(false);
             }
 
@@ -239,7 +241,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 {
                     _currentSegment = await _segmentFactory.BuildSegment(
                         async,
-                        _containerClient,
                         _segments.Dequeue())
                         .ConfigureAwait(false);
                 }

@@ -30,12 +30,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// Internal constructor.
         /// </summary>
         internal BlobChangeFeedAsyncPagable(
-            BlobServiceClient blobBerviceClient,
+            BlobServiceClient blobServiceClient,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default)
         {
-            _changeFeedFactory = new ChangeFeedFactory();
-            _blobServiceClient = blobBerviceClient;
+            _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
+            _blobServiceClient = blobServiceClient;
             _startTime = startTime;
             _endTime = endTime;
         }
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             BlobServiceClient blobServiceClient,
             string continuation)
         {
-            _changeFeedFactory = new ChangeFeedFactory();
+            _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
             _blobServiceClient = blobServiceClient;
             _continuation = continuation;
         }
@@ -73,7 +73,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
                 async: true,
-                _blobServiceClient,
                 _startTime,
                 _endTime,
                 _continuation)

@@ -47,10 +47,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Setup(r => r.HasNext()).Returns(true);
 
             ChunkFactory chunkFactory = new ChunkFactory(
+                containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
             Chunk chunk = chunkFactory.BuildChunk(
-                containerClient.Object,
                 chunkPath);
 
             // Act
@@ -94,10 +94,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Setup(r => r.HasNext()).Returns(false);
 
             ChunkFactory chunkFactory = new ChunkFactory(
+                containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
             Chunk chunk = chunkFactory.BuildChunk(
-                containerClient.Object,
+
                 chunkPath);
 
             // Act
@@ -206,10 +207,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
 
             ChunkFactory chunkFactory = new ChunkFactory(
+                containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
                 avroReaderFactory.Object);
             Chunk chunk = chunkFactory.BuildChunk(
-                containerClient.Object,
                 chunkPath,
                 blockOffset,
                 eventIndex);

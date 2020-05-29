@@ -65,7 +65,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
@@ -74,12 +73,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunk.Setup(r => r.BlockOffset).Returns(blockOffset);
             chunk.Setup(r => r.EventIndex).Returns(eventIndex);
 
-            ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
+            ShardFactory shardFactory = new ShardFactory(
+                containerClient.Object,
+                chunkFactory.Object);
 
             // Act
             Shard shard = await shardFactory.BuildShard(
                 IsAsync,
-                containerClient.Object,
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
@@ -112,7 +112,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk2",
                 blockOffset,
                 eventIndex));
@@ -166,7 +165,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
@@ -174,12 +172,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunk.Setup(r => r.HasNext()).Returns(false);
 
-            ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
+            ShardFactory shardFactory = new ShardFactory(
+                containerClient.Object,
+                chunkFactory.Object);
 
             // Act
             Shard shard = await shardFactory.BuildShard(
                 IsAsync,
-                containerClient.Object,
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
@@ -209,7 +208,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk5",
                 blockOffset,
                 eventIndex));
@@ -262,18 +260,18 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
                 .Returns(chunk.Object);
 
-            ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
+            ShardFactory shardFactory = new ShardFactory(
+                containerClient.Object,
+                chunkFactory.Object);
 
             // Act
             Shard shard = await shardFactory.BuildShard(
                 IsAsync,
-                containerClient.Object,
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
@@ -303,7 +301,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk2",
                 blockOffset,
                 eventIndex));
@@ -354,7 +351,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Setup(r => r.BuildChunk(
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
@@ -362,12 +358,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             chunk.Setup(r => r.HasNext()).Returns(true);
 
-            ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
+            ShardFactory shardFactory = new ShardFactory(
+                containerClient.Object,
+                chunkFactory.Object);
 
             // Act
             Shard shard = await shardFactory.BuildShard(
                 IsAsync,
-                containerClient.Object,
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
@@ -397,7 +394,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk5",
                 blockOffset,
                 eventIndex));
@@ -464,7 +460,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.SetupSequence(r => r.BuildChunk(
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<long?>(),
                 It.IsAny<long?>()))
@@ -504,12 +499,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             chunks[2].Setup(r => r.BlockOffset).Returns(blockOffset);
             chunks[2].Setup(r => r.EventIndex).Returns(eventIndex);
 
-            ShardFactory shardFactory = new ShardFactory(chunkFactory.Object);
+            ShardFactory shardFactory = new ShardFactory(
+                containerClient.Object,
+                chunkFactory.Object);
 
             // Act
             Shard shard = await shardFactory.BuildShard(
                 IsAsync,
-                containerClient.Object,
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
@@ -554,22 +550,18 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk2",
                 blockOffset,
                 eventIndex));
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk3",
                 default,
                 default));
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk4",
                 default,
                 default));
             chunkFactory.Verify(r => r.BuildChunk(
-                containerClient.Object,
                 "chunk5",
                 default,
                 default));

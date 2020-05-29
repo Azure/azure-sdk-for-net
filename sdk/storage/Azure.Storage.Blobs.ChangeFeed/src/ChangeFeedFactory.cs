@@ -14,29 +14,36 @@ namespace Azure.Storage.Blobs.ChangeFeed
     internal class ChangeFeedFactory
     {
         private readonly SegmentFactory _segmentFactory;
+        private readonly BlobContainerClient _containerClient;
 
-        public ChangeFeedFactory()
+        public ChangeFeedFactory(
+            BlobServiceClient blobServiceClient)
         {
+            _containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
             _segmentFactory = new SegmentFactory(
+                _containerClient,
                 new ShardFactory(
+                    _containerClient,
                     new ChunkFactory(
+                        _containerClient,
                         new LazyLoadingBlobStreamFactory(),
                         new AvroReaderFactory())));
         }
 
-        public ChangeFeedFactory(SegmentFactory segmentFactory)
+        public ChangeFeedFactory(
+            BlobContainerClient containerClient,
+            SegmentFactory segmentFactory)
         {
+            _containerClient = containerClient;
             _segmentFactory = segmentFactory;
         }
 
         public async Task<ChangeFeed> BuildChangeFeed(
             bool async,
-            BlobServiceClient blobServiceClient,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default)
         {
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
             DateTimeOffset lastConsumable;
             Queue<string> years = new Queue<string>();
             Queue<string> segments = new Queue<string>();
@@ -46,7 +53,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             if (continuation != null)
             {
                 cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
-                ValidateCursor(containerClient, cursor);
+                ValidateCursor(_containerClient, cursor);
                 startTime = cursor.CurrentSegmentCursor.SegmentTime;
                 endTime = cursor.EndTime;
             }
@@ -62,11 +69,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (async)
             {
-                changeFeedContainerExists = await containerClient.ExistsAsync().ConfigureAwait(false);
+                changeFeedContainerExists = await _containerClient.ExistsAsync().ConfigureAwait(false);
             }
             else
             {
-                changeFeedContainerExists = containerClient.Exists();
+                changeFeedContainerExists = _containerClient.Exists();
             }
 
             if (!changeFeedContainerExists)
@@ -75,7 +82,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             // Get last consumable
-            BlobClient blobClient = containerClient.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath);
+            BlobClient blobClient = _containerClient.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath);
             BlobDownloadInfo blobDownloadInfo;
             if (async)
             {
@@ -99,7 +106,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
 
             // Get year paths
-            years = await GetYearPaths(async, containerClient).ConfigureAwait(false);
+            years = await GetYearPaths(async).ConfigureAwait(false);
 
             // Dequeue any years that occur before start time
             if (startTime.HasValue)
@@ -122,7 +129,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 // Get Segments for year
                 segments = await BlobChangeFeedExtensions.GetSegmentsInYear(
                     async: async,
-                    containerClient: containerClient,
+                    containerClient: _containerClient,
                     yearPath: years.Dequeue(),
                     startTime: startTime,
                     endTime: BlobChangeFeedExtensions.MinDateTime(lastConsumable, endTime))
@@ -137,13 +144,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             Segment currentSegment = await _segmentFactory.BuildSegment(
                 async,
-                containerClient,
                 segments.Dequeue(),
                 cursor?.CurrentSegmentCursor)
                 .ConfigureAwait(false);
 
             return new ChangeFeed(
-                containerClient,
+                _containerClient,
                 _segmentFactory,
                 years,
                 segments,
@@ -163,15 +169,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
-        internal static async Task<Queue<string>> GetYearPaths(
-            bool async,
-            BlobContainerClient containerClient)
+        internal async Task<Queue<string>> GetYearPaths(
+            bool async)
         {
             List<string> list = new List<string>();
 
             if (async)
             {
-                await foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchyAsync(
+                await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
                     prefix: Constants.ChangeFeed.SegmentPrefix,
                     delimiter: "/").ConfigureAwait(false))
                 {
@@ -183,7 +188,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             else
             {
-                foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchy(
+                foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
                 prefix: Constants.ChangeFeed.SegmentPrefix,
                 delimiter: "/"))
                 {

@@ -13,6 +13,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 {
     internal class SegmentFactory
     {
+        private readonly BlobContainerClient _containerClient;
         private readonly ShardFactory _shardFactory;
 
         /// <summary>
@@ -20,8 +21,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public SegmentFactory() { }
 
-        public SegmentFactory(ShardFactory shardFactory)
+        public SegmentFactory(
+            BlobContainerClient containerClient,
+            ShardFactory shardFactory)
         {
+            _containerClient = containerClient;
             _shardFactory = shardFactory;
         }
 
@@ -29,7 +33,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public virtual async Task<Segment> BuildSegment(
 #pragma warning restore CA1822 // Can't mock static methods in MOQ.
             bool async,
-            BlobContainerClient containerClient,
             string manifestPath,
             SegmentCursor cursor = default)
         {
@@ -39,7 +42,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             int shardIndex = cursor?.ShardIndex ?? 0;
 
             // Download segment manifest
-            BlobClient blobClient = containerClient.GetBlobClient(manifestPath);
+            BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
             BlobDownloadInfo blobDownloadInfo;
 
             if (async)
@@ -73,7 +76,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
                 Shard shard = await _shardFactory.BuildShard(
                     async,
-                    containerClient,
                     shardPath,
                     cursor?.ShardCursors?[i])
                     .ConfigureAwait(false);

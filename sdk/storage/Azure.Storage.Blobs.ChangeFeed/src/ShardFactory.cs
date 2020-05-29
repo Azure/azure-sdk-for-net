@@ -14,9 +14,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
     internal class ShardFactory
     {
         private readonly ChunkFactory _chunkFactory;
+        private readonly BlobContainerClient _containerClient;
 
-        public ShardFactory(ChunkFactory chunkFactory)
+        public ShardFactory(
+            BlobContainerClient containerClient,
+            ChunkFactory chunkFactory)
         {
+            _containerClient = containerClient;
             _chunkFactory = chunkFactory;
         }
 
@@ -29,7 +33,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public virtual async Task<Shard> BuildShard(
 #pragma warning restore CA1822 // Can't mock static methods in MOQ.
             bool async,
-            BlobContainerClient containerClient,
             string shardPath,
             ShardCursor shardCursor = default)
         {
@@ -42,7 +45,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Get Chunks
             if (async)
             {
-                await foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchyAsync(
+                await foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchyAsync(
                     prefix: shardPath).ConfigureAwait(false))
                 {
                     if (blobHierarchyItem.IsPrefix)
@@ -54,7 +57,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
             else
             {
-                foreach (BlobHierarchyItem blobHierarchyItem in containerClient.GetBlobsByHierarchy(
+                foreach (BlobHierarchyItem blobHierarchyItem in _containerClient.GetBlobsByHierarchy(
                     prefix: shardPath))
                 {
                     if (blobHierarchyItem.IsPrefix)
@@ -75,13 +78,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             Chunk currentChunk = _chunkFactory.BuildChunk(
-                containerClient,
                 chunks.Dequeue(),
                 blockOffset,
                 eventIndex);
 
             return new Shard(
-                containerClient,
+                _containerClient,
                 _chunkFactory,
                 chunks,
                 currentChunk,

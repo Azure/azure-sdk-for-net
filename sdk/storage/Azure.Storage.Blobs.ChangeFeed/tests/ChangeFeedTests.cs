@@ -119,7 +119,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segmentFactory.Setup(r => r.BuildSegment(
                 It.IsAny<bool>(),
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<SegmentCursor>()))
                 .ReturnsAsync(segment.Object);
@@ -150,12 +149,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 endDateTime: endDateTime,
                 currentSegmentCursor: segmentCursor);
 
-            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
+                containerClient.Object,
+                segmentFactory.Object);
 
             // Act
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
                 IsAsync,
-                serviceClient.Object,
                 continuation: JsonSerializer.Serialize<ChangeFeedCursor>(expectedCursor));
 
             ChangeFeedCursor actualCursor = changeFeed.GetCursor();
@@ -173,7 +173,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].ChunkIndex, actualCursor.CurrentSegmentCursor.ShardCursors[0].ChunkIndex);
             Assert.AreEqual(expectedCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex, actualCursor.CurrentSegmentCursor.ShardCursors[0].EventIndex);
 
-            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
             containerClient.Verify(r => r.Uri);
 
             if (IsAsync)
@@ -236,7 +235,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segmentFactory.Verify(r => r.BuildSegment(
                 IsAsync,
-                containerClient.Object,
                 "idx/segments/2020/01/16/2300/meta.json",
                 It.Is<SegmentCursor>(
                     r => r.SegmentTime == segmentTime
@@ -362,7 +360,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segmentFactory.SetupSequence(r => r.BuildSegment(
                 It.IsAny<bool>(),
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 default))
                 .Returns(Task.FromResult(segments[0].Object))
@@ -468,10 +465,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segments[1].Setup(r => r.GetCursor()).Returns(segmentCursor);
             segments[3].Setup(r => r.GetCursor()).Returns(segmentCursor);
 
-            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
+                containerClient.Object,
+                segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
-                IsAsync,
-                serviceClient.Object);
+                IsAsync);
 
             // Act
             Page<BlobChangeFeedEvent> page0 = await changeFeed.GetPage(IsAsync, 3);
@@ -493,7 +491,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             // ChangeFeedFactory.BuildChangeFeed() verifies
-            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
             containerClient.Verify(r => r.Uri);
 
             if (IsAsync)
@@ -602,10 +599,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segments[1].Verify(r => r.GetCursor());
             segments[3].Verify(r => r.GetCursor());
 
-            segments[0].Verify(r => r.Finalized, Times.Exactly(1));
-            segments[1].Verify(r => r.Finalized, Times.Exactly(1));
-            segments[2].Verify(r => r.Finalized, Times.Exactly(0));
-            segments[3].Verify(r => r.Finalized, Times.Exactly(0));
+            segments[0].Verify(r => r.Finalized, Times.Exactly(3));
+            segments[1].Verify(r => r.Finalized, Times.Exactly(4));
+            segments[2].Verify(r => r.Finalized, Times.Exactly(1));
+            segments[3].Verify(r => r.Finalized, Times.Exactly(2));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
         }
@@ -673,10 +670,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     default)).Returns(pageable);
             }
 
-            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
+                containerClient.Object,
+                segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
                 IsAsync,
-                serviceClient.Object,
                 startTime: new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
 
             // Act
@@ -684,8 +682,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Assert
             Assert.IsFalse(hasNext);
-
-            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
 
             if (IsAsync)
             {
@@ -834,7 +830,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             segmentFactory.SetupSequence(r => r.BuildSegment(
                 It.IsAny<bool>(),
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 default))
                 .Returns(Task.FromResult(segments[0].Object))
@@ -882,10 +877,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     .Returns(true);
             }
 
-            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(segmentFactory.Object);
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
+                containerClient.Object,
+                segmentFactory.Object);
             ChangeFeed changeFeed = await changeFeedFactory.BuildChangeFeed(
                 IsAsync,
-                serviceClient.Object,
                 startTime: new DateTimeOffset(2019, 6, 1, 0, 0, 0, TimeSpan.Zero));
 
             // Act
@@ -896,7 +892,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(events[0].Id, page.Values[0].Id);
             Assert.AreEqual(events[1].Id, page.Values[1].Id);
 
-            serviceClient.Verify(r => r.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName));
             containerClient.Verify(r => r.Uri);
 
             if (IsAsync)

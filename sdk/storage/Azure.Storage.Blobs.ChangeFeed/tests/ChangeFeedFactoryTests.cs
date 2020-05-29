@@ -49,8 +49,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     default)).Returns(pageable);
             }
 
+            Mock<SegmentFactory> segmentFactory = new Mock<SegmentFactory>();
+            ChangeFeedFactory changeFeedFactory = new ChangeFeedFactory(
+                containerClient.Object, segmentFactory.Object);
+
             // Act
-            Queue<string> years = await ChangeFeedFactory.GetYearPaths(IsAsync, containerClient.Object).ConfigureAwait(false);
+            Queue<string> years = await changeFeedFactory.GetYearPaths(IsAsync).ConfigureAwait(false);
 
             // Assert
             Queue<string> expectedYears = new Queue<string>();

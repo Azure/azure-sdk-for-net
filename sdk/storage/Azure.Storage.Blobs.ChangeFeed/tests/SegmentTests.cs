@@ -75,7 +75,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             shardFactory.SetupSequence(r => r.BuildShard(
                 It.IsAny<bool>(),
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<ShardCursor>()))
                 .ReturnsAsync(shards[0].Object)
@@ -87,10 +86,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shards[i].Setup(r => r.GetCursor()).Returns(shardCursors[i]);
             }
 
-            SegmentFactory segmentFactory = new SegmentFactory(shardFactory.Object);
+            SegmentFactory segmentFactory = new SegmentFactory(
+                containerClient.Object,
+                shardFactory.Object);
             Segment segment = await segmentFactory.BuildSegment(
                 IsAsync,
-                containerClient.Object,
                 manifestPath,
                 expectedCursor);
 
@@ -123,7 +123,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 shardFactory.Verify(r => r.BuildShard(
                     IsAsync,
-                    containerClient.Object,
                     $"log/0{i}/2020/03/25/0200/",
                     shardCursors[i]));
             }
@@ -178,7 +177,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             shardFactory.SetupSequence(r => r.BuildShard(
                 It.IsAny<bool>(),
-                It.IsAny<BlobContainerClient>(),
                 It.IsAny<string>(),
                 It.IsAny<ShardCursor>()))
                 .ReturnsAsync(shards[0].Object)
@@ -223,10 +221,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             shards[2].Setup(r => r.HasNext())
                 .Returns(false);
 
-            SegmentFactory segmentFactory = new SegmentFactory(shardFactory.Object);
+            SegmentFactory segmentFactory = new SegmentFactory(
+                containerClient.Object,
+                shardFactory.Object);
             Segment segment = await segmentFactory.BuildSegment(
                 IsAsync,
-                containerClient.Object,
                 manifestPath);
 
             // Act
@@ -253,7 +252,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 shardFactory.Verify(r => r.BuildShard(
                     IsAsync,
-                    containerClient.Object,
                     $"log/0{i}/2020/03/25/0200/",
                     default));
             }

@@ -10,22 +10,24 @@ namespace Azure.Storage.Blobs.ChangeFeed
     {
         private readonly LazyLoadingBlobStreamFactory _lazyLoadingBlobStreamFactory;
         private readonly AvroReaderFactory _avroReaderFactory;
+        private readonly BlobContainerClient _containerClient;
 
         public ChunkFactory(
+            BlobContainerClient containerClient,
             LazyLoadingBlobStreamFactory lazyLoadingBlobStreamFactory,
             AvroReaderFactory avroReaderFactory)
         {
+            _containerClient = containerClient;
             _lazyLoadingBlobStreamFactory = lazyLoadingBlobStreamFactory;
             _avroReaderFactory = avroReaderFactory;
         }
 
         public virtual Chunk BuildChunk(
-            BlobContainerClient containerClient,
             string chunkPath,
             long? blockOffset = default,
             long? eventIndex = default)
         {
-            BlobClient blobClient = containerClient.GetBlobClient(chunkPath);
+            BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
             blockOffset ??= 0;
             eventIndex ??= 0;
             AvroReader avroReader;

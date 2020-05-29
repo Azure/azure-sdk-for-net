@@ -82,6 +82,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 if (_finishedShards.Contains(_shardIndex))
                 {
                     _shardIndex++;
+
+                    if (_shardIndex == _shards.Count)
+                    {
+                        _shardIndex = 0;
+                    }
+
                     continue;
                 }
 

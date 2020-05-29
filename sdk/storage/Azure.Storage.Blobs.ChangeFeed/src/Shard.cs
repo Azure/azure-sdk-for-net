@@ -72,7 +72,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
                 _currentChunk = _chunkFactory.BuildChunk(
-                    _containerClient,
                     _chunks.Dequeue());
                 _chunkIndex++;
             }
@@ -80,7 +79,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         }
 
         /// <summary>
-        /// Constructor for use by <see cref="ShardFactory.BuildShard(bool, BlobContainerClient, string, ShardCursor)"/>.
+        /// Constructor for use by <see cref="ShardFactory.BuildShard(bool, string, ShardCursor)"/>.
         /// </summary>
         public Shard(
             BlobContainerClient containerClient,
