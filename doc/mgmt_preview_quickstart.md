@@ -105,9 +105,6 @@ Now that we are authenticated, we can use our management client to make API call
 
 Example: Managing Resource Groups
 ---------------------------------
-
-**Managing Resource Groups**
-
 We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we have created to perform operations on Resource Group. In this example, we will show to manage Resource Groups.
 
 ***Create a resource group***
