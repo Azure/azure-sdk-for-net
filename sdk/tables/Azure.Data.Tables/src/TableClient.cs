@@ -692,6 +692,14 @@ namespace Azure.Data.Tables
         public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
             _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
 
+        /// <summary>
+        /// Creates an Odata filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="TableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expresssion.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
+
         internal ExpressionParser GetExpressionParser()
         {
             if (_isPremiumEndpoint)
@@ -704,8 +712,6 @@ namespace Azure.Data.Tables
                 return new ExpressionParser();
             }
         }
-
-        public string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
         private string Bind(Expression expression)
         {
