@@ -83,7 +83,7 @@ any other service that you are using.
 
 To authenticate to Azure and create a management client, simply do the
 following:
-```
+```csharp
     using Azure.Identity;
     using Azure.Management.Resource;
     using Azure.Management.Resource.Models;
@@ -109,7 +109,7 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 
 ***Create a resource group***
 
-```
+```csharp
     var location = "uswest2";
     var resourceGroupName = "myResourceGroupName";
     var resourceGroup = new ResourceGroup(location);
@@ -118,7 +118,7 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 
 ***Update a resource group***
 
-``` 
+```csharp
     ...
     var resourceGroupName = "myResourceGroupName";
     var tags = new Dictionary<string,string>();
@@ -132,7 +132,7 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 
 ***List all resource groups***
 
-```    
+```csharp
     AsyncPageable<ResourceGroup> response = resourceGroupClient.ResourceGroups.ListAsync();
     await foreach (ResourceGroup resourceGroup in response)
     {
@@ -142,14 +142,14 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 
 ***Delete a resource group***
 
-```
+```csharp
     await resourceClient.ResourceGroups.DeleteAsync(groupName);
 ```
 
 Example: Creating a Virtual Machine
 -----------------------------------
 Let's show a concrete example of how you would create a virtual machine using .NET SDK
-```
+```csharp
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -286,7 +286,7 @@ namespace AzureCreateVMSample
 
 Driver program
 
-```
+```csharp
 using System;
 using System.Threading.Tasks;
 
