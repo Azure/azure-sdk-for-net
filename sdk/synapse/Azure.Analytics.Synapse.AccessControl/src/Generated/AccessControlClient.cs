@@ -39,15 +39,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Create role assignment. </summary>
-        /// <param name="request"> Details of role id and object id. </param>
+        /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AccessControlClient.CreateRoleAssignment");
             scope.Start();
             try
             {
-                return await RestClient.CreateRoleAssignmentAsync(request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateRoleAssignmentAsync(createRoleAssignmentOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -57,15 +57,15 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Create role assignment. </summary>
-        /// <param name="request"> Details of role id and object id. </param>
+        /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleAssignmentDetails> CreateRoleAssignment(RoleAssignmentOptions request, CancellationToken cancellationToken = default)
+        public virtual Response<RoleAssignmentDetails> CreateRoleAssignment(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AccessControlClient.CreateRoleAssignment");
             scope.Start();
             try
             {
-                return RestClient.CreateRoleAssignment(request, cancellationToken);
+                return RestClient.CreateRoleAssignment(createRoleAssignmentOptions, cancellationToken);
             }
             catch (Exception e)
             {

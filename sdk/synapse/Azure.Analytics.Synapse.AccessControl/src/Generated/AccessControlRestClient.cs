@@ -47,34 +47,34 @@ namespace Azure.Analytics.Synapse.AccessControl
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRoleAssignmentRequest(RoleAssignmentOptions request)
+        internal HttpMessage CreateCreateRoleAssignmentRequest(RoleAssignmentOptions createRoleAssignmentOptions)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/rbac/roleAssignments", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(createRoleAssignmentOptions);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Create role assignment. </summary>
-        /// <param name="request"> Details of role id and object id. </param>
+        /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions request, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
-            if (request == null)
+            if (createRoleAssignmentOptions == null)
             {
-                throw new ArgumentNullException(nameof(request));
+                throw new ArgumentNullException(nameof(createRoleAssignmentOptions));
             }
 
-            using var message = CreateCreateRoleAssignmentRequest(request);
+            using var message = CreateCreateRoleAssignmentRequest(createRoleAssignmentOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -98,16 +98,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Create role assignment. </summary>
-        /// <param name="request"> Details of role id and object id. </param>
+        /// <param name="createRoleAssignmentOptions"> Details of role id and object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignmentDetails> CreateRoleAssignment(RoleAssignmentOptions request, CancellationToken cancellationToken = default)
+        public Response<RoleAssignmentDetails> CreateRoleAssignment(RoleAssignmentOptions createRoleAssignmentOptions, CancellationToken cancellationToken = default)
         {
-            if (request == null)
+            if (createRoleAssignmentOptions == null)
             {
-                throw new ArgumentNullException(nameof(request));
+                throw new ArgumentNullException(nameof(createRoleAssignmentOptions));
             }
 
-            using var message = CreateCreateRoleAssignmentRequest(request);
+            using var message = CreateCreateRoleAssignmentRequest(createRoleAssignmentOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
