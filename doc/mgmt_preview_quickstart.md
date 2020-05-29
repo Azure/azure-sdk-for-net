@@ -150,8 +150,6 @@ Example: Creating a Virtual Machine
 -----------------------------------
 Let's show a concrete example of how you would create a virtual machine using .NET SDK
 ```
-
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
