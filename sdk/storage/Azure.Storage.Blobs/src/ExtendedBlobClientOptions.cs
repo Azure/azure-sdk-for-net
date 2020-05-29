@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// Storage.
     /// </summary>
 #pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion; This is an extension of existing public options that obey this.
-    public class AdvancedBlobClientOptions : BlobClientOptions
+    public class ExtendedBlobClientOptions : BlobClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
         /// <summary>
@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="BlobClientOptions.ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public AdvancedBlobClientOptions(ServiceVersion version = LatestVersion) : base(version)
+        public ExtendedBlobClientOptions(ServiceVersion version = LatestVersion) : base(version)
         {
         }
 

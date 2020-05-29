@@ -6,7 +6,7 @@ namespace Azure.Storage.Queues.Specialized
     /// <summary>
     /// Provides advanced extensions for queue service clients.
     /// </summary>
-    public static class AdvancedQueueClientExtensions
+    public static class QueueClientExtensions
     {
         /// <summary>
         /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same

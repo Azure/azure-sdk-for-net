@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Specialized.Models;
-using Azure.Storage.Tests.Shared;
-using Newtonsoft.Json;
+using Moq;
 using NUnit.Framework;
+using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -22,12 +24,48 @@ namespace Azure.Storage.Queues.Test
         private const string TestMessage = "This can technically be a valid encrypted message.";
         private const string KeyWrapAlgorithm = "my_key_wrap_algorithm";
 
+        private Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(byte[] userKeyBytes = default, string keyId = default)
+        {
+            if (userKeyBytes == default)
+            {
+                const int keySizeBits = 256;
+                var bytes = new byte[keySizeBits >> 3];
+                new RNGCryptoServiceProvider().GetBytes(bytes);
+                userKeyBytes = bytes;
+            }
+            keyId ??= Guid.NewGuid().ToString();
+
+            var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
+            keyMock.SetupGet(k => k.KeyId).Returns(keyId);
+            keyMock.Setup(k => k.WrapKey(KeyWrapAlgorithm, IsNotNull<ReadOnlyMemory<byte>>(), IsAny<CancellationToken>()))
+                .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
+            keyMock.Setup(k => k.UnwrapKey(KeyWrapAlgorithm, IsNotNull<ReadOnlyMemory<byte>>(), IsAny<CancellationToken>()))
+                .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, userKeyBytes.ToArray()));
+
+            return keyMock;
+        }
+        private static byte[] Xor(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length)
+            {
+                throw new ArgumentException("Keys must be the same length for this mock implementation.");
+            }
+
+            var aBits = new System.Collections.BitArray(a);
+            var bBits = new System.Collections.BitArray(b);
+
+            var result = new byte[a.Length];
+            aBits.Xor(bBits).CopyTo(result, 0);
+
+            return result;
+        }
+
         [Test]
         public void SerializeEncryptedMessage()
         {
             var result = ClientSideEncryptor.BufferedEncryptInternal(
                 new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                new MockKeyEncryptionKey(),
+                GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm,
                 async: false,
                 default).EnsureCompleted();
@@ -46,11 +84,11 @@ namespace Azure.Storage.Queues.Test
         public void DeserializeEncryptedMessage()
         {
             var result = ClientSideEncryptor.BufferedEncryptInternal(
-                   new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                   new MockKeyEncryptionKey(),
-                   KeyWrapAlgorithm,
-                   async: false,
-                   default).EnsureCompleted();
+                new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
+                GetIKeyEncryptionKey().Object,
+                KeyWrapAlgorithm,
+                async: false,
+                default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
                 EncryptedMessageContents = Convert.ToBase64String(result.ciphertext),
@@ -67,11 +105,11 @@ namespace Azure.Storage.Queues.Test
         public void TryDeserializeEncryptedMessage()
         {
             var result = ClientSideEncryptor.BufferedEncryptInternal(
-                   new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                   new MockKeyEncryptionKey(),
-                   KeyWrapAlgorithm,
-                   async: false,
-                   default).EnsureCompleted();
+                new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
+                GetIKeyEncryptionKey().Object,
+                KeyWrapAlgorithm,
+                async: false,
+                default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
                 EncryptedMessageContents = Convert.ToBase64String(result.ciphertext),

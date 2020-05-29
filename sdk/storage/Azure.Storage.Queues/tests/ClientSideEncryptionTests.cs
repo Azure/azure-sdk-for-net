@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
@@ -14,16 +15,20 @@ using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Queues.Tests;
-using Azure.Storage.Tests.Shared;
+using Moq;
 using NUnit.Framework;
+using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
     public class ClientSideEncryptionTests : QueueTestBase
     {
+
+        private const string s_algorithmName = "some algorithm name";
+        private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
+
         private readonly string SampleUTF8String = Encoding.UTF8.GetString(
             new byte[] { 0xe1, 0x9a, 0xa0, 0xe1, 0x9b, 0x87, 0xe1, 0x9a, 0xbb, 0x0a }); // valid UTF-8 bytes
 
@@ -94,6 +99,102 @@ namespace Azure.Storage.Queues.Test
             return Encoding.ASCII.GetString(buf);
         }
 
+        private Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(byte[] userKeyBytes = default, string keyId = default)
+        {
+            if (userKeyBytes == default)
+            {
+                const int keySizeBits = 256;
+                var bytes = new byte[keySizeBits >> 3];
+                new RNGCryptoServiceProvider().GetBytes(bytes);
+                userKeyBytes = bytes;
+            }
+            keyId ??= Guid.NewGuid().ToString();
+
+            var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
+            keyMock.SetupGet(k => k.KeyId).Returns(keyId);
+            if (IsAsync)
+            {
+                keyMock.Setup(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Task.FromResult(Xor(userKeyBytes, key.ToArray())));
+                keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey.ToArray())));
+            }
+            else
+            {
+                keyMock.Setup(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) => Xor(userKeyBytes, key.ToArray()));
+                keyMock.Setup(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken))
+                    .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) => Xor(userKeyBytes, wrappedKey.ToArray()));
+            }
+
+            return keyMock;
+        }
+
+        private Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(IKeyEncryptionKey iKey)
+        {
+            var resolverMock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
+            if (IsAsync)
+            {
+                resolverMock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
+                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? Task.FromResult(iKey) : throw new Exception("Mock resolver couldn't resolve key id."));
+            }
+            else
+            {
+                resolverMock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
+                    .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.KeyId == keyId ? iKey : throw new Exception("Mock resolver couldn't resolve key id."));
+            }
+
+            return resolverMock;
+        }
+
+        private Mock<Microsoft.Azure.KeyVault.Core.IKey> GetTrackOneIKey(byte[] userKeyBytes = default, string keyId = default)
+        {
+            if (userKeyBytes == default)
+            {
+                const int keySizeBits = 256;
+                var bytes = new byte[keySizeBits >> 3];
+                new RNGCryptoServiceProvider().GetBytes(bytes);
+                userKeyBytes = bytes;
+            }
+            keyId ??= Guid.NewGuid().ToString();
+
+            var keyMock = new Mock<Microsoft.Azure.KeyVault.Core.IKey>(MockBehavior.Strict);
+            keyMock.SetupGet(k => k.Kid).Returns(keyId);
+            keyMock.SetupGet(k => k.DefaultKeyWrapAlgorithm).Returns(s_algorithmName);
+            // track one had async-only key wrapping
+            keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
+                // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
+                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(Tuple.Create(Xor(userKeyBytes, key), s_algorithmName)));
+            keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
+                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey)));
+
+            return keyMock;
+        }
+
+        private Mock<Microsoft.Azure.KeyVault.Core.IKeyResolver> GetTrackOneIKeyResolver(Microsoft.Azure.KeyVault.Core.IKey iKey)
+        {
+            var resolverMock = new Mock<Microsoft.Azure.KeyVault.Core.IKeyResolver>(MockBehavior.Strict);
+            resolverMock.Setup(r => r.ResolveKeyAsync(IsNotNull<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
+                .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.Kid == keyId ? Task.FromResult(iKey) : throw new Exception("Mock resolver couldn't resolve key id."));
+
+            return resolverMock;
+        }
+
+        private static byte[] Xor(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length)
+            {
+                throw new ArgumentException("Keys must be the same length for this mock implementation.");
+            }
+
+            var aBits = new System.Collections.BitArray(a);
+            var bBits = new System.Collections.BitArray(b);
+
+            var result = new byte[a.Length];
+            aBits.Xor(bBits).CopyTo(result, 0);
+
+            return result;
+        }
         #endregion
 
         [TestCase(16, false)] // a single cipher block
@@ -107,21 +208,20 @@ namespace Azure.Storage.Queues.Test
             var message = usePrebuiltMessage
                 ? GetRandomMessage(messageSize)
                 : SampleUTF8String;
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey().Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var queue = disposable.Queue;
 
                 // upload with encryption
-                await queue.SendMessageAsync(message);
+                await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
                 // download without decrypting
-                var receivedMessages = (await new QueueClient(queue.Uri, GetNewSharedKeyCredentials()).ReceiveMessagesAsync()).Value;
+                var receivedMessages = (await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials())).ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
                 var encryptedMessage = receivedMessages[0].MessageText; // json of message and metadata
                 var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(encryptedMessage);
@@ -129,10 +229,12 @@ namespace Azure.Storage.Queues.Test
                 // encrypt original data manually for comparison
                 EncryptionData encryptionMetadata = parsedEncryptedMessage.EncryptionData;
                 Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+                var explicitlyUnwrappedKey = IsAsync
+                    ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
+                    : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
                 string expectedEncryptedMessage = LocalManualEncryption(
                     message,
-                    (await mockKey.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
-                        .ConfigureAwait(false)).ToArray(),
+                    explicitlyUnwrappedKey,
                     encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
@@ -151,21 +253,22 @@ namespace Azure.Storage.Queues.Test
             var message = usePrebuiltMessage
                 ? GetRandomMessage(messageSize)
                 : SampleUTF8String;
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey().Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyResolver = mockKeyResolver,
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var queue = disposable.Queue;
 
                 // upload with encryption
-                await queue.SendMessageAsync(message);
+                await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
                 // download with decryption
-                var receivedMessages = (await queue.ReceiveMessagesAsync()).Value;
+                var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
                 var downloadedMessage = receivedMessages[0].MessageText;
 
@@ -183,12 +286,18 @@ namespace Azure.Storage.Queues.Test
             var message = usePrebuiltMessage
                 ? GetRandomMessage(messageSize)
                 : SampleUTF8String;
-            var mockKey = new MockKeyEncryptionKey();
+
+            const int keySizeBits = 256;
+            var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
+            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+            var keyId = Guid.NewGuid().ToString();
+
+            var mockKey = GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(GetIKeyEncryptionKey(keyEncryptionKeyBytes, keyId).Object).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
-                KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyResolver = mockKeyResolver,
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var track2Queue = disposable.Queue;
@@ -198,18 +307,21 @@ namespace Azure.Storage.Queues.Test
                 var track1Queue = new Microsoft.Azure.Storage.Queue.CloudQueue(
                     track2Queue.Uri,
                     new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
-                await track1Queue.AddMessageAsync(
-                    new Microsoft.Azure.Storage.Queue.CloudQueueMessage(message),
-                    null,
-                    null,
-                    new Microsoft.Azure.Storage.Queue.QueueRequestOptions()
-                    {
-                        EncryptionPolicy = new Microsoft.Azure.Storage.Queue.QueueEncryptionPolicy(mockKey, mockKey)
-                    },
-                    null);
+                var track1RequestOptions = new Microsoft.Azure.Storage.Queue.QueueRequestOptions()
+                {
+                    EncryptionPolicy = new Microsoft.Azure.Storage.Queue.QueueEncryptionPolicy(mockKey, default)
+                };
+                if (IsAsync)
+                {
+                    await track1Queue.AddMessageAsync(new Microsoft.Azure.Storage.Queue.CloudQueueMessage(message), null, null, track1RequestOptions, null, s_cancellationToken);
+                }
+                else
+                {
+                    track1Queue.AddMessage(new Microsoft.Azure.Storage.Queue.CloudQueueMessage(message), null, null, track1RequestOptions, null);
+                }
 
                 // download with track 2
-                var receivedMessages = (await track2Queue.ReceiveMessagesAsync()).Value;
+                var receivedMessages = (await track2Queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
                 var downloadedMessage = receivedMessages[0].MessageText;
 
@@ -227,18 +339,24 @@ namespace Azure.Storage.Queues.Test
             var message = usePrebuiltMessage
                 ? GetRandomMessage(messageSize)
                 : SampleUTF8String;
-            var mockKey = new MockKeyEncryptionKey();
+
+            const int keySizeBits = 256;
+            var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
+            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+            var keyId = Guid.NewGuid().ToString();
+
+            var mockKey = GetIKeyEncryptionKey(keyEncryptionKeyBytes, keyId).Object;
+            var mockKeyResolver = GetTrackOneIKeyResolver(GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var track2Queue = disposable.Queue;
 
                 // upload with track 2
-                await track2Queue.SendMessageAsync(message);
+                await track2Queue.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
                 // download with track 1
                 var creds = GetNewSharedKeyCredentials();
@@ -249,7 +367,7 @@ namespace Azure.Storage.Queues.Test
                     null,
                     new Microsoft.Azure.Storage.Queue.QueueRequestOptions()
                     {
-                        EncryptionPolicy = new Microsoft.Azure.Storage.Queue.QueueEncryptionPolicy(mockKey, mockKey)
+                        EncryptionPolicy = new Microsoft.Azure.Storage.Queue.QueueEncryptionPolicy(default, mockKeyResolver)
                     },
                     null);
 
@@ -272,9 +390,9 @@ namespace Azure.Storage.Queues.Test
             {
                 var queue = disposable.Queue;
 
-                await queue.SendMessageAsync(message);
+                await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
-                var receivedMessages = (await queue.ReceiveMessagesAsync()).Value;
+                var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
                 var downloadedMessage = receivedMessages[0].MessageText;
 
@@ -287,22 +405,23 @@ namespace Azure.Storage.Queues.Test
         public async Task ReadPlaintextMessage()
         {
             var message = "any old message";
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey().Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyResolver = mockKeyResolver,
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var encryptedQueueClient = disposable.Queue;
                 var plainQueueClient = new QueueClient(encryptedQueueClient.Uri, GetNewSharedKeyCredentials());
 
                 // upload with encryption
-                await plainQueueClient.SendMessageAsync(message);
+                await plainQueueClient.SendMessageAsync(message, cancellationToken: s_cancellationToken);
 
                 // download with decryption
-                var receivedMessages = (await encryptedQueueClient.ReceiveMessagesAsync()).Value;
+                var receivedMessages = (await encryptedQueueClient.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
                 var downloadedMessage = receivedMessages[0].MessageText;
 
@@ -316,20 +435,28 @@ namespace Azure.Storage.Queues.Test
         public async Task OnlyOneKeyWrapCall()
         {
             var message = "any old message";
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object);
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
-                KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyEncryptionKey = mockKey.Object,
+                KeyResolver = mockKeyResolver.Object,
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var queue = disposable.Queue;
 
-                await queue.SendMessageAsync(message).ConfigureAwait(false);
+                await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken).ConfigureAwait(false);
 
-                Assert.AreEqual(1, IsAsync ? mockKey.WrappedAsync : mockKey.WrappedSync);
-                Assert.AreEqual(0, IsAsync ? mockKey.WrappedSync : mockKey.WrappedAsync);
+                var wrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("WrapKey");
+                var wrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("WrapKeyAsync");
+
+                Assert.AreEqual(1, IsAsync
+                    ? mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod)
+                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod));
+                Assert.AreEqual(0, IsAsync
+                    ? mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod)
+                    : mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod));
             }
         }
 
@@ -338,37 +465,50 @@ namespace Azure.Storage.Queues.Test
         public async Task OnlyOneKeyResolveAndUnwrapCall()
         {
             var message = "any old message";
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object);
             await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
-                KeyEncryptionKey = mockKey,
-                KeyResolver = mockKey,
-                KeyWrapAlgorithm = "mock"
+                KeyEncryptionKey = mockKey.Object,
+                KeyResolver = mockKeyResolver.Object,
+                KeyWrapAlgorithm = s_algorithmName
             }))
             {
                 var queue = disposable.Queue;
-                await queue.SendMessageAsync(message).ConfigureAwait(false);
-                mockKey.ResetCounters();
+                await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken).ConfigureAwait(false);
 
                 // replace with client that has only key resolver
                 var options = GetOptions();
                 options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                 {
                     KeyEncryptionKey = default, // we want the key resolver to trigger; no cached key
-                    KeyResolver = mockKey
+                    KeyResolver = mockKeyResolver.Object
                 };
                 queue = InstrumentClient(new QueueClient(
                     queue.Uri,
                     GetNewSharedKeyCredentials(),
                     options));
 
-                await queue.ReceiveMessagesAsync();
+                await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken);
 
-                Assert.AreEqual(1, IsAsync ? mockKey.ResolvedAsync : mockKey.ResolvedSync);
-                Assert.AreEqual(0, IsAsync ? mockKey.ResolvedSync : mockKey.ResolvedAsync);
+                var resolveSyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("Resolve");
+                var resolveAsyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("ResolveAsync");
+                var unwrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
+                var unwrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKeyAsync");
 
-                Assert.AreEqual(1, IsAsync ? mockKey.UnwrappedAsync : mockKey.UnwrappedSync);
-                Assert.AreEqual(0, IsAsync ? mockKey.UnwrappedSync : mockKey.UnwrappedAsync);
+                Assert.AreEqual(1, IsAsync
+                    ? mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod)
+                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveSyncMethod));
+                Assert.AreEqual(0, IsAsync
+                    ? mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveSyncMethod)
+                    : mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod));
+
+                Assert.AreEqual(1, IsAsync
+                    ? mockKey.Invocations.Count(invocation => invocation.Method == unwrapAsyncMethod)
+                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapSyncMethod));
+                Assert.AreEqual(0, IsAsync
+                    ? mockKey.Invocations.Count(invocation => invocation.Method == unwrapSyncMethod)
+                    : mockKey.Invocations.Count(invocation => invocation.Method == unwrapAsyncMethod));
             }
         }
 
@@ -387,19 +527,20 @@ namespace Azure.Storage.Queues.Test
 
             const int numMessages = 5;
             var message = "any old message";
-            var mockKey = new MockKeyEncryptionKey();
+            var mockKey = GetIKeyEncryptionKey().Object;
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey).Object;
             await using (var disposable = await GetTestEncryptedQueueAsync(
                 new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                 {
                     KeyEncryptionKey = mockKey,
-                    KeyResolver = mockKey,
-                    KeyWrapAlgorithm = "mock"
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
                 }))
             {
                 var queue = disposable.Queue;
                 foreach (var _ in Enumerable.Range(0, numMessages))
                 {
-                    await queue.SendMessageAsync(message).ConfigureAwait(false);
+                    await queue.SendMessageAsync(message, cancellationToken: s_cancellationToken).ConfigureAwait(false);
                 }
 
                 bool threw = false;
@@ -415,7 +556,7 @@ namespace Azure.Storage.Queues.Test
                         KeyWrapAlgorithm = "test"
                     };
                     options._onClientSideDecryptionFailure = listener;
-                    result = await new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options).ReceiveMessagesAsync(numMessages);
+                    result = await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options)).ReceiveMessagesAsync(numMessages, cancellationToken: s_cancellationToken);
                 }
                 catch (Exception)
                 {

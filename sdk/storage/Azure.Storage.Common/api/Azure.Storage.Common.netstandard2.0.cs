@@ -1,10 +1,5 @@
 namespace Azure.Storage
 {
-    public partial class ClientSideEncryptionKeyNotFoundException : System.Exception
-    {
-        public ClientSideEncryptionKeyNotFoundException(string keyId) { }
-        public string KeyId { get { throw null; } }
-    }
     public partial class ClientSideEncryptionOptions
     {
         public ClientSideEncryptionOptions(Azure.Storage.ClientSideEncryptionVersion version) { }

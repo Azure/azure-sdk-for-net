@@ -4,7 +4,7 @@
 namespace Azure.Storage.Cryptography.Models
 {
     /// <summary>
-    /// Represents the envelope key details stored on the service.
+    /// Represents the envelope key details JSON schema stored on the service.
     /// In the envelope technique, a securely generated content encryption key (CEK) is generated
     /// for every encryption operation. It is then encrypted (wrapped) with the user-provided key
     /// encryption key (KEK), using a key-wrap algorithm. The wrapped CEK is stored with the

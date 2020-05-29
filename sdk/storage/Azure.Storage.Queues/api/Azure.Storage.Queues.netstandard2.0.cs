@@ -317,18 +317,22 @@ namespace Azure.Storage.Queues.Models
 }
 namespace Azure.Storage.Queues.Specialized
 {
-    public partial class AdvancedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
+    public partial class ExtendedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public AdvancedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public ExtendedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
-        public Azure.Storage.Queues.Specialized.IMissingClientSideEncryptionKeyListener OnMissingClientSideEncryptionKey { get { throw null; } set { } }
+        public Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener OnClientSideDecryptionFailure { get { throw null; } set { } }
     }
-    public partial interface IMissingClientSideEncryptionKeyListener
+    public partial interface IClientSideDecryptionFailureListener
     {
-        void OnMissingKey(Azure.Storage.Queues.Models.PeekedMessage message);
-        void OnMissingKey(Azure.Storage.Queues.Models.QueueMessage message);
-        System.Threading.Tasks.Task OnMissingKeyAsync(Azure.Storage.Queues.Models.PeekedMessage message);
-        System.Threading.Tasks.Task OnMissingKeyAsync(Azure.Storage.Queues.Models.QueueMessage message);
+        void OnFailure(Azure.Storage.Queues.Models.PeekedMessage message, System.Exception exception);
+        void OnFailure(Azure.Storage.Queues.Models.QueueMessage message, System.Exception exception);
+        System.Threading.Tasks.Task OnFailureAsync(Azure.Storage.Queues.Models.PeekedMessage message, System.Exception exception);
+        System.Threading.Tasks.Task OnFailureAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Exception exception);
+    }
+    public static partial class QueueClientExtensions
+    {
+        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptions(this Azure.Storage.Queues.QueueClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions, Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener listener = null) { throw null; }
     }
 }
 namespace Azure.Storage.Sas

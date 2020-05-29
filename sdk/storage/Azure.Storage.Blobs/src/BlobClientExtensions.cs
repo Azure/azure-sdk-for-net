@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// <summary>
     /// Provides advanced extensions for blob service clients.
     /// </summary>
-    public static class AdvancedBlobClientExtensions
+    public static class BlobClientExtensions
     {
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same

@@ -153,13 +153,15 @@ namespace Azure.Storage.Cryptography
             return async
                 ? await key.UnwrapKeyAsync(
                     encryptionData.WrappedContentKey.Algorithm,
-                    encryptionData.WrappedContentKey.EncryptedKey).ConfigureAwait(false)
+                    encryptionData.WrappedContentKey.EncryptedKey,
+                    cancellationToken).ConfigureAwait(false)
                 : key.UnwrapKey(
                     encryptionData.WrappedContentKey.Algorithm,
-                    encryptionData.WrappedContentKey.EncryptedKey);
+                    encryptionData.WrappedContentKey.EncryptedKey,
+                    cancellationToken);
         }
 
-#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+
         /// <summary>
         /// Wraps a stream of ciphertext to stream plaintext.
         /// </summary>
@@ -169,9 +171,12 @@ namespace Azure.Storage.Cryptography
         /// <param name="iv"></param>
         /// <param name="noPadding"></param>
         /// <returns></returns>
-        private static Stream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
-#pragma warning restore CS1587 // XML comment is not placed on a valid language element
-            EncryptionData encryptionData, byte[] iv, bool noPadding)
+        private static Stream WrapStream(
+            Stream contentStream,
+            byte[] contentEncryptionKey,
+            EncryptionData encryptionData,
+            byte[] iv,
+            bool noPadding)
         {
             if (encryptionData.EncryptionAgent.EncryptionAlgorithm == ClientSideEncryptionAlgorithm.AesCbc256)
             {

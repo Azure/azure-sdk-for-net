@@ -914,11 +914,6 @@ namespace Azure.Storage.Blobs.Models
 }
 namespace Azure.Storage.Blobs.Specialized
 {
-    public partial class AdvancedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
-    {
-        public AdvancedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
-        public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
-    }
     public partial class AppendBlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
         protected AppendBlobClient() { }
@@ -994,6 +989,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshot(string snapshot) { throw null; }
         protected virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
     }
+    public static partial class BlobClientExtensions
+    {
+        public static Azure.Storage.Blobs.BlobClient WithClientSideEncryptionOptions(this Azure.Storage.Blobs.BlobClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
+    }
     public partial class BlobLeaseClient
     {
         public static readonly System.TimeSpan InfiniteLeaseDuration;
@@ -1041,6 +1040,11 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public new Azure.Storage.Blobs.Specialized.BlockBlobClient WithSnapshot(string snapshot) { throw null; }
         protected sealed override Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
+    }
+    public partial class ExtendedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
+    {
+        public ExtendedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public partial class PageBlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
