@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// The typical use case for filter actions is to append or update the properties that are attached to a message,
     /// for example assigning a group ID based on the correlation ID of a message.
     /// </remarks>
-    /// <seealso cref="SqlAction"/>
+    /// <seealso cref="SqlRuleAction"/>
     public abstract class RuleAction : IEquatable<RuleAction>
     {
         internal RuleAction()

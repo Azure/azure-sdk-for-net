@@ -165,7 +165,7 @@
   <data name="NotSupportedPropertyType" xml:space="preserve">
     <value>'{0}' is not a supported type.</value>
   </data>
-  <data name="SqlFilterStatmentTooLong" xml:space="preserve">
+  <data name="SqlRuleFilterStatmentTooLong" xml:space="preserve">
     <value>The length of the filter statement is {0}, which exceeds the maximum length of {1}</value>
   </data>
   <data name="SqlFilterActionStatmentTooLong" xml:space="preserve">

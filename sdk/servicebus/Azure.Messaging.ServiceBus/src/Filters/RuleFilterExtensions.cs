@@ -20,13 +20,13 @@ namespace Azure.Messaging.ServiceBus.Filters
             switch (attribute.Value)
             {
                 case "SqlFilter":
-                    return SqlFilterExtensions.ParseFromXElement(xElement);
+                    return SqlRuleFilterExtensions.ParseFromXElement(xElement);
                 case "CorrelationFilter":
-                    return CorrelationFilterExtensions.ParseFromXElement(xElement);
+                    return CorrelationRuleFilterExtensions.ParseFromXElement(xElement);
                 case "TrueFilter":
-                    return new TrueFilter();
+                    return new TrueRuleFilter();
                 case "FalseFilter":
-                    return new FalseFilter();
+                    return new FalseRuleFilter();
                 default:
                     MessagingEventSource.Log.ManagementSerializationException(
                         $"{nameof(RuleFilterExtensions)}_{nameof(ParseFromXElement)}",
@@ -39,21 +39,21 @@ namespace Azure.Messaging.ServiceBus.Filters
         {
             switch (filter)
             {
-                case SqlFilter sqlFilter:
-                    switch (sqlFilter)
+                case SqlRuleFilter sqlRuleFilter:
+                    switch (sqlRuleFilter)
                     {
-                        case TrueFilter _:
-                            return sqlFilter.Serialize(nameof(TrueFilter));
+                        case TrueRuleFilter _:
+                            return sqlRuleFilter.Serialize(nameof(TrueRuleFilter));
 
-                        case FalseFilter _:
-                            return sqlFilter.Serialize(nameof(FalseFilter));
+                        case FalseRuleFilter _:
+                            return sqlRuleFilter.Serialize(nameof(FalseRuleFilter));
 
                         default:
-                            return sqlFilter.Serialize(nameof(SqlFilter));
+                            return sqlRuleFilter.Serialize(nameof(SqlRuleFilter));
                     }
 
-                case CorrelationFilter correlationFilter:
-                    return correlationFilter.Serialize();
+                case CorrelationRuleFilter correlationRuleFilter:
+                    return correlationRuleFilter.Serialize();
 
                 default:
                     throw new NotImplementedException($"filter type {filter.GetType().Name} is not supported.");

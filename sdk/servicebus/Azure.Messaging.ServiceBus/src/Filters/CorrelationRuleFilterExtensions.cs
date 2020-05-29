@@ -6,59 +6,59 @@ using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    internal static class CorrelationFilterExtensions
+    internal static class CorrelationRuleFilterExtensions
     {
         public static RuleFilter ParseFromXElement(XElement xElement)
         {
-            var correlationFilter = new CorrelationFilter();
+            var correlationRuleFilter = new CorrelationRuleFilter();
             foreach (var element in xElement.Elements())
             {
                 switch (element.Name.LocalName)
                 {
                     case "CorrelationId":
-                        correlationFilter.CorrelationId = element.Value;
+                        correlationRuleFilter.CorrelationId = element.Value;
                         break;
                     case "MessageId":
-                        correlationFilter.MessageId = element.Value;
+                        correlationRuleFilter.MessageId = element.Value;
                         break;
                     case "To":
-                        correlationFilter.To = element.Value;
+                        correlationRuleFilter.To = element.Value;
                         break;
                     case "ReplyTo":
-                        correlationFilter.ReplyTo = element.Value;
+                        correlationRuleFilter.ReplyTo = element.Value;
                         break;
                     case "Label":
-                        correlationFilter.Label = element.Value;
+                        correlationRuleFilter.Label = element.Value;
                         break;
                     case "SessionId":
-                        correlationFilter.SessionId = element.Value;
+                        correlationRuleFilter.SessionId = element.Value;
                         break;
                     case "ReplyToSessionId":
-                        correlationFilter.ReplyToSessionId = element.Value;
+                        correlationRuleFilter.ReplyToSessionId = element.Value;
                         break;
                     case "ContentType":
-                        correlationFilter.ContentType = element.Value;
+                        correlationRuleFilter.ContentType = element.Value;
                         break;
                     case "Properties":
                         foreach (var prop in element.Elements(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace)))
                         {
                             var key = prop.Element(XName.Get("Key", ManagementClientConstants.ServiceBusNamespace))?.Value;
                             var value = XmlObjectConvertor.ParseValueObject(prop.Element(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace)));
-                            correlationFilter.Properties.Add(key, value);
+                            correlationRuleFilter.Properties.Add(key, value);
                         }
                         break;
                     default:
                         MessagingEventSource.Log.ManagementSerializationException(
-                            $"{nameof(CorrelationFilterExtensions)}_{nameof(ParseFromXElement)}",
+                            $"{nameof(CorrelationRuleFilterExtensions)}_{nameof(ParseFromXElement)}",
                             element.ToString());
                         break;
                 }
             }
 
-            return correlationFilter;
+            return correlationRuleFilter;
         }
 
-        public static XElement Serialize(this CorrelationFilter filter)
+        public static XElement Serialize(this CorrelationRuleFilter filter)
         {
             XElement parameterElement = null;
             if (filter.properties != null)
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 
             return new XElement(
                 XName.Get("Filter", ManagementClientConstants.ServiceBusNamespace),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(CorrelationFilter)),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(CorrelationRuleFilter)),
                 string.IsNullOrWhiteSpace(filter.CorrelationId) ? null :
                     new XElement(XName.Get("CorrelationId", ManagementClientConstants.ServiceBusNamespace), filter.CorrelationId),
                 string.IsNullOrWhiteSpace(filter.MessageId) ? null :

@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Management
     public class TopicProperties : IEquatable<TopicProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        private string _topicName;
+        private string _name;
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private string _userMetadata = null;
@@ -20,10 +20,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Initializes a new instance of TopicDescription class with the specified relative name.
         /// </summary>
-        /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
-        public TopicProperties(string topicName)
+        /// <param name="name">Name of the topic relative to the namespace base address.</param>
+        public TopicProperties(string name)
         {
-            TopicName = topicName;
+            Name = name;
         }
 
         /// <summary>
@@ -109,13 +109,13 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string TopicName
+        public string Name
         {
-            get => _topicName;
+            get => _name;
             set
             {
-                EntityNameFormatter.CheckValidTopicName(value, nameof(TopicName));
-                _topicName = value;
+                EntityNameFormatter.CheckValidTopicName(value, nameof(Name));
+                _name = value;
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         public override int GetHashCode()
         {
-            return TopicName?.GetHashCode() ?? base.GetHashCode();
+            return Name?.GetHashCode() ?? base.GetHashCode();
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public bool Equals(TopicProperties other)
         {
             if (other is TopicProperties otherProperties
-                && TopicName.Equals(otherProperties.TopicName, StringComparison.OrdinalIgnoreCase)
+                && Name.Equals(otherProperties.Name, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
                 && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
                 && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherProperties.DuplicateDetectionHistoryTimeWindow))

@@ -12,34 +12,34 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline.
     /// </summary>
     /// <remarks>
-    /// A <see cref="SqlFilter"/> holds a SQL-like condition expression that is evaluated in the broker against the arriving messages'
+    /// A <see cref="SqlRuleFilter"/> holds a SQL-like condition expression that is evaluated in the broker against the arriving messages'
     /// user-defined properties and system properties. All system properties (which are all properties explicitly listed
     /// on the <see cref="ServiceBusMessage"/> class) must be prefixed with <code>sys.</code> in the condition expression. The SQL subset implements
     /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators,
     /// numeric arithmetic, and simple text pattern matching with LIKE.
     /// </remarks>
-    public class SqlFilter : RuleFilter
+    public class SqlRuleFilter : RuleFilter
     {
         internal PropertyDictionary parameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlFilter" /> class using the specified SQL expression.
+        /// Initializes a new instance of the <see cref="SqlRuleFilter" /> class using the specified SQL expression.
         /// </summary>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
-        public SqlFilter(string sqlExpression)
+        public SqlRuleFilter(string sqlExpression)
         {
             if (string.IsNullOrEmpty(sqlExpression))
             {
                 throw Fx.Exception.ArgumentNull(nameof(sqlExpression));
             }
 
-            if (sqlExpression.Length > Constants.MaximumSqlFilterStatementLength)
+            if (sqlExpression.Length > Constants.MaximumSqlRuleFilterStatementLength)
             {
                 throw Fx.Exception.Argument(
                     nameof(sqlExpression),
-                    Resources.SqlFilterStatmentTooLong.FormatForUser(
+                    Resources.SqlRuleFilterStatmentTooLong.FormatForUser(
                         sqlExpression.Length,
-                        Constants.MaximumSqlFilterStatementLength));
+                        Constants.MaximumSqlRuleFilterStatementLength));
             }
 
             SqlExpression = sqlExpression;
@@ -60,12 +60,12 @@ namespace Azure.Messaging.ServiceBus.Filters
         public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
-        /// Returns a string representation of <see cref="SqlFilter" />.
+        /// Returns a string representation of <see cref="SqlRuleFilter" />.
         /// </summary>
-        /// <returns>The string representation of <see cref="SqlFilter" />.</returns>
+        /// <returns>The string representation of <see cref="SqlRuleFilter" />.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "SqlFilter: {0}", SqlExpression);
+            return string.Format(CultureInfo.InvariantCulture, "SqlRuleFilter: {0}", SqlExpression);
         }
 
         /// <inheritdoc/>
@@ -84,22 +84,22 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(RuleFilter other)
         {
-            if (other is SqlFilter sqlFilter)
+            if (other is SqlRuleFilter sqlRuleFilter)
             {
-                if (string.Equals(SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (parameters != null && sqlFilter.parameters != null
-                        || parameters == null && sqlFilter.parameters == null))
+                if (string.Equals(SqlExpression, sqlRuleFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (parameters != null && sqlRuleFilter.parameters != null
+                        || parameters == null && sqlRuleFilter.parameters == null))
                 {
                     if (parameters != null)
                     {
-                        if (parameters.Count != sqlFilter.parameters.Count)
+                        if (parameters.Count != sqlRuleFilter.parameters.Count)
                         {
                             return false;
                         }
 
                         foreach (var param in parameters)
                         {
-                            if (!sqlFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!sqlRuleFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||
                                 (param.Value != null && !param.Value.Equals(otherParamValue)))
                             {
@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SqlFilter left, SqlFilter right)
+        public static bool operator ==(SqlRuleFilter left, SqlRuleFilter right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SqlFilter left, SqlFilter right)
+        public static bool operator !=(SqlRuleFilter left, SqlRuleFilter right)
         {
             return !(left == right);
         }

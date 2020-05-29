@@ -11,14 +11,14 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <remarks>
     /// Filter is an abstract class with the following concrete implementations:
     /// <list type="bullet">
-    /// <item><b>SqlFilter</b> that represents a filter using SQL syntax. </item>
-    /// <item><b>CorrelationFilter</b> that provides an optimization for correlation equality expressions.</item>
+    /// <item><b>SqlRuleFilter</b> that represents a filter using SQL syntax. </item>
+    /// <item><b>CorrelationRuleFilter</b> that provides an optimization for correlation equality expressions.</item>
     /// </list>
     /// </remarks>
-    /// <seealso cref="SqlFilter"/>
-    /// <seealso cref="TrueFilter"/>
-    /// <seealso cref="CorrelationFilter "/>
-    /// <seealso cref="FalseFilter"/>
+    /// <seealso cref="SqlRuleFilter"/>
+    /// <seealso cref="TrueRuleFilter"/>
+    /// <seealso cref="CorrelationRuleFilter "/>
+    /// <seealso cref="FalseRuleFilter"/>
     public abstract class RuleFilter : IEquatable<RuleFilter>
     {
         internal RuleFilter()

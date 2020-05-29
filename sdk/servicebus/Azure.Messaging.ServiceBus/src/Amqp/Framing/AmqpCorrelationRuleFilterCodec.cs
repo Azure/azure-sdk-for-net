@@ -7,14 +7,14 @@ using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
-    internal sealed class AmqpCorrelationFilterCodec : AmqpRuleFilterCodec
+    internal sealed class AmqpCorrelationRuleFilterCodec : AmqpRuleFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":correlation-filter:list";
         public const ulong Code = 0x000001370000009;
         private const int Fields = 9;
         private AmqpMap properties;
 
-        public AmqpCorrelationFilterCodec() : base(Name, Code)
+        public AmqpCorrelationRuleFilterCodec() : base(Name, Code)
         {
             properties = new AmqpMap();
         }

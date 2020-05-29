@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus
 
         public const int RuleNameMaximumLength = 50;
 
-        public const int MaximumSqlFilterStatementLength = 1024;
+        public const int MaximumSqlRuleFilterStatementLength = 1024;
 
         public const int MaximumSqlRuleActionStatementLength = 1024;
 

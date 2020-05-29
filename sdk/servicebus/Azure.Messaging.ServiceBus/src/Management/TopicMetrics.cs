@@ -10,15 +10,15 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class TopicMetrics
     {
-        internal TopicMetrics(string topicName)
+        internal TopicMetrics(string name)
         {
-            TopicName = topicName;
+            Name = name;
         }
 
         /// <summary>
         /// The name of the topic.
         /// </summary>
-        public string TopicName { get; internal set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// The total number of messages in the topic.

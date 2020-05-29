@@ -11,16 +11,16 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusMessage" />.
     /// </summary>
-    public sealed class SqlAction : RuleAction
+    public sealed class SqlRuleAction : RuleAction
     {
         internal PropertyDictionary parameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlAction" /> class with the specified SQL expression.
+        /// Initializes a new instance of the <see cref="SqlRuleAction" /> class with the specified SQL expression.
         /// </summary>
         /// <param name="sqlExpression">The SQL expression.</param>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
-        public SqlAction(string sqlExpression)
+        public SqlRuleAction(string sqlExpression)
         {
             if (string.IsNullOrEmpty(sqlExpression))
             {
@@ -53,9 +53,9 @@ namespace Azure.Messaging.ServiceBus.Filters
         public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
-        /// Returns a string representation of <see cref="SqlAction" />.
+        /// Returns a string representation of <see cref="SqlRuleAction" />.
         /// </summary>
-        /// <returns>The string representation of <see cref="SqlAction" />.</returns>
+        /// <returns>The string representation of <see cref="SqlRuleAction" />.</returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", SqlExpression);
@@ -77,22 +77,22 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(RuleAction other)
         {
-            if (other is SqlAction sqlAction)
+            if (other is SqlRuleAction sqlRuleAction)
             {
-                if (string.Equals(SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (parameters != null && sqlAction.parameters != null
-                        || parameters == null && sqlAction.parameters == null))
+                if (string.Equals(SqlExpression, sqlRuleAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (parameters != null && sqlRuleAction.parameters != null
+                        || parameters == null && sqlRuleAction.parameters == null))
                 {
                     if (parameters != null)
                     {
-                        if (parameters.Count != sqlAction.parameters.Count)
+                        if (parameters.Count != sqlRuleAction.parameters.Count)
                         {
                             return false;
                         }
 
                         foreach (var param in parameters)
                         {
-                            if (!sqlAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!sqlRuleAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||
                                 (param.Value != null && !param.Value.Equals(otherParamValue)))
                             {
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SqlAction left, SqlAction right)
+        public static bool operator ==(SqlRuleAction left, SqlRuleAction right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SqlAction left, SqlAction right)
+        public static bool operator !=(SqlRuleAction left, SqlRuleAction right)
         {
             return !(left == right);
         }

@@ -6,13 +6,13 @@ using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
-    internal sealed class AmqpSqlFilterCodec : AmqpRuleFilterCodec
+    internal sealed class AmqpSqlRuleFilterCodec : AmqpRuleFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":sql-filter:list";
         public const ulong Code = 0x000001370000006;
         private const int Fields = 2;
 
-        public AmqpSqlFilterCodec() : base(Name, Code) { }
+        public AmqpSqlRuleFilterCodec() : base(Name, Code) { }
 
         public string Expression { get; set; }
 

@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Management
     public class QueueProperties : IEquatable<QueueProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        private string _queueName;
+        private string _name;
         private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
@@ -25,10 +25,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Initializes a new instance of QueueDescription class with the specified relative name.
         /// </summary>
-        /// <param name="queueName">Name of the queue relative to the namespace base address.</param>
-        public QueueProperties(string queueName)
+        /// <param name="name">Name of the queue relative to the namespace base address.</param>
+        public QueueProperties(string name)
         {
-            QueueName = queueName;
+            Name = name;
         }
 
         /// <summary>
@@ -36,13 +36,13 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
-        public string QueueName
+        public string Name
         {
-            get => _queueName;
+            get => _name;
             set
             {
-                EntityNameFormatter.CheckValidQueueName(value, nameof(QueueName));
-                _queueName = value;
+                EntityNameFormatter.CheckValidQueueName(value, nameof(Name));
+                _name = value;
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
-                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_name.Equals(value, StringComparison.CurrentCultureIgnoreCase))
 
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 }
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (_queueName.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (_name.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         public override int GetHashCode()
         {
-            return QueueName?.GetHashCode() ?? base.GetHashCode();
+            return Name?.GetHashCode() ?? base.GetHashCode();
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -299,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Management
         public bool Equals(QueueProperties other)
         {
             if (other is QueueProperties otherProperties
-                && QueueName.Equals(otherProperties.QueueName, StringComparison.OrdinalIgnoreCase)
+                && Name.Equals(otherProperties.Name, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
                 && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
                 && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherProperties.DuplicateDetectionHistoryTimeWindow))

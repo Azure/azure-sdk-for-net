@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 return null;
             }
 
-            var action = new SqlAction(expression);
+            var action = new SqlRuleAction(expression);
 
             var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
             if (parameters != null && parameters.HasElements)
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 
         public static XElement Serialize(this RuleAction action)
         {
-            if (action is SqlAction sqlRuleAction)
+            if (action is SqlRuleAction sqlRuleAction)
             {
                 XElement parameterElement = null;
                 if (sqlRuleAction.parameters != null)
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 
                 return new XElement(
                         XName.Get("Action", ManagementClientConstants.ServiceBusNamespace),
-                        new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SqlAction)),
+                        new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SqlRuleAction)),
                         new XElement(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace), sqlRuleAction.SqlExpression),
                         parameterElement);
             }

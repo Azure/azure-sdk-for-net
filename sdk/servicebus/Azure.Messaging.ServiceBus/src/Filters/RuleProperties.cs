@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// </summary>
         /// <remarks>
         /// Whenever a new subscription is created, a default rule is always added.
-        /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
+        /// The default rule is a <see cref="TrueRuleFilter"/> which will enable all messages in the topic to reach subscription.
         /// </remarks>
         public const string DefaultRuleName = "$Default";
         private RuleFilter _filter;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// Initializes a new instance of the <see cref="RuleProperties" /> class with default values.
         /// </summary>
         public RuleProperties()
-            : this(RuleProperties.DefaultRuleName, TrueFilter.Default)
+            : this(RuleProperties.DefaultRuleName, TrueRuleFilter.Default)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name.
         /// </summary>
         public RuleProperties(string name)
-            : this(name, TrueFilter.Default)
+            : this(name, TrueRuleFilter.Default)
         {
         }
 

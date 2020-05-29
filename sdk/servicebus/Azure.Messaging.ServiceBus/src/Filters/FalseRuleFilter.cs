@@ -4,27 +4,25 @@
 namespace Azure.Messaging.ServiceBus.Filters
 {
     /// <summary>
-    /// Matches all the messages arriving to be selected for the subscription.
+    /// Matches none the messages arriving to be selected for the subscription.
     /// </summary>
-    public sealed class TrueFilter : SqlFilter
+    public sealed class FalseRuleFilter : SqlRuleFilter
     {
-        internal static readonly TrueFilter Default = new TrueFilter();
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrueFilter" /> class.
+        /// Initializes a new instance of the <see cref="FalseRuleFilter" /> class.
         /// </summary>
-        public TrueFilter()
-            : base("1=1")
+        public FalseRuleFilter()
+            : base("1=0")
         {
         }
 
         /// <summary>
-        /// Converts the value of the current instance to its equivalent string representation.
+        /// Converts the current instance to its string representation.
         /// </summary>
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            return "TrueFilter";
+            return "FalseRuleFilter";
         }
 
         /// <inheritdoc/>
@@ -36,13 +34,13 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is TrueFilter;
+            return obj is FalseRuleFilter;
         }
 
         /// <inheritdoc/>
         public override bool Equals(RuleFilter other)
         {
-            return other is TrueFilter;
+            return other is FalseRuleFilter;
         }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(TrueFilter left, TrueFilter right)
+        public static bool operator ==(FalseRuleFilter left, FalseRuleFilter right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -72,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(TrueFilter left, TrueFilter right)
+        public static bool operator !=(FalseRuleFilter left, FalseRuleFilter right)
         {
             return !(left == right);
         }

@@ -9,11 +9,11 @@ using Azure.Messaging.ServiceBus.Primitives;
 namespace Azure.Messaging.ServiceBus.Filters
 {
     /// <summary>
-    /// Represents the correlation filter expression.
+    /// Represents the correlation rule filter expression.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// A CorrelationFilter holds a set of conditions that are matched against one of more of an arriving message's user and system properties.
+    /// A CorrelationRuleFilter holds a set of conditions that are matched against one of more of an arriving message's user and system properties.
     /// A common use is a match against the <see cref="ServiceBusMessage.CorrelationId"/> property, but the application can also choose to match against
     /// <see cref="ServiceBusMessage.ContentType"/>, <see cref="ServiceBusMessage.Label"/>, <see cref="ServiceBusMessage.MessageId"/>, <see cref="ServiceBusMessage.ReplyTo"/>,
     /// <see cref="ServiceBusMessage.ReplyToSessionId"/>, <see cref="ServiceBusMessage.SessionId"/>, <see cref="ServiceBusMessage.To"/>, and any user-defined properties.
@@ -22,29 +22,29 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// meaning all conditions must match for the filter to match.
     /// </para>
     /// <para>
-    /// The CorrelationFilter provides an efficient shortcut for declarations of filters that deal only with correlation equality.
+    /// The CorrelationRuleFilter provides an efficient shortcut for declarations of filters that deal only with correlation equality.
     /// In this case the cost of the lexigraphical analysis of the expression can be avoided.
     /// Not only will correlation filters be optimized at declaration time, but they will also be optimized at runtime.
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>
     /// </remarks>
-    public sealed class CorrelationFilter : RuleFilter
+    public sealed class CorrelationRuleFilter : RuleFilter
     {
         internal PropertyDictionary properties;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CorrelationFilter" /> class with default values.
+        /// Initializes a new instance of the <see cref="CorrelationRuleFilter" /> class with default values.
         /// </summary>
-        public CorrelationFilter()
+        public CorrelationRuleFilter()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CorrelationFilter" /> class with the specified correlation identifier.
+        /// Initializes a new instance of the <see cref="CorrelationRuleFilter" /> class with the specified correlation identifier.
         /// </summary>
         /// <param name="correlationId">The identifier for the correlation.</param>
         /// <exception cref="System.ArgumentException">Thrown when the <paramref name="correlationId" /> is null or empty.</exception>
-        public CorrelationFilter(string correlationId)
+        public CorrelationRuleFilter(string correlationId)
             : this()
         {
             if (string.IsNullOrWhiteSpace(correlationId))
@@ -158,7 +158,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append("CorrelationFilter: ");
+            stringBuilder.Append("CorrelationRuleFilter: ");
 
             var isFirstExpression = true;
 
@@ -216,36 +216,36 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            var other = obj as CorrelationFilter;
+            var other = obj as CorrelationRuleFilter;
             return Equals(other);
         }
 
         /// <inheritdoc/>
         public override bool Equals(RuleFilter other)
         {
-            if (other is CorrelationFilter correlationFilter)
+            if (other is CorrelationRuleFilter correlationRuleFilter)
             {
-                if (string.Equals(CorrelationId, correlationFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(MessageId, correlationFilter.MessageId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(To, correlationFilter.To, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyTo, correlationFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(Label, correlationFilter.Label, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(SessionId, correlationFilter.SessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ReplyToSessionId, correlationFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(ContentType, correlationFilter.ContentType, StringComparison.OrdinalIgnoreCase)
-                    && (properties != null && correlationFilter.properties != null
-                        || properties == null && correlationFilter.properties == null))
+                if (string.Equals(CorrelationId, correlationRuleFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(MessageId, correlationRuleFilter.MessageId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(To, correlationRuleFilter.To, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ReplyTo, correlationRuleFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(Label, correlationRuleFilter.Label, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(SessionId, correlationRuleFilter.SessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase)
+                    && (properties != null && correlationRuleFilter.properties != null
+                        || properties == null && correlationRuleFilter.properties == null))
                 {
                     if (properties != null)
                     {
-                        if (properties.Count != correlationFilter.properties.Count)
+                        if (properties.Count != correlationRuleFilter.properties.Count)
                         {
                             return false;
                         }
 
                         foreach (var param in properties)
                         {
-                            if (!correlationFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!correlationRuleFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||
                                 (param.Value != null && !param.Value.Equals(otherParamValue)))
                             {
@@ -267,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(CorrelationFilter left, CorrelationFilter right)
+        public static bool operator ==(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(CorrelationFilter left, CorrelationFilter right)
+        public static bool operator !=(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             return !(left == right);
         }

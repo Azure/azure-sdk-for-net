@@ -540,9 +540,9 @@ namespace Azure.Messaging.ServiceBus {
         /// <summary>
         ///   Looks up a localized string similar to The length of the filter statement is {0}, which exceeds the maximum length of {1}.
         /// </summary>
-        internal static string SqlFilterStatmentTooLong {
+        internal static string SqlRuleFilterStatmentTooLong {
             get {
-                return ResourceManager.GetString("SqlFilterStatmentTooLong", resourceCulture);
+                return ResourceManager.GetString("SqlRuleFilterStatmentTooLong", resourceCulture);
             }
         }
         

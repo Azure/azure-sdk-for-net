@@ -7,7 +7,7 @@ using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    internal static class SqlFilterExtensions
+    internal static class SqlRuleFilterExtensions
     {
         internal static RuleFilter ParseFromXElement(XElement xElement)
         {
@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 return null;
             }
 
-            var filter = new SqlFilter(expression);
+            var filter = new SqlRuleFilter(expression);
 
             var parameters = xElement.Element(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
             if (parameters != null && parameters.HasElements)
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             return filter;
         }
 
-        public static XElement Serialize(this SqlFilter filter, string filterName)
+        public static XElement Serialize(this SqlRuleFilter filter, string filterName)
         {
             XElement parameterElement = null;
             if (filter.parameters != null)

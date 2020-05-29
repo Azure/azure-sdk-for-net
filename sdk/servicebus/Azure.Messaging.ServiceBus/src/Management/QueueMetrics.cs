@@ -10,15 +10,15 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class QueueMetrics
     {
-        internal QueueMetrics(string queueName)
+        internal QueueMetrics(string name)
         {
-            QueueName = queueName;
+            Name = name;
         }
 
         /// <summary>
         /// The name of the queue.
         /// </summary>
-        public string QueueName { get; internal set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// The total number of messages in the queue.

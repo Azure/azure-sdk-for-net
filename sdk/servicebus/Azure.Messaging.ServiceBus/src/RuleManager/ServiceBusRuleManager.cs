@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleProperties.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
