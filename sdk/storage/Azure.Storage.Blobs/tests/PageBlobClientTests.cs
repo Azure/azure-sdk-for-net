@@ -2240,6 +2240,50 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
+        [Test]
+        public async Task GetPageBlobClient_AsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            //Act
+            PageBlobClient blob = test.Container.GetPageBlobClient(blobName);
+            await blob.CreateAsync(Constants.KB);
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
+        }
+
+        [Test]
+        public async Task GetPageBlobClient_NonAsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewNonAsciiBlobName();
+
+            //Act
+            PageBlobClient blob = test.Container.GetPageBlobClient(blobName);
+            await blob.CreateAsync(Constants.KB);
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
+        }
+
         private PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
