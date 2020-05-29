@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -24,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public ReadOnlyMemory<byte> Body => SentMessage.Body;
+        public BinaryData Body => SentMessage.Body;
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.

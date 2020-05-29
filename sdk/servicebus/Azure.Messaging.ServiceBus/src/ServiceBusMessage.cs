@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
@@ -32,12 +33,33 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new message from the specified string, using UTF-8 encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        public ServiceBusMessage(string body) :
+            this(body, Encoding.UTF8)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified string, using the specified encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        /// <param name="encoding"></param>
+        public ServiceBusMessage(string body, Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            Body = BinaryData.Create(body, encoding);
+            Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="body">The payload of the message in bytes</param>
+        /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
-            Body = body;
+            Body = new BinaryData(body);
             Properties = new Dictionary<string, object>();
         }
 
@@ -74,7 +96,7 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public ReadOnlyMemory<byte> Body { get; set; }
+        public BinaryData Body { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -260,7 +282,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the total size of the message body in bytes.
         /// </summary>
-        public long Size => !Body.IsEmpty ? Body.Length : 0;
+        public long Size => !Body.AsBytes().IsEmpty ? Body.AsBytes().Length : 0;
 
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.

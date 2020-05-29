@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
@@ -86,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveAsync();
                 await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.AsBytes().ToArray());
             }
         }
 
@@ -98,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
-                msg.Body = GetRandomBuffer(100);
+                msg.Body = new BinaryData(GetRandomBuffer(100));
                 msg.ContentType = "contenttype";
                 msg.CorrelationId = "correlationid";
                 msg.Label = "label";
@@ -126,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
+                    Assert.IsTrue(received.Body.AsBytes().ToArray().SequenceEqual(sentMessage.Body.AsBytes().ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Label, sentMessage.Label);
