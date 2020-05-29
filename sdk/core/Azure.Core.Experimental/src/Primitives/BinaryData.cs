@@ -168,6 +168,12 @@ namespace Azure.Core
             Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
+            if (MemoryMarshal.TryGetArray(
+                Data,
+                out ArraySegment<byte> data))
+            {
+                return encoding.GetString(data.Array);
+            }
             return encoding.GetString(Data.ToArray());
         }
 
@@ -186,9 +192,9 @@ namespace Azure.Core
         {
             if (MemoryMarshal.TryGetArray(
                 Data,
-                out ArraySegment<byte> bytes))
+                out ArraySegment<byte> data))
             {
-                return new MemoryStream(bytes.Array);
+                return new MemoryStream(data.Array);
             }
             return new MemoryStream(Data.ToArray());
         }
