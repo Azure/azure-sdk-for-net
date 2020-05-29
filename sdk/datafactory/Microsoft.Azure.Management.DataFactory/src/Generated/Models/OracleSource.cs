@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Oracle source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OracleSource")]
     public partial class OracleSource : CopySource
     {
         /// <summary>

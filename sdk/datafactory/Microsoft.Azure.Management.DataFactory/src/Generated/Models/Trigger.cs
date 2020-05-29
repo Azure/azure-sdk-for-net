@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Azure data factory nested object which contains information about
     /// creating pipeline run
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Trigger")]
     public partial class Trigger
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Greenplum Database source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("GreenplumSource")]
     public partial class GreenplumSource : TabularSource
     {
         /// <summary>

@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A pipeline activity.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Activity")]
     public partial class Activity
     {
         /// <summary>

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// The Azure Data Factory nested object which identifies data within
     /// different data stores, such as tables, files, folders, and documents.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Dataset")]
     public partial class Dataset
     {
         /// <summary>

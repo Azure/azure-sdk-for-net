@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Avro source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AvroSource")]
     public partial class AvroSource : CopySource
     {
         /// <summary>

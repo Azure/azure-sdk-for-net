@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The custom dataset.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CustomDataset")]
     public partial class CustomDataset : Dataset
     {
         /// <summary>

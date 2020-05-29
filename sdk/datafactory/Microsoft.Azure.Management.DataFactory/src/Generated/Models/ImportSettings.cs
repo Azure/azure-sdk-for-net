@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Import command settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ImportSettings")]
     public partial class ImportSettings
     {
         /// <summary>

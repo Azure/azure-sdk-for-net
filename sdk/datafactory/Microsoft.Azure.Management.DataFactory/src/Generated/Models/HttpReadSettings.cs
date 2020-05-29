@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Sftp read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HttpReadSettings")]
     public partial class HttpReadSettings : StoreReadSettings
     {
         /// <summary>
