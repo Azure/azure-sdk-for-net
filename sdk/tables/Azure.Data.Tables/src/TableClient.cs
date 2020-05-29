@@ -408,13 +408,13 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -450,13 +450,13 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-        public virtual Pageable<IDictionary<string, object>> Query(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -493,13 +493,30 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
 #pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+            QueryAsync(Bind(filter), top, select, cancellationToken);
+
+        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) =>
+            Query(Bind(filter), top, select, cancellationToken);
+
+        /// <summary>
+        /// Queries entities in the table.
+        /// </summary>
+        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
+        /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+
+        [ForwardsClientCalls]
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
 #pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
             QueryAsync<T>(Bind(filter), top, select, cancellationToken);
 
@@ -545,12 +562,12 @@ namespace Azure.Data.Tables
         /// Queries entities in the table.
         /// </summary>
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
+        /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         [ForwardsClientCalls]
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, string select = null, int? top = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
             Query<T>(Bind(filter), top, select, cancellationToken);
 
         /// <summary>
@@ -688,7 +705,9 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal string Bind(Expression expression)
+        public string CreateFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
+
+        private string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
