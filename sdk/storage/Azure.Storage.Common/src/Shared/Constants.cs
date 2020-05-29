@@ -54,7 +54,7 @@ namespace Azure.Storage
         /// The size of the buffer to use when copying streams during a
         /// download operation.
         /// </summary>
-        public const int DefaultDownloadCopyBufferSize = 16384;
+        public const int DefaultDownloadCopyBufferSize = Constants.MB;
 
         public const string CloseAllHandles = "*";
         public const string Wildcard = "*";

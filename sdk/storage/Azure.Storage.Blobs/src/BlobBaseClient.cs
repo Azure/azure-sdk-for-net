@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -1215,6 +1216,117 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Parallel Download
+
+        #region OpenRead
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the stream.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long position = 0,
+            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            BlobRequestConditions conditions = default)
+            => OpenReadInteral(
+                position,
+                bufferSize,
+                conditions);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the stream.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Stream OpenReadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long position = 0,
+            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            BlobRequestConditions conditions = default)
+            => OpenReadInteral(
+                position,
+                bufferSize,
+                conditions);
+
+        /// <summary>
+        /// Opens a stream for reading from the blob.  The stream will only download
+        /// the blob as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the blob to begin the stream.
+        /// Defaults to the beginning of the stream.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the blob.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the blob as the stream
+        /// is read from.
+        /// </returns>
+        internal Stream OpenReadInteral(
+            long position = 0,
+            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            BlobRequestConditions conditions = default)
+            => new LazyLoadingReadOnlyStream<BlobDownloadInfo>(
+                (HttpRange range,
+                object conditions,
+                bool rangeGetContentHash,
+                CancellationToken cancellationToken)
+                    => DownloadAsync(
+                        range,
+                        (BlobRequestConditions)conditions,
+                        rangeGetContentHash,
+                        cancellationToken),
+                (HttpRange range,
+                object conditions,
+                bool rangeGetContentHash,
+                CancellationToken cancellationToken)
+                    => Download(
+                        range,
+                        (BlobRequestConditions)conditions,
+                        rangeGetContentHash,
+                        cancellationToken),
+                position,
+                bufferSize,
+                conditions);
+        #endregion OpenRead
 
         #region StartCopyFromUri
         /// <summary>
