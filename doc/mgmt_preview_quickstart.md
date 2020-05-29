@@ -85,8 +85,8 @@ To authenticate to Azure and create a management client, simply do the
 following:
 ```csharp
     using Azure.Identity;
-    using Azure.Management.Resource;
-    using Azure.Management.Resource.Models;
+    using Azure.Management.Resources;
+    using Azure.Management.Resources.Models;
     using System;
     ...
     var subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
