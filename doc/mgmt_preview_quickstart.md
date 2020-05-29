@@ -1,3 +1,4 @@
+
 Quickstart Tutorial - Resource Management (Preview Libraries)
 =============================================================
 
@@ -82,18 +83,20 @@ any other service that you are using.
 
 To authenticate to Azure and create a management client, simply do the
 following:
-
+```
     using Azure.Identity;
     using Azure.Management.Resource;
     using Azure.Management.Resource.Models;
     using System;
     ...
     var subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
-    var resourceClient = new ResourceClient(subscriptionId, new DefaultAzureCredential(true));
+    var resourceClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
+    var resourceGroupsClient = resourceClient.GetResourceGroupsClient();
+```
+From this code snippet, we showed that in order to interact with Resources, we need to create a top-level client first (**ResourcesManagementClient**), then get the corresponding sub-resource client we are interested in, in this case we called **.GetResourceGroupsClient()** to get a ResourceGroupsClient
 
-More information and different authentication approaches using Azure
-Identity can be found in [this
-document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+For more information and different authentication approaches using Azure
+Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
 Interacting with Azure Resources
 ------------------
@@ -106,152 +109,203 @@ We can use the Resource client (azure.mgmt.resource.ResourceManagementClient) we
 
 ***Create a resource group***
 
-    location = "myLocation";
-    groupName = "myResourceGroupName";
-    var result = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
+```
+    var location = "uswest2";
+    var resourceGroupName = "myResourceGroupName";
+    var resourceGroup = new ResourceGroup(location);
+    resourceGroup = await resourceGroupClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
+```
 
 ***Update a resource group***
 
+``` 
     ...
+    var resourceGroupName = "myResourceGroupName";
     var tags = new Dictionary<string,string>();
     tags.Add("environment","test");
     tags.Add("department","tech");
     resourceGroup.Tags = tags;
 
-    var updated = await resourceClient.ResourceGroups.CreateOrUpdateAsync(groupName, resourceGroup);
+    resourceGroup = await resourceGroupClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
+```
+
 
 ***List all resource groups***
-    
-    AsyncPageable<ResourceGroup> response = resourceClient.ResourceGroups.ListAsync();
+
+```    
+    AsyncPageable<ResourceGroup> response = resourceGroupClient.ResourceGroups.ListAsync();
     await foreach (ResourceGroup resourceGroup in response)
     {
         Console.WriteLine(resourceGroup.Name);
     }
+```
 
 ***Delete a resource group***
 
+```
     await resourceClient.ResourceGroups.DeleteAsync(groupName);
-    
+```
+
 Example: Creating a Virtual Machine
 -----------------------------------
 Let's show a concrete example of how you would create a virtual machine using .NET SDK
+```
 
 
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Azure.Identity;
-    using Azure.Management.Compute;
-    using Azure.Management.Compute.Models;
-    using Azure.Management.Network;
-    using Azure.Management.Resource;
-    using Azure.Management.Resource.Models;
-    using IPVersion = Azure.Management.Network.IPVersion;
-    using NetworkProfile = Azure.Management.Compute.Models.NetworkProfile;
-    using Sku = Azure.Management.Compute.Models.Sku;
-    using SubResource = Azure.Management.Compute.Models.SubResource;
-    
-    ...
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-    // Initialize Client
-    var resourceClient = new ResourceClient(subscriptionId, new DefaultAzureCredential(true));
-    var networkClient = new NetworkClient(subscriptionId, new DefaultAzureCredential(true));
-    var computeClient = new ComputeClient(subscriptionId, new DefaultAzureCredential(true));
+using Azure.Identity;
+using Azure.Management.Compute;
+using Azure.Management.Compute.Models;
+using Azure.Management.Network;
+using Azure.Management.Network.Models;
+using Azure.Management.Resources;
+using Azure.Management.Resources.Models;
 
-    // Create Resource Group
-    await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new ResourceGroup(location));
-
-    // Create AvailabilitySet
-    var availabilitySet = new AvailabilitySet(location)
+namespace AzureCreateVMSample
+{
+    /// <summary>
+    /// Create a Virtual Machine
+    /// </summary>
+    public class CreateVMSample
     {
-        PlatformUpdateDomainCount = 5,
-        PlatformFaultDomainCount = 2,
-        Sku = new Sku() { Name = "Aligned" }  // TODO. Verify new codegen on AvailabilitySetSkuTypes.Aligned
-    };
-
-    availabilitySet = await computeClient.AvailabilitySets
-        .CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
-
-    // Create IP Address
-    var ipAddress = new PublicIPAddress()
-    {
-        PublicIPAddressVersion = IPVersion.IPv4,
-        PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
-        Location = location,
-    };
-
-    ipAddress = await networkClient
-        .PublicIPAddresses.StartCreateOrUpdate(resourceGroup, vmName + "_ip", ipAddress)
-        .WaitForCompletionAsync();
-
-    // Create VNet
-    var vnet = new VirtualNetwork()
-    {
-        Location = location,
-        AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
-        Subnets = new List<Subnet>()
+        public static async Task CreateVmAsync(
+            string subscriptionId,
+            string resourceGroupName,
+            string location,
+            string vmName)
         {
-            new Subnet()
-            {
-                Name = "mySubnet",
-                AddressPrefix = "10.0.0.0/24",
-            }
-        },
-    };
+            var computeClient = new ComputeManagementClient(subscriptionId, new DefaultAzureCredential());
+            var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
+            var resourcesClient = new ResourcesManagementClient(subscriptionId, new DefaultAzureCredential());
+ 
+            var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
+            var networkInterfaceClient = networkClient.GetNetworkInterfacesClient();
+            var publicIpAddressClient = networkClient.GetPublicIPAddresssesClient();
+            var availabilitySetsClient = computeClient.GetAvailabilitySetsClient();
+            var virtualMachinesClient = computeClient.GetVirtualMachinesClient();
+            var resourceGroupClient = resourcesClient..GetResourceGroupsClient();
 
-    vnet = await networkClient.VirtualNetworks
-        .StartCreateOrUpdate(resourceGroup, vmName + "_vent", vnet)
-        .WaitForCompletionAsync();
+            // Create Resource Group
+            var resourceGroup = new ResourceGroup(location);
+            resourceGroup = await resourceGroupClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
 
-    // Create Network interface
-    var nic = new NetworkInterface()
-    {
-        Location = location,
-        IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-        {
-            new NetworkInterfaceIPConfiguration()
+            // Create AvailabilitySet
+            var availabilitySet = new AvailabilitySet(location)
             {
-                Name = "Primary",
-                Primary = true,
-                Subnet = new Subnet() { Id = vnet.Subnets.First().Id },
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                PublicIPAddress = new PublicIPAddress() { Id = ipAddress.Id }
-            }
+                PlatformUpdateDomainCount = 5,
+                PlatformFaultDomainCount = 2,
+                Sku = new Sku() { Name = "Aligned" }  // TODO. Verify new codegen on AvailabilitySetSkuTypes.Aligned
+            };
+
+            availabilitySet = await availabilitySetsClient.CreateOrUpdateAsync(resourceGroupName, vmName + "_aSet", availabilitySet);
+
+            // Create IP Address
+            var ipAddress = new PublicIPAddress()
+            {
+                PublicIPAddressVersion = IPVersion.IPv4,
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                Location = location,
+            };
+
+            ipAddress = await publicIpAddressClient.StartCreateOrUpdate(resourceGroupName, vmName + "_ip", ipAddress)
+                .WaitForCompletionAsync();
+
+            // Create VNet
+            var vnet = new VirtualNetwork()
+            {
+                Location = location,
+                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
+                Subnets = new List<Subnet>()
+                {
+                    new Subnet()
+                    {
+                        Name = "mySubnet",
+                        AddressPrefix = "10.0.0.0/24",
+                    }
+                },
+            };
+
+            vnet = await virtualNetworksClient
+                .StartCreateOrUpdate(resourceGroupName, vmName + "_vent", vnet)
+                .WaitForCompletionAsync();
+
+            // Create Network interface
+            var nic = new NetworkInterface()
+            {
+                Location = location,
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                {
+                    new NetworkInterfaceIPConfiguration()
+                    {
+                        Name = "Primary",
+                        Primary = true,
+                        Subnet = new Subnet() { Id = vnet.Subnets.First().Id },
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PublicIPAddress = new PublicIPAddress() { Id = ipAddress.Id }
+                    }
+                }
+            };
+
+            nic = await networkInterfaceClient
+                .StartCreateOrUpdate(resourceGroupName, vmName + "_nic", nic)
+                .WaitForCompletionAsync();
+
+            var vm = new VirtualMachine(location)
+            {
+                NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = new[] { new NetworkInterfaceReference() { Id = nic.Id } } },
+                OsProfile = new OSProfile
+                {
+                    ComputerName = "testVM",
+                    AdminUsername = "username",
+                    AdminPassword = "(YourPassword)",
+                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
+                },
+                StorageProfile = new StorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Offer = "UbuntuServer",
+                        Publisher = "Canonical",
+                        Sku = "18.04-LTS",
+                        Version = "latest"
+                    },
+                    DataDisks = new List<DataDisk>()
+                },
+                HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
+            };
+            vm.AvailabilitySet.Id = availabilitySet.Id;
+
+            var operaiontion = await virtualMachinesClient.StartCreateOrUpdateAsync(resourceGroupName, vmName, vm);
+            var vm = (await operaiontion.WaitForCompletionAsync()).Value;
         }
-    };
+    }
+}
 
-    nic = await networkClient.NetworkInterfaces
-        .StartCreateOrUpdate(resourceGroup, vmName + "_nic", nic)
-        .WaitForCompletionAsync();
+```
 
-    var vm = new VirtualMachine(location)
+Driver program
+
+```
+using System;
+using System.Threading.Tasks;
+
+namespace AzureCreateVMSample
+{
+    class Program
     {
-        NetworkProfile = new NetworkProfile { NetworkInterfaces = new [] { new NetworkInterfaceReference() { Id = nic.Id } } },
-        OsProfile = new OSProfile
+        static async Task Main(string[] args)
         {
-            ComputerName = "testVM",
-            AdminUsername = "azureUser",
-            AdminPassword = "azure12345QWE!",
-            LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVMAgent = true }
-        },
-        StorageProfile = new StorageProfile()
-        {
-            ImageReference = new ImageReference()
-            {
-                Offer = "UbuntuServer",
-                Publisher = "Canonical",
-                Sku = "18.04-LTS",
-                Version = "latest"
-            },
-            DataDisks = new List<DataDisk>()
-        },
-        HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
-    };
-    vm.AvailabilitySet.Id = availabilitySet.Id;
+            var subscriptionId = "AZURE_SUBSCRIPTION_ID";
+            var location = "westus2";
 
-    await computeClient.VirtualMachines
-        .StartCreateOrUpdate(resourceGroup, vmName, vm)
-        .WaitForCompletionAsync();
+            await CreateVMSample.CreateVmAsync(subscriptionId, "myResourceGroupName", location, "myVirtualMachine");
+        }
+    }
+}
+```
         
 Need help?
 ----------
