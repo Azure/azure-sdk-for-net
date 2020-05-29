@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static AvailableClustersList ListAvailableClusters(this IClustersOperations operations)
+            public static AvailableClustersList ListAvailableClusterRegion(this IClustersOperations operations)
             {
-                return operations.ListAvailableClustersAsync().GetAwaiter().GetResult();
+                return operations.ListAvailableClusterRegionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailableClustersList> ListAvailableClustersAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableClustersList> ListAvailableClusterRegionAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAvailableClustersWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAvailableClusterRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -137,9 +137,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
-            public static Cluster Put(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='parameters'>
+            /// Parameters for creating a eventhub cluster resource.
+            /// </param>
+            public static Cluster Put(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.PutAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.PutAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,12 +157,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
+            /// <param name='parameters'>
+            /// Parameters for creating a eventhub cluster resource.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> PutAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> PutAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -302,9 +308,12 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
-            public static Cluster BeginPut(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='parameters'>
+            /// Parameters for creating a eventhub cluster resource.
+            /// </param>
+            public static Cluster BeginPut(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.BeginPutAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.BeginPutAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -319,12 +328,15 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='clusterName'>
             /// The name of the Event Hubs Cluster.
             /// </param>
+            /// <param name='parameters'>
+            /// Parameters for creating a eventhub cluster resource.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginPutAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginPutAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPutWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginPutWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
