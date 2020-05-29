@@ -25,11 +25,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             return TestUtilities.GenerateName();
         }
 
-        public static string GenerateName(string prefix)
-        {
-            return TestUtilities.GenerateName(prefix: prefix);
-        }
-
         public static void WaitForIndexing()
         {
             TestUtilities.Wait(TimeSpan.FromSeconds(2));
