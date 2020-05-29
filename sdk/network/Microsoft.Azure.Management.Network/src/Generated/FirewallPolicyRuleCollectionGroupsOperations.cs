@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FirewallPolicyRuleGroupsOperations operations.
+    /// FirewallPolicyRuleCollectionGroupsOperations operations.
     /// </summary>
-    internal partial class FirewallPolicyRuleGroupsOperations : IServiceOperations<NetworkManagementClient>, IFirewallPolicyRuleGroupsOperations
+    internal partial class FirewallPolicyRuleCollectionGroupsOperations : IServiceOperations<NetworkManagementClient>, IFirewallPolicyRuleCollectionGroupsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyRuleGroupsOperations class.
+        /// Initializes a new instance of the FirewallPolicyRuleCollectionGroupsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal FirewallPolicyRuleGroupsOperations(NetworkManagementClient client)
+        internal FirewallPolicyRuleCollectionGroupsOperations(NetworkManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes the specified FirewallPolicyRuleGroup.
+        /// Deletes the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -68,15 +68,15 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, ruleGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, ruleCollectionGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the specified FirewallPolicyRuleGroup.
+        /// Gets the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FirewallPolicyRuleGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -118,15 +118,15 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "firewallPolicyName");
             }
-            if (ruleGroupName == null)
+            if (ruleCollectionGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ruleGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleCollectionGroupName");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -136,17 +136,17 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("firewallPolicyName", firewallPolicyName);
-                tracingParameters.Add("ruleGroupName", ruleGroupName);
+                tracingParameters.Add("ruleCollectionGroupName", ruleCollectionGroupName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleGroups/{ruleGroupName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{firewallPolicyName}", System.Uri.EscapeDataString(firewallPolicyName));
-            _url = _url.Replace("{ruleGroupName}", System.Uri.EscapeDataString(ruleGroupName));
+            _url = _url.Replace("{ruleCollectionGroupName}", System.Uri.EscapeDataString(ruleCollectionGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FirewallPolicyRuleGroup>();
+            var _result = new AzureOperationResponse<FirewallPolicyRuleCollectionGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleCollectionGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified FirewallPolicyRuleGroup.
+        /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -287,12 +287,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update FirewallPolicyRuleGroup
-        /// operation.
+        /// Parameters supplied to the create or update
+        /// FirewallPolicyRuleCollectionGroup operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -300,15 +300,15 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FirewallPolicyRuleGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<FirewallPolicyRuleGroup> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, ruleGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<FirewallPolicyRuleCollectionGroup> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, ruleCollectionGroupName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
+        /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>> ListWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>> ListWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleGroups").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{firewallPolicyName}", System.Uri.EscapeDataString(firewallPolicyName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>();
+            var _result = new AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallPolicyRuleGroup>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallPolicyRuleCollectionGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes the specified FirewallPolicyRuleGroup.
+        /// Deletes the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -510,8 +510,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -541,15 +541,15 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "firewallPolicyName");
             }
-            if (ruleGroupName == null)
+            if (ruleCollectionGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ruleGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleCollectionGroupName");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -559,17 +559,17 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("firewallPolicyName", firewallPolicyName);
-                tracingParameters.Add("ruleGroupName", ruleGroupName);
+                tracingParameters.Add("ruleCollectionGroupName", ruleCollectionGroupName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleGroups/{ruleGroupName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{firewallPolicyName}", System.Uri.EscapeDataString(firewallPolicyName));
-            _url = _url.Replace("{ruleGroupName}", System.Uri.EscapeDataString(ruleGroupName));
+            _url = _url.Replace("{ruleCollectionGroupName}", System.Uri.EscapeDataString(ruleCollectionGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified FirewallPolicyRuleGroup.
+        /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -692,12 +692,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update FirewallPolicyRuleGroup
-        /// operation.
+        /// Parameters supplied to the create or update
+        /// FirewallPolicyRuleCollectionGroup operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FirewallPolicyRuleGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -730,9 +730,9 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "firewallPolicyName");
             }
-            if (ruleGroupName == null)
+            if (ruleCollectionGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ruleGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleCollectionGroupName");
             }
             if (parameters == null)
             {
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            string apiVersion = "2020-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("firewallPolicyName", firewallPolicyName);
-                tracingParameters.Add("ruleGroupName", ruleGroupName);
+                tracingParameters.Add("ruleCollectionGroupName", ruleCollectionGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -764,10 +764,10 @@ namespace Microsoft.Azure.Management.Network
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleGroups/{ruleGroupName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{firewallPolicyName}", System.Uri.EscapeDataString(firewallPolicyName));
-            _url = _url.Replace("{ruleGroupName}", System.Uri.EscapeDataString(ruleGroupName));
+            _url = _url.Replace("{ruleCollectionGroupName}", System.Uri.EscapeDataString(ruleCollectionGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FirewallPolicyRuleGroup>();
+            var _result = new AzureOperationResponse<FirewallPolicyRuleCollectionGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -886,7 +886,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleCollectionGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -904,7 +904,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallPolicyRuleCollectionGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -924,7 +924,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
+        /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -950,7 +950,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1064,7 +1064,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>();
+            var _result = new AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1077,7 +1077,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallPolicyRuleGroup>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallPolicyRuleCollectionGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

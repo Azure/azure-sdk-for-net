@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the FirewallPolicyNatRuleAction.
+    /// Properties of the FirewallPolicyNatRuleCollectionAction.
     /// </summary>
-    public partial class FirewallPolicyNatRuleAction
+    public partial class FirewallPolicyNatRuleCollectionAction
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyNatRuleAction
-        /// class.
+        /// Initializes a new instance of the
+        /// FirewallPolicyNatRuleCollectionAction class.
         /// </summary>
-        public FirewallPolicyNatRuleAction()
+        public FirewallPolicyNatRuleCollectionAction()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyNatRuleAction
-        /// class.
+        /// Initializes a new instance of the
+        /// FirewallPolicyNatRuleCollectionAction class.
         /// </summary>
         /// <param name="type">The type of action. Possible values include:
         /// 'DNAT'</param>
-        public FirewallPolicyNatRuleAction(string type = default(string))
+        public FirewallPolicyNatRuleCollectionAction(string type = default(string))
         {
             Type = type;
             CustomInit();

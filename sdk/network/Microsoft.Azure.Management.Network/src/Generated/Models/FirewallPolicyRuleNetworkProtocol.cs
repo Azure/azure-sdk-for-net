@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyNatRuleActionType.
+    /// Defines values for FirewallPolicyRuleNetworkProtocol.
     /// </summary>
-    public static class FirewallPolicyNatRuleActionType
+    public static class FirewallPolicyRuleNetworkProtocol
     {
-        public const string DNAT = "DNAT";
+        public const string TCP = "TCP";
+        public const string UDP = "UDP";
+        public const string Any = "Any";
+        public const string ICMP = "ICMP";
     }
 }

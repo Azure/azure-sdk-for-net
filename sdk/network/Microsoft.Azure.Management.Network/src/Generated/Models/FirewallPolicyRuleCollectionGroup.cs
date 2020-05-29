@@ -18,40 +18,43 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Rule Group resource.
+    /// Rule Collection Group resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class FirewallPolicyRuleGroup : SubResource
+    public partial class FirewallPolicyRuleCollectionGroup : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyRuleGroup class.
+        /// Initializes a new instance of the FirewallPolicyRuleCollectionGroup
+        /// class.
         /// </summary>
-        public FirewallPolicyRuleGroup()
+        public FirewallPolicyRuleCollectionGroup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyRuleGroup class.
+        /// Initializes a new instance of the FirewallPolicyRuleCollectionGroup
+        /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="priority">Priority of the Firewall Policy Rule Group
-        /// resource.</param>
-        /// <param name="rules">Group of Firewall Policy rules.</param>
+        /// <param name="priority">Priority of the Firewall Policy Rule
+        /// Collection Group resource.</param>
+        /// <param name="ruleCollections">Group of Firewall Policy rule
+        /// collections.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// firewall policy rule group resource. Possible values include:
-        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// firewall policy rule collection group resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Rule Group type.</param>
-        public FirewallPolicyRuleGroup(string id = default(string), int? priority = default(int?), IList<FirewallPolicyRule> rules = default(IList<FirewallPolicyRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public FirewallPolicyRuleCollectionGroup(string id = default(string), int? priority = default(int?), IList<FirewallPolicyRuleCollection> ruleCollections = default(IList<FirewallPolicyRuleCollection>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Priority = priority;
-            Rules = rules;
+            RuleCollections = ruleCollections;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -65,20 +68,21 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets priority of the Firewall Policy Rule Group resource.
+        /// Gets or sets priority of the Firewall Policy Rule Collection Group
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets group of Firewall Policy rules.
+        /// Gets or sets group of Firewall Policy rule collections.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rules")]
-        public IList<FirewallPolicyRule> Rules { get; set; }
+        [JsonProperty(PropertyName = "properties.ruleCollections")]
+        public IList<FirewallPolicyRuleCollection> RuleCollections { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the firewall policy rule group
-        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// Gets the provisioning state of the firewall policy rule collection
+        /// group resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
@@ -120,9 +124,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 100);
             }
-            if (Rules != null)
+            if (RuleCollections != null)
             {
-                foreach (var element in Rules)
+                foreach (var element in RuleCollections)
                 {
                     if (element != null)
                     {

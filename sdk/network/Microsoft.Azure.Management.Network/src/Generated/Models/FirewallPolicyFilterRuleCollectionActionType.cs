@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyRuleConditionApplicationProtocolType.
+    /// Defines values for FirewallPolicyFilterRuleCollectionActionType.
     /// </summary>
-    public static class FirewallPolicyRuleConditionApplicationProtocolType
+    public static class FirewallPolicyFilterRuleCollectionActionType
     {
-        public const string Http = "Http";
-        public const string Https = "Https";
+        public const string Allow = "Allow";
+        public const string Deny = "Deny";
     }
 }

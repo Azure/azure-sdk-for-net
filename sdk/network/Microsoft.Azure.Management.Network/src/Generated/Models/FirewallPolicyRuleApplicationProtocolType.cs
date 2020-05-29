@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyRuleConditionNetworkProtocol.
+    /// Defines values for FirewallPolicyRuleApplicationProtocolType.
     /// </summary>
-    public static class FirewallPolicyRuleConditionNetworkProtocol
+    public static class FirewallPolicyRuleApplicationProtocolType
     {
-        public const string TCP = "TCP";
-        public const string UDP = "UDP";
-        public const string Any = "Any";
-        public const string ICMP = "ICMP";
+        public const string Http = "Http";
+        public const string Https = "Https";
     }
 }

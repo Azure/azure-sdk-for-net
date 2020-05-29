@@ -16,32 +16,35 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Firewall Policy Filter Rule.
+    /// Firewall Policy NAT Rule Collection.
     /// </summary>
-    public partial class FirewallPolicyFilterRule : FirewallPolicyRule
+    public partial class FirewallPolicyNatRuleCollection : FirewallPolicyRuleCollection
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyFilterRule class.
+        /// Initializes a new instance of the FirewallPolicyNatRuleCollection
+        /// class.
         /// </summary>
-        public FirewallPolicyFilterRule()
+        public FirewallPolicyNatRuleCollection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyFilterRule class.
+        /// Initializes a new instance of the FirewallPolicyNatRuleCollection
+        /// class.
         /// </summary>
-        /// <param name="name">The name of the rule.</param>
+        /// <param name="name">The name of the rule collection.</param>
         /// <param name="priority">Priority of the Firewall Policy Rule
-        /// resource.</param>
-        /// <param name="action">The action type of a Filter rule.</param>
-        /// <param name="ruleConditions">Collection of rule conditions used by
-        /// a rule.</param>
-        public FirewallPolicyFilterRule(string name = default(string), int? priority = default(int?), FirewallPolicyFilterRuleAction action = default(FirewallPolicyFilterRuleAction), IList<FirewallPolicyRuleCondition> ruleConditions = default(IList<FirewallPolicyRuleCondition>))
+        /// Collection resource.</param>
+        /// <param name="action">The action type of a Nat rule
+        /// collection.</param>
+        /// <param name="rules">List of rules included in a rule
+        /// collection.</param>
+        public FirewallPolicyNatRuleCollection(string name = default(string), int? priority = default(int?), FirewallPolicyNatRuleCollectionAction action = default(FirewallPolicyNatRuleCollectionAction), IList<FirewallPolicyRule> rules = default(IList<FirewallPolicyRule>))
             : base(name, priority)
         {
             Action = action;
-            RuleConditions = ruleConditions;
+            Rules = rules;
             CustomInit();
         }
 
@@ -51,16 +54,16 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the action type of a Filter rule.
+        /// Gets or sets the action type of a Nat rule collection.
         /// </summary>
         [JsonProperty(PropertyName = "action")]
-        public FirewallPolicyFilterRuleAction Action { get; set; }
+        public FirewallPolicyNatRuleCollectionAction Action { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of rule conditions used by a rule.
+        /// Gets or sets list of rules included in a rule collection.
         /// </summary>
-        [JsonProperty(PropertyName = "ruleConditions")]
-        public IList<FirewallPolicyRuleCondition> RuleConditions { get; set; }
+        [JsonProperty(PropertyName = "rules")]
+        public IList<FirewallPolicyRule> Rules { get; set; }
 
         /// <summary>
         /// Validate the object.
