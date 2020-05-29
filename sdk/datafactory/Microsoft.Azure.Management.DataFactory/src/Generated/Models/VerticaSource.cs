@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Vertica source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("VerticaSource")]
     public partial class VerticaSource : TabularSource
     {
         /// <summary>
