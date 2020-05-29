@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TriggerStatus.
+    /// Defines values for PipelineRunTargetType.
     /// </summary>
-    public static class TriggerStatus
+    public static class PipelineRunTargetType
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        public const string AzureStorageBlob = "AzureStorageBlob";
     }
 }
