@@ -105,17 +105,15 @@ namespace Azure.Search.Documents.Indexes
     public static partial class FieldBuilder
     {
         public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type) { throw null; }
-        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type, System.Text.Json.JsonNamingPolicy namingPolicy) { throw null; }
         public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>() { throw null; }
-        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>(System.Text.Json.JsonNamingPolicy namingPolicy) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class SearchableFieldAttribute : Azure.Search.Documents.Indexes.SimpleFieldAttribute
     {
         public SearchableFieldAttribute(bool collection = false) : base (default(Azure.Search.Documents.Indexes.Models.SearchFieldDataType), default(bool)) { }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? AnalyzerName { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? IndexAnalyzerName { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
+        public string AnalyzerName { get { throw null; } set { } }
+        public string IndexAnalyzerName { get { throw null; } set { } }
+        public string SearchAnalyzerName { get { throw null; } set { } }
         public string[] SynonymMapNames { get { throw null; } set { } }
     }
     public partial class SearchIndexClient
