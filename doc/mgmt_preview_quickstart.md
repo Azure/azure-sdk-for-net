@@ -105,7 +105,7 @@ Now that we are authenticated, we can use our management client to make API call
 
 Example: Managing Resource Groups
 ---------------------------------
-We can use the Resource client (Azure.Management.Resources.ResourcesManagementClient) we have created to perform operations on Resource Group. In this example, we will show to manage Resource Groups.
+We can use the Resource client (``Azure.Management.Resources.ResourcesManagementClient``) we have created to perform operations on Resource Group. In this example, we will show to manage Resource Groups.
 
 ***Create a resource group***
 
@@ -113,7 +113,7 @@ We can use the Resource client (Azure.Management.Resources.ResourcesManagementCl
     var location = "uswest2";
     var resourceGroupName = "myResourceGroupName";
     var resourceGroup = new ResourceGroup(location);
-    resourceGroup = await resourceGroupClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
+    resourceGroup = await resourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
 ```
 
 ***Update a resource group***
@@ -126,14 +126,14 @@ We can use the Resource client (Azure.Management.Resources.ResourcesManagementCl
     tags.Add("department","tech");
     resourceGroup.Tags = tags;
 
-    resourceGroup = await resourceGroupClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
+    resourceGroup = await resourceGroupsClient.CreateOrUpdateAsync(resourceGroupName, resourceGroup);
 ```
 
 
 ***List all resource groups***
 
 ```csharp
-    AsyncPageable<ResourceGroup> response = resourceGroupClient.ListAsync();
+    AsyncPageable<ResourceGroup> response = resourceGroupsClient.ListAsync();
     await foreach (ResourceGroup resourceGroup in response)
     {
         Console.WriteLine(resourceGroup.Name);
@@ -143,7 +143,7 @@ We can use the Resource client (Azure.Management.Resources.ResourcesManagementCl
 ***Delete a resource group***
 
 ```csharp
-    await resourceGroupClient.DeleteAsync(groupName);
+    await resourceGroupsClient.StartDeleteAsync(groupName);
 ```
 
 Example: Creating a Virtual Machine
