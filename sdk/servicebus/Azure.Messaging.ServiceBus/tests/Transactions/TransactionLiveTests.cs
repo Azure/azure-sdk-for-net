@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Filters;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
