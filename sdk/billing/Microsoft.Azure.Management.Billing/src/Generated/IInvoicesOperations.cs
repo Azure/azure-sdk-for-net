@@ -159,6 +159,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceName'>
         /// The ID that uniquely identifies an invoice.
         /// </param>
+        /// <param name='downloadToken'>
+        /// Download token with document source and document ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -174,7 +177,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> DownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> DownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the invoices for a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
@@ -262,6 +265,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceName'>
         /// The ID that uniquely identifies an invoice.
         /// </param>
+        /// <param name='downloadToken'>
+        /// Download token with document source and document ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -277,7 +283,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> BeginDownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> BeginDownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a URL to download an invoice.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />

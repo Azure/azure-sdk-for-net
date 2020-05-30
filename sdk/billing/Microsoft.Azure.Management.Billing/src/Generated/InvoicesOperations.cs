@@ -851,16 +851,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceName'>
         /// The ID that uniquely identifies an invoice.
         /// </param>
+        /// <param name='downloadToken'>
+        /// Download token with document source and document ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> DownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> DownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders> _response = await BeginDownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders> _response = await BeginDownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, downloadToken, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1280,6 +1283,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceName'>
         /// The ID that uniquely identifies an invoice.
         /// </param>
+        /// <param name='downloadToken'>
+        /// Download token with document source and document ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1301,7 +1307,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> BeginDownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DownloadUrl,InvoicesDownloadInvoiceHeaders>> BeginDownloadInvoiceWithHttpMessagesAsync(string billingAccountName, string invoiceName, string downloadToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1315,6 +1321,10 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "invoiceName");
             }
+            if (downloadToken == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "downloadToken");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1324,6 +1334,7 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("invoiceName", invoiceName);
+                tracingParameters.Add("downloadToken", downloadToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDownloadInvoice", tracingParameters);
             }
@@ -1336,6 +1347,10 @@ namespace Microsoft.Azure.Management.Billing
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (downloadToken != null)
+            {
+                _queryParameters.Add(string.Format("downloadToken={0}", System.Uri.EscapeDataString(downloadToken)));
             }
             if (_queryParameters.Count > 0)
             {

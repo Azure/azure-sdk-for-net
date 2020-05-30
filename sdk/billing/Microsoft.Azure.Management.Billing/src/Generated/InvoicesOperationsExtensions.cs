@@ -238,9 +238,12 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceName'>
             /// The ID that uniquely identifies an invoice.
             /// </param>
-            public static DownloadUrl DownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName)
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl DownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken)
             {
-                return operations.DownloadInvoiceAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+                return operations.DownloadInvoiceAsync(billingAccountName, invoiceName, downloadToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -258,12 +261,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceName'>
             /// The ID that uniquely identifies an invoice.
             /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> DownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> DownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -404,9 +410,12 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceName'>
             /// The ID that uniquely identifies an invoice.
             /// </param>
-            public static DownloadUrl BeginDownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName)
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
+            public static DownloadUrl BeginDownloadInvoice(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken)
             {
-                return operations.BeginDownloadInvoiceAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
+                return operations.BeginDownloadInvoiceAsync(billingAccountName, invoiceName, downloadToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -424,12 +433,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceName'>
             /// The ID that uniquely identifies an invoice.
             /// </param>
+            /// <param name='downloadToken'>
+            /// Download token with document source and document ID.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> BeginDownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> BeginDownloadInvoiceAsync(this IInvoicesOperations operations, string billingAccountName, string invoiceName, string downloadToken, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDownloadInvoiceWithHttpMessagesAsync(billingAccountName, invoiceName, downloadToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
