@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -38,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
             };
         }
@@ -65,14 +66,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message1.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
 
                 receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message2.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
             };
         }

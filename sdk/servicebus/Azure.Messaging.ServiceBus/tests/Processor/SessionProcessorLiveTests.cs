@@ -1312,7 +1312,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task SessionOpenDoesNotLoseLock()
+        public async Task SessionOpenEventDoesNotLoseLock()
         {
             var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
