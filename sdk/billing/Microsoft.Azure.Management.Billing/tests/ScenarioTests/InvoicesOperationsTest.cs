@@ -60,7 +60,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Download the invoice
-                var downloadUrl = billingMgmtClient.Invoices.DownloadInvoice(BillingAccountName, InvoiceNumber);
+                var downloadUrl = billingMgmtClient.Invoices.DownloadInvoice(BillingAccountName, InvoiceNumber, DownloadToken);
 
                 // Verify the response
                 Assert.NotNull(downloadUrl);
