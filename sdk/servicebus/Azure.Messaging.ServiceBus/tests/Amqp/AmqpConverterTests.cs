@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
-
     public class AmqpConverterTests : ServiceBusTestBase
     {
         [Test]

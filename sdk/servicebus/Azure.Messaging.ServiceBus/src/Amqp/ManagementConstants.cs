@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.Amqp.Encoding;
+
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    using Microsoft.Azure.Amqp.Encoding;
-
     internal static class ManagementConstants
     {
         public const string Microsoft = "com.microsoft";
