@@ -209,7 +209,7 @@ namespace Azure.Core.Tests
         [TestCase("\r\n\r\nmy recorded test\r\n message", "\n\nmy recorded test\n message", true)]
         [TestCase("\r\nmy recorded test\r\n message", "\r\nmy recorded test\n message", false)]
         [TestCase("my recorded test\\r\n message", "my recorded test\\n message", false)]
-        public void RecordMatcherIgnoresControlChars(string recorded, string request, bool match)
+        public void RecordMatcherNormalizesLineEndings(string recorded, string request, bool match)
         {
             var session = new RecordSession();
             var matcher = new RecordMatcher();
