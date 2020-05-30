@@ -37,7 +37,7 @@ namespace Azure.Core.TestFramework
         {
             text = null;
 
-            if (IsTextContentType(out Encoding encoding))
+            if (Body != null && IsTextContentType(out Encoding encoding))
             {
                 text = encoding.GetString(Body);
 
