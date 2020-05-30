@@ -217,10 +217,10 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the actions needed to instrument a set of events.
+        ///   Performs the actions needed to instrument a set of messages.
         /// </summary>
         ///
-        /// <param name="messages">The events to instrument.</param>
+        /// <param name="messages">The messages to instrument.</param>
         ///
         private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
         {

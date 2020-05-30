@@ -8,6 +8,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Core.Pipeline;
+using System.Text;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -114,6 +115,7 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 Logger.GetSessionStateException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 

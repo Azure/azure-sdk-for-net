@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         continue;
                     }
-                    await ProcessOneMessageWithinScope(
+                    await ProcessOneMessageWithinScopeAsync(
                         message,
                         DiagnosticProperty.ProcessMessageActivityName,
                         cancellationToken).ConfigureAwait(false);
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected async Task ProcessOneMessageWithinScope(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
+        protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
             scope.Start();

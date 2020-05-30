@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus
                         // be processed.
                         break;
                     }
-                    await ProcessOneMessageWithinScope(
+                    await ProcessOneMessageWithinScopeAsync(
                         message,
                         DiagnosticProperty.ProcessSessionMessageActivityName,
                         cancellationToken).ConfigureAwait(false);

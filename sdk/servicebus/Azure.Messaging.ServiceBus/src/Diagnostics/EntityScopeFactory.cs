@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         /// <summary>
-        ///   Extracts a diagnostic id from the given event.
+        ///   Extracts a diagnostic id from a message's properties.
         /// </summary>
         ///
         /// <param name="properties">The properties holding the diagnostic id.</param>
