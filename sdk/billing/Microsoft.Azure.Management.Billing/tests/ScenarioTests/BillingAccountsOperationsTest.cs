@@ -170,7 +170,7 @@ namespace Billing.Tests.ScenarioTests
             {
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var addressLine2 = Guid.NewGuid().ToString();
+                var addressLine2 = "New Address line";
                 var address = new AddressDetails
                 {
                     AddressLine1 = "1 Microsoft Way",

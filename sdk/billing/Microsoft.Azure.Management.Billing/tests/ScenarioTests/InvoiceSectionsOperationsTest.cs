@@ -81,8 +81,8 @@ namespace Billing.Tests.ScenarioTests
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory =
                 Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-            var invoiceSectionName = Guid.NewGuid().ToString();
-            var displayName = Guid.NewGuid().ToString();
+            var invoiceSectionName = "InvoiceSection-SDKTest-1";
+            var displayName = "InvoiceSection-SDKTest-DisplayName-1";
             var labels = new Dictionary<string, string>
             {
                 {"pcCode", "A123456"},
@@ -122,8 +122,8 @@ namespace Billing.Tests.ScenarioTests
             string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory =
                 Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-            var invoiceSectionName = Guid.NewGuid().ToString();
-            var displayName = Guid.NewGuid().ToString();
+            var invoiceSectionName = "InvoiceSection-SDKTest-2";
+            var displayName = "InvoiceSection-SDKTest-2";
             var labels = new Dictionary<string, string>
             {
                 {"pcCode", "A123456"},
