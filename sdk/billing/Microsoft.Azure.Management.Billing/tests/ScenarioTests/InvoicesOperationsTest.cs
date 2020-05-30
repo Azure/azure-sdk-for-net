@@ -17,7 +17,7 @@ namespace Billing.Tests.ScenarioTests
 {
     public class InvoicesOperationsTest : TestBase
     {
-        private static readonly DateTime DueDate = DateTime.Parse("11/15/2019");
+        private static readonly DateTime DueDate = DateTime.Parse("5/9/2020");
         private const string BillingAccountName = "c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31";
         private const string BillingProfileName = "FQWV-S4GU-BG7-TGB";
         private const string InvoiceNumber = "T000154489";
@@ -59,7 +59,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the invoices
-                var invoices = billingMgmtClient.Invoices.ListByBillingAccount(BillingAccountName, "2019-08-01", "2019-11-01");
+                var invoices = billingMgmtClient.Invoices.ListByBillingAccount(BillingAccountName, "2019-12-01", "2020-11-01");
 
                 // Verify the response
                 Assert.NotNull(invoices);
@@ -84,7 +84,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the invoices
-                var invoices = billingMgmtClient.Invoices.ListByBillingProfile(BillingAccountName, BillingProfileName, "2019-08-01", "2019-11-01");
+                var invoices = billingMgmtClient.Invoices.ListByBillingProfile(BillingAccountName, BillingProfileName, "2019-12-01", "2020-11-01");
 
                 // Verify the response
                 Assert.NotNull(invoices);
