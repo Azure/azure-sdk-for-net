@@ -28,7 +28,11 @@ namespace Microsoft.Azure.Search.Models
         [EnumMember(Value = "description")]
         Description,
         [EnumMember(Value = "faces")]
-        Faces
+        Faces,
+        [EnumMember(Value = "imageType")]
+        ImageType,
+        [EnumMember(Value = "color")]
+        Color
     }
     internal static class VisualFeatureEnumExtension
     {
@@ -49,6 +53,10 @@ namespace Microsoft.Azure.Search.Models
                     return "description";
                 case VisualFeature.Faces:
                     return "faces";
+                case VisualFeature.ImageType:
+                    return "imageType";
+                case VisualFeature.Color:
+                    return "color";
             }
             return null;
         }
@@ -65,6 +73,10 @@ namespace Microsoft.Azure.Search.Models
                     return VisualFeature.Description;
                 case "faces":
                     return VisualFeature.Faces;
+                case "imageType":
+                    return VisualFeature.ImageType;
+                case "color":
+                    return VisualFeature.Color;
             }
             return null;
         }
