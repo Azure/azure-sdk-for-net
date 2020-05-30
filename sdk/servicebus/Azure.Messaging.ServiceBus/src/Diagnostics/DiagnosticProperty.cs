@@ -21,9 +21,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The attribute which represents the session Id. Only populated for sessions.</summary>
         public const string SessionIdAttribute = "SessionId";
 
-        /// <summary>The attribute which represents the session state. Only populated for sessions when doing set/get state operations.</summary>
-        public const string SessionStateAttribute = "SessionState";
-
         /// <summary>The attribute which represents the sequence number.</summary>
         public const string SequenceNumbersAttribute = "SequenceNumber";
 

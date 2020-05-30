@@ -89,11 +89,5 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 scope.AddLink(diagnosticId);
             }
         }
-
-        public static void SetSessionState(this DiagnosticScope scope, IEnumerable<ServiceBusMessage> messages)
-        {
-            scope.AddLinkedDiagnostics(messages);
-            scope.SetMessageTags(messages);
-        }
     }
 }
