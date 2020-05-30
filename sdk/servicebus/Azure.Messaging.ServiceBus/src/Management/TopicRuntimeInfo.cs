@@ -6,34 +6,24 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the queue.
+    /// This provides runtime information of the topic.
     /// </summary>
-    public class QueueMetrics
+    public class TopicRuntimeInfo
     {
-        internal QueueMetrics(string name)
+        internal TopicRuntimeInfo(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// The name of the queue.
+        /// The name of the topic.
         /// </summary>
         public string Name { get; internal set; }
 
         /// <summary>
-        /// The total number of messages in the queue.
+        /// The <see cref="DateTime"/> when the entity was last accessed.
         /// </summary>
-        public long MessageCount { get; internal set; }
-
-        /// <summary>
-        /// Message count details of the sub-queues of the entity.
-        /// </summary>
-        public MessageCountDetails MessageCountDetails { get; internal set; }
-
-        /// <summary>
-        /// Current size of the entity in bytes.
-        /// </summary>
-        public long SizeInBytes { get; internal set; }
+        public DateTimeOffset AccessedAt { get; internal set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> when the entity was created.
@@ -46,8 +36,13 @@ namespace Azure.Messaging.ServiceBus.Management
         public DateTimeOffset UpdatedAt { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTimeOffset"/> when the entity was last accessed.
+        /// Current size of the entity in bytes.
         /// </summary>
-        public DateTimeOffset AccessedAt { get; internal set; }
+        public long SizeInBytes { get; internal set; }
+
+        /// <summary>
+        /// Number of subscriptions to the topic.
+        /// </summary>
+        public int SubscriptionCount { get; internal set; }
     }
 }

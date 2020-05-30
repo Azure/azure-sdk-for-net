@@ -8,18 +8,18 @@ using System.Xml;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class QueuePropertiesExtensions
+    internal static class QueueDescriptionExtensions
     {
-        public static XDocument Serialize(this QueueProperties description)
+        public static XDocument Serialize(this QueueDescription description)
         {
             var queueDescriptionElements = new List<object>()
             {
                 new XElement(XName.Get("LockDuration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.LockDuration)),
-                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMB)),
+                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMegabytes)),
                 new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.RequiresDuplicateDetection)),
                 new XElement(XName.Get("RequiresSession", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.RequiresSession)),
                 description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
+                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DeadLetteringOnMessageExpiration)),
                 description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
                     new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
                     : null,
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         ///
         /// </summary>
-        public static QueueProperties ParseFromContent(string xml)
+        public static QueueDescription ParseFromContent(string xml)
         {
             try
             {
@@ -71,10 +71,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static QueueProperties ParseFromEntryElement(XElement xEntry)
+        private static QueueDescription ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var qd = new QueueProperties(name);
+            var qd = new QueueDescription(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("QueueDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -89,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "MaxSizeInMegabytes":
-                        qd.MaxSizeInMB = Int64.Parse(element.Value);
+                        qd.MaxSizeInMegabytes = Int64.Parse(element.Value);
                         break;
                     case "RequiresDuplicateDetection":
                         qd.RequiresDuplicateDetection = Boolean.Parse(element.Value);
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         qd.RequiresSession = Boolean.Parse(element.Value);
                         break;
                     case "DeadLetteringOnMessageExpiration":
-                        qd.EnableDeadLetteringOnMessageExpiration = Boolean.Parse(element.Value);
+                        qd.DeadLetteringOnMessageExpiration = Boolean.Parse(element.Value);
                         break;
                     case "DuplicateDetectionHistoryTimeWindow":
                         qd.DuplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         qd.EnableBatchedOperations = Boolean.Parse(element.Value);
                         break;
                     case "Status":
-                        qd.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        qd.Status = element.Value;
                         break;
                     case "AutoDeleteOnIdle":
                         qd.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return qd;
         }
 
-        public static IList<QueueProperties> ParseCollectionFromContent(string xml)
+        public static IList<QueueDescription> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var queueList = new List<QueueProperties>();
+                        var queueList = new List<QueueDescription>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -195,7 +195,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No queues were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static void NormalizeDescription(this QueueProperties description, string baseAddress)
+        public static void NormalizeDescription(this QueueDescription description, string baseAddress)
         {
             if (!string.IsNullOrWhiteSpace(description.ForwardTo))
             {

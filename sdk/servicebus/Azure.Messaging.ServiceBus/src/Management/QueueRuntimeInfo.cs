@@ -6,29 +6,34 @@ using System;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// This provides runtime information of the topic.
+    /// This provides runtime information of the queue.
     /// </summary>
-    public class TopicMetrics
+    public class QueueRuntimeInfo
     {
-        internal TopicMetrics(string name)
+        internal QueueRuntimeInfo(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// The name of the topic.
+        /// The name of the queue.
         /// </summary>
         public string Name { get; internal set; }
 
         /// <summary>
-        /// The total number of messages in the topic.
+        /// The total number of messages in the queue.
         /// </summary>
-        public MessageCountDetails MessageCountDetails { get; internal set; }
+        public long MessageCount { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTime"/> when the entity was last accessed.
+        /// Message count details of the sub-queues of the entity.
         /// </summary>
-        public DateTimeOffset AccessedAt { get; internal set; }
+        public MessageCountDetails CountDetails { get; internal set; }
+
+        /// <summary>
+        /// Current size of the entity in bytes.
+        /// </summary>
+        public long SizeInBytes { get; internal set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> when the entity was created.
@@ -41,13 +46,8 @@ namespace Azure.Messaging.ServiceBus.Management
         public DateTimeOffset UpdatedAt { get; internal set; }
 
         /// <summary>
-        /// Current size of the entity in bytes.
+        /// The <see cref="DateTimeOffset"/> when the entity was last accessed.
         /// </summary>
-        public long SizeInBytes { get; internal set; }
-
-        /// <summary>
-        /// Number of subscriptions to the topic.
-        /// </summary>
-        public int SubscriptionCount { get; internal set; }
+        public DateTimeOffset AccessedAt { get; internal set; }
     }
 }

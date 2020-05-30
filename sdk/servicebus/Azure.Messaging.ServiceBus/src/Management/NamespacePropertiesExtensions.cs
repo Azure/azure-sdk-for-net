@@ -62,28 +62,10 @@ namespace Azure.Messaging.ServiceBus.Management
                         nsInfo.MessagingUnits = units;
                         break;
                     case "NamespaceType":
-                        if (Enum.TryParse<NamespaceType>(element.Value, out var nsType))
-                        {
-                            nsInfo.NamespaceType = nsType;
-                        }
-                        else if (element.Value == "Messaging") // TODO: workaround till next major as it's a breaking change
-                        {
-                            nsInfo.NamespaceType = NamespaceType.ServiceBus;
-                        }
-                        else
-                        {
-                            nsInfo.NamespaceType = NamespaceType.Others;
-                        }
+                            nsInfo.NamespaceType = element.Value;
                         break;
                     case "MessagingSKU":
-                        if (Enum.TryParse<MessagingSku>(element.Value, out var nsSku))
-                        {
-                            nsInfo.MessagingSku = nsSku;
-                        }
-                        else
-                        {
-                            nsInfo.MessagingSku = MessagingSku.Others;
-                        }
+                            nsInfo.MessagingSku = element.Value;
                         break;
                 }
             }

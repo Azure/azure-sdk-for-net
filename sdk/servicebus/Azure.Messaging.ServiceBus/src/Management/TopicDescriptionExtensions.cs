@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class TopicPropertiesExtensions
+    internal static class TopicDescriptionExtensions
     {
-        public static TopicProperties ParseFromContent(string xml)
+        public static TopicDescription ParseFromContent(string xml)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<TopicProperties> ParseCollectionFromContent(string xml)
+        public static IList<TopicDescription> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var topicList = new List<TopicProperties>();
+                        var topicList = new List<TopicDescription>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -60,10 +60,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No topics were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static TopicProperties ParseFromEntryElement(XElement xEntry)
+        private static TopicDescription ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var topicDesc = new TopicProperties(name);
+            var topicDesc = new TopicDescription(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("TopicDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "MaxSizeInMegabytes":
-                        topicDesc.MaxSizeInMB = long.Parse(element.Value);
+                        topicDesc.MaxSizeInMegabytes = long.Parse(element.Value);
                         break;
                     case "RequiresDuplicateDetection":
                         topicDesc.RequiresDuplicateDetection = bool.Parse(element.Value);
@@ -135,12 +135,12 @@ namespace Azure.Messaging.ServiceBus.Management
             return topicDesc;
         }
 
-        public static XDocument Serialize(this TopicProperties description)
+        public static XDocument Serialize(this TopicDescription description)
         {
             var topicDescriptionElements = new List<object>
             {
                 description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMB)),
+                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMegabytes)),
                 new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.RequiresDuplicateDetection)),
                 description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
                     new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))

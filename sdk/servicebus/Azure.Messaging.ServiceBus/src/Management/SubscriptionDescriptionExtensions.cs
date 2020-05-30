@@ -9,9 +9,9 @@ using Azure.Messaging.ServiceBus.Filters;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class SubscriptionPropertiesExtensions
+    internal static class SubscriptionDescriptionExtensions
     {
-        public static void NormalizeDescription(this SubscriptionProperties description, string baseAddress)
+        public static void NormalizeDescription(this SubscriptionDescription description, string baseAddress)
         {
             if (!string.IsNullOrWhiteSpace(description.ForwardTo))
             {
@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return forwardToUri.AbsoluteUri;
         }
 
-        public static SubscriptionProperties ParseFromContent(string topicName, string xml)
+        public static SubscriptionDescription ParseFromContent(string topicName, string xml)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<SubscriptionProperties> ParseCollectionFromContent(string topicName, string xml)
+        public static IList<SubscriptionDescription> ParseCollectionFromContent(string topicName, string xml)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var subscriptionList = new List<SubscriptionProperties>();
+                        var subscriptionList = new List<SubscriptionDescription>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -89,10 +89,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("No subscriptions were found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry)
+        private static SubscriptionDescription ParseFromEntryElement(string topicName, XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var subscriptionDesc = new SubscriptionProperties(topicName, name);
+            var subscriptionDesc = new SubscriptionDescription(topicName, name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         subscriptionDesc.RequiresSession = bool.Parse(element.Value);
                         break;
                     case "DeadLetteringOnMessageExpiration":
-                        subscriptionDesc.EnableDeadLetteringOnMessageExpiration = bool.Parse(element.Value);
+                        subscriptionDesc.DeadLetteringOnMessageExpiration = bool.Parse(element.Value);
                         break;
                     case "DeadLetteringOnFilterEvaluationExceptions":
                         subscriptionDesc.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
@@ -172,14 +172,14 @@ namespace Azure.Messaging.ServiceBus.Management
             return subscriptionDesc;
         }
 
-        public static XDocument Serialize(this SubscriptionProperties description)
+        public static XDocument Serialize(this SubscriptionDescription description)
         {
             var subscriptionDescriptionElements = new List<object>()
             {
                 new XElement(XName.Get("LockDuration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.LockDuration)),
                 new XElement(XName.Get("RequiresSession", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.RequiresSession)),
                 description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
+                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DeadLetteringOnMessageExpiration)),
                 new XElement(XName.Get("DeadLetteringOnFilterEvaluationExceptions", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableDeadLetteringOnFilterEvaluationExceptions)),
                 description.Rule != null ? description.Rule.SerializeRule("DefaultRuleDescription") : null,
                 new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxDeliveryCount)),

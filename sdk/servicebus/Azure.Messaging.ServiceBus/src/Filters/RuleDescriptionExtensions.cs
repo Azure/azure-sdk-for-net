@@ -9,9 +9,9 @@ using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    internal static class RulePropertiesExtensions
+    internal static class RuleDescriptionExtensions
     {
-        public static void ValidateDescriptionName(this RuleProperties description)
+        public static void ValidateDescriptionName(this RuleDescription description)
         {
             if (string.IsNullOrWhiteSpace(description.Name))
             {
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             }
         }
 
-        public static RuleProperties ParseFromContent(string xml)
+        public static RuleDescription ParseFromContent(string xml)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             //throw new MessagingEntityNotFoundException("Rule was not found");
         }
 
-        public static IList<RuleProperties> ParseCollectionFromContent(string xml)
+        public static IList<RuleDescription> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var rules = new List<RuleProperties>();
+                        var rules = new List<RuleDescription>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
@@ -95,10 +95,10 @@ namespace Azure.Messaging.ServiceBus.Filters
             //throw new MessagingEntityNotFoundException("Rule was not found");
         }
 
-        private static RuleProperties ParseFromEntryElement(XElement xEntry)
+        private static RuleDescription ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var ruleDescription = new RuleProperties();
+            var ruleDescription = new RuleDescription();
 
             var rdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("RuleDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             return ruleDescription;
         }
 
-        public static XDocument Serialize(this RuleProperties description)
+        public static XDocument Serialize(this RuleDescription description)
         {
             XDocument doc = new XDocument(
                    new XElement(XName.Get("entry", ManagementClientConstants.AtomNamespace),
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             return doc;
         }
 
-        public static XElement SerializeRule(this RuleProperties description, string elementName = "RuleDescription")
+        public static XElement SerializeRule(this RuleDescription description, string elementName = "RuleDescription")
         {
             return new XElement(
                 XName.Get(elementName, ManagementClientConstants.ServiceBusNamespace),

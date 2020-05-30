@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
-    public sealed class RuleProperties : IEquatable<RuleProperties>
+    public sealed class RuleDescription : IEquatable<RuleDescription>
     {
         /// <summary>
         /// Gets the name of the default rule on the subscription.
@@ -23,27 +23,27 @@ namespace Azure.Messaging.ServiceBus.Filters
         private string _name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleProperties" /> class with default values.
+        /// Initializes a new instance of the <see cref="RuleDescription" /> class with default values.
         /// </summary>
-        public RuleProperties()
-            : this(RuleProperties.DefaultRuleName, TrueRuleFilter.Default)
+        public RuleDescription()
+            : this(RuleDescription.DefaultRuleName, TrueRuleFilter.Default)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name.
+        /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name.
         /// </summary>
-        public RuleProperties(string name)
+        public RuleDescription(string name)
             : this(name, TrueRuleFilter.Default)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleProperties" /> class with the specified name and filter expression.
+        /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name and filter expression.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="filter">The filter expression used to match messages.</param>
-        public RuleProperties(string name, RuleFilter filter)
+        public RuleDescription(string name, RuleFilter filter)
         {
             Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
             Name = name;
@@ -104,14 +104,14 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            var other = obj as RuleProperties;
+            var other = obj as RuleDescription;
             return Equals(other);
         }
 
         /// <inheritdoc/>
-        public bool Equals(RuleProperties other)
+        public bool Equals(RuleDescription other)
         {
-            if (other is RuleProperties otherProperties
+            if (other is RuleDescription otherProperties
                 && string.Equals(Name, otherProperties.Name, StringComparison.OrdinalIgnoreCase)
                 && (Filter == null || Filter.Equals(otherProperties.Filter))
                 && (Action == null || Action.Equals(otherProperties.Action)))
@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(RuleProperties left, RuleProperties right)
+        public static bool operator ==(RuleDescription left, RuleDescription right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(RuleProperties left, RuleProperties right)
+        public static bool operator !=(RuleDescription left, RuleDescription right)
         {
             return !(left == right);
         }

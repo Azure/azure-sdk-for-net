@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
@@ -14,14 +15,18 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         {
             var queueName = "TestQueue";
             // using connection string
-            // var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
+             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
             // using AAD
-            var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            // var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             try
             {
-                var queueDescription = await client.CreateQueueAsync(queueName);
-                Assert.AreEqual(queueDescription.Status, EntityStatus.Active);
+                QueueDescription queueDescription = await client.CreateQueueAsync(queueName);
+                queueDescription.EnableBatchedOperations = false;
+                await client.UpdateQueueAsync(queueDescription);
+
+                queueDescription = await client.GetQueueAsync(queueName);
+                Assert.AreEqual(queueDescription.EnableBatchedOperations, false);
             }
             catch
             {

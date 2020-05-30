@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    internal static class QueueMetricsExtensions
+    internal static class QueueRuntimeInfoExtensions
     {
-        public static QueueMetrics ParseFromContent(string xml)
+        public static QueueRuntimeInfo ParseFromContent(string xml)
         {
             try
             {
@@ -30,10 +30,10 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Queue was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        private static QueueMetrics ParseFromEntryElement(XElement xEntry)
+        private static QueueRuntimeInfo ParseFromEntryElement(XElement xEntry)
         {
             var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
-            var qRuntime = new QueueMetrics(name);
+            var qRuntime = new QueueRuntimeInfo(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
                 .Element(XName.Get("QueueDescription", ManagementClientConstants.ServiceBusNamespace));
@@ -63,25 +63,25 @@ namespace Azure.Messaging.ServiceBus.Management
                         qRuntime.UpdatedAt = DateTime.Parse(element.Value);
                         break;
                     case "CountDetails":
-                        qRuntime.MessageCountDetails = new MessageCountDetails();
+                        qRuntime.CountDetails = new MessageCountDetails();
                         foreach (var countElement in element.Elements())
                         {
                             switch (countElement.Name.LocalName)
                             {
                                 case "ActiveMessageCount":
-                                    qRuntime.MessageCountDetails.ActiveMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.ActiveMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "DeadLetterMessageCount":
-                                    qRuntime.MessageCountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "ScheduledMessageCount":
-                                    qRuntime.MessageCountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "TransferMessageCount":
-                                    qRuntime.MessageCountDetails.TransferMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.TransferMessageCount = long.Parse(countElement.Value);
                                     break;
                                 case "TransferDeadLetterMessageCount":
-                                    qRuntime.MessageCountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
                                     break;
                             }
                         }
@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return qRuntime;
         }
 
-        public static IList<QueueMetrics> ParseCollectionFromContent(string xml)
+        public static IList<QueueRuntimeInfo> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 {
                     if (xDoc.Name.LocalName == "feed")
                     {
-                        var queueList = new List<QueueMetrics>();
+                        var queueList = new List<QueueRuntimeInfo>();
 
                         var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
                         foreach (var entry in entryList)

@@ -8,9 +8,9 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     /// This provides runtime information of the subscription.
     /// </summary>
-    public class SubscriptionMetrics
+    public class SubscriptionRuntimeInfo
     {
-        internal SubscriptionMetrics(string topicName, string subscriptionName)
+        internal SubscriptionRuntimeInfo(string topicName, string subscriptionName)
         {
             TopicName = topicName;
             SubscriptionName = subscriptionName;
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Message count details of the sub-queues of the entity.
         /// </summary>
-        public MessageCountDetails MessageCountDetails { get; internal set; }
+        public MessageCountDetails CountDetails { get; internal set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> when the entity was last accessed.

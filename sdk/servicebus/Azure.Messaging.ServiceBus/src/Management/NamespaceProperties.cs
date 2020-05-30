@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Type of entities present in the namespace.
         /// </summary>
-        public NamespaceType NamespaceType { get; internal set; }
+        internal NamespaceType NamespaceType { get; set; }
 
         /// <summary>
         /// The time at which the namespace was created.
