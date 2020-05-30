@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _timeToLive;
 
         /// <summary>
-        /// Creates a new Message
+        /// Creates a new message.
         /// </summary>
         public ServiceBusMessage()
             : this(default(ReadOnlyMemory<byte>))
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified string, using the specified encoding.
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
-        /// <param name="encoding"></param>
+        /// <param name="encoding">The encoding to use for the body.</param>
         public ServiceBusMessage(string body, Encoding encoding)
         {
             Argument.AssertNotNull(encoding, nameof(encoding));
@@ -60,6 +60,16 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
             Body = new BinaryData(body);
+            Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="BinaryData"/> instance.
+        /// </summary>
+        /// <param name="body">The payload of the message.</param>
+        public ServiceBusMessage(BinaryData body)
+        {
+            Body = body;
             Properties = new Dictionary<string, object>();
         }
 

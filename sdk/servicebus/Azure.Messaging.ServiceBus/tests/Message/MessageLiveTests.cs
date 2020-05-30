@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -145,6 +142,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual(received.ViaPartitionKey, sentMessage.ViaPartitionKey);
                 }
             }
+        }
+
+        [Test]
+        public async Task SendJsonBodyMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var serializer = new JsonObjectSerializer();
+                var testBody = new TestBody
+                {
+                    A = "text",
+                    B = 5,
+                    C = false
+                };
+                var body = BinaryData.Create(testBody, serializer);
+                var msg = new ServiceBusMessage(body);
+
+                await sender.SendAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveAsync();
+                var receivedBody = received.Body.As<TestBody>(serializer);
+                Assert.AreEqual(testBody.A, receivedBody.A);
+                Assert.AreEqual(testBody.B, receivedBody.B);
+                Assert.AreEqual(testBody.C, receivedBody.C);
+            }
+        }
+
+        private class TestBody
+        {
+            public string A { get; set; }
+            public int B { get; set; }
+            public bool C { get; set; }
         }
     }
 }
