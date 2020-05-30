@@ -205,6 +205,48 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCase("\r\nmy recorded test\r\n message", "\nmy recorded test\n message", true)]
+        [TestCase("\r\n\r\nmy recorded test\r\n message", "\n\nmy recorded test\n message", true)]
+        [TestCase("\r\nmy recorded test\r\n message", "\r\nmy recorded test\n message", false)]
+        [TestCase("my recorded test\\r\n message", "my recorded test\\n message", false)]
+        public void RecordMatcherIgnoresControlChars(string recorded, string request, bool match)
+        {
+            var session = new RecordSession();
+            var matcher = new RecordMatcher();
+            var sanitizer = new RecordedTestSanitizer();
+
+            var recordedEntry = CreateEntry(recorded);
+            session.Entries.Add(recordedEntry);
+            var requestEntry = CreateEntry(request);
+
+            if (match)
+            {
+                Assert.NotNull(session.Lookup(requestEntry, matcher, sanitizer));
+            }
+            else
+            {
+                Assert.That(
+                    () => session.Lookup(requestEntry, matcher, sanitizer),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+
+            RecordEntry CreateEntry(string body)
+            {
+                RecordEntry entry = new RecordEntry();
+                entry.Request.Headers.Add("Content-Type", new[] { "application/json" });
+                entry.Request.Headers.Add("Other-Header", new[] { "multi", "value" });
+                entry.Request.Body = Encoding.UTF8.GetBytes(body);
+                entry.Request.Headers.Add(
+                    "Content-Length",
+                    new string[] { entry.Request.Body.Length.ToString() });
+
+                entry.RequestUri = "http://localhost/";
+                entry.RequestMethod = RequestMethod.Put;
+                return entry;
+            }
+        }
+
+        [Test]
         public void SavingRecordingSanitizesValues()
         {
             var tempFile = Path.GetTempFileName();

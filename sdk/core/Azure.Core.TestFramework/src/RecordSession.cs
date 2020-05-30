@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.TestFramework
@@ -81,6 +82,8 @@ namespace Azure.Core.TestFramework
 
         public RecordEntry Lookup(RecordEntry requestEntry, RecordMatcher matcher, RecordedTestSanitizer sanitizer)
         {
+            NormalizeLineEndings(requestEntry.Request);
+
             sanitizer.Sanitize(requestEntry);
 
             lock (Entries)
@@ -89,7 +92,14 @@ namespace Azure.Core.TestFramework
                 Entries.Remove(entry);
                 return entry;
             }
+        }
 
+        private void NormalizeLineEndings(RecordEntryMessage entryMessage)
+        {
+            if (entryMessage.TryGetBodyAsText(out string text))
+            {
+                entryMessage.Body = Encoding.UTF8.GetBytes(text.Replace("\n", "\r\n"));
+            }
         }
 
         public void Sanitize(RecordedTestSanitizer sanitizer)
