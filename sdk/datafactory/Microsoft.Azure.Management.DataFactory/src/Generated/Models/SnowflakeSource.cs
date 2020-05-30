@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity snowflake source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SnowflakeSource")]
     public partial class SnowflakeSource : CopySource
     {
         /// <summary>

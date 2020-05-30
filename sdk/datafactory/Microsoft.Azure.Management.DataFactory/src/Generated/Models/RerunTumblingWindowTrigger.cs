@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Trigger that schedules pipeline reruns for all fixed time interval
     /// windows from a requested start time to requested end time.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RerunTumblingWindowTrigger")]
     [Rest.Serialization.JsonTransformation]
     public partial class RerunTumblingWindowTrigger : Trigger
     {

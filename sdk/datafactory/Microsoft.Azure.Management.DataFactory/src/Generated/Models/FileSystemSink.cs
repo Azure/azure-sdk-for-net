@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity file system sink.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FileSystemSink")]
     public partial class FileSystemSink : CopySink
     {
         /// <summary>
