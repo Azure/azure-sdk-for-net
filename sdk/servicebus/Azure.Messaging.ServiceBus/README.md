@@ -125,7 +125,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // get the message body as a string
-string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
+string body = receivedMessage.Body.AsString();
 Console.WriteLine(body);
 ```
 
@@ -279,7 +279,7 @@ processor.ProcessErrorAsync += ErrorHandler;
 
 async Task MessageHandler(ProcessMessageEventArgs args)
 {
-    string body = Encoding.UTF8.GetString(args.Message.Body.ToArray());
+    string body = args.Message.Body.AsString();
     Console.WriteLine(body);
 
     // we can evaluate application logic and use that to determine how to settle the message.
