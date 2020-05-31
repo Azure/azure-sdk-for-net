@@ -9,8 +9,10 @@ using Xunit;
 using Microsoft.Azure.Management.Billing;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Azure.Management.Billing.Models;
+using Enumerable = System.Linq.Enumerable;
 
 namespace Billing.Tests.ScenarioTests
 {
@@ -156,6 +158,30 @@ namespace Billing.Tests.ScenarioTests
                 var billingProfile = Assert.Single(billingAccount.BillingProfiles.Value);
                 Assert.Equal(BillingProfileName, billingProfile.Name);
                 Assert.True(billingProfile.InvoiceSections.Value.Count > 0);
+            }
+        }
+
+        [Fact]
+        public void ListInvoiceSectionsByCreateSubscriptionPermissionTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var invoiceSectionDisplayName = "CGPK-BEXW-PJA-TGB";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the Billing Accounts
+                var invoiceSections = billingMgmtClient.BillingAccounts.ListInvoiceSectionsByCreateSubscriptionPermission(BillingAccountName);
+
+                // Verify the response
+                Assert.NotNull(invoiceSections);
+                Assert.Equal(9, invoiceSections.Count());
+                var invoiceSection =
+                    invoiceSections.Where(i => i.InvoiceSectionDisplayName == invoiceSectionDisplayName);
             }
         }
 
