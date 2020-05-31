@@ -6,7 +6,7 @@ parameters:
   BuildInParallel: true
   TimeoutInMinutes: 60
   Location: ''
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  SubscriptionConfiguration: $(sub-config-gov-test-resources)
 
 jobs:
   - job: "Test"
