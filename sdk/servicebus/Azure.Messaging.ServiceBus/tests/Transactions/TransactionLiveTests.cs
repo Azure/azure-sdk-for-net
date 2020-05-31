@@ -176,7 +176,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     // not completing the transaction
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: "sessionId") : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ?
+                    await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions
+                        {
+                            SessionId = "sessionId"
+                        })
+                    : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 

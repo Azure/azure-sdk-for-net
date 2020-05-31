@@ -26,6 +26,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
+        private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
         private ServiceBusSessionReceiver _receiver;
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
@@ -54,6 +55,12 @@ namespace Azure.Messaging.ServiceBus
             _sessionCloseHandler = sessionCloseHandler;
             _messageHandler = messageHandler;
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
+            _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
+            {
+                ReceiveMode = _processorOptions.ReceiveMode,
+                PrefetchCount = _processorOptions.PrefetchCount,
+                SessionId = sessionId
+            };
         }
 
         private async Task EnsureReceiverCreated(CancellationToken cancellationToken)
@@ -99,8 +106,7 @@ namespace Azure.Messaging.ServiceBus
             _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: _entityPath,
                 connection: _connection,
-                sessionId: _sessionId,
-                options: _receiverOptions,
+                options: _sessionReceiverOptions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             if (AutoRenewLock)

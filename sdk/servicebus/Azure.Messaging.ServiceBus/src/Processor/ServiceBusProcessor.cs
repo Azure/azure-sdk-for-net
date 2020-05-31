@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             bool isSessionEntity,
             ServiceBusProcessorOptions options,
-            params string[] sessionIds)
+            string[] sessionIds = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -203,7 +203,7 @@ namespace Azure.Messaging.ServiceBus
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
-            _sessionIds = sessionIds;
+            _sessionIds = sessionIds ?? Array.Empty<string>();
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
         }
 

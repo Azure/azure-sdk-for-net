@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         protected readonly string _entityPath;
         protected readonly string _identifier;
         protected readonly TimeSpan? _maxReceiveWaitTime;
-        protected readonly ServiceBusReceiverOptions _receiverOptions;
+        private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions _processorOptions;
         private readonly Func<ProcessErrorEventArgs, Task> _errorHandler;
         private readonly Func<ProcessMessageEventArgs, Task> _messageHandler;
