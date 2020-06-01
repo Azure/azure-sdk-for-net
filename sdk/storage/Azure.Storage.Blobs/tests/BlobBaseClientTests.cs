@@ -897,6 +897,118 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenReadAsync_StrangeOffsetsTest()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            int length = Constants.KB;
+            byte[] exectedData = GetRandomBuffer(length);
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(exectedData))
+            {
+                await blobClient.UploadAsync(stream);
+            }
+            Stream outputStream = await blobClient.OpenReadAsync(position: 0, bufferSize: 157);
+            byte[] actualData = new byte[length];
+            int offset = 0;
+
+            // Act
+            int count = 0;
+            while (offset + count < length)
+            {
+                for (count = 6; count < 37; count += 6)
+                {
+                    await outputStream.ReadAsync(actualData, offset, count);
+                    offset += count;
+                }
+            }
+            await outputStream.ReadAsync(actualData, offset, length - offset);
+
+            // Assert
+            TestHelper.AssertSequenceEqual(exectedData, actualData);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_LargeData()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            int length = 128 * Constants.MB;
+            byte[] exectedData = GetRandomBuffer(length);
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(exectedData))
+            {
+                await blobClient.UploadAsync(stream,
+                    transferOptions: new StorageTransferOptions
+                        {
+                            MaximumTransferLength = 2 * Constants.MB,
+                            MaximumConcurrency = 8
+                        });
+            }
+
+            Stream outputStream = await blobClient.OpenReadAsync();
+            int readSize = 8 * Constants.MB;
+            byte[] actualData = new byte[readSize];
+            int offset = 0;
+
+            // Act
+            for (int i = 0; i < length / readSize; i++)
+            {
+
+                await outputStream.ReadAsync(actualData, 0, readSize);
+                for (int j = 0; j < readSize; j++)
+                {
+                    if (actualData[j] != exectedData[offset + j])
+                    {
+                        Assert.Fail($"Index {offset + j} does not match.  Expected: {exectedData[offset + j]} Actual: {actualData[j]}");
+                    }
+                }
+                offset += readSize;
+            }
+
+            // Assert
+            TestHelper.AssertSequenceEqual(exectedData, actualData);
+        }
+
+        [Test]
+        public async Task OpenReadAsync_InvalidParameterTests()
+        {
+            // Arrange
+            BlobClient blobClient = new BlobClient(new Uri("https://www.doesntmatter.com"));
+            Stream stream = await blobClient.OpenReadAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                stream.ReadAsync(buffer: null, offset: 0, count: 10),
+                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
+                    e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
+                    e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
+                    e.Message));
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                stream.ReadAsync(buffer: new byte[10], offset: 5, count: 15),
+                e => Assert.AreEqual(
+                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset + count cannot exceed buffer length.",
+                    e.Message));
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
