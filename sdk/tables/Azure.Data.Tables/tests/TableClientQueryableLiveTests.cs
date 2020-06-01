@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests

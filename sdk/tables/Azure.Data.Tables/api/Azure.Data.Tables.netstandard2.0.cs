@@ -5,7 +5,6 @@ namespace Azure.Data.Tables
         protected TableClient() { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> Create(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public string CreateFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
         public virtual Azure.Response Delete(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.ObjectModel.ReadOnlyCollection<Azure.Data.Tables.Models.SignedIdentifier>> GetAccessPolicy(int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -220,6 +219,13 @@ namespace Azure.Data.Tables.Models
     {
         internal TableServiceStats() { }
         public Azure.Data.Tables.Models.GeoReplication GeoReplication { get { throw null; } }
+    }
+}
+namespace Azure.Data.Tables.Queryable
+{
+    public static partial class TableClientExtensions
+    {
+        public static string CreateFilter<T>(this Azure.Data.Tables.TableClient client, System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
     }
 }
 namespace Azure.Data.Tables.Sas
