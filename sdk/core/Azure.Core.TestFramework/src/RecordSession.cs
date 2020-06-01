@@ -18,7 +18,7 @@ namespace Azure.Core.TestFramework
         //Used only for deserializing track 1 session record files
         public Dictionary<string, Queue<string>> Names { get; set; } = new Dictionary<string, Queue<string>>();
 
-        public virtual string NewLine => Environment.NewLine;
+        protected virtual string NewLine => Environment.NewLine;
 
         public void Serialize(Utf8JsonWriter jsonWriter)
         {

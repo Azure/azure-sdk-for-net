@@ -354,7 +354,7 @@ namespace Azure.Core.Tests
         private class TestRecordSession : RecordSession
         {
             private readonly string _newLine;
-            public override string NewLine => _newLine;
+            protected override string NewLine => _newLine;
 
             public TestRecordSession(string newLine)
             {
