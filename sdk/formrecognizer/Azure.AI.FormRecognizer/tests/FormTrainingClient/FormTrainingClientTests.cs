@@ -95,8 +95,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             FormTrainingClient client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty)));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null));
+            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null, useTrainingLabels: false));
         }
 
         [Test]
