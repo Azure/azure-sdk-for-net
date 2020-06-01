@@ -1302,7 +1302,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         internal Stream OpenReadInteral(
             long position = 0,
-            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
             BlobRequestConditions conditions = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))

@@ -3468,12 +3468,29 @@ namespace Azure.Storage.Files.DataLake
         public virtual Stream OpenRead(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
             DataLakeRequestConditions conditions = default)
-            => _blockBlobClient.OpenRead(
-                position,
-                bufferSize,
-                conditions.ToBlobRequestConditions());
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.OpenRead(
+                    position,
+                    bufferSize,
+                    conditions.ToBlobRequestConditions());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+
+        }
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -3499,13 +3516,28 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultStreamCopyBufferSize,
+            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
             DataLakeRequestConditions conditions = default)
-            => await _blockBlobClient.OpenReadAsync(
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.OpenReadAsync(
                 position,
                 bufferSize,
                 conditions?.ToBlobRequestConditions()).ConfigureAwait(false);
-
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion OpenRead
     }
 }
