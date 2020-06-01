@@ -18,6 +18,8 @@ namespace Azure.Core.TestFramework
         //Used only for deserializing track 1 session record files
         public Dictionary<string, Queue<string>> Names { get; set; } = new Dictionary<string, Queue<string>>();
 
+        public virtual string NewLine => Environment.NewLine;
+
         public void Serialize(Utf8JsonWriter jsonWriter)
         {
             jsonWriter.WriteStartObject();
@@ -96,7 +98,8 @@ namespace Azure.Core.TestFramework
 
         private void NormalizeLineEndings(RecordEntryMessage entryMessage)
         {
-            if (entryMessage.TryGetBodyAsText(out string text))
+            if (NewLine == "\n" &&
+                entryMessage.TryGetBodyAsText(out string text))
             {
                 entryMessage.Body = Encoding.UTF8.GetBytes(text.Replace("\n", "\r\n"));
             }

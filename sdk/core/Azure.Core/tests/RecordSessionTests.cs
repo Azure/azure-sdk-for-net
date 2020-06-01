@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
 
@@ -205,13 +206,14 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase("\r\nmy recorded test\r\n message", "\nmy recorded test\n message", true)]
-        [TestCase("\r\n\r\nmy recorded test\r\n message", "\n\nmy recorded test\n message", true)]
-        [TestCase("\r\nmy recorded test\r\n message", "\r\nmy recorded test\n message", false)]
-        [TestCase("my recorded test\\r\n message", "my recorded test\\n message", false)]
-        public void RecordMatcherNormalizesLineEndings(string recorded, string request, bool match)
+        [TestCase("\r\nmy recorded test\r\n message", "\nmy recorded test\n message", "\n", true)]
+        [TestCase("\r\n\r\nmy recorded test\r\n message", "\n\nmy recorded test\n message", "\n", true)]
+        [TestCase("\r\nmy recorded test\r\n message", "\r\nmy recorded test\n message", "\n", false)]
+        [TestCase("my recorded test\\r\n message", "my recorded test\\n message", "\n", false)]
+        [TestCase("my recorded test\r\n message", "my recorded test\r\n message", "\r\n", true)]
+        public void RecordMatcherNormalizesLineEndings(string recorded, string request, string newLine, bool match)
         {
-            var session = new RecordSession();
+            var session = new TestRecordSession(newLine);
             var matcher = new RecordMatcher();
             var sanitizer = new RecordedTestSanitizer();
 
@@ -347,6 +349,17 @@ namespace Azure.Core.Tests
             public override string SanitizeVariable(string variableName, string environmentVariableValue)
             {
                 return environmentVariableValue.Replace("secret", "SANITIZED");
+            }
+        }
+
+        private class TestRecordSession : RecordSession
+        {
+            private readonly string _newLine;
+            public override string NewLine => _newLine;
+
+            public TestRecordSession(string newLine)
+            {
+                _newLine = newLine;
             }
         }
     }
