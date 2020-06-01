@@ -131,6 +131,7 @@ namespace Azure.Storage.Shared
         private async Task Download(bool async, CancellationToken cancellationToken)
         {
             Response<T> response;
+
             HttpRange range = new HttpRange(_position, _bufferSize);
 
             try

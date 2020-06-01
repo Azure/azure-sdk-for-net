@@ -930,11 +930,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Don't want to record 1 GB of data.")]
         public async Task OpenReadAsync_LargeData()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            int length = 128 * Constants.MB;
+            int length = 1 * Constants.GB;
             byte[] exectedData = GetRandomBuffer(length);
             BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(exectedData))
@@ -942,7 +943,7 @@ namespace Azure.Storage.Blobs.Test
                 await blobClient.UploadAsync(stream,
                     transferOptions: new StorageTransferOptions
                         {
-                            MaximumTransferLength = 2 * Constants.MB,
+                            MaximumTransferLength = 8 * Constants.MB,
                             MaximumConcurrency = 8
                         });
             }
@@ -959,6 +960,7 @@ namespace Azure.Storage.Blobs.Test
                 await outputStream.ReadAsync(actualData, 0, readSize);
                 for (int j = 0; j < readSize; j++)
                 {
+                    // Assert
                     if (actualData[j] != exectedData[offset + j])
                     {
                         Assert.Fail($"Index {offset + j} does not match.  Expected: {exectedData[offset + j]} Actual: {actualData[j]}");
@@ -966,9 +968,6 @@ namespace Azure.Storage.Blobs.Test
                 }
                 offset += readSize;
             }
-
-            // Assert
-            TestHelper.AssertSequenceEqual(exectedData, actualData);
         }
 
         [Test]
