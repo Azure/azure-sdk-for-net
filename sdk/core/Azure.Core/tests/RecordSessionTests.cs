@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
 
