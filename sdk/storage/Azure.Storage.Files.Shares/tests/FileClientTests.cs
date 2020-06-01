@@ -2552,6 +2552,28 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
+        [Test]
+        public async Task OpenReadAsync()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync().ConfigureAwait(false);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data, outputBytes);
+        }
+
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)
         {
             CopyStatus status = CopyStatus.Pending;
