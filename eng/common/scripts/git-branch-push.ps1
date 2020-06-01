@@ -121,8 +121,16 @@ do
                 continue
             }
 
-            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
+            Write-Host "git add -A"
+            git add -A 
+            if ($LASTEXITCODE -ne 0)
+            {
+                Write-Error "Unable to git add LASTEXITCODE=$($LASTEXITCODE), see command output above."
+                continue
+            }
+
+            Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -m `"$($CommitMsg)`""
+            git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -m "$($CommitMsg)"
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to commit LASTEXITCODE=$($LASTEXITCODE), see command output above."

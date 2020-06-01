@@ -18,8 +18,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("description");
-            writer.WriteStringValue(Description);
+            if (Description != null)
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("skills");
             writer.WriteStartArray();
             foreach (var item in Skills)
@@ -56,6 +59,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }

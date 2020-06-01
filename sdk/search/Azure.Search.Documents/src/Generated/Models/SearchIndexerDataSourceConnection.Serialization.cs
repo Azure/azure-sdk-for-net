@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerDataSource : IUtf8JsonSerializable
+    public partial class SearchIndexerDataSourceConnection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerDataSource DeserializeSearchIndexerDataSource(JsonElement element)
+        internal static SearchIndexerDataSourceConnection DeserializeSearchIndexerDataSourceConnection(JsonElement element)
         {
             string name = default;
             string description = default;
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerDataSource(name, description, type, credentials, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, odataEtag);
+            return new SearchIndexerDataSourceConnection(name, description, type, credentials, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, odataEtag);
         }
     }
 }

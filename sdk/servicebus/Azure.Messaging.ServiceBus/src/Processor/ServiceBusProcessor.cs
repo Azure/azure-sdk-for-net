@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -153,7 +152,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         private readonly string[] _sessionIds;
-
+        private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
@@ -205,6 +204,7 @@ namespace Azure.Messaging.ServiceBus
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _sessionIds = sessionIds;
+            _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
         }
 
         /// <summary>
@@ -480,7 +480,8 @@ namespace Azure.Messaging.ServiceBus
                             _sessionClosingAsync,
                             _processSessionMessageAsync,
                             _processErrorAsync,
-                            MaxConcurrentAcceptSessionsSemaphore));
+                            MaxConcurrentAcceptSessionsSemaphore,
+                            _scopeFactory));
                 }
             }
             else
@@ -493,7 +494,8 @@ namespace Azure.Messaging.ServiceBus
                         Identifier,
                         _options,
                         _processMessageAsync,
-                        _processErrorAsync));
+                        _processErrorAsync,
+                        _scopeFactory));
             }
         }
 
