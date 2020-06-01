@@ -517,6 +517,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("dt-id", dtId);
             if (dtTimestamp != null)
@@ -618,6 +619,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/components/", false);
             uri.AppendPath(componentPath, true);
             uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("dt-id", dtId);
             if (dtTimestamp != null)
