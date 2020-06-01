@@ -42,7 +42,7 @@ namespace Azure.Storage
         /// <summary>
         /// The minimum number of bytes to download in Open Read.
         /// </summary>
-        public const int MinimumStreamingDownloadSize = 16 * Constants.KB;
+        public const int DefaultStreamingDownloadSize = 1 * Constants.MB;
 
         /// <summary>
         /// Different .NET implementations have different default sizes for <see cref="System.IO.Stream.CopyTo(System.IO.Stream)"/>

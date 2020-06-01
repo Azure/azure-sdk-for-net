@@ -1242,7 +1242,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Stream OpenRead(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
+            int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
             => OpenReadInteral(
                 position,
@@ -1273,7 +1273,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position = 0,
-            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
+            int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
             => Task.FromResult(OpenReadInteral(
                 position,
@@ -1302,7 +1302,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         internal Stream OpenReadInteral(
             long position = 0,
-            int bufferSize = Constants.DefaultDownloadCopyBufferSize,
+            int bufferSize = Constants.DefaultStreamingDownloadSize,
             BlobRequestConditions conditions = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))

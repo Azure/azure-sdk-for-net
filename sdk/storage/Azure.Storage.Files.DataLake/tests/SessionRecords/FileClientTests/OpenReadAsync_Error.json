@@ -5,14 +5,14 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8c51d23bad9fcf4a98e27eca63bbef61-fc7aa5c26348e647-00",
+        "traceparent": "00-6b9db1e6f11f6045a12f33cf7df39132-0fbda805ad8cee4e-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200601.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "a3ac4cac-93a7-6fe2-28f3-906d429f71b9",
-        "x-ms-date": "Mon, 01 Jun 2020 19:14:40 GMT",
+        "x-ms-date": "Mon, 01 Jun 2020 19:40:48 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -20,15 +20,15 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 01 Jun 2020 19:14:43 GMT",
-        "ETag": "\u00220x8D8066009BB3DE7\u0022",
-        "Last-Modified": "Mon, 01 Jun 2020 19:14:42 GMT",
+        "Date": "Mon, 01 Jun 2020 19:40:49 GMT",
+        "ETag": "\u00220x8D80663AFB58831\u0022",
+        "Last-Modified": "Mon, 01 Jun 2020 19:40:49 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "a3ac4cac-93a7-6fe2-28f3-906d429f71b9",
-        "x-ms-request-id": "cec231a2-601e-0086-7048-388119000000",
+        "x-ms-request-id": "145b52d4-e01e-006c-104c-38a637000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -43,7 +43,7 @@
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "ba53142b-569f-50cf-cfd4-62b8869b87cd",
-        "x-ms-date": "Mon, 01 Jun 2020 19:14:42 GMT",
+        "x-ms-date": "Mon, 01 Jun 2020 19:40:48 GMT",
         "x-ms-range": "bytes=0-1048575",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -53,20 +53,20 @@
       "ResponseHeaders": {
         "Content-Length": "215",
         "Content-Type": "application/xml",
-        "Date": "Mon, 01 Jun 2020 19:14:43 GMT",
+        "Date": "Mon, 01 Jun 2020 19:40:49 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "ba53142b-569f-50cf-cfd4-62b8869b87cd",
         "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "cec2320d-601e-0086-3948-388119000000",
+        "x-ms-request-id": "145b52dc-e01e-006c-154c-38a637000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
-        "RequestId:cec2320d-601e-0086-3948-388119000000\n",
-        "Time:2020-06-01T19:14:43.4406495Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:145b52dc-e01e-006c-154c-38a637000000\n",
+        "Time:2020-06-01T19:40:49.3274462Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
@@ -74,13 +74,13 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-1e42806e596938459668905ab94b85cc-1142dae2bc1dec4b-00",
+        "traceparent": "00-c67b33e32860524c8e06abc5e450e231-0dbfa92f179fc94c-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200601.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "d31ba34f-6607-819a-aa28-4a683c1f674c",
-        "x-ms-date": "Mon, 01 Jun 2020 19:14:42 GMT",
+        "x-ms-date": "Mon, 01 Jun 2020 19:40:48 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -88,13 +88,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 01 Jun 2020 19:14:43 GMT",
+        "Date": "Mon, 01 Jun 2020 19:40:49 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "d31ba34f-6607-819a-aa28-4a683c1f674c",
-        "x-ms-request-id": "cec23225-601e-0086-4b48-388119000000",
+        "x-ms-request-id": "145b52e0-e01e-006c-194c-38a637000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
