@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 throw new InvalidOperationException("Change feed doesn't have any more events");
             }
 
-            if (_currentSegment.DateTime > _endTime)
+            if (_currentSegment.DateTime >= _endTime)
             {
                 return BlobChangeFeedEventPage.Empty();
             }
@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (_endTime.HasValue)
             {
-                return _currentSegment.DateTime <= _endTime;
+                return _currentSegment.DateTime < _endTime;
             }
 
             return true;
