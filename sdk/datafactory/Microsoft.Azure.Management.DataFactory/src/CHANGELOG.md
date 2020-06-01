@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.12.0
+###  Feature Additions
+- Added support for GlobalParameters 
+- Changed data type of waitTimeInSeconds in WaitActivity to object
+
 ## Version 4.11.0
 ###  Feature Additions
 - Added support for the follwoing new datasets in ADF - ExcelDataset, along with source and sink for Copy activity
