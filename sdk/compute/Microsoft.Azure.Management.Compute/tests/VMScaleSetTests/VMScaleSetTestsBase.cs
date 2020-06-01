@@ -260,6 +260,7 @@ namespace Compute.Tests
             bool? enableUltraSSD = false,
             string diskEncryptionSetId = null,
             AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            bool? encryptionAtHostEnabled = null,
             bool singlePlacementGroup = true)
         {
             try
@@ -283,6 +284,7 @@ namespace Compute.Tests
                                                                                      enableUltraSSD: enableUltraSSD,
                                                                                      diskEncryptionSetId: diskEncryptionSetId,
                                                                                      automaticRepairsPolicy: automaticRepairsPolicy,
+                                                                                     encryptionAtHostEnabled: encryptionAtHostEnabled,
                                                                                      singlePlacementGroup: singlePlacementGroup);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
@@ -366,6 +368,7 @@ namespace Compute.Tests
             bool? enableUltraSSD = false,
             string diskEncryptionSetId = null,
             AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            bool? encryptionAtHostEnabled = null,
             bool singlePlacementGroup = true)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
@@ -396,6 +399,14 @@ namespace Compute.Tests
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
+            }
+
+            if (encryptionAtHostEnabled != null)
+            {
+                inputVMScaleSet.VirtualMachineProfile.SecurityProfile = new SecurityProfile
+                {
+                    EncryptionAtHost = encryptionAtHostEnabled.Value
+                };
             }
 
             if (hasDiffDisks)
