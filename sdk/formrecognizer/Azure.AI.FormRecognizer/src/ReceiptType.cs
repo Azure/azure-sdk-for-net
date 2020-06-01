@@ -4,9 +4,9 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// The receipt type of recognized <see cref="USReceipt"/> instances.
+    /// The receipt type of <see cref="RecognizedReceipt"/> instances.
     /// </summary>
-    public enum USReceiptType
+    public enum ReceiptType
     {
         /// <summary>
         /// Used for receipts whose type couldn't be recognized.

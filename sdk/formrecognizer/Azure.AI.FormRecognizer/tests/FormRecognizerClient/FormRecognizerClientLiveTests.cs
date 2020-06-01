@@ -265,91 +265,91 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
         }
 
-        /// <summary>
-        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform analysis of receipts.
-        /// </summary>
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
-        {
-            var client = CreateInstrumentedFormRecognizerClient();
-            RecognizeReceiptsOperation operation;
+        ///// <summary>
+        ///// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        ///// Recognizer cognitive service and perform analysis of receipts.
+        ///// </summary>
+        //[Test]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
+        //{
+        //    var client = CreateInstrumentedFormRecognizerClient();
+        //    RecognizeReceiptsOperation operation;
 
-            if (useStream)
-            {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeReceiptsAsync(stream);
-                }
-            }
-            else
-            {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-                operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
-            }
+        //    if (useStream)
+        //    {
+        //        using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+        //        using (Recording.DisableRequestBodyRecording())
+        //        {
+        //            operation = await client.StartRecognizeReceiptsAsync(stream);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
+        //        operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
+        //    }
 
-            await operation.WaitForCompletionAsync();
+        //    await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+        //    Assert.IsTrue(operation.HasValue);
 
-            var receipt = operation.Value.Single().AsUSReceipt();
+        //    var receipt = operation.Value.Single().AsUSReceipt();
 
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the receipt. We are not testing the service here, but the SDK.
+        //    // The expected values are based on the values returned by the service, and not the actual
+        //    // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(USReceiptType.Itemized, receipt.ReceiptType);
-            Assert.That(receipt.ReceiptTypeConfidence, Is.EqualTo(0.66).Within(0.01));
+        //    Assert.AreEqual(ReceiptType.Itemized, receipt.ReceiptType);
+        //    Assert.That(receipt.ReceiptTypeConfidence, Is.EqualTo(0.66).Within(0.01));
 
-            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
+        //    Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
+        //    Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
 
-            Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
-            Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
+        //    Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
+        //    Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
+        //    Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
 
-            Assert.IsNotNull(receipt.TransactionDate);
-            Assert.IsNotNull(receipt.TransactionTime);
+        //    Assert.IsNotNull(receipt.TransactionDate);
+        //    Assert.IsNotNull(receipt.TransactionTime);
 
-            var date = receipt.TransactionDate.Value;
-            var time = receipt.TransactionTime.Value;
+        //    var date = receipt.TransactionDate.Value;
+        //    var time = receipt.TransactionTime.Value;
 
-            Assert.AreEqual(10, date.Day);
-            Assert.AreEqual(6, date.Month);
-            Assert.AreEqual(2019, date.Year);
+        //    Assert.AreEqual(10, date.Day);
+        //    Assert.AreEqual(6, date.Month);
+        //    Assert.AreEqual(2019, date.Year);
 
-            Assert.AreEqual(13, time.Hours);
-            Assert.AreEqual(59, time.Minutes);
-            Assert.AreEqual(0, time.Seconds);
+        //    Assert.AreEqual(13, time.Hours);
+        //    Assert.AreEqual(59, time.Minutes);
+        //    Assert.AreEqual(0, time.Seconds);
 
-            var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
-            {
-                (null, "8GB RAM (Black)", null, 999.00f),
-                (1, "SurfacePen", null, 99.99f)
-            };
+        //    var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
+        //    {
+        //        (null, "8GB RAM (Black)", null, 999.00f),
+        //        (1, "SurfacePen", null, 99.99f)
+        //    };
 
-            // Include a bit of tolerance when comparing float types.
+        //    // Include a bit of tolerance when comparing float types.
 
-            Assert.AreEqual(expectedItems.Count, receipt.Items.Count);
+        //    Assert.AreEqual(expectedItems.Count, receipt.Items.Count);
 
-            for (var itemIndex = 0; itemIndex < receipt.Items.Count; itemIndex++)
-            {
-                var receiptItem = receipt.Items[itemIndex];
-                var expectedItem = expectedItems[itemIndex];
+        //    for (var itemIndex = 0; itemIndex < receipt.Items.Count; itemIndex++)
+        //    {
+        //        var receiptItem = receipt.Items[itemIndex];
+        //        var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
-            }
+        //        Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
+        //        Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
+        //        Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
+        //        Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
+        //    }
 
-            Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
-            Assert.IsNull(receipt.Tip);
-            Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
-        }
+        //    Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
+        //    Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
+        //    Assert.IsNull(receipt.Tip);
+        //    Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        //}
 
         [Test]
         [TestCase(true)]
@@ -383,7 +383,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
                 Assert.NotNull(recognizedReceipt.RecognizedForm);
 
                 ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,
@@ -421,7 +420,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 var recognizedReceipt = recognizedReceipts[receiptIndex];
                 var expectedPageNumber = receiptIndex + 1;
 
-                Assert.AreEqual("en-US", recognizedReceipt.ReceiptLocale);
                 Assert.NotNull(recognizedReceipt.RecognizedForm);
 
                 ValidateRecognizedForm(recognizedReceipt.RecognizedForm, includeTextContent: true,

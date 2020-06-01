@@ -13,22 +13,13 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal RecognizedReceipt(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
-            // Hard-coding locale for v2.0.
-            ReceiptLocale = "en-US";
             RecognizedForm = new RecognizedForm(documentResult, pageResults, readResults);
         }
 
         internal RecognizedReceipt(RecognizedReceipt receipt)
         {
-            ReceiptLocale = receipt.ReceiptLocale;
             RecognizedForm = receipt.RecognizedForm;
         }
-
-        /// <summary>
-        /// A culture name representing the location in which the receipt has been issued. Currently only
-        /// &quot;en-US&quot; is supported.
-        /// </summary>
-        public string ReceiptLocale { get; internal set; }
 
         /// <summary>
         /// Contains detailed form information about the recognized receipt, such as fields, form type and
