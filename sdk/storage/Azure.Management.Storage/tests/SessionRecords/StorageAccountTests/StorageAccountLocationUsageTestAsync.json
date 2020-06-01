@@ -1,0 +1,53 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/providers/Microsoft.Storage/locations/eastus2%28stage%29/usages?api-version=2019-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Management.Storage/1.0.0-dev.20200601.1",
+          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "cd9eb3a1ec211042455564a407299379",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "129",
+        "Content-Type": "application/json",
+        "Date": "Mon, 01 Jun 2020 06:30:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cd9eb3a1ec211042455564a407299379",
+        "x-ms-correlation-request-id": "e5807fa1-287f-4e15-baf3-6bbd5410c510",
+        "x-ms-ratelimit-remaining-subscription-reads": "11189",
+        "x-ms-request-id": "461f2a0d-63f6-44da-98de-defcf944b10b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200601T063042Z:e5807fa1-287f-4e15-baf3-6bbd5410c510"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "unit": "Count",
+            "currentValue": 50,
+            "limit": 250,
+            "name": {
+              "value": "StorageAccounts",
+              "localizedValue": "Storage Accounts"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "184972336",
+    "SUBSCRIPTION_ID": "45b60d85-fd72-427a-a708-f994d26e593e",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  }
+}
