@@ -37,15 +37,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// class.
         /// </summary>
         /// <param name="displayName">The billing account name.</param>
-        /// <param name="address">The address associated with billing
-        /// account.</param>
+        /// <param name="soldTo">The address of the individual or organization
+        /// that is responsible for the billing account.</param>
         /// <param name="agreementType">The type of agreement. Possible values
         /// include: 'MicrosoftCustomerAgreement', 'EnterpriseAgreement',
         /// 'MicrosoftOnlineServicesProgram',
         /// 'MicrosoftPartnerAgreement'</param>
-        /// <param name="customerType">The type of customer. Possible values
+        /// <param name="accountType">The type of customer. Possible values
         /// include: 'Enterprise', 'Individual', 'Partner'</param>
-        /// <param name="billingProfiles">The billing profiles associated to
+        /// <param name="accountStatus">The current status of the billing
+        /// account. Possible values include: 'Active', 'Deleted', 'Disabled',
+        /// 'Expired', 'Transferred', 'Extended', 'Terminated'</param>
+        /// <param name="billingProfiles">The billing profiles associated with
         /// the billing account. By default this is not populated, unless it's
         /// specified in $expand.</param>
         /// <param name="enrollmentDetails">The details about the associated
@@ -55,18 +58,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// enrollment.</param>
         /// <param name="enrollmentAccounts">The accounts associated to the
         /// enrollment.</param>
-        /// <param name="organizationId">Organization id.</param>
-        public BillingAccountUpdateRequest(string displayName = default(string), AddressDetails address = default(AddressDetails), string agreementType = default(string), string customerType = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), string organizationId = default(string))
+        /// <param name="hasReadAccess">Indicates whether user has read access
+        /// to the billing account.</param>
+        public BillingAccountUpdateRequest(string displayName = default(string), AddressDetails soldTo = default(AddressDetails), string agreementType = default(string), string accountType = default(string), string accountStatus = default(string), BillingProfilesOnExpand billingProfiles = default(BillingProfilesOnExpand), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?))
         {
             DisplayName = displayName;
-            Address = address;
+            SoldTo = soldTo;
             AgreementType = agreementType;
-            CustomerType = customerType;
+            AccountType = accountType;
+            AccountStatus = accountStatus;
             BillingProfiles = billingProfiles;
             EnrollmentDetails = enrollmentDetails;
             Departments = departments;
             EnrollmentAccounts = enrollmentAccounts;
-            OrganizationId = organizationId;
+            HasReadAccess = hasReadAccess;
             CustomInit();
         }
 
@@ -76,16 +81,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the billing account name.
+        /// Gets or sets the billing account name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
-        public string DisplayName { get; private set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the address associated with billing account.
+        /// Gets or sets the address of the individual or organization that is
+        /// responsible for the billing account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.address")]
-        public AddressDetails Address { get; set; }
+        [JsonProperty(PropertyName = "properties.soldTo")]
+        public AddressDetails SoldTo { get; set; }
 
         /// <summary>
         /// Gets the type of agreement. Possible values include:
@@ -99,16 +105,24 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Gets the type of customer. Possible values include: 'Enterprise',
         /// 'Individual', 'Partner'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.customerType")]
-        public string CustomerType { get; private set; }
+        [JsonProperty(PropertyName = "properties.accountType")]
+        public string AccountType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the billing profiles associated to the billing
+        /// Gets the current status of the billing account. Possible values
+        /// include: 'Active', 'Deleted', 'Disabled', 'Expired', 'Transferred',
+        /// 'Extended', 'Terminated'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountStatus")]
+        public string AccountStatus { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the billing profiles associated with the billing
         /// account. By default this is not populated, unless it's specified in
         /// $expand.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfiles")]
-        public IList<BillingProfile> BillingProfiles { get; set; }
+        public BillingProfilesOnExpand BillingProfiles { get; set; }
 
         /// <summary>
         /// Gets the details about the associated legacy enrollment. By default
@@ -130,10 +144,23 @@ namespace Microsoft.Azure.Management.Billing.Models
         public IList<EnrollmentAccount> EnrollmentAccounts { get; set; }
 
         /// <summary>
-        /// Gets organization id.
+        /// Gets indicates whether user has read access to the billing account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.organizationId")]
-        public string OrganizationId { get; private set; }
+        [JsonProperty(PropertyName = "properties.hasReadAccess")]
+        public bool? HasReadAccess { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SoldTo != null)
+            {
+                SoldTo.Validate();
+            }
+        }
     }
 }
