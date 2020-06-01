@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.KubernetesConfiguration</PackageId>
     <Description>Provides Microsoft Azure KubernetesConfiguration management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.8.2-preview</Version>
+    <Version>1.0.0-preview.1</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure KubernetesConfiguration Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.KubernetesConfiguration</AssemblyName>
@@ -24,10 +24,5 @@ New features:
 
   <!-- Please do not move/edit code below this line -->
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.21" />
-    <PackageReference Update="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Update="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
   <!-- Please do not move/edit code above this line -->
 </Project>
