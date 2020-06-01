@@ -814,6 +814,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task OpenReadAsync_Error()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blobClient = test.Container.GetBlobClient(GetNewBlobName());
+            Stream outputStream = await blobClient.OpenReadAsync();
+            byte[] bytes = new byte[Constants.KB];
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                outputStream.ReadAsync(bytes, 0, Constants.KB),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
         public async Task OpenReadAsync_AccessConditions()
         {
             // Arrange
@@ -872,9 +887,12 @@ namespace Azure.Storage.Blobs.Test
                     bufferSize: size / 4,
                     conditions: accessConditions).ConfigureAwait(false);
                 byte[] outputBytes = new byte[size];
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    outputStream.ReadAsync(outputBytes, 0, size),
-                    e => { });
+
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        var _ = await outputStream.ReadAsync(outputBytes, 0, size);
+                    });
             }
         }
 

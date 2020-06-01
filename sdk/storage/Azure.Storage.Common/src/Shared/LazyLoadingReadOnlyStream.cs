@@ -133,9 +133,17 @@ namespace Azure.Storage.Shared
             Response<T> response;
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-            response = async
-                ? await _downloadToAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
-                : _downloadToFunc(range, _requestConditions, default, cancellationToken);
+            try
+            {
+                response = async
+                    ? await _downloadToAsyncFunc(range, _requestConditions, default, cancellationToken).ConfigureAwait(false)
+                    : _downloadToFunc(range, _requestConditions, default, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
 
             _stream = (Stream)typeof(T).GetProperty("Content").GetValue(response.Value, null);
             _lastDownloadBytes = response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
