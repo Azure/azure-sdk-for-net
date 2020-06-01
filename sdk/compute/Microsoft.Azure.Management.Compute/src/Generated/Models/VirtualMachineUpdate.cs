@@ -53,6 +53,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// cannot be changed once VM is provisioned.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
         /// the virtual machine.</param>
+        /// <param name="securityProfile">Specifies the Security related
+        /// profile settings for the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
         /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2015-06-15.</param>
@@ -124,7 +126,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -133,6 +135,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             VirtualMachineScaleSet = virtualMachineScaleSet;
@@ -202,6 +205,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Security related profile settings for
+        /// the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the boot diagnostic settings state.
