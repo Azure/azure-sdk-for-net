@@ -854,7 +854,7 @@ namespace Azure.Storage.Blobs
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
                 {
-                    response = default;
+                    response = Response.FromValue(new BlobContainerInfo(), default);
                 }
                 catch (Exception ex)
                 {

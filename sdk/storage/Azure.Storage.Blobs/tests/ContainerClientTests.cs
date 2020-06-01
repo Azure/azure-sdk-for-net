@@ -509,11 +509,12 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            await container.CreateIfNotExistsAsync();
+            Response<BlobContainerInfo> createResponse = await container.CreateIfNotExistsAsync();
 
             // Assert
-            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            Assert.IsNotNull(response.Value.ETag);
+            Response<BlobContainerProperties> propertiesResponse = await container.GetPropertiesAsync();
+            Assert.IsNotNull(createResponse.Value.ETag);
+            Assert.IsNotNull(propertiesResponse.Value.ETag);
 
             // Cleanup
             await container.DeleteAsync();
@@ -527,12 +528,12 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             await container.CreateAsync();
 
-            // Act
-            await container.CreateIfNotExistsAsync();
+            BlobContainerInfo containerInfo = await container.CreateIfNotExistsAsync();
 
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
             Assert.IsNotNull(response.Value.ETag);
+            Assert.AreEqual(containerInfo.ETag.ToString(), "<null>");
 
             // Cleanup
             await container.DeleteAsync();
