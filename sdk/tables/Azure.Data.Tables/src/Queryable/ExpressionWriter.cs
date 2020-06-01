@@ -50,6 +50,19 @@ namespace Azure.Data.Tables.Queryable
             return result;
         }
 
+        internal override Expression VisitMethodCall(MethodCallExpression m)
+        {
+            if (m.Method == ReflectionUtil.DictionaryGetItemMethodInfo && m.Arguments.Count == 1 && m.Arguments[0] is ConstantExpression ce)
+            {
+                _builder.Append(ce.Value as string);
+            }
+            else
+            {
+                return base.VisitMethodCall(m);
+            }
+
+            return m;
+        }
 
         internal override Expression VisitMemberAccess(MemberExpression m)
         {
@@ -155,9 +168,17 @@ namespace Azure.Data.Tables.Queryable
         {
             if (e is BinaryExpression || e is UnaryExpression)
             {
-                _builder.Append(UriHelper.LEFTPAREN);
-                Visit(e);
-                _builder.Append(UriHelper.RIGHTPAREN);
+                if (e is UnaryExpression unary && unary.NodeType == ExpressionType.TypeAs)
+                {
+                    Visit(unary.Operand);
+                }
+                else
+                {
+                    _builder.Append(UriHelper.LEFTPAREN);
+                    Visit(e);
+                    _builder.Append(UriHelper.RIGHTPAREN);
+                }
+
             }
             else
             {
