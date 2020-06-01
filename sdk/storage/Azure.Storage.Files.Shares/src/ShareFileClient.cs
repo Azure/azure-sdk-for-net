@@ -1996,28 +1996,44 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int bufferSize = Constants.DefaultStreamCopyBufferSize,
             ShareFileRequestConditions conditions = default)
-            => new LazyLoadingReadOnlyStream<ShareFileDownloadInfo>(
-                (HttpRange range,
-                object conditions,
-                bool rangeGetContentHash,
-                CancellationToken cancellationToken)
-                    => DownloadAsync(
-                        range,
-                        (ShareFileRequestConditions)conditions,
-                        rangeGetContentHash,
-                        cancellationToken),
-                (HttpRange range,
-                object conditions,
-                bool rangeGetContentHash,
-                CancellationToken cancellationToken)
-                    => Download(
-                        range,
-                        (ShareFileRequestConditions)conditions,
-                        rangeGetContentHash,
-                        cancellationToken),
-                position,
-                bufferSize,
-                conditions);
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+                return new LazyLoadingReadOnlyStream<ShareFileDownloadInfo>(
+                    (HttpRange range,
+                    object conditions,
+                    bool rangeGetContentHash,
+                    CancellationToken cancellationToken)
+                        => DownloadAsync(
+                            range,
+                            (ShareFileRequestConditions)conditions,
+                            rangeGetContentHash,
+                            cancellationToken),
+                    (HttpRange range,
+                    object conditions,
+                    bool rangeGetContentHash,
+                    CancellationToken cancellationToken)
+                        => Download(
+                            range,
+                            (ShareFileRequestConditions)conditions,
+                            rangeGetContentHash,
+                            cancellationToken),
+                    position,
+                    bufferSize,
+                    conditions);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion OpenRead
 
         #region Delete

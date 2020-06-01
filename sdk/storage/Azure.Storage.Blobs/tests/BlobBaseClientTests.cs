@@ -740,10 +740,8 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var data = GetRandomBuffer(size);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
 
             // Act
             Stream outputStream = await blob.OpenReadAsync().ConfigureAwait(false);
@@ -764,10 +762,8 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var data = GetRandomBuffer(size);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
 
             // Act
             Stream outputStream = await blob.OpenReadAsync(bufferSize: size / 8).ConfigureAwait(false);
@@ -791,10 +787,8 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var data = GetRandomBuffer(size);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
 
             byte[] expected = new byte[size];
             Array.Copy(data, size / 2, expected, size / 2, size / 2);
@@ -839,10 +833,8 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
                 var data = GetRandomBuffer(size);
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
+                using Stream stream = new MemoryStream(data);
+                await blob.UploadAsync(stream);
 
                 parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
                 parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
@@ -874,10 +866,8 @@ namespace Azure.Storage.Blobs.Test
                 await using DisposingContainer test = await GetTestContainerAsync();
                 var data = GetRandomBuffer(size);
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
+                using Stream stream = new MemoryStream(data);
+                await blob.UploadAsync(stream);
 
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
@@ -902,20 +892,19 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            int length = Constants.KB;
-            byte[] exectedData = GetRandomBuffer(length);
+            int size = Constants.KB;
+            byte[] exectedData = GetRandomBuffer(size);
             BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(exectedData))
-            {
-                await blobClient.UploadAsync(stream);
-            }
+            using Stream stream = new MemoryStream(exectedData);
+            await blobClient.UploadAsync(stream);
+
             Stream outputStream = await blobClient.OpenReadAsync(position: 0, bufferSize: 157);
-            byte[] actualData = new byte[length];
+            byte[] actualData = new byte[size];
             int offset = 0;
 
             // Act
             int count = 0;
-            while (offset + count < length)
+            while (offset + count < size)
             {
                 for (count = 6; count < 37; count += 6)
                 {
@@ -923,7 +912,7 @@ namespace Azure.Storage.Blobs.Test
                     offset += count;
                 }
             }
-            await outputStream.ReadAsync(actualData, offset, length - offset);
+            await outputStream.ReadAsync(actualData, offset, size - offset);
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);
@@ -938,15 +927,13 @@ namespace Azure.Storage.Blobs.Test
             int length = 1 * Constants.GB;
             byte[] exectedData = GetRandomBuffer(length);
             BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(exectedData))
-            {
-                await blobClient.UploadAsync(stream,
-                    transferOptions: new StorageTransferOptions
-                        {
-                            MaximumTransferLength = 8 * Constants.MB,
-                            MaximumConcurrency = 8
-                        });
-            }
+            using Stream stream = new MemoryStream(exectedData);
+            await blobClient.UploadAsync(stream,
+                transferOptions: new StorageTransferOptions
+                    {
+                        MaximumTransferLength = 8 * Constants.MB,
+                        MaximumConcurrency = 8
+                    });
 
             Stream outputStream = await blobClient.OpenReadAsync();
             int readSize = 8 * Constants.MB;
