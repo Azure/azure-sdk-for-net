@@ -609,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConsumerClient), EventHubName, clientHash);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, clientHash);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -630,7 +630,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -646,13 +646,13 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConsumerClient), EventHubName, clientHash);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual

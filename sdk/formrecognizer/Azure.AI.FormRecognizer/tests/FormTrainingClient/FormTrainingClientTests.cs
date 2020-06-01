@@ -95,8 +95,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             FormTrainingClient client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty)));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null));
+            Assert.ThrowsAsync<UriFormatException>(() => client.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartTrainingAsync((Uri)null, useTrainingLabels: false));
         }
 
         [Test]
@@ -128,6 +128,30 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(formRecognizerClient);
             Assert.IsNotNull(formRecognizerClient.Diagnostics);
             Assert.IsNotNull(formRecognizerClient.ServiceClient);
+        }
+
+        [Test]
+        public void StartCopyModelArgumentValidation()
+        {
+            FormTrainingClient client = CreateInstrumentedClient();
+            var copyAuth = new CopyAuthorization("<modelId>", "<accesstoken>", default, "<resourceId>", "<region>");
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync(null, copyAuth));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync(string.Empty, copyAuth));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelAsync("<modelId>", default));
+            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelAsync("1975-04-04", copyAuth));
+        }
+
+        [Test]
+        public void GetCopyAuthorizationArgumentValidation()
+        {
+            FormTrainingClient client = CreateInstrumentedClient();
+            var text = "text";
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCopyAuthorizationAsync(null, text));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCopyAuthorizationAsync(string.Empty, text));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCopyAuthorizationAsync(text, null));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCopyAuthorizationAsync(text, string.Empty));
         }
     }
 }

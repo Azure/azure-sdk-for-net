@@ -44,10 +44,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
 
         /// <summary>
         ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
@@ -80,12 +81,14 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the rule manager.</param>
         ///
         /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
         ///
         public abstract TransportRuleManager CreateRuleManager(
             string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy);
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.
@@ -103,7 +106,5 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
-
-
     }
 }

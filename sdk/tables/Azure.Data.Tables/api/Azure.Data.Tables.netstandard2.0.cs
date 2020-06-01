@@ -17,10 +17,14 @@ namespace Azure.Data.Tables
         public virtual Azure.Response<T> Insert<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
         public virtual Azure.Response Merge(System.Collections.Generic.IDictionary<string, object> entity, string eTag = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> MergeAsync(System.Collections.Generic.IDictionary<string, object> entity, string eTag = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.Collections.Generic.IDictionary<string, object>> Query(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.Collections.Generic.IDictionary<string, object>> QueryAsync(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<T> QueryAsync<T>(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
-        public virtual Azure.Pageable<T> Query<T>(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
+        public virtual Azure.Pageable<System.Collections.Generic.IDictionary<string, object>> Query(System.Linq.Expressions.Expression<System.Func<System.Collections.Generic.IDictionary<string, object>, bool>> filter, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.Collections.Generic.IDictionary<string, object>> Query(string filter = null, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.Collections.Generic.IDictionary<string, object>> QueryAsync(System.Linq.Expressions.Expression<System.Func<System.Collections.Generic.IDictionary<string, object>, bool>> filter, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.Collections.Generic.IDictionary<string, object>> QueryAsync(string filter = null, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<T> QueryAsync<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
+        public virtual Azure.AsyncPageable<T> QueryAsync<T>(string filter = null, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
+        public virtual Azure.Pageable<T> Query<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
+        public virtual Azure.Pageable<T> Query<T>(string filter = null, int? top = default(int?), string select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : Azure.Data.Tables.TableEntity, new() { throw null; }
         public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl = null, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(System.Collections.Generic.IDictionary<string, object> entity, string eTag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -41,6 +45,7 @@ namespace Azure.Data.Tables
     public partial class TableEntity
     {
         public TableEntity() { }
+        public TableEntity(string partitionKey, string rowKey) { }
         public string ETag { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
         public string RowKey { get { throw null; } set { } }
@@ -202,11 +207,6 @@ namespace Azure.Data.Tables.Models
         public string OdataMetadata { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.TableItem> Value { get { throw null; } }
     }
-    public partial class TableServiceError
-    {
-        internal TableServiceError() { }
-        public string Message { get { throw null; } }
-    }
     public partial class TableServiceProperties
     {
         public TableServiceProperties() { }
@@ -219,6 +219,13 @@ namespace Azure.Data.Tables.Models
     {
         internal TableServiceStats() { }
         public Azure.Data.Tables.Models.GeoReplication GeoReplication { get { throw null; } }
+    }
+}
+namespace Azure.Data.Tables.Queryable
+{
+    public static partial class TableClientExtensions
+    {
+        public static string CreateFilter<T>(this Azure.Data.Tables.TableClient client, System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
     }
 }
 namespace Azure.Data.Tables.Sas

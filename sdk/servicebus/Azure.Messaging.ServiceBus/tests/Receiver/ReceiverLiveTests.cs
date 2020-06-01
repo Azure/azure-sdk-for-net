@@ -28,12 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendAsync(batch);
 
                 await using var receiver = client.CreateReceiver(scope.QueueName);
-
-                Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
-                foreach (ServiceBusMessage message in sentMessages)
-                {
-                    sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body.ToArray()));
-                }
+                var messageEnum = sentMessages.GetEnumerator();
 
                 var ct = 0;
                 while (ct < messageCt)
@@ -41,7 +36,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAsync(
                     maxMessages: messageCt))
                     {
-                        var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
                         ct++;
                     }
                 }

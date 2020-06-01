@@ -11,7 +11,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: digitaltwins
-    Location: southcentralus
+    Location: westus2
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     EnvVars:
       # Runs live tests.

@@ -9,10 +9,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -225,34 +225,46 @@ namespace Azure.Search.Documents.Tests
 
         #region Get Clients
         /// <summary>
-        /// Get a SearchServiceClient to use for testing.
+        /// Get a <see cref="SearchIndexClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchServiceClient instance.</returns>
-        public SearchServiceClient GetServiceClient(SearchClientOptions options = null) =>
+        /// <returns>A <see cref="SearchIndexClient"/> instance.</returns>
+        public SearchIndexClient GetIndexClient(SearchClientOptions options = null) =>
             TestFixture.InstrumentClient(
-                new SearchServiceClient(
+                new SearchIndexClient(
                     Endpoint,
                     new AzureKeyCredential(PrimaryApiKey),
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
-        /// Get a SearchClient to use for testing with an Admin API key.
+        /// Get a <see cref="SearchIndexerClient"/> to use for testing.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchClient instance.</returns>
+        /// <returns>A <see cref="SearchIndexerClient"/> instance.</returns>
+        public SearchIndexerClient GetIndexerClient(SearchClientOptions options = null) =>
+            TestFixture.InstrumentClient(
+                new SearchIndexerClient(
+                    Endpoint,
+                    new AzureKeyCredential(PrimaryApiKey),
+                    TestFixture.GetSearchClientOptions(options)));
+
+        /// <summary>
+        /// Get a <see cref="SearchClient"/> to use for testing with an Admin API key.
+        /// </summary>
+        /// <param name="options">Optional client options.</param>
+        /// <returns>A <see cref="SearchClient"/> instance.</returns>
         public SearchClient GetSearchClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
-                GetServiceClient(options).GetSearchClient(IndexName));
+                GetIndexClient(options).GetSearchClient(IndexName));
         }
 
         /// <summary>
-        /// Get a SearchClient to use for testing with a query API key.
+        /// Get a <see cref="SearchClient"/> to use for testing with a query API key.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchClient instance.</returns>
+        /// <returns>A <see cref="SearchClient"/> instance.</returns>
         public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
@@ -282,7 +294,7 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
-                SearchServiceClient client = GetServiceClient();
+                SearchIndexClient client = GetIndexClient();
                 await client.DeleteIndexAsync(IndexName);
                 RequiresCleanup = false;
 
@@ -318,7 +330,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Random.GetName(8);
 
-                SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
                 await client.CreateIndexAsync(GetHotelIndex(IndexName));
 
                 RequiresCleanup = true;

@@ -47,18 +47,35 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 // implement case
                 try
                 {
+                    // Enable container soft dlete
+                    BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    properties.ContainerDeleteRetentionPolicy = new DeleteRetentionPolicy();
+                    properties.ContainerDeleteRetentionPolicy.Enabled = true;
+                    properties.ContainerDeleteRetentionPolicy.Days = 30;
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties);
+                    BlobServiceProperties properties2 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties2.ContainerDeleteRetentionPolicy.Enabled);
+                    Assert.Equal(30, properties2.ContainerDeleteRetentionPolicy.Days);
+
+                    //Create container
                     string containerName = TestUtilities.GenerateName("container");
                     BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName, new BlobContainer());
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
+                    //Get container
                     blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
                     Assert.Null(blobContainer.Metadata);
                     Assert.Equal(PublicAccess.None, blobContainer.PublicAccess);
@@ -69,6 +86,9 @@ namespace Storage.Tests
                     storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
                     IPage<ListContainerItem> blobContainers = storageMgmtClient.BlobContainers.List(rgName, accountName);
                     Assert.Empty(blobContainers.ToList());
+
+                    //List include deleted 
+                    IPage<ListContainerItem> containers = storageMgmtClient.BlobContainers.List(rgName, accountName, include: ListContainersInclude.Deleted);
 
                     //Delete not exist container, won't fail (return 204)
                     storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
