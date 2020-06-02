@@ -39,7 +39,7 @@ var createNamespaceResponse = eventHubManagementClient.Namespaces.CreateOrUpdate
     namespaceName,
     new EHNamespace()
     {
-        Location = location,
+        Location = "westus",
         Sku = new Sku
         {
             Name = SkuName.Standard,
@@ -94,7 +94,7 @@ var createNamespaceResponse = await namespacesClient.StartCreateOrUpdateAsync(
     namespaceName,
     new EHNamespace()
     {
-        Location = location.Result,
+        Location = "westus",
         Sku= new Sku(SkuName.Standard)
         {
             Tier = SkuTier.Standard,

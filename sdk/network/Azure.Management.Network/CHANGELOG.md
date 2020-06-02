@@ -38,7 +38,7 @@ networkClient.SubscriptionId = subscriptionId;
 // Create VNet
 var vnet = new VirtualNetwork()
 {
-    Location = location,
+    Location = "westus",
     AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
     Subnets = new List<Subnet>()
     {
@@ -66,7 +66,7 @@ var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
 // Create VNet
 var vnet = new VirtualNetwork()
 {
-    Location = location,
+    Location = "westus",
     AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
     Subnets = new List<Subnet>()
     {
@@ -84,28 +84,32 @@ vnet = await response.WaitForCompletionAsync();
 
 #### Object Model Changes
 
-Example: Create a VirtualNetworkGatewayConnection Model
+Example: Create a IpsecPolicy Model
 
 Before upgrade:
 ```csharp
-var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnection()
-                {
-                    Location = location,
-                    VirtualNetworkGateway1 = getVirtualNetworkGatewayResponse,
-                    LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
-                    ConnectionType = VirtualNetworkGatewayConnectionType.IPsec,
-                    RoutingWeight = 3,
-                    SharedKey = "abc"
-                };
+var policy = new IpsecPolicy()
+            {
+                SaLifeTimeSeconds = 300,
+                SaDataSizeKilobytes = 1024,
+                IpsecEncryption = IpsecEncryption.AES128,
+                IpsecIntegrity = IpsecIntegrity.SHA256,
+                IkeEncryption = IkeEncryption.AES192,
+                IkeIntegrity = IkeIntegrity.SHA1,
+                DhGroup = DhGroup.DHGroup2,
+                PfsGroup = PfsGroup.PFS1,
+            }
 ```
 
 After upgrade:
 ```csharp
- var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnection(getVirtualNetworkGatewayResponse, VirtualNetworkGatewayConnectionType.IPsec)
-                {
-                    Location = location,
-                    LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
-                    RoutingWeight = 3,
-                    SharedKey = "abc"
-                };
+var policy = new IpsecPolicy(
+    300,
+    1024,
+    IpsecEncryption.AES128,
+    IpsecIntegrity.SHA256,
+    IkeEncryption.AES192,
+    IkeIntegrity.SHA1,
+    DhGroup.DHGroup2,
+    PfsGroup.PFS1)
 ```

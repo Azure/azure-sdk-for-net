@@ -45,8 +45,8 @@ var parameters = new Deployment
     }
 };
 
-client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
-client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+resourceManagerManagementClient.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "westus" });
+resourceManagerManagementClient.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 ```
 
 storage-account.json
@@ -112,7 +112,7 @@ var parameters = new Deployment
         Parameters = parameter.ToString()
     }
 );
-await resourceGroupsClient.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
+await resourceGroupsClient.CreateOrUpdateAsync(groupName, new ResourceGroup("westus"));
 var rawResult = await deploymentsClient.StartCreateOrUpdateAsync(groupName, deploymentName, parameters);
 await rawResult.WaitForCompletionAsync();
 ```

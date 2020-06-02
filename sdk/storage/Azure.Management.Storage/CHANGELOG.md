@@ -37,7 +37,7 @@ storageManagementClient.SubscriptionId = subscriptionId;
 
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters
 {
-    Location = location,
+    Location = "westus",
     Tags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -58,7 +58,7 @@ using Azure.Management.Storage.Models;
 var storageManagementClient = new StorageManagementClient(subscriptionId, new DefaultAzureCredential());
 var storageAccountsClient = storageManagementClient.GetStorageAccountsClient();
 
-var parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, location)
+var parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, "westus")
     {
         Tags = new Dictionary<string, string>
             {

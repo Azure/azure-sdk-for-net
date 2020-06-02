@@ -52,6 +52,7 @@ resourceClient.SubscriptionId = subscriptionId;
 networkClient.SubscriptionId = subscriptionId;
 computeClient.SubscriptionId = subscriptionId;
 
+var location = "westus";
 // Create Resource Group
 await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new ResourceGroup(location));
 
@@ -163,6 +164,8 @@ var availabilitySetsClient = computeClient.GetAvailabilitySetsClient();
 var virtualNetworksClient = networkClient.GetVirtualNetworksClient();
 var networkInterfaceClient = networkClient.GetNetworkInterfacesClient();
 var virtualMachinesClient = computeClient.GetVirtualMachinesClient();
+
+var location = "westus";
 // Create AvailabilitySet
 var availabilitySet = new AvailabilitySet(location)
 {
@@ -250,7 +253,7 @@ Before upgrade:
 ```csharp
 var vmExtension = new VirtualMachineExtension
             {
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = "westus",
                 Tags = new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 Publisher = "Microsoft.Compute",
                 VirtualMachineExtensionType = "VMAccessAgent",
@@ -270,7 +273,7 @@ var vmExtension = new VirtualMachineExtension(
                 null,
                 "vmext01",
                 "Microsoft.Compute/virtualMachines/extensions",
-                "SoutheastAsia",
+                "westus",
                 new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 "RerunExtension",
                 "Microsoft.Compute",
