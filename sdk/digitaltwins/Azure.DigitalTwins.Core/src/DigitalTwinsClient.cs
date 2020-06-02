@@ -33,8 +33,10 @@ namespace Azure.DigitalTwins.Core
         /// <param name='endpoint'>The Azure digital twins service instance URI to connect to.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateServiceClient">
-        /// var clientSecretCredential = new ClientSecretCredential(
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret">
+        /// // By using the ClientSecretCredential, a specified application Id can login using a
+        /// // client secret.
+        /// var tokenCredential = new ClientSecretCredential(
         ///     tenantId,
         ///     clientId,
         ///     clientSecret,
@@ -42,7 +44,7 @@ namespace Azure.DigitalTwins.Core
         ///
         /// var dtClient = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
-        ///     clientSecretCredential);
+        ///     tokenCredential);
         /// </code>
         /// </example>
         public DigitalTwinsClient(Uri endpoint, TokenCredential credential)
@@ -57,24 +59,24 @@ namespace Azure.DigitalTwins.Core
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
         /// <param name="options"> Options that allow configuration of requests sent to the digital twins service.</param>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateServiceClientWithHttpClient">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin">
         /// // This illustrates how to specify client options, in this case, by providing an
-        /// // instance of HttpClient for the digital twins client to use
-        ///
+        /// // instance of HttpClient for the digital twins client to use.
         /// var clientOptions = new DigitalTwinsClientOptions
         /// {
         ///     Transport = new HttpClientTransport(httpClient),
         /// };
         ///
-        /// var clientSecretCredential = new ClientSecretCredential(
+        /// // By using the InteractiveBrowserCredential, the current user can login using a web browser
+        /// // interactively with the AAD
+        /// var tokenCredential = new InteractiveBrowserCredential(
         ///     tenantId,
         ///     clientId,
-        ///     clientSecret,
         ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
         ///
         /// var dtClient = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
-        ///     clientSecretCredential,
+        ///     tokenCredential,
         ///     clientOptions);
         /// </code>
         /// </example>
@@ -142,7 +144,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The created application/json digital twin and the http response.</returns>
         /// <remarks>The digital twin must be the serialization of an instance of <see cref="Azure.DigitalTwins.Core.Serialization.BasicDigitalTwin"/> or the serialization of an extension of that type.</remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateTwin">
         /// Response&lt;string&gt; response = await DigitalTwinsClient.CreateDigitalTwinAsync(twin.Key, twin.Value).ConfigureAwait(false);
         /// </code>
         /// </example>
@@ -175,7 +177,7 @@ namespace Azure.DigitalTwins.Core
         /// To delete a digital twin, any relationships referencing it must be deleted first.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleDeleteTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteTwin">
         /// await DigitalTwinsClient.DeleteDigitalTwinAsync(twin.Key).ConfigureAwait(false);
         /// </code>
         /// </example>
@@ -234,7 +236,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetComponent">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
         /// response = await DigitalTwinsClient.GetComponentAsync(twinId, SamplesConstants.ComponentPath).ConfigureAwait(false);
         /// </code>
         /// </example>
@@ -265,7 +267,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleUpdateComponent">
+        /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
         /// // Update Component with replacing property value
         /// string propertyPath = &quot;/ComponentProp1&quot;;
         /// string propValue = &quot;New Value&quot;;
@@ -304,7 +306,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetRelationships">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetRelationships">
         /// AsyncPageable&lt;string&gt; relationships = DigitalTwinsClient.GetRelationshipsAsync(twin.Key);
         /// </code>
         /// </example>
@@ -406,7 +408,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships directed towards the specified digital twin and the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetIncomingRelationships">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships">
         /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = DigitalTwinsClient.GetIncomingRelationshipsAsync(twin.Key);
         /// </code>
         /// </example>
@@ -555,7 +557,7 @@ namespace Azure.DigitalTwins.Core
         /// <para>This argument must be the serialization of an instance of <see cref="Azure.DigitalTwins.Core.Serialization.BasicRelationship"/> or the serialization of an extension of that type.</para>
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateRelationship">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateRelationship">
         /// string serializedRelationship = JsonSerializer.Serialize(relationship);
         ///
         /// await DigitalTwinsClient
@@ -626,7 +628,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json models and the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetModels">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetModels">
         /// AsyncPageable&lt;ModelData&gt; allModels = DigitalTwinsClient.GetModelsAsync();
         /// await foreach (ModelData model in allModels)
         /// {
@@ -723,7 +725,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json model and the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetModel">
         /// Response&lt;ModelData&gt; sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
         /// </code>
         /// </example>
@@ -757,7 +759,7 @@ namespace Azure.DigitalTwins.Core
         /// Once a model is decomissioned, it may not be recommissioned.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleDecommisionModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel">
         /// try
         /// {
         ///     await DigitalTwinsClient.DecommissionModelAsync(sampleModelId).ConfigureAwait(false);
@@ -804,7 +806,7 @@ namespace Azure.DigitalTwins.Core
         /// So using this method, model creation is transactional.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateModels">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
         /// Response&lt;IReadOnlyList&lt;ModelData&gt;&gt; response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
         /// Console.WriteLine($&quot;Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}&quot;);
         /// </code>
@@ -845,7 +847,7 @@ namespace Azure.DigitalTwins.Core
         /// 409 (Conflict): There are dependencies on the model that prevent it from being deleted.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleDeleteModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteModel">
         /// try
         /// {
         ///     await DigitalTwinsClient.DeleteModelAsync(sampleModelId).ConfigureAwait(false);
@@ -888,7 +890,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of query results.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleQueryTwins">
+        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins">
         /// // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
         /// // happens under the covers.
         /// AsyncPageable&lt;string&gt; asyncPageableResponse = DigitalTwinsClient.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
@@ -1013,7 +1015,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json event routes and the http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleGetEventRoutes">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes">
         /// AsyncPageable&lt;EventRoute&gt; response = DigitalTwinsClient.GetEventRoutesAsync();
         /// await foreach (EventRoute er in response)
         /// {
@@ -1131,7 +1133,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleCreateEventRoute">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateEventRoute">
         /// string eventFilter = &quot;$eventType = &apos;DigitalTwinTelemetryMessages&apos; or $eventType = &apos;DigitalTwinLifecycleNotification&apos;&quot;;
         /// var eventRoute = new EventRoute(_eventhubEndpointName)
         /// {
@@ -1165,7 +1167,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinSampleDeleteEventRoute">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteEventRoute">
         /// Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId).ConfigureAwait(false);
         /// </code>
         /// </example>
