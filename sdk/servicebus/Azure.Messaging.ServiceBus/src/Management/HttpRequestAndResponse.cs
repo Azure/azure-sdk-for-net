@@ -23,7 +23,6 @@ namespace Azure.Messaging.ServiceBus.Management
         private readonly string _fullyQualifiedNamespace;
         private readonly TokenCredential _tokenCredential;
         private readonly int _port;
-        private readonly string _clientId;
 
         /// <summary>
         /// Initializes a new <see cref="HttpRequestAndResponse"/> which can be used to send http request and response.
@@ -38,7 +37,6 @@ namespace Azure.Messaging.ServiceBus.Management
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _port = GetPort(_fullyQualifiedNamespace);
-            _clientId = nameof(ServiceBusManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
         }
         private static async Task<Exception> ValidateHttpResponse(Response response, Request request)
         {
@@ -178,8 +176,6 @@ namespace Azure.Messaging.ServiceBus.Management
             bool enrich,
             CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(GetEntityAsync), $"path:{entityPath},query:{query},enrich:{enrich}");
-
             var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
             if (query != null)
             {
@@ -201,7 +197,6 @@ namespace Azure.Messaging.ServiceBus.Management
             request.Uri = requestUriBuilder;
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(GetEntityAsync), $"path:{entityPath},query:{query},enrich:{enrich}");
             return response;
         }
 
@@ -213,8 +208,6 @@ namespace Azure.Messaging.ServiceBus.Management
             string fwdDeadLetterTo,
             CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(PutEntityAsync), $"path:{entityPath},isUpdate:{isUpdate}");
-
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
@@ -255,7 +248,6 @@ namespace Azure.Messaging.ServiceBus.Management
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(PutEntityAsync), $"path:{entityPath},isUpdate:{isUpdate}");
             return response;
         }
 
@@ -263,8 +255,6 @@ namespace Azure.Messaging.ServiceBus.Management
             string entityPath,
             CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(DeleteEntityAsync), entityPath);
-
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
@@ -280,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Management
             request.Method = RequestMethod.Delete;
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
-            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(DeleteEntityAsync), entityPath);
+
             return response;
         }
 
@@ -303,7 +293,6 @@ namespace Azure.Messaging.ServiceBus.Management
             }
             catch (HttpRequestException exception)
             {
-                MessagingEventSource.Log.ManagementOperationException(_clientId, nameof(SendHttpRequestAsync), exception);
                 throw new ServiceBusException(true, exception.Message);
             }
 
@@ -314,7 +303,6 @@ namespace Azure.Messaging.ServiceBus.Management
             }
             else
             {
-                MessagingEventSource.Log.ManagementOperationException(_clientId, nameof(SendHttpRequestAsync), exceptionReturned);
                 throw exceptionReturned;
             }
         }

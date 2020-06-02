@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Management
@@ -56,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Management
             get => _lockDuration;
             set
             {
-                TimeoutHelper.ThrowIfNonPositiveArgument(value, nameof(LockDuration));
+                Argument.AssertPositive(value, nameof(LockDuration));
                 _lockDuration = value;
             }
         }
