@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Analytics.Synapse.Spark.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.Analytics.Synapse.Spark.Tests
@@ -38,11 +38,11 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         public async Task TestSparkSessionJob()
         {
             // Start the Spark session
-            var createParams = this.CreateSparkSessionRequestParameters();
-            var sessionCreateResponse = (await SparkSessionClient.CreateSparkSessionAsync(createParams)).Value;
+            SparkSessionOptions createParams = this.CreateSparkSessionRequestParameters();
+            SparkSession sessionCreateResponse = (await SparkSessionClient.CreateSparkSessionAsync(createParams)).Value;
 
             // Poll the spark session initialization until it is successful.
-            var getSessionResponse = await this.PollSparkSessionAsync(sessionCreateResponse);
+            SparkSession getSessionResponse = await this.PollSparkSessionAsync(sessionCreateResponse);
 
             // Verify the Spark session completes successfully
             Assert.True("idle".Equals(getSessionResponse.State, StringComparison.OrdinalIgnoreCase) && getSessionResponse.Result == SparkSessionResultType.Succeeded,
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             );
 
             // Execute Spark statement in the session
-            var createStatementResponse = (await SparkSessionClient.CreateSparkStatementAsync(
+            SparkStatement createStatementResponse = (await SparkSessionClient.CreateSparkStatementAsync(
                 getSessionResponse.Id,
                 new SparkStatementOptions
                 {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
                     Code = @"print(""Hello world\n"")"
                 })).Value;
 
-            var getStatementResponse = await this.PollSparkSessionStatementAsync(
+            SparkStatement getStatementResponse = await this.PollSparkSessionStatementAsync(
                 getSessionResponse.Id,
                 createStatementResponse);
 
@@ -80,17 +80,17 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             );
 
             // Verify the output
-            Assert.IsInstanceOf(typeof(JObject), getStatementResponse.Output.Data);
-            Assert.Equals("Hello world", ((JObject)getStatementResponse.Output.Data)["text/plain"].Value<string>());
+            Dictionary<string, string> outputData = JsonSerializer.Deserialize<Dictionary<string, string>>(getStatementResponse.Output.Data as string);
+            Assert.Equals("Hello world", outputData["text/plain"]);
 
             // Get the list of Spark statements and check that the executed statement exists
-            var listStatementResponse = await SparkSessionClient.GetSparkStatementsAsync(sessionCreateResponse.Id);
+            Response<SparkStatementCollection> listStatementResponse = await SparkSessionClient.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
             Assert.NotNull(listStatementResponse.Value);
             Assert.IsTrue(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id));
 
             // Get the list of Spark session and check that the created session exists
-            var listSessionResponse = await this.ListSparkSessionsAsync();
+            List<SparkSession> listSessionResponse = await this.ListSparkSessionsAsync();
 
             Assert.NotNull(listSessionResponse);
             Assert.IsTrue(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id));
@@ -99,10 +99,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         [Test]
         public async Task TestGetSparkSession()
         {
-            var sparkSessions = (await SparkSessionClient.GetSparkSessionsAsync()).Value;
-            foreach (var expectedSparkSession in sparkSessions.Sessions)
+            SparkSessionCollection sparkSessions = (await SparkSessionClient.GetSparkSessionsAsync()).Value;
+            foreach (SparkSession expectedSparkSession in sparkSessions.Sessions)
             {
-                var actualSparkSession = await SparkSessionClient.GetSparkSessionAsync(expectedSparkSession.Id);
+                SparkSession actualSparkSession = await SparkSessionClient.GetSparkSessionAsync(expectedSparkSession.Id);
                 ValidateSparkSession(expectedSparkSession, actualSparkSession);
             }
         }

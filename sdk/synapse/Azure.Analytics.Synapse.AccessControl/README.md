@@ -1,10 +1,10 @@
 # Azure Synapse Analytics Access Control client library for .NET
 
-Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
-
 This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
 
 The Azure Synapse Analytics access control client library enables programmatically managing role assignments.
+
+Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
 
 ## Getting started
 
@@ -16,7 +16,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics access control client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Analytics.Synapse.AccessControl -IncludePrerelease
+dotnet add package Azure.Analytics.Synapse.AccessControl --version 0.1.0-preview.1
 ```
 
 ### Prerequisites
@@ -47,6 +47,14 @@ or other credential providers provided with the Azure SDK, you should install th
 Install-Package Azure.Identity
 ```
 
+## Key concepts
+
+### AccessControlClient
+With a `AccessControlClient` you can get role assignments from the workspace, create new role assignments, and delete role assignments.
+
+### Role Assignment
+The way you control access to Synapse resources is to create role assignments. A role assignment is the process of attaching a role definition to a user, group, service principal, or managed identity at a particular scope for the purpose of granting access. Access is granted by creating a role assignment, and access is revoked by removing a role assignment.
+
 ## Examples
 The Azure.Analytics.Synapse.AccessControl package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics access control related tasks:
 
@@ -61,7 +69,7 @@ The Azure.Analytics.Synapse.AccessControl package supports synchronous and async
 `CreateRoleAssignment` creates a role assignment.
 
 ```C# Snippet:CreateRoleAssignment
-var options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
 RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
 ```
 
@@ -77,8 +85,8 @@ RoleAssignmentDetails roleAssignment = client.GetRoleAssignmentById(principalId)
 `GetRoleAssignments` enumerates the role assignments in the Synapse workspace.
 
 ```C# Snippet:ListRoleAssignments
-var roleAssignments = client.GetRoleAssignments().Value;
-foreach (var assignment in roleAssignments)
+IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
+foreach (RoleAssignmentDetails assignment in roleAssignments)
 {
     Console.WriteLine(assignment.Id);
 }
@@ -99,11 +107,6 @@ For information on building the Azure Synapse client library, please see [Buildi
 ## Target frameworks
 
 For information about the target frameworks of the Azure Synapse client library, please refer to the [Target Frameworks](https://github.com/azure/azure-sdk-for-net#target-frameworks) of the Microsoft Azure SDK for .NET.  
-
-## Key concepts
-
-### AccessControlClient
-With a `AccessControlClient` you can get role assignments from the workspace, create new role assignments, and delete role assignments.
 
 ## Troubleshooting
 

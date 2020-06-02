@@ -25,11 +25,11 @@ namespace Azure.Analytics.Synapse.Samples
             string sparkPoolName = TestEnvironment.SparkPoolName;
 
             #region Snippet:SparkSessionSample1SparkSessionClient
-            var client = new SparkSessionClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
+            SparkSessionClient client = new SparkSessionClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:SparkSessionSample1StartSparkSession
-            var request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
+            SparkSessionOptions request = new SparkSessionOptions(name: $"session-{Guid.NewGuid()}")
             {
                 DriverMemory = "28g",
                 DriverCores = 4,
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:SparkSessionSample1ExecuteSparkStatement
-            var sparkStatementRequest = new SparkStatementOptions
+            SparkStatementOptions sparkStatementRequest = new SparkStatementOptions
             {
                 Kind = SparkStatementLanguageType.Spark,
                 Code = @"print(""Hello world\n"")"

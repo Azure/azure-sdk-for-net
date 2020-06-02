@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Analytics.Synapse.AccessControl;
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Samples
             string workspaceUrl = TestEnvironment.WorkspaceUrl;
 
             #region Snippet:AccessControlSample1AccessControlClient
-            var client = new AccessControlClient(new Uri(workspaceUrl), new DefaultAzureCredential());
+            AccessControlClient client = new AccessControlClient(new Uri(workspaceUrl), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:AccessControlSample1GetWorkspaceAdminRole
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:AccessControlSample1AddRoleAssignment
             string principalId = Guid.NewGuid().ToString();
-            var request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
+            RoleAssignmentOptions request = new RoleAssignmentOptions(roleId:role.Id, principalId:principalId);
             RoleAssignmentDetails roleAssignmentAdded = client.CreateRoleAssignment(request);
             #endregion
 
@@ -42,8 +43,8 @@ namespace Azure.Analytics.Synapse.Samples
             #endregion
 
             #region Snippet:AccessControlSample1ListRoleAssignments
-            var roleAssignments = client.GetRoleAssignments().Value;
-            foreach (var assignment in roleAssignments)
+            IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
+            foreach (RoleAssignmentDetails assignment in roleAssignments)
             {
                 Console.WriteLine(assignment.Id);
             }

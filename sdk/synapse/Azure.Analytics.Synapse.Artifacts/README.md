@@ -1,10 +1,10 @@
 # Azure Synapse Analytics Artifacts client library for .NET
 
-Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
-
 This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
 
 The Azure Synapse Analytics development client library enables programmatically managing artifacts, offering methods to create, update, list, and delete pipelines, datasets, data flows, notebooks, Spark job definitions, SQL scripts, linked services and triggers.
+
+Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
 
 ## Getting started
 
@@ -16,7 +16,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics development client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Analytics.Synapse.Artifacts -IncludePrerelease
+dotnet add package Azure.Analytics.Synapse.Artifacts --version 0.1.0-preview.1
 ```
 
 ### Prerequisites
@@ -61,13 +61,15 @@ The Azure.Analytics.Synapse.Artifacts package supports synchronous and asynchron
 `CreateOrUpdateNotebook` creates a notebook.
 
 ```C# Snippet:CreateNotebook
-var notebook = new Notebook(new NotebookMetadata
-{
-    LanguageInfo = new NotebookLanguageInfo(name: "Python")
-},
-nbformat: 4,
-nbformatMinor: 2,
-new List<NotebookCell>());
+Notebook notebook = new Notebook(
+    new NotebookMetadata
+    {
+        LanguageInfo = new NotebookLanguageInfo(name: "Python")
+    },
+    nbformat: 4,
+    nbformatMinor: 2,
+    new List<NotebookCell>()
+);
 NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
 ```
 
@@ -83,8 +85,8 @@ NotebookResource notebook = notebookClient.GetNotebook("MyNotebook");
 `GetNotebooksByWorkspace` enumerates the notebooks in the Synapse workspace.
 
 ```C# Snippet:ListNotebooks
-var notebooks = notebookClient.GetNotebooksByWorkspace();
-foreach (var notebook in notebooks)
+Pageable<NotebookResource> notebooks = notebookClient.GetNotebooksByWorkspace();
+foreach (NotebookResource notebook in notebooks)
 {
     System.Console.WriteLine(notebook.Name);
 }

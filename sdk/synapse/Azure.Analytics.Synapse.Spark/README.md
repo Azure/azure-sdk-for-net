@@ -1,12 +1,12 @@
 # Azure Synapse Spark client library for .NET
 
-Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
-
 This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
 
 Use the client library for Synapse to:
 
 - Submit Spark Batch job and Spark Session Job
+
+Azure Synapse is a limitless analytics service that brings together enterprise data warehousing and Big Data analytics. It gives you the freedom to query data on your terms, using either serverless on-demand or provisioned resources—at scale. Azure Synapse brings these two worlds together with a unified experience to ingest, prepare, manage, and serve data for immediate BI and machine learning needs. 
 
 ## Getting started
 
@@ -18,7 +18,7 @@ For the best development experience, developers should use the official Microsof
 Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Analytics.Synapse.Spark -IncludePrerelease
+dotnet add package Azure.Analytics.Synapse.Spark --version 0.1.0-preview.1
 ```
 
 ### Prerequisites
@@ -61,8 +61,8 @@ The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 List the spark batch job under the specific spark pool of a specific synapse workspace
 
 ```C# Snippet:ListSparkBatchJobs
-var jobs = batchClient.GetSparkBatchJobs();
-foreach (var job in jobs.Value.Sessions)
+Response<SparkBatchJobCollection> jobs = batchClient.GetSparkBatchJobs();
+foreach (SparkBatchJob job in jobs.Value.Sessions)
 {
     Console.WriteLine(job.Name);
 }
@@ -74,7 +74,7 @@ Create spark batch job under specific workspace and spark pool.
 ```C# Snippet:CreateBatchJob
 string name = $"batchSample";
 string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
-var options = new SparkBatchJobOptions(name: name, file: file)
+SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
 {
     ClassName = "WordCount",
     Arguments = new List<string>

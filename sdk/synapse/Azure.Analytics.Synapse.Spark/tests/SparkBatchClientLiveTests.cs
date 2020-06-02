@@ -36,11 +36,11 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         public async Task TestSparkBatchJob()
         {
             // Submit the Spark job
-            var createParams = this.CreateSparkJobRequestParameters();
-            var jobCreateResponse = (await SparkBatchClient.CreateSparkBatchJobAsync(createParams)).Value;
+            SparkBatchJobOptions createParams = this.CreateSparkJobRequestParameters();
+            SparkBatchJob jobCreateResponse = (await SparkBatchClient.CreateSparkBatchJobAsync(createParams)).Value;
 
             // Poll the Spark job until it finishes
-            var getJobResponse = await this.PollSparkBatchJobSubmissionAsync(jobCreateResponse);
+            SparkBatchJob getJobResponse = await this.PollSparkBatchJobSubmissionAsync(jobCreateResponse);
 
             // Verify the Spark batch job completes successfully
             Assert.True("success".Equals(getJobResponse.State, StringComparison.OrdinalIgnoreCase) && getJobResponse.Result == SparkBatchJobResultType.Succeeded,
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             );
 
             // Get the list of Spark batch jobs and check that the submitted job exists
-            var listJobResponse = await this.ListSparkBatchJobsAsync();
+            List<SparkBatchJob> listJobResponse = await this.ListSparkBatchJobsAsync();
             Assert.NotNull(listJobResponse);
             Assert.IsTrue(listJobResponse.Any(job => job.Id == getJobResponse.Id));
         }
@@ -62,10 +62,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         [Test]
         public async Task TestGetSparkBatchJob()
         {
-            var sparkJobs = (await SparkBatchClient.GetSparkBatchJobsAsync()).Value;
-            foreach (var expectedSparkJob in sparkJobs.Sessions)
+            SparkBatchJobCollection sparkJobs = (await SparkBatchClient.GetSparkBatchJobsAsync()).Value;
+            foreach (SparkBatchJob expectedSparkJob in sparkJobs.Sessions)
             {
-                var actualSparkJob = await SparkBatchClient.GetSparkBatchJobAsync(expectedSparkJob.Id);
+                SparkBatchJob actualSparkJob = await SparkBatchClient.GetSparkBatchJobAsync(expectedSparkJob.Id);
                 ValidateSparkBatchJob(expectedSparkJob, actualSparkJob);
             }
         }

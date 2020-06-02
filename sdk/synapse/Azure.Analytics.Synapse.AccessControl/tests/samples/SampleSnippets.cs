@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Analytics.Synapse.AccessControl.Models;
 using Azure.Analytics.Synapse.Samples;
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:CreateAccessControlClient
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            AccessControlClient client = new AccessControlClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
             this.client = client;
@@ -35,10 +36,10 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         public void CreateRoleAssignment()
         {
             string principalId = TestEnvironment.PrincipalId;
-            var sqlAdminRoleId = client.GetRoleDefinitions().AsEnumerable().Single(role => role.Name == "Sql Admin").Id;
+            string sqlAdminRoleId = client.GetRoleDefinitions().AsEnumerable().Single(role => role.Name == "Sql Admin").Id;
 
             #region Snippet:CreateRoleAssignment
-            var options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
+            RoleAssignmentOptions options = new RoleAssignmentOptions(sqlAdminRoleId, principalId);
             RoleAssignmentDetails roleAssignment = client.CreateRoleAssignment(options);
             #endregion
         }
@@ -57,8 +58,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         public void ListRoleAssignments()
         {
             #region Snippet:ListRoleAssignments
-            var roleAssignments = client.GetRoleAssignments().Value;
-            foreach (var assignment in roleAssignments)
+            IReadOnlyList<RoleAssignmentDetails> roleAssignments = client.GetRoleAssignments().Value;
+            foreach (RoleAssignmentDetails assignment in roleAssignments)
             {
                 Console.WriteLine(assignment.Id);
             }

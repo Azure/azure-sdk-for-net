@@ -32,13 +32,13 @@ namespace Azure.Analytics.Synapse.Samples
             string fileSystem = TestEnvironment.StorageFileSystemName;
 
             #region Snippet:SparkBatchSample1SparkBatchClient
-            var client = new SparkBatchClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
+            SparkBatchClient client = new SparkBatchClient(new Uri(workspaceUrl), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:SparkBatchSample1SubmitSparkJob
             string name = $"batch-{Guid.NewGuid()}";
             string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
-            var request = new SparkBatchJobOptions(name, file)
+            SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
             {
                 ClassName = "WordCount",
                 Arguments = new List<string>

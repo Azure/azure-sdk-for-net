@@ -70,13 +70,13 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
         internal static async Task<List<SparkBatchJob>> ListSparkBatchJobsAsync(this SparkClientTestBase test, bool detailed = true)
         {
-            var batches = new List<SparkBatchJob>();
+            List<SparkBatchJob> batches = new List<SparkBatchJob>();
             int from = 0;
             int currentPageSize;
             int pageSize = 20;
             do
             {
-                var page = (await test.SparkBatchClient.GetSparkBatchJobsAsync(detailed: detailed, from: from, size: pageSize)).Value;
+                SparkBatchJobCollection page = (await test.SparkBatchClient.GetSparkBatchJobsAsync(detailed: detailed, from: from, size: pageSize)).Value;
                 currentPageSize = page.Total;
                 from += currentPageSize;
                 batches.AddRange(page.Sessions);
@@ -101,13 +101,13 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
         internal static async Task<List<SparkSession>> ListSparkSessionsAsync(this SparkClientTestBase test, bool detailed = true)
         {
-            var sessions = new List<SparkSession>();
+            List<SparkSession> sessions = new List<SparkSession>();
             int from = 0;
             int currentPageSize;
             int pageSize = 20;
             do
             {
-                var page = (await test.SparkSessionClient.GetSparkSessionsAsync(detailed: detailed, from: from, size: pageSize)).Value;
+                SparkSessionCollection page = (await test.SparkSessionClient.GetSparkSessionsAsync(detailed: detailed, from: from, size: pageSize)).Value;
                 currentPageSize = page.Total;
                 from += currentPageSize;
                 sessions.AddRange(page.Sessions);
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             int timeoutInMilliseconds = default,
             Action<T> writeLog = null)
         {
-            var timeWaitedInMilliSeconds = 0;
+            int timeWaitedInMilliSeconds = 0;
             if (pollingInMilliseconds == default)
             {
                 pollingInMilliseconds = 5000;

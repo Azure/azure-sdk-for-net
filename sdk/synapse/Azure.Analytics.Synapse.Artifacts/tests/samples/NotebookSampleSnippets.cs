@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #region Snippet:CreateNotebookClient
             // Create a new notebook client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new NotebookClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
+            NotebookClient client = new NotebookClient(endpoint: new Uri(workspaceUrl), credential: new DefaultAzureCredential());
             #endregion
 
             this.notebookClient = client;
@@ -33,13 +33,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void CreateNotebook()
         {
             #region Snippet:CreateNotebook
-            var notebook = new Notebook(new NotebookMetadata
-            {
-                LanguageInfo = new NotebookLanguageInfo(name: "Python")
-            },
-            nbformat: 4,
-            nbformatMinor: 2,
-            new List<NotebookCell>());
+            Notebook notebook = new Notebook(
+                new NotebookMetadata
+                {
+                    LanguageInfo = new NotebookLanguageInfo(name: "Python")
+                },
+                nbformat: 4,
+                nbformatMinor: 2,
+                new List<NotebookCell>()
+            );
             NotebookResource createdNotebook = notebookClient.CreateOrUpdateNotebook("MyNotebook", new NotebookResource(notebook));
             #endregion
         }
@@ -56,8 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void ListNotebooks()
         {
             #region Snippet:ListNotebooks
-            var notebooks = notebookClient.GetNotebooksByWorkspace();
-            foreach (var notebook in notebooks)
+            Pageable<NotebookResource> notebooks = notebookClient.GetNotebooksByWorkspace();
+            foreach (NotebookResource notebook in notebooks)
             {
                 System.Console.WriteLine(notebook.Name);
             }

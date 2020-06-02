@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #region Snippet:CreateBatchClient
             // Create a new access Spark batch client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new SparkBatchClient(endpoint: new Uri(workspaceUrl), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
+            SparkBatchClient client = new SparkBatchClient(endpoint: new Uri(workspaceUrl), sparkPoolName: sparkPoolName, credential: new DefaultAzureCredential());
             #endregion
 
             this.batchClient = client;
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             #region Snippet:CreateBatchJob
             string name = $"batchSample";
             string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
-            var options = new SparkBatchJobOptions(name: name, file: file)
+            SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
             {
                 ClassName = "WordCount",
                 Arguments = new List<string>
@@ -67,8 +67,8 @@ namespace Azure.Analytics.Synapse.Spark.Samples
         public void ListSparkBatchJobs()
         {
             #region Snippet:ListSparkBatchJobs
-            var jobs = batchClient.GetSparkBatchJobs();
-            foreach (var job in jobs.Value.Sessions)
+            Response<SparkBatchJobCollection> jobs = batchClient.GetSparkBatchJobs();
+            foreach (SparkBatchJob job in jobs.Value.Sessions)
             {
                 Console.WriteLine(job.Name);
             }
