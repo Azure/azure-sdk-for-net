@@ -43,6 +43,8 @@ jobs:
         value: ${{ parameters.SubscriptionConfiguration }}
       - name: Location
         value: ${{ parameters.Location }}
+      - name: ArmTemplateParameters
+        value: ${{ parameters.ArmTemplateParameters }}
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -89,6 +91,7 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
+          ArmTemplateParameters: $(ArmTemplateParameters)
           Location: $(Location)
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
