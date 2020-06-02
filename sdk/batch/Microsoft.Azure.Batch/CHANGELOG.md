@@ -1,5 +1,8 @@
 # Release History
 
+## 13.1.0-preview.1 (Unreleased)
+
+
 ## 13.0.0 (2020-03-01)
 ### Features
 - Added ability to encrypt `ComputeNode` disk drives using the new `DiskEncryptionConfiguration` property of `VirtualMachineConfiguration`.
