@@ -61,14 +61,14 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                #region Snippet:DigitalTwinSamplePublishTelemetry
+                #region Snippet:DigitalTwinsSamplePublishTelemetry
 
                 Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
                 Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
 
-                #endregion Snippet:DigitalTwinSamplePublishTelemetry
+                #endregion Snippet:DigitalTwinsSamplePublishTelemetry
 
-                #region Snippet:DigitalTwinSamplePublishComponentTelemetry
+                #region Snippet:DigitalTwinsSamplePublishComponentTelemetry
 
                 var telemetryPayload = new Dictionary<string, int>
                 {
@@ -77,7 +77,7 @@ namespace Azure.DigitalTwins.Samples
                 Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
                 Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
 
-                #endregion Snippet:DigitalTwinSamplePublishComponentTelemetry
+                #endregion Snippet:DigitalTwinsSamplePublishComponentTelemetry
             }
             catch (Exception ex)
             {
