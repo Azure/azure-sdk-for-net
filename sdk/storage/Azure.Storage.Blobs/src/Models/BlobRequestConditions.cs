@@ -19,6 +19,11 @@ namespace Azure.Storage.Blobs.Models
         public string LeaseId { get; set; }
 
         /// <summary>
+        /// Optional SQL statement to apply to the Tags of the Blob.
+        /// </summary>
+        public string TagConditions { get; set; }
+
+        /// <summary>
         /// Converts the value of the current RequestConditions object to
         /// its equivalent string representation.
         /// </summary>
@@ -71,6 +76,11 @@ namespace Azure.Storage.Blobs.Models
             if (LeaseId != null)
             {
                 conditions.Append(nameof(LeaseId)).Append('=').Append(LeaseId).Append(';');
+            }
+
+            if (TagConditions != null)
+            {
+                conditions.Append(nameof(TagConditions)).Append('=').Append(TagConditions).Append(';');
             }
         }
     }

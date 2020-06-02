@@ -2320,6 +2320,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
@@ -2671,6 +2672,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
@@ -2827,6 +2829,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
@@ -2984,6 +2987,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
@@ -3140,6 +3144,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
