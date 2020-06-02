@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Batch.Models
 
     /// <summary>
     /// The identity of the Batch account, if configured. This is only used
-    /// when the user specifies 'Azure.KeyVault' as their Batch account
+    /// when the user specifies 'Microsoft.KeyVault' as their Batch account
     /// encryption configuration.
     /// </summary>
     public partial class BatchAccountIdentity
