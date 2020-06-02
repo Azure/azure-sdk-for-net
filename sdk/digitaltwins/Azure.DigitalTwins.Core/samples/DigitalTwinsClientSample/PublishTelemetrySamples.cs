@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
 using Azure.DigitalTwins.Core.Samples;
@@ -42,10 +43,9 @@ namespace Azure.DigitalTwins.Samples
                 .Replace(SamplesConstants.ComponentId, componentModelId);
 
             // Then we create the models.
-            await DigitalTwinsClient.CreateModelsAsync(new[] {
-                newComponentModelPayload,
-                newModelPayload
-            }).ConfigureAwait(false);
+            await DigitalTwinsClient
+                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload })
+                .ConfigureAwait(false);
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
@@ -61,35 +61,39 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinSamplePublishTelemetry
 
-                Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "\"telemetry\": {\"Telemetry1\": 5}");
+                Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
 
                 #endregion Snippet:DigitalTwinSamplePublishTelemetry
 
-                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
-
                 #region Snippet:DigitalTwinSamplePublishComponentTelemetry
 
-                Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", "\"telemetry\": {\"ComponentTelementry1\": 9}");
+                Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", "{\"ComponentTelementry1\": 9}");
+                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
 
                 #endregion Snippet:DigitalTwinSamplePublishComponentTelemetry
-
-                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
             }
-            finally
+            catch (Exception ex)
+            {
+                FatalError($"Failed to publish a telemetry message due to {ex.Message}");
+            }
+
+            try
             {
                 // Delete the twin.
                 await DigitalTwinsClient.DeleteDigitalTwinAsync(twinId).ConfigureAwait(false);
 
                 // Delete the models.
-                try
-                {
-                    await DigitalTwinsClient.DeleteModelAsync(modelId).ConfigureAwait(false);
-                    await DigitalTwinsClient.DeleteModelAsync(componentModelId).ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex)
-                {
-                    Console.WriteLine($"Failed to delete models due to {ex}");
-                }
+                await DigitalTwinsClient.DeleteModelAsync(modelId).ConfigureAwait(false);
+                await DigitalTwinsClient.DeleteModelAsync(componentModelId).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
+            {
+                // Digital twin or models do not exist
+            }
+            catch (RequestFailedException ex)
+            {
+                FatalError($"Failed to delete due to {ex.Message}");
             }
         }
     }
