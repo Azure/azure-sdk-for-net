@@ -651,6 +651,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AppendBlockAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = test.Container.GetAppendBlobClient(GetNewBlobName());
+            await blob.CreateAsync();
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AppendBlockAsync_IfTags_Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = test.Container.GetAppendBlobClient(GetNewBlobName());
+            await blob.CreateAsync();
+
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.AppendBlockAsync(
+                    content: stream,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task AppendBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
