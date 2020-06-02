@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyFilterRuleActionType.
+    /// Defines values for FirewallPolicyNatRuleCollectionActionType.
     /// </summary>
-    public static class FirewallPolicyFilterRuleActionType
+    public static class FirewallPolicyNatRuleCollectionActionType
     {
-        public const string Allow = "Allow";
-        public const string Deny = "Deny";
+        public const string DNAT = "DNAT";
     }
 }

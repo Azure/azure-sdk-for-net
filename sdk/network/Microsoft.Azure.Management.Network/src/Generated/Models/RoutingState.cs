@@ -12,10 +12,13 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for FirewallPolicyNatRuleActionType.
+    /// Defines values for RoutingState.
     /// </summary>
-    public static class FirewallPolicyNatRuleActionType
+    public static class RoutingState
     {
-        public const string DNAT = "DNAT";
+        public const string None = "None";
+        public const string Provisioned = "Provisioned";
+        public const string Provisioning = "Provisioning";
+        public const string Failed = "Failed";
     }
 }

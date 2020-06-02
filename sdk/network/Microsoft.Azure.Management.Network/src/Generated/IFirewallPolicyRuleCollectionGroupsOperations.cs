@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FirewallPolicyRuleGroupsOperations operations.
+    /// FirewallPolicyRuleCollectionGroupsOperations operations.
     /// </summary>
-    public partial interface IFirewallPolicyRuleGroupsOperations
+    public partial interface IFirewallPolicyRuleCollectionGroupsOperations
     {
         /// <summary>
-        /// Deletes the specified FirewallPolicyRuleGroup.
+        /// Deletes the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified FirewallPolicyRuleGroup.
+        /// Gets the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FirewallPolicyRuleGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates the specified FirewallPolicyRuleGroup.
+        /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -85,12 +85,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update FirewallPolicyRuleGroup
-        /// operation.
+        /// Parameters supplied to the create or update
+        /// FirewallPolicyRuleCollectionGroup operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,9 +107,10 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FirewallPolicyRuleGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
+        /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy
+        /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -132,9 +133,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>> ListWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>> ListWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified FirewallPolicyRuleGroup.
+        /// Deletes the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -142,8 +143,8 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,9 +158,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates the specified FirewallPolicyRuleGroup.
+        /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -167,12 +168,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='firewallPolicyName'>
         /// The name of the Firewall Policy.
         /// </param>
-        /// <param name='ruleGroupName'>
-        /// The name of the FirewallPolicyRuleGroup.
+        /// <param name='ruleCollectionGroupName'>
+        /// The name of the FirewallPolicyRuleCollectionGroup.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update FirewallPolicyRuleGroup
-        /// operation.
+        /// Parameters supplied to the create or update
+        /// FirewallPolicyRuleCollectionGroup operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -189,9 +190,10 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FirewallPolicyRuleGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleGroupName, FirewallPolicyRuleGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FirewallPolicyRuleCollectionGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string firewallPolicyName, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
+        /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy
+        /// resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -211,6 +213,6 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FirewallPolicyRuleGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FirewallPolicyRuleCollectionGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

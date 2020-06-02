@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the FirewallPolicyFilterRuleAction.
+    /// Properties of the FirewallPolicyFilterRuleCollectionAction.
     /// </summary>
-    public partial class FirewallPolicyFilterRuleAction
+    public partial class FirewallPolicyFilterRuleCollectionAction
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyFilterRuleAction
-        /// class.
+        /// Initializes a new instance of the
+        /// FirewallPolicyFilterRuleCollectionAction class.
         /// </summary>
-        public FirewallPolicyFilterRuleAction()
+        public FirewallPolicyFilterRuleCollectionAction()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallPolicyFilterRuleAction
-        /// class.
+        /// Initializes a new instance of the
+        /// FirewallPolicyFilterRuleCollectionAction class.
         /// </summary>
         /// <param name="type">The type of action. Possible values include:
         /// 'Allow', 'Deny'</param>
-        public FirewallPolicyFilterRuleAction(string type = default(string))
+        public FirewallPolicyFilterRuleCollectionAction(string type = default(string))
         {
             Type = type;
             CustomInit();

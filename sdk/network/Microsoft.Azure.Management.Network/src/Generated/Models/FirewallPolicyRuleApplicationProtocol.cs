@@ -17,26 +17,26 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Properties of the application rule protocol.
     /// </summary>
-    public partial class FirewallPolicyRuleConditionApplicationProtocol
+    public partial class FirewallPolicyRuleApplicationProtocol
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// FirewallPolicyRuleConditionApplicationProtocol class.
+        /// FirewallPolicyRuleApplicationProtocol class.
         /// </summary>
-        public FirewallPolicyRuleConditionApplicationProtocol()
+        public FirewallPolicyRuleApplicationProtocol()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// FirewallPolicyRuleConditionApplicationProtocol class.
+        /// FirewallPolicyRuleApplicationProtocol class.
         /// </summary>
         /// <param name="protocolType">Protocol type. Possible values include:
         /// 'Http', 'Https'</param>
         /// <param name="port">Port number for the protocol, cannot be greater
         /// than 64000.</param>
-        public FirewallPolicyRuleConditionApplicationProtocol(string protocolType = default(string), int? port = default(int?))
+        public FirewallPolicyRuleApplicationProtocol(string protocolType = default(string), int? port = default(int?))
         {
             ProtocolType = protocolType;
             Port = port;

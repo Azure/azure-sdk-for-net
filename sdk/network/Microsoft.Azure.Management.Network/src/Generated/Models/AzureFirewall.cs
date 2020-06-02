@@ -159,10 +159,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource FirewallPolicy { get; set; }
 
         /// <summary>
-        /// Gets IP addresses associated with AzureFirewall.
+        /// Gets or sets IP addresses associated with AzureFirewall.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hubIpAddresses")]
-        public HubIPAddresses HubIpAddresses { get; private set; }
+        public HubIPAddresses HubIpAddresses { get; set; }
 
         /// <summary>
         /// Gets ipGroups associated with AzureFirewall.
