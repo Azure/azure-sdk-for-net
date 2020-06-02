@@ -116,14 +116,6 @@ namespace Azure.AI.FormRecognizer.Training
             Id = string.Join("/", substrs, substrs.Length - 3, 3);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
-        /// </summary>
-        protected CopyModelOperation()
-        {
-        }
-
-
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
 
