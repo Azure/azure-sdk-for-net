@@ -53,7 +53,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// The application/json description of a temporary model
         /// </summary>
-        public const string TemporaryModelPayload = @"
+        public const string TemporaryModelWithComponentPayload = @"
             {
                 ""@id"": ""MODEL_ID"",
                 ""@type"": ""Interface"",

@@ -8,7 +8,7 @@ namespace Azure.DigitalTwins.Core.Serialization
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
-    /// The $metadata class on a <see cref="BasicDigitalTwin" />.
+    /// The $metadata class on a <see cref="BasicDigitalTwin"/>.
     /// </summary>
     public class DigitalTwinMetadata
     {
@@ -21,7 +21,8 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// <summary>
         /// Additional, model-defined properties.
         /// </summary>
+        /// <remarks>For your convenience, the value of each dictionary object can be turned into an instance of <see cref="WritableProperty"/>.</remarks>
         [JsonExtensionData]
-        public IDictionary<string, object> ModelProperties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> WriteableProperties { get; set; } = new Dictionary<string, object>();
     }
 }

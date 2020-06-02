@@ -121,8 +121,25 @@ catch (Exception ex)
 
 For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
 
-```C# Snippet:DigitalTwinsSampleCreateTwin
-Response<string> response = await DigitalTwinsClient.CreateDigitalTwinAsync(twin.Key, twin.Value).ConfigureAwait(false);
+```C# Snippet:DigitalTwinsSampleCreateBasicTwin
+// Create digital twin with Component payload using the BasicDigitalTwin serialization helper
+
+var basicDigitalTwin = new BasicDigitalTwin();
+basicDigitalTwin.Metadata.ModelId = modelId;
+basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
+basicDigitalTwin.CustomProperties.Add("Prop2", "Value2");
+
+var componentMetadata = new ModelProperties();
+componentMetadata.Metadata.ModelId = componentModelId;
+componentMetadata.CustomProperties.Add("ComponentProp1", "ComponentValue1");
+componentMetadata.CustomProperties.Add("ComponentProp2", "ComponentValue2");
+
+basicDigitalTwin.CustomProperties.Add("Component1", componentMetadata);
+
+string dtPayload = JsonSerializer.Serialize(basicDigitalTwin, new JsonSerializerOptions { IgnoreNullValues = true });
+
+Response<string> createDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId, dtPayload).ConfigureAwait(false);
+Console.WriteLine($"Created digital twin {dtId} with response {createDtResponse.GetRawResponse().Status}.");
 ```
 
 ### Query Digital Twin
@@ -190,14 +207,14 @@ await DigitalTwinsClient.DeleteDigitalTwinAsync(twin.Key).ConfigureAwait(false);
 To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.  
 
 ```C# Snippet:DigitalTwinsSampleUpdateComponent
-// Update Component with replacing property value
-string propertyPath = "/ComponentProp1";
-string propValue = "New Value";
-
+// Update Component1 by replacing the property ComponentProp1 value
 var componentUpdateUtility = new UpdateOperationsUtility();
-componentUpdateUtility.AppendReplaceOp(propertyPath, propValue);
+componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
+string updatePayload = componentUpdateUtility.Serialize();
 
-Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(twinId, SamplesConstants.ComponentPath, componentUpdateUtility.Serialize());
+Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId, "Component1", updatePayload);
+
+Console.WriteLine($"Updated component for digital twin {dtId}. Update response status: {response.GetRawResponse().Status}");
 ```
 
 ### Get Digital Twin Component
@@ -205,7 +222,9 @@ Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(twinId
 Get a component by providing name of a component and id of digital twin it belongs to.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-response = await DigitalTwinsClient.GetComponentAsync(twinId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+response = await DigitalTwinsClient.GetComponentAsync(dtId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+
+Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
 ```
 
 ## Create and list Digital Twin edges

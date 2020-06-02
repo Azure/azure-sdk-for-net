@@ -40,7 +40,7 @@ namespace Azure.DigitalTwins.Samples
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
                 .Replace(SamplesConstants.ComponentId, componentModelId);
 
-            string newModelPayload = SamplesConstants.TemporaryModelPayload
+            string newModelPayload = SamplesConstants.TemporaryModelWithComponentPayload
                 .Replace(SamplesConstants.ModelId, modelId)
                 .Replace(SamplesConstants.ComponentId, componentModelId);
 
