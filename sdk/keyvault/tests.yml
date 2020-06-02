@@ -15,3 +15,4 @@ jobs:
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+    ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.usgovcloudapi.net' }"
