@@ -10,7 +10,7 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
-## Prerequisites
+### Prerequisites
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription][azure_sub]
 - Azure Digital Twins instance: In order to use the Azure Digital Twins SDK, you need to first create a Digital Twins instance using one of many options:
@@ -18,7 +18,7 @@ For the best development experience, developers should use the official Microsof
   - Using [Azure Management APIs][azure_rest_api]
   - Using [Azure CLI][azure_cli]: You will need to install azure cli and the [Azure IoT extension][iot_cli_extension] for Azure CLI. Refer to [IoT CLI Documentation][iot_cli_doc] for more information on how to create and interact with your Digital Twins instance.
 
-## Install the package
+### Install the package
 
 Install the Azure Digital Twins client library for .NET with [NuGet][nuget]:
 
@@ -26,7 +26,7 @@ Install the Azure Digital Twins client library for .NET with [NuGet][nuget]:
 Install-Package Azure.DigitalTwins.Core
 ```
 
-## Authenticate the Client
+### Authenticate the Client
 
 In order to interact with the Azure Digital Twins service, you will need to create an instance of a [TokenCredential class][token_credential] and pass it to the constructor of your [DigitalTwinsClient][digital_twins_client].
 
