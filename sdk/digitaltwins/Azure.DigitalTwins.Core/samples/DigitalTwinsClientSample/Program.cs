@@ -40,6 +40,9 @@ namespace Azure.DigitalTwins.Core.Samples
             var componentSamples = new ComponentSamples(dtClient);
             await componentSamples.RunSamplesAsync().ConfigureAwait(false);
 
+            var publishTelemetrySamples = new PublishTelemetrySamples(dtClient);
+            await publishTelemetrySamples.RunSamplesAsync().ConfigureAwait(false);
+
             httpClient.Dispose();
         }
 

@@ -1194,6 +1194,13 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry">
+        /// // construct your json telemetry payload by hand.
+        /// Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
+        /// Console.WriteLine($&quot;Successfully published telemetry message, status: {publishTelemetryResponse.Status}&quot;);
+        /// </code>
+        /// </example>
         public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
@@ -1230,6 +1237,17 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinsSamplePublishComponentTelemetry">
+        /// // construct your json telemetry payload by serializing a dictionary.
+        /// var telemetryPayload = new Dictionary&lt;string, int&gt;
+        /// {
+        ///     { &quot;ComponentTelemetry1&quot;, 9}
+        /// };
+        /// Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, &quot;Component1&quot;, JsonSerializer.Serialize(telemetryPayload));
+        /// Console.WriteLine($&quot;Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}&quot;);
+        /// </code>
+        /// </example>
         public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();

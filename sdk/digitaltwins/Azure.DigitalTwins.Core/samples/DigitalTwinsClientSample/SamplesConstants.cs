@@ -74,6 +74,11 @@ namespace Azure.DigitalTwins.Core.Samples
                         ""@type"": ""Component"",
                         ""name"": ""Component1"",
                         ""schema"": ""COMPONENT_ID""
+                    },
+                    {
+                        ""@type"": ""Telemetry"",
+                        ""name"": ""Telemetry1"",
+                        ""schema"": ""integer""
                     }
                 ]
             }";
@@ -102,6 +107,11 @@ namespace Azure.DigitalTwins.Core.Samples
                         ""@type"": ""Property"",
                         ""name"": ""ComponentProp2"",
                         ""schema"": ""string""
+                    },
+                    {
+                        ""@type"": ""Telemetry"",
+                        ""name"": ""ComponentTelemetry1"",
+                        ""schema"": ""integer""
                     }
                 ]
             }";

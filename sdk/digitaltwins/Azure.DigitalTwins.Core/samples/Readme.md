@@ -5,7 +5,8 @@ Sample project demonstrates the following:
 * Create, query and delete a Digital Twin
 * Get and update components for a Digital Twin
 * Create, get and delete relationships between Digital Twins
-* Create, get and delete eventroutes for Digital Twin
+* Create, get and delete event routes for Digital Twin
+* Publish telemetry messages to a Digital Twin and Digital Twin component
 
 ## Creating Digital Twin Client
 
@@ -264,4 +265,26 @@ Delete an event route given event route id
 
 ```C# Snippet:DigitalTwinSampleDeleteEventRoute
 Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId).ConfigureAwait(false);
+```
+
+### Publish telemetry messages to a Digital Twin
+
+To publish a telemetry message to a digital twin, you need to provide the digital twin id, along with the payload on which telemetry that needs the update.
+
+```C# Snippet:DigitalTwinsSamplePublishTelemetry
+// construct your json telemetry payload by hand.
+Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
+```
+
+You can also publish a telemetry message to a specific component in a digital twin. In addition to the digital twin id and payload, you need to specify the target component id.
+
+```C# Snippet:DigitalTwinsSamplePublishComponentTelemetry
+// construct your json telemetry payload by serializing a dictionary.
+var telemetryPayload = new Dictionary<string, int>
+{
+    { "ComponentTelemetry1", 9}
+};
+Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
+Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
 ```
