@@ -1196,6 +1196,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry">
+        /// // construct your json telemetry payload by hand.
         /// Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
         /// Console.WriteLine($&quot;Successfully published telemetry message, status: {publishTelemetryResponse.Status}&quot;);
         /// </code>
@@ -1238,6 +1239,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSamplePublishComponentTelemetry">
+        /// // construct your json telemetry payload by serializing a dictionary.
         /// var telemetryPayload = new Dictionary&lt;string, int&gt;
         /// {
         ///     { &quot;ComponentTelemetry1&quot;, 9}

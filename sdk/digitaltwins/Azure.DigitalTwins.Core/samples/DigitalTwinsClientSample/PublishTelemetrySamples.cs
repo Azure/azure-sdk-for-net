@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Samples
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
-            // Create digital twin with Component payload
+            // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId)
                 .Replace(SamplesConstants.ComponentId, componentModelId);
@@ -63,6 +63,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSamplePublishTelemetry
 
+                // construct your json telemetry payload by hand.
                 Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
                 Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
 
@@ -70,6 +71,7 @@ namespace Azure.DigitalTwins.Samples
 
                 #region Snippet:DigitalTwinsSamplePublishComponentTelemetry
 
+                // construct your json telemetry payload by serializing a dictionary.
                 var telemetryPayload = new Dictionary<string, int>
                 {
                     { "ComponentTelemetry1", 9}
@@ -95,7 +97,7 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
             {
-                // Digital twin or models do not exist
+                // Digital twin or models do not exist.
             }
             catch (RequestFailedException ex)
             {
