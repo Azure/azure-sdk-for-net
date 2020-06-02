@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
@@ -13,20 +14,36 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         [Test]
         public async Task CreateQueueTest()
         {
-            var queueName = "TestQueue";
+           // var queueName = "TestQueue";
             // using connection string
-             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
+             // var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
             // using AAD
-            // var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+             var client = new ServiceBusManagementClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
             try
             {
-                QueueDescription queueDescription = await client.CreateQueueAsync(queueName);
-                queueDescription.EnableBatchedOperations = false;
-                await client.UpdateQueueAsync(queueDescription);
+                await client.CreateTopicAsync("test");
+                await client.CreateSubscriptionAsync("test", "Test1");
+                await client.CreateSubscriptionAsync("test", "Test2");
+                await client.CreateSubscriptionAsync("test", "Test3");
+                await client.CreateSubscriptionAsync("test", "Test4");
+                await client.CreateSubscriptionAsync("test", "Test5");
+                // await client.CreateSubscriptionAsync("test", "Test6");
 
-                queueDescription = await client.GetQueueAsync(queueName);
-                Assert.AreEqual(queueDescription.EnableBatchedOperations, false);
+                List<string> names = new List<string>();
+                await foreach (SubscriptionDescription queues in client.GetSubscriptionsAsync("test"))
+                {
+                    names.Add(queues.SubscriptionName);
+                    Console.WriteLine(names);
+                }
+
+                Console.WriteLine(names);
+                //QueueDescription queueDescription = await client.CreateQueueAsync(queueName);
+                //queueDescription.EnableBatchedOperations = false;
+                //await client.UpdateQueueAsync(queueDescription);
+
+                //queueDescription = await client.GetQueueAsync(queueName);
+                //Assert.AreEqual(queueDescription.EnableBatchedOperations, false);
             }
             catch
             {
@@ -34,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             }
             finally
             {
-                await client.DeleteQueueAsync(queueName);
+             //   await client.DeleteTopicAsync("Test");
             }
         }
     }

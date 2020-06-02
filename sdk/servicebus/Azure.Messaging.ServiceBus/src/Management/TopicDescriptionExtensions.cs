@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Topic was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<TopicDescription> ParseCollectionFromContent(string xml)
+        public static List<TopicDescription> ParseCollectionFromContent(string xml)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         topicDesc.EnableBatchedOperations = bool.Parse(element.Value);
                         break;
                     case "Status":
-                        topicDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        topicDesc.Status = element.Value;
                         break;
                     case "UserMetadata":
                         topicDesc.UserMetadata = element.Value;

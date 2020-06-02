@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Management
             throw new ServiceBusException("Subscription was not found", ServiceBusException.FailureReason.MessagingEntityNotFound);
         }
 
-        public static IList<SubscriptionDescription> ParseCollectionFromContent(string topicName, string xml)
+        public static List<SubscriptionDescription> ParseCollectionFromContent(string topicName, string xml)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value);
                         break;
                     case "Status":
-                        subscriptionDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        subscriptionDesc.Status = element.Value;
                         break;
                     case "EnableBatchedOperations":
                         subscriptionDesc.EnableBatchedOperations = bool.Parse(element.Value);

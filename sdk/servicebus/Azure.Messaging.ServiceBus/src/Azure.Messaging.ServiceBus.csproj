@@ -46,6 +46,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="SharedSource\Azure.Core\ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" Link="SharedSource\Azure.Core\ValueStopwatch.cs" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="SharedSource\Azure.Core\PageResponseEnumerator.cs" />
 
   </ItemGroup>
   <ItemGroup>

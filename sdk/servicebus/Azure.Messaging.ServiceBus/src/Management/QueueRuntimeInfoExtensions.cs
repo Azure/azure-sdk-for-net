@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return qRuntime;
         }
 
-        public static IList<QueueRuntimeInfo> ParseCollectionFromContent(string xml)
+        public static List<QueueRuntimeInfo> ParseCollectionFromContent(string xml)
         {
             try
             {

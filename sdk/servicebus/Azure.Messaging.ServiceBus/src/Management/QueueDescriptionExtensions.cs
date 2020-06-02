@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Management
             return qd;
         }
 
-        public static IList<QueueDescription> ParseCollectionFromContent(string xml)
+        public static List<QueueDescription> ParseCollectionFromContent(string xml)
         {
             try
             {

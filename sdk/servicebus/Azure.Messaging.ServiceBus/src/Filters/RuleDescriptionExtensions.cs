@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             //throw new MessagingEntityNotFoundException("Rule was not found");
         }
 
-        public static IList<RuleDescription> ParseCollectionFromContent(string xml)
+        public static List<RuleDescription> ParseCollectionFromContent(string xml)
         {
             try
             {
