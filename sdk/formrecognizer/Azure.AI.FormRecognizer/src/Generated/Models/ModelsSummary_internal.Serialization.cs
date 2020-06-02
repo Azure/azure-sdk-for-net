@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

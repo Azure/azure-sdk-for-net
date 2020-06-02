@@ -47,9 +47,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only container names starting with the filter
             /// will be listed.
             /// </param>
-            public static IPage<ListContainerItem> List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string))
+            /// <param name='include'>
+            /// Optional, used to include the properties for soft deleted blob containers.
+            /// Possible values include: 'deleted'
+            /// </param>
+            public static IPage<ListContainerItem> List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter, include).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -76,12 +80,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only container names starting with the filter
             /// will be listed.
             /// </param>
+            /// <param name='include'>
+            /// Optional, used to include the properties for soft deleted blob containers.
+            /// Possible values include: 'deleted'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ListContainerItem>> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ListContainerItem>> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, include, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

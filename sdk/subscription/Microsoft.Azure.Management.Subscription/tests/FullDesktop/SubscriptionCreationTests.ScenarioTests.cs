@@ -71,7 +71,7 @@ namespace FullDesktop.Tests
                 };
                 var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
-                var subscriptionResult = client.SubscriptionFactory.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(
+                var subscriptionResult = client.Subscription.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(
                     enrollmentAccountName, body).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.Equal(HttpStatusCode.OK, subscriptionResult.Response.StatusCode);

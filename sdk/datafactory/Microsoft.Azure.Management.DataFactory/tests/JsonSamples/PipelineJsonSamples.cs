@@ -4182,6 +4182,53 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_Excel_Adls = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""ExcelSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""AvroSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""AvroWriteSettings"",
+              ""recordName"": ""testavro"",
+              ""recordNamespace"": ""microsoft.datatransfer.test""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Orc_Adls = @"{
   ""properties"": {
     ""activities"": [
@@ -6364,6 +6411,87 @@ namespace DataFactory.Tests.JsonSamples
             }
         ]
     }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyWithTypeConversion = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"" : ""Copy from CSV to SQL DW with Copy Command"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""rowDelimiter"": ""\n"",
+              ""quoteChar"": ""\"""",
+              ""escapeChar"": ""\""""
+            }
+          },
+          ""sink"": {
+            ""type"": ""SqlSink""
+          },
+          ""translator"": {
+            ""type"": ""TabularTranslator"",
+            ""mappings"": [
+              {
+                ""source"": {
+                  ""ordinal"": 3
+                },
+                ""sink"": {
+                  ""name"": ""CustomerName""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 2
+                },
+                ""sink"": {
+                  ""name"": ""CustomerAddress""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 1
+                },
+                ""sink"": {
+                  ""name"": ""CustomerDate""
+                }
+              }
+            ],
+            ""typeConversion"": true,
+            ""typeConversionSettings"": {
+              ""allowDataTruncation"": false,
+              ""dateTimeFormat"": ""MM/dd/yyyy HH:mm""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
 }
 ";
     }

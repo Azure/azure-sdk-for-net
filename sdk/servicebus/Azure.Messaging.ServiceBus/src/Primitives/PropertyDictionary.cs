@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Azure.Messaging.ServiceBus.Amqp;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Azure.Messaging.ServiceBus.Amqp;
-
     internal sealed class PropertyDictionary : IDictionary<string, object>
     {
         private readonly IDictionary<string, object> _inner;

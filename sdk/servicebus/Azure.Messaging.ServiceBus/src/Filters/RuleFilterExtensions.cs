@@ -3,6 +3,7 @@
 
 using System;
 using System.Xml.Linq;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -28,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                 case "FalseFilter":
                     return new FalseRuleFilter();
                 default:
-                    MessagingEventSource.Log.ManagementSerializationException(
+                    ServiceBusEventSource.Log.ManagementSerializationException(
                         $"{nameof(RuleFilterExtensions)}_{nameof(ParseFromXElement)}",
                         xElement.ToString());
                     return null;

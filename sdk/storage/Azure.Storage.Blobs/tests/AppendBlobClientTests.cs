@@ -919,6 +919,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task AppendBlockFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewNonAsciiBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
+
+                // Act
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
+            }
+        }
+
+        [Test]
         public async Task AppendBlockAsync_NullStream_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

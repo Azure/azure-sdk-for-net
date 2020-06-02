@@ -687,6 +687,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StageBlockFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewNonAsciiBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceBlob.UploadAsync(stream);
+            }
+
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await RetryAsync(
+                async () => await destBlob.StageBlockFromUriAsync(sourceBlob.Uri, ToBase64(GetNewBlockName())),
+                _retryStageBlockFromUri);
+        }
+
+        [Test]
         public async Task CommitBlockListAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

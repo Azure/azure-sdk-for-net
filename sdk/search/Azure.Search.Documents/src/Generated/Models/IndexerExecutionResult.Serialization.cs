@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class IndexerExecutionResult
     {
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("S");
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("S");
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("errors"))

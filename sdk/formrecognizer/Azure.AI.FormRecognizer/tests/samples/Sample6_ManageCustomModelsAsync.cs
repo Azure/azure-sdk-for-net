@@ -28,29 +28,29 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
 
             // List the models currently stored in the account.
-            AsyncPageable<CustomFormModelInfo> models = client.GetModelInfosAsync();
+            AsyncPageable<CustomFormModelInfo> models = client.GetCustomModelsAsync();
 
             await foreach (CustomFormModelInfo modelInfo in models)
             {
                 Console.WriteLine($"Custom Model Info:");
                 Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
                 Console.WriteLine($"    Model Status: {modelInfo.Status}");
-                Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-                Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+                Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+                Console.WriteLine($"    Completed on: : {modelInfo.CompletedOn}");
             }
 
             // Create a new model to store in the account
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Get the model that was just created
             CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
 
             Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-            foreach (CustomFormSubModel subModel in modelCopy.Models)
+            foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
             {
-                Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-                foreach (CustomFormModelField field in subModel.Fields.Values)
+                Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+                foreach (CustomFormModelField field in submodel.Fields.Values)
                 {
                     Console.Write($"    FieldName: {field.Name}");
                     if (field.Label != null)

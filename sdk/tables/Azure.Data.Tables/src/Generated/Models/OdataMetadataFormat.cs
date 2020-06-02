@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.Tables.Models
 {
-    /// <summary> The Enum0. </summary>
+    /// <summary> The OdataMetadataFormat. </summary>
     public readonly partial struct OdataMetadataFormat : IEquatable<OdataMetadataFormat>
     {
         private readonly string _value;

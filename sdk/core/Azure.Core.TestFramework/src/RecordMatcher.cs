@@ -91,12 +91,11 @@ namespace Azure.Core.TestFramework
                 }
 
                 //we only check Uri + RequestMethod for track1 record
-                if (entry.IsTrack1Recording)
+                if (!entry.IsTrack1Recording)
                 {
                     score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, ExcludeHeaders);
+                    score += CompareBodies(request.Request.Body, entry.Request.Body);
                 }
-
-                score += CompareBodies(request.Request.Body, entry.Request.Body);
 
                 if (score == 0)
                 {

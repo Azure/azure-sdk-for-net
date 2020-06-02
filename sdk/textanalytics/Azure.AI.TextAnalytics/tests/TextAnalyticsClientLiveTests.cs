@@ -447,7 +447,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(keyPhrases.Warnings);
             Assert.GreaterOrEqual(keyPhrases.Warnings.Count, 0);
-            Assert.AreEqual("LongWordsInDocument", keyPhrases.Warnings.FirstOrDefault().WarningCode);
+            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
 
             Assert.GreaterOrEqual(keyPhrases.Count, 1);
         }
@@ -634,6 +634,26 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void RecognizeEntitiesBatchWithInvalidDocumentBatch()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "document 1",
+                "document 2",
+                "document 3",
+                "document 4",
+                "document 5",
+                "document 6"
+            };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.RecognizeEntitiesBatchAsync(documents));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
+        }
+
+        [Test]
         public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -764,6 +784,26 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[1].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        [Test]
+        public void RecognizeLinkedEntitiesBatchWithInvalidDocumentBatch()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "Hello world",
+                "Pike place market is my favorite Seattle attraction.",
+                "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!",
+                "Unfortunately, it rained during my entire trip to Seattle. I didn't even get to visit the Space Needle",
+                "This should fail!"
+            };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidDocumentBatch", ex.ErrorCode);
         }
 
         [Test]

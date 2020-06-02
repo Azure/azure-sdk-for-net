@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 

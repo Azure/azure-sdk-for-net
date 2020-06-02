@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -28,19 +29,8 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
         public SqlRuleFilter(string sqlExpression)
         {
-            if (string.IsNullOrEmpty(sqlExpression))
-            {
-                throw Fx.Exception.ArgumentNull(nameof(sqlExpression));
-            }
-
-            if (sqlExpression.Length > Constants.MaximumSqlRuleFilterStatementLength)
-            {
-                throw Fx.Exception.Argument(
-                    nameof(sqlExpression),
-                    Resources.SqlRuleFilterStatmentTooLong.FormatForUser(
-                        sqlExpression.Length,
-                        Constants.MaximumSqlRuleFilterStatementLength));
-            }
+            Argument.AssertNotNullOrEmpty(sqlExpression, nameof(sqlExpression));
+            Argument.AssertNotTooLong(sqlExpression, Constants.MaximumSqlRuleFilterStatementLength, nameof(sqlExpression));
 
             SqlExpression = sqlExpression;
         }

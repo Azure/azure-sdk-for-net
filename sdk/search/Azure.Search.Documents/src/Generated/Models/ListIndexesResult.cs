@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Indexes request. If successful, it includes the full definitions of all indexes. </summary>
     internal partial class ListIndexesResult

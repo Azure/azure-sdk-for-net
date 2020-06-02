@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-jcswnkcn.search.windows.net/indexes(\u0027mesaejwj\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "70",
         "Content-Type": "application/json",
-        "traceparent": "00-b801cde582b9fd4db22bc8e72ae604b3-ef7f8293eba68b42-00",
+        "traceparent": "00-69b8419670d0d842bf000cc9ea9ca9f8-426f0ee191058c47-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "2f588dc52dbacd39693487e8d6cba384",
         "x-ms-return-client-request-id": "true"
@@ -27,7 +27,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "6362",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 25 Apr 2020 01:23:13 GMT",
+        "Date": "Fri, 08 May 2020 07:08:56 GMT",
         "elapsed-time": "8",
         "Expires": "-1",
         "OData-Version": "4.0",
@@ -293,7 +293,8 @@
   ],
   "Variables": {
     "RandomSeed": "640477458",
-    "SearchIndexName": "mesaejwj",
-    "SearchServiceName": "azs-net-jcswnkcn"
+    "SearchIndexName": "yrehvsfy",
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
   }
 }

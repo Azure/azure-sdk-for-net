@@ -4,9 +4,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Core.Pipeline;
+using System.Text;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -45,14 +47,21 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
-
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
                 options: options,
                 sessionId: sessionId);
-
-            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                receiver.Logger.ClientCreateException(typeof(ServiceBusSessionReceiver), receiver.FullyQualifiedNamespace, entityPath, ex);
+                throw;
+            }
+            receiver.Logger.ClientCreateComplete(typeof(ServiceBusSessionReceiver), receiver.Identifier);
             return receiver;
         }
 
@@ -91,7 +100,12 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetSessionStateStart(Identifier, SessionId);
+            Logger.GetSessionStateStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.GetSessionStateActivityName,
+                sessionId: SessionId);
+            scope.Start();
+
             byte[] sessionState = null;
 
             try
@@ -100,12 +114,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.GetSessionStateException(Identifier, exception);
+                Logger.GetSessionStateException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetSessionStateComplete(Identifier);
+            Logger.GetSessionStateComplete(Identifier);
             return sessionState;
         }
 
@@ -124,9 +138,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
-            Argument.AssertNotNullOrEmpty(sessionState, nameof(sessionState));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.SetSessionStateStart(Identifier, SessionId);
+            Logger.SetSessionStateStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.SetSessionStateActivityName,
+                sessionId: SessionId);
+            scope.Start();
 
             try
             {
@@ -134,12 +151,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.SetSessionStateException(Identifier, exception);
+                Logger.SetSessionStateException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.SetSessionStateComplete(Identifier);
+            Logger.SetSessionStateComplete(Identifier);
         }
 
         /// <summary>
@@ -162,7 +179,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockStart(Identifier, SessionId);
+            Logger.RenewSessionLockStart(Identifier, SessionId);
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.RenewSessionLockActivityName,
+                sessionId: SessionId);
+            scope.Start();
 
             try
             {
@@ -170,12 +191,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RenewSessionLockException(Identifier, exception);
+                Logger.RenewSessionLockException(Identifier, exception.ToString());
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockComplete(Identifier);
+            Logger.RenewSessionLockComplete(Identifier);
         }
     }
 }

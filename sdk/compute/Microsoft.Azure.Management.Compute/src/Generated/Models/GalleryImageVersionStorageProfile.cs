@@ -63,32 +63,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "dataDiskImages")]
         public IList<GalleryDataDiskImage> DataDiskImages { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Source != null)
-            {
-                Source.Validate();
-            }
-            if (OsDiskImage != null)
-            {
-                OsDiskImage.Validate();
-            }
-            if (DataDiskImages != null)
-            {
-                foreach (var element in DataDiskImages)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

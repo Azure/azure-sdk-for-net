@@ -5,6 +5,9 @@ namespace Azure.Data.Tables
 {
     internal static class TableConstants
     {
+        internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
+        internal const string CosmosTableDomain = ".table.cosmos.";
+
         internal static class HeaderNames
         {
             public const string Date = "x-ms-date";
@@ -26,6 +29,19 @@ namespace Azure.Data.Tables
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
             public const string Etag = "odata.etag";
+        }
+
+        internal static class Odata
+        {
+            internal const string OdataTypeString = "@odata.type";
+            internal const string EdmBinary = "Edm.Binary";
+            internal const string EdmBoolean = "Emd.Boolean";
+            internal const string EdmDateTime = "Edm.DateTime";
+            internal const string EdmDouble = "Edm.Double";
+            internal const string EdmGuid = "Edm.Guid";
+            internal const string EdmInt32 = "Edm.Int32";
+            internal const string EdmInt64 = "Edm.Int64";
+            internal const string EdmString = "Edm.String";
         }
 
         /// <summary>

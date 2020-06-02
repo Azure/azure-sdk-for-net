@@ -3,7 +3,8 @@
 ## Import the namespaces
 ```C# Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 ```
 
 ## Create a client
@@ -15,7 +16,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 // Create a new SearchServiceClient
-SearchServiceClient search = new SearchServiceClient(endpoint, credential);
+SearchIndexClient search = new SearchIndexClient(endpoint, credential);
 
 // Perform an operation
 Response<SearchServiceStatistics> stats = search.GetServiceStatistics();

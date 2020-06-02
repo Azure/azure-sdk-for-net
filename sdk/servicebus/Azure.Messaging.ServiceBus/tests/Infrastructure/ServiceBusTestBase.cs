@@ -4,18 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public class ServiceBusTestBase
+    public abstract class ServiceBusTestBase
     {
-        protected IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        protected IList<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)

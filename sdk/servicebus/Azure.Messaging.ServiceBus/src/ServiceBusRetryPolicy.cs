@@ -3,14 +3,12 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -45,6 +43,12 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the exception message when a server busy error is returned.
         /// </summary>
         private string ServerBusyExceptionMessage { get; set; }
+
+        /// <summary>
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
@@ -113,62 +117,55 @@ namespace Azure.Messaging.ServiceBus
         {
             var failedAttemptCount = 0;
 
-            try
+
+            TimeSpan tryTimeout = CalculateTryTimeout(0);
+            if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
             {
-                TimeSpan tryTimeout = CalculateTryTimeout(0);
-                if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
+                // We are in a server busy state before we start processing.
+                // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
+                await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
+                throw new ServiceBusException(
+                    ServerBusyExceptionMessage,
+                    ServiceBusException.FailureReason.ServiceBusy);
+            }
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (IsServerBusy)
                 {
-                    // We are in a server busy state before we start processing.
-                    // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
-                    await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
-                    throw new ServiceBusException(
-                        ServerBusyExceptionMessage,
-                        ServiceBusException.FailureReason.ServiceBusy);
+                    await Task.Delay(ServerBusyBaseSleepTime, cancellationToken).ConfigureAwait(false);
                 }
-                while (!cancellationToken.IsCancellationRequested)
+
+                try
                 {
-                    if (IsServerBusy)
+                    await operation(tryTimeout).ConfigureAwait(false);
+                    return;
+                }
+
+                catch (Exception ex)
+                {
+                    Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
+
+                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                    // Otherwise, throw the translated exception.
+
+                    ++failedAttemptCount;
+                    TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
+                    if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                     {
-                        await Task.Delay(ServerBusyBaseSleepTime, cancellationToken).ConfigureAwait(false);
+                        Logger.RunOperationExceptionEncountered(activeEx.ToString());
+                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+                        tryTimeout = CalculateTryTimeout(failedAttemptCount);
                     }
-
-                    try
+                    else
                     {
-                        await operation(tryTimeout).ConfigureAwait(false);
-                        return;
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
-
-                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, throw the translated exception.
-
-                        ++failedAttemptCount;
-                        TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
-                        if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
-                        {
-                            ServiceBusEventSource.Log.RunOperationExceptionEncountered(activeEx);
-                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-                            tryTimeout = CalculateTryTimeout(failedAttemptCount);
-                        }
-                        else
-                        {
-                            ExceptionDispatchInfo.Capture(activeEx)
-                                .Throw();
-                        }
+                        ExceptionDispatchInfo.Capture(activeEx)
+                            .Throw();
                     }
                 }
-                // If no value has been returned nor exception thrown by this point,
-                // then cancellation has been requested.
-                throw new TaskCanceledException();
             }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.RunOperationExceptionEncountered(ex);
-                throw;
-            }
+            // If no value has been returned nor exception thrown by this point,
+            // then cancellation has been requested.
+            throw new TaskCanceledException();
         }
 
         internal void SetServerBusy(string exceptionMessage)

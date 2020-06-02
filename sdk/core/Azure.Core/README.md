@@ -223,5 +223,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client
+[docs]: https://azure.github.io/azure-sdk-for-net/core.html
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
 using NUnit.Framework;
 
@@ -34,8 +35,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create a new SearchServiceClient
-            SearchServiceClient search = new SearchServiceClient(endpoint, credential);
-            /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
+            SearchIndexClient search = new SearchIndexClient(endpoint, credential);
+            /*@@*/ search = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
             Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
@@ -60,8 +61,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create a new SearchServiceClient
-            SearchServiceClient search = new SearchServiceClient(endpoint, credential);
-            /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
+            SearchIndexClient search = new SearchIndexClient(endpoint, credential);
+            /*@@*/ search = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
             Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
@@ -139,8 +140,8 @@ namespace Azure.Search.Documents.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
-            SearchServiceClient search = new SearchServiceClient(endpoint, credential);
-            /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
+            SearchIndexClient search = new SearchIndexClient(endpoint, credential);
+            /*@@*/ search = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Get and report the Search Service statistics
             Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();

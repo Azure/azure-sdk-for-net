@@ -214,15 +214,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The entity path/name &apos;{0}&apos; exceeds the &apos;{1}&apos; character limit..
-        /// </summary>
-        internal static string EntityNameLengthExceedsLimit {
-            get {
-                return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
         /// </summary>
         internal static string ExponentialRetryBackoffRange {
@@ -331,15 +322,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified value &apos;{0}&apos; is invalid. &quot;maxConcurrentCalls&quot; must be greater than zero..
-        /// </summary>
-        internal static string MaxConcurrentCallsMustBeGreaterThanZero {
-            get {
-                return ResourceManager.GetString("MaxConcurrentCallsMustBeGreaterThanZero", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The maximum permitted length of {0} was exceeded..
         /// </summary>
         internal static string MaxPermittedLengthExceeded {
@@ -421,7 +403,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        ///   Looks up a localized string similar to This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled..
         /// </summary>
         internal static string PeekLockModeRequired {
             get {
@@ -525,15 +507,6 @@ namespace Azure.Messaging.ServiceBus {
         internal static string SharedKeyCredentialCannotGenerateTokens {
             get {
                 return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
-        /// </summary>
-        internal static string SqlFilterActionStatmentTooLong {
-            get {
-                return ResourceManager.GetString("SqlFilterActionStatmentTooLong", resourceCulture);
             }
         }
         

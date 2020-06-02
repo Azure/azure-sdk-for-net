@@ -599,7 +599,7 @@ namespace Azure.Messaging.EventHubs.Producer
             IsClosed = true;
 
             var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubProducerClient), EventHubName, identifier);
 
             // Attempt to close the pool of producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -612,7 +612,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubProducerClient), EventHubName, identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, identifier, ex.Message);
                 transportProducerPoolException = ex;
             }
 
@@ -628,12 +628,12 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubProducerClient), EventHubName, identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, identifier, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubProducerClient), EventHubName, identifier);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubProducerClient), EventHubName, identifier);
             }
 
             // If there was an active exception pending from closing the

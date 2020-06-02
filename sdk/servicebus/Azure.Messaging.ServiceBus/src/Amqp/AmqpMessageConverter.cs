@@ -155,7 +155,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var body = new ArraySegment<byte>((sbMessage.Body.IsEmpty) ? Array.Empty<byte>() : sbMessage.Body.ToArray());
+            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body.AsBytes();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var amqpMessage = AmqpMessage.Create(new Data { Value = body });
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
@@ -221,10 +222,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
-            if (amqpMessage == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(amqpMessage));
-            }
+            Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
             ServiceBusReceivedMessage sbMessage;
 
@@ -567,7 +565,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName));
                     }
                     else if (netObject is byte[] netObjectAsByteArray)
                     {
@@ -656,7 +654,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
+                        throw new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName));
                     }
                     else if (amqpObject is AmqpMap map)
                     {

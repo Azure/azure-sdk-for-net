@@ -31,14 +31,25 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
+        public static EventHubsEventSource Log { get; } = new EventHubsEventSource(EventSourceName);
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        protected EventHubsEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected EventHubsEventSource()
+        {
+        }
+
+        /// <summary>
+        ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
+        ///   outside the scope of the <see cref="Log" /> instance.
+        /// </summary>
+        ///
+        /// <param name="eventSourceName">The name to assign to the event source.</param>
+        ///
+        private EventHubsEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
@@ -201,18 +212,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
         [Event(9, Level = EventLevel.Verbose, Message = "Closing an {0} (EventHub '{1}'; Identifier '{2}').")]
-        public virtual void ClientCloseStart(Type clientType,
+        public virtual void ClientCloseStart(string clientTypeName,
                                              string eventHubName,
                                              string clientId)
         {
             if (IsEnabled())
             {
-                WriteEvent(9, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(9, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -221,18 +232,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         ///
         [Event(10, Level = EventLevel.Verbose, Message = "An {0} has been closed (EventHub '{1}'; Identifier '{2}').")]
-        public virtual void ClientCloseComplete(Type clientType,
+        public virtual void ClientCloseComplete(string clientTypeName,
                                                 string eventHubName,
                                                 string clientId)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(10, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty);
             }
         }
 
@@ -241,20 +252,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
-        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="clientTypeName">The name of the type of client being closed.</param>
         /// <param name="eventHubName">The name of the Event Hub associated with the client.</param>
         /// <param name="clientId">An identifier to associate with the client.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(11, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (EventHub '{1}'; Identifier '{2}'). Error Message: '{3}'")]
-        public virtual void ClientCloseError(Type clientType,
+        public virtual void ClientCloseError(string clientTypeName,
                                              string eventHubName,
                                              string clientId,
                                              string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(11, clientType.Name, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(11, clientTypeName ?? string.Empty, eventHubName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

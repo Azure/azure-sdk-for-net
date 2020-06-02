@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Filters
@@ -47,11 +48,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         public CorrelationRuleFilter(string correlationId)
             : this()
         {
-            if (string.IsNullOrWhiteSpace(correlationId))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(correlationId));
-            }
-
+            Argument.AssertNotNullOrWhiteSpace(correlationId, nameof(correlationId));
             CorrelationId = correlationId;
         }
 
