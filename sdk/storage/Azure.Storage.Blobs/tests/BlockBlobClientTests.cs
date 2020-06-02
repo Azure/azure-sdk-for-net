@@ -1156,6 +1156,78 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var blockName = GetNewBlockName();
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            stream.Position = 0;
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            BlobRequestConditions condition = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.CommitBlockListAsync(
+                commitList,
+                conditions: condition);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CommitBlockListAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var blockName = GetNewBlockName();
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            stream.Position = 0;
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            BlobRequestConditions condition = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.CommitBlockListAsync(
+                    commitList,
+                    conditions: condition),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task CommitBlockListAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
