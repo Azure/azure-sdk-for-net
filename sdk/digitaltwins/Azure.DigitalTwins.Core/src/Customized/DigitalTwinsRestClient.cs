@@ -629,7 +629,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> SendTelemetryAsync(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> SendTelemetryAsync(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -653,7 +653,7 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -665,7 +665,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> SendTelemetry(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal Response SendTelemetry(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -689,7 +689,7 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -701,7 +701,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal async Task<Response<string>> SendComponentTelemetryAsync(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -729,7 +729,7 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -741,7 +741,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<string> SendComponentTelemetry(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        internal Response SendComponentTelemetry(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -769,7 +769,7 @@ namespace Azure.DigitalTwins.Core
                 switch (message.Response.Status)
                 {
                     case 204:
-                        return Response.FromValue<string>(null, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }

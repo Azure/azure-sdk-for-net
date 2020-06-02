@@ -1200,7 +1200,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Successfully published telemetry message, status: {publishTelemetryResponse.GetRawResponse().Status}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> PublishTelemetryAsync(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
             var dateTimeInString = TypeFormatters.ToString(telemetryOptions.TimeStamp, DateTimeOffsetFormat);
@@ -1218,7 +1218,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
-        public virtual Response<string> PublishTelemetry(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response PublishTelemetry(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
             var dateTimeInString = TypeFormatters.ToString(telemetryOptions.TimeStamp, DateTimeOffsetFormat);
@@ -1246,7 +1246,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.GetRawResponse().Status}&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response<string>> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
             var dateTimeInString = TypeFormatters.ToString(telemetryOptions.TimeStamp, DateTimeOffsetFormat);
@@ -1265,7 +1265,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
-        public virtual Response<string> PublishComponentTelemetry(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response PublishComponentTelemetry(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
             var dateTimeInString = TypeFormatters.ToString(telemetryOptions.TimeStamp, DateTimeOffsetFormat);
