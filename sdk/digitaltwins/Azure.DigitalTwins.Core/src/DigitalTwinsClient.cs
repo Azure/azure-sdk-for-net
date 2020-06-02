@@ -813,7 +813,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual Task<Response<IReadOnlyList<ModelData>>> CreateModelsAsync(IEnumerable<string> models, CancellationToken cancellationToken = default)
         {
-            return _dtModelsRestClient.AddAsync(models, cancellationToken);
+            return _dtModelsRestClient.AddAsync(null, cancellationToken);
         }
 
         /// <summary>
