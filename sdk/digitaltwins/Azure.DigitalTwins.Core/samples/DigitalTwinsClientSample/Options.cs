@@ -2,57 +2,44 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using CommandLine;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
+    internal enum LoginMethod
+    {
+        AppId,
+        User,
+    };
+
     public class Options
     {
-        public Options(string adtEndpoint, string clientId, string tenantId, string clientSecret, string eventHubName)
+        [Option('a', "adtEndpoint", Required = true, HelpText = "Digital twins service endpoint")]
+        public string AdtEndpoint { get; set; }
+
+        [Option('i', "clientId", Required = true, HelpText = "Client Id of the application Id to login, or the application Id used to log the user in.")]
+        public string ClientId { get; set; }
+
+        [Option('m', "loginMethod", Required = false, Default = "AppId", HelpText = "Choose between: AppId, User.")]
+        public string LoginMethod { get; set; }
+
+        [Option('t', "tenantId", Required = true, HelpText = "Application tenant Id")]
+        public string TenantId { get; set; }
+
+        [Option('s', "clientSecret", Required = false, HelpText = "Application client secret. Only applicable when using LoginMethod of AppId.")]
+        public string ClientSecret { get; set; }
+
+        [Option('e', "eventHubName", Required = true, HelpText = "Event Hub Name linked to digital twins instance")]
+        public string EventHubName { get; set; }
+
+        internal LoginMethod GetLoginMethod()
         {
-            AdtEndpoint = adtEndpoint;
-            ClientId = clientId;
-            TenantId = tenantId;
-            ClientSecret = clientSecret;
-            EventHubName = eventHubName;
-        }
-
-        [Option("adtEndpoint", Required = true, HelpText = "Digital twins service endpoint")]
-        public string AdtEndpoint { get; }
-
-        [Option("clientId", Required = true, HelpText = "Application client Id")]
-        public string ClientId { get; }
-
-        [Option("tenantId", Required = true, HelpText = "Application tenant Id")]
-        public string TenantId { get; }
-
-        [Option("clientSecret", Required = true, HelpText = "Application client secret")]
-        public string ClientSecret { get; }
-
-        [Option("eventHubName", Required = true, HelpText = "Event Hub Name linked to digital twins instance")]
-        public string EventHubName { get; }
-
-        public static void HandleParseError(IEnumerable<Error> errors)
-        {
-            if (errors.IsVersion())
+            if (Enum.TryParse<LoginMethod>(LoginMethod, out LoginMethod loginMethod))
             {
-                Console.WriteLine("1.0.0");
-                return;
+                return loginMethod;
             }
 
-            if (errors.IsHelp())
-            {
-                Console.WriteLine("Usage: .\\DigitalTwinServiceClientSample.exe " +
-                    "--adtEndpoint <yourAdtEndpointName> " +
-                    "--clientId <yourApplicationClientId> " +
-                    "--tenantId <yourApplicationTenantId> " +
-                    "--clientSecret <yourApplicationClientSecret>" +
-                    "--eventHubName <yourEventHubName>");
-                return;
-            }
-
-            Console.WriteLine("Parser Fail");
+            return Samples.LoginMethod.AppId;
         }
     }
 }

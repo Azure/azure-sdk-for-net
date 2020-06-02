@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core.Samples
             await DigitalTwinsClient.CreateDigitalTwinAsync(twinId, twinPayload).ConfigureAwait(false);
             Console.WriteLine($"Created digital twin {twinId}.");
 
-            #region Snippet:DigitalTwinSampleUpdateComponent
+            #region Snippet:DigitalTwinsSampleUpdateComponent
 
             // Update Component with replacing property value
             string propertyPath = "/ComponentProp1";
@@ -62,17 +62,17 @@ namespace Azure.DigitalTwins.Core.Samples
 
             Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(twinId, SamplesConstants.ComponentPath, componentUpdateUtility.Serialize());
 
-            #endregion Snippet:DigitalTwinSampleUpdateComponent
+            #endregion Snippet:DigitalTwinsSampleUpdateComponent
 
             Console.WriteLine($"Updated component for digital twin {twinId}. Update response status: {response.GetRawResponse().Status}");
 
             // Get Component
 
-            #region Snippet:DigitalTwinSampleGetComponent
+            #region Snippet:DigitalTwinsSampleGetComponent
 
             response = await DigitalTwinsClient.GetComponentAsync(twinId, SamplesConstants.ComponentPath).ConfigureAwait(false);
 
-            #endregion Snippet:DigitalTwinSampleGetComponent
+            #endregion Snippet:DigitalTwinsSampleGetComponent
 
             Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
 

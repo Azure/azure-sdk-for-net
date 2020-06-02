@@ -172,7 +172,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 // Get all the twin types
 
-                #region Snippet:DigitalTwinSampleGetModels
+                #region Snippet:DigitalTwinsSampleGetModels
 
                 AsyncPageable<ModelData> allModels = DigitalTwinsClient.GetModelsAsync();
                 await foreach (ModelData model in allModels)
@@ -180,7 +180,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     Console.WriteLine($"Model Id: {model.Id}, display name: {model.DisplayName["en"]}, upload time: {model.UploadTime}, is decommissioned: {model.Decommissioned}");
                 }
 
-                #endregion Snippet:DigitalTwinSampleGetModels
+                #endregion Snippet:DigitalTwinsSampleGetModels
             }
             catch (Exception ex)
             {
@@ -202,11 +202,11 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     // Delete all relationships
 
-                    #region Snippet:DigitalTwinSampleGetRelationships
+                    #region Snippet:DigitalTwinsSampleGetRelationships
 
                     AsyncPageable<string> relationships = DigitalTwinsClient.GetRelationshipsAsync(twin.Key);
 
-                    #endregion Snippet:DigitalTwinSampleGetRelationships
+                    #endregion Snippet:DigitalTwinsSampleGetRelationships
 
                     await foreach (var relationshipJson in relationships)
                     {
@@ -217,11 +217,11 @@ namespace Azure.DigitalTwins.Core.Samples
 
                     // Delete any incoming relationships
 
-                    #region Snippet:DigitalTwinSampleGetIncomingRelationships
+                    #region Snippet:DigitalTwinsSampleGetIncomingRelationships
 
                     AsyncPageable<IncomingRelationship> incomingRelationships = DigitalTwinsClient.GetIncomingRelationshipsAsync(twin.Key);
 
-                    #endregion Snippet:DigitalTwinSampleGetIncomingRelationships
+                    #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
 
                     await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
                     {
@@ -231,11 +231,11 @@ namespace Azure.DigitalTwins.Core.Samples
 
                     // Now the digital twin should be safe to delete
 
-                    #region Snippet:DigitalTwinSampleDeleteTwin
+                    #region Snippet:DigitalTwinsSampleDeleteTwin
 
                     await DigitalTwinsClient.DeleteDigitalTwinAsync(twin.Key).ConfigureAwait(false);
 
-                    #endregion Snippet:DigitalTwinSampleDeleteTwin
+                    #endregion Snippet:DigitalTwinsSampleDeleteTwin
 
                     Console.WriteLine($"Deleted digital twin {twin.Key}");
                 }
@@ -263,11 +263,11 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 try
                 {
-                    #region Snippet:DigitalTwinSampleCreateTwin
+                    #region Snippet:DigitalTwinsSampleCreateTwin
 
                     Response<string> response = await DigitalTwinsClient.CreateDigitalTwinAsync(twin.Key, twin.Value).ConfigureAwait(false);
 
-                    #endregion Snippet:DigitalTwinSampleCreateTwin
+                    #endregion Snippet:DigitalTwinsSampleCreateTwin
 
                     Console.WriteLine($"Created digital twin {twin.Key}. Create response status: {response.GetRawResponse().Status}");
                     Console.WriteLine($"Body: {response?.Value}");
@@ -287,7 +287,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 Console.WriteLine("Making a twin query and iterating over the results.");
 
-                #region Snippet:DigitalTwinSampleQueryTwins
+                #region Snippet:DigitalTwinsSampleQueryTwins
 
                 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
                 // happens under the covers.
@@ -302,11 +302,11 @@ namespace Azure.DigitalTwins.Core.Samples
                     Console.WriteLine($"Found digital twin: {twin.Id}");
                 }
 
-                #endregion Snippet:DigitalTwinSampleQueryTwins
+                #endregion Snippet:DigitalTwinsSampleQueryTwins
 
                 Console.WriteLine("Making a twin query, with query-charge header extraction.");
 
-                #region Snippet:DigitalTwinSampleQueryTwinsWithQueryCharge
+                #region Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge
 
                 // This code snippet demonstrates how you could extract the query charges incurred when calling
                 // the query API. It iterates over the response pages first to access to the query-charge header,
@@ -335,7 +335,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     }
                 }
 
-                #endregion Snippet:DigitalTwinSampleQueryTwinsWithQueryCharge
+                #endregion Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge
             }
             catch (Exception ex)
             {
@@ -363,7 +363,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     try
                     {
-                        #region Snippet:DigitalTwinSampleCreateRelationship
+                        #region Snippet:DigitalTwinsSampleCreateRelationship
 
                         string serializedRelationship = JsonSerializer.Serialize(relationship);
 
@@ -374,7 +374,7 @@ namespace Azure.DigitalTwins.Core.Samples
                                 serializedRelationship)
                             .ConfigureAwait(false);
 
-                        #endregion Snippet:DigitalTwinSampleCreateRelationship
+                        #endregion Snippet:DigitalTwinsSampleCreateRelationship
 
                         Console.WriteLine($"Linked {serializedRelationship}");
                     }
@@ -394,7 +394,7 @@ namespace Azure.DigitalTwins.Core.Samples
             PrintHeader("LISTING EVENT ROUTES");
             try
             {
-                #region Snippet:DigitalTwinSampleGetEventRoutes
+                #region Snippet:DigitalTwinsSampleGetEventRoutes
 
                 AsyncPageable<EventRoute> response = DigitalTwinsClient.GetEventRoutesAsync();
                 await foreach (EventRoute er in response)
@@ -402,7 +402,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     Console.WriteLine($"Event route: {er.Id}, endpoint name: {er.EndpointName}");
                 }
 
-                #endregion Snippet:DigitalTwinSampleGetEventRoutes
+                #endregion Snippet:DigitalTwinsSampleGetEventRoutes
             }
             catch (Exception ex)
             {
@@ -418,7 +418,7 @@ namespace Azure.DigitalTwins.Core.Samples
             PrintHeader("CREATE EVENT ROUTE");
             try
             {
-                #region Snippet:DigitalTwinSampleCreateEventRoute
+                #region Snippet:DigitalTwinsSampleCreateEventRoute
 
                 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
                 var eventRoute = new EventRoute(_eventhubEndpointName)
@@ -428,7 +428,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 Response createEventRouteResponse = await DigitalTwinsClient.CreateEventRouteAsync(_eventRouteId, eventRoute).ConfigureAwait(false);
 
-                #endregion Snippet:DigitalTwinSampleCreateEventRoute
+                #endregion Snippet:DigitalTwinsSampleCreateEventRoute
 
                 Console.WriteLine($"Created event route: {_eventRouteId} Response status: {createEventRouteResponse.Status}");
             }
@@ -446,11 +446,11 @@ namespace Azure.DigitalTwins.Core.Samples
             PrintHeader("DELETING EVENT ROUTE");
             try
             {
-                #region Snippet:DigitalTwinSampleDeleteEventRoute
+                #region Snippet:DigitalTwinsSampleDeleteEventRoute
 
                 Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId).ConfigureAwait(false);
 
-                #endregion Snippet:DigitalTwinSampleDeleteEventRoute
+                #endregion Snippet:DigitalTwinsSampleDeleteEventRoute
 
                 Console.WriteLine($"Successfully deleted event route: {_eventRouteId}, status: {response.Status}");
             }

@@ -47,12 +47,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                #region Snippet:DigitalTwinSampleCreateModels
+                #region Snippet:DigitalTwinsSampleCreateModels
 
                 Response<IReadOnlyList<ModelData>> response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
                 Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
 
-                #endregion Snippet:DigitalTwinSampleCreateModels
+                #endregion Snippet:DigitalTwinsSampleCreateModels
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
             {
@@ -66,11 +66,11 @@ namespace Azure.DigitalTwins.Samples
             // Get Model
             try
             {
-                #region Snippet:DigitalTwinSampleGetModel
+                #region Snippet:DigitalTwinsSampleGetModel
 
                 Response<ModelData> sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
 
-                #endregion Snippet:DigitalTwinSampleGetModel
+                #endregion Snippet:DigitalTwinsSampleGetModel
 
                 Console.WriteLine($"{sampleModel.Value.Id} has decommission status of {sampleModel.Value.Decommissioned}");
             }
@@ -81,7 +81,7 @@ namespace Azure.DigitalTwins.Samples
 
             // Now we decommission the model
 
-            #region Snippet:DigitalTwinSampleDecommisionModel
+            #region Snippet:DigitalTwinsSampleDecommisionModel
 
             try
             {
@@ -94,11 +94,11 @@ namespace Azure.DigitalTwins.Samples
                 FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
             }
 
-            #endregion Snippet:DigitalTwinSampleDecommisionModel
+            #endregion Snippet:DigitalTwinsSampleDecommisionModel
 
             // Now delete created model
 
-            #region Snippet:DigitalTwinSampleDeleteModel
+            #region Snippet:DigitalTwinsSampleDeleteModel
 
             try
             {
@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Samples
                 FatalError($"Failed to delete model {sampleModelId} due to:\n{ex}");
             }
 
-            #endregion Snippet:DigitalTwinSampleDeleteModel
+            #endregion Snippet:DigitalTwinsSampleDeleteModel
         }
     }
 }
