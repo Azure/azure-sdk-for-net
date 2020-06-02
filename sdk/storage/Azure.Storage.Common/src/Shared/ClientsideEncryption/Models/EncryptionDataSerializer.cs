@@ -11,11 +11,22 @@ namespace Azure.Storage.Cryptography.Models
     internal static class EncryptionDataSerializer
     {
         #region Serialize
+
+        /// <summary>
+        /// Serializes an EncryptionData instance into JSON.
+        /// </summary>
+        /// <param name="data">Data to serialize.</param>
+        /// <returns>The JSON string.</returns>
         public static string Serialize(EncryptionData data)
         {
             return Encoding.UTF8.GetString(SerializeEncryptionData(data).ToArray());
         }
 
+        /// <summary>
+        /// Serializes an EncryptionData instance into JSON.
+        /// </summary>
+        /// <param name="data">Data to serialize.</param>
+        /// <returns>The JSON UTF8 bytes.</returns>
         public static ReadOnlyMemory<byte> SerializeEncryptionData(EncryptionData data)
         {
             var writer = new Core.ArrayBufferWriter<byte>();
@@ -29,6 +40,11 @@ namespace Azure.Storage.Cryptography.Models
             return writer.WrittenMemory;
         }
 
+        /// <summary>
+        /// Serializes an EncryptionData instance into JSON and writes it to the given JSON writer.
+        /// </summary>
+        /// <param name="json">The writer to write the serialization to.</param>
+        /// <param name="data">Data to serialize.</param>
         public static void WriteEncryptionData(Utf8JsonWriter json, EncryptionData data)
         {
             json.WriteString(nameof(data.EncryptionMode), data.EncryptionMode);
@@ -71,12 +87,22 @@ namespace Azure.Storage.Cryptography.Models
         #endregion
 
         #region Deserialize
+        /// <summary>
+        /// Deserializes an EncryptionData instance from JSON.
+        /// </summary>
+        /// <param name="serializedData">The serialized data string.</param>
+        /// <returns>The instance.</returns>
         public static EncryptionData Deserialize(string serializedData)
         {
             var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(serializedData));
             return DeserializeEncryptionData(ref reader);
         }
 
+        /// <summary>
+        /// Reads an EncryptionData instance from a JSON reader.
+        /// </summary>
+        /// <param name="reader">The reader to parse an EncryptionData isntance from.</param>
+        /// <returns>The instance.</returns>
         public static EncryptionData DeserializeEncryptionData(ref Utf8JsonReader reader)
         {
             using JsonDocument json = JsonDocument.ParseValue(ref reader);
@@ -84,6 +110,11 @@ namespace Azure.Storage.Cryptography.Models
             return ReadEncryptionData(root);
         }
 
+        /// <summary>
+        /// Reads an EncryptionData instance from a parsed JSON object.
+        /// </summary>
+        /// <param name="root">The JSON object model.</param>
+        /// <returns>The instance.</returns>
         public static EncryptionData ReadEncryptionData(JsonElement root)
         {
             var data = new EncryptionData();

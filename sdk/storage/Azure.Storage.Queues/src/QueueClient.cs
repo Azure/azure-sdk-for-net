@@ -89,7 +89,9 @@ namespace Azure.Storage.Queues
 
         internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
-        private readonly IClientSideDecryptionFailureListener _missingClientSideEncryptionKeyListener;
+        private readonly IClientSideDecryptionFailureListener _onClientSideDecryptionFailure;
+
+        internal virtual IClientSideDecryptionFailureListener OnClientSideDecryptionFailure => _onClientSideDecryptionFailure;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -198,7 +200,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
+            _onClientSideDecryptionFailure = options._onClientSideDecryptionFailure;
         }
 
         /// <summary>
@@ -291,7 +293,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
+            _onClientSideDecryptionFailure = options._onClientSideDecryptionFailure;
         }
 
         /// <summary>
@@ -333,7 +335,7 @@ namespace Azure.Storage.Queues
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = encryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = listener;
+            _onClientSideDecryptionFailure = listener;
         }
         #endregion ctors
 
@@ -1510,7 +1512,8 @@ namespace Azure.Storage.Queues
                 try
                 {
                     messageText = UsingClientSideEncryption
-                        ? await ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
+                        ? await new QueueClientSideEncryptor(ClientSideEncryption)
+                            .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
                         : messageText;
 
                     Response<IEnumerable<SendReceipt>> messages =
@@ -1707,7 +1710,8 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                            await new QueueClientSideDecryptor(ClientSideEncryption, OnClientSideDecryptionFailure)
+                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
@@ -1825,7 +1829,8 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                            await new QueueClientSideDecryptor(ClientSideEncryption, OnClientSideDecryptionFailure)
+                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
@@ -2106,98 +2111,5 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
-
-        private async Task<string> ClientSideEncryptInternal(string messageToUpload, bool async, CancellationToken cancellationToken)
-        {
-            var bytesToEncrypt = Encoding.UTF8.GetBytes(messageToUpload);
-            (byte[] ciphertext, EncryptionData encryptionData) = await ClientSideEncryptor.BufferedEncryptInternal(
-                new MemoryStream(bytesToEncrypt),
-                ClientSideEncryption.KeyEncryptionKey,
-                ClientSideEncryption.KeyWrapAlgorithm,
-                async,
-                cancellationToken).ConfigureAwait(false);
-
-            return EncryptedMessageSerializer.Serialize(new EncryptedMessage
-            {
-                EncryptedMessageContents = Convert.ToBase64String(ciphertext),
-                EncryptionData = encryptionData
-            });
-        }
-
-        private async Task<QueueMessage[]> ClientSideDecryptMessagesInternal(QueueMessage[] messages, bool async, CancellationToken cancellationToken)
-        {
-            var filteredMessages = new List<QueueMessage>();
-            foreach (var message in messages)
-            {
-                try
-                {
-                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
-                    filteredMessages.Add(message);
-                }
-                catch (Exception e) when (_missingClientSideEncryptionKeyListener != default)
-                {
-                    if (async)
-                    {
-                        await _missingClientSideEncryptionKeyListener.OnFailureAsync(message, e).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _missingClientSideEncryptionKeyListener.OnFailure(message, e);
-                    }
-                }
-            }
-            return filteredMessages.ToArray();
-        }
-        private async Task<PeekedMessage[]> ClientSideDecryptMessagesInternal(PeekedMessage[] messages, bool async, CancellationToken cancellationToken)
-        {
-            var filteredMessages = new List<PeekedMessage>();
-            foreach (var message in messages)
-            {
-                try
-                {
-                    message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
-                    filteredMessages.Add(message);
-                }
-                catch (Exception e) when (_missingClientSideEncryptionKeyListener != default)
-                {
-                    if (async)
-                    {
-                        await _missingClientSideEncryptionKeyListener.OnFailureAsync(message, e).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _missingClientSideEncryptionKeyListener.OnFailure(message, e);
-                    }
-                }
-            }
-            return filteredMessages.ToArray();
-        }
-
-        private async Task<string> ClientSideDecryptInternal(string downloadedMessage, bool async, CancellationToken cancellationToken)
-        {
-            if (!EncryptedMessageSerializer.TryDeserialize(downloadedMessage, out var encryptedMessage))
-            {
-                return downloadedMessage; // not recognized as client-side encrypted message
-            }
-
-            var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents));
-            var decryptedMessageStream = await ClientSideDecryptor.DecryptInternal(
-                encryptedMessageStream,
-                encryptedMessage.EncryptionData,
-                ivInStream: false,
-                ClientSideEncryption.KeyResolver,
-                ClientSideEncryption.KeyEncryptionKey,
-                noPadding: false,
-                async: async,
-                cancellationToken).ConfigureAwait(false);
-            // if we got back the stream we put in, then we couldn't decrypt and are supposed to return the original
-            // message to the user
-            if (encryptedMessageStream == decryptedMessageStream)
-            {
-                return downloadedMessage;
-            }
-
-            return new StreamReader(decryptedMessageStream, Encoding.UTF8).ReadToEnd();
-        }
     }
 }

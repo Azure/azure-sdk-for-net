@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +10,6 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Cryptography.Models;
-using System.Collections.Generic;
-using Azure.Storage.Cryptography;
 
 namespace Azure.Storage.Blobs
 {
@@ -954,7 +950,8 @@ namespace Azure.Storage.Blobs
             if (UsingClientSideEncryption)
             {
                 // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
-                (content, metadata) = await ClientSideEncryptInternal(content, metadata, async, cancellationToken).ConfigureAwait(false);
+                (content, metadata) = await new BlobClientSideEncryptor(ClientSideEncryption)
+                    .ClientSideEncryptInternal(content, metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
             var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
@@ -1067,55 +1064,5 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Upload
-
-        /// <summary>
-        /// Applies client-side encryption to the data for upload.
-        /// </summary>
-        /// <param name="content">
-        /// Content to encrypt.
-        /// </param>
-        /// <param name="metadata">
-        /// Metadata to add encryption metadata to.
-        /// </param>
-        /// <param name="async">
-        /// Whether to perform this operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
-        /// <returns>Transformed content stream and metadata.</returns>
-        private async Task<(Stream, Metadata)> ClientSideEncryptInternal(
-            Stream content,
-            Metadata metadata,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            if (ClientSideEncryption?.KeyEncryptionKey == default || ClientSideEncryption?.KeyWrapAlgorithm == default)
-            {
-                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(ClientSideEncryption.KeyEncryptionKey), nameof(ClientSideEncryption.KeyWrapAlgorithm));
-            }
-
-            //long originalLength = content.Length;
-
-            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await ClientSideEncryptor.EncryptInternal(
-                content,
-                ClientSideEncryption.KeyEncryptionKey,
-                ClientSideEncryption.KeyWrapAlgorithm,
-                async,
-                cancellationToken).ConfigureAwait(false);
-
-            //Stream seekableCiphertext = new RollingBufferStream(
-            //        nonSeekableCiphertext,
-            //        EncryptionConstants.DefaultRollingBufferSize,
-            //        GetExpectedCryptoStreamLength(originalLength));
-
-            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata.Add(EncryptionConstants.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
-
-            return (nonSeekableCiphertext, metadata);
-        }
-
-        private static long GetExpectedCryptoStreamLength(long originalLength)
-            => originalLength + (EncryptionConstants.EncryptionBlockSize - originalLength % EncryptionConstants.EncryptionBlockSize);
     }
 }

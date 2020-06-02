@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -11,6 +12,8 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
@@ -31,10 +34,10 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-
-        #region Utility
-
-        private byte[] LocalManualEncryption(byte[] data, byte[] key, byte[] iv)
+        /// <summary>
+        /// Provides encryption functionality clone of client logic, letting us validate the client got it right end-to-end.
+        /// </summary>
+        private byte[] EncryptData(byte[] data, byte[] key, byte[] iv)
         {
             using (var aesProvider = new AesCryptoServiceProvider() { Key = key, IV = iv })
             using (var encryptor = aesProvider.CreateEncryptor())
@@ -103,6 +106,39 @@ namespace Azure.Storage.Blobs.Test
             return keyMock;
         }
 
+        private Mock<IKeyEncryptionKeyResolver> GetAlwaysFailsKeyResolver(bool throws)
+        {
+            var mock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
+            if (IsAsync)
+            {
+                if (throws)
+                {
+                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
+                        .Throws<Exception>();
+                }
+                else
+                {
+                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
+                        .Returns(Task.FromResult<IKeyEncryptionKey>(null));
+                }
+            }
+            else
+            {
+                if (throws)
+                {
+                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
+                        .Throws<Exception>();
+                }
+                else
+                {
+                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
+                        .Returns((IKeyEncryptionKey)null);
+                }
+            }
+
+            return mock;
+        }
+
         private Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(IKeyEncryptionKey iKey)
         {
             var resolverMock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
@@ -169,7 +205,38 @@ namespace Azure.Storage.Blobs.Test
             return result;
         }
 
-        #endregion
+        [Test]
+        [LiveOnly]
+        public void CanSwapKey()
+        {
+            var options1 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "foo"
+            };
+            var options2 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            var client = new BlobClient(new Uri("http://someuri.com"), new ExtendedBlobClientOptions()
+            {
+                ClientSideEncryption = options1,
+            });
+
+            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+
+            client = client.WithClientSideEncryptionOptions(options2);
+
+            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+        }
 
         [TestCase(16)] // a single cipher block
         [TestCase(14)] // a single unalligned cipher block
@@ -210,7 +277,7 @@ namespace Azure.Storage.Blobs.Test
                 var explicitlyUnwrappedKey = IsAsync // can't instrument this
                     ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
                     : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
-                byte[] expectedEncryptedData = LocalManualEncryption(
+                byte[] expectedEncryptedData = EncryptData(
                     data,
                     explicitlyUnwrappedKey,
                     encryptionMetadata.ContentEncryptionIV);
@@ -484,17 +551,22 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 bool threw = false;
+                var resolver = GetAlwaysFailsKeyResolver(resolverThrows);
                 try
                 {
                     // download but can't find key
                     var options = GetOptions();
                     options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
-                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ShouldThrow = resolverThrows },
+                        KeyResolver = resolver.Object,
                         KeyWrapAlgorithm = "test"
                     };
                     var encryptedDataStream = new MemoryStream();
                     await InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), options)).DownloadToAsync(encryptedDataStream, cancellationToken: s_cancellationToken);
+                }
+                catch (MockException e)
+                {
+                    Assert.Fail(e.Message);
                 }
                 catch (Exception)
                 {
@@ -503,6 +575,50 @@ namespace Azure.Storage.Blobs.Test
                 finally
                 {
                     Assert.IsTrue(threw);
+                    // we already asserted the correct method was called in `catch (MockException e)`
+                    Assert.AreEqual(1, resolver.Invocations.Count);
+                }
+            }
+        }
+
+        // using 5 to setup offsets to avoid any off-by-one confusion in debugging
+        [TestCase(0, null)]
+        [TestCase(0, 2 * EncryptionConstants.EncryptionBlockSize)]
+        [TestCase(0, 2 * EncryptionConstants.EncryptionBlockSize + 5)]
+        [TestCase(EncryptionConstants.EncryptionBlockSize, EncryptionConstants.EncryptionBlockSize)]
+        [TestCase(EncryptionConstants.EncryptionBlockSize, EncryptionConstants.EncryptionBlockSize + 5)]
+        [TestCase(EncryptionConstants.EncryptionBlockSize + 5, 2 * EncryptionConstants.EncryptionBlockSize)]
+        [LiveOnly]
+        public async Task AppropriateRangeDownloadOnPlaintext(int rangeOffset, int? rangeLength)
+        {
+            var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + EncryptionConstants.EncryptionBlockSize);
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(GetIKeyEncryptionKey().Object).Object;
+            await using (var disposable = await GetTestContainerAsync())
+            {
+                // upload plaintext
+                var blob = disposable.Container.GetBlobClient(GetNewBlobName());
+                await blob.UploadAsync(new MemoryStream(data));
+
+                // download plaintext range with encrypted client
+                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), new ExtendedBlobClientOptions()
+                {
+                    ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    {
+                        KeyResolver = mockKeyResolver
+                    }
+                }));
+                var desiredRange = new HttpRange(rangeOffset, rangeLength);
+                var response = await cryptoClient.DownloadAsync(desiredRange);
+
+                // assert we recieved the data we requested
+                int expectedLength = rangeLength ?? data.Length - rangeOffset;
+                var memoryStream = new MemoryStream();
+                await response.Value.Content.CopyToAsync(memoryStream);
+                var recievedData = memoryStream.ToArray();
+                Assert.AreEqual(expectedLength, recievedData.Length);
+                for (int i = 0; i < recievedData.Length; i++)
+                {
+                    Assert.AreEqual(data[i + rangeOffset], recievedData[i]);
                 }
             }
         }
@@ -512,7 +628,7 @@ namespace Azure.Storage.Blobs.Test
         [Ignore("stress test")]
         public async Task StressAsync()
         {
-            static async Task<byte[]> RoundTripDataHelper(BlobClient client, byte[] data)
+            static async Task<byte[]> RoundTripData(BlobClient client, byte[] data)
             {
                 using (var dataStream = new MemoryStream(data))
                 {
@@ -542,7 +658,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     var blob = disposable.Container.GetBlobClient(GetNewBlobName());
 
-                    downloadTasks.Add(RoundTripDataHelper(blob, data));
+                    downloadTasks.Add(RoundTripData(blob, data));
                 }
 
                 var downloads = await Task.WhenAll(downloadTasks);

@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Queues.Tests;
 using Moq;
@@ -37,9 +37,10 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-        #region Utility
-
-        private string LocalManualEncryption(string message, byte[] key, byte[] iv)
+        /// <summary>
+        /// Provides encryption functionality clone of client logic, letting us validate the client got it right end-to-end.
+        /// </summary>
+        private string EncryptData(string message, byte[] key, byte[] iv)
         {
             using (var aesProvider = new AesCryptoServiceProvider() { Key = key, IV = iv })
             using (var encryptor = aesProvider.CreateEncryptor())
@@ -130,6 +131,39 @@ namespace Azure.Storage.Queues.Test
             return keyMock;
         }
 
+        private Mock<IKeyEncryptionKeyResolver> GetAlwaysFailsKeyResolver(bool throws)
+        {
+            var mock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
+            if (IsAsync)
+            {
+                if (throws)
+                {
+                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
+                        .Throws<Exception>();
+                }
+                else
+                {
+                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
+                        .Returns(Task.FromResult<IKeyEncryptionKey>(null));
+                }
+            }
+            else
+            {
+                if (throws)
+                {
+                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
+                        .Throws<Exception>();
+                }
+                else
+                {
+                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
+                        .Returns((IKeyEncryptionKey)null);
+                }
+            }
+
+            return mock;
+        }
+
         private Mock<IKeyEncryptionKeyResolver> GetIKeyEncryptionKeyResolver(IKeyEncryptionKey iKey)
         {
             var resolverMock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
@@ -195,7 +229,63 @@ namespace Azure.Storage.Queues.Test
 
             return result;
         }
-        #endregion
+
+        private Mock<IClientSideDecryptionFailureListener> GetFailureListener()
+        {
+            var mock = new Mock<IClientSideDecryptionFailureListener>(MockBehavior.Strict);
+            if (IsAsync)
+            {
+                mock.Setup(l => l.OnFailureAsync(IsNotNull<PeekedMessage>(), IsNotNull<Exception>()))
+                    .Returns(Task.CompletedTask);
+                mock.Setup(l => l.OnFailureAsync(IsNotNull<QueueMessage>(), IsNotNull<Exception>()))
+                    .Returns(Task.CompletedTask);
+            }
+            else
+            {
+                mock.Setup(l => l.OnFailure(IsNotNull<PeekedMessage>(), IsNotNull<Exception>()));
+                mock.Setup(l => l.OnFailure(IsNotNull<QueueMessage>(), IsNotNull<Exception>()));
+            }
+
+            return mock;
+        }
+
+        [Test]
+        [LiveOnly]
+        public void CanSwapKey()
+        {
+            var options1 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "foo"
+            };
+            var options2 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+            var listener1 = GetFailureListener().Object;
+            var listener2 = GetFailureListener().Object;
+
+            var client = new QueueClient(new Uri("http://someuri.com"), new ExtendedQueueClientOptions()
+            {
+                ClientSideEncryption = options1,
+                OnClientSideDecryptionFailure = listener1
+            });
+
+            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(listener1, client.OnClientSideDecryptionFailure);
+
+            client = client.WithClientSideEncryptionOptions(options2).WithClientSideEncryptionFailureListener(listener2);
+
+            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(listener2, client.OnClientSideDecryptionFailure);
+        }
 
         [TestCase(16, false)] // a single cipher block
         [TestCase(14, false)] // a single unalligned cipher block
@@ -232,7 +322,7 @@ namespace Azure.Storage.Queues.Test
                 var explicitlyUnwrappedKey = IsAsync
                     ? await mockKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
                     : mockKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
-                string expectedEncryptedMessage = LocalManualEncryption(
+                string expectedEncryptedMessage = EncryptData(
                     message,
                     explicitlyUnwrappedKey,
                     encryptionMetadata.ContentEncryptionIV);
@@ -491,10 +581,10 @@ namespace Azure.Storage.Queues.Test
 
                 await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken);
 
-                var resolveSyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("Resolve");
-                var resolveAsyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("ResolveAsync");
-                var unwrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
-                var unwrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKeyAsync");
+                System.Reflection.MethodInfo resolveSyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("Resolve");
+                System.Reflection.MethodInfo resolveAsyncMethod = typeof(IKeyEncryptionKeyResolver).GetMethod("ResolveAsync");
+                System.Reflection.MethodInfo unwrapSyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
+                System.Reflection.MethodInfo unwrapAsyncMethod = typeof(IKeyEncryptionKey).GetMethod("UnwrapKeyAsync");
 
                 Assert.AreEqual(1, IsAsync
                     ? mockKeyResolver.Invocations.Count(invocation => invocation.Method == resolveAsyncMethod)
@@ -512,17 +602,21 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        [TestCase(true, true)]
-        [TestCase(false, true)]
+        [TestCase(true, false, false)]
+        [TestCase(false, false, false)]
+        [TestCase(true, true, false)]
+        [TestCase(false, true, false)]
+        [TestCase(true, false, true)]
+        [TestCase(false, false, true)]
+        [TestCase(true, true, true)]
+        [TestCase(false, true, true)]
         [LiveOnly]
-        public async Task CannotFindKeyAsync(bool useListener, bool resolverThrows)
+        public async Task CannotFindKeyAsync(bool useListener, bool resolverThrows, bool peek)
         {
-            MockMissingClientSideEncryptionKeyListener listener = null;
+            Mock<IClientSideDecryptionFailureListener> listener = null;
             if (useListener)
             {
-                listener = new MockMissingClientSideEncryptionKeyListener();
+                listener = GetFailureListener();
             }
 
             const int numMessages = 5;
@@ -544,7 +638,8 @@ namespace Azure.Storage.Queues.Test
                 }
 
                 bool threw = false;
-                QueueMessage[] result = default;
+                var resolver = GetAlwaysFailsKeyResolver(resolverThrows);
+                int returnedMessages = int.MinValue; // obviously wrong value, but need to initialize to something before try block
                 try
                 {
                     // download but can't find key
@@ -552,11 +647,18 @@ namespace Azure.Storage.Queues.Test
                     options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
                         // note decryption will throw whether the resolver throws or just returns null
-                        KeyResolver = new AlwaysFailsKeyEncryptionKeyResolver() { ShouldThrow = resolverThrows },
+                        KeyResolver = resolver.Object,
                         KeyWrapAlgorithm = "test"
                     };
-                    options._onClientSideDecryptionFailure = listener;
-                    result = await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options)).ReceiveMessagesAsync(numMessages, cancellationToken: s_cancellationToken);
+                    options._onClientSideDecryptionFailure = listener.Object;
+                    var badQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options));
+                    returnedMessages = peek
+                        ? (await badQueueClient.PeekMessagesAsync(numMessages, cancellationToken: s_cancellationToken)).Value.Length
+                        : (await badQueueClient.ReceiveMessagesAsync(numMessages, cancellationToken: s_cancellationToken)).Value.Length;
+                }
+                catch (MockException e)
+                {
+                    Assert.Fail(e.Message);
                 }
                 catch (Exception)
                 {
@@ -568,8 +670,48 @@ namespace Azure.Storage.Queues.Test
 
                     if (useListener)
                     {
-                        Assert.AreEqual(numMessages, listener.TimesInvoked);
-                        Assert.AreEqual(0, result.Length); // all messages should have been filtered out
+                        // we already asserted the correct method was called in `catch (MockException e)`
+                        Assert.AreEqual(numMessages, resolver.Invocations.Count);
+
+                        // 4 possible methods we could have been testing
+                        System.Reflection.MethodInfo onReceiveFailAsync = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailureAsync", new Type[] { typeof(QueueMessage), typeof(Exception) });
+                        System.Reflection.MethodInfo onReceiveFail = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailure", new Type[] { typeof(QueueMessage), typeof(Exception) });
+                        System.Reflection.MethodInfo onPeekFailAsync = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailureAsync", new Type[] { typeof(PeekedMessage), typeof(Exception) });
+                        System.Reflection.MethodInfo onPeekFail = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailure", new Type[] { typeof(PeekedMessage), typeof(Exception) });
+
+                        // determine what method we were testing and which we weren't
+                        System.Reflection.MethodInfo targetMethod;
+                        IEnumerable<System.Reflection.MethodInfo> nonTargetMethods;
+                        if (IsAsync && peek)
+                        {
+                            targetMethod = onPeekFailAsync;
+                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onReceiveFailAsync, onPeekFail };
+                        }
+                        else if (IsAsync)
+                        {
+                            targetMethod = onReceiveFailAsync;
+                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onPeekFail, onPeekFailAsync };
+                        }
+                        else if (peek)
+                        {
+                            targetMethod = onPeekFail;
+                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onReceiveFailAsync, onPeekFailAsync };
+                        }
+                        else
+                        {
+                            targetMethod = onReceiveFail;
+                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onPeekFailAsync, onReceiveFailAsync, onPeekFail };
+                        }
+
+                        // assert target method was called the expected number of times and other methods weren't called at all
+                        Assert.AreEqual(numMessages, listener.Invocations.Count(invocation => invocation.Method == targetMethod));
+                        foreach (var method in nonTargetMethods)
+                        {
+                            Assert.AreEqual(0, listener.Invocations.Count(invocation => invocation.Method == method));
+                        }
+
+                        // assert all messages were filtered out of formal response
+                        Assert.AreEqual(0, returnedMessages);
                     }
                 }
             }

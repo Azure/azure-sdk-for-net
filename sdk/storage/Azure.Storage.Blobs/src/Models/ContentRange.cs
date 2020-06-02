@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             /// <summary>
-            /// AES-CBC using a 256 bit key.
+            /// Label for bytes as the measurement of content range.
             /// </summary>
             public static RangeUnit Bytes { get; } = new RangeUnit(BytesValue);
 
