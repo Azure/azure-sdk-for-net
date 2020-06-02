@@ -110,7 +110,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     },
                     {
                         ""@type"": ""Telemetry"",
-                        ""name"": ""ComponentTelementry1"",
+                        ""name"": ""ComponentTelemetry1"",
                         ""schema"": ""integer""
                     }
                 ]

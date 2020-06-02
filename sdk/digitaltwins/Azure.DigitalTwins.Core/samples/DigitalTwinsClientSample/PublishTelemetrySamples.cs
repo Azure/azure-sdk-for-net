@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
 using Azure.DigitalTwins.Core.Samples;
@@ -61,15 +63,19 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinSamplePublishTelemetry
 
-                Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
-                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
+                Response<string> publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+                Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinSamplePublishTelemetry
 
                 #region Snippet:DigitalTwinSamplePublishComponentTelemetry
 
-                Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", "{\"ComponentTelementry1\": 9}");
-                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
+                var telemetryPayload = new Dictionary<string, int>
+                {
+                    { "ComponentTelemetry1", 9}
+                };
+                Response<string> publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
+                Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinSamplePublishComponentTelemetry
             }

@@ -272,11 +272,17 @@ Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId
 To publish a telemetry message to a digital twin, you need to provide the digital twin id, along with the payload on which telemetry that needs the update.
 
 ```C# Snippet:DigitalTwinSamplePublishTelemetry
-Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "\"telemetry\": {\"Telemetry1\": 5}");
+Response<string> publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.GetRawResponse().Status}");
 ```
 
 You can also publish a telemetry message to a specific component in a digital twin. In addition to the digital twin id and payload, you need to specify the target component id.
 
 ```C# Snippet:DigitalTwinSamplePublishComponentTelemetry
-Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", "\"telemetry\": {\"ComponentTelementry1\": 9}");
+var telemetryPayload = new Dictionary<string, int>
+{
+    { "ComponentTelemetry1", 9}
+};
+Response<string> publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
+Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.GetRawResponse().Status}");
 ```
