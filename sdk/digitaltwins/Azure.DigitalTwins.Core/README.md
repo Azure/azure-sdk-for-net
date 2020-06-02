@@ -1,4 +1,4 @@
-# Azure IoT Digital Twin client library for .NET
+# Azure IoT Digital Twins client library for .NET
 
 This library provides access to the Azure Digital Twins service for managing twins, models, relationships, etc.
 
@@ -75,7 +75,7 @@ Assembly properties required for running unit tests against signed assemblies in
 
 ### /src/Serialization
 
-Serialization helpers provided to help serialize/deseralize commonly used types within the Digital Twins service.
+Serialization helpers provided to help serialize/deserialize commonly used types within the Digital Twins service.
 
 Any time the client library code is updated, you will need to run the following scripts
 
