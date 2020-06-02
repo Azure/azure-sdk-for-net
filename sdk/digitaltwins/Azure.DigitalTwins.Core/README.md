@@ -6,26 +6,38 @@ This library provides access to the Azure Digital Twins service for managing twi
 
 ## Getting started
 
-### Authenticate the Client
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads][[microsoft_sdk_download]] Page and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-### Install the package
+For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
+
+## Prerequisites
+
+- Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription][azure_sub] 
+- Azure Digital Twin instance: In order to use the Azure Digital Twin SDK, you need to first create a Digital Twin instance using one of many options:
+  - Using [Azure portal][azure_portal] 
+  - Using [Azure Management APIs][azure_rest_api]
+  - Using [Azure CLI][azure_cli]: You will need to install azure cli and the [Azure IoT extension][iot_cli_extension] for Azure CLI. Refer to [IoT CLI Documentation][iot_cli_doc] for more information on how to create and interact with your Digital Twin instance. 
+
+## Install the package
 
 Install the Azure Digital Twins client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
 Install-Package Azure.DigitalTwins.Core
 ```
-### Prerequisites
 
-* An [Azure subscription][azure_sub].
+## Authenticate the Client
+In order to interact with the Azure Digital Twin service, you will need to create an instance of a [ClientSecretCredential][client_secret_credential] and pass it to the constructor of your [DigitalTwinClient][digital_twin_client].
 
 ## Key concepts
+Azure Digital Twins Preview is an Azure IoT service that creates comprehensive models of the physical environment. It can create spatial intelligence graphs to model the relationships and interactions between people, spaces, and devices.
+
+You can learn more about Azure Digital Twins by visiting [Azure Digital Twins Documentation][digital_twins_documentation]
 
 ## Examples
+You can familiarize yourself with different APIs using [samples for Digital Twin](./samples/). 
 
-## Developer guide
-
-### Source code folder structure
+## Source code folder structure
 
 ### /src
 The digital twins public client `DigitalTwinsClient` and the additional configuration options that can be sent to the digital twins service `DigitalTwinsClientOptions`.
@@ -57,8 +69,24 @@ Serialization helpers provided to help serialize/deseralize commonly used types 
 Any time the client library code is updated, you will need to run the script [here](./../Export-AdtApis.ps1), which will update the corresponding API surface.
 
 ## Troubleshooting
+All Azure Digital Twin service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
+
+For example, if you use the ```GetModelAsync``` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode][http_status_code] to decide the operation that follows in that case.
+```csharp
+try
+{
+    Response<ModelData> sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
+}
+catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
+{
+    // Model does not exist.
+    // Create the model
+}
+
+```
 
 ## Next steps
+Get started with our [Azure Digital Twins samples](./samples)
 
 ## Contributing
 
@@ -69,10 +97,21 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
+[microsoft_sdk_download]:https://azure.microsoft.com/en-us/downloads/?sdk=net
+[azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/iot/adt
-[package]: https://www.nuget.org/packages/Azure.IoT.DigitalTwins
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins
+[package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [nuget]: https://www.nuget.org/
+[azure_portal]: https://portal.azure.com/
+[azure_rest_api]: https://docs.microsoft.com/en-us/rest/api/azure/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
+[client_secret_credential]: https://docs.microsoft.com/en-us/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet
+[digital_twin_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
+[digital_twins_documentation]: https://docs.microsoft.com/en-us/azure/digital-twins/
+[azure_cli]: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
+[iot_cli_extension]: https://docs.microsoft.com/en-us/azure/iot-pnp/howto-install-pnp-cli#:~:text=The%20Azure%20CLI%20lets%20you,Plug%20and%20Play%20Preview%20devices.
+[iot_cli_doc]: https://docs.microsoft.com/en-us/cli/azure/ext/azure-iot/iot?view=azure-cli-latest
+[http_status_code]: https://docs.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
