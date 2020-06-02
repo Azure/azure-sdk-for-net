@@ -5,6 +5,7 @@ parameters:
   MaxParallel: 0
   BuildInParallel: true
   TimeoutInMinutes: 60
+  ArmTemplateParameters: '@{}'
   Location: ''
   SubscriptionConfiguration: $(sub-config-gov-test-resources)
 
@@ -16,6 +17,8 @@ jobs:
         value: ${{ parameters.SubscriptionConfiguration }}
       - name: Location
         value: ${{ parameters.Location }}
+      - name: ArmTemplateParameters
+        value: ${{ parameters.ArmTemplateParameters }}
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -62,6 +65,7 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
+          ArmTemplateParameters: $(ArmTemplateParameters)
           Location: $(Location)
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: $(SubscriptionConfiguration)
