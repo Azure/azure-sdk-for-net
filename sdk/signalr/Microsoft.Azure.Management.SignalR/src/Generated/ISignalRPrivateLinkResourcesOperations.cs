@@ -19,15 +19,21 @@ namespace Microsoft.Azure.Management.SignalR
     using System.Threading.Tasks;
 
     /// <summary>
-    /// UsagesOperations operations.
+    /// SignalRPrivateLinkResourcesOperations operations.
     /// </summary>
-    public partial interface IUsagesOperations
+    public partial interface ISignalRPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// Get the private link resources that need to be created for a
+        /// SignalR resource.
         /// </summary>
-        /// <param name='location'>
-        /// the location like "eastus"
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the SignalR resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,9 +50,10 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SignalRUsage>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List usage quotas for Azure SignalR service by location.
+        /// Get the private link resources that need to be created for a
+        /// SignalR resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -66,6 +73,6 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SignalRUsage>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateLinkResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
