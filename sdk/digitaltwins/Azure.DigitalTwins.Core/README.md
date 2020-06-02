@@ -13,10 +13,10 @@ For the best development experience, developers should use the official Microsof
 ## Prerequisites
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription][azure_sub]
-- Azure Digital Twin instance: In order to use the Azure Digital Twins SDK, you need to first create a Digital Twin instance using one of many options:
+- Azure Digital Twins instance: In order to use the Azure Digital Twins SDK, you need to first create a Digital Twins instance using one of many options:
   - Using [Azure portal][azure_portal]
   - Using [Azure Management APIs][azure_rest_api]
-  - Using [Azure CLI][azure_cli]: You will need to install azure cli and the [Azure IoT extension][iot_cli_extension] for Azure CLI. Refer to [IoT CLI Documentation][iot_cli_doc] for more information on how to create and interact with your Digital Twin instance.
+  - Using [Azure CLI][azure_cli]: You will need to install azure cli and the [Azure IoT extension][iot_cli_extension] for Azure CLI. Refer to [IoT CLI Documentation][iot_cli_doc] for more information on how to create and interact with your Digital Twins instance.
 
 ## Install the package
 
