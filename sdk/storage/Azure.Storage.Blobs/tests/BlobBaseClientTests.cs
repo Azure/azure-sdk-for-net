@@ -423,6 +423,57 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.DownloadAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DownloadAsync(
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task DownloadAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
