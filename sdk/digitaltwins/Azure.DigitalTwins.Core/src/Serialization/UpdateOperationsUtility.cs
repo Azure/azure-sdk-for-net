@@ -16,9 +16,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
     /// string updatePayload = componentUpdateUtility.Serialize();
     ///
-    /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(dtId, &quot;Component1&quot;, updatePayload);
+    /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, &quot;Component1&quot;, updatePayload);
     ///
-    /// Console.WriteLine($&quot;Updated component for digital twin {dtId}. Update response status: {response.GetRawResponse().Status}&quot;);
+    /// Console.WriteLine($&quot;Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}&quot;);
     /// </code>
     /// </example>
     public class UpdateOperationsUtility
