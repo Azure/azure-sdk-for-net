@@ -11,28 +11,28 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// The api error.
+    /// </summary>
+    public partial class ExceptionResponse
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExceptionResponse class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public ExceptionResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExceptionResponse class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="error">The api error details.</param>
+        public ExceptionResponse(ServiceError error = default(ServiceError))
         {
-            Scopes = scopes;
+            Error = error;
             CustomInit();
         }
 
@@ -42,9 +42,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the api error details.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ServiceError Error { get; set; }
 
     }
 }
