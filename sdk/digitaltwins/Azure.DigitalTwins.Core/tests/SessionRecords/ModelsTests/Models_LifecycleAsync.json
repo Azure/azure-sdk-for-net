@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3ABuilding%3B19930?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3ABuilding%3B19930?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "43b7ad321e2ddbd89e9633b5aef791b4",
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:03 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:06 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -28,12 +28,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3AFloor%3B11095524?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AFloor%3B11095524?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "3b29802fe31b958bf1eca834ba6bd2ff",
@@ -44,7 +44,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:02 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:06 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -55,12 +55,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3AHvac%3B156543431?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AHvac%3B156543431?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "597e85768e57884e117d783e14e8b03d",
@@ -71,7 +71,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:03 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:06 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -82,12 +82,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3AWard%3B129811965?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B129811965?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6583a9c7ca16ae2b3c322fa6e32b61b5",
@@ -98,7 +98,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:03 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -109,111 +109,36 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "2029",
+        "Content-Length": "1883",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "350b80e3d8a6dbf2b309651257dc04f8",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": [
-        "[{\r\n",
-        "    \u0022@id\u0022: \u0022dtmi:example:Building;19930\u0022,\r\n",
-        "    \u0022@type\u0022: \u0022Interface\u0022,\r\n",
-        "    \u0022displayName\u0022: \u0022Building\u0022,\r\n",
-        "    \u0022description\u0022: \u0022A free-standing structure.\u0022,\r\n",
-        "    \u0022contents\u0022: [\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Relationship\u0022,\r\n",
-        "            \u0022name\u0022: \u0022has\u0022,\r\n",
-        "            \u0022target\u0022: \u0022dtmi:example:Floor;11095524\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Relationship\u0022,\r\n",
-        "            \u0022name\u0022: \u0022isEquippedWith\u0022,\r\n",
-        "            \u0022target\u0022: \u0022dtmi:example:Hvac;156543431\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022AverageTemperature\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        }\r\n",
-        "    ],\r\n",
-        "    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022\r\n",
-        "},{\r\n",
-        "    \u0022@id\u0022: \u0022dtmi:example:Hvac;156543431\u0022,\r\n",
-        "    \u0022@type\u0022: \u0022Interface\u0022,\r\n",
-        "    \u0022displayName\u0022: \u0022HVAC\u0022,\r\n",
-        "    \u0022description\u0022: \u0022A heating, ventilation, and air conditioning unit.\u0022,\r\n",
-        "    \u0022contents\u0022: [\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022Efficiency\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022TargetTemperature\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022TargetHumidity\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Relationship\u0022,\r\n",
-        "            \u0022name\u0022: \u0022cools\u0022,\r\n",
-        "            \u0022target\u0022: \u0022dtmi:example:Floor;11095524\u0022\r\n",
-        "        }\r\n",
-        "    ],\r\n",
-        "    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022\r\n",
-        "},{\r\n",
-        "    \u0022@id\u0022: \u0022dtmi:example:Ward;129811965\u0022,\r\n",
-        "    \u0022@type\u0022: \u0022Interface\u0022,\r\n",
-        "    \u0022displayName\u0022: \u0022Ward\u0022,\r\n",
-        "    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,\r\n",
-        "    \u0022contents\u0022: [\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022VisitorCount\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022HandWashPercentage\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Relationship\u0022,\r\n",
-        "            \u0022name\u0022: \u0022managedRooms\u0022\r\n",
-        "        }\r\n",
-        "    ],\r\n",
-        "    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022\r\n",
-        "}]"
-      ],
+      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:Building;19930\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Building\u0022,    \u0022description\u0022: \u0022A free-standing structure.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022has\u0022,            \u0022target\u0022: \u0022dtmi:example:Floor;11095524\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022isEquippedWith\u0022,            \u0022target\u0022: \u0022dtmi:example:Hvac;156543431\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022AverageTemperature\u0022,            \u0022schema\u0022: \u0022double\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022},{    \u0022@id\u0022: \u0022dtmi:example:Hvac;156543431\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022HVAC\u0022,    \u0022description\u0022: \u0022A heating, ventilation, and air conditioning unit.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Efficiency\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022TargetTemperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022TargetHumidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022cools\u0022,            \u0022target\u0022: \u0022dtmi:example:Floor;11095524\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022},{    \u0022@id\u0022: \u0022dtmi:example:Ward;129811965\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Ward\u0022,    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022VisitorCount\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022HandWashPercentage\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022managedRooms\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "627",
+        "Content-Length": "626",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:04 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0754051\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;156543431\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0755043\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;129811965\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0755882\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.7105444\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;156543431\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.7106604\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;129811965\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.710757\u002B00:00\u0022}]"
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3ABuilding%3B19930?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3ABuilding%3B19930?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "28a4d4f7657cbb5f53ab1a5b1fe12d52",
@@ -224,18 +149,18 @@
       "ResponseHeaders": {
         "Content-Length": "604",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:04 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:09 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0754051\u002B00:00\u0022,\u0022model\u0022:{\u0022@id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022@type\u0022:\u0022Interface\u0022,\u0022displayName\u0022:\u0022Building\u0022,\u0022description\u0022:\u0022A free-standing structure.\u0022,\u0022contents\u0022:[{\u0022@type\u0022:\u0022Relationship\u0022,\u0022name\u0022:\u0022has\u0022,\u0022target\u0022:\u0022dtmi:example:Floor;11095524\u0022},{\u0022@type\u0022:\u0022Relationship\u0022,\u0022name\u0022:\u0022isEquippedWith\u0022,\u0022target\u0022:\u0022dtmi:example:Hvac;156543431\u0022},{\u0022@type\u0022:\u0022Property\u0022,\u0022name\u0022:\u0022AverageTemperature\u0022,\u0022schema\u0022:\u0022double\u0022}],\u0022@context\u0022:[\u0022dtmi:dtdl:context;2\u0022]}}"
+      "ResponseBody": "{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.7105444\u002B00:00\u0022,\u0022model\u0022:{\u0022@id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022@type\u0022:\u0022Interface\u0022,\u0022displayName\u0022:\u0022Building\u0022,\u0022description\u0022:\u0022A free-standing structure.\u0022,\u0022contents\u0022:[{\u0022@type\u0022:\u0022Relationship\u0022,\u0022name\u0022:\u0022has\u0022,\u0022target\u0022:\u0022dtmi:example:Floor;11095524\u0022},{\u0022@type\u0022:\u0022Relationship\u0022,\u0022name\u0022:\u0022isEquippedWith\u0022,\u0022target\u0022:\u0022dtmi:example:Hvac;156543431\u0022},{\u0022@type\u0022:\u0022Property\u0022,\u0022name\u0022:\u0022AverageTemperature\u0022,\u0022schema\u0022:\u0022double\u0022}],\u0022@context\u0022:[\u0022dtmi:dtdl:context;2\u0022]}}"
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models?includeModelDefinition=false\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models?includeModelDefinition=false\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6731891707a4ee3fb7a8b10c6518575f",
@@ -244,22 +169,22 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8242",
+        "Content-Length": "2620",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:05 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:09 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "{\u0022value\u0022:[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11795\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:40.1087098\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;110813340\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:40.1093734\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifiroom;11085\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:40.9136432\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;178807757\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:40.9143412\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;121903001\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:41.5423248\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;137784739\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:43.281271\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;112421922\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:49.7910161\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;112021088\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:45:51.2775521\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifiroom;13376\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:46:57.5203947\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;114348555\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:46:57.5205526\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;113890337\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:50:14.8981623\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;145345511\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:50:15.0620158\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;119207084\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:50:22.5786159\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;162914014\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:50:23.4129911\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;112491866\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:58:13.5051157\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;118110353\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:58:14.1322013\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;115195109\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:58:21.5787297\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;114115543\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-26T17:58:21.8679372\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;171587792\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-28T23:13:40.3886166\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;114829098\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-28T23:13:40.7004224\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;145940630\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-28T23:13:48.1709632\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;145169011\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-28T23:13:49.3835092\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;113333312\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T19:55:02.0215043\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;111094352\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T19:55:03.4611138\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;118409140\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T19:55:09.6180506\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;111083308\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T19:55:11.9059544\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;121159740\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T20:42:42.8709519\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;121200167\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T20:42:42.8841701\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;112162783\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T20:42:49.9204159\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;147373991\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T20:42:50.4758422\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:room;117517802\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:00.6171277\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;120708472\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:02.0693692\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;161147759\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:02.1360011\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0754051\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;156543431\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0755043\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;129811965\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.0755882\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Building;14778\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.2830182\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;126640227\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.2831418\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;165729996\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:05.2832482\u002B00:00\u0022}],\u0022nextLink\u0022:null}"
+      "ResponseBody": "{\u0022value\u0022:[{\u0022id\u0022:\u0022dtmi:example:Ward;198120452\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:04:43.9657682\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;117820941\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:04:44.267811\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;154443507\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:04:51.2569854\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;111034261\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:04:51.6965029\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;121159740\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:05.8234553\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;121200167\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:05.8516329\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Building;14778\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.5211897\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;126640227\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.5212961\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;165729996\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.521381\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Building;19930\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.7105444\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;156543431\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.7106604\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;129811965\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:08.710757\u002B00:00\u0022}],\u0022nextLink\u0022:null}"
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3ABuilding%3B19930?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3ABuilding%3B19930?api-version=2020-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "63",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0faf362e39867d382050e2fbbd96bbd2",
@@ -269,18 +194,18 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:05 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:09 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3ABuilding%3B19930?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3ABuilding%3B19930?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cefb12dc9cabef5395b571d3b352553a",
@@ -290,18 +215,18 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:05 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:10 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3AHvac%3B156543431?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AHvac%3B156543431?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e82dbb531e31decc50b3465325433120",
@@ -311,18 +236,18 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:06 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:10 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3AWard%3B129811965?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B129811965?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5330dfec881d91b4e3c07ad1c765cace",
@@ -332,14 +257,14 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:06 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:10 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DIGITALTWINS_URL": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net",
+    "DIGITALTWINS_URL": "https://vinageshnew.api.wus2.digitaltwins.azure.net",
     "RandomSeed": "1133739533"
   }
 }

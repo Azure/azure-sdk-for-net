@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3Awifi%3B118382803?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B118382803?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e27076bfefb5fe8dec7da3880213b707",
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:26:58 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:02 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -28,12 +28,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3Awifiroom%3B19137?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B19137?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1270d29123047704a389ecc8bf053a2f",
@@ -44,7 +44,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:26:59 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:03 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -55,12 +55,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b747af127265d357c1d6db0bb0164c7e",
@@ -71,7 +71,7 @@
       "ResponseHeaders": {
         "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:26:59 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:03 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -82,123 +82,55 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "1237",
+        "Content-Length": "1139",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e9a7e26aba7b6c536a1266a1352d7768",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": [
-        "[{\r\n",
-        "    \u0022@id\u0022: \u0022dtmi:example:wifiroom;19137\u0022,\r\n",
-        "    \u0022@type\u0022: \u0022Interface\u0022,\r\n",
-        "    \u0022displayName\u0022: \u0022RoomWithWifi\u0022,\r\n",
-        "    \u0022contents\u0022: [\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022Temperature\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022Humidity\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022double\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022IsOccupied\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022boolean\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022EmployeeId\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022string\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Component\u0022,\r\n",
-        "            \u0022name\u0022: \u0022wifiAccessPoint\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022dtmi:example:wifi;118382803\u0022\r\n",
-        "        }\r\n",
-        "    ],\r\n",
-        "    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022\r\n",
-        "},{\r\n",
-        "    \u0022@id\u0022: \u0022dtmi:example:wifi;118382803\u0022,\r\n",
-        "    \u0022@type\u0022: \u0022Interface\u0022,\r\n",
-        "    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022,\r\n",
-        "    \u0022displayName\u0022: \u0022Wifi\u0022,\r\n",
-        "    \u0022contents\u0022: [\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022RouterName\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022string\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "            \u0022@type\u0022: \u0022Property\u0022,\r\n",
-        "            \u0022name\u0022: \u0022Network\u0022,\r\n",
-        "            \u0022schema\u0022: \u0022string\u0022\r\n",
-        "        }\r\n",
-        "    ]\r\n",
-        "}]"
-      ],
+      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:wifiroom;19137\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022RoomWithWifi\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        },        {            \u0022@type\u0022: \u0022Component\u0022,            \u0022name\u0022: \u0022wifiAccessPoint\u0022,            \u0022schema\u0022: \u0022dtmi:example:wifi;118382803\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022},{    \u0022@id\u0022: \u0022dtmi:example:wifi;118382803\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022,    \u0022displayName\u0022: \u0022Wifi\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022RouterName\u0022,            \u0022schema\u0022: \u0022string\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Network\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ]}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "317",
+        "Content-Length": "315",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;19137\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:00.0336167\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;118382803\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-05-29T22:27:00.0337603\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;19137\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:04.70208\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;118382803\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:04.7022409\u002B00:00\u0022}]"
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "348",
+        "Content-Length": "318",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0701b95845bf602b193f434c296cf272",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": [
-        "{\r\n",
-        "  \u0022$metadata\u0022: {\r\n",
-        "    \u0022$model\u0022: \u0022dtmi:example:wifiroom;19137\u0022\r\n",
-        "  },\r\n",
-        "  \u0022Temperature\u0022: 80,\r\n",
-        "  \u0022Humidity\u0022: 25,\r\n",
-        "  \u0022IsOccupied\u0022: true,\r\n",
-        "  \u0022EmployeeId\u0022: \u0022Employee1\u0022,\r\n",
-        "  \u0022wifiAccessPoint\u0022: {\r\n",
-        "        \u0022$metadata\u0022: {\r\n",
-        "            \u0022$model\u0022: \u0022dtmi:example:wifi;118382803\u0022\r\n",
-        "        },\r\n",
-        "        \u0022RouterName\u0022: \u0022Cisco1\u0022,\r\n",
-        "        \u0022Network\u0022: \u0022Room1\u0022\r\n",
-        "    }\r\n",
-        "}"
-      ],
+      "RequestBody": "{  \u0022$metadata\u0022: {    \u0022$model\u0022: \u0022dtmi:example:wifiroom;19137\u0022  },  \u0022Temperature\u0022: 80,  \u0022Humidity\u0022: 25,  \u0022IsOccupied\u0022: true,  \u0022EmployeeId\u0022: \u0022Employee1\u0022,  \u0022wifiAccessPoint\u0022: {        \u0022$metadata\u0022: {            \u0022$model\u0022: \u0022dtmi:example:wifi;118382803\u0022        },        \u0022RouterName\u0022: \u0022Cisco1\u0022,        \u0022Network\u0022: \u0022Room1\u0022    }}",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "1003",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
-        "ETag": "W/\u00223343d230-ab3d-49f6-a941-04e04d7de990\u0022",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
+        "ETag": "W/\u00225d77af30-ab94-4f6d-bd9d-6e6d4b7bcc5b\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomWithWifiTwin1728255304",
-        "$etag": "3343d230-ab3d-49f6-a941-04e04d7de990",
+        "$etag": "5d77af30-ab94-4f6d-bd9d-6e6d4b7bcc5b",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -258,12 +190,12 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/roomWithWifiTwin1728255304/components/wifiAccessPoint?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1728255304/components/wifiAccessPoint?api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2354499f459258cc5cdb4d520cb59d94",
@@ -274,8 +206,8 @@
       "ResponseHeaders": {
         "Content-Length": "322",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
-        "ETag": "W/\u00223343d230-ab3d-49f6-a941-04e04d7de990\u0022",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
+        "ETag": "W/\u00225d77af30-ab94-4f6d-bd9d-6e6d4b7bcc5b\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -301,14 +233,14 @@
       }
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/roomWithWifiTwin1728255304/components/wifiAccessPoint?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1728255304/components/wifiAccessPoint?api-version=2020-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "58",
         "Content-Type": "application/json-patch\u002Bjson; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f6b2725e451525bfb647d03c770642fe",
@@ -318,19 +250,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
-        "ETag": "W/\u00225d3eb7f4-ea2c-41ba-8f10-e5681fb83c69\u0022",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
+        "ETag": "W/\u0022edb3ee70-833f-4a1a-b989-d7853700b9de\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1728255304?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ec02f32054d813d5eda9abe3f8d85463",
@@ -340,18 +272,18 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3Awifiroom%3B19137?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifiroom%3B19137?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b7edaea1fbb95a5c8a2f6c4b7490e056",
@@ -361,18 +293,18 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:00 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:04 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/models/dtmi%3Aexample%3Awifi%3B118382803?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Awifi%3B118382803?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "18324f99b1b30abb9c9f096c99dc2cde",
@@ -382,14 +314,14 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 29 May 2020 22:27:01 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DIGITALTWINS_URL": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net",
+    "DIGITALTWINS_URL": "https://vinageshnew.api.wus2.digitaltwins.azure.net",
     "RandomSeed": "1042416616"
   }
 }
