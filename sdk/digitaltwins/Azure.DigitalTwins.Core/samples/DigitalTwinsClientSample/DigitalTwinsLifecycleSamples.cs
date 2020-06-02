@@ -263,11 +263,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 try
                 {
-                    #region Snippet:DigitalTwinsSampleCreateTwin
-
                     Response<string> response = await DigitalTwinsClient.CreateDigitalTwinAsync(twin.Key, twin.Value).ConfigureAwait(false);
-
-                    #endregion Snippet:DigitalTwinsSampleCreateTwin
 
                     Console.WriteLine($"Created digital twin {twin.Key}. Create response status: {response.GetRawResponse().Status}");
                     Console.WriteLine($"Body: {response?.Value}");
