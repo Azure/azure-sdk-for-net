@@ -18,7 +18,7 @@ namespace Azure.Storage.Cryptography.Models
                     return ClientSideEncryptionVersionString.V1_0;
                 default:
                     // sanity check; serialize is in this file to make it easy to add the serialization cases
-                    throw Errors.ClientSideEncryptionVersionNotSupported();
+                    throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported();
             }
         }
 
@@ -30,7 +30,7 @@ namespace Azure.Storage.Cryptography.Models
                     return ClientSideEncryptionVersion.V1_0;
                 default:
                     // This library doesn't support the stated encryption version
-                    throw Errors.ClientSideEncryptionVersionNotSupported(versionString);
+                    throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported(versionString);
             }
         }
     }

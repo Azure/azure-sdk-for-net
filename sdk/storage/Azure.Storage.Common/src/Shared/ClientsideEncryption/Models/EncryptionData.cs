@@ -53,7 +53,7 @@ namespace Azure.Storage.Cryptography.Models
             CancellationToken cancellationToken)
             => new EncryptionData()
             {
-                EncryptionMode = EncryptionConstants.EncryptionMode,
+                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
                 ContentEncryptionIV = contentEncryptionIv,
                 EncryptionAgent = new EncryptionAgent()
                 {
@@ -62,7 +62,7 @@ namespace Azure.Storage.Cryptography.Models
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {
-                    { EncryptionConstants.AgentMetadataKey, AgentString }
+                    { Constants.ClientSideEncryption.AgentMetadataKey, AgentString }
                 },
                 WrappedContentKey = new KeyEnvelope()
                 {

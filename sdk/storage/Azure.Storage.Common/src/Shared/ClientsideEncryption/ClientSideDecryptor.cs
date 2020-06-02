@@ -57,6 +57,59 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
+            switch (encryptionData.EncryptionAgent.Protocol)
+            {
+                case ClientSideEncryptionVersion.V1_0:
+                    return await DecryptInternalV1_0(ciphertext, encryptionData, ivInStream, keyResolver, potentialCachedKeyWrapper, noPadding, async, cancellationToken).ConfigureAwait(false);
+                default:
+                    throw Errors.ClientSideEncryption.BadEncryptionAgent(encryptionData.EncryptionAgent.Protocol.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Decrypts the given stream if decryption information is provided.
+        /// Does not shave off unwanted start/end bytes, but will shave off padding.
+        /// </summary>
+        /// <param name="ciphertext">Stream to decrypt.</param>
+        /// <param name="encryptionData">
+        /// Encryption metadata and wrapped content encryption key.
+        /// </param>
+        /// <param name="ivInStream">
+        /// Whether to use the first block of the stream for the IV instead of the value in
+        /// <paramref name="encryptionData"/>. Generally for partial blob downloads where the
+        /// previous block of the ciphertext is the IV for the next.
+        /// </param>
+        /// <param name="keyResolver">
+        /// Resolver to fetch the key encryption key.
+        /// </param>
+        /// <param name="potentialCachedKeyWrapper">
+        /// Clients that can upload data have a key encryption key stored on them. Checking if
+        /// a cached key exists and matches the <paramref name="encryptionData"/> saves a call
+        /// to the external key resolver implementation when available.
+        /// </param>
+        /// <param name="noPadding">
+        /// Whether to ignore padding. Generally for partial blob downloads where the end of
+        /// the blob (where the padding occurs) was not downloaded.
+        /// </param>
+        /// <param name="async">Whether to perform this function asynchronously.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Decrypted plaintext.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
+        /// <see cref="IKeyEncryptionKeyResolver"/>.
+        /// </exception>
+        public static async Task<Stream> DecryptInternalV1_0(
+            Stream ciphertext,
+            EncryptionData encryptionData,
+            bool ivInStream,
+            IKeyEncryptionKeyResolver keyResolver,
+            IKeyEncryptionKey potentialCachedKeyWrapper,
+            bool noPadding,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             var contentEncryptionKey = await GetContentEncryptionKeyAsync(
                 encryptionData,
                 keyResolver,
@@ -75,7 +128,7 @@ namespace Azure.Storage.Cryptography
                 }
                 else
                 {
-                    IV = new byte[EncryptionConstants.EncryptionBlockSize];
+                    IV = new byte[Constants.ClientSideEncryption.EncryptionBlockSize];
                     if (async)
                     {
                         await ciphertext.ReadAsync(IV, 0, IV.Length, cancellationToken).ConfigureAwait(false);
@@ -147,7 +200,7 @@ namespace Azure.Storage.Cryptography
             // exception here instead of nullref.
             if (key == default)
             {
-                throw EncryptionErrors.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
+                throw Errors.ClientSideEncryption.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
             }
 
             return async
@@ -194,7 +247,7 @@ namespace Azure.Storage.Cryptography
                 }
             }
 
-            throw EncryptionErrors.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
+            throw Errors.ClientSideEncryption.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
         }
     }
 }

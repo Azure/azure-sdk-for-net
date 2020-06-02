@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs
                 return await TrimStreamInternal(content, originalRange, contentRange, pulledOutIv: false, async, cancellationToken).ConfigureAwait(false);
             }
 
-            bool ivInStream = originalRange.Offset >= EncryptionConstants.EncryptionBlockSize;
+            bool ivInStream = originalRange.Offset >= Constants.ClientSideEncryption.EncryptionBlockSize;
 
             // this method throws when key cannot be resolved. Blobs is intended to throw on this failure.
             var plaintext = await ClientSideDecryptor.DecryptInternal(
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs
             // retrim start of stream to original requested location
             // keeping in mind whether we already pulled the IV out of the stream as well
             int gap = (int)(originalRange.Offset - (receivedRange?.Start ?? 0))
-                - (pulledOutIv ? EncryptionConstants.EncryptionBlockSize : 0);
+                - (pulledOutIv ? Constants.ClientSideEncryption.EncryptionBlockSize : 0);
             if (gap > 0)
             {
                 // throw away initial bytes we want to trim off; stream cannot seek into future
@@ -91,16 +91,16 @@ namespace Azure.Storage.Blobs
             {
                 return default;
             }
-            if (!metadata.TryGetValue(EncryptionConstants.EncryptionDataKey, out string encryptedDataString))
+            if (!metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string encryptedDataString))
             {
                 return default;
             }
 
             EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(encryptedDataString);
 
-            _ = encryptionData.ContentEncryptionIV ?? throw EncryptionErrors.MissingEncryptionMetadata(
+            _ = encryptionData.ContentEncryptionIV ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                 nameof(EncryptionData.ContentEncryptionIV));
-            _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw EncryptionErrors.MissingEncryptionMetadata(
+            _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                 nameof(EncryptionData.WrappedContentKey.EncryptedKey));
 
             return encryptionData;
@@ -151,7 +151,7 @@ namespace Azure.Storage.Blobs
             {
                 // Align with encryption block boundary.
                 int diff;
-                if ((diff = (int)(originalRange.Offset % EncryptionConstants.EncryptionBlockSize)) != 0)
+                if ((diff = (int)(originalRange.Offset % Constants.ClientSideEncryption.EncryptionBlockSize)) != 0)
                 {
                     offsetAdjustment += diff;
                     if (adjustedDownloadCount != default)
@@ -161,13 +161,13 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Account for IV.
-                if (originalRange.Offset >= EncryptionConstants.EncryptionBlockSize)
+                if (originalRange.Offset >= Constants.ClientSideEncryption.EncryptionBlockSize)
                 {
-                    offsetAdjustment += EncryptionConstants.EncryptionBlockSize;
+                    offsetAdjustment += Constants.ClientSideEncryption.EncryptionBlockSize;
                     // Increment adjustedDownloadCount if necessary.
                     if (adjustedDownloadCount != default)
                     {
-                        adjustedDownloadCount += EncryptionConstants.EncryptionBlockSize;
+                        adjustedDownloadCount += Constants.ClientSideEncryption.EncryptionBlockSize;
                     }
                 }
             }
@@ -177,9 +177,9 @@ namespace Azure.Storage.Blobs
             if (adjustedDownloadCount != null)
             {
                 adjustedDownloadCount += (
-                    EncryptionConstants.EncryptionBlockSize - (int)(adjustedDownloadCount
-                    % EncryptionConstants.EncryptionBlockSize)
-                ) % EncryptionConstants.EncryptionBlockSize;
+                    Constants.ClientSideEncryption.EncryptionBlockSize - (int)(adjustedDownloadCount
+                    % Constants.ClientSideEncryption.EncryptionBlockSize)
+                ) % Constants.ClientSideEncryption.EncryptionBlockSize;
             }
 
             return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);

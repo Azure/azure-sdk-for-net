@@ -29,7 +29,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream ciphertext = default;
 
@@ -69,7 +69,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             var ciphertext = new MemoryStream();
             byte[] bufferedCiphertext = default;

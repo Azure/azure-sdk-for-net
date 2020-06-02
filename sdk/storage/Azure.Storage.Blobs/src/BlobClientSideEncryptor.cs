@@ -67,12 +67,12 @@ namespace Azure.Storage.Blobs
             //        GetExpectedCryptoStreamLength(originalLength));
 
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata.Add(EncryptionConstants.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
+            metadata.Add(Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
 
             return (nonSeekableCiphertext, metadata);
         }
 
         private static long GetExpectedCryptoStreamLength(long originalLength)
-            => originalLength + (EncryptionConstants.EncryptionBlockSize - originalLength % EncryptionConstants.EncryptionBlockSize);
+            => originalLength + (Constants.ClientSideEncryption.EncryptionBlockSize - originalLength % Constants.ClientSideEncryption.EncryptionBlockSize);
     }
 }

@@ -267,7 +267,7 @@ namespace Azure.Storage.Blobs.Test
                 var encryptedData = encryptedDataStream.ToArray();
 
                 // encrypt original data manually for comparison
-                if (!(await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(EncryptionConstants.EncryptionDataKey, out string serialEncryptionData))
+                if (!(await blob.GetPropertiesAsync()).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string serialEncryptionData))
                 {
                     Assert.Fail("No encryption metadata present.");
                 }
@@ -583,15 +583,15 @@ namespace Azure.Storage.Blobs.Test
 
         // using 5 to setup offsets to avoid any off-by-one confusion in debugging
         [TestCase(0, null)]
-        [TestCase(0, 2 * EncryptionConstants.EncryptionBlockSize)]
-        [TestCase(0, 2 * EncryptionConstants.EncryptionBlockSize + 5)]
-        [TestCase(EncryptionConstants.EncryptionBlockSize, EncryptionConstants.EncryptionBlockSize)]
-        [TestCase(EncryptionConstants.EncryptionBlockSize, EncryptionConstants.EncryptionBlockSize + 5)]
-        [TestCase(EncryptionConstants.EncryptionBlockSize + 5, 2 * EncryptionConstants.EncryptionBlockSize)]
+        [TestCase(0, 2 * Constants.ClientSideEncryption.EncryptionBlockSize)]
+        [TestCase(0, 2 * Constants.ClientSideEncryption.EncryptionBlockSize + 5)]
+        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize, Constants.ClientSideEncryption.EncryptionBlockSize)]
+        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize, Constants.ClientSideEncryption.EncryptionBlockSize + 5)]
+        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize + 5, 2 * Constants.ClientSideEncryption.EncryptionBlockSize)]
         [LiveOnly]
         public async Task AppropriateRangeDownloadOnPlaintext(int rangeOffset, int? rangeLength)
         {
-            var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + EncryptionConstants.EncryptionBlockSize);
+            var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + Constants.ClientSideEncryption.EncryptionBlockSize);
             var mockKeyResolver = GetIKeyEncryptionKeyResolver(GetIKeyEncryptionKey().Object).Object;
             await using (var disposable = await GetTestContainerAsync())
             {
