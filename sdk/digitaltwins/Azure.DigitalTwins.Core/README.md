@@ -13,7 +13,7 @@ For the best development experience, developers should use the official Microsof
 ## Prerequisites
 
 - Microsoft Azure Subscription: To call Microsoft Azure services, you need to create an [Azure subscription][azure_sub] 
-- Azure Digital Twin instance: In order to use the Azure Digital Twin SDK, you need to first create a Digital Twin instance using one of many options:
+- Azure Digital Twin instance: In order to use the Azure Digital Twins SDK, you need to first create a Digital Twin instance using one of many options:
   - Using [Azure portal][azure_portal] 
   - Using [Azure Management APIs][azure_rest_api]
   - Using [Azure CLI][azure_cli]: You will need to install azure cli and the [Azure IoT extension][iot_cli_extension] for Azure CLI. Refer to [IoT CLI Documentation][iot_cli_doc] for more information on how to create and interact with your Digital Twin instance. 
@@ -27,7 +27,7 @@ Install-Package Azure.DigitalTwins.Core
 ```
 
 ## Authenticate the Client
-In order to interact with the Azure Digital Twin service, you will need to create an instance of a [ClientSecretCredential][client_secret_credential] and pass it to the constructor of your [DigitalTwinClient][digital_twin_client].
+In order to interact with the Azure Digital Twins service, you will need to create an instance of a [ClientSecretCredential][client_secret_credential] and pass it to the constructor of your [DigitalTwinsClient][digital_twins_client].
 
 ## Key concepts
 Azure Digital Twins Preview is an Azure IoT service that creates comprehensive models of the physical environment. It can create spatial intelligence graphs to model the relationships and interactions between people, spaces, and devices.
@@ -35,15 +35,15 @@ Azure Digital Twins Preview is an Azure IoT service that creates comprehensive m
 You can learn more about Azure Digital Twins by visiting [Azure Digital Twins Documentation][digital_twins_documentation]
 
 ## Examples
-You can familiarize yourself with different APIs using [samples for Digital Twin](./samples/). 
+You can familiarize yourself with different APIs using [samples for Digital Twins](./samples/). 
 
 ## Source code folder structure
 
 ### /src
-The digital twins public client `DigitalTwinsClient` and the additional configuration options that can be sent to the digital twins service `DigitalTwinsClientOptions`.
+The Digital Twins public client `DigitalTwinsClient` and the additional configuration options that can be sent to the Digital Twins service `DigitalTwinsClientOptions`.
 
 ### /src/swagger
-The swagger file that defines the structure of the REST APIs used by the digital twins client library.
+The swagger file that defines the structure of the REST APIs used by the Digital Twins client library.
 
 To generate the code, run the powershell script present [here](./src/generate.ps1).
 
@@ -58,18 +58,18 @@ The customzied code written to override the following behavior of auto-generated
 - Declare some methods to return the response as **strings** instead of **objects**.
 
 ### /src/Models
-Constants useful for use with the digital twins client.
+Constants useful for use with the Digital Twins client.
 
 ### /src/Properties
 Assembly properties required for running unit tests against signed assemblies in Debug mode.
 
 ### /src/Serialization
-Serialization helpers provided to help serialize/deseralize commonly used types within the digital twins service.
+Serialization helpers provided to help serialize/deseralize commonly used types within the Digital Twins service.
 
 Any time the client library code is updated, you will need to run the script [here](./../Export-AdtApis.ps1), which will update the corresponding API surface.
 
 ## Troubleshooting
-All Azure Digital Twin service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
+All Azure Digital Twins service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
 
 For example, if you use the ```GetModelAsync``` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode][http_status_code] to decide the operation that follows in that case.
 ```csharp
@@ -109,7 +109,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_rest_api]: https://docs.microsoft.com/en-us/rest/api/azure/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [client_secret_credential]: https://docs.microsoft.com/en-us/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet
-[digital_twin_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
+[digital_twins_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
 [digital_twins_documentation]: https://docs.microsoft.com/en-us/azure/digital-twins/
 [azure_cli]: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
 [iot_cli_extension]: https://docs.microsoft.com/en-us/azure/iot-pnp/howto-install-pnp-cli#:~:text=The%20Azure%20CLI%20lets%20you,Plug%20and%20Play%20Preview%20devices.
