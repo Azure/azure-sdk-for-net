@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Couchbase server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CouchbaseSource")]
     public partial class CouchbaseSource : TabularSource
     {
         /// <summary>

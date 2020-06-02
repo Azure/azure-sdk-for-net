@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Eloqua server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("EloquaSource")]
     public partial class EloquaSource : TabularSource
     {
         /// <summary>

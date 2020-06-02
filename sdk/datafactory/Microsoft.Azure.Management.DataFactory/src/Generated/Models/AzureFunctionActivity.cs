@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure Function activity.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureFunctionActivity")]
     [Rest.Serialization.JsonTransformation]
     public partial class AzureFunctionActivity : ExecutionActivity
     {

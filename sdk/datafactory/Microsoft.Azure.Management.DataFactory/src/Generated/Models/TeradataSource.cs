@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Teradata source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TeradataSource")]
     public partial class TeradataSource : TabularSource
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Magento server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MagentoSource")]
     public partial class MagentoSource : TabularSource
     {
         /// <summary>

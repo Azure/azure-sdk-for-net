@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Sftp read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SftpReadSettings")]
     public partial class SftpReadSettings : StoreReadSettings
     {
         /// <summary>
@@ -52,13 +53,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// file (relative path to the path configured in the dataset) that you
         /// want to copy. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="deleteFilesAfterCompletion">Indicates whether the
+        /// source files need to be deleted after copy completion. Default is
+        /// false. Type: boolean (or Expression with resultType
+        /// boolean).</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
@@ -67,6 +72,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             EnablePartitionDiscovery = enablePartitionDiscovery;
             PartitionRootPath = partitionRootPath;
             FileListPath = fileListPath;
+            DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
             CustomInit();
@@ -119,6 +125,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "fileListPath")]
         public object FileListPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the source files need to be deleted
+        /// after copy completion. Default is false. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteFilesAfterCompletion")]
+        public object DeleteFilesAfterCompletion { get; set; }
 
         /// <summary>
         /// Gets or sets the start of file's modified datetime. Type: string

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Salesforce Service Cloud source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SalesforceServiceCloudSource")]
     public partial class SalesforceServiceCloudSource : CopySource
     {
         /// <summary>

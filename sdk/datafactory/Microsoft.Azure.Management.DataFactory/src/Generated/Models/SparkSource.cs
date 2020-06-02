@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Spark Server source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SparkSource")]
     public partial class SparkSource : TabularSource
     {
         /// <summary>
