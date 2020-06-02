@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             string componentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
             string modelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
-            string dtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+            string dtId1 = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
                 .Replace(SamplesConstants.ComponentId, componentModelId);
@@ -51,7 +51,10 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // Create digital twin with Component payload using the BasicDigitalTwin serialization helper
 
-            var basicDigitalTwin = new BasicDigitalTwin();
+            var basicDigitalTwin = new BasicDigitalTwin
+            {
+                Id = dtId1
+            };
             basicDigitalTwin.Metadata.ModelId = modelId;
             basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
             basicDigitalTwin.CustomProperties.Add("Prop2", "Value2");
@@ -63,12 +66,35 @@ namespace Azure.DigitalTwins.Core.Samples
 
             basicDigitalTwin.CustomProperties.Add("Component1", componentMetadata);
 
-            string dtPayload = JsonSerializer.Serialize(basicDigitalTwin, new JsonSerializerOptions { IgnoreNullValues = true });
+            string dt1Payload = JsonSerializer.Serialize(basicDigitalTwin);
 
-            Response<string> createDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId, dtPayload).ConfigureAwait(false);
-            Console.WriteLine($"Created digital twin {dtId} with response {createDtResponse.GetRawResponse().Status}.");
+            Response<string> createDt1Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId1, dt1Payload).ConfigureAwait(false);
+            Console.WriteLine($"Created digital twin {dtId1} with response {createDt1Response.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
+
+            #region Snippet:DigitalTwinsSampleCreateCustomTwin
+
+            string dtId2 = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+            var customDigitalTwin = new CustomDigitalTwin
+            {
+                Id = dtId2,
+                Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+                Prop1 = "Prop1 val",
+                Prop2 = "Prop2 val",
+                Component1 = new Component1
+                {
+                    Metadata = new Component1Metadata { ModelId = componentModelId },
+                    ComponentProp1 = "Component prop1 val",
+                    ComponentProp2 = "Component prop2 val",
+                }
+            };
+            string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
+
+            Response<string> createDt2Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId2, dt2Payload).ConfigureAwait(false);
+            Console.WriteLine($"Created digital twin {dtId2} with response {createDt2Response.GetRawResponse().Status}.");
+
+            #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
 
             #region Snippet:DigitalTwinsSampleUpdateComponent
 
@@ -77,9 +103,9 @@ namespace Azure.DigitalTwins.Core.Samples
             componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
             string updatePayload = componentUpdateUtility.Serialize();
 
-            Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId, "Component1", updatePayload);
+            Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, "Component1", updatePayload);
 
-            Console.WriteLine($"Updated component for digital twin {dtId}. Update response status: {response.GetRawResponse().Status}");
+            Console.WriteLine($"Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleUpdateComponent
 
@@ -87,16 +113,24 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleGetComponent
 
-            response = await DigitalTwinsClient.GetComponentAsync(dtId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+            response = await DigitalTwinsClient.GetComponentAsync(dtId1, SamplesConstants.ComponentPath).ConfigureAwait(false);
 
             Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent
 
-            // Now delete a Twin
-            await DigitalTwinsClient.DeleteDigitalTwinAsync(dtId).ConfigureAwait(false);
+            // Clean up
 
-            // Delete models
+            try
+            {
+                await DigitalTwinsClient.DeleteDigitalTwinAsync(dtId1).ConfigureAwait(false);
+                await DigitalTwinsClient.DeleteDigitalTwinAsync(dtId2).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Failed to delete digital twin due to {ex}");
+            }
+
             try
             {
                 await DigitalTwinsClient.DeleteModelAsync(modelId).ConfigureAwait(false);

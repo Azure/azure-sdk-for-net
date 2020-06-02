@@ -121,10 +121,16 @@ catch (Exception ex)
 
 For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
 
+One option is to use the provided class BasicDigitalTwin for serialization and deserialization.
+It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
+
 ```C# Snippet:DigitalTwinsSampleCreateBasicTwin
 // Create digital twin with Component payload using the BasicDigitalTwin serialization helper
 
-var basicDigitalTwin = new BasicDigitalTwin();
+var basicDigitalTwin = new BasicDigitalTwin
+{
+    Id = dtId1
+};
 basicDigitalTwin.Metadata.ModelId = modelId;
 basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
 basicDigitalTwin.CustomProperties.Add("Prop2", "Value2");
@@ -136,10 +142,34 @@ componentMetadata.CustomProperties.Add("ComponentProp2", "ComponentValue2");
 
 basicDigitalTwin.CustomProperties.Add("Component1", componentMetadata);
 
-string dtPayload = JsonSerializer.Serialize(basicDigitalTwin, new JsonSerializerOptions { IgnoreNullValues = true });
+string dt1Payload = JsonSerializer.Serialize(basicDigitalTwin);
 
-Response<string> createDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId, dtPayload).ConfigureAwait(false);
-Console.WriteLine($"Created digital twin {dtId} with response {createDtResponse.GetRawResponse().Status}.");
+Response<string> createDt1Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId1, dt1Payload).ConfigureAwait(false);
+Console.WriteLine($"Created digital twin {dtId1} with response {createDt1Response.GetRawResponse().Status}.");
+```
+
+For known twin model types, it may be best to create your own class that maps all the properties.
+This makes your code more readable, and properties easier to work with.
+
+```C# Snippet:DigitalTwinsSampleCreateCustomTwin
+string dtId2 = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+var customDigitalTwin = new CustomDigitalTwin
+{
+    Id = dtId2,
+    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Prop1 = "Prop1 val",
+    Prop2 = "Prop2 val",
+    Component1 = new Component1
+    {
+        Metadata = new Component1Metadata { ModelId = componentModelId },
+        ComponentProp1 = "Component prop1 val",
+        ComponentProp2 = "Component prop2 val",
+    }
+};
+string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
+
+Response<string> createDt2Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId2, dt2Payload).ConfigureAwait(false);
+Console.WriteLine($"Created digital twin {dtId2} with response {createDt2Response.GetRawResponse().Status}.");
 ```
 
 ### Query Digital Twin
@@ -212,9 +242,9 @@ var componentUpdateUtility = new UpdateOperationsUtility();
 componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
 string updatePayload = componentUpdateUtility.Serialize();
 
-Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId, "Component1", updatePayload);
+Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, "Component1", updatePayload);
 
-Console.WriteLine($"Updated component for digital twin {dtId}. Update response status: {response.GetRawResponse().Status}");
+Console.WriteLine($"Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}");
 ```
 
 ### Get Digital Twin Component
@@ -222,7 +252,7 @@ Console.WriteLine($"Updated component for digital twin {dtId}. Update response s
 Get a component by providing name of a component and id of digital twin it belongs to.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-response = await DigitalTwinsClient.GetComponentAsync(dtId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+response = await DigitalTwinsClient.GetComponentAsync(dtId1, SamplesConstants.ComponentPath).ConfigureAwait(false);
 
 Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
 ```

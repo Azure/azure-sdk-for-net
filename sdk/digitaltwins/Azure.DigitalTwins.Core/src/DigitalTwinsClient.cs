@@ -144,25 +144,25 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The created application/json digital twin and the http response.</returns>
         /// <remarks>The digital twin must be the serialization of an instance of <see cref="Serialization.BasicDigitalTwin"/> or the serialization of an extension of that type.</remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin">
-        /// // Create digital twin with Component payload using the BasicDigitalTwin serialization helper
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomTwin">
+        /// string dtId2 = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+        /// var customDigitalTwin = new CustomDigitalTwin
+        /// {
+        ///     Id = dtId2,
+        ///     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+        ///     Prop1 = &quot;Prop1 val&quot;,
+        ///     Prop2 = &quot;Prop2 val&quot;,
+        ///     Component1 = new Component1
+        ///     {
+        ///         Metadata = new Component1Metadata { ModelId = componentModelId },
+        ///         ComponentProp1 = &quot;Component prop1 val&quot;,
+        ///         ComponentProp2 = &quot;Component prop2 val&quot;,
+        ///     }
+        /// };
+        /// string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
         ///
-        /// var basicDigitalTwin = new BasicDigitalTwin();
-        /// basicDigitalTwin.Metadata.ModelId = modelId;
-        /// basicDigitalTwin.CustomProperties.Add(&quot;Prop1&quot;, &quot;Value1&quot;);
-        /// basicDigitalTwin.CustomProperties.Add(&quot;Prop2&quot;, &quot;Value2&quot;);
-        ///
-        /// var componentMetadata = new ModelProperties();
-        /// componentMetadata.Metadata.ModelId = componentModelId;
-        /// componentMetadata.CustomProperties.Add(&quot;ComponentProp1&quot;, &quot;ComponentValue1&quot;);
-        /// componentMetadata.CustomProperties.Add(&quot;ComponentProp2&quot;, &quot;ComponentValue2&quot;);
-        ///
-        /// basicDigitalTwin.CustomProperties.Add(&quot;Component1&quot;, componentMetadata);
-        ///
-        /// string dtPayload = JsonSerializer.Serialize(basicDigitalTwin, new JsonSerializerOptions { IgnoreNullValues = true });
-        ///
-        /// Response&lt;string&gt; createDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId, dtPayload).ConfigureAwait(false);
-        /// Console.WriteLine($&quot;Created digital twin {dtId} with response {createDtResponse.GetRawResponse().Status}.&quot;);
+        /// Response&lt;string&gt; createDt2Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId2, dt2Payload).ConfigureAwait(false);
+        /// Console.WriteLine($&quot;Created digital twin {dtId2} with response {createDt2Response.GetRawResponse().Status}.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> CreateDigitalTwinAsync(string digitalTwinId, string digitalTwin, CancellationToken cancellationToken = default)
@@ -254,7 +254,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// response = await DigitalTwinsClient.GetComponentAsync(dtId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+        /// response = await DigitalTwinsClient.GetComponentAsync(dtId1, SamplesConstants.ComponentPath).ConfigureAwait(false);
         ///
         /// Console.WriteLine($&quot;Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}&quot;);
         /// </code>
@@ -292,9 +292,9 @@ namespace Azure.DigitalTwins.Core
         /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
         /// string updatePayload = componentUpdateUtility.Serialize();
         ///
-        /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(dtId, &quot;Component1&quot;, updatePayload);
+        /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, &quot;Component1&quot;, updatePayload);
         ///
-        /// Console.WriteLine($&quot;Updated component for digital twin {dtId}. Update response status: {response.GetRawResponse().Status}&quot;);
+        /// Console.WriteLine($&quot;Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> UpdateComponentAsync(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
