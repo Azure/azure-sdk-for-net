@@ -30,14 +30,14 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
                 await client.CreateSubscriptionAsync("test", "Test5");
                 // await client.CreateSubscriptionAsync("test", "Test6");
 
-                List<string> names = new List<string>();
-                await foreach (SubscriptionDescription queues in client.GetSubscriptionsAsync("test"))
-                {
-                    names.Add(queues.SubscriptionName);
-                    Console.WriteLine(names);
-                }
+                //List<string> names = new List<string>();
+                //await foreach (SubscriptionDescription queues in client.GetSubscriptionsAsync("test"))
+                //{
+                //    names.Add(queues.SubscriptionName);
+                //    Console.WriteLine(names);
+                //}
 
-                Console.WriteLine(names);
+                //Console.WriteLine(names);
                 //QueueDescription queueDescription = await client.CreateQueueAsync(queueName);
                 //queueDescription.EnableBatchedOperations = false;
                 //await client.UpdateQueueAsync(queueDescription);

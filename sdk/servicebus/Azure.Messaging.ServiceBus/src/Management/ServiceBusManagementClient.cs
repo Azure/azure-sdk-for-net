@@ -105,21 +105,31 @@ namespace Azure.Messaging.ServiceBus.Management
             TokenCredential credential,
             ServiceBusManagementClientOptions options)
         {
-            options = options?.Clone() ?? new ServiceBusManagementClientOptions();
-
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options = options?.Clone() ?? new ServiceBusManagementClientOptions();
-
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
+
+            switch (credential)
+            {
+                case SharedAccessSignatureCredential _:
+                    break;
+
+                case ServiceBusSharedKeyCredential sharedKeyCredential:
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(fullyQualifiedNamespace));
+                    break;
+            }
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
+
             var authenticationPolicy = new BearerTokenAuthenticationPolicy(credential, "https://servicebus.azure.net/.default");
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options,
                  authenticationPolicy);
+
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
-                credential,
+                tokenCredential,
                 _fullyQualifiedNamespace);
         }
 
@@ -133,7 +143,11 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <returns><see cref="NamespaceProperties"/> containing namespace information.</returns>
         public virtual async Task<Response<NamespaceProperties>> GetNamespacePropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response response = await _httpRequestAndResponse.GetEntityAsync("$namespaceinfo", null, false, cancellationToken).ConfigureAwait(false);
+            Response response = await _httpRequestAndResponse.GetEntityAsync(
+                "$namespaceinfo",
+                null,
+                false,
+                cancellationToken).ConfigureAwait(false);
             var result = await ReadAsString(response).ConfigureAwait(false);
             NamespaceProperties properties = NamespacePropertiesExtensions.ParseFromContent(result);
 
@@ -157,7 +171,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteQueueAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteQueueAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
             return _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken);
@@ -177,7 +193,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteTopicAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteTopicAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
             return _httpRequestAndResponse.DeleteEntityAsync(name, cancellationToken);
@@ -198,7 +216,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteSubscriptionAsync(
+            string topicName,
+            string subscriptionName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -222,7 +243,11 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual Task<Response> DeleteRuleAsync(string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteRuleAsync(
+            string topicName,
+            string subscriptionName,
+            string ruleName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -250,7 +275,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<QueueDescription>> GetQueueAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueDescription>> GetQueueAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
 
@@ -276,7 +303,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<TopicDescription>> GetTopicAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopicDescription>> GetTopicAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
 
@@ -303,7 +332,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<SubscriptionDescription>> GetSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionDescription>> GetSubscriptionAsync(
+            string topicName,
+            string subscriptionName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -334,7 +366,11 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<RuleDescription>> GetRuleAsync(string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RuleDescription>> GetRuleAsync(
+            string topicName,
+            string subscriptionName,
+            string ruleName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -365,7 +401,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<QueueRuntimeInfo>> GetQueueMetricsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueRuntimeInfo>> GetQueueMetricsAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
 
@@ -390,7 +428,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<TopicRuntimeInfo>> GetTopicMetricsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopicRuntimeInfo>> GetTopicMetricsAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
 
@@ -417,7 +457,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<SubscriptionRuntimeInfo>> GetSubscriptionMetricsAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionRuntimeInfo>> GetSubscriptionMetricsAsync(
+            string topicName,
+            string subscriptionName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -628,7 +671,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<Response<QueueDescription>> CreateQueueAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<QueueDescription>> CreateQueueAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             return CreateQueueAsync(new QueueDescription(name), cancellationToken);
         }
@@ -649,7 +694,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<QueueDescription>> CreateQueueAsync(QueueDescription queue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueDescription>> CreateQueueAsync(
+            QueueDescription queue,
+            CancellationToken cancellationToken = default)
         {
             queue = queue ?? throw new ArgumentNullException(nameof(queue));
             queue.NormalizeDescription(_fullyQualifiedNamespace);
@@ -684,7 +731,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<Response<TopicDescription>> CreateTopicAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Task<Response<TopicDescription>> CreateTopicAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             return CreateTopicAsync(new TopicDescription(name), cancellationToken);
         }
@@ -705,7 +754,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<TopicDescription>> CreateTopicAsync(TopicDescription topic, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopicDescription>> CreateTopicAsync(
+            TopicDescription topic,
+            CancellationToken cancellationToken = default)
         {
             topic = topic ?? throw new ArgumentNullException(nameof(topic));
             var atomRequest = topic.Serialize().ToString();
@@ -743,7 +794,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(
+            string topicName,
+            string subscriptionName,
+            CancellationToken cancellationToken = default)
         {
             return CreateSubscriptionAsync(new SubscriptionDescription(topicName, subscriptionName), cancellationToken);
         }
@@ -766,7 +820,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(SubscriptionDescription subscription, CancellationToken cancellationToken = default)
+        public virtual Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(
+            SubscriptionDescription subscription,
+            CancellationToken cancellationToken = default)
         {
             subscription = subscription ?? throw new ArgumentNullException(nameof(subscription));
             return CreateSubscriptionAsync(subscription, null, cancellationToken);
@@ -789,12 +845,16 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(SubscriptionDescription subscription, RuleDescription rule, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionDescription>> CreateSubscriptionAsync(
+            SubscriptionDescription subscription,
+            RuleDescription rule,
+            CancellationToken cancellationToken = default)
         {
             subscription = subscription ?? throw new ArgumentNullException(nameof(subscription));
             subscription.NormalizeDescription(_fullyQualifiedNamespace);
             subscription.Rule = rule;
             var atomRequest = subscription.Serialize().ToString();
+
             Response response = await _httpRequestAndResponse.PutEntityAsync(
                 EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
                 atomRequest,
@@ -825,12 +885,15 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         /// <returns><see cref="RuleDescription"/> of the recently created rule.</returns>
-        public virtual async Task<Response<RuleDescription>> CreateRuleAsync(string topicName, string subscriptionName, RuleDescription rule, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RuleDescription>> CreateRuleAsync(
+            string topicName,
+            string subscriptionName,
+            RuleDescription rule,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
             rule = rule ?? throw new ArgumentNullException(nameof(rule));
-
             var atomRequest = rule.Serialize().ToString();
 
             Response response = await _httpRequestAndResponse.PutEntityAsync(
@@ -864,11 +927,12 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<QueueDescription>> UpdateQueueAsync(QueueDescription queue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueDescription>> UpdateQueueAsync(
+            QueueDescription queue,
+            CancellationToken cancellationToken = default)
         {
             queue = queue ?? throw new ArgumentNullException(nameof(queue));
             queue.NormalizeDescription(_fullyQualifiedNamespace);
-
             var atomRequest = queue.Serialize().ToString();
 
             Response response = await _httpRequestAndResponse.PutEntityAsync(
@@ -899,7 +963,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<TopicDescription>> UpdateTopicAsync(TopicDescription topic, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopicDescription>> UpdateTopicAsync(
+            TopicDescription topic,
+            CancellationToken cancellationToken = default)
         {
             topic = topic ?? throw new ArgumentNullException(nameof(topic));
             var atomRequest = topic.Serialize().ToString();
@@ -926,11 +992,14 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<SubscriptionDescription>> UpdateSubscriptionAsync(SubscriptionDescription subscription, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionDescription>> UpdateSubscriptionAsync(
+            SubscriptionDescription subscription,
+            CancellationToken cancellationToken = default)
         {
             subscription = subscription ?? throw new ArgumentNullException(nameof(subscription));
             subscription.NormalizeDescription(_fullyQualifiedNamespace);
             var atomRequest = subscription.Serialize().ToString();
+
             Response response = await _httpRequestAndResponse.PutEntityAsync(
                 EntityNameFormatter.FormatSubscriptionPath(subscription.TopicName, subscription.SubscriptionName),
                 atomRequest,
@@ -961,7 +1030,11 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="ServiceBusException.FailureReason.QuotaExceeded">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<RuleDescription>> UpdateRuleAsync(string topicName, string subscriptionName, RuleDescription rule, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RuleDescription>> UpdateRuleAsync(
+            string topicName,
+            string subscriptionName,
+            RuleDescription rule,
+            CancellationToken cancellationToken = default)
         {
             rule = rule ?? throw new ArgumentNullException(nameof(rule));
             EntityNameFormatter.CheckValidTopicName(topicName);
@@ -996,7 +1069,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<bool>> QueueExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> QueueExistsAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
             Response<QueueDescription> descriptionResponse = null;
@@ -1004,7 +1079,6 @@ namespace Azure.Messaging.ServiceBus.Management
             try
             {
                 descriptionResponse = await GetQueueAsync(name, cancellationToken).ConfigureAwait(false);
-
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -1027,7 +1101,9 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<bool>> TopicExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> TopicExistsAsync(
+            string name,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
             Response<TopicDescription> descriptionResponse = null;
@@ -1035,7 +1111,6 @@ namespace Azure.Messaging.ServiceBus.Management
             try
             {
                 descriptionResponse = await GetTopicAsync(name, cancellationToken).ConfigureAwait(false);
-
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -1059,7 +1134,10 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<bool>> SubscriptionExistsAsync(string topicName, string subscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> SubscriptionExistsAsync(
+            string topicName,
+            string subscriptionName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -1068,7 +1146,6 @@ namespace Azure.Messaging.ServiceBus.Management
             try
             {
                 descriptionResponse = await GetSubscriptionAsync(topicName, subscriptionName, cancellationToken).ConfigureAwait(false);
-
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
@@ -1093,7 +1170,11 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
-        public virtual async Task<Response<bool>> RuleExistsAsync(string topicName, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> RuleExistsAsync(
+            string topicName,
+            string subscriptionName,
+            string ruleName,
+            CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
@@ -1102,7 +1183,6 @@ namespace Azure.Messaging.ServiceBus.Management
             try
             {
                 descriptionResponse = await GetRuleAsync(topicName, subscriptionName, ruleName, cancellationToken).ConfigureAwait(false);
-
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
