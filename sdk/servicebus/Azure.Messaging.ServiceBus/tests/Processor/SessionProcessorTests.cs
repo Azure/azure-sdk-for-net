@@ -28,6 +28,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void MustSetMessageHandler()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void MustSetErrorHandler()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusSessionProcessor(

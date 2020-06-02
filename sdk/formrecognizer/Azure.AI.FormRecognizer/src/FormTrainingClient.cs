@@ -109,16 +109,16 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
+        /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, trainingFileFilter, useTrainingLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
@@ -129,16 +129,16 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
+        /// <param name="trainingFileFilter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
 
-            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, filter, useTrainingLabels);
+            var trainRequest = new TrainRequest_internal(trainingFilesUri.AbsoluteUri, trainingFileFilter, useTrainingLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
@@ -305,9 +305,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(target, nameof(target));
 
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target._resourceId,
-                                          target._region,
-                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+            var request = new CopyRequest(target.ResourceId,
+                                          target.Region,
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
 
             ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = ServiceClient.CopyCustomModel(guid, request, cancellationToken);
             return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
@@ -329,9 +329,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(target, nameof(target));
 
             Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-            var request = new CopyRequest(target._resourceId,
-                                          target._region,
-                                          new CopyAuthorizationResult(target.ModelId, target._accessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
+            var request = new CopyRequest(target.ResourceId,
+                                          target.Region,
+                                          new CopyAuthorizationResult(target.ModelId, target.AccessToken, target.ExpiresOn/*.ToUnixTimeSeconds()*/));
             ResponseWithHeaders<ServiceCopyCustomModelHeaders> response = await ServiceClient.CopyCustomModelAsync(guid, request, cancellationToken).ConfigureAwait(false);
             return new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, target.ModelId);
         }

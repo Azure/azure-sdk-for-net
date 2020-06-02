@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents

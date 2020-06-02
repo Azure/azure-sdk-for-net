@@ -55,8 +55,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartTrainingAsync(new Uri(encodedUriString));
-            await client.StartTrainingAsync(new Uri(decodedUriString));
+            await client.StartTrainingAsync(new Uri(encodedUriString), useTrainingLabels: false);
+            await client.StartTrainingAsync(new Uri(decodedUriString), useTrainingLabels: false);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 

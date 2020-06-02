@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {

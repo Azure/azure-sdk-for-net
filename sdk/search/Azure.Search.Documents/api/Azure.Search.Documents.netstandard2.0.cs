@@ -65,6 +65,57 @@ namespace Azure.Search.Documents
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
     }
+    public partial class SearchOptions
+    {
+        public SearchOptions() { }
+        public SearchOptions(string continuationToken) { }
+        public System.Collections.Generic.IList<string> Facets { get { throw null; } }
+        public string Filter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
+        public string HighlightPostTag { get { throw null; } set { } }
+        public string HighlightPreTag { get { throw null; } set { } }
+        public bool? IncludeTotalCount { get { throw null; } set { } }
+        public double? MinimumCoverage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }
+        public string ScoringProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
+        public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Select { get { throw null; } }
+        public int? Size { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+    }
+    public partial class SuggestOptions
+    {
+        public SuggestOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string HighlightPostTag { get { throw null; } set { } }
+        public string HighlightPreTag { get { throw null; } set { } }
+        public double? MinimumCoverage { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
+        public System.Collections.Generic.IList<string> Select { get { throw null; } }
+        public int? Size { get { throw null; } set { } }
+        public bool? UseFuzzyMatching { get { throw null; } set { } }
+    }
+}
+namespace Azure.Search.Documents.Indexes
+{
+    public static partial class FieldBuilder
+    {
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type) { throw null; }
+        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>() { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SearchableFieldAttribute : Azure.Search.Documents.Indexes.SimpleFieldAttribute
+    {
+        public SearchableFieldAttribute(bool collection = false) : base (default(Azure.Search.Documents.Indexes.Models.SearchFieldDataType), default(bool)) { }
+        public string AnalyzerName { get { throw null; } set { } }
+        public string IndexAnalyzerName { get { throw null; } set { } }
+        public string SearchAnalyzerName { get { throw null; } set { } }
+        public string[] SynonymMapNames { get { throw null; } set { } }
+    }
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
@@ -115,22 +166,22 @@ namespace Azure.Search.Documents
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
-        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource> CreateDataSource(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource>> CreateDataSourceAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateDataSourceConnectionAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource> CreateOrUpdateDataSource(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource>> CreateOrUpdateDataSourceAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> CreateOrUpdateIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> CreateOrUpdateIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateOrUpdateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> CreateSkillset(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>> CreateSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteDataSource(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteDataSource(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataSourceAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource dataSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataSourceAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteDataSourceConnection(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteDataSourceConnection(string dataSourceConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataSourceConnectionAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection dataSourceConnection, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIndexer(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIndexerAsync(Azure.Search.Documents.Indexes.Models.SearchIndexer indexer, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -139,12 +190,12 @@ namespace Azure.Search.Documents
         public virtual Azure.Response DeleteSkillset(string skillsetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSkillsetAsync(Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset skillset, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSkillsetAsync(string skillsetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource> GetDataSource(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource>> GetDataSourceAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetDataSourceNames(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetDataSourceNamesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource>> GetDataSources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSource>>> GetDataSourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection> GetDataSourceConnection(string dataSourceConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> GetDataSourceConnectionAsync(string dataSourceConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetDataSourceConnectionNames(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>> GetDataSourceConnections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer> GetIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndexer>> GetIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetIndexerNames(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -164,39 +215,16 @@ namespace Azure.Search.Documents
         public virtual Azure.Response RunIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SearchOptions
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public partial class SimpleFieldAttribute : System.Attribute
     {
-        public SearchOptions() { }
-        public SearchOptions(string continuationToken) { }
-        public System.Collections.Generic.IList<string> Facets { get { throw null; } }
-        public string Filter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
-        public string HighlightPostTag { get { throw null; } set { } }
-        public string HighlightPreTag { get { throw null; } set { } }
-        public bool? IncludeTotalCount { get { throw null; } set { } }
-        public double? MinimumCoverage { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }
-        public string ScoringProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
-        public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public int? Size { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-    }
-    public partial class SuggestOptions
-    {
-        public SuggestOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string HighlightPostTag { get { throw null; } set { } }
-        public string HighlightPreTag { get { throw null; } set { } }
-        public double? MinimumCoverage { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
-        public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public int? Size { get { throw null; } set { } }
-        public bool? UseFuzzyMatching { get { throw null; } set { } }
+        public SimpleFieldAttribute(Azure.Search.Documents.Indexes.Models.SearchFieldDataType type, bool collection = false) { }
+        public bool IsFacetable { get { throw null; } set { } }
+        public bool IsFilterable { get { throw null; } set { } }
+        public bool IsHidden { get { throw null; } set { } }
+        public bool IsKey { get { throw null; } set { } }
+        public bool IsSortable { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
@@ -351,15 +379,28 @@ namespace Azure.Search.Documents.Indexes.Models
         public ElisionTokenFilter(string name) { }
         public System.Collections.Generic.IList<string> Articles { get { throw null; } set { } }
     }
-    public enum EntityCategory
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityCategory : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityCategory>
     {
-        Location = 0,
-        Organization = 1,
-        Person = 2,
-        Quantity = 3,
-        Datetime = 4,
-        Url = 5,
-        Email = 6,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityCategory(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Datetime { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Email { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Location { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Organization { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Person { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Quantity { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityCategory Url { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.EntityCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EntityRecognitionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
@@ -464,10 +505,23 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage left, Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum ImageDetail
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageDetail : System.IEquatable<Azure.Search.Documents.Indexes.Models.ImageDetail>
     {
-        Celebrities = 0,
-        Landmarks = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageDetail(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.ImageDetail Celebrities { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageDetail Landmarks { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.ImageDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.ImageDetail left, Azure.Search.Documents.Indexes.Models.ImageDetail right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.ImageDetail (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.ImageDetail left, Azure.Search.Documents.Indexes.Models.ImageDetail right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class IndexerExecutionResult
     {
@@ -897,7 +951,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public OcrSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public Azure.Search.Documents.Indexes.Models.OcrSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? ShouldDetectOrientation { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.TextExtractionAlgorithm? TextExtractionAlgorithm { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OcrSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.OcrSkillLanguage>
@@ -1161,9 +1214,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
     }
-    public partial class SearchIndexerDataSource
+    public partial class SearchIndexerDataSourceConnection
     {
-        public SearchIndexerDataSource(string name, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType type, string connectionString, Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer container) { }
+        public SearchIndexerDataSourceConnection(string name, Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType type, string connectionString, Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer container) { }
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataContainer Container { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy { get { throw null; } set { } }
@@ -1222,7 +1275,7 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class SearchIndexerSkillset
     {
-        public SearchIndexerSkillset(string name, string description, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> skills) { }
+        public SearchIndexerSkillset(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> skills) { }
         public Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -1575,15 +1628,23 @@ namespace Azure.Search.Documents.Indexes.Models
         public TagScoringParameters(string tagsParameter) { }
         public string TagsParameter { get { throw null; } set { } }
     }
-    public enum TextExtractionAlgorithm
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TextSplitMode : System.IEquatable<Azure.Search.Documents.Indexes.Models.TextSplitMode>
     {
-        Printed = 0,
-        Handwritten = 1,
-    }
-    public enum TextSplitMode
-    {
-        Pages = 0,
-        Sentences = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TextSplitMode(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.TextSplitMode Pages { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.TextSplitMode Sentences { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.TextSplitMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.TextSplitMode left, Azure.Search.Documents.Indexes.Models.TextSplitMode right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.TextSplitMode (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.TextSplitMode left, Azure.Search.Documents.Indexes.Models.TextSplitMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TextTranslationSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
@@ -1754,15 +1815,28 @@ namespace Azure.Search.Documents.Indexes.Models
         public UniqueTokenFilter(string name) { }
         public bool? OnlyOnSamePosition { get { throw null; } set { } }
     }
-    public enum VisualFeature
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VisualFeature : System.IEquatable<Azure.Search.Documents.Indexes.Models.VisualFeature>
     {
-        Adult = 0,
-        Brands = 1,
-        Categories = 2,
-        Description = 3,
-        Faces = 4,
-        Objects = 5,
-        Tags = 6,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VisualFeature(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Adult { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Brands { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Categories { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Description { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Faces { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Objects { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VisualFeature Tags { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.VisualFeature other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.VisualFeature left, Azure.Search.Documents.Indexes.Models.VisualFeature right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.VisualFeature (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.VisualFeature left, Azure.Search.Documents.Indexes.Models.VisualFeature right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WebApiSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {

@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.11.0
+###  Feature Additions
+- Added support for the follwoing new datasets in ADF - ExcelDataset, along with source and sink for Copy activity
+- ExcelDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+
 ## Version 4.10.0
 ###  Feature Additions
 - Added new type conversion support in Copy activity

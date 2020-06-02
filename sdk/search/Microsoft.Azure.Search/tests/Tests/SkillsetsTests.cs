@@ -808,10 +808,8 @@ namespace Microsoft.Azure.Search.Tests
                 VisualFeatures = new List<VisualFeature>
                 {
                     VisualFeature.Categories,
-                    VisualFeature.Color,
                     VisualFeature.Description,
                     VisualFeature.Faces,
-                    VisualFeature.ImageType,
                     VisualFeature.Tags
                 },
                 Details = new List<ImageDetail>
