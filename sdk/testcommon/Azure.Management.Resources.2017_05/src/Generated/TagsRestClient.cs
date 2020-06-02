@@ -72,7 +72,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -144,7 +144,7 @@ namespace Azure.Management.Resources
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response<TagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -237,7 +237,7 @@ namespace Azure.Management.Resources
         /// <summary> The tag name can have a maximum of 512 characters and is case insensitive. Tag names created by Azure have prefixes of microsoft, azure, or windows. You cannot create tags with one of these prefixes. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -321,7 +321,7 @@ namespace Azure.Management.Resources
         /// <summary> You must remove all values from a resource tag before you can delete it. </summary>
         /// <param name="tagName"> The name of the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -379,7 +379,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Gets the names and values of all resource tags that are defined in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<TagsListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -446,7 +446,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets the names and values of all resource tags that are defined in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<TagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

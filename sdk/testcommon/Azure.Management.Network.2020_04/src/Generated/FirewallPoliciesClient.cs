@@ -241,7 +241,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<FirewallPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<FirewallPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.Management.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Firewall Policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<FirewallPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string firewallPolicyName, FirewallPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<FirewallPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string firewallPolicyName, FirewallPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

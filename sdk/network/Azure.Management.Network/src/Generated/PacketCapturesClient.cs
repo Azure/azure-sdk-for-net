@@ -149,7 +149,7 @@ namespace Azure.Management.Network
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="parameters"> Parameters that define the create packet capture operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PacketCapturesCreateOperation> StartCreateAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, PacketCapture parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<PacketCapturesCreateOperation> StartCreateAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, PacketCapture parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -226,7 +226,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PacketCapturesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<PacketCapturesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -294,7 +294,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PacketCapturesStopOperation> StartStopAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<PacketCapturesStopOperation> StartStopAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -362,7 +362,7 @@ namespace Azure.Management.Network
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="packetCaptureName"> The name given to the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PacketCapturesGetStatusOperation> StartGetStatusAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<PacketCapturesGetStatusOperation> StartGetStatusAsync(string resourceGroupName, string networkWatcherName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

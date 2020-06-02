@@ -72,7 +72,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to delete. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -144,7 +144,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to check. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -221,7 +221,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -240,8 +240,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -272,8 +272,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -302,7 +302,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentExtended>> GetAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentExtended>> GetAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -397,7 +397,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment to cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CancelAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -473,7 +473,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="parameters"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentValidateResult>> ValidateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentValidateResult>> ValidateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -579,7 +579,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment from which to get the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentExportResult>> ExportTemplateAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentExportResult>> ExportTemplateAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -681,7 +681,7 @@ namespace Azure.Management.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -766,7 +766,7 @@ namespace Azure.Management.Resources
         /// <summary> Calculate the hash of the given template. </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TemplateHashResult>> CalculateTemplateHashAsync(object template, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateHashResult>> CalculateTemplateHashAsync(object template, CancellationToken cancellationToken = default)
         {
             if (template == null)
             {
@@ -847,7 +847,7 @@ namespace Azure.Management.Resources
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

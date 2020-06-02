@@ -85,7 +85,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -176,7 +176,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
             {
@@ -251,7 +251,7 @@ namespace Azure.Management.Resources
         /// <param name="sourceResourceGroupName"> The name of the resource group containing the resources to validate for move. </param>
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> ValidateMoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateMoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (sourceResourceGroupName == null)
             {
@@ -268,6 +268,7 @@ namespace Azure.Management.Resources
             {
                 case 202:
                 case 204:
+                case 409:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -295,6 +296,7 @@ namespace Azure.Management.Resources
             {
                 case 202:
                 case 204:
+                case 409:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -333,7 +335,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, expand, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -419,7 +421,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CheckExistenceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckExistenceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -527,7 +529,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="resourceName"> The name of the resource to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -554,8 +556,9 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -596,8 +599,9 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -640,7 +644,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to create. </param>
         /// <param name="parameters"> Parameters for creating or updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -671,8 +675,9 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -718,8 +723,9 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -762,7 +768,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceName"> The name of the resource to update. </param>
         /// <param name="parameters"> Parameters for updating the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -793,8 +799,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -840,8 +846,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -879,7 +885,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GenericResource>> GetAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<GenericResource>> GetAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -995,7 +1001,7 @@ namespace Azure.Management.Resources
         /// <summary> Checks by ID whether a resource exists. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CheckExistenceByIdAsync(string resourceId, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckExistenceByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -1053,7 +1059,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteByIdAsync(string resourceId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -1064,8 +1070,9 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1086,8 +1093,9 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1116,7 +1124,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -1131,8 +1139,9 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1158,8 +1167,9 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1188,7 +1198,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateByIdAsync(string resourceId, GenericResource parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -1203,8 +1213,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1230,8 +1240,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1255,7 +1265,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GenericResource>> GetByIdAsync(string resourceId, CancellationToken cancellationToken = default)
+        public async Task<Response<GenericResource>> GetByIdAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -1337,7 +1347,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1430,7 +1440,7 @@ namespace Azure.Management.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListNextPageAsync(string nextLink, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListNextPageAsync(string nextLink, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -53,7 +53,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<LocationListResult>> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<LocationListResult>> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -133,7 +133,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets details about a specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Subscription>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<Subscription>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -211,7 +211,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SubscriptionListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,7 +278,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SubscriptionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

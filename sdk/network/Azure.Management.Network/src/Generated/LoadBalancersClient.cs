@@ -281,7 +281,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<LoadBalancersDeleteOperation> StartDeleteAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
+        public virtual async Task<LoadBalancersDeleteOperation> StartDeleteAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -340,7 +340,7 @@ namespace Azure.Management.Network
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<LoadBalancersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<LoadBalancersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (TextSplitMode != null)
             {
                 writer.WritePropertyName("textSplitMode");
-                writer.WriteStringValue(TextSplitMode.Value.ToSerialString());
+                writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
             if (MaximumPageLength != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    textSplitMode = property.Value.GetString().ToTextSplitMode();
+                    textSplitMode = new TextSplitMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maximumPageLength"))

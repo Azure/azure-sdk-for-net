@@ -67,7 +67,7 @@ namespace Azure.Management.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinition>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinition>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -160,7 +160,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -220,7 +220,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation retrieves the policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -300,7 +300,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinition>> GetBuiltInAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinition>> GetBuiltInAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -380,7 +380,7 @@ namespace Azure.Management.Resources
 
         /// <summary> This operation retrieves a list of all the policy set definitions in the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -447,7 +447,7 @@ namespace Azure.Management.Resources
 
         /// <summary> This operation retrieves a list of all the built-in policy set definitions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListBuiltInAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListBuiltInAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListBuiltInRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -524,7 +524,7 @@ namespace Azure.Management.Resources
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinition>> CreateOrUpdateAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinition>> CreateOrUpdateAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, PolicySetDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -627,7 +627,7 @@ namespace Azure.Management.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -697,7 +697,7 @@ namespace Azure.Management.Resources
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinition>> GetAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinition>> GetAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -787,7 +787,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation retrieves a list of all the a policy set definition in the given management group. </summary>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
             {
@@ -865,7 +865,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation retrieves a list of all the policy set definitions in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -943,7 +943,7 @@ namespace Azure.Management.Resources
         /// <summary> This operation retrieves a list of all the built-in policy set definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListBuiltInNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListBuiltInNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1022,7 +1022,7 @@ namespace Azure.Management.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PolicySetDefinitionListResult>> ListByManagementGroupNextPageAsync(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupNextPageAsync(string nextLink, string managementGroupId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

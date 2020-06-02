@@ -206,7 +206,7 @@ namespace Azure.Management.Network
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<LocalNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<LocalNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -273,7 +273,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<LocalNetworkGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<LocalNetworkGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

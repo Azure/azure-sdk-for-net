@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -41,10 +42,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // get the message body as a string
-                string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
+                string body = receivedMessage.Body.AsString();
                 Console.WriteLine(body);
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
+                Assert.AreEqual("Hello world!", receivedMessage.Body.AsString());
             }
         }
 
@@ -74,8 +75,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 // get the message body as a string
-                string body = Encoding.UTF8.GetString(peekedMessage.Body.ToArray());
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), peekedMessage.Body.ToArray());
+                string body = peekedMessage.Body.AsString();
+                Assert.AreEqual("Hello world!", peekedMessage.Body.AsString());
             }
         }
 
@@ -113,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string
-                    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
+                    string body = receivedMessage.Body.AsString();
                     Console.WriteLine(body);
                 }
                 #endregion
@@ -122,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToArray(), receivedMessage.Body.ToArray());
+                    Assert.AreEqual(sentMessagesEnum.Current.Body.AsString(), receivedMessage.Body.AsString());
                 }
             }
         }
@@ -161,15 +162,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
-                    // get the message body as a string
-                    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
-                    Console.WriteLine(body);
+                    // get the message body as a string using an implicit cast
+                    string body = receivedMessage.Body.AsString();
                 }
                 var sentMessagesEnum = messageBatch.AsEnumerable<ServiceBusMessage>().GetEnumerator();
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     sentMessagesEnum.MoveNext();
-                    Assert.AreEqual(sentMessagesEnum.Current.Body.ToArray(), receivedMessage.Body.ToArray());
+                    Assert.AreEqual(sentMessagesEnum.Current.Body.AsString(), receivedMessage.Body.AsString());
                 }
             }
         }

@@ -16,20 +16,20 @@ namespace Azure.AI.FormRecognizer.Training
         //public DateTimeOffset ExpiresOn { get; set; }
         public long ExpiresOn { get; }
         /// <summary> Token claim used to authorize the request. </summary>
-        internal string _accessToken { get; }
+        internal string AccessToken { get; }
         /// <summary> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </summary>
-        internal string _resourceId { get; }
+        internal string ResourceId { get; }
         /// <summary> Location of the target Form Recognizer resource. A valid Azure region name supported by Cognitive Services. </summary>
-        internal string _region { get; }
+        internal string Region { get; }
 
         internal CopyAuthorization(string modelId, string accessToken, long expirationDateTimeTicks, string resourceId, string region)
         {
             ModelId = modelId;
-            _accessToken = accessToken;
+            AccessToken = accessToken;
             //ExpiresOn = DateTimeOffset.FromUnixTimeSeconds(expirationDateTimeTicks);
             ExpiresOn = expirationDateTimeTicks;
-            _resourceId = resourceId;
-            _region = region;
+            ResourceId = resourceId;
+            Region = region;
         }
 
         internal CopyAuthorization(CopyAuthorizationResult copyAuth, string resourceId, string region)
@@ -73,11 +73,11 @@ namespace Azure.AI.FormRecognizer.Training
             public CopyAuthorizationParse(CopyAuthorization target)
             {
                 modelId = target.ModelId;
-                accessToken = target._accessToken;
+                accessToken = target.AccessToken;
                 //expirationDateTimeTicks = target.ExpiresOn.ToUnixTimeSeconds();
                 expirationDateTimeTicks = target.ExpiresOn;
-                resourceId = target._resourceId;
-                resourceRegion = target._region;
+                resourceId = target.ResourceId;
+                resourceRegion = target.Region;
             }
         }
     }

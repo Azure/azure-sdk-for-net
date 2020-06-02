@@ -63,7 +63,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all available service aliases for this subscription in this region. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableServiceAliasesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -149,7 +149,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableServiceAliasesResult>> ListByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -237,7 +237,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableServiceAliasesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -326,7 +326,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableServiceAliasesResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

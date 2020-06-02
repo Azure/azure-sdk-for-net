@@ -180,7 +180,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SubnetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public virtual async Task<SubnetsDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -249,7 +249,7 @@ namespace Azure.Management.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SubnetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<SubnetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -327,7 +327,7 @@ namespace Azure.Management.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SubnetsPrepareNetworkPoliciesOperation> StartPrepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<SubnetsPrepareNetworkPoliciesOperation> StartPrepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +405,7 @@ namespace Azure.Management.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SubnetsUnprepareNetworkPoliciesOperation> StartUnprepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<SubnetsUnprepareNetworkPoliciesOperation> StartUnprepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

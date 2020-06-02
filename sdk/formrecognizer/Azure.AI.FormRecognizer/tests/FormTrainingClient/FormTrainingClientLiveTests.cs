@@ -87,10 +87,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(0, doc.Errors.Count);
             }
 
-            foreach (var subModel in model.Models)
+            foreach (var submodel in model.Submodels)
             {
-                Assert.IsNotNull(subModel.FormType);
-                foreach (var fields in subModel.Fields)
+                Assert.IsNotNull(submodel.FormType);
+                foreach (var fields in submodel.Fields)
                 {
                     Assert.IsNotNull(fields.Value.Name);
                     if (labeled)
@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl);
+            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
 
             await operation.WaitForCompletionAsync();
 
@@ -169,17 +169,17 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(tm.Errors.Count, rm.Errors.Count);
             }
 
-            for (int i = 0; i < resultModel.Models.Count; i++)
+            for (int i = 0; i < resultModel.Submodels.Count; i++)
             {
-                Assert.AreEqual(trainedModel.Models[i].FormType, resultModel.Models[i].FormType);
+                Assert.AreEqual(trainedModel.Submodels[i].FormType, resultModel.Submodels[i].FormType);
 
-                foreach (var fields in resultModel.Models[i].Fields)
+                foreach (var fields in resultModel.Submodels[i].Fields)
                 {
-                    Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Name, fields.Value.Name);
+                    Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Name, fields.Value.Name);
                     if (labeled)
-                        Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Accuracy, fields.Value.Accuracy);
+                        Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Accuracy, fields.Value.Accuracy);
                     else
-                        Assert.AreEqual(trainedModel.Models[i].Fields[fields.Key].Label, fields.Value.Label);
+                        Assert.AreEqual(trainedModel.Submodels[i].Fields[fields.Key].Label, fields.Value.Label);
                 }
             }
 
@@ -256,10 +256,10 @@ namespace Azure.AI.FormRecognizer.Tests
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
 
             Assert.IsNotNull(targetAuth.ModelId);
-            Assert.IsNotNull(targetAuth._accessToken);
+            Assert.IsNotNull(targetAuth.AccessToken);
             Assert.IsNotNull(targetAuth.ExpiresOn);
-            Assert.AreEqual(resourceID, targetAuth._resourceId);
-            Assert.AreEqual(region, targetAuth._region);
+            Assert.AreEqual(resourceID, targetAuth.ResourceId);
+            Assert.AreEqual(region, targetAuth.Region);
         }
 
         [Test]
@@ -278,9 +278,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(targetAuth.ModelId, targetAuthFromJson.ModelId);
             Assert.AreEqual(targetAuth.ExpiresOn, targetAuthFromJson.ExpiresOn);
-            Assert.AreEqual(targetAuth._accessToken, targetAuthFromJson._accessToken);
-            Assert.AreEqual(targetAuth._resourceId, targetAuthFromJson._resourceId);
-            Assert.AreEqual(targetAuth._region, targetAuthFromJson._region);
+            Assert.AreEqual(targetAuth.AccessToken, targetAuthFromJson.AccessToken);
+            Assert.AreEqual(targetAuth.ResourceId, targetAuthFromJson.ResourceId);
+            Assert.AreEqual(targetAuth.Region, targetAuthFromJson.Region);
         }
     }
 }

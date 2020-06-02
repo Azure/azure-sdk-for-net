@@ -8,7 +8,7 @@
 namespace Azure.Management.KeyVault.Models
 {
     /// <summary> An error response from Key Vault resource provider. </summary>
-    public partial class CloudErrorBody
+    internal partial class CloudErrorBody
     {
         /// <summary> Initializes a new instance of CloudErrorBody. </summary>
         internal CloudErrorBody()

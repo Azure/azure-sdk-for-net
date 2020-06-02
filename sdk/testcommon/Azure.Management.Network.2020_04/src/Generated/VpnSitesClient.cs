@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="vpnSiteName"> The name of the VpnSite being created or updated. </param>
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnSitesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vpnSiteName, VpnSite vpnSiteParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnSitesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vpnSiteName, VpnSite vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnSite. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnSitesDeleteOperation> StartDeleteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnSitesDeleteOperation> StartDeleteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

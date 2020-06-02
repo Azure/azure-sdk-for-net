@@ -16,6 +16,7 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics --version 1.0.0-preview.5
 ```
+**Note:** This package version targets Azure Text Analytics service API version v3.0.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].

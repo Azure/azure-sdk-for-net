@@ -68,7 +68,7 @@ namespace Azure.Management.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -87,8 +87,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -119,8 +120,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -152,7 +154,7 @@ namespace Azure.Management.Network
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualRouterPeering>> GetAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualRouterPeering>> GetAsync(string resourceGroupName, string virtualRouterName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -263,7 +265,7 @@ namespace Azure.Management.Network
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router Peering operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualRouterName, string peeringName, VirtualRouterPeering parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -286,8 +288,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -323,8 +325,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -354,7 +356,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualRouterPeeringListResult>> ListAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualRouterPeeringListResult>> ListAsync(string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -443,7 +445,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualRouterPeeringListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualRouterPeeringListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualRouterName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

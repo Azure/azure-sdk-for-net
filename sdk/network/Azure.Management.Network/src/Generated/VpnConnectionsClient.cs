@@ -179,7 +179,7 @@ namespace Azure.Management.Network
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="vpnConnectionParameters"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, string connectionName, VpnConnection vpnConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -256,7 +256,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

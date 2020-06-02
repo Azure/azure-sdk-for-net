@@ -1130,7 +1130,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<NamespacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<NamespacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1197,7 +1197,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<NamespacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NamespacesDeleteOperation> StartDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

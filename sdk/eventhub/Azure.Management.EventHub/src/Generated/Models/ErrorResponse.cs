@@ -8,7 +8,7 @@
 namespace Azure.Management.EventHub.Models
 {
     /// <summary> Error response indicates Event Hub service is not able to process the incoming request. The reason is provided in the error message. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

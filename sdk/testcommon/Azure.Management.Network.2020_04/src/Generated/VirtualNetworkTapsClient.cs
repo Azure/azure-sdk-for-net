@@ -279,7 +279,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkTapsDeleteOperation> StartDeleteAsync(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkTapsDeleteOperation> StartDeleteAsync(string resourceGroupName, string tapName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.Management.Network
         /// <param name="tapName"> The name of the virtual network tap. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualNetworkTapsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string tapName, VirtualNetworkTap parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualNetworkTapsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string tapName, VirtualNetworkTap parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

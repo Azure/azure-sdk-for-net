@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Management.Resources.Models
 {
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {

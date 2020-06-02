@@ -60,7 +60,7 @@ namespace Azure.Management.Network
 
         /// <summary> Gets all the available express route service providers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ExpressRouteServiceProviderListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteServiceProviderListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,7 +127,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the available express route service providers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ExpressRouteServiceProviderListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteServiceProviderListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

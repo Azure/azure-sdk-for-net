@@ -80,7 +80,7 @@ namespace Azure.Management.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<StorageQueue>> CreateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageQueue>> CreateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -200,7 +200,7 @@ namespace Azure.Management.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<StorageQueue>> UpdateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageQueue>> UpdateAsync(string resourceGroupName, string accountName, string queueName, StorageQueue queue, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -315,7 +315,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<StorageQueue>> GetAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageQueue>> GetAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -421,7 +421,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string queueName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -511,7 +511,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListQueueResource>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListQueueResource>> ListAsync(string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -604,7 +604,7 @@ namespace Azure.Management.Storage
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListQueueResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListQueueResource>> ListNextPageAsync(string nextLink, string resourceGroupName, string accountName, string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

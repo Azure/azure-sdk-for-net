@@ -239,7 +239,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<BastionHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<BastionHostsDeleteOperation> StartDeleteAsync(string resourceGroupName, string bastionHostName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -298,7 +298,7 @@ namespace Azure.Management.Network
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Bastion Host operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<BastionHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string bastionHostName, BastionHost parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<BastionHostsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string bastionHostName, BastionHost parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

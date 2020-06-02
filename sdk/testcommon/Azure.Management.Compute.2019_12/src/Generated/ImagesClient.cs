@@ -242,7 +242,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Create Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ImagesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string imageName, Image parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -310,7 +310,7 @@ namespace Azure.Management.Compute
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="parameters"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ImagesUpdateOperation> StartUpdateAsync(string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -377,7 +377,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string imageName, CancellationToken cancellationToken = default)
+        public virtual async Task<ImagesDeleteOperation> StartDeleteAsync(string resourceGroupName, string imageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

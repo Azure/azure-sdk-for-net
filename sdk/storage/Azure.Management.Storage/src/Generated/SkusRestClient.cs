@@ -67,7 +67,7 @@ namespace Azure.Management.Storage
 
         /// <summary> Lists the available SKUs supported by Microsoft.Storage for given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<StorageSkuListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<StorageSkuListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

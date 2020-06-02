@@ -16,6 +16,7 @@ namespace Azure.Data.Tables
         private readonly TableRestClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
         private readonly string _version;
+        internal readonly bool _isPremiumEndpoint;
 
         public TableServiceClient(Uri endpoint)
                 : this(endpoint, options: null)
@@ -62,6 +63,10 @@ namespace Azure.Data.Tables
             var diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(diagnostics, pipeline, endpointString);
             _version = options.VersionString;
+
+            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
+            _isPremiumEndpoint = (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
+                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
         }
 
         /// <summary>
@@ -84,7 +89,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version);
+            return new TableClient(tableName, _tableOperations, _version, _isPremiumEndpoint);
         }
 
         /// <summary>
