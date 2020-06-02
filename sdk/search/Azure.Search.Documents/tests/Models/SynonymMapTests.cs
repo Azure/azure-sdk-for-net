@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models

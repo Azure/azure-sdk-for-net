@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerSkillset : IUtf8JsonSerializable
     {
@@ -18,8 +18,11 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("description");
-            writer.WriteStringValue(Description);
+            if (Description != null)
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("skills");
             writer.WriteStartArray();
             foreach (var item in Skills)
@@ -56,6 +59,10 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }

@@ -134,5 +134,25 @@ namespace Microsoft.Azure.Management.Storage
         /// </summary>
         IFileSharesOperations FileShares { get; }
 
+        /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        IQueueServicesOperations QueueServices { get; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        IQueueOperations Queue { get; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        ITableServicesOperations TableServices { get; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        ITableOperations Table { get; }
+
     }
 }

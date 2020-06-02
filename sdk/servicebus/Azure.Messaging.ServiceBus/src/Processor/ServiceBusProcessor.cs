@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -146,8 +145,14 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration { get; }
 
-        private readonly string[] _sessionIds;
+        /// <summary>
+        ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
+        private readonly string[] _sessionIds;
+        private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
@@ -199,6 +204,7 @@ namespace Azure.Messaging.ServiceBus
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _sessionIds = sessionIds;
+            _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
         }
 
         /// <summary>
@@ -412,13 +418,15 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             if (ActiveReceiveTask == null)
             {
-                ServiceBusEventSource.Log.StartProcessingStart(Identifier);
-                await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                ValidateMessageHandler();
-                ValidateErrorHandler();
+                Logger.StartProcessingStart(Identifier);
+                bool releaseGuard = false;
 
                 try
                 {
+                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
+                    ValidateMessageHandler();
+                    ValidateErrorHandler();
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                     InitializeReceiverManagers();
@@ -434,14 +442,17 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception exception)
                 {
-                    ServiceBusEventSource.Log.StartProcessingException(Identifier, exception);
+                    Logger.StartProcessingException(Identifier, exception.ToString());
                     throw;
                 }
                 finally
                 {
-                    ProcessingStartStopSemaphore.Release();
+                    if (releaseGuard)
+                    {
+                        ProcessingStartStopSemaphore.Release();
+                    }
                 }
-                ServiceBusEventSource.Log.StartProcessingComplete(Identifier);
+                Logger.StartProcessingComplete(Identifier);
             }
             else
             {
@@ -469,7 +480,8 @@ namespace Azure.Messaging.ServiceBus
                             _sessionClosingAsync,
                             _processSessionMessageAsync,
                             _processErrorAsync,
-                            MaxConcurrentAcceptSessionsSemaphore));
+                            MaxConcurrentAcceptSessionsSemaphore,
+                            _scopeFactory));
                 }
             }
             else
@@ -482,7 +494,8 @@ namespace Azure.Messaging.ServiceBus
                         Identifier,
                         _options,
                         _processMessageAsync,
-                        _processErrorAsync));
+                        _processErrorAsync,
+                        _scopeFactory));
             }
         }
 
@@ -517,14 +530,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusProcessor" /> will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            bool releaseGuard = false;
             try
             {
                 if (ActiveReceiveTask != null)
                 {
-                    ServiceBusEventSource.Log.StopProcessingStart(Identifier);
+                    Logger.StopProcessingStart(Identifier);
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                     await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    releaseGuard = true;
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -559,14 +574,17 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.StopProcessingException(Identifier, exception);
+                Logger.StopProcessingException(Identifier, exception.ToString());
                 throw;
             }
             finally
             {
-                ProcessingStartStopSemaphore.Release();
+                if (releaseGuard)
+                {
+                    ProcessingStartStopSemaphore.Release();
+                }
             }
-            ServiceBusEventSource.Log.StopProcessingComplete(Identifier);
+            Logger.StopProcessingComplete(Identifier);
         }
 
         /// <summary>

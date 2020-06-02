@@ -12,13 +12,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents
 {
     internal partial class SynonymMapsRestClient
     {
         private string endpoint;
+        private Guid? xMsClientRequestId;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -27,9 +28,10 @@ namespace Azure.Search.Documents
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
+        public SynonymMapsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
@@ -41,12 +43,13 @@ namespace Azure.Search.Documents
             }
 
             this.endpoint = endpoint;
+            this.xMsClientRequestId = xMsClientRequestId;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string synonymMapName, SynonymMap synonymMap, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string synonymMapName, SynonymMap synonymMap, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,11 +85,10 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new synonym map or updates a synonym map if it already exists. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
         /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SynonymMap>> CreateOrUpdateAsync(string synonymMapName, SynonymMap synonymMap, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynonymMap>> CreateOrUpdateAsync(string synonymMapName, SynonymMap synonymMap, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
@@ -97,7 +99,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(synonymMap));
             }
 
-            using var message = CreateCreateOrUpdateRequest(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(synonymMapName, synonymMap, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -124,11 +126,10 @@ namespace Azure.Search.Documents
         /// <summary> Creates a new synonym map or updates a synonym map if it already exists. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
         /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SynonymMap> CreateOrUpdate(string synonymMapName, SynonymMap synonymMap, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SynonymMap> CreateOrUpdate(string synonymMapName, SynonymMap synonymMap, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
@@ -139,7 +140,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(synonymMap));
             }
 
-            using var message = CreateCreateOrUpdateRequest(synonymMapName, synonymMap, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(synonymMapName, synonymMap, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -163,7 +164,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string synonymMapName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string synonymMapName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -193,18 +194,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Deletes a synonym map. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to delete. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string synonymMapName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string synonymMapName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
                 throw new ArgumentNullException(nameof(synonymMapName));
             }
 
-            using var message = CreateDeleteRequest(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(synonymMapName, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -218,18 +218,17 @@ namespace Azure.Search.Documents
 
         /// <summary> Deletes a synonym map. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to delete. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(string synonymMapName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string synonymMapName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
                 throw new ArgumentNullException(nameof(synonymMapName));
             }
 
-            using var message = CreateDeleteRequest(synonymMapName, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(synonymMapName, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -241,7 +240,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string synonymMapName, Guid? xMsClientRequestId)
+        internal HttpMessage CreateGetRequest(string synonymMapName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,16 +262,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SynonymMap>> GetAsync(string synonymMapName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynonymMap>> GetAsync(string synonymMapName, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
                 throw new ArgumentNullException(nameof(synonymMapName));
             }
 
-            using var message = CreateGetRequest(synonymMapName, xMsClientRequestId);
+            using var message = CreateGetRequest(synonymMapName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -297,16 +295,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SynonymMap> Get(string synonymMapName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SynonymMap> Get(string synonymMapName, CancellationToken cancellationToken = default)
         {
             if (synonymMapName == null)
             {
                 throw new ArgumentNullException(nameof(synonymMapName));
             }
 
-            using var message = CreateGetRequest(synonymMapName, xMsClientRequestId);
+            using var message = CreateGetRequest(synonymMapName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -329,7 +326,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateListRequest(string select, Guid? xMsClientRequestId)
+        internal HttpMessage CreateListRequest(string select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,11 +350,10 @@ namespace Azure.Search.Documents
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListSynonymMapsResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListSynonymMapsResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select, xMsClientRequestId);
+            using var message = CreateListRequest(select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -382,11 +378,10 @@ namespace Azure.Search.Documents
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListSynonymMapsResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<ListSynonymMapsResult> List(string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select, xMsClientRequestId);
+            using var message = CreateListRequest(select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +404,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(SynonymMap synonymMap, Guid? xMsClientRequestId)
+        internal HttpMessage CreateCreateRequest(SynonymMap synonymMap)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -433,16 +428,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SynonymMap>> CreateAsync(SynonymMap synonymMap, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynonymMap>> CreateAsync(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
             {
                 throw new ArgumentNullException(nameof(synonymMap));
             }
 
-            using var message = CreateCreateRequest(synonymMap, xMsClientRequestId);
+            using var message = CreateCreateRequest(synonymMap);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -467,16 +461,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SynonymMap> Create(SynonymMap synonymMap, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SynonymMap> Create(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
             if (synonymMap == null)
             {
                 throw new ArgumentNullException(nameof(synonymMap));
             }
 
-            using var message = CreateCreateRequest(synonymMap, xMsClientRequestId);
+            using var message = CreateCreateRequest(synonymMap);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

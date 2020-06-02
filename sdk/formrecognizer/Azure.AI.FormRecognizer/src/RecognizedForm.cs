@@ -32,7 +32,13 @@ namespace Azure.AI.FormRecognizer.Models
             // https://github.com/Azure/azure-sdk-for-net/issues/10547
 
             PageRange = new FormPageRange(documentResult.PageRange[0], documentResult.PageRange[1]);
-            Fields = ConvertSupervisedFields(documentResult.Fields, readResults);
+
+            // documentResult.Fields is required and not null, according to the swagger file, but it's not
+            // present when a blank receipt is submitted for recognition.
+
+            Fields = documentResult.Fields == null
+                ? new Dictionary<string, FormField>()
+                : ConvertSupervisedFields(documentResult.Fields, readResults);
             Pages = ConvertSupervisedPages(pageResults, readResults);
         }
 
@@ -81,7 +87,9 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var field in fields)
             {
-                fieldDictionary[field.Key] = new FormField(field.Key, field.Value, readResults);
+                fieldDictionary[field.Key] = field.Value == null
+                    ? null
+                    : new FormField(field.Key, field.Value, readResults);
             }
 
             return fieldDictionary;

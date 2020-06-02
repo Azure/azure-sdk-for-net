@@ -29,12 +29,15 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the OptionsResource class.
         /// </summary>
-        /// <param name="throughput">Value of the Cosmos DB resource
-        /// throughput. Use the ThroughputSetting resource when retrieving
-        /// offer details.</param>
-        public OptionsResource(int? throughput = default(int?))
+        /// <param name="throughput">Value of the Cosmos DB resource throughput
+        /// or autoscaleSettings. Use the ThroughputSetting resource when
+        /// retrieving offer details.</param>
+        /// <param name="autoscaleSettings">Specifies the Autoscale
+        /// settings.</param>
+        public OptionsResource(int? throughput = default(int?), AutoscaleSettings autoscaleSettings = default(AutoscaleSettings))
         {
             Throughput = throughput;
+            AutoscaleSettings = autoscaleSettings;
             CustomInit();
         }
 
@@ -44,11 +47,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets value of the Cosmos DB resource throughput. Use the
-        /// ThroughputSetting resource when retrieving offer details.
+        /// Gets or sets value of the Cosmos DB resource throughput or
+        /// autoscaleSettings. Use the ThroughputSetting resource when
+        /// retrieving offer details.
         /// </summary>
         [JsonProperty(PropertyName = "throughput")]
         public int? Throughput { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Autoscale settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "autoscaleSettings")]
+        public AutoscaleSettings AutoscaleSettings { get; set; }
 
     }
 }

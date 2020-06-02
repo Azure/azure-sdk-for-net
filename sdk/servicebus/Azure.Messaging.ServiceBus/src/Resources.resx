@@ -178,7 +178,7 @@
     <value>Provided rule filter {0} is not supported. Supported values are: {1}, {2}</value>
   </data>
   <data name="PeekLockModeRequired" xml:space="preserve">
-    <value>This operation is only supported for a message receiver in 'PeekLock' receive mode.</value>
+    <value>This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled.</value>
   </data>
   <data name="MessageHandlerAlreadyRegistered" xml:space="preserve">
     <value>A message handler has already been registered.</value>

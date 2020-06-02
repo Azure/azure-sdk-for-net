@@ -8,7 +8,7 @@ namespace Azure.Search.Documents
     /// <summary>
     /// Options for <see cref="SearchClient.IndexDocumentsAsync(Models.IndexDocumentsBatch{Models.SearchDocument}, IndexDocumentsOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class IndexDocumentsOptions : SearchRequestOptions
+    public class IndexDocumentsOptions
     {
         /// <summary>
         /// Gets or sets a value indicating whether to throw an exception on

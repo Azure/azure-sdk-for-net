@@ -12,13 +12,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents
 {
     internal partial class IndexesRestClient
     {
         private string endpoint;
+        private Guid? xMsClientRequestId;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -27,9 +28,10 @@ namespace Azure.Search.Documents
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
+        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
@@ -41,12 +43,13 @@ namespace Azure.Search.Documents
             }
 
             this.endpoint = endpoint;
+            this.xMsClientRequestId = xMsClientRequestId;
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(SearchIndex index, Guid? xMsClientRequestId)
+        internal HttpMessage CreateCreateRequest(SearchIndex index)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,16 +73,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateAsync(SearchIndex index, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> CreateAsync(SearchIndex index, CancellationToken cancellationToken = default)
         {
             if (index == null)
             {
                 throw new ArgumentNullException(nameof(index));
             }
 
-            using var message = CreateCreateRequest(index, xMsClientRequestId);
+            using var message = CreateCreateRequest(index);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -104,16 +106,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndex> Create(SearchIndex index, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndex> Create(SearchIndex index, CancellationToken cancellationToken = default)
         {
             if (index == null)
             {
                 throw new ArgumentNullException(nameof(index));
             }
 
-            using var message = CreateCreateRequest(index, xMsClientRequestId);
+            using var message = CreateCreateRequest(index);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -136,7 +137,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateListRequest(string select, Guid? xMsClientRequestId)
+        internal HttpMessage CreateListRequest(string select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,11 +161,10 @@ namespace Azure.Search.Documents
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListIndexesResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListIndexesResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select, xMsClientRequestId);
+            using var message = CreateListRequest(select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -189,11 +189,10 @@ namespace Azure.Search.Documents
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListIndexesResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<ListIndexesResult> List(string select = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(select, xMsClientRequestId);
+            using var message = CreateListRequest(select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -216,7 +215,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string indexName, SearchIndex index, bool? allowIndexDowntime, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string indexName, SearchIndex index, bool? allowIndexDowntime, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -257,11 +256,10 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The definition of the index to create or update. </param>
         /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -272,7 +270,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(index));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexName, index, allowIndexDowntime, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -300,11 +298,10 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The definition of the index to create or update. </param>
         /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndex> CreateOrUpdate(string indexName, SearchIndex index, bool? allowIndexDowntime = null, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndex> CreateOrUpdate(string indexName, SearchIndex index, bool? allowIndexDowntime = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -315,7 +312,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(index));
             }
 
-            using var message = CreateCreateOrUpdateRequest(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(indexName, index, allowIndexDowntime, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -339,7 +336,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string indexName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string indexName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,20 +364,19 @@ namespace Azure.Search.Documents
             return message;
         }
 
-        /// <summary> Deletes a search index and all the documents it contains. </summary>
+        /// <summary> Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index. </summary>
         /// <param name="indexName"> The name of the index to delete. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string indexName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateDeleteRequest(indexName, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(indexName, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -392,20 +388,19 @@ namespace Azure.Search.Documents
             }
         }
 
-        /// <summary> Deletes a search index and all the documents it contains. </summary>
+        /// <summary> Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index. </summary>
         /// <param name="indexName"> The name of the index to delete. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(string indexName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string indexName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateDeleteRequest(indexName, xMsClientRequestId, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(indexName, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -417,7 +412,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetRequest(string indexName, Guid? xMsClientRequestId)
+        internal HttpMessage CreateGetRequest(string indexName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,16 +434,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index to retrieve. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndex>> GetAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndex>> GetAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateGetRequest(indexName, xMsClientRequestId);
+            using var message = CreateGetRequest(indexName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -473,16 +467,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index to retrieve. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndex> Get(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndex> Get(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateGetRequest(indexName, xMsClientRequestId);
+            using var message = CreateGetRequest(indexName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -505,7 +498,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(string indexName, Guid? xMsClientRequestId)
+        internal HttpMessage CreateGetStatisticsRequest(string indexName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,16 +520,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateGetStatisticsRequest(indexName, xMsClientRequestId);
+            using var message = CreateGetStatisticsRequest(indexName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -561,16 +553,15 @@ namespace Azure.Search.Documents
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchIndexStatistics> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexStatistics> GetStatistics(string indexName, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
 
-            using var message = CreateGetStatisticsRequest(indexName, xMsClientRequestId);
+            using var message = CreateGetStatisticsRequest(indexName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -593,7 +584,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeRequest request, Guid? xMsClientRequestId)
+        internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeRequest request)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -620,9 +611,8 @@ namespace Azure.Search.Documents
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -633,7 +623,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateAnalyzeRequest(indexName, request, xMsClientRequestId);
+            using var message = CreateAnalyzeRequest(indexName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -659,9 +649,8 @@ namespace Azure.Search.Documents
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
         /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="request"> The text and analyzer or analysis components to test. </param>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeRequest request, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<AnalyzeResult> Analyze(string indexName, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -672,7 +661,7 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateAnalyzeRequest(indexName, request, xMsClientRequestId);
+            using var message = CreateAnalyzeRequest(indexName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

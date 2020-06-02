@@ -403,7 +403,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        ///   Looks up a localized string similar to This operation is not supported for peeked messages. Only messages received in PeekLock mode can be settled..
         /// </summary>
         internal static string PeekLockModeRequired {
             get {

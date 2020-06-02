@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
-            string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
+            string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))

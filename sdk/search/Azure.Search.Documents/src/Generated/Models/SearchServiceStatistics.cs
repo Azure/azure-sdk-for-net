@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
     public partial class SearchServiceStatistics

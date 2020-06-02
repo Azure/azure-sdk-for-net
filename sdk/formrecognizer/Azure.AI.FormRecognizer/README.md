@@ -75,6 +75,25 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
+#### Create FormRecognizerClient with Azure Active Directory Credential
+
+`AzureKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
+
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Form Recognizer by assigning the `"Cognitive Services User"` role to your service principal.
+
+Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+
+```C# Snippet:CreateFormRecognizerClientTokenCredential
+string endpoint = "<endpoint>";
+var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
+```
+
 ## Key concepts
 
 ### FormRecognizerClient
@@ -92,6 +111,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 - Training custom models to recognize all fields and values found in your custom forms.  A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract for each form type.
 - Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 - Managing models created in your account.
+- Copying a custom model from one Form Recognizer resource to another.
 
 Please note that models can also be trained using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
@@ -208,18 +228,18 @@ Train a machine-learned model on your own form types. The resulting model will b
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Created On: {model.CreatedOn}");
-Console.WriteLine($"    Last Modified: {model.LastModified}");
+Console.WriteLine($"    Requested on: {model.RequestedOn}");
+Console.WriteLine($"    Completed on: {model.CompletedOn}");
 
-foreach (CustomFormSubModel subModel in model.Models)
+foreach (CustomFormSubmodel submodel in model.Submodels)
 {
-    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-    foreach (CustomFormModelField field in subModel.Fields.Values)
+    Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+    foreach (CustomFormModelField field in submodel.Fields.Values)
     {
         Console.Write($"    FieldName: {field.Name}");
         if (field.Label != null)
@@ -250,22 +270,22 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-    Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+    Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+    Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
 Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-foreach (CustomFormSubModel subModel in modelCopy.Models)
+foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
-    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-    foreach (CustomFormModelField field in subModel.Fields.Values)
+    Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+    foreach (CustomFormModelField field in submodel.Fields.Values)
     {
         Console.Write($"    FieldName: {field.Name}");
         if (field.Label != null)
@@ -338,6 +358,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize custom forms][recognize_custom_forms]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
+- [Copy a custom model between Form Recognizer resources][copy_custom_models]
 
 ## Contributing
 
@@ -381,6 +402,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_custom_forms]: samples/Sample3_RecognizeCustomForms.md
 [train_a_model]: samples/Sample4_TrainModel.md
 [manage_custom_models]: samples/Sample5_ManageCustomModels.md
+[copy_custom_models]: samples/Sample6_CopyCustomModel.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

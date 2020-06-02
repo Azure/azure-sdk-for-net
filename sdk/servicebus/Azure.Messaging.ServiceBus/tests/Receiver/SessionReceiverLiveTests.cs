@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -52,11 +53,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
-                    var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                    var peekedText = peekedMessage.Body.AsString();
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
-                    Assert.AreEqual(Encoding.Default.GetString(sentMsg.Body.ToArray()), peekedText);
+                    Assert.AreEqual(sentMsg.Body.AsString(), peekedText);
                     Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     ct++;

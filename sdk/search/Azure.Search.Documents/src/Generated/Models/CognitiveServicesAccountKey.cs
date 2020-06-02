@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A cognitive service resource provisioned with a key that is attached to a skillset. </summary>
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount
