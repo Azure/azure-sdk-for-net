@@ -516,9 +516,10 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 var conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                Response<BlobContentInfo> response;
                 try
                 {
-                    return await CreateInternal(
+                    response = await CreateInternal(
                         size,
                         sequenceNumber,
                         httpHeaders,
@@ -532,7 +533,7 @@ namespace Azure.Storage.Blobs.Specialized
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                 {
-                    return default;
+                    response = Response.FromValue(new BlobContentInfo(), default);
                 }
                 catch (Exception ex)
                 {
@@ -543,6 +544,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Pipeline.LogMethodExit(nameof(PageBlobClient));
                 }
+                return response;
             }
         }
 

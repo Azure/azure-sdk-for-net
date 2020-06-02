@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.AreEqual(response.Value.ETag.ToString(), "<null>");
         }
 
         [Test]

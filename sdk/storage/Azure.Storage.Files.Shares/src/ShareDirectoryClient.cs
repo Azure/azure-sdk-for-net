@@ -647,9 +647,10 @@ namespace Azure.Storage.Files.Shares
                 Pipeline.LogMethodEnter(
                     nameof(ShareDirectoryClient),
                     message: $"{nameof(Uri)}: {Uri}");
+                Response<ShareDirectoryInfo> response;
                 try
                 {
-                    Response<ShareDirectoryInfo> response = await CreateInternal(
+                    response = await CreateInternal(
                         metadata,
                         smbProperties,
                         filePermission,
@@ -657,13 +658,11 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken,
                         operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
                         .ConfigureAwait(false);
-
-                    return response;
                 }
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceAlreadyExists)
                 {
-                    return default;
+                    response = Response.FromValue(new ShareDirectoryInfo(new RawStorageDirectoryInfo()), default);
                 }
                 catch (Exception ex)
                 {
@@ -674,6 +673,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
                 }
+                return response;
             }
         }
         #endregion CreateIfNotExists

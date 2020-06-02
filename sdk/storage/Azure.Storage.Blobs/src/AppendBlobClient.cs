@@ -426,9 +426,10 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                Response<BlobContentInfo> response;
                 try
                 {
-                    Response<BlobContentInfo> response = await CreateInternal(
+                    response = await CreateInternal(
                         httpHeaders,
                         metadata,
                         conditions,
@@ -436,13 +437,11 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken,
                         $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
                         .ConfigureAwait(false);
-
-                    return response;
                 }
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                 {
-                    return default;
+                    response = Response.FromValue(new BlobContentInfo(), default);
                 }
                 catch (Exception ex)
                 {
@@ -453,6 +452,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     Pipeline.LogMethodExit(nameof(AppendBlobClient));
                 }
+                return response;
             }
         }
 

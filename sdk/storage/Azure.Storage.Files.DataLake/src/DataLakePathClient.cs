@@ -927,7 +927,7 @@ namespace Azure.Storage.Files.DataLake
             catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == "PathAlreadyExists")
             {
-                response = default;
+                response = Response.FromValue(new PathInfo(), default);
             }
             catch (Exception ex)
             {

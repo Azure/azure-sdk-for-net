@@ -574,7 +574,7 @@ namespace Azure.Storage.Files.Shares
                 catch (RequestFailedException storageRequestFailedException)
                 when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareAlreadyExists)
                 {
-                    response = default;
+                    response = Response.FromValue(new ShareInfo(), default);
                 }
                 catch (Exception ex)
                 {

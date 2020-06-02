@@ -278,7 +278,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareDirectoryInfo> response = await directory.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.AreEqual(response.Value.ETag.ToString(), "<null>");
         }
 
         [Test]

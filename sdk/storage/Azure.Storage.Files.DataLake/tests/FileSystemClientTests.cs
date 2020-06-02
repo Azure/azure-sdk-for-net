@@ -344,7 +344,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Response<FileSystemInfo> response = await fileSystemClient.CreateIfNotExistsAsync();
 
                 // Assert
-                Assert.IsNull(response);
+                Assert.AreEqual(response.Value.ETag.ToString(), "<null>");
             }
             finally
             {

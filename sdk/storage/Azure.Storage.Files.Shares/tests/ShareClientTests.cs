@@ -331,7 +331,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
 
             // Assert
-            Assert.IsNull(response);
+            Assert.AreEqual(response.Value.ETag.ToString(), "<null>");
 
             // Cleanup
             await share.DeleteAsync();
