@@ -253,14 +253,14 @@ namespace Azure.Core.Tests
             };
 
             // Serialize and deserialize as a base class
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, options);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(Geometry), options);
             var geometry3 = JsonSerializer.Deserialize<Geometry>(bytes, options);
 
             // Serialize and deserialize as a concrete class
             var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3, options);
             var geometry4 = JsonSerializer.Deserialize<T>(bytes2, options);
 
-            return (T)geometry4;
+            return geometry4;
         }
     }
 }
