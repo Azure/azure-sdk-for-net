@@ -332,7 +332,8 @@ namespace Azure.Storage.Queues.Specialized
     }
     public static partial class QueueClientExtensions
     {
-        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptions(this Azure.Storage.Queues.QueueClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions, Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener listener = null) { throw null; }
+        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionFailureListener(this Azure.Storage.Queues.QueueClient client, Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener listener) { throw null; }
+        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptions(this Azure.Storage.Queues.QueueClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
 }
 namespace Azure.Storage.Sas
