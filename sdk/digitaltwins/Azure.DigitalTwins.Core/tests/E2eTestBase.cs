@@ -15,7 +15,6 @@ namespace Azure.DigitalTwins.Core.Tests
     /// This class will initialize all the settings and create and instance of the Digital twins client.
     /// </summary>
     [Parallelizable(ParallelScope.Self)]
-    [Category("Live")] // This category indicates the tests hit a "live" service: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#to-test-1
     public abstract class E2eTestBase : RecordedTestBase<DigitalTwinsTestEnvironment>
     {
         protected static readonly int MaxTries = 10;

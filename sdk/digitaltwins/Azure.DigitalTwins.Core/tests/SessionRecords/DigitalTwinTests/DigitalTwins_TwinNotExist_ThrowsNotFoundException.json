@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net/digitaltwins/someNonExistantTwin?api-version=2020-05-31-preview",
+      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/someNonExistantTwin?api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200529.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "3c9f99ca5ab7bbcd1d7859b690c85db7",
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "272",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 22:27:01 GMT",
+        "Date": "Tue, 02 Jun 2020 19:05:05 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -29,7 +29,7 @@
     }
   ],
   "Variables": {
-    "DIGITALTWINS_URL": "https://vinadttests.api.scus.pp.azuredigitaltwins-ppe.net",
+    "DIGITALTWINS_URL": "https://vinageshnew.api.wus2.digitaltwins.azure.net",
     "RandomSeed": "1567953324"
   }
 }
