@@ -18,10 +18,12 @@ namespace Azure.Messaging.ServiceBus
     /// The receiver instance will only be closed when no other threads are using it, or when the user has
     /// called StopProcessingAsync.
     /// </summary>
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable.
+    // Doesn't own _concurrentAcceptSessionsSemaphore
     internal class SessionReceiverManager : ReceiverManager
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private int _threadCount = 0;
-        private readonly string _sessionId;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
         private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
         private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
@@ -50,7 +52,6 @@ namespace Azure.Messaging.ServiceBus
             : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
                   scopeFactory)
         {
-            _sessionId = sessionId;
             _sessionInitHandler = sessionInitHandler;
             _sessionCloseHandler = sessionCloseHandler;
             _messageHandler = messageHandler;

@@ -769,7 +769,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Throws an InvalidOperationException when the lock token is empty.
         /// </summary>
-        private void ThrowIfLockTokenIsEmpty(string lockToken)
+        private static void ThrowIfLockTokenIsEmpty(string lockToken)
         {
             if (Guid.Parse(lockToken) == Guid.Empty)
             {

@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
@@ -167,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ScheduleMessageStart(
                         sender.Identifier,
-                        scheduleTime.ToString()),
+                        scheduleTime.ToString(CultureInfo.InvariantCulture)),
                 Times.Once);
             mockLogger
                 .Verify(
@@ -203,7 +205,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ScheduleMessageStart(
                         sender.Identifier,
-                        scheduleTime.ToString()),
+                        scheduleTime.ToString(CultureInfo.InvariantCulture)),
                 Times.Once);
             mockLogger
                 .Verify(

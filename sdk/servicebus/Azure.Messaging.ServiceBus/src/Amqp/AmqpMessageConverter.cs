@@ -25,7 +25,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string SequenceNumberName = "x-opt-sequence-number";
         private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
         private const string LockedUntilName = "x-opt-locked-until";
-        private const string PublisherName = "x-opt-publisher";
         private const string PartitionKeyName = "x-opt-partition-key";
         private const string PartitionIdName = "x-opt-partition-id";
         private const string ViaPartitionKeyName = "x-opt-via-partition-key";

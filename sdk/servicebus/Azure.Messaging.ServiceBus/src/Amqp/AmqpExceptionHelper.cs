@@ -93,12 +93,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
         {
-            if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
+            if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceTimeout);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotFound.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (connectionError)
                 {
@@ -108,68 +108,68 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessagingEntityNotFound);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new NotSupportedException(message);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value))
+            if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new InvalidOperationException(message);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value) ||
-                string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value))
+            if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase) ||
+                string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.Unauthorized);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceBusy);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentException(message);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value))
+            if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ArgumentOutOfRangeException(message);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value))
+            if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessagingEntityDisabled);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value))
+            if (string.Equals(condition, AmqpClientConstants.MessageLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessageLockLost);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value))
+            if (string.Equals(condition, AmqpClientConstants.SessionLockLostError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.SessionLockLost);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value))
+            if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.QuotaExceeded);
             }
 
-            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value))
+            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessageSizeExceeded);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value))
+            if (string.Equals(condition, AmqpClientConstants.MessageNotFoundError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.MessageNotFound);
             }
 
-            if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value))
+            if (string.Equals(condition, AmqpClientConstants.SessionCannotBeLockedError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(message, ServiceBusException.FailureReason.SessionCannotBeLocked);
             }
