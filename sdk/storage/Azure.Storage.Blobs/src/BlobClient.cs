@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -950,7 +951,7 @@ namespace Azure.Storage.Blobs
             if (UsingClientSideEncryption)
             {
                 // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
-                (content, metadata) = await new BlobClientSideEncryptor(ClientSideEncryption)
+                (content, metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                     .ClientSideEncryptInternal(content, metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
@@ -1028,8 +1029,10 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO uncomment when upload from file gets its own implementation
-            //// if clientside encryption, upload from stream, where our crypto logic is
+            // TODO Upload from file will get it's own implementation in the future that opens more
+            //      than one stream at once. This is incompatible with .NET's CryptoStream. We will
+            //      need to uncomment the below code and revert to upload from stream if client-side
+            //      encryption is enabled.
             //if (ClientSideEncryption != default)
             //{
             //    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))

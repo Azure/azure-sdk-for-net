@@ -1512,7 +1512,7 @@ namespace Azure.Storage.Queues
                 try
                 {
                     messageText = UsingClientSideEncryption
-                        ? await new QueueClientSideEncryptor(ClientSideEncryption)
+                        ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
                         : messageText;
 
@@ -1710,7 +1710,7 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientSideEncryption, OnClientSideDecryptionFailure)
+                            await new QueueClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption), OnClientSideDecryptionFailure)
                                 .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
@@ -1829,7 +1829,7 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientSideEncryption, OnClientSideDecryptionFailure)
+                            await new QueueClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption), OnClientSideDecryptionFailure)
                                 .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }

@@ -27,7 +27,7 @@ namespace Azure.Storage.Cryptography.Models
         /// </summary>
         /// <param name="data">Data to serialize.</param>
         /// <returns>The JSON UTF8 bytes.</returns>
-        public static ReadOnlyMemory<byte> SerializeEncryptionData(EncryptionData data)
+        private static ReadOnlyMemory<byte> SerializeEncryptionData(EncryptionData data)
         {
             var writer = new Core.ArrayBufferWriter<byte>();
             using var json = new Utf8JsonWriter(writer);

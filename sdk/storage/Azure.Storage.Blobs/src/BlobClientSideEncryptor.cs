@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Cryptography;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -16,13 +14,11 @@ namespace Azure.Storage.Blobs
 {
     internal class BlobClientSideEncryptor
     {
-        private readonly IKeyEncryptionKey _keyEncryptionKey;
-        private readonly string _keyWrapAlgorithm;
+        private readonly ClientSideEncryptor _encryptor;
 
-        public BlobClientSideEncryptor(ClientSideEncryptionOptions options)
+        public BlobClientSideEncryptor(ClientSideEncryptor encryptor)
         {
-            _keyEncryptionKey = options.KeyEncryptionKey;
-            _keyWrapAlgorithm = options.KeyWrapAlgorithm;
+            _encryptor = encryptor;
         }
 
         /// <summary>
@@ -47,32 +43,15 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
-            {
-                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
-            }
-
-            //long originalLength = content.Length;
-
-            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await ClientSideEncryptor.EncryptInternal(
+            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await _encryptor.EncryptInternal(
                 content,
-                _keyEncryptionKey,
-                _keyWrapAlgorithm,
                 async,
                 cancellationToken).ConfigureAwait(false);
-
-            //Stream seekableCiphertext = new RollingBufferStream(
-            //        nonSeekableCiphertext,
-            //        EncryptionConstants.DefaultRollingBufferSize,
-            //        GetExpectedCryptoStreamLength(originalLength));
 
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             metadata.Add(Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData));
 
             return (nonSeekableCiphertext, metadata);
         }
-
-        private static long GetExpectedCryptoStreamLength(long originalLength)
-            => originalLength + (Constants.ClientSideEncryption.EncryptionBlockSize - originalLength % Constants.ClientSideEncryption.EncryptionBlockSize);
     }
 }

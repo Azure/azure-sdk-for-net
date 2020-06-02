@@ -63,10 +63,12 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void SerializeEncryptedMessage()
         {
-            var result = ClientSideEncryptor.BufferedEncryptInternal(
+            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyWrapAlgorithm = KeyWrapAlgorithm
+            }).BufferedEncryptInternal(
                 new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                GetIKeyEncryptionKey().Object,
-                KeyWrapAlgorithm,
                 async: false,
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
@@ -83,10 +85,12 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void DeserializeEncryptedMessage()
         {
-            var result = ClientSideEncryptor.BufferedEncryptInternal(
+            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyWrapAlgorithm = KeyWrapAlgorithm
+            }).BufferedEncryptInternal(
                 new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                GetIKeyEncryptionKey().Object,
-                KeyWrapAlgorithm,
                 async: false,
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
@@ -104,10 +108,12 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void TryDeserializeEncryptedMessage()
         {
-            var result = ClientSideEncryptor.BufferedEncryptInternal(
+            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyWrapAlgorithm = KeyWrapAlgorithm
+            }).BufferedEncryptInternal(
                 new MemoryStream(Encoding.UTF8.GetBytes(TestMessage)),
-                GetIKeyEncryptionKey().Object,
-                KeyWrapAlgorithm,
                 async: false,
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()

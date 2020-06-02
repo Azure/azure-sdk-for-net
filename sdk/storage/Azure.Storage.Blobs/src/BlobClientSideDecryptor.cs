@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Cryptography;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
@@ -15,13 +14,11 @@ namespace Azure.Storage.Blobs
 {
     internal class BlobClientSideDecryptor
     {
-        private readonly IKeyEncryptionKeyResolver _resolver;
-        private readonly IKeyEncryptionKey _cachedIKey;
+        private readonly ClientSideDecryptor _decryptor;
 
-        public BlobClientSideDecryptor(ClientSideEncryptionOptions options)
+        public BlobClientSideDecryptor(ClientSideDecryptor decryptor)
         {
-            _resolver = options.KeyResolver;
-            _cachedIKey = options.KeyEncryptionKey;
+            _decryptor = decryptor;
         }
 
         public async Task<Stream> ClientSideDecryptInternal(
@@ -45,12 +42,10 @@ namespace Azure.Storage.Blobs
             bool ivInStream = originalRange.Offset >= Constants.ClientSideEncryption.EncryptionBlockSize;
 
             // this method throws when key cannot be resolved. Blobs is intended to throw on this failure.
-            var plaintext = await ClientSideDecryptor.DecryptInternal(
+            var plaintext = await _decryptor.DecryptInternal(
                 content,
                 encryptionData,
                 ivInStream,
-                _resolver,
-                _cachedIKey,
                 CanIgnorePadding(contentRange),
                 async,
                 cancellationToken).ConfigureAwait(false);

@@ -713,7 +713,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // we already return a nonseekable stream; returning a crypto stream is fine
                     if (UsingClientSideEncryption)
                     {
-                        stream = await new BlobClientSideDecryptor(ClientSideEncryption)
+                        stream = await new BlobClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption))
                             .ClientSideDecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
                     }
 

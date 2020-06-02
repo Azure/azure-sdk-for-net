@@ -10,25 +10,35 @@ using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
 {
-    internal static class ClientSideEncryptor
+    internal class ClientSideEncryptor
     {
+        private readonly IKeyEncryptionKey _keyEncryptionKey;
+        private readonly string _keyWrapAlgorithm;
+
+        public ClientSideEncryptor(ClientSideEncryptionOptions options)
+        {
+            _keyEncryptionKey = options.KeyEncryptionKey;
+            _keyWrapAlgorithm = options.KeyWrapAlgorithm;
+        }
+
         /// <summary>
         /// Wraps the given read-stream in a CryptoStream and provides the metadata used to create
         /// that stream.
         /// </summary>
         /// <param name="plaintext">Stream to wrap.</param>
-        /// <param name="keyWrapper">Key encryption key (KEK).</param>
-        /// <param name="keyWrapAlgorithm">Algorithm to encrypt the content encryption key (CEK) with.</param>
-        /// <param name="async">Whether to wrap the CEK asynchronously.</param>
+        /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The wrapped stream to read from and the encryption metadata for the wrapped stream.</returns>
-        public static async Task<(Stream ciphertext, EncryptionData encryptionData)> EncryptInternal(
+        public async Task<(Stream ciphertext, EncryptionData encryptionData)> EncryptInternal(
             Stream plaintext,
-            IKeyEncryptionKey keyWrapper,
-            string keyWrapAlgorithm,
             bool async,
             CancellationToken cancellationToken)
         {
+            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
+            {
+                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
+            }
+
             var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             Stream ciphertext = default;
@@ -37,9 +47,9 @@ namespace Azure.Storage.Cryptography
             {
                 encryptionData = await EncryptionData.CreateInternalV1_0(
                     contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: keyWrapAlgorithm,
+                    keyWrapAlgorithm: _keyWrapAlgorithm,
                     contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: keyWrapper,
+                    keyEncryptionKey: _keyEncryptionKey,
                     async: async,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -57,18 +67,19 @@ namespace Azure.Storage.Cryptography
         /// optimized for known-size data that will already be buffered in memory.
         /// </summary>
         /// <param name="plaintext">Stream to encrypt.</param>
-        /// <param name="keyWrapper">Key encryption key (KEK).</param>
-        /// <param name="keyWrapAlgorithm">Algorithm to encrypt the content encryption key (CEK) with.</param>
-        /// <param name="async">Whether to wrap the CEK asynchronously.</param>
+        /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The encrypted data and the encryption metadata for the wrapped stream.</returns>
-        public static async Task<(byte[] ciphertext, EncryptionData encryptionData)> BufferedEncryptInternal(
+        public async Task<(byte[] ciphertext, EncryptionData encryptionData)> BufferedEncryptInternal(
             Stream plaintext,
-            IKeyEncryptionKey keyWrapper,
-            string keyWrapAlgorithm,
             bool async,
             CancellationToken cancellationToken)
         {
+            if (_keyEncryptionKey == default || _keyWrapAlgorithm == default)
+            {
+                throw Errors.ClientSideEncryption.MissingRequiredEncryptionResources(nameof(_keyEncryptionKey), nameof(_keyWrapAlgorithm));
+            }
+
             var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
             EncryptionData encryptionData = default;
             var ciphertext = new MemoryStream();
@@ -78,9 +89,9 @@ namespace Azure.Storage.Cryptography
             {
                 encryptionData = await EncryptionData.CreateInternalV1_0(
                     contentEncryptionIv: aesProvider.IV,
-                    keyWrapAlgorithm: keyWrapAlgorithm,
+                    keyWrapAlgorithm: _keyWrapAlgorithm,
                     contentEncryptionKey: generatedKey,
-                    keyEncryptionKey: keyWrapper,
+                    keyEncryptionKey: _keyEncryptionKey,
                     async: async,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 

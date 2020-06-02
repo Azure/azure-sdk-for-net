@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Cryptography;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
@@ -17,14 +16,12 @@ namespace Azure.Storage.Queues
 {
     internal class QueueClientSideDecryptor
     {
-        private readonly IKeyEncryptionKeyResolver _resolver;
-        private readonly IKeyEncryptionKey _cachedIKey;
+        private readonly ClientSideDecryptor _decryptor;
         private readonly IClientSideDecryptionFailureListener _listener;
 
-        public QueueClientSideDecryptor(ClientSideEncryptionOptions options, IClientSideDecryptionFailureListener listener)
+        public QueueClientSideDecryptor(ClientSideDecryptor decryptor, IClientSideDecryptionFailureListener listener)
         {
-            _resolver = options.KeyResolver;
-            _cachedIKey = options.KeyEncryptionKey;
+            _decryptor = decryptor;
             _listener = listener;
         }
 
@@ -85,12 +82,10 @@ namespace Azure.Storage.Queues
             }
 
             var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents));
-            var decryptedMessageStream = await ClientSideDecryptor.DecryptInternal(
+            var decryptedMessageStream = await _decryptor.DecryptInternal(
                 encryptedMessageStream,
                 encryptedMessage.EncryptionData,
                 ivInStream: false,
-                _resolver,
-                _cachedIKey,
                 noPadding: false,
                 async: async,
                 cancellationToken).ConfigureAwait(false);

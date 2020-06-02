@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Cryptography;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Specialized.Models;
@@ -15,22 +14,18 @@ namespace Azure.Storage.Queues
 {
     internal class QueueClientSideEncryptor
     {
-        private readonly IKeyEncryptionKey _keyEncryptionKey;
-        private readonly string _keyWrapAlgorithm;
+        private readonly ClientSideEncryptor _encryptor;
 
-        public QueueClientSideEncryptor(ClientSideEncryptionOptions options)
+        public QueueClientSideEncryptor(ClientSideEncryptor encryptor)
         {
-            _keyEncryptionKey = options.KeyEncryptionKey;
-            _keyWrapAlgorithm = options.KeyWrapAlgorithm;
+            _encryptor = encryptor;
         }
 
         public async Task<string> ClientSideEncryptInternal(string messageToUpload, bool async, CancellationToken cancellationToken)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(messageToUpload);
-            (byte[] ciphertext, EncryptionData encryptionData) = await ClientSideEncryptor.BufferedEncryptInternal(
+            (byte[] ciphertext, EncryptionData encryptionData) = await _encryptor.BufferedEncryptInternal(
                 new MemoryStream(bytesToEncrypt),
-                _keyEncryptionKey,
-                _keyWrapAlgorithm,
                 async,
                 cancellationToken).ConfigureAwait(false);
 

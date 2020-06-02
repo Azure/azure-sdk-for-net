@@ -11,8 +11,26 @@ using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
 {
-    internal static class ClientSideDecryptor
+    internal class ClientSideDecryptor
     {
+        /// <summary>
+        /// Clients that can upload data have a key encryption key stored on them. Checking if
+        /// a cached key exists and matches a given <see cref="EncryptionData"/> saves a call
+        /// to the external key resolver implementation when available.
+        /// </summary>
+        private readonly IKeyEncryptionKey _potentialCachedIKeyEncryptionKey;
+
+        /// <summary>
+        /// Resolver to fetch the key encryption key.
+        /// </summary>
+        private readonly IKeyEncryptionKeyResolver _keyResolver;
+
+        public ClientSideDecryptor(ClientSideEncryptionOptions options)
+        {
+            _potentialCachedIKeyEncryptionKey = options.KeyEncryptionKey;
+            _keyResolver = options.KeyResolver;
+        }
+
         /// <summary>
         /// Decrypts the given stream if decryption information is provided.
         /// Does not shave off unwanted start/end bytes, but will shave off padding.
@@ -25,14 +43,6 @@ namespace Azure.Storage.Cryptography
         /// Whether to use the first block of the stream for the IV instead of the value in
         /// <paramref name="encryptionData"/>. Generally for partial blob downloads where the
         /// previous block of the ciphertext is the IV for the next.
-        /// </param>
-        /// <param name="keyResolver">
-        /// Resolver to fetch the key encryption key.
-        /// </param>
-        /// <param name="potentialCachedKeyWrapper">
-        /// Clients that can upload data have a key encryption key stored on them. Checking if
-        /// a cached key exists and matches the <paramref name="encryptionData"/> saves a call
-        /// to the external key resolver implementation when available.
         /// </param>
         /// <param name="noPadding">
         /// Whether to ignore padding. Generally for partial blob downloads where the end of
@@ -47,12 +57,10 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        public static async Task<Stream> DecryptInternal(
+        public async Task<Stream> DecryptInternal(
             Stream ciphertext,
             EncryptionData encryptionData,
             bool ivInStream,
-            IKeyEncryptionKeyResolver keyResolver,
-            IKeyEncryptionKey potentialCachedKeyWrapper,
             bool noPadding,
             bool async,
             CancellationToken cancellationToken)
@@ -60,7 +68,13 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.Protocol)
             {
                 case ClientSideEncryptionVersion.V1_0:
-                    return await DecryptInternalV1_0(ciphertext, encryptionData, ivInStream, keyResolver, potentialCachedKeyWrapper, noPadding, async, cancellationToken).ConfigureAwait(false);
+                    return await DecryptInternalV1_0(
+                        ciphertext,
+                        encryptionData,
+                        ivInStream,
+                        noPadding,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
                 default:
                     throw Errors.ClientSideEncryption.BadEncryptionAgent(encryptionData.EncryptionAgent.Protocol.ToString());
             }
@@ -79,14 +93,6 @@ namespace Azure.Storage.Cryptography
         /// <paramref name="encryptionData"/>. Generally for partial blob downloads where the
         /// previous block of the ciphertext is the IV for the next.
         /// </param>
-        /// <param name="keyResolver">
-        /// Resolver to fetch the key encryption key.
-        /// </param>
-        /// <param name="potentialCachedKeyWrapper">
-        /// Clients that can upload data have a key encryption key stored on them. Checking if
-        /// a cached key exists and matches the <paramref name="encryptionData"/> saves a call
-        /// to the external key resolver implementation when available.
-        /// </param>
         /// <param name="noPadding">
         /// Whether to ignore padding. Generally for partial blob downloads where the end of
         /// the blob (where the padding occurs) was not downloaded.
@@ -100,20 +106,16 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        public static async Task<Stream> DecryptInternalV1_0(
+        private async Task<Stream> DecryptInternalV1_0(
             Stream ciphertext,
             EncryptionData encryptionData,
             bool ivInStream,
-            IKeyEncryptionKeyResolver keyResolver,
-            IKeyEncryptionKey potentialCachedKeyWrapper,
             bool noPadding,
             bool async,
             CancellationToken cancellationToken)
         {
             var contentEncryptionKey = await GetContentEncryptionKeyAsync(
                 encryptionData,
-                keyResolver,
-                potentialCachedKeyWrapper,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -162,8 +164,6 @@ namespace Azure.Storage.Cryptography
         /// correct key wrapper.
         /// </summary>
         /// <param name="encryptionData">The encryption data.</param>
-        /// <param name="keyResolver"></param>
-        /// <param name="potentiallyCachedKeyWrapper"></param>
         /// <param name="async">Whether to perform asynchronously.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>
@@ -173,27 +173,25 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        private static async Task<Memory<byte>> GetContentEncryptionKeyAsync(
+        private async Task<Memory<byte>> GetContentEncryptionKeyAsync(
 #pragma warning restore CS1587 // XML comment is not placed on a valid language element
             EncryptionData encryptionData,
-            IKeyEncryptionKeyResolver keyResolver,
-            IKeyEncryptionKey potentiallyCachedKeyWrapper,
             bool async,
             CancellationToken cancellationToken)
         {
             IKeyEncryptionKey key = default;
 
             // If we already have a local key and it is the correct one, use that.
-            if (encryptionData.WrappedContentKey.KeyId == potentiallyCachedKeyWrapper?.KeyId)
+            if (encryptionData.WrappedContentKey.KeyId == _potentialCachedIKeyEncryptionKey?.KeyId)
             {
-                key = potentiallyCachedKeyWrapper;
+                key = _potentialCachedIKeyEncryptionKey;
             }
             // Otherwise, use the resolver.
-            else if (keyResolver != null)
+            else if (_keyResolver != null)
             {
                 key = async
-                    ? await keyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId, cancellationToken).ConfigureAwait(false)
-                    : keyResolver.Resolve(encryptionData.WrappedContentKey.KeyId, cancellationToken);
+                    ? await _keyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId, cancellationToken).ConfigureAwait(false)
+                    : _keyResolver.Resolve(encryptionData.WrappedContentKey.KeyId, cancellationToken);
             }
 
             // We throw for every other reason that decryption couldn't happen. Throw a reasonable
