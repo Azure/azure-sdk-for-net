@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Samples
         {
             PrintHeader("MODEL LIFECYCLE SAMPLE");
 
-            // For the purpose of this example We will create temporary models using random model Ids and then decommission a model.
+            // For the purpose of this example we will create temporary models using random model Ids and then decommission a model.
             // We have to make sure these model Ids are unique within the DT instance.
 
             string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, DigitalTwinsClient).ConfigureAwait(false);

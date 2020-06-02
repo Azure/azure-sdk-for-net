@@ -1194,6 +1194,11 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinSamplePublishTelemetry">
+        /// Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, &quot;\&quot;telemetry\&quot;: {\&quot;Telemetry1\&quot;: 5}&quot;);
+        /// </code>
+        /// </example>
         public virtual Task<Response> PublishTelemetryAsync(string digitalTwinId, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
@@ -1230,6 +1235,11 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinSamplePublishComponentTelemetry">
+        /// Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, &quot;Component1&quot;, &quot;\&quot;telemetry\&quot;: {\&quot;ComponentTelementry1\&quot;: 9}&quot;);
+        /// </code>
+        /// </example>
         public virtual Task<Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string payload, TelemetryOptions options = default, CancellationToken cancellationToken = default)
         {
             TelemetryOptions telemetryOptions = options ?? new TelemetryOptions();
