@@ -37,23 +37,23 @@ namespace Azure.Data.Tables.Tests
         private static readonly DateTimeOffset _someDateTimeOffset = DateTimeOffset.UtcNow;
         private static readonly Guid _someGuid = Guid.NewGuid();
         private static readonly byte[] _someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
-        private static Expression<Func<ComplexEntity, bool>> _ne = x => x.PartitionKey == Partition && x.RowKey != Row;
-        private static Expression<Func<ComplexEntity, bool>> gt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
-        private static Expression<Func<ComplexEntity, bool>> ge = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
-        private static Expression<Func<ComplexEntity, bool>> lt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
-        private static Expression<Func<ComplexEntity, bool>> le = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
-        private static Expression<Func<ComplexEntity, bool>> or = x => x.PartitionKey == Partition || x.RowKey == Row;
-        private static Expression<Func<ComplexEntity, bool>> stringExp = ent => ent.String.CompareTo(SomeString) >= 0;
-        private static Expression<Func<ComplexEntity, bool>> guidExp = ent => ent.Guid == _someGuid;
-        private static Expression<Func<ComplexEntity, bool>> int64Exp = ent => ent.Int64 >= SomeInt64;
-        private static Expression<Func<ComplexEntity, bool>> doubleExp = ent => ent.Double >= SomeDouble;
-        private static Expression<Func<ComplexEntity, bool>> intExp = ent => ent.Int32 >= SomeInt;
-        private static Expression<Func<ComplexEntity, bool>> dtoExp = ent => ent.DateTimeOffset >= _someDateTimeOffset;
-        private static Expression<Func<ComplexEntity, bool>> dtExp = ent => ent.DateTime < _someDateTime;
-        private static Expression<Func<ComplexEntity, bool>> boolTrueExp = ent => ent.Bool == SomeTrueBool;
-        private static Expression<Func<ComplexEntity, bool>> boolFalseExp = ent => ent.Bool == SomeFalseBool;
-        private static Expression<Func<ComplexEntity, bool>> binaryExp = ent => ent.Binary == _someBinary;
-        private static Expression<Func<ComplexEntity, bool>> complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= _someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_gt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_ge = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_lt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_le = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_or = x => x.PartitionKey == Partition || x.RowKey == Row;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_stringExp = ent => ent.String.CompareTo(SomeString) >= 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_guidExp = ent => ent.Guid == _someGuid;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_int64Exp = ent => ent.Int64 >= SomeInt64;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_doubleExp = ent => ent.Double >= SomeDouble;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_intExp = ent => ent.Int32 >= SomeInt;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoExp = ent => ent.DateTimeOffset >= _someDateTimeOffset;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtExp = ent => ent.DateTime < _someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_boolTrueExp = ent => ent.Bool == SomeTrueBool;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_boolFalseExp = ent => ent.Bool == SomeFalseBool;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_binaryExp = ent => ent.Binary == _someBinary;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= _someDateTime;
 
         [OneTimeSetUp]
         public void TestSetup()
@@ -64,23 +64,23 @@ namespace Azure.Data.Tables.Tests
 
         public static object[] ExpressionTestCases =
         {
-            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", _ne },
-            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", gt },
-            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", ge },
-            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey lt '{Row}')", lt },
-            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey le '{Row}')", le },
-            new object[] {$"(PartitionKey eq '{Partition}') or (RowKey eq '{Row}')", or },
-            new object[] {$"String ge '{SomeString}'", stringExp },
-            new object[] {$"Guid eq guid'{_someGuid}'", guidExp },
-            new object[] {$"Int64 ge {SomeInt64}L", int64Exp },
-            new object[] { $"Double ge {SomeDouble}", doubleExp },
-            new object[] { $"Int32 ge {SomeInt}", intExp },
-            new object[] { $"DateTimeOffset ge datetime'{XmlConvert.ToString(_someDateTimeOffset.UtcDateTime, XmlDateTimeSerializationMode.RoundtripKind)}'", dtoExp },
-            new object[] { $"DateTime lt datetime'{XmlConvert.ToString(_someDateTime, XmlDateTimeSerializationMode.RoundtripKind)}'", dtExp },
-            new object[] { $"Bool eq true", boolTrueExp },
-            new object[] { $"Bool eq false", boolFalseExp },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, _someBinary.Select(b => b.ToString("D2")))}'", binaryExp },
-            new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{XmlConvert.ToString(_someDateTime, XmlDateTimeSerializationMode.RoundtripKind)}')", complexExp },
+            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_ne },
+            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gt },
+            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", s_ge },
+            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey lt '{Row}')", s_lt },
+            new object[] {$"(PartitionKey eq '{Partition}') and (RowKey le '{Row}')", s_le },
+            new object[] {$"(PartitionKey eq '{Partition}') or (RowKey eq '{Row}')", s_or },
+            new object[] {$"String ge '{SomeString}'", s_stringExp },
+            new object[] {$"Guid eq guid'{_someGuid}'", s_guidExp },
+            new object[] {$"Int64 ge {SomeInt64}L", s_int64Exp },
+            new object[] { $"Double ge {SomeDouble}", s_doubleExp },
+            new object[] { $"Int32 ge {SomeInt}", s_intExp },
+            new object[] { $"DateTimeOffset ge datetime'{XmlConvert.ToString(_someDateTimeOffset.UtcDateTime, XmlDateTimeSerializationMode.RoundtripKind)}'", s_dtoExp },
+            new object[] { $"DateTime lt datetime'{XmlConvert.ToString(_someDateTime, XmlDateTimeSerializationMode.RoundtripKind)}'", s_dtExp },
+            new object[] { $"Bool eq true", s_boolTrueExp },
+            new object[] { $"Bool eq false", s_boolFalseExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, _someBinary.Select(b => b.ToString("D2")))}'", s_binaryExp },
+            new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{XmlConvert.ToString(_someDateTime, XmlDateTimeSerializationMode.RoundtripKind)}')", s_complexExp },
         };
 
         [TestCaseSource(nameof(ExpressionTestCases))]
