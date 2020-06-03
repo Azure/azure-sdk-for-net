@@ -122,6 +122,17 @@ namespace Compute.Tests
             };
         }
 
+        protected DiagnosticsProfile GetManagedDiagnosticsProfile()
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true
+                }
+            };
+        }
+
         protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
         {
             string testVaultId =
@@ -1226,8 +1237,20 @@ namespace Compute.Tests
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
         }
 
-        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError)
+        /// <remarks>
+        /// BootDiagnosticsInstanceView properties will be null if VM is enabled with managed boot diagnostics
+        /// </remarks>
+        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError, bool enabledWithManagedBootDiagnostics = false)
         {
+            // VM with managed boot diagnostics will not return blob URIs or status in BootDiagnosticsInstanceView
+            if (enabledWithManagedBootDiagnostics)
+            {
+                Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.Status);
+                return;
+            }
+
             if (hasError)
             {
                 Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
@@ -1240,6 +1263,13 @@ namespace Compute.Tests
                 Assert.NotNull(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
                 Assert.Null(bootDiagnosticsInstanceView.Status);
             }
+        }
+
+        protected static void ValidateBootDiagnosticsData(RetrieveBootDiagnosticsDataResult bootDiagnosticsData)
+        {
+            Assert.NotNull(bootDiagnosticsData);
+            Assert.NotNull(bootDiagnosticsData.ConsoleScreenshotBlobUri);
+            Assert.NotNull(bootDiagnosticsData.SerialConsoleLogBlobUri);
         }
     }
 }
