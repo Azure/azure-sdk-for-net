@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/invoices/T000154489/download?api-version=2020-05-01&downloadToken=Drs_9904044",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f%3A2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/invoices/T000154489/download?api-version=2020-05-01&downloadToken=Drs_9904044",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvZGVmYXVsdC9iaWxsaW5nU3Vic2NyaXB0aW9ucy83Yjk3NTFlMS03YmI2LTQ1ODMtYTNiMS1hNzYyNjkwMTgxMWEvaW52b2ljZXMvVDAwMDE1NDQ4OS9kb3dubG9hZD9hcGktdmVyc2lvbj0yMDIwLTA1LTAxJmRvd25sb2FkVG9rZW49RHJzXzk5MDQwNDQ=",
       "RequestMethod": "POST",
       "RequestBody": "",
