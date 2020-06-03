@@ -16,6 +16,9 @@ namespace Billing.Tests.ScenarioTests
     public class AgreementsOperationsTest : TestBase
     {
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
+        private const string AgreementStatus = "Active";
+        private const string AgreementAcceptanceMode = "ClickToAccept";
+        private const string AgreementCategory = "MicrosoftCustomerAgreement";
 
         [Fact]
         public void ListAgreementsByBillingAccountTest()
@@ -34,7 +37,18 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(agreements);
-                Assert.Empty(agreements);
+                Assert.NotEmpty(agreements);
+                var agreement = Assert.Single(agreements);
+                Assert.NotNull(agreement.AcceptanceMode);
+                Assert.NotNull(agreement.AgreementLink);
+                Assert.NotNull(agreement.Category);
+                Assert.NotNull(agreement.EffectiveDate);
+                Assert.NotNull(agreement.ExpirationDate);
+                Assert.NotNull(agreement.Name);
+                Assert.NotNull(agreement.Status);
+                Assert.Equal(AgreementStatus, agreement.Status);
+                Assert.Equal(AgreementAcceptanceMode, agreement.AcceptanceMode);
+                Assert.Equal(AgreementCategory, agreement.Category);
             }
         }
     }
