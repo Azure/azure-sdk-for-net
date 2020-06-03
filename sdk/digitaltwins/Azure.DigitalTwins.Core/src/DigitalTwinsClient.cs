@@ -168,7 +168,6 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response.</returns>
-        /// <remarks>The digital twin must be the serialization of an instance of <see cref="Serialization.BasicDigitalTwin"/> or the serialization of an extension of that type.</remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomTwin">
         /// string customDtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
@@ -203,7 +202,6 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response.</returns>
-        /// <remarks>The digital twin must be the serialization of an instance of <see cref="Serialization.BasicDigitalTwin"/> or the serialization of an extension of that type.</remarks>
         public virtual Response<string> CreateDigitalTwin(string digitalTwinId, string digitalTwin, CancellationToken cancellationToken = default)
         {
             return _dtRestClient.Add(digitalTwinId, digitalTwin, cancellationToken);
