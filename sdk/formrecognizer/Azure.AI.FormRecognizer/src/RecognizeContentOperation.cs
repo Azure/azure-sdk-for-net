@@ -20,6 +20,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceRestClient _serviceClient;
 
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
@@ -33,7 +36,18 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override FormPageCollection Value => OperationHelpers.GetValue(ref _value);
+        public override FormPageCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("RecognizeContent operation failed.");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -52,16 +66,19 @@ namespace Azure.AI.FormRecognizer.Models
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeContentOperation(ServiceRestClient serviceClient, string operationLocation)
+        internal RecognizeContentOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
+            _diagnostics = diagnostics;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -101,14 +118,20 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
+                _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     _hasCompleted = true;
 
                     _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                 }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _hasCompleted = true;
 
-                _response = update.GetRawResponse();
+                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                }
             }
 
             return GetRawResponse();
@@ -127,6 +150,37 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return new FormPageCollection(pages);
+        }
+
+        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
+        {
+            string errorMessage = default;
+            string errorCode = default;
+
+            if (errors.Count > 0)
+            {
+                var firstError = errors[0];
+
+                errorMessage = firstError.Message;
+                errorCode = firstError.ErrorCode;
+            }
+            else
+            {
+                errorMessage = "RecognizeContent operation failed.";
+            }
+
+            var errorInfo = new Dictionary<string, string>();
+            int index = 0;
+
+            foreach (var error in errors)
+            {
+                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
+                index++;
+            }
+
+            return async
+                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }

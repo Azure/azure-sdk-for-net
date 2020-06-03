@@ -19,6 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceRestClient _serviceClient;
 
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
@@ -32,7 +35,18 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override RecognizedReceiptCollection Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedReceiptCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("RecognizeReceipt operation failed.");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -48,22 +62,25 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
+        public RecognizeReceiptsOperation(string operationId,FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeReceiptsOperation(ServiceRestClient serviceClient, string operationLocation)
+        internal RecognizeReceiptsOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
+            _diagnostics = diagnostics;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -100,7 +117,9 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
+                _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     _hasCompleted = true;
 
@@ -110,8 +129,12 @@ namespace Azure.AI.FormRecognizer.Models
                     //_value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
                     _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
                 }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _hasCompleted = true;
 
-                _response = update.GetRawResponse();
+                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                }
             }
 
             return GetRawResponse();
@@ -125,6 +148,37 @@ namespace Azure.AI.FormRecognizer.Models
                 receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return new RecognizedReceiptCollection(receipts);
+        }
+
+        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
+        {
+            string errorMessage = default;
+            string errorCode = default;
+
+            if (errors.Count > 0)
+            {
+                var firstError = errors[0];
+
+                errorMessage = firstError.Message;
+                errorCode = firstError.ErrorCode;
+            }
+            else
+            {
+                errorMessage = "RecognizeReceipt operation failed.";
+            }
+
+            var errorInfo = new Dictionary<string, string>();
+            int index = 0;
+
+            foreach (var error in errors)
+            {
+                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
+                index++;
+            }
+
+            return async
+                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }

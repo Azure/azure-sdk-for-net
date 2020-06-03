@@ -109,22 +109,10 @@ namespace Azure.AI.FormRecognizer.Tests
             var containerUrl = new Uri("https://someUrl");
 
             TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
-            await operation.WaitForCompletionAsync();
-
-            Assert.IsTrue(operation.HasValue);
-
-            CustomFormModel model = operation.Value;
-
-            Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.RequestedOn);
-            Assert.IsNotNull(model.CompletedOn);
-            Assert.IsNotNull(model.Status);
-            Assert.AreEqual(CustomFormModelStatus.Invalid, model.Status);
-            Assert.IsNotNull(model.Errors);
-            Assert.AreEqual(1, model.Errors.Count);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().ErrorCode);
-            Assert.IsNotNull(model.Errors.FirstOrDefault().Message);
+            Assert.False(operation.HasValue);
+            Assert.Throws<InvalidOperationException>(() => operation.Value.GetType());
         }
 
         [Test]

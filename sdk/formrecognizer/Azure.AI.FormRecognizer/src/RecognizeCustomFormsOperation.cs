@@ -42,7 +42,18 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override RecognizedFormCollection Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedFormCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("RecognizeCustomForms operation failed.");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -148,7 +159,6 @@ namespace Azure.AI.FormRecognizer.Models
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = new RecognizedFormCollection(new List<RecognizedForm>());
 
                     throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
                 }

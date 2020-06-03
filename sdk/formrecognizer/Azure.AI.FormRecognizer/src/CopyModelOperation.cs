@@ -45,7 +45,18 @@ namespace Azure.AI.FormRecognizer.Training
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override CustomFormModelInfo Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormModelInfo Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("Copy model operation failed");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -88,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
         internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
@@ -159,7 +170,7 @@ namespace Azure.AI.FormRecognizer.Training
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Invalid);
+
                     throw await CreateExceptionForFailedOperationAsync(async, update.Value.CopyResult.Errors).ConfigureAwait(false);
                 }
             }
