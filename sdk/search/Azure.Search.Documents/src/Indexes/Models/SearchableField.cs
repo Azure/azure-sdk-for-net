@@ -80,7 +80,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
             if (SynonymMapNames.Count > 0)
             {
-                field.SynonymMapNames = SynonymMapNames;
+                IList<string> fields = field.SynonymMapNames;
+                foreach (string name in SynonymMapNames)
+                {
+                    fields.Add(name);
+                }
             }
         }
     }

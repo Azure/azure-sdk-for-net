@@ -23,6 +23,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Text = text;
+            TokenFilters = new List<TokenFilterName>();
+            CharFilters = new List<string>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeRequest. </summary>
@@ -36,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Text = text;
             Analyzer = analyzer;
             Tokenizer = tokenizer;
-            TokenFilters = tokenFilters;
-            CharFilters = charFilters;
+            TokenFilters = tokenFilters ?? new List<TokenFilterName>();
+            CharFilters = charFilters ?? new List<string>();
         }
 
         /// <summary> The text to break into tokens. </summary>
@@ -46,9 +48,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public LexicalAnalyzerName? Analyzer { get; set; }
         /// <summary> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         public LexicalTokenizerName? Tokenizer { get; set; }
-        /// <summary> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
-        public IList<TokenFilterName> TokenFilters { get; set; }
-        /// <summary> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
-        public IList<string> CharFilters { get; set; }
     }
 }

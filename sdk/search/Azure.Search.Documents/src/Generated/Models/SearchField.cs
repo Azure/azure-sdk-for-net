@@ -41,8 +41,8 @@ namespace Azure.Search.Documents.Indexes.Models
             AnalyzerName = analyzerName;
             SearchAnalyzerName = searchAnalyzerName;
             IndexAnalyzerName = indexAnalyzerName;
-            SynonymMapNames = synonymMapNames;
-            Fields = fields;
+            SynonymMapNames = synonymMapNames ?? new List<string>();
+            Fields = fields ?? new List<SearchField>();
         }
     }
 }
