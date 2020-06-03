@@ -52,5 +52,16 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/dochung4/azure-rest-api-specs/blob/compute-2020-06/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "dochung4";
+      public static readonly String GithubBranchName = "compute-2020-06";
+      public static readonly String GithubCommidId = "97fae75112268d7d1a0c1476e4a50e7435d6985d";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
