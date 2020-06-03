@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network
     public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, INetworkManagementClient, IAzureClient
     {
         partial void CustomInitialize()
-        {
+        {/*
             // first remove the converters added by generated code for the FirewallPolicyRule and RuleCondition
             DeserializationSettings.Converters.Remove(DeserializationSettings.Converters.FirstOrDefault(c => c.GetType() == typeof(PolymorphicDeserializeJsonConverter<FirewallPolicyRule>)));
             DeserializationSettings.Converters.Remove(DeserializationSettings.Converters.FirstOrDefault(c => c.GetType() == typeof(PolymorphicDeserializeJsonConverter<FirewallPolicyRuleCondition>)));
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network
 
             // now add the correct converters
             DeserializationSettings.Converters.Add(new PolymorphicJsonCustomConverter<FirewallPolicyRule, FirewallPolicyRuleCondition>("ruleType", "ruleConditionType"));
-            SerializationSettings.Converters.Add(new PolymorphicJsonCustomConverter<FirewallPolicyRule, FirewallPolicyRuleCondition>("ruleType", "ruleConditionType"));
+            SerializationSettings.Converters.Add(new PolymorphicJsonCustomConverter<FirewallPolicyRule, FirewallPolicyRuleCondition>("ruleType", "ruleConditionType"));*/
         }
     }
 }
