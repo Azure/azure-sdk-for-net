@@ -1763,6 +1763,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}",
                         cancellationToken: cancellationToken)
