@@ -102,20 +102,6 @@ namespace Azure.Search.Documents
 }
 namespace Azure.Search.Documents.Indexes
 {
-    public static partial class FieldBuilder
-    {
-        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build(System.Type type) { throw null; }
-        public static System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Build<T>() { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
-    public partial class SearchableFieldAttribute : Azure.Search.Documents.Indexes.SimpleFieldAttribute
-    {
-        public SearchableFieldAttribute(bool collection = false) : base (default(Azure.Search.Documents.Indexes.Models.SearchFieldDataType), default(bool)) { }
-        public string AnalyzerName { get { throw null; } set { } }
-        public string IndexAnalyzerName { get { throw null; } set { } }
-        public string SearchAnalyzerName { get { throw null; } set { } }
-        public string[] SynonymMapNames { get { throw null; } set { } }
-    }
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
@@ -214,17 +200,6 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RunIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
-    public partial class SimpleFieldAttribute : System.Attribute
-    {
-        public SimpleFieldAttribute(Azure.Search.Documents.Indexes.Models.SearchFieldDataType type, bool collection = false) { }
-        public bool IsFacetable { get { throw null; } set { } }
-        public bool IsFilterable { get { throw null; } set { } }
-        public bool IsHidden { get { throw null; } set { } }
-        public bool IsKey { get { throw null; } set { } }
-        public bool IsSortable { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
