@@ -17,8 +17,8 @@ namespace Billing.Tests.ScenarioTests
     {
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string BillingSubscriptionName = "8d974561-9387-46ad-8593-527f5b6bf775";
-        private const string InvoiceSectionName = "LE7E-3FVV-PJA-PGB";
+        private const string BillingSubscriptionName = "0195fcc8-69cd-4440-852b-237bdae4e36c";
+        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
 
         [Fact]
         public void GetBillingSubscriptionTest()
