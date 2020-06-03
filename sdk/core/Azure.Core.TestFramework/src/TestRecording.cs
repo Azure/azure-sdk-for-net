@@ -21,7 +21,11 @@ namespace Azure.Core.TestFramework
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        public TestRecording(
+            RecordedTestMode mode,
+            string sessionFile,
+            RecordedTestSanitizer sanitizer,
+            RecordMatcher matcher)
         {
             Mode = mode;
             _sessionFile = sessionFile;
@@ -59,7 +63,6 @@ namespace Azure.Core.TestFramework
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
-
         private readonly RecordSession _session;
 
         private RecordSession _previousSession;

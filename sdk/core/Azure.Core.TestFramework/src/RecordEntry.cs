@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 
@@ -13,6 +14,11 @@ namespace Azure.Core.TestFramework
 {
     public class RecordEntry
     {
+        private static JsonWriterOptions _requestWriterOptions = new JsonWriterOptions();
+        private static JsonWriterOptions _responseWriterOptions = new JsonWriterOptions()
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
         public RecordEntryMessage Request { get; } = new RecordEntryMessage();
 
         public RecordEntryMessage Response { get; } = new RecordEntryMessage();
@@ -51,7 +57,7 @@ namespace Azure.Core.TestFramework
 
             if (element.TryGetProperty("RequestBody", out property))
             {
-                record.Request.Body = DeserializeBody(record.Request.Headers, property);
+                record.Request.Body = DeserializeBody(record.Request.Headers, property, _requestWriterOptions);
             }
 
             if (element.TryGetProperty(nameof(StatusCode), out property) &&
@@ -67,13 +73,13 @@ namespace Azure.Core.TestFramework
 
             if (element.TryGetProperty("ResponseBody", out property))
             {
-                record.Response.Body = DeserializeBody(record.Response.Headers, property);
+                record.Response.Body = DeserializeBody(record.Response.Headers, property, _responseWriterOptions);
             }
 
             return record;
         }
 
-        private static byte[] DeserializeBody(IDictionary<string, string[]> headers, in JsonElement property)
+        private static byte[] DeserializeBody(IDictionary<string, string[]> headers, in JsonElement property, JsonWriterOptions writerOptions)
         {
             if (property.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +91,7 @@ namespace Azure.Core.TestFramework
                 if (property.ValueKind == JsonValueKind.Object)
                 {
                     using var memoryStream = new MemoryStream();
-                    using var writer = new Utf8JsonWriter(memoryStream);
+                    using var writer = new Utf8JsonWriter(memoryStream, writerOptions);
                     property.WriteTo(writer);
                     writer.Flush();
                     return memoryStream.ToArray();
@@ -146,7 +152,7 @@ namespace Azure.Core.TestFramework
             SerializeHeaders(jsonWriter, Request.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers);
+            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers, _requestWriterOptions);
 
             jsonWriter.WriteNumber(nameof(StatusCode), StatusCode);
 
@@ -154,11 +160,11 @@ namespace Azure.Core.TestFramework
             SerializeHeaders(jsonWriter, Response.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers);
+            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers, _responseWriterOptions);
             jsonWriter.WriteEndObject();
         }
 
-        private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers)
+        private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers, JsonWriterOptions writerOptions)
         {
             if (requestBody == null)
             {
@@ -186,7 +192,7 @@ namespace Azure.Core.TestFramework
                         // fallback to generic string writing
                         var memoryStream = new MemoryStream();
                         // Settings of this writer should be in sync with the one used in deserialiation
-                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream))
+                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream, writerOptions))
                         {
                             document.RootElement.WriteTo(reformattedWriter);
                         }
