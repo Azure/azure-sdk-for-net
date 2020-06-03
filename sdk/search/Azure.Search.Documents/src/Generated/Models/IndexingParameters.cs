@@ -15,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
         public IndexingParameters()
         {
+            Configuration = new Dictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;
             MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
-            Configuration = configuration;
+            Configuration = configuration ?? new Dictionary<string, object>();
         }
 
         /// <summary> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </summary>
@@ -36,7 +37,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MaxFailedItems { get; set; }
         /// <summary> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </summary>
         public int? MaxFailedItemsPerBatch { get; set; }
-        /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-        public IDictionary<string, object> Configuration { get; set; }
     }
 }

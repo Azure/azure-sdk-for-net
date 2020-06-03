@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -65,7 +66,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(analyzerName, field.AnalyzerName?.ToString());
             Assert.AreEqual(searchAnalyzerName, field.SearchAnalyzerName?.ToString());
             Assert.AreEqual(indexAnalyzerName, field.IndexAnalyzerName?.ToString());
-            Assert.AreEqual(synonymMapNames, field.SynonymMapNames);
+            Assert.AreEqual(synonymMapNames ?? Enumerable.Empty<string>(), field.SynonymMapNames);
         }
     }
 }
