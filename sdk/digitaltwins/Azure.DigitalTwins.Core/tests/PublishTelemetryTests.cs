@@ -42,13 +42,13 @@ namespace Azure.DigitalTwins.Core.Tests
             try
             {
                 // Create an event route for the digital twins client.
-                EventRoute eventRoute = await CreateEventRoute(client, eventRouteId);
+                EventRoute eventRoute = await CreateEventRoute(client, eventRouteId).ConfigureAwait(false);
 
                 // Create the models needed for the digital twin.
-                await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId);
+                await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
 
                 // Act - Test publishing telemetry to a digital twin.
-                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, "{\"Telemetry1\": 5}");
+                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, "{\"Telemetry1\": 5}").ConfigureAwait(false);
 
                 // Assert
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
@@ -58,7 +58,9 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     { "ComponentTelemetry1", 9}
                 };
-                Response publishComponentTelemetryResponse = await client.PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, JsonSerializer.Serialize(telemetryPayload));
+                Response publishComponentTelemetryResponse = await client
+                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, JsonSerializer.Serialize(telemetryPayload))
+                    .ConfigureAwait(false);
 
                 // Assert
                 publishComponentTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
@@ -112,7 +114,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
             // Create the room with wifi component digital twin.
-            await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin);
+            await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin).ConfigureAwait(false);
         }
 
         private async Task<EventRoute> CreateEventRoute(DigitalTwinsClient client, string eventRouteId)
