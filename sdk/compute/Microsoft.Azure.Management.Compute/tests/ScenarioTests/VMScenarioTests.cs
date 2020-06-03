@@ -189,6 +189,23 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup")]
+        public void TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup", vmSize: VirtualMachineSizeTypes.StandardDS148V2, hasManagedDisks: true,
+                   hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
         /// <summary>
         /// To record this test case, you need to run it in zone supported regions like eastus2euap.
         /// </summary>
