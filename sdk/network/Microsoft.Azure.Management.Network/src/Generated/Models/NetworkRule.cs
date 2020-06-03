@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// rule.</param>
         /// <param name="destinationIpGroups">List of destination IpGroups for
         /// this rule.</param>
-        public NetworkRule(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>), IList<string> destinationIpGroups = default(IList<string>))
+        /// <param name="destinationFqdns">List of destination FQDNs.</param>
+        public NetworkRule(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>), IList<string> destinationIpGroups = default(IList<string>), IList<string> destinationFqdns = default(IList<string>))
             : base(name, description)
         {
             IpProtocols = ipProtocols;
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
             DestinationPorts = destinationPorts;
             SourceIpGroups = sourceIpGroups;
             DestinationIpGroups = destinationIpGroups;
+            DestinationFqdns = destinationFqdns;
             CustomInit();
         }
 
@@ -96,6 +98,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "destinationIpGroups")]
         public IList<string> DestinationIpGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of destination FQDNs.
+        /// </summary>
+        [JsonProperty(PropertyName = "destinationFqdns")]
+        public IList<string> DestinationFqdns { get; set; }
 
     }
 }

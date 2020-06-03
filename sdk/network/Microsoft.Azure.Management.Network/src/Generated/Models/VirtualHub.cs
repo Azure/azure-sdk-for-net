@@ -51,8 +51,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VirtualHub.</param>
         /// <param name="securityPartnerProvider">The securityPartnerProvider
         /// associated with this VirtualHub.</param>
-        /// <param name="virtualNetworkConnections">List of all vnet
-        /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
         /// VirtualHub.</param>
         /// <param name="routeTable">The routeTable associated with this
@@ -65,6 +63,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualHubRouteTableV2s">List of all virtual hub route
         /// table v2s associated with this VirtualHub.</param>
         /// <param name="sku">The sku of this VirtualHub.</param>
+        /// <param name="routingState">The routing state. Possible values
+        /// include: 'None', 'Provisioned', 'Provisioning', 'Failed'</param>
         /// <param name="bgpConnections">List of references to Bgp
         /// Connections.</param>
         /// <param name="ipConfigurations">List of references to
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualRouterIps">VirtualRouter IPs.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -82,13 +82,13 @@ namespace Microsoft.Azure.Management.Network.Models
             ExpressRouteGateway = expressRouteGateway;
             AzureFirewall = azureFirewall;
             SecurityPartnerProvider = securityPartnerProvider;
-            VirtualNetworkConnections = virtualNetworkConnections;
             AddressPrefix = addressPrefix;
             RouteTable = routeTable;
             ProvisioningState = provisioningState;
             SecurityProviderName = securityProviderName;
             VirtualHubRouteTableV2s = virtualHubRouteTableV2s;
             Sku = sku;
+            RoutingState = routingState;
             BgpConnections = bgpConnections;
             IpConfigurations = ipConfigurations;
             VirtualRouterAsn = virtualRouterAsn;
@@ -141,12 +141,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource SecurityPartnerProvider { get; set; }
 
         /// <summary>
-        /// Gets or sets list of all vnet connections with this VirtualHub.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualNetworkConnections")]
-        public IList<HubVirtualNetworkConnection> VirtualNetworkConnections { get; set; }
-
-        /// <summary>
         /// Gets or sets address-prefix for this VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.addressPrefix")]
@@ -183,6 +177,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the routing state. Possible values include: 'None',
+        /// 'Provisioned', 'Provisioning', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingState")]
+        public string RoutingState { get; set; }
 
         /// <summary>
         /// Gets list of references to Bgp Connections.
