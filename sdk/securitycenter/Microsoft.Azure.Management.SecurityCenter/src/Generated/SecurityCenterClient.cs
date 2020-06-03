@@ -127,16 +127,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; private set; }
 
         /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
@@ -192,11 +182,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
 
         /// <summary>
-        /// Gets the IServerVulnerabilityAssessmentOperations.
-        /// </summary>
-        public virtual IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; private set; }
-
-        /// <summary>
         /// Gets the ISubAssessmentsOperations.
         /// </summary>
         public virtual ISubAssessmentsOperations SubAssessments { get; private set; }
@@ -205,6 +190,16 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAutomationsOperations.
         /// </summary>
         public virtual IAutomationsOperations Automations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        public virtual IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// </summary>
+        public virtual IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; private set; }
 
         /// <summary>
         /// Gets the IAssessmentsMetadataOperations.
@@ -240,6 +235,31 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IJitNetworkAccessPoliciesOperations.
         /// </summary>
         public virtual IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoresOperations.
+        /// </summary>
+        public virtual ISecureScoresOperations SecureScores { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlsOperations.
+        /// </summary>
+        public virtual ISecureScoreControlsOperations SecureScoreControls { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlDefinitionsOperations.
+        /// </summary>
+        public virtual ISecureScoreControlDefinitionsOperations SecureScoreControlDefinitions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -492,8 +512,6 @@ namespace Microsoft.Azure.Management.Security
             IotSecuritySolutionAnalytics = new IotSecuritySolutionAnalyticsOperations(this);
             IotSecuritySolutionsAnalyticsAggregatedAlert = new IotSecuritySolutionsAnalyticsAggregatedAlertOperations(this);
             IotSecuritySolutionsAnalyticsRecommendation = new IotSecuritySolutionsAnalyticsRecommendationOperations(this);
-            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
-            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
             Locations = new LocationsOperations(this);
             Operations = new Operations(this);
             Tasks = new TasksOperations(this);
@@ -505,9 +523,10 @@ namespace Microsoft.Azure.Management.Security
             RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
             RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
             RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
-            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             SubAssessments = new SubAssessmentsOperations(this);
             Automations = new AutomationsOperations(this);
+            AlertsSuppressionRules = new AlertsSuppressionRulesOperations(this);
+            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             AssessmentsMetadata = new AssessmentsMetadataOperations(this);
             Assessments = new AssessmentsOperations(this);
             AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);
@@ -515,6 +534,11 @@ namespace Microsoft.Azure.Management.Security
             AllowedConnections = new AllowedConnectionsOperations(this);
             Topology = new TopologyOperations(this);
             JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
+            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
+            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
+            SecureScores = new SecureScoresOperations(this);
+            SecureScoreControls = new SecureScoreControlsOperations(this);
+            SecureScoreControlDefinitions = new SecureScoreControlDefinitionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -549,14 +573,14 @@ namespace Microsoft.Azure.Management.Security
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SettingResource>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomAlertRule>("ruleType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomAlertRule>("ruleType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceDetails>("source"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceDetails>("source"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdditionalData>("assessedResourceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdditionalData>("assessedResourceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AutomationAction>("actionType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AutomationAction>("actionType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

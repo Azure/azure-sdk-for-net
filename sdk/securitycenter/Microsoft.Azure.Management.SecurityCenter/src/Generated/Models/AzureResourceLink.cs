@@ -10,26 +10,42 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Details of the resource that was assessed
+    /// Describes an Azure resource with kind
     /// </summary>
-    public partial class ResourceDetails
+    public partial class AzureResourceLink
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceDetails class.
+        /// Initializes a new instance of the AzureResourceLink class.
         /// </summary>
-        public ResourceDetails()
+        public AzureResourceLink()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the AzureResourceLink class.
+        /// </summary>
+        /// <param name="id">Azure resource Id</param>
+        public AzureResourceLink(string id = default(string))
+        {
+            Id = id;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets azure resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

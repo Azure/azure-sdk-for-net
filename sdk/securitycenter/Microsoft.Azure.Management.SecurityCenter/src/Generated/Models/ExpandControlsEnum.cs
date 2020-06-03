@@ -10,26 +10,15 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using System.Linq;
 
     /// <summary>
-    /// Details of the resource that was assessed
+    /// Defines values for ExpandControlsEnum.
     /// </summary>
-    public partial class ResourceDetails
+    public static class ExpandControlsEnum
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceDetails class.
+        /// Add definition object for each control
         /// </summary>
-        public ResourceDetails()
-        {
-            CustomInit();
-        }
-
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
+        public const string Definition = "definition";
     }
 }
