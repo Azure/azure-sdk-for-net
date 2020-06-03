@@ -935,7 +935,7 @@ namespace Compute.Tests
             return vm;
         }
 
-        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName)
+        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName, int? availabilityZone = 1)
         {
             m_ResourcesClient.ResourceGroups.CreateOrUpdate(
                    rgName,
@@ -948,8 +948,9 @@ namespace Compute.Tests
             DedicatedHostGroup dedicatedHostGroup = new DedicatedHostGroup()
             {
                 Location = m_location,
-                Zones = new List<string> { "1" },
-                PlatformFaultDomainCount = 1
+                Zones = availabilityZone == null ? null : new List<string> { availabilityZone.ToString() },
+                PlatformFaultDomainCount = 1,
+                SupportAutomaticPlacement = true
             };
             return m_CrpClient.DedicatedHostGroups.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostGroup);
         }
