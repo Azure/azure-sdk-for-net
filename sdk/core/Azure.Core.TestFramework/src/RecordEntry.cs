@@ -14,11 +14,15 @@ namespace Azure.Core.TestFramework
 {
     public class RecordEntry
     {
-        private static JsonWriterOptions _requestWriterOptions = new JsonWriterOptions();
-        private static JsonWriterOptions _responseWriterOptions = new JsonWriterOptions()
+        private static readonly JsonWriterOptions RequestWriterOptions = new JsonWriterOptions();
+        // Responses are usually formatted using Newtonsoft.Json that has more relaxed encoding rules
+        // To enable us to store more responses as JSON instead of string in Recording files use
+        // relaxed settings for roundrip
+        private static readonly JsonWriterOptions ResponseWriterOptions = new JsonWriterOptions()
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
+
         public RecordEntryMessage Request { get; } = new RecordEntryMessage();
 
         public RecordEntryMessage Response { get; } = new RecordEntryMessage();
@@ -57,7 +61,7 @@ namespace Azure.Core.TestFramework
 
             if (element.TryGetProperty("RequestBody", out property))
             {
-                record.Request.Body = DeserializeBody(record.Request.Headers, property, _requestWriterOptions);
+                record.Request.Body = DeserializeBody(record.Request.Headers, property, RequestWriterOptions);
             }
 
             if (element.TryGetProperty(nameof(StatusCode), out property) &&
@@ -73,7 +77,7 @@ namespace Azure.Core.TestFramework
 
             if (element.TryGetProperty("ResponseBody", out property))
             {
-                record.Response.Body = DeserializeBody(record.Response.Headers, property, _responseWriterOptions);
+                record.Response.Body = DeserializeBody(record.Response.Headers, property, ResponseWriterOptions);
             }
 
             return record;
@@ -152,7 +156,7 @@ namespace Azure.Core.TestFramework
             SerializeHeaders(jsonWriter, Request.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers, _requestWriterOptions);
+            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers, RequestWriterOptions);
 
             jsonWriter.WriteNumber(nameof(StatusCode), StatusCode);
 
@@ -160,7 +164,7 @@ namespace Azure.Core.TestFramework
             SerializeHeaders(jsonWriter, Response.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers, _responseWriterOptions);
+            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers, ResponseWriterOptions);
             jsonWriter.WriteEndObject();
         }
 
