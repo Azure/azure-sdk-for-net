@@ -21,5 +21,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public const string OneZero = "10";
         public const string OneZeroFullStopZero = "10.0";
         public const string OneZeroFullStopTwo = "10.2";
+        public const string OneOne = "11";
     }
 }
