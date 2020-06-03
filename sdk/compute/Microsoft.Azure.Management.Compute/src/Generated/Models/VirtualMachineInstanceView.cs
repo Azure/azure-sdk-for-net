@@ -57,8 +57,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the
         /// output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables
         /// you to see a screenshot of the VM from the hypervisor.</param>
+        /// <param name="assignedHost">Resource id of the dedicated host, on
+        /// which the virtual machine is allocated through automatic
+        /// placement.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -72,6 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Disks = disks;
             Extensions = extensions;
             BootDiagnostics = bootDiagnostics;
+            AssignedHost = assignedHost;
             Statuses = statuses;
             CustomInit();
         }
@@ -159,6 +163,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource id of the dedicated host, on which the
+        /// virtual machine is allocated through automatic placement.
+        /// </summary>
+        [JsonProperty(PropertyName = "assignedHost")]
+        public string AssignedHost { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
