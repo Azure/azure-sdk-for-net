@@ -29,9 +29,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Initializes a new instance of the <see cref="AccessControlClient"/> class for mocking.
         /// </summary>
         protected AccessControlClient()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessControlClient"/> class for the specified vault.
@@ -75,18 +73,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<RoleDefinition> GetRoleDefinitions(Uri scope, CancellationToken cancellationToken = default)
-        {
-            return PageableHelpers.CreateEnumerable(_ =>
-            {
-                var response = _definitionsRestClient.List(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.AbsoluteUri, cancellationToken: cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            }, (nextLink, _) =>
-            {
-                var response = _definitionsRestClient.ListNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.AbsoluteUri, cancellationToken: cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            });
-        }
+        public virtual Pageable<RoleDefinition> GetRoleDefinitions(Uri scope, CancellationToken cancellationToken = default) =>
+            GetRoleDefinitions(scope.AbsoluteUri, cancellationToken);
 
         /// <summary>
         /// Gets a list of <see cref="RoleDefinition"/>.
@@ -113,20 +101,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(Uri scope, CancellationToken cancellationToken = default)
-        {
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _definitionsRestClient.ListAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.AbsoluteUri, cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            }, async (nextLink, _) =>
-            {
-                var response = await _definitionsRestClient.ListNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.AbsoluteUri, cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            });
-        }
+        public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(Uri scope, CancellationToken cancellationToken = default) =>
+            GetRoleDefinitionsAsync(scope.AbsoluteUri, cancellationToken);
 
         /// <summary>
         /// Gets a list of <see cref="RoleDefinition"/>.
@@ -149,10 +125,63 @@ namespace Azure.Security.KeyVault.Administration
             });
         }
 
-        // public virtual Pageable<RoleAssignment> GetRoleAssignments(Uri scope, CancellationToken cancellationToken = default) => null;
-        // public virtual Pageable<RoleAssignment> GetRoleAssignments(string scope, CancellationToken cancellationToken = default) => null;
-        // public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(Uri scope, CancellationToken cancellationToken = default) => null;
-        // public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(string scope, CancellationToken cancellationToken = default) => null;
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<RoleAssignment> GetRoleAssignments(Uri scope, CancellationToken cancellationToken = default) =>
+            GetRoleAssignments(scope.AbsoluteUri, cancellationToken);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<RoleAssignment> GetRoleAssignments(string scope, CancellationToken cancellationToken = default)
+        {
+            return PageableHelpers.CreateEnumerable(_ =>
+            {
+                var response = _assignmentsRestClient.ListForScope(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope, cancellationToken: cancellationToken);
+                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }, (nextLink, _) =>
+            {
+                var response = _assignmentsRestClient.ListForScopeNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope, cancellationToken: cancellationToken);
+                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            });
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(Uri scope, CancellationToken cancellationToken = default) =>
+            GetRoleAssignmentsAsync(scope.AbsoluteUri, cancellationToken);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _assignmentsRestClient.ListForScopeAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            }, async (nextLink, _) =>
+            {
+                var response = await _assignmentsRestClient.ListForScopeNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+            });
+        }
 
         // // The role assignment name will be created automatically. The swagger specification reads, "The name of the role assignment to create. It can be any valid GUID."
         // public virtual Response<RoleAssignment> CreateRoleAssignment(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) => null;
