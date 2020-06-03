@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobBaseClientTests : BlobTestBase
     {
         public BlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -4168,7 +4168,7 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            tags = BuildTags();
+            tags.Add("anotherTag", "anotherValue");
 
             // Act
             await blob.SetTagsAsync(
