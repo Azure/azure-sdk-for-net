@@ -16,6 +16,7 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\"value\"\"}", "application/json")]
         [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
         [TestCase("{\"json\"\n:\"value\"}", "application/json")]
         [TestCase("{\"json\" :\"value\"}", "application/json")]

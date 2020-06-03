@@ -19,11 +19,22 @@ namespace Azure.Core
     /// </summary>
     public class DynamicJson : IDynamicMetaObjectProvider
     {
-        private readonly JsonElement _element;
+        private readonly JsonElement? _element;
+        private readonly JsonValueKind _kind;
+        private Dictionary<string, DynamicJson>? _elements;
+        private List<dynami _elements;
+        private object? _value;
 
-        private DynamicJson(JsonElement element)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="element"></param>
+        protected DynamicJson(JsonElement element)
         {
             _element = element;
+            _kind = element.ValueKind;
+            if (element)
+            element.ValueKind.
         }
 
         /// <summary>
@@ -84,6 +95,11 @@ namespace Azure.Core
         }
 
         private object GetValueAt(int index)
+        {
+            return new DynamicJson(_element[index]);
+        }
+
+        private object SetValueAt(int index, object value)
         {
             return new DynamicJson(_element[index]);
         }
@@ -170,6 +186,23 @@ namespace Azure.Core
                 return getProperty;
             }
 
+            public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
+            {
+
+                if (indexes.Length != 1) throw new InvalidOperationException();
+                var index = indexes[0].Expression;
+
+                var targetObject = Expression.Convert(Expression, LimitType);
+                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetValueAt), BindingFlags.NonPublic | BindingFlags.Instance);
+                var arguments = new[] { index };
+
+                var getPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
+                var restrictions = binder.FallbackSetIndex(this, indexes).Restrictions; // TODO: all these restrictions are a hack. Tthey need to be cleaned up.
+                DynamicMetaObject getProperty = new DynamicMetaObject(getPropertyCall, restrictions);
+                return getProperty;
+
+                return base.BindSetIndex(binder, indexes, value);
+            }
         }
 
         private class Enumerable: IEnumerable<DynamicJson>

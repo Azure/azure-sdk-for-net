@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -115,6 +116,13 @@ namespace Azure.Core.Tests
         {
             dynamic dynamicJson = DynamicJson.Parse(json);
             return (T) dynamicJson;
+        }
+
+        internal class DynamicJsonSubclass : DynamicJson
+        {
+            protected DynamicJsonSubclass(JsonElement element) : base(element)
+            {
+            }
         }
     }
 }
