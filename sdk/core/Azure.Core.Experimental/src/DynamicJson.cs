@@ -21,8 +21,8 @@ namespace Azure.Core
     {
         private readonly JsonElement? _element;
         private readonly JsonValueKind _kind;
-        private Dictionary<string, DynamicJson>? _elements;
-        private List<dynami _elements;
+        private Dictionary<string, DynamicJson>? _objectRepresentation;
+        private List<DynamicJson> _listRepresentation;
         private object? _value;
 
         /// <summary>
@@ -33,7 +33,6 @@ namespace Azure.Core
         {
             _element = element;
             _kind = element.ValueKind;
-            if (element)
             element.ValueKind.
         }
 
