@@ -5,7 +5,7 @@
 Support ARC machines.
 
 ### Bug fixes
-None
+None 
 
 ### REST API version
 This version of the GuestConfiguration .NET client library targets version 2018-11-20 of the Azure GuestConfiguration REST API.
