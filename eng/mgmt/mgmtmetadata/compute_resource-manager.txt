@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/dochung4/azure-rest-api-specs/blob/compute-2020-06/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\azure-sdk-for-net\sdk
-2020-06-03 19:11:16 UTC
+2020-06-03 22:40:42 UTC
 Azure-rest-api-specs repository information
 GitHub fork: dochung4
 Branch:      compute-2020-06
-Commit:      f58f119558b9d9e10fc14d99ae448fcab42e9573
+Commit:      14c323867e063cd04c8f4764271dedb207d5275b
 AutoRest information
 Requested version: v2
 Bootstrapper version:    autorest@2.0.4413
