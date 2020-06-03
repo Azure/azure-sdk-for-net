@@ -81,14 +81,21 @@ namespace Compute.Tests
             };
         }
 
-        protected ImageReference GetPlatformVMImage(bool useWindowsImage)
+        protected ImageReference GetPlatformVMImage(bool useWindowsImage, bool smallDisk = false)
         {
             if (useWindowsImage)
             {
                 if (m_windowsImageReference == null)
                 {
                     Trace.TraceInformation("Querying available Windows Server image from PIR...");
-                    m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
+                    if (smallDisk)
+                    {
+                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2019-Datacenter-smalldisk");
+                    }
+                    else
+                    {
+                        m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
+                    }                    
                 }
                 return m_windowsImageReference;
             }
@@ -111,6 +118,17 @@ namespace Compute.Tests
                 {
                     Enabled = true,
                     StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                }
+            };
+        }
+
+        protected DiagnosticsProfile GetManagedDiagnosticsProfile()
+        {
+            return new DiagnosticsProfile
+            {
+                BootDiagnostics = new BootDiagnostics
+                {
+                    Enabled = true
                 }
             };
         }
@@ -219,7 +237,8 @@ namespace Compute.Tests
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null,
             string ppgName = null,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            bool? encryptionAtHostEnabled = null)
         {
             try
             {
@@ -260,6 +279,14 @@ namespace Compute.Tests
                     osDisk.DiffDiskSettings = new DiffDiskSettings {
                         Option = DiffDiskOptions.Local,
                         Placement = DiffDiskPlacement.ResourceDisk
+                    };
+                }
+
+                if (encryptionAtHostEnabled != null)
+                {
+                    inputVM.SecurityProfile = new SecurityProfile
+                    {
+                        EncryptionAtHost = encryptionAtHostEnabled.Value
                     };
                 }
 
@@ -311,7 +338,8 @@ namespace Compute.Tests
 
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
+                    hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled);
 
                 return getResponse;
             }
@@ -944,7 +972,8 @@ namespace Compute.Tests
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
-            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null)
+            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
+            bool? encryptionAtHostEnabled = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -997,6 +1026,15 @@ namespace Compute.Tests
                     else
                     {
                         Assert.Null(vm.StorageProfile.OsDisk.DiffDiskSettings);
+                    }
+
+                    if(encryptionAtHostEnabled != null)
+                    {
+                        Assert.True(vmOut.SecurityProfile.EncryptionAtHost == vm.SecurityProfile.EncryptionAtHost);
+                    }
+                    else
+                    {
+                        Assert.Null(vmOut.SecurityProfile?.EncryptionAtHost);
                     }
 
                     if (writeAcceleratorEnabled.HasValue)
@@ -1199,8 +1237,20 @@ namespace Compute.Tests
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
         }
 
-        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError)
+        /// <remarks>
+        /// BootDiagnosticsInstanceView properties will be null if VM is enabled with managed boot diagnostics
+        /// </remarks>
+        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError, bool enabledWithManagedBootDiagnostics = false)
         {
+            // VM with managed boot diagnostics will not return blob URIs or status in BootDiagnosticsInstanceView
+            if (enabledWithManagedBootDiagnostics)
+            {
+                Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.Status);
+                return;
+            }
+
             if (hasError)
             {
                 Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
@@ -1213,6 +1263,13 @@ namespace Compute.Tests
                 Assert.NotNull(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
                 Assert.Null(bootDiagnosticsInstanceView.Status);
             }
+        }
+
+        protected static void ValidateBootDiagnosticsData(RetrieveBootDiagnosticsDataResult bootDiagnosticsData)
+        {
+            Assert.NotNull(bootDiagnosticsData);
+            Assert.NotNull(bootDiagnosticsData.ConsoleScreenshotBlobUri);
+            Assert.NotNull(bootDiagnosticsData.SerialConsoleLogBlobUri);
         }
     }
 }

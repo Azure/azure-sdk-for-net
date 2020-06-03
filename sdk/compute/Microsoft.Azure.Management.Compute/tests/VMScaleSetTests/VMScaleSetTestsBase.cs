@@ -112,7 +112,8 @@ namespace Compute.Tests
             string machineSizeType = null,
             bool? enableUltraSSD = false,
             string diskEncryptionSetId = null,
-            AutomaticRepairsPolicy automaticRepairsPolicy = null)
+            AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            DiagnosticsProfile bootDiagnosticsProfile = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -219,6 +220,11 @@ namespace Compute.Tests
                 AutomaticRepairsPolicy = automaticRepairsPolicy
             };
 
+            if (bootDiagnosticsProfile != null)
+            {
+                vmScaleSet.VirtualMachineProfile.DiagnosticsProfile = bootDiagnosticsProfile;
+            }
+
             if (enableUltraSSD == true)
             {
                 vmScaleSet.AdditionalCapabilities = new AdditionalCapabilities
@@ -260,7 +266,9 @@ namespace Compute.Tests
             bool? enableUltraSSD = false,
             string diskEncryptionSetId = null,
             AutomaticRepairsPolicy automaticRepairsPolicy = null,
-            bool singlePlacementGroup = true)
+            bool? encryptionAtHostEnabled = null,
+            bool singlePlacementGroup = true,
+            DiagnosticsProfile bootDiagnosticsProfile = null)
         {
             try
             {
@@ -283,7 +291,9 @@ namespace Compute.Tests
                                                                                      enableUltraSSD: enableUltraSSD,
                                                                                      diskEncryptionSetId: diskEncryptionSetId,
                                                                                      automaticRepairsPolicy: automaticRepairsPolicy,
-                                                                                     singlePlacementGroup: singlePlacementGroup);
+                                                                                     encryptionAtHostEnabled: encryptionAtHostEnabled,
+                                                                                     singlePlacementGroup: singlePlacementGroup,
+                                                                                     bootDiagnosticsProfile: bootDiagnosticsProfile);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -366,7 +376,9 @@ namespace Compute.Tests
             bool? enableUltraSSD = false,
             string diskEncryptionSetId = null,
             AutomaticRepairsPolicy automaticRepairsPolicy = null,
-            bool singlePlacementGroup = true)
+            bool? encryptionAtHostEnabled = null,
+            bool singlePlacementGroup = true,
+            DiagnosticsProfile bootDiagnosticsProfile = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -392,10 +404,19 @@ namespace Compute.Tests
             inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
                 loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB,
-                machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD, diskEncryptionSetId: diskEncryptionSetId, automaticRepairsPolicy: automaticRepairsPolicy);
+                machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD, diskEncryptionSetId: diskEncryptionSetId, automaticRepairsPolicy: automaticRepairsPolicy,
+                bootDiagnosticsProfile: bootDiagnosticsProfile);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
+            }
+
+            if (encryptionAtHostEnabled != null)
+            {
+                inputVMScaleSet.VirtualMachineProfile.SecurityProfile = new SecurityProfile
+                {
+                    EncryptionAtHost = encryptionAtHostEnabled.Value
+                };
             }
 
             if (hasDiffDisks)

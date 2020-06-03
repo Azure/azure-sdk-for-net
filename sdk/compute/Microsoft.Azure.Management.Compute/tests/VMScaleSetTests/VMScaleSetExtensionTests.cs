@@ -149,7 +149,7 @@ namespace Compute.Tests
                     out inputVMScaleSet);
 
                 // Add an extension to the VMSS
-                VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension();
+                VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension(autoUpdateMinorVersion:false);
                 vmssExtension.ForceUpdateTag = "RerunExtension";
                 var response = m_CrpClient.VirtualMachineScaleSetExtensions.CreateOrUpdate(rgName, vmssName, vmssExtension.Name, vmssExtension);
                 ValidateVmssExtension(vmssExtension, response);
