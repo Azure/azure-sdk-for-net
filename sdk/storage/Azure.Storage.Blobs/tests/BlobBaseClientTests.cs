@@ -1090,6 +1090,75 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destBlob.SetTagsAsync(tags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                srcBlob.Uri,
+                options: options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.StartCopyFromUriAsync(
+                            srcBlob.Uri,
+                            options: options),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_AccessTier()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1657,6 +1726,60 @@ namespace Azure.Storage.Blobs.Test
                         options),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await destBlob.SetTagsAsync(tags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options: options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SyncCopyFromUriAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlobBaseClient destBlob = await GetNewBlobClient(test.Container);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                DestinationConditions = new BlobRequestConditions
+                {
+                    TagConditions = "\"coolTag\" = 'true'"
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncCopyFromUriAsync(
+                    srcBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
