@@ -60,7 +60,7 @@ namespace Compute.Tests
                     ValidateDedicatedHostGroup(createdDHG, returnedDHG);
 
                     //Create DedicatedHost within the DedicatedHostGroup and validate
-                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName);
+                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv3-Type1");
                     var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
                     ValidateDedicatedHost(createdDH, returnedDH);
 
@@ -104,7 +104,7 @@ namespace Compute.Tests
                     ValidateDedicatedHostGroup(createdDHG, returnedDHG);
 
                     //Create DedicatedHost within the DedicatedHostGroup and validate
-                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName);
+                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv3-Type1");
                     var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
                     ValidateDedicatedHost(createdDH, returnedDH);
 

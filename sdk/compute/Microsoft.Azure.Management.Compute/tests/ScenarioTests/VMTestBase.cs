@@ -238,7 +238,10 @@ namespace Compute.Tests
             IList<string> zones = null,
             string ppgName = null,
             string diskEncryptionSetId = null,
-            bool? encryptionAtHostEnabled = null)
+            bool? encryptionAtHostEnabled = null,
+            string dedicatedHostGroupReferenceId = null,
+            string dedicatedHostGroupName = null,
+            string dedicatedHostName = null)
         {
             try
             {
@@ -280,6 +283,14 @@ namespace Compute.Tests
                         Option = DiffDiskOptions.Local,
                         Placement = DiffDiskPlacement.ResourceDisk
                     };
+                }
+
+                if (dedicatedHostGroupReferenceId != null)
+                {
+                    CreateDedicatedHostGroup(rgName, dedicatedHostGroupName, availabilityZone: null);
+                    CreateDedicatedHost(rgName, dedicatedHostGroupName, dedicatedHostName, "DSv3-Type1");
+                    inputVM.HostGroup = new CM.SubResource { Id = dedicatedHostGroupReferenceId };
+                    inputVM.AvailabilitySet = null;
                 }
 
                 if (encryptionAtHostEnabled != null)
@@ -325,12 +336,13 @@ namespace Compute.Tests
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
-                bool hasUserDefinedAvSet = zones == null && !(VirtualMachinePriorityTypes.Spot.Equals(inputVM.Priority) || VirtualMachinePriorityTypes.Low.Equals(inputVM.Priority));
+                bool hasUserDefinedAvSet = inputVM.AvailabilitySet != null;
                 if (hasUserDefinedAvSet)
                 {
                     Assert.True(createOrUpdateResponse.AvailabilitySet.Id.ToLowerInvariant() == asetId.ToLowerInvariant());
                 }
-                else if (zones != null)
+
+                if (zones != null)
                 {
                     Assert.True(createOrUpdateResponse.Zones.Count == 1);
                     Assert.True(createOrUpdateResponse.Zones.FirstOrDefault() == zones.FirstOrDefault());
@@ -339,7 +351,8 @@ namespace Compute.Tests
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
-                    hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled);
+                    hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled,
+                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
 
                 return getResponse;
             }
@@ -955,7 +968,7 @@ namespace Compute.Tests
             return m_CrpClient.DedicatedHostGroups.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostGroup);
         }
 
-        protected DedicatedHost CreateDedicatedHost(string rgName, string dedicatedHostGroupName, string dedicatedHostName)
+        protected DedicatedHost CreateDedicatedHost(string rgName, string dedicatedHostGroupName, string dedicatedHostName, string dedicatedHostSku)
         {
             //Check if DedicatedHostGroup already exist and if does not exist, create one.
             DedicatedHostGroup existingDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dedicatedHostGroupName);
@@ -968,13 +981,13 @@ namespace Compute.Tests
                 {
                     Location = m_location,
                     Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } },
-                    Sku = new CM.Sku() { Name = "ESv3-Type1" }
+                    Sku = new CM.Sku() { Name = dedicatedHostSku }
                 });
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
-            bool? encryptionAtHostEnabled = null)
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1167,25 +1180,35 @@ namespace Compute.Tests
             {
                 Assert.Null(vmOut.ProximityPlacementGroup);
             }
+
+            if (expectedDedicatedHostGroupReferenceId != null)
+            {
+                Assert.NotNull(vmOut.HostGroup);
+                Assert.Equal(expectedDedicatedHostGroupReferenceId, vmOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmOut.HostGroup);
+            }
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut, bool hasManagedDisks = false,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
             Assert.NotNull(vmOut.InstanceView);
-            ValidateVMInstanceView(vmIn, vmOut.InstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
+            ValidateVMInstanceView(vmIn, vmOut.InstanceView, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId);
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
             ValidateVMInstanceView(vmInstanceView, hasManagedDisks, 
                 !hasManagedDisks ? vmIn.StorageProfile.OsDisk.Name : null,
-                expectedComputerName, expectedOSName, expectedOSVersion);
+                expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId: expectedDedicatedHostReferenceId);
         }
 
         private void ValidateVMInstanceView(VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false, string osDiskName = null,
-            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedDedicatedHostReferenceId = null)
         {
             Assert.Contains(vmInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
 
@@ -1219,6 +1242,11 @@ namespace Compute.Tests
             if (expectedOSVersion != null)
             {
                 Assert.Equal(expectedOSVersion, vmInstanceView.OsVersion, StringComparer.OrdinalIgnoreCase);
+            }
+            
+            if (expectedDedicatedHostReferenceId != null)
+            {
+                Assert.Equal(expectedDedicatedHostReferenceId, vmInstanceView.AssignedHost, StringComparer.OrdinalIgnoreCase);
             }
         }
 
