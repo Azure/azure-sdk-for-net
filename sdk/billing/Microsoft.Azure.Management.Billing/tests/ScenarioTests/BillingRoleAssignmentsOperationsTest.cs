@@ -16,11 +16,11 @@ namespace Billing.Tests.ScenarioTests
     public class BillingRoleAssignmentsOperationsTest : TestBase
     {
         private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
-        private const string BillingAccountRoleAssignmentName = "50000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string BillingAccountRoleAssignmentName = "50000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523";
         private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
-        private const string BillingProfileRoleAssignmentName = "40000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string BillingProfileRoleAssignmentName = "40000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523";
         private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
-        private const string InvoiceSectionRoleAssignmentName = "30000000-aaaa-bbbb-cccc-100000000000_5c4fad53-9cfb-4e22-9635-e7f420ab3ca7";
+        private const string InvoiceSectionRoleAssignmentName = "30000000-aaaa-bbbb-cccc-100000000000_9ae0765f-fe58-40d0-9657-55bd0c421523";
 
         [Fact]
         public void GetBillingRoleAssignmentByBillingAccountTest()
