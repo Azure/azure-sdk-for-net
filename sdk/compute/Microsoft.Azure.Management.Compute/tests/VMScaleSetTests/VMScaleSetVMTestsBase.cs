@@ -10,7 +10,8 @@ namespace Compute.Tests
 {
     public class VMScaleSetVMTestsBase : VMScaleSetTestsBase
     {
-        protected void ValidateVMScaleSetVM(VirtualMachineScaleSet vmScaleSet, string instanceId, VirtualMachineScaleSetVM vmScaleSetVMOut, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSetVM(VirtualMachineScaleSet vmScaleSet, string instanceId, VirtualMachineScaleSetVM vmScaleSetVMOut, bool hasManagedDisks = false,
+            string dedicatedHostGroupReferenceId = null)
         {
             VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks);
 
@@ -86,7 +87,8 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false,
+            string dedicatedHostGroupReferenceId = null)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
             Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
@@ -102,6 +104,11 @@ namespace Compute.Tests
                 Assert.NotNull(diskInstanceView.Statuses[0].DisplayStatus);
                 Assert.NotNull(diskInstanceView.Statuses[0].Code);
                 Assert.NotNull(diskInstanceView.Statuses[0].Level);
+            }
+
+            if (dedicatedHostGroupReferenceId != null)
+            {
+                Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetVMInstanceView.AssignedHost);
             }
         }
 

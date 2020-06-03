@@ -223,6 +223,25 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_AutomaticPlacementOnDedicatedHostGroup")]
+        public void TestVMScaleSetScenarioOperations_AutomaticPlacementOnDedicatedHostGroup()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ScheduledEvents")]
         public void TestVMScaleSetScenarioOperations_ScheduledEvents()
         {
@@ -456,7 +475,7 @@ namespace Compute.Tests
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
-            bool? encryptionAtHostEnabled = null)
+            bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false)
         {
             EnsureClientsInitialized(context);
 
@@ -489,6 +508,15 @@ namespace Compute.Tests
                     ppgId = CreateProximityPlacementGroup(rgName, ppgName);
                 }
 
+                string dedicatedHostGroupName = null, dedicatedHostName = null, dedicatedHostGroupReferenceId = null, dedicatedHostReferenceId = null;
+                if (isAutomaticPlacementOnDedicatedHostGroupScenario)
+                {
+                    dedicatedHostGroupName = ComputeManagementTestUtilities.GenerateName("dhgtest");
+                    dedicatedHostName = ComputeManagementTestUtilities.GenerateName("dhtest");
+                    dedicatedHostGroupReferenceId = Helpers.GetDedicatedHostGroupRef(m_subId, rgName, dedicatedHostGroupName);
+                    dedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
+                }
+
                 VirtualMachineScaleSet getResponse = CreateVMScaleSet_NoAsyncTracking(
                     rgName,
                     vmssName,
@@ -511,7 +539,10 @@ namespace Compute.Tests
                     ppgId: ppgId,
                     enableUltraSSD: enableUltraSSD,
                     diskEncryptionSetId: diskEncryptionSetId,
-                    encryptionAtHostEnabled: encryptionAtHostEnabled);
+                    encryptionAtHostEnabled: encryptionAtHostEnabled,
+                    dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
+                    dedicatedHostGroupName: dedicatedHostGroupName,
+                    dedicatedHostName: dedicatedHostName);
 
                 if (diskEncryptionSetId != null)
                 {
@@ -531,7 +562,7 @@ namespace Compute.Tests
                         "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
-                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId);
+                ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
 
                 var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                 Assert.NotNull(getInstanceViewResponse);
@@ -567,6 +598,9 @@ namespace Compute.Tests
                         ValidateVMScaleSetVM(inputVMScaleSet, instanceId, getVMResponse, hasManagedDisks);
                     }
                 }
+
+                VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
+                ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostGroupReferenceId);
 
                 vmScaleSetValidator?.Invoke(getResponse);
 

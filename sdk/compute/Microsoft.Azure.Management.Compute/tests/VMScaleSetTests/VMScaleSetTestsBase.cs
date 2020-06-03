@@ -268,7 +268,10 @@ namespace Compute.Tests
             AutomaticRepairsPolicy automaticRepairsPolicy = null,
             bool? encryptionAtHostEnabled = null,
             bool singlePlacementGroup = true,
-            DiagnosticsProfile bootDiagnosticsProfile = null)
+            DiagnosticsProfile bootDiagnosticsProfile = null,
+            string dedicatedHostGroupReferenceId = null,
+            string dedicatedHostGroupName = null,
+            string dedicatedHostName = null)
         {
             try
             {
@@ -480,7 +483,8 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null)
+        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null,
+            string dedicatedHostGroupReferenceId = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -700,6 +704,11 @@ namespace Compute.Tests
             if(ppgId != null)
             {
                 Assert.Equal(ppgId, vmScaleSetOut.ProximityPlacementGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+
+            if (dedicatedHostGroupReferenceId != null)
+            {
+                Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
             }
         }
 
