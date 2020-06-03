@@ -32,6 +32,12 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name='endpoint'>The Azure digital twins service instance URI to connect to.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
+        /// <seealso cref="DigitalTwinsClient(Uri, TokenCredential)">
+        /// This other constructor provides an opportunity to override default behavior, including specifying API version,
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// </seealso>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret">
         /// // By using the ClientSecretCredential, a specified application Id can login using a
@@ -53,11 +59,17 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class.
+        /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class, with options.
         /// </summary>
         /// <param name='endpoint'>The Azure digital twins service instance URI to connect to.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
-        /// <param name="options"> Options that allow configuration of requests sent to the digital twins service.</param>
+        /// <param name="options">Options that allow configuration of requests sent to the digital twins service.</param>
+        /// <remarks>
+        /// The options parameter provides an opportunity to override default behavior, including specifying API version,
+        /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
+        /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
+        /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin">
         /// // This illustrates how to specify client options, in this case, by providing an
@@ -96,11 +108,11 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class.
+        /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class, provided for unit testing purposes only.
         /// </summary>
         protected DigitalTwinsClient()
         {
-            // This constructor only exists for mocking purposes in unit tests. It should not be used otherwise
+            // This constructor only exists for mocking purposes in unit tests. It should not be used otherwise.
         }
 
         /// <summary>
