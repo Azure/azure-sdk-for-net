@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// The instance view of a dedicated host.
     /// </summary>
-    public partial class DedicatedHostInstanceViewWithName : Resource
+    public partial class DedicatedHostInstanceViewWithName : DedicatedHostInstanceView
     {
         /// <summary>
         /// Initializes a new instance of the DedicatedHostInstanceViewWithName
@@ -32,14 +33,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DedicatedHostInstanceViewWithName
         /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        public DedicatedHostInstanceViewWithName(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(location, id, name, type, tags)
+        /// <param name="assetId">Specifies the unique id of the dedicated
+        /// physical machine on which the dedicated host resides.</param>
+        /// <param name="availableCapacity">Unutilized capacity of the
+        /// dedicated host.</param>
+        /// <param name="statuses">The resource status information.</param>
+        /// <param name="name">The name of the dedicated host.</param>
+        public DedicatedHostInstanceViewWithName(string assetId = default(string), DedicatedHostAvailableCapacity availableCapacity = default(DedicatedHostAvailableCapacity), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), string name = default(string))
+            : base(assetId, availableCapacity, statuses)
         {
+            Name = name;
             CustomInit();
         }
 
@@ -49,14 +52,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the name of the dedicated host.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
     }
 }
