@@ -303,6 +303,52 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// ChangeFeed constant values.
+        /// </summary>
+        internal static class ChangeFeed
+        {
+            public const string ChangeFeedContainerName = "$blobchangefeed";
+            public const string SegmentPrefix = "idx/segments/";
+            public const string InitalizationManifestPath = "/0000/";
+            public const string InitalizationSegment = "1601";
+            public const string MetaSegmentsPath = "meta/segments.json";
+            public const long ChunkBlockDownloadSize = MB;
+            public const int DefaultPageSize = 5000;
+
+            internal static class Event
+            {
+                public const string Topic = "topic";
+                public const string Subject = "subject";
+                public const string EventType = "eventType";
+                public const string EventTime = "eventTime";
+                public const string EventId = "id";
+                public const string Data = "data";
+                public const string DataVersion = "dataVersion";
+                public const string MetadataVersion = "metadataVersion";
+            }
+
+            internal static class EventData
+            {
+                public const string Api = "api";
+                public const string ClientRequestId = "clientRequestId";
+                public const string RequestId = "requestId";
+                public const string Etag = "etag";
+                public const string ContentType = "contentType";
+                public const string ContentLength = "contentLength";
+                public const string BlobType = "blobType";
+                public const string BlockBlob = "BlockBlob";
+                public const string PageBlob = "pageBlob";
+                public const string AppendBlob = "AppendBlob";
+                public const string ContentOffset = "contentOffset";
+                public const string DestinationUrl = "destinationUrl";
+                public const string SourceUrl = "sourceUrl";
+                public const string Url = "url";
+                public const string Recursive = "recursive";
+                public const string Sequencer = "sequencer";
+            }
+        }
+
+        /// <summary>
         /// Quick Query constant values.
         /// </summary>
         internal static class QuickQuery
