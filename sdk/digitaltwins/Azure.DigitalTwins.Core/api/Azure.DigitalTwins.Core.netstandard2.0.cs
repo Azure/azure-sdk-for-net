@@ -125,6 +125,8 @@ namespace Azure.DigitalTwins.Core.Serialization
     public partial class BasicDigitalTwin : Azure.DigitalTwins.Core.Serialization.ModelProperties
     {
         public BasicDigitalTwin() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
+        public string ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
     }

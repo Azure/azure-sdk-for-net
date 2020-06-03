@@ -15,6 +15,9 @@ namespace Azure.DigitalTwins.Core.Samples
         [JsonPropertyName("$dtId")]
         public string Id { get; set; }
 
+        [JsonPropertyName("$etag")]
+        public string ETag { get; set; }
+
         [JsonPropertyName("$metadata")]
         public CustomDigitalTwinMetadata Metadata { get; set; }
 

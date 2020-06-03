@@ -9,12 +9,14 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// An optional, helper class for deserializing a digital twin.
     /// </summary>
     /// <example>
+    /// Here's an example of  how to use the BasicDigitalTwin helper class to serialize and create a digital twin.
+    ///
     /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin">
-    /// // Create digital twin with Component payload using the BasicDigitalTwin serialization helper
+    /// // Create digital twin with component payload using the BasicDigitalTwin serialization helper
     ///
     /// var basicDigitalTwin = new BasicDigitalTwin
     /// {
-    ///     Id = dtId1
+    ///     Id = basicDtId
     /// };
     /// basicDigitalTwin.Metadata.ModelId = modelId;
     /// basicDigitalTwin.CustomProperties.Add(&quot;Prop1&quot;, &quot;Value1&quot;);
@@ -27,10 +29,28 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///
     /// basicDigitalTwin.CustomProperties.Add(&quot;Component1&quot;, componentMetadata);
     ///
-    /// string dt1Payload = JsonSerializer.Serialize(basicDigitalTwin);
+    /// string basicDtPayload = JsonSerializer.Serialize(basicDigitalTwin);
     ///
-    /// Response&lt;string&gt; createDt1Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId1, dt1Payload).ConfigureAwait(false);
-    /// Console.WriteLine($&quot;Created digital twin {dtId1} with response {createDt1Response.GetRawResponse().Status}.&quot;);
+    /// Response&lt;string&gt; createBasicDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(basicDtId, basicDtPayload).ConfigureAwait(false);
+    /// Console.WriteLine($&quot;Created digital twin {basicDtId} with response {createBasicDtResponse.GetRawResponse().Status}.&quot;);
+    /// </code>
+    ///
+    /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
+    ///
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+    /// Response&lt;string&gt; getBasicDtResponse = await DigitalTwinsClient.GetDigitalTwinAsync(basicDtId).ConfigureAwait(false);
+    /// if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
+    /// {
+    ///     BasicDigitalTwin basicDt = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(getBasicDtResponse.Value);
+    ///
+    ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+    ///     string component1RawText = ((JsonElement)basicDt.CustomProperties[&quot;Component1&quot;]).GetRawText();
+    ///     var component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
+    ///
+    ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}  with ETag {basicDt.ETag} &quot; +
+    ///         $&quot;and Prop1 &apos;{basicDt.CustomProperties[&quot;Prop1&quot;]}&apos;, Prop2 &apos;{basicDt.CustomProperties[&quot;Prop2&quot;]}&apos;, &quot; +
+    ///         $&quot;ComponentProp1 &apos;{component1[&quot;ComponentProp1&quot;]}&apos;, ComponentProp2 &apos;{component1[&quot;ComponentProp2&quot;]}&apos;&quot;);
+    /// }
     /// </code>
     /// </example>
     public class BasicDigitalTwin : ModelProperties
@@ -40,5 +60,11 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// </summary>
         [JsonPropertyName("$dtId")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
+        /// </summary>
+        [JsonPropertyName("$etag")]
+        public string ETag { get; set; }
     }
 }
