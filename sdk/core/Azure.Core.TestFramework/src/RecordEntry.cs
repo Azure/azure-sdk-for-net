@@ -194,7 +194,7 @@ namespace Azure.Core.TestFramework
                         // Make sure we can replay JSON is exactly the same as the source
                         // for the case where service response was pre-formatted
                         // fallback to generic string writing
-                        var memoryStream = new MemoryStream();
+                        using var memoryStream = new MemoryStream();
                         // Settings of this writer should be in sync with the one used in deserialiation
                         using (var reformattedWriter = new Utf8JsonWriter(memoryStream, writerOptions))
                         {

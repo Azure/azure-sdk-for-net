@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using System.IO;
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -29,9 +28,6 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public bool SaveDebugRecordingsOnFailure { get; set; } = false;
 #endif
-
-        public JsonWriterOptions RequestSerializationOptions { get; set; } = new JsonWriterOptions();
-        public JsonWriterOptions ResponseSerializationOptions { get; set; } = new JsonWriterOptions();
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
