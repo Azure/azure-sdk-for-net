@@ -37,14 +37,22 @@ namespace Azure.Data.Tables.Queryable
         {
             BinaryExpression visited = (BinaryExpression)base.VisitBinary(b);
 
-            if (visited.NodeType == ExpressionType.Equal)
+            switch (visited.NodeType)
             {
-                Expression normalizedLeft = UnwrapObjectConvert(visited.Left);
-                Expression normalizedRight = UnwrapObjectConvert(visited.Right);
-                if (normalizedLeft != visited.Left || normalizedRight != visited.Right)
-                {
-                    visited = CreateRelationalOperator(ExpressionType.Equal, normalizedLeft, normalizedRight);
-                }
+                case ExpressionType.Equal:
+                case ExpressionType.NotEqual:
+                case ExpressionType.LessThan:
+                case ExpressionType.LessThanOrEqual:
+                case ExpressionType.GreaterThan:
+                case ExpressionType.GreaterThanOrEqual:
+
+                    Expression normalizedLeft = UnwrapObjectConvert(visited.Left);
+                    Expression normalizedRight = UnwrapObjectConvert(visited.Right);
+                    if (normalizedLeft != visited.Left || normalizedRight != visited.Right)
+                    {
+                        visited = CreateRelationalOperator(visited.NodeType, normalizedLeft, normalizedRight);
+                    }
+                    break;
             }
 
             if (_patterns.TryGetValue(visited.Left, out Pattern pattern) && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
@@ -84,7 +92,7 @@ namespace Azure.Data.Tables.Queryable
                 }
             }
 
-            while (ExpressionType.Convert == input.NodeType && typeof(object) == input.Type)
+            while (ExpressionType.Convert == input.NodeType)
             {
                 input = ((UnaryExpression)input).Operand;
             }
@@ -132,6 +140,11 @@ namespace Azure.Data.Tables.Queryable
             if (visited.Method.IsStatic && visited.Method.Name == "Compare" && visited.Arguments.Count > 1 && visited.Method.ReturnType == typeof(int))
             {
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
+            }
+
+            if (visited.Method == ReflectionUtil.DictionaryGetItemMethodInfo && visited.Arguments.Count == 1 && visited.Arguments[0] is ConstantExpression ce)
+            {
+                return visited;
             }
 
             throw new NotSupportedException($"Method {visited.Method.Name} not supported.");

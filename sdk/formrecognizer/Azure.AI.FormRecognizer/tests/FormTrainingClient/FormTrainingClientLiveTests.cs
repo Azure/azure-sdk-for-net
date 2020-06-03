@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl);
+            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
 
             await operation.WaitForCompletionAsync();
 
@@ -256,10 +256,10 @@ namespace Azure.AI.FormRecognizer.Tests
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceID, region);
 
             Assert.IsNotNull(targetAuth.ModelId);
-            Assert.IsNotNull(targetAuth._accessToken);
+            Assert.IsNotNull(targetAuth.AccessToken);
             Assert.IsNotNull(targetAuth.ExpiresOn);
-            Assert.AreEqual(resourceID, targetAuth._resourceId);
-            Assert.AreEqual(region, targetAuth._region);
+            Assert.AreEqual(resourceID, targetAuth.ResourceId);
+            Assert.AreEqual(region, targetAuth.Region);
         }
 
         [Test]
@@ -278,9 +278,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(targetAuth.ModelId, targetAuthFromJson.ModelId);
             Assert.AreEqual(targetAuth.ExpiresOn, targetAuthFromJson.ExpiresOn);
-            Assert.AreEqual(targetAuth._accessToken, targetAuthFromJson._accessToken);
-            Assert.AreEqual(targetAuth._resourceId, targetAuthFromJson._resourceId);
-            Assert.AreEqual(targetAuth._region, targetAuthFromJson._region);
+            Assert.AreEqual(targetAuth.AccessToken, targetAuthFromJson.AccessToken);
+            Assert.AreEqual(targetAuth.ResourceId, targetAuthFromJson.ResourceId);
+            Assert.AreEqual(targetAuth.Region, targetAuthFromJson.Region);
         }
     }
 }

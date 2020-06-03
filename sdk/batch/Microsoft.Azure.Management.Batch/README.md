@@ -5,7 +5,8 @@
     * Add new APIs as path-verb pairs in the Swagger specification.
     * Add/remove properties on existing entity types in the Swagger specification.
 2. Regenerate the SDK based using [AutoRest](https://github.com/Azure/autorest) on the updated Swagger specification:
-    * `Start-AutoRestCodeGeneration -SdkRepoRootPath <path to this repo root> -ResourceProvider "batch/resource-manager" -AutoRestVersion "latest" -SdkGenerationDirectory "<path to this repo root>\sdk\batch\Microsoft.Azure.Management.Batch\src\generated" -ConfigFileTag "package-2020-03"`
+    * See this document for more information: https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md#sdk-generation-from-updated-spec
+    * Run the command from the root of the repo: `sdk/batch/Microsoft.Azure.Management.Batch/src/generate.ps1` 
 3. Add new tests for your new models and APIs. There are two types of tests, "recorded" tests and unit tests:
     * Recorded tests are run live and the request/response payloads are recorded and then replayed for subsequent runs.
     * Unit tests are in-memory tests which never actually make a REST call.

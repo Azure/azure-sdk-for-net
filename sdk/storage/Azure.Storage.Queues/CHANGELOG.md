@@ -3,6 +3,9 @@
 ## 12.4.0-preview.1 (Unreleased)
 
 
+## 12.3.1 (2020-06)
+- This release contains bug fixes to improve quality.
+
 ## 12.3.0 (2020-03)
 - Added Exists(), CreateIfNotExists() and DeleteIfNotExists() to QueueClient.
 

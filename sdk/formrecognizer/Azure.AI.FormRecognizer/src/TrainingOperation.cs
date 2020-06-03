@@ -53,13 +53,6 @@ namespace Azure.AI.FormRecognizer.Training
         public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrainingOperation"/> class for mocking.
-        /// </summary>
-        protected TrainingOperation()
-        {
-        }
-
         internal TrainingOperation(string location, ServiceRestClient allOperations)
         {
             _serviceClient = allOperations;

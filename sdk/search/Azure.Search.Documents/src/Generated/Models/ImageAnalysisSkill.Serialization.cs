@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in VisualFeatures)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VisualFeature> array = new List<VisualFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVisualFeature());
+                        array.Add(new VisualFeature(item.GetString()));
                     }
                     visualFeatures = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<ImageDetail> array = new List<ImageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToImageDetail());
+                        array.Add(new ImageDetail(item.GetString()));
                     }
                     details = array;
                     continue;

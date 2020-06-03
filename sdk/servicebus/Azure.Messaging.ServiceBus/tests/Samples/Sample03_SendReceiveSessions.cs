@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -51,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 byte[] state = await receiver.GetSessionStateAsync();
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.AsBytes().ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
                 Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state);
             }
@@ -97,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Console.WriteLine(receivedMessage.SessionId);
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.AsBytes().ToArray());
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }

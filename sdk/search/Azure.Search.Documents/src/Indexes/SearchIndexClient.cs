@@ -10,7 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Azure Cognitive Search client that can be used to manage indexes on a Search service.

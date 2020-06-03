@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using Azure.Messaging.ServiceBus.Filters;
 using NUnit.Framework;
 
