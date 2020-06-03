@@ -68,16 +68,16 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Gets a list of <see cref="RoleDefinition"/>.
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual Pageable<RoleDefinition> GetRoleDefinitions(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleDefinitions(scope.AbsoluteUri, cancellationToken);
 
         /// <summary>
-        /// Gets a list of <see cref="RoleDefinition"/>.
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
@@ -96,19 +96,19 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Gets a list of <see cref="RoleDefinition"/>.
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleDefinitionsAsync(scope.AbsoluteUri, cancellationToken);
 
         /// <summary>
-        /// Gets a list of <see cref="RoleDefinition"/>.
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(string scope, CancellationToken cancellationToken = default)
         {
@@ -126,7 +126,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        ///
+        /// Gets the <see cref="RoleAssignment"/>s for a scope.
         /// </summary>
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
@@ -154,19 +154,19 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        ///
+        /// Gets the <see cref="RoleAssignment"/>s for a scope.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleAssignmentsAsync(scope.AbsoluteUri, cancellationToken);
 
         /// <summary>
-        ///
+        /// Gets the <see cref="RoleAssignment"/>s for a scope.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
         public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(string scope, CancellationToken cancellationToken = default)
         {
@@ -183,16 +183,79 @@ namespace Azure.Security.KeyVault.Administration
             });
         }
 
-        // // The role assignment name will be created automatically. The swagger specification reads, "The name of the role assignment to create. It can be any valid GUID."
-        // public virtual Response<RoleAssignment> CreateRoleAssignment(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) => null;
-        // public virtual Response<RoleAssignment> CreateRoleAssignment(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) => null;
-        // public virtual Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) => null;
-        // public virtual Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) => null;
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Response<RoleAssignment> CreateRoleAssignment(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            CreateRoleAssignment(scope.AbsoluteUri, properties, cancellationToken);
 
-        // public virtual Response<RoleAssignment> GetRoleAssignment(string name, CancellationToken cancellationToken = default) => null;
-        // public virtual Task<Response<RoleAssignment>> GetRoleAssignmentAsync(string name, CancellationToken cancellation = default) => null;
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="properties"> Properties for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        public virtual Response<RoleAssignment> CreateRoleAssignment(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            _assignmentsRestClient.Create(VaultUri.AbsoluteUri, scope, Guid.NewGuid().ToString(), new RoleAssignmentCreateParameters(properties), cancellationToken);
 
-        // public virtual Response<RoleAssignment> DeleteRoleAssignment(string name, CancellationToken cancellationToken = default) => null;
-        // public virtual Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(string name, CancellationToken cancellation = default) => null;
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="properties"> Properties for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope.AbsoluteUri, Guid.NewGuid().ToString(), new RoleAssignmentCreateParameters(properties), cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="properties"> Properties for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope, Guid.NewGuid().ToString(), new RoleAssignmentCreateParameters(properties), cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Get the specified role assignment.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RoleAssignment> GetRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
+            _assignmentsRestClient.Get(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken);
+
+        /// <summary>
+        /// Get the specified role assignment.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignment>> GetRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
+            await _assignmentsRestClient.GetAsync(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Delete the specified role assignment.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RoleAssignment> DeleteRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
+            _assignmentsRestClient.Delete(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken);
+
+        /// <summary>
+        /// Delete the specified role assignment.
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
+            await _assignmentsRestClient.DeleteAsync(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken)
+                .ConfigureAwait(false);
     }
 }
