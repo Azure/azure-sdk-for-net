@@ -197,8 +197,8 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup", vmSize: VirtualMachineSizeTypes.StandardDS148V2, hasManagedDisks: true,
-                   hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
+                    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true);
             }
             finally
             {
@@ -227,7 +227,8 @@ namespace Compute.Tests
 
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null)
+            bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
+            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -239,13 +240,21 @@ namespace Compute.Tests
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
-                string ppgName = null;
-                string expectedPpgReferenceId = null;
+                string ppgName = null, expectedPpgReferenceId = null;
+                string dedicatedHostGroupName = null, dedicatedHostName = null, expectedDedicatedHostGroupReferenceId = null, expectedDedicatedHostReferenceId = null;
 
                 if (isPpgScenario)
                 {
                     ppgName = ComputeManagementTestUtilities.GenerateName("ppgtest");
                     expectedPpgReferenceId = Helpers.GetProximityPlacementGroupRef(m_subId, rgName, ppgName);
+                }
+
+                if (isAutomaticPlacementOnDedicatedHostGroupScenario)
+                {
+                    dedicatedHostGroupName = ComputeManagementTestUtilities.GenerateName("dhgtest");
+                    dedicatedHostName = ComputeManagementTestUtilities.GenerateName("dhtest");
+                    expectedDedicatedHostGroupReferenceId = Helpers.GetDedicatedHostGroupRef(m_subId, rgName, dedicatedHostGroupName);
+                    expectedDedicatedHostReferenceId = Helpers.GetDedicatedHostRef(m_subId, rgName, dedicatedHostGroupName, dedicatedHostName);
                 }
 
                 VirtualMachine inputVM;
@@ -258,7 +267,8 @@ namespace Compute.Tests
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
-                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled);
+                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, dedicatedHostGroupReferenceId: expectedDedicatedHostGroupReferenceId,
+                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
@@ -280,19 +290,19 @@ namespace Compute.Tests
                             "DataDisks.ManagedDisk.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
                     }
                     
-                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
+                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId);
 
                     var getVMInstanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
                     Assert.True(getVMInstanceViewResponse != null, "VM in InstanceView");
-                    ValidateVMInstanceView(inputVM, getVMInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion);
+                    ValidateVMInstanceView(inputVM, getVMInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedDedicatedHostReferenceId);
 
-                    bool hasUserDefinedAS = zones == null;
+                    bool hasUserDefinedAS = inputVM.AvailabilitySet != null;
 
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
                     ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
                         expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId,
-                        encryptionAtHostEnabled: encryptionAtHostEnabled);
+                        encryptionAtHostEnabled: encryptionAtHostEnabled, expectedDedicatedHostGroupReferenceId: expectedDedicatedHostGroupReferenceId);
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, 
