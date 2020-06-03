@@ -12,8 +12,9 @@ namespace GuestConfiguration.Tests.ScenarioTests
 
     public class AutomationTest 
     {
-        private const string ResourceGroupName = "vivga";
-        private const string VMName = "vivga0";
+        private const string ResourceGroupName = "geTestResourceGroup002";
+        private const string AzureVMName = "GeWin20200507";
+        private const string HybridMachineName = "WIN-9DFUIQ7NP1B";
         private const string AssignmentName = "AuditSecureProtocol";
 
         [Fact]
@@ -25,7 +26,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 {
                     var gcAssignmentToCreateDefinition = new GuestConfigurationAssignmentForPutDefinition(
                         ResourceGroupName,
-                        VMName,
+                        AzureVMName,
                         new GuestConfigurationAssignment(name: AssignmentName,
                         location: "westcentralus",
                         properties: new GuestConfigurationAssignmentProperties()
@@ -80,7 +81,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 {
                     var gcAssignmentToCreateDefinition = new GuestConfigurationAssignmentForPutDefinition(
                         ResourceGroupName,
-                        VMName,
+                        HybridMachineName,
                         new GuestConfigurationAssignment(name: AssignmentName,
                         location: "westcentralus",
                         properties: new GuestConfigurationAssignmentProperties()
@@ -95,33 +96,33 @@ namespace GuestConfiguration.Tests.ScenarioTests
                      );
 
                     // create a new guest configuration assignment
-                    var gcAssignmentCreated = GuestConfigurationAssignmentsOperationsExtensions.CreateOrUpdate(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                    var gcHCRPAssignmentCreated = GuestConfigurationHCRPAssignmentsOperationsExtensions.CreateOrUpdate(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
                         gcAssignmentToCreateDefinition.Parameters.Name,
                         gcAssignmentToCreateDefinition.Parameters,
                         gcAssignmentToCreateDefinition.ResourceGroupName,
                         gcAssignmentToCreateDefinition.VmName);
 
-                    Assert.NotNull(gcAssignmentCreated);
+                    Assert.NotNull(gcHCRPAssignmentCreated);
 
                     // Get created guest configuration assignment
-                    var gcAssignmentRetrieved = GuestConfigurationAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                    var gcHCRPAssignmentRetrieved = GuestConfigurationHCRPAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
                         gcAssignmentToCreateDefinition.ResourceGroupName,
                         gcAssignmentToCreateDefinition.Parameters.Name,
                         gcAssignmentToCreateDefinition.VmName);
 
-                    Assert.NotNull(gcAssignmentRetrieved);
-                    Assert.Equal(gcAssignmentToCreateDefinition.Parameters.Name, gcAssignmentRetrieved.Name);
+                    Assert.NotNull(gcHCRPAssignmentRetrieved);
+                    Assert.Equal(gcAssignmentToCreateDefinition.Parameters.Name, gcHCRPAssignmentRetrieved.Name);
 
                     // update guest configuration assignment
                     var updateParameters = gcAssignmentToCreateDefinition.GetParametersForUpdate();
-                    var gcAssignmentUpdated = GuestConfigurationAssignmentsOperationsExtensions.CreateOrUpdate(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                    var gcHCRPAssignmentUpdated = GuestConfigurationHCRPAssignmentsOperationsExtensions.CreateOrUpdate(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
                         updateParameters.Name,
                         updateParameters,
                         gcAssignmentToCreateDefinition.ResourceGroupName,
                         gcAssignmentToCreateDefinition.VmName);
 
-                    Assert.NotNull(gcAssignmentUpdated);
-                    Assert.Equal(updateParameters.Properties.Context, gcAssignmentUpdated.Properties.Context);
+                    Assert.NotNull(gcHCRPAssignmentUpdated);
+                    Assert.Equal(updateParameters.Properties.Context, gcHCRPAssignmentUpdated.Properties.Context);
                 }
             }
         }
@@ -137,7 +138,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     var gcAssignment = GuestConfigurationAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
                         ResourceGroupName,
                         AssignmentName,
-                        VMName);
+                        AzureVMName);
 
                     Assert.NotNull(gcAssignment);
 
@@ -145,7 +146,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     var gcAssignmentReportsRetrieved = GuestConfigurationAssignmentReportsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReports,
                                              ResourceGroupName,
                                              AssignmentName,
-                                             VMName);
+                                             AzureVMName);
 
                     Assert.NotNull(gcAssignmentReportsRetrieved);
                     Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
@@ -161,21 +162,21 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
                     // get guest configuration assignment
-                    var gcAssignment = GuestConfigurationAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                    var gcHCRPAssignment = GuestConfigurationHCRPAssignmentsOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
                         ResourceGroupName,
                         AssignmentName,
-                        VMName);
+                        HybridMachineName);
 
-                    Assert.NotNull(gcAssignment);
+                    Assert.NotNull(gcHCRPAssignment);
 
                     // Get reports
-                    var gcAssignmentReportsRetrieved = GuestConfigurationAssignmentReportsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReports,
+                    var gcHCRPAssignmentReportsRetrieved = GuestConfigurationHCRPAssignmentReportsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignmentReports,
                                              ResourceGroupName,
                                              AssignmentName,
-                                             VMName);
+                                             HybridMachineName);
 
-                    Assert.NotNull(gcAssignmentReportsRetrieved);
-                    Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
+                    Assert.NotNull(gcHCRPAssignmentReportsRetrieved);
+                    Assert.True(gcHCRPAssignmentReportsRetrieved.Value.Count >= 0);
                 }
             }
         }
@@ -190,7 +191,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     // get guest configuration assignment
                     var gcAssignments = GuestConfigurationAssignmentsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
                         ResourceGroupName,
-                        VMName);
+                        AzureVMName);
 
                     Assert.NotNull(gcAssignments);
                     Assert.True(gcAssignments.IsAny());
@@ -206,12 +207,12 @@ namespace GuestConfiguration.Tests.ScenarioTests
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
                     // get guest configuration assignment
-                    var gcAssignments = GuestConfigurationAssignmentsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                    var gcHCRPAssignments = GuestConfigurationHCRPAssignmentsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationHCRPAssignments,
                         ResourceGroupName,
-                        VMName);
+                        HybridMachineName);
 
-                    Assert.NotNull(gcAssignments);
-                    Assert.True(gcAssignments.IsAny());
+                    Assert.NotNull(gcHCRPAssignments);
+                    Assert.True(gcHCRPAssignments.IsAny());
                 }
             }
         }
