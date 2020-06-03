@@ -392,6 +392,7 @@ namespace Azure.Storage.Blobs.Test
                         e.Message.Split('\n')[0]);
                 });
         }
+
         [Test]
         public async Task UploadPagesAsync()
         {
@@ -598,6 +599,64 @@ namespace Azure.Storage.Blobs.Test
                         e => Assert.IsTrue(true));
                 }
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadPagesAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await blob.UploadPagesAsync(
+                content: stream,
+                offset: Constants.KB,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadPagesAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            PageBlobRequestConditions conditions = new PageBlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.UploadPagesAsync(
+                    content: stream,
+                    offset: Constants.KB,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
