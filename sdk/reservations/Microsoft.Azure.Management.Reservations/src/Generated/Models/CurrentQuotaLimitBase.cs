@@ -10,29 +10,31 @@
 
 namespace Microsoft.Azure.Management.Reservations.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Quota limits.
+    /// </summary>
+    public partial class CurrentQuotaLimitBase : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the CurrentQuotaLimitBase class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public CurrentQuotaLimitBase()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the CurrentQuotaLimitBase class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="properties">Quota properties for the resource.</param>
+        public CurrentQuotaLimitBase(QuotaProperties properties = default(QuotaProperties))
         {
-            Scopes = scopes;
+            Properties = properties;
             CustomInit();
         }
 
@@ -42,9 +44,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets quota properties for the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public QuotaProperties Properties { get; set; }
 
     }
 }

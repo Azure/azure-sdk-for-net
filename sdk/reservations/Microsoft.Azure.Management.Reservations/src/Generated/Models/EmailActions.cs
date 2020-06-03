@@ -15,24 +15,26 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// The email actions.
+    /// </summary>
+    public partial class EmailActions
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the EmailActions class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public EmailActions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the EmailActions class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="emailAddresses">The list of email actions.</param>
+        public EmailActions(IList<EmailAction> emailAddresses = default(IList<EmailAction>))
         {
-            Scopes = scopes;
+            EmailAddresses = emailAddresses;
             CustomInit();
         }
 
@@ -42,9 +44,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of email actions.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "emailAddresses")]
+        public IList<EmailAction> EmailAddresses { get; set; }
 
     }
 }
