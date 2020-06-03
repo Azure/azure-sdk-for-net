@@ -4028,6 +4028,81 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            tags = BuildTags();
+
+            // Act
+            await blob.SetTagsAsync(
+                tags,
+                conditions: conditions);
+            Response<IDictionary<string, string>> getTagsResponse = await blob.GetTagsAsync(
+                conditions: conditions);
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetTagsAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetTagsAsync(
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetTagsAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetTagsAsync(
+                    tags,
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetSetTagsAsync_Version()
         {
             // Arrange
