@@ -32,13 +32,13 @@ namespace Azure.Messaging.ServiceBus.Management
         public DateTimeOffset ModifiedTime { get; internal set; }
 
         /// <summary>
-        /// The SKU/tier of the namespace. Valid only for <see cref="NamespaceType.ServiceBus"/>
+        /// The SKU/tier of the namespace. Valid only for <see cref="NamespaceType.Messaging"/>
         /// </summary>
         public MessagingSku MessagingSku { get; internal set; }
 
         /// <summary>
         /// Number of messaging units allocated for namespace.
-        /// Valid only for <see cref="NamespaceType.ServiceBus"/> and <see cref="MessagingSku.Premium"/>
+        /// Valid only for <see cref="NamespaceType.Messaging"/> and <see cref="MessagingSku.Premium"/>
         /// </summary>
         public int MessagingUnits { get; internal set; }
 

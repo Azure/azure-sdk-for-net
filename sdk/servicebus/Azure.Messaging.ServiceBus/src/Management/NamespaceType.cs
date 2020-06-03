@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     internal readonly struct NamespaceType : IEquatable<NamespaceType>
     {
-        internal const string ServiceBusValue = "ServiceBus";
+        internal const string MessagingValue = "Messaging";
         internal const string MixedValue = "Mixed";
 
         private readonly string _value;
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <summary>
         /// Namespace contains service bus entities (queues, topics).
         /// </summary>
-        public static NamespaceType ServiceBus { get; } = new NamespaceType(ServiceBusValue);
+        public static NamespaceType Messaging { get; } = new NamespaceType(MessagingValue);
 
         /// <summary>
         /// Supported only for backward compatibility.

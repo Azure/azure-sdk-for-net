@@ -14,7 +14,8 @@ using Azure.Messaging.ServiceBus.Filters;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    ///
+    /// The <see cref="ServiceBusManagementClient"/> is the client through which all Service Bus
+    /// entities can be Created, updated, fetched and deleted.
     /// </summary>
     public class ServiceBusManagementClient
     {
@@ -385,7 +386,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
         #endregion
 
-        #region GetMetrics
+        #region GetRuntimeInfo
         /// <summary>
         /// Retrieves the runtime information of a queue.
         /// </summary>
@@ -401,7 +402,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<QueueRuntimeInfo>> GetQueueMetricsAsync(
+        public virtual async Task<Response<QueueRuntimeInfo>> GetQueueRuntimeInfoAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -428,7 +429,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<TopicRuntimeInfo>> GetTopicMetricsAsync(
+        public virtual async Task<Response<TopicRuntimeInfo>> GetTopicRuntimeInfoAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -457,7 +458,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> credentials to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual async Task<Response<SubscriptionRuntimeInfo>> GetSubscriptionMetricsAsync(
+        public virtual async Task<Response<SubscriptionRuntimeInfo>> GetSubscriptionRuntimeInfoAsync(
             string topicName,
             string subscriptionName,
             CancellationToken cancellationToken = default)
@@ -578,7 +579,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
         #endregion
 
-        #region GetEntitesMetrics
+        #region GetEntitesRuntimeInfo
         /// <summary>
         /// Retrieves the list of runtime information for queues present in the namespace.
         /// </summary>
@@ -592,7 +593,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<QueueRuntimeInfo> GetQueuesMetricsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QueueRuntimeInfo> GetQueuesRuntimeInfoAsync(CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
                 "$Resources/queues",
@@ -614,7 +615,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<TopicRuntimeInfo> GetTopicsMetricsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopicRuntimeInfo> GetTopicsRuntimeInfoAsync(CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
                 "$Resources/topics",
@@ -637,7 +638,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ServiceBusManagementClient"/> has the correct <see cref="TokenCredential"/> to perform this operation.</exception>
         /// <exception cref="ServiceBusException.FailureReason.ServiceBusy">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
-        public virtual AsyncPageable<SubscriptionRuntimeInfo> GetSubscriptionsMetricsAsync(
+        public virtual AsyncPageable<SubscriptionRuntimeInfo> GetSubscriptionsRuntimeInfoAsync(
             string topicName,
             CancellationToken cancellationToken = default)
         {
@@ -1074,18 +1075,20 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidQueueName(name);
-            Response<QueueDescription> descriptionResponse = null;
+            Response response = null;
 
             try
             {
-                descriptionResponse = await GetQueueAsync(name, cancellationToken).ConfigureAwait(false);
+                response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                QueueDescription description = QueueDescriptionExtensions.ParseFromContent(result);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
-                return Response.FromValue(false, descriptionResponse.GetRawResponse());
+                return Response.FromValue(false, response);
             }
 
-            return Response.FromValue(true, descriptionResponse.GetRawResponse());
+            return Response.FromValue(true, response);
         }
 
         /// <summary>
@@ -1106,18 +1109,20 @@ namespace Azure.Messaging.ServiceBus.Management
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(name);
-            Response<TopicDescription> descriptionResponse = null;
+            Response response = null;
 
             try
             {
-                descriptionResponse = await GetTopicAsync(name, cancellationToken).ConfigureAwait(false);
+                response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                TopicDescription description = TopicDescriptionExtensions.ParseFromContent(result);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
-                return Response.FromValue(false, descriptionResponse.GetRawResponse());
+                return Response.FromValue(false, response);
             }
 
-            return Response.FromValue(true, descriptionResponse.GetRawResponse());
+            return Response.FromValue(true, response);
         }
 
         /// <summary>
@@ -1141,18 +1146,20 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
-            Response<SubscriptionDescription> descriptionResponse = null;
+            Response response = null;
 
             try
             {
-                descriptionResponse = await GetSubscriptionAsync(topicName, subscriptionName, cancellationToken).ConfigureAwait(false);
+                response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                SubscriptionDescription description = SubscriptionDescriptionExtensions.ParseFromContent(topicName, result);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
-                return Response.FromValue(false, descriptionResponse.GetRawResponse());
+                return Response.FromValue(false, response);
             }
 
-            return Response.FromValue(true, descriptionResponse.GetRawResponse());
+            return Response.FromValue(true, response);
         }
 
         /// <summary>
@@ -1178,18 +1185,20 @@ namespace Azure.Messaging.ServiceBus.Management
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
-            Response<RuleDescription> descriptionResponse = null;
+            Response response = null;
 
             try
             {
-                descriptionResponse = await GetRuleAsync(topicName, subscriptionName, ruleName, cancellationToken).ConfigureAwait(false);
+                response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
+                var result = await ReadAsString(response).ConfigureAwait(false);
+                RuleDescription description = RuleDescriptionExtensions.ParseFromContent(result);
             }
             catch (ServiceBusException ex) when (ex.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
             {
-                return Response.FromValue(false, descriptionResponse.GetRawResponse());
+                return Response.FromValue(false, response);
             }
 
-            return Response.FromValue(true, descriptionResponse.GetRawResponse());
+            return Response.FromValue(true, response);
         }
 
         #endregion

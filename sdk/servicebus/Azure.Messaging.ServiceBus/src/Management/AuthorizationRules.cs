@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    ///
+    /// Specifies the authorization rules.
     /// </summary>
     public class AuthorizationRules : List<AuthorizationRule>, IEquatable<AuthorizationRules>
     {
@@ -49,17 +49,21 @@ namespace Azure.Messaging.ServiceBus.Management
             return hash;
         }
 
-        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
         public override bool Equals(object obj)
         {
             var other = obj as AuthorizationRules;
-            return this.Equals(other);
+            return Equals(other);
         }
 
-        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
         public bool Equals(AuthorizationRules other)
         {
-            if (ReferenceEquals(other, null) || this.Count != other.Count)
+            if (ReferenceEquals(other, null) || Count != other.Count)
             {
                 return false;
             }

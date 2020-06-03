@@ -44,17 +44,17 @@ namespace Azure.Messaging.ServiceBus.Filters
                     switch (sqlRuleFilter)
                     {
                         case TrueRuleFilter _:
-                            return sqlRuleFilter.Serialize(nameof(TrueRuleFilter));
+                            return sqlRuleFilter.Serialize("TrueFilter");
 
                         case FalseRuleFilter _:
-                            return sqlRuleFilter.Serialize(nameof(FalseRuleFilter));
+                            return sqlRuleFilter.Serialize("FalseFilter");
 
                         default:
-                            return sqlRuleFilter.Serialize(nameof(SqlRuleFilter));
+                            return sqlRuleFilter.Serialize("SqlFilter");
                     }
 
                 case CorrelationRuleFilter correlationRuleFilter:
-                    return correlationRuleFilter.Serialize();
+                    return correlationRuleFilter.Serialize("CorrelationFilter");
 
                 default:
                     throw new NotImplementedException($"filter type {filter.GetType().Name} is not supported.");

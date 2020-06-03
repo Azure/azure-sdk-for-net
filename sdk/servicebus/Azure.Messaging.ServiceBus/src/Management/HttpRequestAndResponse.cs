@@ -48,8 +48,7 @@ namespace Azure.Messaging.ServiceBus.Management
             string exceptionMessage = string.Empty;
             if (response.ContentStream != null)
             {
-                using StreamReader reader = new StreamReader(response.ContentStream);
-                exceptionMessage = await reader.ReadToEndAsync().ConfigureAwait(false);
+                exceptionMessage = await ReadAsString(response).ConfigureAwait(false);
             }
             exceptionMessage = ParseDetailIfAvailable(exceptionMessage) ?? response.ReasonPhrase;
 

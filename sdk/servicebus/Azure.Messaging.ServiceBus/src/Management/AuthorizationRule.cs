@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    ///
+    /// Specifies the authorization rule.
     /// </summary>
     public abstract class AuthorizationRule : IEquatable<AuthorizationRule>
     {
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
         internal static AuthorizationRule ParseFromXElement(XElement xElement)
         {
-            var attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
+            XAttribute attribute = xElement.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace));
             if (attribute == null)
             {
                 return null;

@@ -7,7 +7,9 @@ using System.Runtime.Serialization;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
-    /// <summary>The status of the messaging entity.</summary>
+    /// <summary>
+    /// The status of the messaging entity.
+    /// </summary>
     public readonly struct EntityStatus : IEquatable<EntityStatus>
     {
         internal const string ActiveValue = "Active";

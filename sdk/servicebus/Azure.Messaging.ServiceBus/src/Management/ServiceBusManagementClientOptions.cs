@@ -7,7 +7,8 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    ///
+    ///   The set of options that can be specified when creating an <see cref="ServiceBusManagementClient" />
+    ///   to configure its behavior.
     /// </summary>
     public class ServiceBusManagementClientOptions : ClientOptions
     {

@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             return correlationRuleFilter;
         }
 
-        public static XElement Serialize(this CorrelationRuleFilter filter)
+        public static XElement Serialize(this CorrelationRuleFilter filter, string filterName)
         {
             XElement parameterElement = null;
             if (filter.properties != null)
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 
             return new XElement(
                 XName.Get("Filter", ManagementClientConstants.ServiceBusNamespace),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(CorrelationRuleFilter)),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), filterName),
                 string.IsNullOrWhiteSpace(filter.CorrelationId) ? null :
                     new XElement(XName.Get("CorrelationId", ManagementClientConstants.ServiceBusNamespace), filter.CorrelationId),
                 string.IsNullOrWhiteSpace(filter.MessageId) ? null :
