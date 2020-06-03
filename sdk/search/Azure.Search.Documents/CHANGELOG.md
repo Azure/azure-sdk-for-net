@@ -6,7 +6,6 @@
 
 - Moved models for managing indexes, indexers, and skillsets to `Azure.Search.Documents.Indexes.Models`.
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
-<<<<<<< Updated upstream
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
 - Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
