@@ -10,18 +10,13 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Specifies blob lease access conditions for a container or blob.
     /// </summary>
-    public class BlobRequestConditions : RequestConditions
+    public class BlobRequestConditions : BlobTagRequestConditions
     {
         /// <summary>
         /// Optionally limit requests to resources with an active lease
         /// matching this Id.
         /// </summary>
         public string LeaseId { get; set; }
-
-        /// <summary>
-        /// Optional SQL statement to apply to the Tags of the Blob.
-        /// </summary>
-        public string TagConditions { get; set; }
 
         /// <summary>
         /// Converts the value of the current RequestConditions object to

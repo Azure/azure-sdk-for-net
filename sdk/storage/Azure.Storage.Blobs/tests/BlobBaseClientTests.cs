@@ -3171,6 +3171,59 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AcquireLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            // Act
+            await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
+                duration,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AcquireLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(
+                    duration,
+                    conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task AcquireLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3258,6 +3311,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RenewLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.RenewAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RenewLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.RenewAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task RenewLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3341,6 +3449,61 @@ namespace Azure.Storage.Blobs.Test
                     lease.ReleaseAsync(conditions: accessConditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ReleaseLeaseAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.ReleaseAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ReleaseLeaseAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.ReleaseAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -3451,6 +3614,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task BreakLeaseAsync_IfTag()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.BreakAsync(conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task BreakLeaseAsync_IfTagFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.BreakAsync(conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [Test]
         public async Task BreakLeaseAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3540,6 +3758,67 @@ namespace Azure.Storage.Blobs.Test
                         conditions: accessConditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ChangeLeaseAsync_IfTags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+
+            await blob.SetTagsAsync(tags);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var newLeaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await lease.ChangeAsync(
+                newLeaseId,
+                conditions: conditions);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ChangeLeaseAsync_IfTagsFailed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var newLeaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+
+            BlobLeaseClient lease = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
+            await lease.AcquireAsync(duration);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                lease.ChangeAsync(
+                newLeaseId,
+                conditions: conditions),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
