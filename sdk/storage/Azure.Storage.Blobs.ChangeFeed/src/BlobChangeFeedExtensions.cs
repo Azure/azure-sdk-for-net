@@ -87,6 +87,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return null;
             }
 
+            if (dateTimeOffset.Value.Minute == 0 && dateTimeOffset.Value.Second == 0 && dateTimeOffset.Value.Millisecond == 0)
+            {
+                return dateTimeOffset;
+            }
+
             DateTimeOffset? newDateTimeOffest = dateTimeOffset.RoundDownToNearestHour();
 
             return newDateTimeOffest.Value.AddHours(1);
