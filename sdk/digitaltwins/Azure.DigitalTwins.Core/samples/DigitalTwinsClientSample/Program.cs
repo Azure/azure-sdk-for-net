@@ -19,6 +19,8 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         public static async Task Main(string[] args)
         {
+            // Parse and validate paramters
+
             Options options = null;
             ParserResult<Options> result = Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(parsedOptions =>
@@ -38,6 +40,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 Environment.Exit(1);
             }
 
+            // Instantiate the client
+
             var httpClient = new HttpClient();
             DigitalTwinsClient dtClient = (options.GetLoginMethod()) switch
             {
@@ -56,17 +60,21 @@ namespace Azure.DigitalTwins.Core.Samples
                 _ => throw new Exception("Unsupported login method"),
             };
 
+            // Run the samples
+
             var dtLifecycleSamples = new DigitalTwinsLifecycleSamples(dtClient, options.EventHubName);
-            await dtLifecycleSamples.RunSamplesAsync().ConfigureAwait(false);
+            await dtLifecycleSamples.RunSamplesAsync();
 
-            var modelLifecycleSamples = new ModelLifecycleSamples(dtClient);
-            await modelLifecycleSamples.RunSamplesAsync().ConfigureAwait(false);
+            var modelLifecycleSamples = new ModelLifecycleSamples();
+            await modelLifecycleSamples.RunSamplesAsync(dtClient);
 
-            var componentSamples = new ComponentSamples(dtClient);
-            await componentSamples.RunSamplesAsync().ConfigureAwait(false);
+            var componentSamples = new ComponentSamples();
+            await componentSamples.RunSamplesAsync(dtClient);
 
-            var publishTelemetrySamples = new PublishTelemetrySamples(dtClient);
-            await publishTelemetrySamples.RunSamplesAsync().ConfigureAwait(false);
+            var publishTelemetrySamples = new PublishTelemetrySamples();
+            await publishTelemetrySamples.RunSamplesAsync(dtClient);
+
+            // Clean up
 
             httpClient.Dispose();
         }
@@ -91,13 +99,13 @@ namespace Azure.DigitalTwins.Core.Samples
                 clientSecret,
                 new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
 
-            var dtClient = new DigitalTwinsClient(
+            var client = new DigitalTwinsClient(
                 new Uri(adtEndpoint),
                 tokenCredential);
 
             #endregion Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
 
-            return dtClient;
+            return client;
         }
 
         /// <summary>
@@ -126,14 +134,14 @@ namespace Azure.DigitalTwins.Core.Samples
                 clientId,
                 new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
 
-            var dtClient = new DigitalTwinsClient(
+            var client = new DigitalTwinsClient(
                 new Uri(adtEndpoint),
                 tokenCredential,
                 clientOptions);
 
             #endregion Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin
 
-            return dtClient;
+            return client;
         }
     }
 }

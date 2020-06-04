@@ -15,26 +15,19 @@ namespace Azure.DigitalTwins.Samples
 {
     internal class ModelLifecycleSamples
     {
-        private DigitalTwinsClient DigitalTwinsClient { get; }
-
-        public ModelLifecycleSamples(DigitalTwinsClient dtClient)
-        {
-            DigitalTwinsClient = dtClient;
-        }
-
         /// <summary>
         /// Creates a new model with a random Id
         /// Decommission the newly created model and check for success
         /// </summary>
-        public async Task RunSamplesAsync()
+        public async Task RunSamplesAsync(DigitalTwinsClient client)
         {
             PrintHeader("MODEL LIFECYCLE SAMPLE");
 
             // For the purpose of this example we will create temporary models using random model Ids and then decommission a model.
             // We have to make sure these model Ids are unique within the DT instance.
 
-            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
-            string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
+            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
+            string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, client);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
                 .Replace(SamplesConstants.ComponentId, newComponentModelId);
@@ -49,7 +42,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleCreateModels
 
-                Response<IReadOnlyList<ModelData>> response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
+                Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
                 Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinsSampleCreateModels
@@ -68,7 +61,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetModel
 
-                Response<ModelData> sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
+                Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
 
                 #endregion Snippet:DigitalTwinsSampleGetModel
 
@@ -85,7 +78,7 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await DigitalTwinsClient.DecommissionModelAsync(sampleModelId).ConfigureAwait(false);
+                await client.DecommissionModelAsync(sampleModelId);
 
                 Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
             }
@@ -102,7 +95,7 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await DigitalTwinsClient.DeleteModelAsync(sampleModelId).ConfigureAwait(false);
+                await client.DeleteModelAsync(sampleModelId);
 
                 Console.WriteLine($"Deleted model {sampleModelId}");
             }
