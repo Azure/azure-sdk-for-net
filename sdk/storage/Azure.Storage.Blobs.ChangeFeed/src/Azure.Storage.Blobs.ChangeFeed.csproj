@@ -14,7 +14,7 @@
       Microsoft Azure Storage quickstarts and tutorials - TODO
       Microsoft Azure Storage REST API Reference - TODO
     </Description>
-    <GenerateAPIListing>false</GenerateAPIListing>
+    <GenerateAPIListing>true</GenerateAPIListing>
     <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
