@@ -14,6 +14,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
     public class ServiceBusManagementClientLiveTests : ServiceBusLiveTestBase
     {
         [Test]
+        [NonParallelizable]
         public async Task BasicQueueCrudOperations()
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -65,8 +66,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 queueList.Add(queue);
             }
-            Assert.True(queueList.Count >= 1);
-            Assert.Contains(getQueue, queueList);
+            Assert.True(queueList.Count == 1);
+            Assert.AreEqual(queueList.First().Name, queueName);
 
             await client.DeleteQueueAsync(updatedQueue.Name);
 
@@ -80,6 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        [NonParallelizable]
         public async Task BasicTopicCrudOperations()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -121,8 +123,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 topicList.Add(topic);
             }
-            Assert.True(topicList.Count >= 1);
-            Assert.Contains(getTopic, topicList);
+            Assert.True(topicList.Count == 1);
+            Assert.AreEqual(topicList.First().Name, topicName);
 
             await client.DeleteTopicAsync(updatedTopic.Name);
 
@@ -136,6 +138,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        [NonParallelizable]
         public async Task BasicSubscriptionCrudOperations()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -179,8 +182,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 subscriptionList.Add(subscription);
             }
-            Assert.True(subscriptionList.Count >= 1);
-            Assert.Contains(getSubscription, subscriptionList);
+            Assert.True(subscriptionList.Count == 1);
+            Assert.AreEqual(subscriptionList.First().TopicName, topicName);	            Assert.Contains(getSubscription, subscriptionList);
+            Assert.AreEqual(subscriptionList.First().SubscriptionName, subscriptionName);
 
             await client.DeleteSubscriptionAsync(subscriptionDescription.TopicName, subscriptionDescription.SubscriptionName);
 
@@ -283,6 +287,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        [NonParallelizable]
         public async Task GetQueueRuntimeInfo()
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -312,8 +317,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(queueRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count >= 1);
-            QueueRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
+            Assert.True(runtimeInfoList.Count == 1);
+            QueueRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(queueName, runtimeInfo.Name);
@@ -340,6 +345,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        [NonParallelizable]
         public async Task GetSubscriptionRuntimeInfoTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -376,8 +382,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(subscriptionRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count >= 1);
-            SubscriptionRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.SubscriptionName.Equals(subscriptionName, StringComparison.OrdinalIgnoreCase));
+            Assert.True(runtimeInfoList.Count == 1);
+            SubscriptionRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(topicName, runtimeInfo.TopicName);
@@ -407,6 +413,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        [NonParallelizable]
         public async Task GetTopicRuntimeInfo()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -426,8 +433,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(topicRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count >= 1);
-            TopicRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.Name.Equals(topicName, StringComparison.OrdinalIgnoreCase));
+            Assert.True(runtimeInfoList.Count == 1);
+            TopicRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(topicName, runtimeInfo.Name);
