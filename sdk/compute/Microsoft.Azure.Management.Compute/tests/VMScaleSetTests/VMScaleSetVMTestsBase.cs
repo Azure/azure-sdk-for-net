@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -88,7 +89,7 @@ namespace Compute.Tests
         }
 
         protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false,
-            string dedicatedHostGroupReferenceId = null)
+            string dedicatedHostReferenceId = null)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
             Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
@@ -106,9 +107,9 @@ namespace Compute.Tests
                 Assert.NotNull(diskInstanceView.Statuses[0].Level);
             }
 
-            if (dedicatedHostGroupReferenceId != null)
+            if (dedicatedHostReferenceId != null)
             {
-                Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetVMInstanceView.AssignedHost);
+                Assert.Equal(dedicatedHostReferenceId, vmScaleSetVMInstanceView.AssignedHost, StringComparer.OrdinalIgnoreCase);
             }
         }
 
