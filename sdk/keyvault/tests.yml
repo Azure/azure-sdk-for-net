@@ -12,6 +12,7 @@ jobs:
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
 
 # AzureUSGovernment
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
@@ -23,6 +24,7 @@ jobs:
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+      AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
 
 # AzureChinaCloud
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
@@ -34,3 +36,4 @@ jobs:
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+      AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn
