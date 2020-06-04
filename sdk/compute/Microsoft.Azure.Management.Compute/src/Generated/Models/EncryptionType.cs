@@ -25,5 +25,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Disk is encrypted with Customer managed key at rest.
         /// </summary>
         public const string EncryptionAtRestWithCustomerKey = "EncryptionAtRestWithCustomerKey";
+        /// <summary>
+        /// Disk is encrypted with 2 layers of encryption at rest. One of the
+        /// keys is Customer managed and the other key is Platform managed.
+        /// </summary>
+        public const string EncryptionAtRestWithPlatformAndCustomerKeys = "EncryptionAtRestWithPlatformAndCustomerKeys";
     }
 }

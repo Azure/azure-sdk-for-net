@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set to use for enabling encryption at rest.</param>
         /// <param name="type">The type of key used to encrypt the data of the
         /// disk. Possible values include: 'EncryptionAtRestWithPlatformKey',
-        /// 'EncryptionAtRestWithCustomerKey'</param>
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
         public Encryption(string diskEncryptionSetId = default(string), string type = default(string))
         {
             DiskEncryptionSetId = diskEncryptionSetId;
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the type of key used to encrypt the data of the disk.
         /// Possible values include: 'EncryptionAtRestWithPlatformKey',
-        /// 'EncryptionAtRestWithCustomerKey'
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
