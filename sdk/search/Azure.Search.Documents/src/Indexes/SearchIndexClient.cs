@@ -227,16 +227,16 @@ namespace Azure.Search.Documents.Indexes
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="request">The <see cref="AnalyzeTextRequest"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="request"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
-            AnalyzeRequest analyzeRequest,
+            AnalyzeTextRequest request,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -245,7 +245,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 Response<AnalyzeResult> result = IndexesClient.Analyze(
                     indexName,
-                    analyzeRequest,
+                    request,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Tokens, result.GetRawResponse());
@@ -261,16 +261,16 @@ namespace Azure.Search.Documents.Indexes
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="request">The <see cref="AnalyzeTextRequest"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="request"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
-            AnalyzeRequest analyzeRequest,
+            AnalyzeTextRequest request,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -279,7 +279,7 @@ namespace Azure.Search.Documents.Indexes
             {
                 Response<AnalyzeResult> result = await IndexesClient.AnalyzeAsync(
                     indexName,
-                    analyzeRequest,
+                    request,
                     cancellationToken)
                     .ConfigureAwait(false);
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -313,6 +314,24 @@ namespace Azure.Search.Documents.Tests
             }
 
             await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
+        }
+
+        [Test]
+        public async Task AnalyzeText()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            AnalyzeTextRequest request = new AnalyzeTextRequest("The quick brown fox jumped over the lazy dog.")
+            {
+                Tokenizer = LexicalTokenizerName.Whitespace,
+            };
+
+            Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
+            IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
+
+            Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
         }
     }
 }
