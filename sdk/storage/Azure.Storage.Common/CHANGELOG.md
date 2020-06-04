@@ -1,6 +1,6 @@
 # Release History
 
-## 12.4.1 (2020-05)
+## 12.4.3 (2020-06)
 - This release contains bug fixes to improve quality.
 
 ## 12.4.2 (2020-06)
