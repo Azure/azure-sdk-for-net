@@ -324,7 +324,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreCreationParameters);
             request.Content = content;
             return message;
@@ -484,7 +484,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreUpdateParameters);
             request.Content = content;
             return message;
@@ -672,7 +672,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
             request.Content = content;
             return message;
@@ -781,7 +781,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(listKeyValueParameters);
             request.Content = content;
             return message;

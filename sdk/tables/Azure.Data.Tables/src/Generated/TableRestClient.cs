@@ -171,7 +171,7 @@ namespace Azure.Data.Tables
                 request.Headers.Add("Prefer", responsePreference.Value.ToString());
             }
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
             return message;
@@ -597,7 +597,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Content-Type", "application/json");
             if (tableEntityProperties != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -720,7 +720,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Content-Type", "application/json");
             if (tableEntityProperties != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -951,7 +951,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             if (tableEntityProperties != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in tableEntityProperties)
                 {
@@ -1190,7 +1190,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Content-Type", "application/xml");
             if (tableAcl != null)
             {
-                using var content = new XmlWriterContent();
+                var content = new XmlWriterContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in tableAcl)
                 {
