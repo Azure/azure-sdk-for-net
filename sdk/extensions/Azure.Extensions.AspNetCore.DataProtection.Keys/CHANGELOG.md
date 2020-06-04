@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0
+## 1.0.0 (2020-06-04)
 
 - No changes. General availability release.
 
