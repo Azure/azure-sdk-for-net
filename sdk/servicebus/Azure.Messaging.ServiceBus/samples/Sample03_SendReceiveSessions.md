@@ -47,7 +47,10 @@ byte[] state = await receiver.GetSessionStateAsync();
 // create a receiver specifying a particular session
 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
     queueName,
-    sessionId: "Session2");
+    new ServiceBusSessionReceiverOptions
+    {
+        SessionId = "Session2"
+    });
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();

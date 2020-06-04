@@ -26,7 +26,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     /// </summary>
     ///
     /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportReceiver" />
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal class AmqpReceiver : TransportReceiver
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -181,13 +183,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        private void CloseLink(ReceivingAmqpLink link)
+        private static void CloseLink(ReceivingAmqpLink link)
         {
             link.Session?.SafeClose();
             link.SafeClose();
         }
 
-        private void CloseLink(RequestResponseAmqpLink link)
+        private static void CloseLink(RequestResponseAmqpLink link)
         {
             link.Session?.SafeClose();
             link.SafeClose();
@@ -734,18 +736,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        private Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify) =>
+        private static Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, false);
 
-        private Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
+        private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
 
-        private List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
+        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
         {
             return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
         }
 
-        private Outcome GetModifiedOutcome(
+        private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
             bool undeliverableHere)
         {

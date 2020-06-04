@@ -8,10 +8,11 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver"/> or <see cref="ServiceBusProcessor" />
+    /// The set of options that can be specified when creating a
+    /// <see cref="ServiceBusSessionProcessor" />
     /// to configure its behavior.
     /// </summary>
-    public class ServiceBusProcessorOptions
+    public class ServiceBusSessionProcessorOptions
     {
         /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
@@ -37,21 +38,19 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.
+        /// <summary>Gets or sets a value that indicates whether
+        /// the processor should automatically complete messages
+        /// after the callback has completed processing.
         /// The default value is true.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
-        /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
+        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This value should be
+        /// greater than the queue's LockDuration Property.
         /// </summary>
         ///
         /// <value>The maximum duration during which locks are automatically renewed.</value>
-        ///
-        /// <remarks>The message renew can continue for sometime in the background
-        /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -84,7 +83,7 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan? _maxReceiveWaitTime;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the processor should initiate. The default is 1.</summary>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the processor should initiate. The default value is 8.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
@@ -97,6 +96,14 @@ namespace Azure.Messaging.ServiceBus
             }
         }
         private int _maxConcurrentCalls;
+
+        /// <summary>
+        /// An optional list of session IDs to scope
+        /// the <see cref="ServiceBusSessionProcessor"/> to. If left
+        /// blank, the processor will not be limited to any specific
+        /// session IDs.
+        /// </summary>
+        public string[] SessionIds { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -126,12 +133,7 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusProcessorOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
-        internal ServiceBusProcessorOptions Clone()
+        internal ServiceBusProcessorOptions ToProcessorOptions()
         {
             var clone = new ServiceBusProcessorOptions
             {
