@@ -1,7 +1,7 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
-
+## 12.2.2 (2020-06)
+- This release contains bug fixes to improve quality.
 
 ## 12.2.1 (2020-06)
 - Fixed bug where download could hang indefinietly on .NET Framework
