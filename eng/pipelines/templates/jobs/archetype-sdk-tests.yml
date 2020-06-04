@@ -8,9 +8,14 @@ parameters:
   ArmTemplateParameters: '@{}'
   Location: ''
   SubscriptionConfiguration: $(sub-config-gov-test-resources)
+  ScenarioName: ''
 
 jobs:
-  - job: "Test"
+  - job:
+    ${{ if not(eq(parameters.ScenarioName, '')) }}:
+      displayName: Test-${{ parameters.ScenarioName }}-
+    ${{ if eq(parameters.ScenarioName, '') }}:
+      displayName: Test
     variables:
       - template: ../variables/globals.yml
       - name: SubscriptionConfiguration
