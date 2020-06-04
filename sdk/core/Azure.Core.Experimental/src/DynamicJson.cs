@@ -19,6 +19,32 @@ namespace Azure.Core
     /// </summary>
     public class DynamicJson : IDynamicMetaObjectProvider
     {
+        private struct Number
+        {
+            public Number(in JsonElement element)
+            {
+                _hasDouble = element.TryGetDouble(out _double);
+                _hasLong = element.TryGetInt64(out _long);
+            }
+
+            private long _long;
+            private bool _hasLong;
+            private double _double;
+            private bool _hasDouble;
+
+            public void WriteTo(Utf8JsonWriter writer)
+            {
+                if (_hasDouble)
+                {
+                    writer.WriteNumberValue(_double);
+                }
+                else
+                {
+                    writer.WriteNumberValue(_long);
+                }
+            }
+        }
+
         private readonly JsonElement _element;
         private readonly JsonValueKind _kind;
         private Dictionary<string, DynamicJson>? _objectRepresentation;
@@ -54,7 +80,7 @@ namespace Azure.Core
                     break;
                 case JsonValueKind.Number:
                     // TODO:
-                    _value = element.GetInt32();
+                    _value = new Number(element);
                     break;
                 case JsonValueKind.True:
                 case JsonValueKind.False:
@@ -124,7 +150,7 @@ namespace Azure.Core
                     writer.WriteStringValue((string?)_value);
                     break;
                 case JsonValueKind.Number:
-                    writer.WriteNumberValue((int)_value!);
+                    ((Number) _value!).WriteTo(writer);
                     break;
                 case JsonValueKind.True:
                 case JsonValueKind.False:

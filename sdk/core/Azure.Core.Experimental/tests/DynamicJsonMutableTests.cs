@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Spatial;
 using NUnit.Framework;
@@ -62,7 +61,7 @@ namespace Azure.Core.Tests
                 Converters = { new GeometryJsonConverter() }
             });
 
-            Assert.AreEqual("", json.ToString());
+            Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }
     }
 }
