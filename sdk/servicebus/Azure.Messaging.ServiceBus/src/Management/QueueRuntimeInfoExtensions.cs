@@ -4,6 +4,7 @@
 using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
@@ -48,19 +49,19 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "AccessedAt":
-                        qRuntime.AccessedAt = DateTime.Parse(element.Value);
+                        qRuntime.AccessedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CreatedAt":
-                        qRuntime.CreatedAt = DateTime.Parse(element.Value);
+                        qRuntime.CreatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "MessageCount":
-                        qRuntime.MessageCount = long.Parse(element.Value);
+                        qRuntime.MessageCount = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "SizeInBytes":
-                        qRuntime.SizeInBytes = long.Parse(element.Value);
+                        qRuntime.SizeInBytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "UpdatedAt":
-                        qRuntime.UpdatedAt = DateTime.Parse(element.Value);
+                        qRuntime.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
                         qRuntime.CountDetails = new MessageCountDetails();
@@ -69,19 +70,19 @@ namespace Azure.Messaging.ServiceBus.Management
                             switch (countElement.Name.LocalName)
                             {
                                 case "ActiveMessageCount":
-                                    qRuntime.CountDetails.ActiveMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.ActiveMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "DeadLetterMessageCount":
-                                    qRuntime.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "ScheduledMessageCount":
-                                    qRuntime.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferMessageCount":
-                                    qRuntime.CountDetails.TransferMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.TransferMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferDeadLetterMessageCount":
-                                    qRuntime.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
+                                    qRuntime.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                             }
                         }

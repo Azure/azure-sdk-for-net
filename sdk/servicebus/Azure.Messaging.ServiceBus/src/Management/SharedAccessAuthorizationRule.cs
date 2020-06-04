@@ -74,16 +74,17 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(nameof(KeyName));
+                    throw new ArgumentNullException(null, nameof(KeyName));
                 }
 
                 if (value.Length > SharedAccessSignature.MaximumKeyNameLength)
                 {
                     throw new ArgumentOutOfRangeException(
-                        nameof(KeyName), $"The argument cannot exceed {SharedAccessSignature.MaximumKeyNameLength} characters");
+                        $"The argument cannot exceed {SharedAccessSignature.MaximumKeyNameLength} characters",
+                        nameof(KeyName));
                 }
 
-                if (!string.Equals(value, HttpUtility.UrlEncode(value)))
+                if (!string.Equals(value, HttpUtility.UrlEncode(value), StringComparison.InvariantCulture))
                 {
                     throw new ArgumentException("The key name specified contains invalid characters");
                 }
@@ -101,12 +102,14 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(nameof(PrimaryKey));
+                    throw new ArgumentNullException(null, nameof(PrimaryKey));
                 }
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(PrimaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+                    throw new ArgumentOutOfRangeException(
+                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes",
+                        nameof(PrimaryKey));
                 }
 
                 if (!CheckBase64(value))
@@ -127,12 +130,14 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(nameof(SecondaryKey));
+                    throw new ArgumentNullException(null, nameof(SecondaryKey));
                 }
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(SecondaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+                    throw new ArgumentOutOfRangeException(
+                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes",
+                        nameof(SecondaryKey));
                 }
 
                 if (!CheckBase64(value))
@@ -145,6 +150,7 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         /// <inheritdoc/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public override List<AccessRights> Rights
         {
             get => internalRights;
@@ -163,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
                 if (value.Contains(AccessRights.Manage) && value.Count != 3)
                 {
-                    throw new ArgumentException(nameof(Rights), "Manage permission should also include Send and Listen");
+                    throw new ArgumentException("Manage permission should also include Send and Listen");
                 }
 
                 internalRights = value;

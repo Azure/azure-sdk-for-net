@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus.Management
 
         /// <summary>Gets or sets the list of rights.</summary>
         /// <value>The list of rights.</value>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public abstract List<AccessRights> Rights { get; set; }
 
         /// <summary>Gets or sets the authorization rule key name.</summary>
@@ -61,5 +62,12 @@ namespace Azure.Messaging.ServiceBus.Management
         }
 
         internal abstract XElement Serialize();
+
+        /// <inheritdoc/>
+        public abstract override bool Equals(object obj);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() =>
+            base.GetHashCode();
     }
 }

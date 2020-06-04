@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Primitives;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
@@ -151,14 +152,14 @@ namespace Azure.Messaging.ServiceBus.Management
             int maxCount = 100;
             if (nextSkip != null)
             {
-                skip = int.Parse(nextSkip);
+                skip = int.Parse(nextSkip, CultureInfo.InvariantCulture);
             }
             Response response = await GetEntityAsync(path, $"$skip={skip}&$top={maxCount}", false, cancellationToken).ConfigureAwait(false);
             string result = await ReadAsString(response).ConfigureAwait(false);
 
             IReadOnlyList<T> description = parseFunction.Invoke(result);
             skip += maxCount;
-            nextSkip = skip.ToString();
+            nextSkip = skip.ToString(CultureInfo.InvariantCulture);
 
             if (description.Count < maxCount || description.Count == 0)
             {

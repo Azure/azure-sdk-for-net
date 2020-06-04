@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
@@ -89,16 +90,16 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "MaxSizeInMegabytes":
-                        qd.MaxSizeInMegabytes = Int64.Parse(element.Value);
+                        qd.MaxSizeInMegabytes = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "RequiresDuplicateDetection":
-                        qd.RequiresDuplicateDetection = Boolean.Parse(element.Value);
+                        qd.RequiresDuplicateDetection = bool.Parse(element.Value);
                         break;
                     case "RequiresSession":
-                        qd.RequiresSession = Boolean.Parse(element.Value);
+                        qd.RequiresSession = bool.Parse(element.Value);
                         break;
                     case "DeadLetteringOnMessageExpiration":
-                        qd.DeadLetteringOnMessageExpiration = Boolean.Parse(element.Value);
+                        qd.DeadLetteringOnMessageExpiration = bool.Parse(element.Value);
                         break;
                     case "DuplicateDetectionHistoryTimeWindow":
                         qd.DuplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
@@ -110,10 +111,10 @@ namespace Azure.Messaging.ServiceBus.Management
                         qd.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "MaxDeliveryCount":
-                        qd.MaxDeliveryCount = Int32.Parse(element.Value);
+                        qd.MaxDeliveryCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "EnableBatchedOperations":
-                        qd.EnableBatchedOperations = Boolean.Parse(element.Value);
+                        qd.EnableBatchedOperations = bool.Parse(element.Value);
                         break;
                     case "Status":
                         qd.Status = element.Value;

@@ -101,8 +101,9 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(DefaultMessageTimeToLive),
-                        $"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
+                    throw new ArgumentOutOfRangeException(
+                        $"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}",
+                        nameof(DefaultMessageTimeToLive));
                 }
 
                 _defaultMessageTimeToLive = value;
@@ -120,8 +121,9 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(AutoDeleteOnIdle),
-                        $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
+                    throw new ArgumentOutOfRangeException(
+                        $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}",
+                        nameof(AutoDeleteOnIdle));
                 }
 
                 autoDeleteOnIdle = value;
@@ -147,8 +149,9 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(DuplicateDetectionHistoryTimeWindow),
-                        $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
+                    throw new ArgumentOutOfRangeException(
+                        $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}",
+                        nameof(DuplicateDetectionHistoryTimeWindow));
                 }
 
                 _duplicateDetectionHistoryTimeWindow = value;
@@ -168,8 +171,9 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (value < ManagementClientConstants.MinAllowedMaxDeliveryCount)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(MaxDeliveryCount),
-                        $"The value must be greater than {ManagementClientConstants.MinAllowedMaxDeliveryCount}");
+                    throw new ArgumentOutOfRangeException(
+                        $"The value must be greater than {ManagementClientConstants.MinAllowedMaxDeliveryCount}",
+                        nameof(MaxDeliveryCount));
                 }
 
                 _maxDeliveryCount = value;
@@ -263,12 +267,12 @@ namespace Azure.Messaging.ServiceBus.Management
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(UserMetadata), $"Value cannot be null");
+                    throw new ArgumentNullException($"Value cannot be null", nameof(UserMetadata));
                 }
 
                 if (value.Length > ManagementClientConstants.MaxUserMetadataLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(UserMetadata), $"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
+                    throw new ArgumentOutOfRangeException($"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters", nameof(UserMetadata));
                 }
 
                 _userMetadata = value;

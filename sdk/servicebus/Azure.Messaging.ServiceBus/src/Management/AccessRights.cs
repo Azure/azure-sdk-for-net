@@ -6,7 +6,9 @@ namespace Azure.Messaging.ServiceBus.Management
     /// <summary>
     ///
     /// </summary>
+#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum AccessRights
+#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
         /// <summary>
         /// The access right is Manage.

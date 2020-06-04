@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace Azure.Messaging.ServiceBus.Management
@@ -46,10 +47,10 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "CreatedTime":
-                        nsInfo.CreatedTime = DateTimeOffset.Parse(element.Value);
+                        nsInfo.CreatedTime = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "ModifiedTime":
-                        nsInfo.ModifiedTime = DateTimeOffset.Parse(element.Value);
+                        nsInfo.ModifiedTime = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "Name":
                         nsInfo.Name = element.Value;
@@ -58,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         nsInfo.Alias = element.Value;
                         break;
                     case "MessagingUnits":
-                        int.TryParse(element.Value, out var units);
+                        _ = int.TryParse(element.Value, out var units);
                         nsInfo.MessagingUnits = units;
                         break;
                     case "NamespaceType":

@@ -4,6 +4,7 @@
 using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
@@ -48,16 +49,16 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "AccessedAt":
-                        subscriptionRuntimeInfo.AccessedAt = DateTime.Parse(element.Value);
+                        subscriptionRuntimeInfo.AccessedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CreatedAt":
-                        subscriptionRuntimeInfo.CreatedAt = DateTime.Parse(element.Value);
+                        subscriptionRuntimeInfo.CreatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "UpdatedAt":
-                        subscriptionRuntimeInfo.UpdatedAt = DateTime.Parse(element.Value);
+                        subscriptionRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "MessageCount":
-                        subscriptionRuntimeInfo.MessageCount = long.Parse(element.Value);
+                        subscriptionRuntimeInfo.MessageCount = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
                         subscriptionRuntimeInfo.CountDetails = new MessageCountDetails();
@@ -66,19 +67,19 @@ namespace Azure.Messaging.ServiceBus.Management
                             switch (countElement.Name.LocalName)
                             {
                                 case "ActiveMessageCount":
-                                    subscriptionRuntimeInfo.CountDetails.ActiveMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.CountDetails.ActiveMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "DeadLetterMessageCount":
-                                    subscriptionRuntimeInfo.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.CountDetails.DeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "ScheduledMessageCount":
-                                    subscriptionRuntimeInfo.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.CountDetails.ScheduledMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferMessageCount":
-                                    subscriptionRuntimeInfo.CountDetails.TransferMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.CountDetails.TransferMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TransferDeadLetterMessageCount":
-                                    subscriptionRuntimeInfo.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
+                                    subscriptionRuntimeInfo.CountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value, CultureInfo.InvariantCulture);
                                     break;
                             }
                         }

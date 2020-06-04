@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using System;
+using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Core;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Authorization;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Filters;
 
 namespace Azure.Messaging.ServiceBus.Management
@@ -561,7 +562,7 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidTopicName(topicName);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(SubscriptionsPath, topicName),
+                string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
                 nextSkip,
                 rawResult => SubscriptionDescriptionExtensions.ParseCollectionFromContent(topicName, rawResult),
                 cancellationToken));
@@ -591,7 +592,7 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(RulesPath, topicName, subscriptionName),
+                string.Format(CultureInfo.CurrentCulture, RulesPath, topicName, subscriptionName),
                 nextSkip,
                 rawResult => RuleDescriptionExtensions.ParseCollectionFromContent(rawResult),
                 cancellationToken));
@@ -661,7 +662,7 @@ namespace Azure.Messaging.ServiceBus.Management
             EntityNameFormatter.CheckValidTopicName(topicName);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                string.Format(SubscriptionsPath, topicName),
+                string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
                 nextSkip,
                 rawResult => SubscriptionRuntimeInfoExtensions.ParseCollectionFromContent(topicName, rawResult),
                 cancellationToken));
@@ -1245,7 +1246,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 UserName = string.Empty,
             };
 
-            if (builder.Path.EndsWith("/"))
+            if (builder.Path.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
             {
                 builder.Path = builder.Path.TrimEnd('/');
             }

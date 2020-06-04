@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -78,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "MaxSizeInMegabytes":
-                        topicDesc.MaxSizeInMegabytes = long.Parse(element.Value);
+                        topicDesc.MaxSizeInMegabytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "RequiresDuplicateDetection":
                         topicDesc.RequiresDuplicateDetection = bool.Parse(element.Value);

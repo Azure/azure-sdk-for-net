@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Messaging.ServiceBus.Filters;
@@ -119,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Management
                         subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
                         break;
                     case "MaxDeliveryCount":
-                        subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value);
+                        subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "Status":
                         subscriptionDesc.Status = element.Value;

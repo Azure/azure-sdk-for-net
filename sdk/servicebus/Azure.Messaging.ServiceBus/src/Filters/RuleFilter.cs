@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 
         /// <inheritdoc/>
         public abstract override bool Equals(object obj);
-        
+
         /// <inheritdoc/>
         public override int GetHashCode() =>
             base.GetHashCode();

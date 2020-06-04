@@ -4,6 +4,8 @@
 using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Globalization;
+
 namespace Azure.Messaging.ServiceBus.Management
 {
     internal static class TopicRuntimeInfoExtensions
@@ -47,19 +49,19 @@ namespace Azure.Messaging.ServiceBus.Management
                 switch (element.Name.LocalName)
                 {
                     case "AccessedAt":
-                        topicRuntimeInfo.AccessedAt = DateTime.Parse(element.Value);
+                        topicRuntimeInfo.AccessedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CreatedAt":
-                        topicRuntimeInfo.CreatedAt = DateTime.Parse(element.Value);
+                        topicRuntimeInfo.CreatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "SizeInBytes":
-                        topicRuntimeInfo.SizeInBytes = long.Parse(element.Value);
+                        topicRuntimeInfo.SizeInBytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "SubscriptionCount":
-                        topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value);
+                        topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "UpdatedAt":
-                        topicRuntimeInfo.UpdatedAt = DateTime.Parse(element.Value);
+                        topicRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                     case "CountDetails":
                         break;
