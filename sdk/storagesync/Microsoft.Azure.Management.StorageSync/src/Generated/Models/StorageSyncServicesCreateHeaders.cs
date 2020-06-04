@@ -14,37 +14,37 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Delete operation.
+    /// Defines headers for Create operation.
     /// </summary>
-    public partial class StorageSyncServicesDeleteHeaders
+    public partial class StorageSyncServicesCreateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the StorageSyncServicesDeleteHeaders
+        /// Initializes a new instance of the StorageSyncServicesCreateHeaders
         /// class.
         /// </summary>
-        public StorageSyncServicesDeleteHeaders()
+        public StorageSyncServicesCreateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageSyncServicesDeleteHeaders
+        /// Initializes a new instance of the StorageSyncServicesCreateHeaders
         /// class.
         /// </summary>
-        /// <param name="xMsRequestId">Request id</param>
-        /// <param name="xMsCorrelationRequestId">correlation request
-        /// id</param>
         /// <param name="azureAsyncOperation">Operation Status Location
         /// URI</param>
         /// <param name="location">Operation Status Location URI</param>
         /// <param name="retryAfter">Retry After</param>
-        public StorageSyncServicesDeleteHeaders(string xMsRequestId = default(string), string xMsCorrelationRequestId = default(string), string azureAsyncOperation = default(string), string location = default(string), string retryAfter = default(string))
+        /// <param name="xMsRequestId">Request id</param>
+        /// <param name="xMsCorrelationRequestId">correlation request
+        /// id</param>
+        public StorageSyncServicesCreateHeaders(string azureAsyncOperation = default(string), string location = default(string), string retryAfter = default(string), string xMsRequestId = default(string), string xMsCorrelationRequestId = default(string))
         {
-            XMsRequestId = xMsRequestId;
-            XMsCorrelationRequestId = xMsCorrelationRequestId;
             AzureAsyncOperation = azureAsyncOperation;
             Location = location;
             RetryAfter = retryAfter;
+            XMsRequestId = xMsRequestId;
+            XMsCorrelationRequestId = xMsCorrelationRequestId;
             CustomInit();
         }
 
@@ -52,18 +52,6 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets request id
-        /// </summary>
-        [JsonProperty(PropertyName = "x-ms-request-id")]
-        public string XMsRequestId { get; set; }
-
-        /// <summary>
-        /// Gets or sets correlation request id
-        /// </summary>
-        [JsonProperty(PropertyName = "x-ms-correlation-request-id")]
-        public string XMsCorrelationRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets operation Status Location URI
@@ -82,6 +70,18 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
         public string RetryAfter { get; set; }
+
+        /// <summary>
+        /// Gets or sets request id
+        /// </summary>
+        [JsonProperty(PropertyName = "x-ms-request-id")]
+        public string XMsRequestId { get; set; }
+
+        /// <summary>
+        /// Gets or sets correlation request id
+        /// </summary>
+        [JsonProperty(PropertyName = "x-ms-correlation-request-id")]
+        public string XMsCorrelationRequestId { get; set; }
 
     }
 }
