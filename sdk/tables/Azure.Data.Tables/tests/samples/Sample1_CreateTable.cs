@@ -20,6 +20,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "mytesttable";
 
             #region Snippet:TablesSample1CreateClient
+
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -27,11 +28,12 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:CreateTable
-            var client = serviceClient.GetTableClient(tableName);
-            client.Create();
 
-            
+            serviceClient.CreateTable(tableName);
+
             #endregion
+
+            serviceClient.DeleteTable(tableName);
         }
     }
 }
