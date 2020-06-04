@@ -11,7 +11,7 @@ parameters:
   ScenarioName: 'AzureCloud'
 
 jobs:
-  - job: Test-${{ parameters.ScenarioName }}-
+  - job: Test_${{ parameters.ScenarioName }}_
     variables:
       - template: ../variables/globals.yml
       - name: SubscriptionConfiguration
