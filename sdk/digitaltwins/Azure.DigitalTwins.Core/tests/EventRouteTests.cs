@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Net;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Azure.DigitalTwins.Core.Models;
-using System;
+using FluentAssertions;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
