@@ -1,10 +1,32 @@
 trigger: none
 
-extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+jobs:
+# Azure Cloud
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+    ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.net' }"
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+
+# AzureUSGovernment
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: keyvault
+    SubscriptionConfiguration: $(sub-config-gov-test-resources)
     ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.usgovcloudapi.net' }"
+    EnvVars:
+      # Runs samples with live tests.
+      AZURE_KEYVAULT_TEST_MODE: Live
+
+# AzureChinaCloud
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: keyvault
+    SubscriptionConfiguration: $(sub-config-cn-test-resources)
+    ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.cn' }"
+    EnvVars:
+      # Runs samples with live tests.
+      AZURE_KEYVAULT_TEST_MODE: Live
