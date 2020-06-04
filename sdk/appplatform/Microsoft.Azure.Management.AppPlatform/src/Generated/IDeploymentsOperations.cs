@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeploymentResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to delete a Deployment.
         /// </summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeploymentResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in an App.
         /// </summary>
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeploymentResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to update an exiting Deployment.
         /// </summary>
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DeploymentResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Start the deployment.
         /// </summary>
