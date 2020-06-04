@@ -2,6 +2,8 @@
 
 ## 1.2.0-preview.4 (Unreleased)
 
+### New Features
+- Added `Authenticate` methods to `UsernamePasswordCredential`
 
 ## 1.2.0-preview.3
 
