@@ -53,22 +53,22 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; internal set; }
+        public FieldText LabelText { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; internal set; }
+        public FieldText ValueText { get; }
 
         /// <summary>
         /// The strongly-typed value of this <see cref="FormField"/>.
         /// </summary>
-        public FieldValue Value { get; internal set; }
+        public FieldValue Value { get; }
 
         /// <summary>
         /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
