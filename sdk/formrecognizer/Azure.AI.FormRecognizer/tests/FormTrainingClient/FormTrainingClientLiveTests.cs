@@ -112,7 +112,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
             Assert.False(operation.HasValue);
-            Assert.Throws<InvalidOperationException>(() => operation.Value.GetType());
+            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         [Test]

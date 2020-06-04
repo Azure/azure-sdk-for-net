@@ -23,8 +23,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary>The id of the model created.</summary>
-        private Guid _modelId;
+        private RequestFailedException _requestFailedException;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
@@ -45,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (HasCompleted && !HasValue)
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException($"Invalid model created with ID {_modelId}.");
+                    throw _requestFailedException;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 else
                     return OperationHelpers.GetValue(ref _value);
@@ -118,37 +117,24 @@ namespace Azure.AI.FormRecognizer.Training
 
                 if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
                 {
-                    _hasCompleted = true;
+                    // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                     _value = new CustomFormModel(update.Value);
+                    _hasCompleted = true;
                 }
                 else if (update.Value.ModelInfo.Status == CustomFormModelStatus.Invalid)
                 {
+                    _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
+                                                    async,
+                                                    _diagnostics,
+                                                    _response,
+                                                    update.Value.TrainResult.Errors,
+                                                    $"Invalid model created with ID {update.Value.ModelInfo.ModelId}").ConfigureAwait(false);
                     _hasCompleted = true;
-                    _modelId = update.Value.ModelInfo.ModelId;
-
-                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.TrainResult.Errors).ConfigureAwait(false);
+                    throw _requestFailedException;
                 }
             }
 
             return GetRawResponse();
-        }
-
-        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
-        {
-            string errorMessage = $"Invalid model created with ID {_modelId}";
-
-            var errorInfo = new Dictionary<string, string>();
-            int index = 0;
-
-            foreach (var error in errors)
-            {
-                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
-                index++;
-            }
-
-            return async
-                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, additionalInfo:errorInfo).ConfigureAwait(false)
-                : _diagnostics.CreateRequestFailedException(_response, errorMessage, additionalInfo:errorInfo);
         }
     }
 }

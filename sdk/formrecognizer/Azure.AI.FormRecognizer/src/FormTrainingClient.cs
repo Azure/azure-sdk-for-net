@@ -114,7 +114,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</para>
-        /// <para>If the training fails, an exception is raised, and a model with an "invalid" status is still created in the Form Recognizer resource.</para>
+        /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
+        /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
         [ForwardsClientCalls]
         public virtual TrainingOperation StartTraining(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)
@@ -137,7 +138,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns>
         /// <para>A <see cref="TrainingOperation"/> to wait on this long-running operation. Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</para>
-        /// <para>If the training fails, an exception is raised, and a model with an "invalid" status is still created in the Form Recognizer resource.</para>
+        /// <para>Even if training fails, a model is created in the Form Recognizer account with an "invalid" status.
+        /// A <see cref="RequestFailedException"/> will be raised containing the modelId to access this invalid model.</para>
         /// </returns>
         [ForwardsClientCalls]
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFilesUri, bool useTrainingLabels, TrainingFileFilter trainingFileFilter = default, CancellationToken cancellationToken = default)

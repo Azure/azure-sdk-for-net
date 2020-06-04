@@ -866,7 +866,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
-            Assert.Throws<InvalidOperationException>(() => operation.Value.GetType());
+            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         private void ValidateFormPage(FormPage formPage, bool includeTextContent, int expectedPageNumber)

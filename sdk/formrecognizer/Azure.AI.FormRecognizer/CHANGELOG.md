@@ -32,7 +32,7 @@
 - `ReceiptLocale` removed from `RecognizedReceipt`.
 - An `InvalidOperationException` is now raised if trying to access the `Value` property of a `TrainingOperation` when a trained model is invalid.
 - A `RequestFailedException` is now raised if a model with `status=="invalid"` is returned from the `StartTraining` and `StartTrainingAsync` methods.
-- A `RequestFailedException` is now raised if an operation like `StartRecognizeReceipts`, `StartRecognizeContent`, or `StartRecognizeCustomForms` fails.
+- A `RequestFailedException` is now raised if an operation like `StartRecognizeReceipts` or `StartRecognizeContent` fails.
 - An `InvalidOperationException` is now raised if trying to access the `Value` property of a `xxOperation` object when a the executed operation failed.
 
 ### New Features

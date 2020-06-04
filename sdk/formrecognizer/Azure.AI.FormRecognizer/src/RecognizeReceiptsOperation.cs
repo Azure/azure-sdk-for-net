@@ -22,6 +22,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
+        private RequestFailedException _requestFailedException;
+
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
@@ -41,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (HasCompleted && !HasValue)
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("RecognizeReceipt operation failed.");
+                    throw _requestFailedException;
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 else
                     return OperationHelpers.GetValue(ref _value);
@@ -62,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public RecognizeReceiptsOperation(string operationId,FormRecognizerClient client)
+        public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
 
@@ -121,19 +123,17 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
-                    _hasCompleted = true;
-
-                    // TODO: When they support extracting more than one receipt, add a pageable method for this.
-                    // https://github.com/Azure/azure-sdk-for-net/issues/10389
-
-                    //_value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
+                    // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                     _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
+                    _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
+                    _requestFailedException = await ClientCommon
+                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                        .ConfigureAwait(false);
                     _hasCompleted = true;
-
-                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                    throw _requestFailedException;
                 }
             }
 
@@ -148,37 +148,6 @@ namespace Azure.AI.FormRecognizer.Models
                 receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return new RecognizedReceiptCollection(receipts);
-        }
-
-        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
-        {
-            string errorMessage = default;
-            string errorCode = default;
-
-            if (errors.Count > 0)
-            {
-                var firstError = errors[0];
-
-                errorMessage = firstError.Message;
-                errorCode = firstError.ErrorCode;
-            }
-            else
-            {
-                errorMessage = "RecognizeReceipt operation failed.";
-            }
-
-            var errorInfo = new Dictionary<string, string>();
-            int index = 0;
-
-            foreach (var error in errors)
-            {
-                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
-                index++;
-            }
-
-            return async
-                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }
