@@ -25,6 +25,9 @@ parameters:
 - name: TimeoutInMinutes
   type: number
   default: 60
+- name: ArmTemplateParameters
+  type: string
+  default: '@{}'
 - name: Location
   type: string
   default: ''
