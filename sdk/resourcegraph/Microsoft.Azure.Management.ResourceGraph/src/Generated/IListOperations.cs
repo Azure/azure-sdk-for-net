@@ -19,20 +19,23 @@ namespace Microsoft.Azure.Management.ResourceGraph
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ListOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IListOperations
     {
         /// <summary>
-        /// Lists all of the available REST API operations.
+        /// List changes to a resource for a given time interval.
         /// </summary>
+        /// <param name='parameters'>
+        /// the parameters for this request for changes.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -41,6 +44,6 @@ namespace Microsoft.Azure.Management.ResourceGraph
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Operation>>> ListMethodWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceChangeList>> ResourceChangesWithHttpMessagesAsync(ResourceChangesRequestParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

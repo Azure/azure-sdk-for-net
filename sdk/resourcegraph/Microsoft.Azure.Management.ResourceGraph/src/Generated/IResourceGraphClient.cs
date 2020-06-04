@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// API version.
+        /// Api Version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -67,6 +67,16 @@ namespace Microsoft.Azure.Management.ResourceGraph
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IListOperations.
+        /// </summary>
+        IListOperations List { get; }
+
+        /// <summary>
+        /// Gets the IGetOperations.
+        /// </summary>
+        IGetOperations Get { get; }
 
         /// <summary>
         /// Gets the IOperations.
