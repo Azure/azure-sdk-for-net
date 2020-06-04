@@ -254,15 +254,15 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             Assert.AreEqual(rule3, getRule3);
 
             List<RuleDescription> ruleList = new List<RuleDescription>();
-            //await foreach (RuleDescription rule in client.GetRulesAsync(topicName, subscriptionName))
-            //{
-            //    ruleList.Add(rule);
-            //}
-            //var ruleArr = ruleList.ToArray();
-            //Assert.True(ruleArr.Length == 3);
-            //Assert.AreEqual(rule1, ruleArr[0]);
-            //Assert.AreEqual(rule2, ruleArr[1]);
-            //Assert.AreEqual(rule3, ruleArr[2]);
+            await foreach (RuleDescription rule in client.GetRulesAsync(topicName, subscriptionName))
+            {
+                ruleList.Add(rule);
+            }
+            RuleDescription[] ruleArr = ruleList.ToArray();
+            Assert.True(ruleArr.Length == 3);
+            Assert.AreEqual(rule1, ruleArr[0]);
+            Assert.AreEqual(rule2, ruleArr[1]);
+            Assert.AreEqual(rule3, ruleArr[2]);
 
             ((CorrelationRuleFilter)getRule3.Filter).CorrelationId = "correlationIdModified";
             RuleDescription updatedRule3 = await client.UpdateRuleAsync(topicName, subscriptionName, getRule3);
