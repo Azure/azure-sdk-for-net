@@ -119,7 +119,7 @@ var basicDigitalTwin = new BasicDigitalTwin
 };
 basicDigitalTwin.Metadata.ModelId = modelId;
 basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
-basicDigitalTwin.CustomProperties.Add("Prop2", "Value2");
+basicDigitalTwin.CustomProperties.Add("Prop2", 987);
 
 var componentMetadata = new ModelProperties();
 componentMetadata.Metadata.ModelId = componentModelId;
@@ -145,7 +145,7 @@ var customDigitalTwin = new CustomDigitalTwin
     Id = customDtId,
     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
     Prop1 = "Prop1 val",
-    Prop2 = "Prop2 val",
+    Prop2 = 987,
     Component1 = new Component1
     {
         Metadata = new Component1Metadata { ModelId = componentModelId },
@@ -176,7 +176,7 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id} with ETag {basicDt.ETag} " +
-        $"and Prop1: '{basicDt.CustomProperties["Prop1"]}', Prop2: '{basicDt.CustomProperties["Prop2"]}'," +
+        $"and Prop1: '{basicDt.CustomProperties["Prop1"]}', Prop2: {basicDt.CustomProperties["Prop2"]}," +
         $"ComponentProp1: '{component1["ComponentProp1"]}', ComponentProp2: {component1["ComponentProp2"]}");
 }
 ```
@@ -191,7 +191,7 @@ var customDigitalTwin = new CustomDigitalTwin
     Id = customDtId,
     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
     Prop1 = "Prop1 val",
-    Prop2 = "Prop2 val",
+    Prop2 = 987,
     Component1 = new Component1
     {
         Metadata = new Component1Metadata { ModelId = componentModelId },

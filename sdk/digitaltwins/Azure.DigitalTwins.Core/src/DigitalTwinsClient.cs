@@ -141,7 +141,7 @@ namespace Azure.DigitalTwins.Core
         /// {
         ///     CustomDigitalTwin customDt = JsonSerializer.Deserialize&lt;CustomDigitalTwin&gt;(getCustomDtResponse.Value);
         ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {customDt.Id} with ETag {customDt.ETag} &quot; +
-        ///         $&quot;and Prop1: &apos;{customDt.Prop1}&apos;, Prop2: &apos;{customDt.Prop2}&apos;,&quot; +
+        ///         $&quot;and Prop1: &apos;{customDt.Prop1}&apos;, Prop2: {customDt.Prop2},&quot; +
         ///         $&quot;ComponentProp1: &apos;{customDt.Component1.ComponentProp1}&apos;, ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
         /// }
         /// </code>
@@ -194,7 +194,7 @@ namespace Azure.DigitalTwins.Core
         ///     Id = customDtId,
         ///     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
         ///     Prop1 = &quot;Prop1 val&quot;,
-        ///     Prop2 = &quot;Prop2 val&quot;,
+        ///     Prop2 = 987,
         ///     Component1 = new Component1
         ///     {
         ///         Metadata = new Component1Metadata { ModelId = componentModelId },

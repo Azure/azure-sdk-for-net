@@ -20,7 +20,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// };
     /// basicDigitalTwin.Metadata.ModelId = modelId;
     /// basicDigitalTwin.CustomProperties.Add(&quot;Prop1&quot;, &quot;Value1&quot;);
-    /// basicDigitalTwin.CustomProperties.Add(&quot;Prop2&quot;, &quot;Value2&quot;);
+    /// basicDigitalTwin.CustomProperties.Add(&quot;Prop2&quot;, 987);
     ///
     /// var componentMetadata = new ModelProperties();
     /// componentMetadata.Metadata.ModelId = componentModelId;
@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     var component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
     ///
     ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id} with ETag {basicDt.ETag} &quot; +
-    ///         $&quot;and Prop1: &apos;{basicDt.CustomProperties[&quot;Prop1&quot;]}&apos;, Prop2: &apos;{basicDt.CustomProperties[&quot;Prop2&quot;]}&apos;,&quot; +
+    ///         $&quot;and Prop1: &apos;{basicDt.CustomProperties[&quot;Prop1&quot;]}&apos;, Prop2: {basicDt.CustomProperties[&quot;Prop2&quot;]},&quot; +
     ///         $&quot;ComponentProp1: &apos;{component1[&quot;ComponentProp1&quot;]}&apos;, ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
     /// }
     /// </code>
