@@ -28,6 +28,7 @@
 - The order of the values for `USReceiptType` have changed so that `Other` has now a value of `1`.
 - Parameter `useTrainingLabels` is now required for `FormTrainingClient.StartTraining`.
 - Protected constructors have been removed from `Operation` types, such as `TrainingOperation` or `RecognizeContentOperation`.
+- `USReceipt`, `USReceiptItem` and `USReceiptType` types removed. Information about a `RecognizedReceipt` must now be extracted from its `RecognizedForm`.
 
 ### New Features
 
