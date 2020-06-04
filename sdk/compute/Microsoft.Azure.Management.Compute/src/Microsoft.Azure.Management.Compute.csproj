@@ -11,7 +11,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are the changes for DiskRP API Version 2020-05-01.
+        This is a public release of the Azure Compute SDK. Included with this release are the changes for DiskRP API Version 2020-05-01 which includes Managed Disk support for Private Links via DiskAccess resource.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
