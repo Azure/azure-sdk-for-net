@@ -268,7 +268,7 @@ namespace Azure.Storage.Queues.Test
             var listener1 = GetFailureListener().Object;
             var listener2 = GetFailureListener().Object;
 
-            var client = new QueueClient(new Uri("http://someuri.com"), new ExtendedQueueClientOptions()
+            var client = new QueueClient(new Uri("http://someuri.com"), new SpecializedQueueClientOptions()
             {
                 ClientSideEncryption = options1,
                 OnClientSideDecryptionFailure = listener1

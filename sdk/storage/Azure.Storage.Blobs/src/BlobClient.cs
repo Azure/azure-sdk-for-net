@@ -12,6 +12,8 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Blobs
 {
     /// <summary>

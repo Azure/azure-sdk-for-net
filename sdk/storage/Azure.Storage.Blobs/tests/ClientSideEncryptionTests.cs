@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs.Test
                 KeyWrapAlgorithm = "bar"
             };
 
-            var client = new BlobClient(new Uri("http://someuri.com"), new ExtendedBlobClientOptions()
+            var client = new BlobClient(new Uri("http://someuri.com"), new SpecializedBlobClientOptions()
             {
                 ClientSideEncryption = options1,
             });
@@ -600,7 +600,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download plaintext range with encrypted client
-                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), new ExtendedBlobClientOptions()
+                var cryptoClient = InstrumentClient(new BlobClient(blob.Uri, GetNewSharedKeyCredentials(), new SpecializedBlobClientOptions()
                 {
                     ClientSideEncryption = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {

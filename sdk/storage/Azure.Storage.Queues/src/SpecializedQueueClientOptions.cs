@@ -12,7 +12,7 @@ namespace Azure.Storage.Queues.Specialized
     /// Storage.
     /// </summary>
 #pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion; This is an extension of existing public options that obey this.
-    public class ExtendedQueueClientOptions : QueueClientOptions
+    public class SpecializedQueueClientOptions : QueueClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues.Specialized
         /// The <see cref="QueueClientOptions.ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public ExtendedQueueClientOptions(ServiceVersion version = LatestVersion) : base(version)
+        public SpecializedQueueClientOptions(ServiceVersion version = LatestVersion) : base(version)
         {
         }
 

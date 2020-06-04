@@ -18,6 +18,8 @@ using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Queues
 {
     /// <summary>
@@ -2111,5 +2113,46 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
+    }
+}
+
+namespace Azure.Storage.Queues.Specialized
+{
+    /// <summary>
+    /// Add methods to <see cref="Queues"/> clients.
+    /// </summary>
+    public static partial class SpecializedQueueExtensions
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="client">Client to base off of.</param>
+        /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        public static QueueClient WithClientSideEncryptionOptions(this QueueClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
+            => new QueueClient(
+                client.Uri,
+                client.Pipeline,
+                client.Version,
+                client.ClientDiagnostics,
+                clientSideEncryptionOptions,
+                client.OnClientSideDecryptionFailure);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="client">Client to base off of.</param>
+        /// <param name="listener">Listener for when decryption of a single message fails.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        public static QueueClient WithClientSideEncryptionFailureListener(this QueueClient client, IClientSideDecryptionFailureListener listener)
+            => new QueueClient(
+                client.Uri,
+                client.Pipeline,
+                client.Version,
+                client.ClientDiagnostics,
+                client.ClientSideEncryption,
+                listener);
     }
 }
