@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.12.0
+###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+
 ## Version 4.11.0
 ###  Feature Additions
 - Added support for the follwoing new datasets in ADF - ExcelDataset, along with source and sink for Copy activity
