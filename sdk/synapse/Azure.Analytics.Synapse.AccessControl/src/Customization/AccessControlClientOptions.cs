@@ -28,9 +28,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary>
-        /// API version for Spark job service.
+        /// API version for Azure Synapse Access Control service.
         /// </summary>
-        public string VersionString { get; set; }
+        internal string VersionString { get; }
 
         /// <summary>
         /// The Synapse service version.

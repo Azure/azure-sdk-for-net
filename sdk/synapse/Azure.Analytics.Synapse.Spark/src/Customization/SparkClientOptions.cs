@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <summary>
         /// API version for Spark job service.
         /// </summary>
-        public string VersionString { get; set; }
+        internal string VersionString { get; }
 
         /// <summary>
         /// The Synapse service version.
