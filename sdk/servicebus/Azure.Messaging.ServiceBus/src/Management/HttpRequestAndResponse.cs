@@ -126,10 +126,8 @@ namespace Azure.Messaging.ServiceBus.Management
             }
         }
 
-        private Task<string> GetToken(Uri requestUri)
-        {
-            return GetTokenAsync(requestUri.GetLeftPart(UriPartial.Path));
-        }
+        private Task<string> GetToken(Uri requestUri) =>
+            GetTokenAsync(requestUri.GetLeftPart(UriPartial.Path));
 
         public async Task<string> GetTokenAsync(string requestUri)
         {
@@ -137,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Management
             var credential = (ServiceBusTokenCredential)_tokenCredential;
             if (!credential.IsSharedAccessSignatureCredential)
             {
-                scope = "https://servicebus.azure.net/.default";
+                scope = Constants.DefaultScope;
             }
             AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
@@ -162,7 +160,7 @@ namespace Azure.Messaging.ServiceBus.Management
             skip += maxCount;
             nextSkip = skip.ToString();
 
-            if (description.Count< maxCount || description.Count == 0)
+            if (description.Count < maxCount || description.Count == 0)
             {
                 nextSkip = null;
             }

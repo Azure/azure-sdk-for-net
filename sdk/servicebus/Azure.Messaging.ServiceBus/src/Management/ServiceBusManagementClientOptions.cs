@@ -13,12 +13,12 @@ namespace Azure.Messaging.ServiceBus.Management
     public class ServiceBusManagementClientOptions : ClientOptions
     {
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        ///   Determines whether the specified <see cref="object" /> is equal to this instance.
         /// </summary>
         ///
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <param name="obj">The <see cref="object" /> to compare with this instance.</param>
         ///
-        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified <see cref="object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
@@ -36,21 +36,9 @@ namespace Azure.Messaging.ServiceBus.Management
         ///   Converts the instance to string representation.
         /// </summary>
         ///
-        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        /// <returns>A <see cref="string" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusClientOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///        ///
-        /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
-        ///
-        internal ServiceBusManagementClientOptions Clone() =>
-            new ServiceBusManagementClientOptions
-            {
-                Transport = Transport,
-            };
     }
 }

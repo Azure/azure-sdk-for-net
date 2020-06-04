@@ -65,8 +65,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 queueList.Add(queue);
             }
-            Assert.True(queueList.Count == 1);
-            Assert.AreEqual(queueList.First().Name, queueName);
+            Assert.True(queueList.Count >= 1);
+            Assert.Contains(getQueue, queueList);
 
             await client.DeleteQueueAsync(updatedQueue.Name);
 
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             TopicDescription updatedTopic = await client.UpdateTopicAsync(getTopic);
             Assert.AreEqual(getTopic, updatedTopic);
 
-            var exists = await client.TopicExistsAsync(topicName);
+            bool exists = await client.TopicExistsAsync(topicName);
             Assert.True(exists);
 
             List<TopicDescription> topicList = new List<TopicDescription>();
@@ -121,8 +121,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 topicList.Add(topic);
             }
-            Assert.True(topicList.Count == 1);
-            Assert.AreEqual(topicList.First().Name, topicName);
+            Assert.True(topicList.Count >= 1);
+            Assert.Contains(getTopic, topicList);
 
             await client.DeleteTopicAsync(updatedTopic.Name);
 
@@ -179,9 +179,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 subscriptionList.Add(subscription);
             }
-            Assert.True(subscriptionList.Count == 1);
-            Assert.AreEqual(subscriptionList.First().TopicName, topicName);
-            Assert.AreEqual(subscriptionList.First().SubscriptionName, subscriptionName);
+            Assert.True(subscriptionList.Count >= 1);
+            Assert.Contains(getSubscription, subscriptionList);
 
             await client.DeleteSubscriptionAsync(subscriptionDescription.TopicName, subscriptionDescription.SubscriptionName);
 
@@ -313,8 +312,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(queueRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
-            QueueRuntimeInfo runtimeInfo = runtimeInfoList.First();
+            Assert.True(runtimeInfoList.Count >= 1);
+            QueueRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.Name.Equals(queueName, StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(queueName, runtimeInfo.Name);
@@ -377,8 +376,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(subscriptionRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
-            SubscriptionRuntimeInfo runtimeInfo = runtimeInfoList.First();
+            Assert.True(runtimeInfoList.Count >= 1);
+            SubscriptionRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.SubscriptionName.Equals(subscriptionName, StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(topicName, runtimeInfo.TopicName);
@@ -427,8 +426,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(topicRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
-            TopicRuntimeInfo runtimeInfo = runtimeInfoList.First();
+            Assert.True(runtimeInfoList.Count >= 1);
+            TopicRuntimeInfo runtimeInfo = runtimeInfoList.FirstOrDefault(e => e.Name.Equals(topicName, StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(runtimeInfo);
 
             Assert.AreEqual(topicName, runtimeInfo.Name);
@@ -560,11 +559,11 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
                     ForwardDeadLetteredMessagesTo = dlqDestinationName
                 });
 
-            var qd = new QueueDescription(queueName)
-            {
-                ForwardTo = destinationName
-            };
-            await mgmtClient.CreateQueueAsync(qd);
+            await mgmtClient.CreateQueueAsync(
+                new QueueDescription(queueName)
+                {
+                    ForwardTo = destinationName
+                });
 
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             ServiceBusSender sender = sbClient.CreateSender(queueName);
@@ -650,7 +649,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 
             NamespaceProperties nsInfo = await client.GetNamespacePropertiesAsync();
             Assert.NotNull(nsInfo);
-           // Assert.AreEqual(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
+            // Assert.AreEqual(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
             Assert.AreEqual(NamespaceType.Messaging, nsInfo.NamespaceType); // Common namespace type used for testing is messaging.
         }
 

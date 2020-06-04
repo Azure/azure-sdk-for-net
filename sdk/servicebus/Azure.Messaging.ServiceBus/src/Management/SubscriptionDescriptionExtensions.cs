@@ -26,13 +26,10 @@ namespace Azure.Messaging.ServiceBus.Management
 
         public static string NormalizeForwardToAddress(string forwardTo, string baseAddress)
         {
-            if (!Uri.TryCreate(forwardTo, UriKind.Absolute, out var forwardToUri))
-            {
-                if (!baseAddress.EndsWith("/", StringComparison.Ordinal))
-                {
-                    baseAddress += "/";
-                }
+            baseAddress = new UriBuilder(baseAddress).Uri.ToString();
 
+            if (!Uri.TryCreate(forwardTo, UriKind.Absolute, out Uri forwardToUri))
+            {
                 forwardToUri = new Uri(new Uri(baseAddress), forwardTo);
             }
 
