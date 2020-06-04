@@ -19,21 +19,75 @@ namespace Azure.Core
     /// </summary>
     public class DynamicJson : IDynamicMetaObjectProvider
     {
-        private readonly JsonElement? _element;
+        private readonly JsonElement _element;
         private readonly JsonValueKind _kind;
         private Dictionary<string, DynamicJson>? _objectRepresentation;
-        private List<DynamicJson> _listRepresentation;
+        private List<DynamicJson>? _arrayRepresentation;
         private object? _value;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="element"></param>
-        protected DynamicJson(JsonElement element)
+        internal DynamicJson(JsonElement element)
         {
             _element = element;
             _kind = element.ValueKind;
-            element.ValueKind.
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    _objectRepresentation = new Dictionary<string, DynamicJson>();
+                    foreach (var item in element.EnumerateObject())
+                    {
+                        _objectRepresentation[item.Name] = new DynamicJson(item.Value);
+                    }
+                    break;
+                case JsonValueKind.Array:
+                    _arrayRepresentation = new List<DynamicJson>();
+                    foreach (var item in element.EnumerateArray())
+                    {
+                        _arrayRepresentation.Add(new DynamicJson(item));
+                    }
+                    break;
+                case JsonValueKind.String:
+                    _value = element.GetString();
+                    break;
+                case JsonValueKind.Number:
+                    // TODO:
+                    _value = element.GetInt32();
+                    break;
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    _value = element.GetBoolean();
+                    break;
+                case JsonValueKind.Null:
+                    _value = null;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(element), "Unsupported element kind");
+            }
+        }
+
+        private DynamicJson(IEnumerable<KeyValuePair<string,DynamicJson>> properties)
+        {
+            _kind = JsonValueKind.Object;
+            _objectRepresentation = new Dictionary<string, DynamicJson>();
+            foreach (var property in properties)
+            {
+                _objectRepresentation[property.Key] = property.Value;
+            }
+        }
+
+        private DynamicJson(IEnumerable<DynamicJson> array)
+        {
+            _kind = JsonValueKind.Array;
+            _arrayRepresentation = new List<DynamicJson>(array);
+        }
+
+        private DynamicJson(object? value)
+        {
+            _value = value;
+            _kind = value == null ? JsonValueKind.Null : JsonValueKind.String;
         }
 
         /// <summary>
@@ -55,6 +109,7 @@ namespace Azure.Core
         {
             return new DynamicJson(element);
         }
+
         /// <summary>
         ///
         /// </summary>
@@ -80,27 +135,54 @@ namespace Azure.Core
 
         private object GetValue(string propertyName)
         {
-            if (propertyName == "Length" && _element.ValueKind == JsonValueKind.Array)
+            if (propertyName == "Length" && _kind == JsonValueKind.Array)
             {
-                return _element.GetArrayLength();
+                return EnsureArray().Count;
             }
 
-            if (_element.TryGetProperty(propertyName, out JsonElement element))
+            if (EnsureObject().TryGetValue(propertyName, out DynamicJson element))
             {
-                return new DynamicJson(element);
+                return element;
             }
 
             throw new InvalidOperationException($"Property {propertyName} not found");
         }
 
-        private object GetValueAt(int index)
+        private List<DynamicJson> EnsureArray()
         {
-            return new DynamicJson(_element[index]);
+            if (_kind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected kind to be array but was {_kind} instead");
+            }
+
+            Debug.Assert(_arrayRepresentation != null);
+            return _arrayRepresentation!;
         }
 
-        private object SetValueAt(int index, object value)
+        private Dictionary<string, DynamicJson> EnsureObject()
         {
-            return new DynamicJson(_element[index]);
+            if (_kind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected kind to be object but was {_kind} instead");
+            }
+
+            Debug.Assert(_objectRepresentation != null);
+            return _objectRepresentation!;
+        }
+
+        private object? EnsureValue()
+        {
+            if (_kind == JsonValueKind.Object || _kind == JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected kind to be value but was {_kind} instead");
+            }
+
+            return _value;
+        }
+
+        private object GetValueAt(int index)
+        {
+            return EnsureArray()[index];
         }
 
         private object? ConvertTo(Type type)
@@ -109,30 +191,32 @@ namespace Azure.Core
 
             if (type == typeof(IEnumerable))
             {
-                return new Enumerable(this);
+                return EnsureArray();
             }
 
-            if (type == typeof(long))
-            {
-                return _element.GetInt64();
-            }
-            if (type == typeof(int))
-            {
-                return _element.GetInt32();
-            }
-            if (type == typeof(bool))
-            {
-                return _element.GetBoolean();
-            }
+            var value = EnsureValue();
 
-            if (_element.ValueKind == JsonValueKind.Null)
+            if (value == null)
             {
                 return null;
             }
 
+            if (type == typeof(long))
+            {
+                return (long)value;
+            }
+            if (type == typeof(int))
+            {
+                return (int)value;
+            }
+            if (type == typeof(bool))
+            {
+                return (bool)value;
+            }
+
             if (type == typeof(string))
             {
-                return _element.GetString();
+                return (string)value;
             }
 
             throw new InvalidOperationException($"Unknown type {type}");
@@ -187,72 +271,69 @@ namespace Azure.Core
 
             public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
             {
-
-                if (indexes.Length != 1) throw new InvalidOperationException();
-                var index = indexes[0].Expression;
-
-                var targetObject = Expression.Convert(Expression, LimitType);
-                var methodIplementation = typeof(DynamicJson).GetMethod(nameof(GetValueAt), BindingFlags.NonPublic | BindingFlags.Instance);
-                var arguments = new[] { index };
-
-                var getPropertyCall = Expression.Call(targetObject, methodIplementation, arguments);
-                var restrictions = binder.FallbackSetIndex(this, indexes).Restrictions; // TODO: all these restrictions are a hack. Tthey need to be cleaned up.
-                DynamicMetaObject getProperty = new DynamicMetaObject(getPropertyCall, restrictions);
-                return getProperty;
-
                 return base.BindSetIndex(binder, indexes, value);
             }
         }
 
-        private class Enumerable: IEnumerable<DynamicJson>
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public static DynamicJson Object(IEnumerable<KeyValuePair<string, DynamicJson>> values = null)
         {
-            private readonly DynamicJson _dynamicJson;
-
-            public Enumerable(DynamicJson dynamicJson)
-            {
-                _dynamicJson = dynamicJson;
-            }
-
-            IEnumerator<DynamicJson> IEnumerable<DynamicJson>.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerator? GetEnumerator()
-            {
-                return new Enumerator(_dynamicJson);
-            }
+            return new DynamicJson(values);
         }
 
-        private class Enumerator: IEnumerator<DynamicJson>
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public static DynamicJson Array(IEnumerable<DynamicJson> values = null)
         {
-            private readonly DynamicJson _dynamicJson;
-            private int _index = -1;
+            return new DynamicJson(values ?? System.Array.Empty<DynamicJson>());
+        }
 
-            public Enumerator(DynamicJson dynamicJson)
-            {
-                _dynamicJson = dynamicJson;
-            }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static DynamicJson Array(params DynamicJson[] values)
+        {
+            return new DynamicJson(values);
+        }
 
-            public bool MoveNext()
-            {
-                _index++;
-                return _index < _dynamicJson._element.GetArrayLength();
-            }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static implicit operator DynamicJson(int value)
+        {
+            return new DynamicJson(value);
+        }
 
-            public void Reset()
-            {
-                _index = -1;
-            }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static implicit operator DynamicJson(string? value)
+        {
+            return new DynamicJson(value);
+        }
 
-            object IEnumerator.Current => Current;
-
-            public DynamicJson Current => new DynamicJson(_dynamicJson._element[_index]);
-
-            public void Dispose()
-            {
-            }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static DynamicJson Serialize<T>(T value, JsonSerializerOptions options = null)
+        {
+            var serialized = JsonSerializer.Serialize<T>(value, options);
+            return new DynamicJson(JsonDocument.Parse(serialized).RootElement);
         }
     }
-
 }

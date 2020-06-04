@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -10,10 +13,43 @@ namespace Azure.Core.Tests
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            dynamic dynamicJson = DynamicJson.Parse("[0, 1, 2, 3]");
+            var json = DynamicJson.Parse("[0, 1, 2, 3]");
+            dynamic dynamicJson = json;
             dynamicJson[1] = 2;
             dynamicJson[2] = null;
             dynamicJson[3] = "string";
+        }
+
+        [Test]
+        public void ExistingObjectPropertiesCanBeAssigned()
+        {
+            var json = DynamicJson.Parse("{\"a\": 1}");
+            dynamic dynamicJson = json;
+            dynamicJson.a = "2";
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithPrimitive()
+        {
+            var json = DynamicJson.Parse("{}");
+            dynamic dynamicJson = json;
+            dynamicJson.a = "2";
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithArrays()
+        {
+            var json = DynamicJson.Parse("{}");
+            dynamic dynamicJson = json;
+            dynamicJson.a = DynamicJson.Array(1, 2, null, "string");
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
+        {
+            var json = DynamicJson.Parse("{}");
+            dynamic dynamicJson = json;
+            dynamicJson.a = DynamicJson.Serialize(new PointGeometry(new GeometryPosition(1, 2)));
         }
     }
 }
