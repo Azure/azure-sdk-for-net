@@ -50,7 +50,7 @@ namespace Compute.Tests
                     EnsureClientsInitialized(context);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
                     VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
-
+                    
                     // Set extension sequencing (ext2 is provisioned after ext1)
                     vmssExtProfile.Extensions[1].ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[0].Name };
 
@@ -63,6 +63,7 @@ namespace Compute.Tests
                         extensionProfile: vmssExtProfile,
                         createWithManagedDisks: true);
 
+                    Assert.Equal("PT1H20M", vmScaleSet.VirtualMachineProfile.ExtensionProfile.ExtensionsTimeBudget);
                     // Perform a Get operation on each extension
                     VirtualMachineScaleSetExtension getVmssExtResponse = null;
                     for (int i = 0; i < vmssExtProfile.Extensions.Count; i++)
@@ -70,7 +71,7 @@ namespace Compute.Tests
                         getVmssExtResponse = m_CrpClient.VirtualMachineScaleSetExtensions.Get(rgName, vmssName, vmssExtProfile.Extensions[i].Name);
                         ValidateVmssExtension(vmssExtProfile.Extensions[i], getVmssExtResponse);
                     }
-
+                    
                     // Add a new extension to the VMSS (ext3 is provisioned after ext2)
                     VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension(name: "3", publisher: "Microsoft.CPlat.Core", type: "NullLinux", version: "4.0");
                     vmssExtension.ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[1].Name };
@@ -122,7 +123,8 @@ namespace Compute.Tests
                 {
                     GetTestVMSSVMExtension(name: "1", publisher: "Microsoft.CPlat.Core", type: "NullSeqA", version: "2.0"),
                     GetTestVMSSVMExtension(name: "2", publisher: "Microsoft.CPlat.Core", type: "NullSeqB", version: "2.0")
-                }
+                },
+                ExtensionsTimeBudget = "PT1H20M"
             };
         }
 
