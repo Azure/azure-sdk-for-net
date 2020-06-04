@@ -77,7 +77,16 @@ namespace Microsoft.Rest.Serialization
                         propertyName = property.PropertyName.Substring("properties.".Length);
                     }
                     writer.WritePropertyName(propertyName);
-                    serializer.Serialize(writer, memberValue);
+
+                    if (memberValue != null
+                        && property.Converter?.CanWrite == true)
+                    {
+                        property.Converter.WriteJson(writer, memberValue, serializer);
+                    }
+                    else
+                    {
+                        serializer.Serialize(writer, memberValue);
+                    }
                 }
 
                 // serialize additional properties

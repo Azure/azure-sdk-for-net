@@ -65,6 +65,64 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         [Fact]
+        public void PolymorphicSerializeWithPropertyConverter()
+        {
+            var dog = new Dog
+            {
+                Name = "Doug",
+                Birthday = new DateTime(2020, 2, 29),
+                LikesDogfood = true,
+            };
+
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+
+            var serializedJson = JsonConvert.SerializeObject(dog, Formatting.Indented, serializeSettings);
+
+            string dougJson = @"{
+  ""dType"": ""dog"",
+  ""likesDogfood"": true,
+  ""bestFriend"": null,
+  ""name"": ""Doug"",
+  ""birthday"": 1582934400
+}";
+            Assert.Equal(dougJson, serializedJson);
+
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Animal>("dType"));
+
+            var deserializedDog = (Dog)JsonConvert.DeserializeObject<Animal>(serializedJson, deserializeSettings);
+            Assert.Equal(dog.Birthday, deserializedDog.Birthday);
+        }
+
+        [Fact]
+        public void PolymorphicSerializeNullWithPropertyConverter()
+        {
+            var dog = new Dog
+            {
+                Name = "Doug",
+                LikesDogfood = true,
+            };
+
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+
+            var serializedJson = JsonConvert.SerializeObject(dog, Formatting.Indented, serializeSettings);
+
+            string dougJson = @"{
+  ""dType"": ""dog"",
+  ""likesDogfood"": true,
+  ""bestFriend"": null,
+  ""name"": ""Doug"",
+  ""birthday"": null
+}";
+            Assert.Equal(dougJson, serializedJson);
+        }
+
+        [Fact]
         public void PolymorphismWorksWithReadOnlyProperties()
         {
             var deserializeSettings = new JsonSerializerSettings();
