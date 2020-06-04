@@ -35,7 +35,8 @@ namespace Azure.Storage.Blobs.Models
         public string ObjectReplicationDestinationPolicy { get; internal set; }
 
         /// <summary>
-        /// Parsed Object Replication Policy Id, Rule Id(s) and status of the source blob.
+        /// Holds the Object Replication Properties of the source blob as
+        /// Dictionary ( policyId, Dictionary ( ruleId, replicationStatus ) ).
         /// </summary>
         public IDictionary<string, IDictionary<string, string>> ObjectReplicationSourceProperties { get; internal set; }
 

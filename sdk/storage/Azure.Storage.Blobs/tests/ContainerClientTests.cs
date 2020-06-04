@@ -1766,6 +1766,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
+        // TODO: Recorded Only
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR Metadata
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+
+            // Act
+            IList<BlobItem> blobs = await sourceContainer.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            // Since this is a record ONLY test. We expect all the blobs in this source container/account
+            // to have OrMetadata
+            Assert.IsNotNull(blobs.First().ObjectReplicationSourceProperties);
+        }
+
         [Test]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -2002,6 +2023,27 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsByHierarchyAsync().ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        // TODO: Recorded Only
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsHierarchySegmentAsync_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR Metadata
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+
+            // Act
+            BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync().FirstAsync();
+
+            // Assert
+            // Since this is a record ONLY test. We expect all the blobs in this source container/account
+            // to have OrMetadata
+            Assert.IsNotNull(item.Blob.ObjectReplicationSourceProperties);
         }
 
         [Test]

@@ -80,7 +80,9 @@ namespace Azure.Storage.Blobs.Models
             _flattened = flattened;
             Details = new BlobDownloadDetails() {
                 _flattened = flattened,
-                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
+                ObjectReplicationSourceProperties = flattened.ObjectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(flattened.ObjectReplicationRules)
+                    : null
             };
         }
 
