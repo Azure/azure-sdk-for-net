@@ -9,6 +9,7 @@ using Xunit;
 using Microsoft.Azure.Management.Billing;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Azure.Management.Billing.Models;
 
@@ -16,8 +17,8 @@ namespace Billing.Tests.ScenarioTests
 {
     public class BillingProfilesOperationsTest : TestBase
     {
-        private const string BillingAccountName = "09fdb330-0b61-5cf6-3e5a-92828b8da4c0:83025e81-32ed-47e8-b420-359f05267fb9_2019-05-31";
-        private const string BillingProfileName = "TSYB-SQXK-BG7-PKDK-SGB";
+        private const string BillingAccountName = "1f434626-12ea-5b95-6758-0c4b6432b3ae:d0f4c360-b456-4844-b6e2-040c0d6b0cd7_2019-05-31";
+        private const string BillingProfileName = "DRWP-ID5F-BG7-TGB";
         private const string BillingProfileCurrency = "USD";
 
         [Fact]
@@ -37,8 +38,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingProfiles);
-                var billingProfile = Assert.Single(billingProfiles);
-                Assert.Equal(BillingProfileName, billingProfile.Name);
+                Assert.Equal(5, billingProfiles.Count());
+                var billingProfile = Assert.Single(billingProfiles.Where(i => i.Name == BillingProfileName));
                 Assert.Equal(BillingProfileCurrency, billingProfile.Currency);
             }
         }
@@ -76,7 +77,7 @@ namespace Billing.Tests.ScenarioTests
             {
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var BillingProfileFriendlyName = "Test_" + Guid.NewGuid().ToString();
+                var BillingProfileFriendlyName = "Test_BillingProfile2020GA" ;
                 var firstName = "First";
                 var lastName = "Last";
 
@@ -97,8 +98,8 @@ namespace Billing.Tests.ScenarioTests
                     new AzurePlan { SkuId = "0001" },
                     new AzurePlan { SkuId = "0002" }
                 };
-                var poNumber = Guid.NewGuid().ToString();
-                var displayName = Guid.NewGuid().ToString();
+                var poNumber = "1234567";
+                var displayName = "NewBillingProfileDisplayName";
 
                 // Get the billing profile
                 var billingProfile = billingMgmtClient.BillingProfiles.CreateOrUpdate(
@@ -115,7 +116,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingProfile);
-                Assert.Equal(BillingProfileName, billingProfile.Name);
+                Assert.Equal(BillingProfileFriendlyName, billingProfile.Name);
                 Assert.Equal(BillingProfileCurrency, billingProfile.Currency);
                 Assert.Equal(displayName, billingProfile.DisplayName);
                 Assert.Equal(enabledAzurePlans.Length, billingProfile.EnabledAzurePlans.Count);
@@ -136,13 +137,14 @@ namespace Billing.Tests.ScenarioTests
             {
                 // Create client
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var poNumber = Guid.NewGuid().ToString();
-                var displayName = Guid.NewGuid().ToString();
+                var poNumber = "8901234";
+                var displayName = "UpdatedBillingProfileDisplayName";
+                var billingProfileName = "Test_BillingProfile2020GA";
 
                 // Get the billing profile
                 var billingProfile = billingMgmtClient.BillingProfiles.CreateOrUpdate(
                     BillingAccountName,
-                    BillingProfileName,
+                    billingProfileName,
                     new BillingProfile
                     {
                         DisplayName = displayName,
@@ -151,7 +153,7 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingProfile);
-                Assert.Equal(BillingProfileName, billingProfile.Name);
+                Assert.Equal(billingProfileName, billingProfile.Name);
                 Assert.Equal(BillingProfileCurrency, billingProfile.Currency);
                 Assert.Equal(displayName, billingProfile.DisplayName);
                 Assert.Equal(poNumber, billingProfile.PoNumber);
