@@ -34,9 +34,16 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: ScenarioName
+  type: string
+  default: AzureCloud
 
 jobs:
-  - job: "Test"
+  - job:
+    ${{ if not(eq(parameters.ScenarioName, '')) }}:
+      displayName: Test-${{ parameters.ScenarioName }}-
+    ${{ if eq(parameters.ScenarioName, '') }}:
+      displayName: Test
     variables:
       - template: ../variables/globals.yml
       - name: SubscriptionConfiguration
@@ -72,7 +79,7 @@ jobs:
 
     steps:
       - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-      
+
       - ${{ parameters.PreSteps }}
 
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
@@ -125,7 +132,7 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testRunTitle: "${{ parameters.ScenarioName }} $(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
 
