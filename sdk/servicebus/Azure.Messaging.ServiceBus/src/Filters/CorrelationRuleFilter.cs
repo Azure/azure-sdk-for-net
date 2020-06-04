@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -179,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Filters
             return stringBuilder.ToString();
         }
 
-        private void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)
+        private static void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)
         {
             if (value != null)
             {
@@ -192,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                     builder.Append(" AND ");
                 }
 
-                builder.AppendFormat("{0} = '{1}'", propertyName, value);
+                builder.AppendFormat(CultureInfo.InvariantCulture, "{0} = '{1}'", propertyName, value);
             }
         }
 

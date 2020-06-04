@@ -68,13 +68,6 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationLocation.Split('/').Last();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
-        /// </summary>
-        protected RecognizeContentOperation()
-        {
-        }
-
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
 

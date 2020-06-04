@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///
     /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportSender" />
     ///
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable. The AmqpSender doesn't own the connection scope.
     internal class AmqpSender : TransportSender
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -239,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 using (AmqpMessage batchMessage = messageFactory())
                 {
 
-                    string messageHash = batchMessage.GetHashCode().ToString();
+                    string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                     ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
                     Transaction ambientTransaction = Transaction.Current;
@@ -258,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     if (batchMessage.SerializedMessageSize > MaxMessageSize)
                     {
-                        throw new ServiceBusException(string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
                     }
 
                     // Attempt to send the message batch.

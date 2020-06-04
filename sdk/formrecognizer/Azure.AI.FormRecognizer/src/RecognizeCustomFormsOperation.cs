@@ -114,13 +114,6 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationId;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
-        /// </summary>
-        protected RecognizeCustomFormsOperation()
-        {
-        }
-
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             UpdateStatusAsync(false, cancellationToken).EnsureCompleted();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("text");
                 writer.WriteObjectValue(TextWeights);
             }
-            if (Functions != null)
+            if (Functions != null && Functions.Any())
             {
                 writer.WritePropertyName("functions");
                 writer.WriteStartArray();

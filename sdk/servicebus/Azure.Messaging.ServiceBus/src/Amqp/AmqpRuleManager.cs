@@ -14,7 +14,9 @@ using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable. AmqpRuleManager does not own connection scope.
     internal class AmqpRuleManager : TransportRuleManager
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>
         /// The path of the Service Bus subscription to which the rule manager is bound.

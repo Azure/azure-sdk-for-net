@@ -1,0 +1,142 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://amandacanaryoauth.blob.core.windows.net/test-filesystem-7926c602-58aa-3a7d-50a9-173792710428?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1bb12b8349115643bc9f523da48e016c-77fd5a3acf97d449-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "320ea34e-f672-ce88-ddc5-65ded75f6dea",
+        "x-ms-date": "Fri, 29 May 2020 00:05:09 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 29 May 2020 00:05:09 GMT",
+        "ETag": "\u00220x8D80363F39DB8E4\u0022",
+        "Last-Modified": "Fri, 29 May 2020 00:05:09 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "320ea34e-f672-ce88-ddc5-65ded75f6dea",
+        "x-ms-request-id": "83c44ddf-501e-00c0-6a4c-350e1f000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-7926c602-58aa-3a7d-50a9-173792710428/test-dire\u00A2t \u00D8\u00AE\u03D2%253A-18294ffa-650d-10a8-c204-3574679319f5?resource=directory",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d2ef06c8-1e31-e9fd-fafd-6f6ec014674a",
+        "x-ms-date": "Fri, 29 May 2020 00:05:09 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 29 May 2020 00:05:09 GMT",
+        "ETag": "\u00220x8D80363F3A93939\u0022",
+        "Last-Modified": "Fri, 29 May 2020 00:05:09 GMT",
+        "Server": [
+          "Windows-Azure-HDFS/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "d2ef06c8-1e31-e9fd-fafd-6f6ec014674a",
+        "x-ms-request-id": "7539ed3e-e01f-000e-4f4c-35df91000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-7926c602-58aa-3a7d-50a9-173792710428?resource=filesystem\u0026recursive=true\u0026upn=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "60ab50b9-46a3-53c3-0ffe-f4656248ca3f",
+        "x-ms-date": "Fri, 29 May 2020 00:05:09 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 29 May 2020 00:05:09 GMT",
+        "Server": [
+          "Windows-Azure-HDFS/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "60ab50b9-46a3-53c3-0ffe-f4656248ca3f",
+        "x-ms-request-id": "7539ed3f-e01f-000e-504c-35df91000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": {
+        "paths": [
+          {
+            "contentLength": "0",
+            "etag": "0x8D80363F3A93939",
+            "isDirectory": "true",
+            "lastModified": "Fri, 29 May 2020 00:05:09 GMT",
+            "name": "test-dire\u00A2t \u00D8\u00AE\u03D2%3A-18294ffa-650d-10a8-c204-3574679319f5"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "http://amandacanaryoauth.blob.core.windows.net/test-filesystem-7926c602-58aa-3a7d-50a9-173792710428?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0f5412b1ea214a4dbec77cad495b1038-7ecfb1d6ce277447-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.3.0-dev.20200528.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "6fb4d378-0668-65a7-ac18-bb788a22c550",
+        "x-ms-date": "Fri, 29 May 2020 00:05:09 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 29 May 2020 00:05:09 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "6fb4d378-0668-65a7-ac18-bb788a22c550",
+        "x-ms-request-id": "83c44e08-501e-00c0-064c-350e1f000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "409565269",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandacanaryoauth\nU2FuaXRpemVk\nhttp://amandacanaryoauth.blob.core.windows.net\nhttp://amandacanaryoauth.file.core.windows.net\nhttp://amandacanaryoauth.queue.core.windows.net\nhttp://amandacanaryoauth.table.core.windows.net\n\n\n\n\nhttp://amandacanaryoauth-secondary.blob.core.windows.net\nhttp://amandacanaryoauth-secondary.file.core.windows.net\nhttp://amandacanaryoauth-secondary.queue.core.windows.net\nhttp://amandacanaryoauth-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandacanaryoauth.blob.core.windows.net/;QueueEndpoint=http://amandacanaryoauth.queue.core.windows.net/;FileEndpoint=http://amandacanaryoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanaryoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanaryoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanaryoauth-secondary.file.core.windows.net/;AccountName=amandacanaryoauth;AccountKey=Sanitized\n"
+  }
+}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -361,7 +362,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime.ToString());
+            Logger.ScheduleMessageStart(Identifier, scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
             using DiagnosticScope scope = CreateDiagnosticScope(
                 new ServiceBusMessage[] { message },
                 DiagnosticProperty.ScheduleActivityName);

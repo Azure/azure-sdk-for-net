@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    new ServiceBusReceiverOptions
+                    new ServiceBusSessionReceiverOptions
                     {
                         ReceiveMode = ReceiveMode.ReceiveAndDelete
                     });

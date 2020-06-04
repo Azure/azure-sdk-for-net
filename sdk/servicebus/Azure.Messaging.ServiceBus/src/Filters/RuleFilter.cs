@@ -26,7 +26,15 @@ namespace Azure.Messaging.ServiceBus.Filters
             // This is intentionally left blank. This constructor exists
             // only to prevent external assemblies inheriting from it.
         }
+
         /// <inheritdoc/>
         public abstract bool Equals(RuleFilter other);
+
+        /// <inheritdoc/>
+        public abstract override bool Equals(object obj);
+        
+        /// <inheritdoc/>
+        public override int GetHashCode() =>
+            base.GetHashCode();
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Tests
                     new ScoringProfile("nearest")
                     {
                         FunctionAggregation = ScoringFunctionAggregation.Sum,
-                        Functions = new[]
+                        Functions =
                         {
                             new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100)),
                         },
