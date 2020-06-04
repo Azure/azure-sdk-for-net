@@ -48,7 +48,7 @@ namespace Azure.DigitalTwins.Core
         ///     clientSecret,
         ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
         ///
-        /// var dtClient = new DigitalTwinsClient(
+        /// var client = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
         ///     tokenCredential);
         /// </code>
@@ -86,7 +86,7 @@ namespace Azure.DigitalTwins.Core
         ///     clientId,
         ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
         ///
-        /// var dtClient = new DigitalTwinsClient(
+        /// var client = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
         ///     tokenCredential,
         ///     clientOptions);
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core
         /// This sample demonstrates getting and deserializing a digital twin into a custom data type.
         ///
         /// <code snippet="Snippet:DigitalTwinsSampleGetCustomDigitalTwin">
-        /// Response&lt;string&gt; getCustomDtResponse = await DigitalTwinsClient.GetDigitalTwinAsync(customDtId).ConfigureAwait(false);
+        /// Response&lt;string&gt; getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
         /// if (getCustomDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
         /// {
         ///     CustomDigitalTwin customDt = JsonSerializer.Deserialize&lt;CustomDigitalTwin&gt;(getCustomDtResponse.Value);
@@ -170,7 +170,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The created application/json digital twin and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomTwin">
-        /// string customDtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+        /// string customDtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, client);
         /// var customDigitalTwin = new CustomDigitalTwin
         /// {
         ///     Id = customDtId,
@@ -186,7 +186,7 @@ namespace Azure.DigitalTwins.Core
         /// };
         /// string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
         ///
-        /// Response&lt;string&gt; createCustomDtResponse = await DigitalTwinsClient.CreateDigitalTwinAsync(customDtId, dt2Payload).ConfigureAwait(false);
+        /// Response&lt;string&gt; createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
         /// Console.WriteLine($&quot;Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.&quot;);
         /// </code>
         /// </example>
@@ -219,7 +219,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteTwin">
-        /// await DigitalTwinsClient.DeleteDigitalTwinAsync(twin.Key).ConfigureAwait(false);
+        /// await client.DeleteDigitalTwinAsync(twin.Key);
         /// </code>
         /// </example>
         public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
@@ -281,7 +281,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
-        /// response = await DigitalTwinsClient.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath).ConfigureAwait(false);
+        /// response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
         ///
         /// Console.WriteLine($&quot;Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}&quot;);
         /// </code>
@@ -322,7 +322,7 @@ namespace Azure.DigitalTwins.Core
         /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
         /// string updatePayload = componentUpdateUtility.Serialize();
         ///
-        /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
+        /// Response&lt;string&gt; response = await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
         ///
         /// Console.WriteLine($&quot;Updated component for digital twin {basicDtId}. Update response status: {response.GetRawResponse().Status}&quot;);
         /// </code>
@@ -359,7 +359,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list of application/json relationships belonging to the specified digital twin and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetRelationships">
-        /// AsyncPageable&lt;string&gt; relationships = DigitalTwinsClient.GetRelationshipsAsync(twin.Key);
+        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(twin.Key);
         /// </code>
         /// </example>
         public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
@@ -464,7 +464,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The pageable list of application/json relationships directed towards the specified digital twin and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships">
-        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = DigitalTwinsClient.GetIncomingRelationshipsAsync(twin.Key);
+        /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
         /// </code>
         /// </example>
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
@@ -624,12 +624,10 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleCreateRelationship">
         /// string serializedRelationship = JsonSerializer.Serialize(relationship);
         ///
-        /// await DigitalTwinsClient
-        ///     .CreateRelationshipAsync(
-        ///         relationship.SourceId,
-        ///         relationship.Id,
-        ///         serializedRelationship)
-        ///     .ConfigureAwait(false);
+        /// await client.CreateRelationshipAsync(
+        ///     relationship.SourceId,
+        ///     relationship.Id,
+        ///     serializedRelationship);
         /// </code>
         /// </example>
         public virtual Task<Response<string>> CreateRelationshipAsync(string digitalTwinId, string relationshipId, string relationship, CancellationToken cancellationToken = default)
@@ -699,7 +697,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>A pageable set of application/json models and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModels">
-        /// AsyncPageable&lt;ModelData&gt; allModels = DigitalTwinsClient.GetModelsAsync();
+        /// AsyncPageable&lt;ModelData&gt; allModels = client.GetModelsAsync();
         /// await foreach (ModelData model in allModels)
         /// {
         ///     Console.WriteLine($&quot;Model Id: {model.Id}, display name: {model.DisplayName[&quot;en&quot;]}, upload time: {model.UploadTime}, is decommissioned: {model.Decommissioned}&quot;);
@@ -799,7 +797,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The application/json model and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModel">
-        /// Response&lt;ModelData&gt; sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
+        /// Response&lt;ModelData&gt; sampleModel = await client.GetModelAsync(sampleModelId);
         /// </code>
         /// </example>
         public virtual Task<Response<ModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
@@ -838,7 +836,7 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel">
         /// try
         /// {
-        ///     await DigitalTwinsClient.DecommissionModelAsync(sampleModelId).ConfigureAwait(false);
+        ///     await client.DecommissionModelAsync(sampleModelId);
         ///
         ///     Console.WriteLine($&quot;Successfully decommissioned model {sampleModelId}&quot;);
         /// }
@@ -886,7 +884,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
-        /// Response&lt;IReadOnlyList&lt;ModelData&gt;&gt; response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
+        /// Response&lt;IReadOnlyList&lt;ModelData&gt;&gt; response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
         /// Console.WriteLine($&quot;Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}&quot;);
         /// </code>
         /// </example>
@@ -932,7 +930,7 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteModel">
         /// try
         /// {
-        ///     await DigitalTwinsClient.DeleteModelAsync(sampleModelId).ConfigureAwait(false);
+        ///     await client.DeleteModelAsync(sampleModelId);
         ///
         ///     Console.WriteLine($&quot;Deleted model {sampleModelId}&quot;);
         /// }
@@ -978,7 +976,7 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins">
         /// // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
         /// // happens under the covers.
-        /// AsyncPageable&lt;string&gt; asyncPageableResponse = DigitalTwinsClient.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
+        /// AsyncPageable&lt;string&gt; asyncPageableResponse = client.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
         ///
         /// // Iterate over the twin instances in the pageable response.
         /// // The &quot;await&quot; keyword here is required because new pages will be fetched when necessary,
@@ -1104,7 +1102,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>A pageable set of application/json event routes and the http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes">
-        /// AsyncPageable&lt;EventRoute&gt; response = DigitalTwinsClient.GetEventRoutesAsync();
+        /// AsyncPageable&lt;EventRoute&gt; response = client.GetEventRoutesAsync();
         /// await foreach (EventRoute er in response)
         /// {
         ///     Console.WriteLine($&quot;Event route: {er.Id}, endpoint name: {er.EndpointName}&quot;);
@@ -1229,12 +1227,12 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateEventRoute">
         /// string eventFilter = &quot;$eventType = &apos;DigitalTwinTelemetryMessages&apos; or $eventType = &apos;DigitalTwinLifecycleNotification&apos;&quot;;
-        /// var eventRoute = new EventRoute(_eventhubEndpointName)
+        /// var eventRoute = new EventRoute(eventhubEndpointName)
         /// {
         ///     Filter = eventFilter
         /// };
         ///
-        /// Response createEventRouteResponse = await DigitalTwinsClient.CreateEventRouteAsync(_eventRouteId, eventRoute).ConfigureAwait(false);
+        /// Response createEventRouteResponse = await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
         /// </code>
         /// </example>
         public virtual Task<Response> CreateEventRouteAsync(string eventRouteId, EventRoute eventRoute, CancellationToken cancellationToken = default)
@@ -1265,7 +1263,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The http response.</returns>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteEventRoute">
-        /// Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId).ConfigureAwait(false);
+        /// Response response = await client.DeleteEventRouteAsync(_eventRouteId);
         /// </code>
         /// </example>
         public virtual Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
@@ -1300,7 +1298,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry">
         /// // construct your json telemetry payload by hand.
-        /// Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
+        /// Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
         /// Console.WriteLine($&quot;Successfully published telemetry message, status: {publishTelemetryResponse.Status}&quot;);
         /// </code>
         /// </example>
@@ -1352,7 +1350,10 @@ namespace Azure.DigitalTwins.Core
         /// {
         ///     { &quot;ComponentTelemetry1&quot;, 9}
         /// };
-        /// Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, &quot;Component1&quot;, JsonSerializer.Serialize(telemetryPayload));
+        /// Response publishTelemetryToComponentResponse = await client.PublishComponentTelemetryAsync(
+        ///     twinId,
+        ///     &quot;Component1&quot;,
+        ///     JsonSerializer.Serialize(telemetryPayload));
         /// Console.WriteLine($&quot;Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}&quot;);
         /// </code>
         /// </example>
