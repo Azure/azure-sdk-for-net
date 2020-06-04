@@ -55,6 +55,13 @@
             "metadata": {
                 "description": "Domain suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
             }
+        },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
         }
     },
     "variables": {
@@ -88,7 +95,7 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
