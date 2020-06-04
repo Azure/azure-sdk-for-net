@@ -9,24 +9,28 @@ using Azure.Data.Tables.Tests;
 namespace Azure.Data.Tables.Samples
 {
     [LiveOnly]
-    public partial class TablesSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TablesSamples : SamplesBase<TablesTestEnvironment>
     {
         [Test]
-        public void DetectLanguage()
+        public void CreateTable()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            string storageUri = TestEnvironment.StorageUri;
+            string accountName = TestEnvironment.AccountName;
+            string storageAccountKey = TestEnvironment.PrimaryStorageAccountKey;
+            string tableName = "mytesttable";
 
-            #region Snippet:TextAnalyticsSample1CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            #region Snippet:TablesSample1CreateClient
+            var serviceClient = new TableServiceClient(
+                new Uri(storageUri),
+                new TableSharedKeyCredential(accountName, storageAccountKey));
+
             #endregion
 
-            #region Snippet:DetectLanguage
-            string document = "Este documento está en español.";
+            #region Snippet:CreateTable
+            var client = serviceClient.GetTableClient(tableName);
+            client.Create();
 
-            DetectedLanguage language = client.DetectLanguage(document);
-
-            Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+            
             #endregion
         }
     }
