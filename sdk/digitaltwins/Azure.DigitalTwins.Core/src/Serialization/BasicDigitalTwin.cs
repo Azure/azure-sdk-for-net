@@ -20,12 +20,12 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// };
     /// basicDigitalTwin.Metadata.ModelId = modelId;
     /// basicDigitalTwin.CustomProperties.Add(&quot;Prop1&quot;, &quot;Value1&quot;);
-    /// basicDigitalTwin.CustomProperties.Add(&quot;Prop2&quot;, &quot;Value2&quot;);
+    /// basicDigitalTwin.CustomProperties.Add(&quot;Prop2&quot;, 987);
     ///
     /// var componentMetadata = new ModelProperties();
     /// componentMetadata.Metadata.ModelId = componentModelId;
     /// componentMetadata.CustomProperties.Add(&quot;ComponentProp1&quot;, &quot;ComponentValue1&quot;);
-    /// componentMetadata.CustomProperties.Add(&quot;ComponentProp2&quot;, &quot;ComponentValue2&quot;);
+    /// componentMetadata.CustomProperties.Add(&quot;ComponentProp2&quot;, 123);
     ///
     /// basicDigitalTwin.CustomProperties.Add(&quot;Component1&quot;, componentMetadata);
     ///
@@ -47,9 +47,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     string component1RawText = ((JsonElement)basicDt.CustomProperties[&quot;Component1&quot;]).GetRawText();
     ///     var component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
     ///
-    ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}  with ETag {basicDt.ETag} &quot; +
-    ///         $&quot;and Prop1 &apos;{basicDt.CustomProperties[&quot;Prop1&quot;]}&apos;, Prop2 &apos;{basicDt.CustomProperties[&quot;Prop2&quot;]}&apos;, &quot; +
-    ///         $&quot;ComponentProp1 &apos;{component1[&quot;ComponentProp1&quot;]}&apos;, ComponentProp2 &apos;{component1[&quot;ComponentProp2&quot;]}&apos;&quot;);
+    ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id} with ETag {basicDt.ETag} &quot; +
+    ///         $&quot;and Prop1: &apos;{basicDt.CustomProperties[&quot;Prop1&quot;]}&apos;, Prop2: {basicDt.CustomProperties[&quot;Prop2&quot;]},&quot; +
+    ///         $&quot;ComponentProp1: &apos;{component1[&quot;ComponentProp1&quot;]}&apos;, ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
     /// }
     /// </code>
     /// </example>
