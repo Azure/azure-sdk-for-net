@@ -52,5 +52,7 @@ stages:
       safeName: AzureStorageFilesDataLake
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
+    - name: Azure.Storage.Blobs.ChangeFeed
+      safeName: AzureStorageBlobsChangeFeed
     - name: Azure.Management.Storage
       safeName: AzureManagementStorage
