@@ -1,12 +1,11 @@
 trigger: none
-
 resources:
   repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
+  - repository: azure-sdk-tools
+    type: github
+    name: Azure/azure-sdk-tools
+    endpoint: azure
+    ref: refs/tags/azure-sdk-tools_20200604.3
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
@@ -14,5 +13,4 @@ jobs:
     Location: westus2
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     EnvVars:
-      # Runs live tests.
       AZURE_IOT_TEST_MODE: Live
