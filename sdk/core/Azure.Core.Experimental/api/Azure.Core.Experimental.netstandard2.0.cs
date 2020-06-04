@@ -50,7 +50,7 @@ namespace Azure.Core.Spatial
         public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.Geometry> Geometries { get { throw null; } }
     }
-    public partial class Geometry
+    public abstract partial class Geometry
     {
         protected Geometry(Azure.Core.Spatial.GeometryProperties properties) { }
         public Azure.Core.Spatial.GeometryProperties Properties { get { throw null; } }
@@ -74,6 +74,7 @@ namespace Azure.Core.Spatial
     public partial class GeometryJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Spatial.Geometry>
     {
         public GeometryJsonConverter() { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Spatial.Geometry Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Spatial.Geometry value, System.Text.Json.JsonSerializerOptions options) { }
     }

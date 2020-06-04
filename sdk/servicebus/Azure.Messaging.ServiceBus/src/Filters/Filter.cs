@@ -30,5 +30,10 @@ namespace Azure.Messaging.ServiceBus.Filters
         }
         /// <inheritdoc/>
         public abstract bool Equals(Filter other);
+
+        public abstract override bool Equals(object obj);
+
+        public override int GetHashCode() =>
+            base.GetHashCode();
     }
 }

@@ -4,6 +4,10 @@
 - Fixed bug where blob, file and directory names were not URL encoded.
 - Fixed bug where BlobBaseClient.DownloadAsync() could download data incorrectly if intermittent network failure occurs.
 
+## 12.4.3 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
 ## 12.4.2 (2020-05)
 - Fixed bug where blob, file and directory names were not URL encoded.
 - Fixed bug where BlobBaseClient.DownloadAsync() could download data incorrectly if intermittent network failure occurs.

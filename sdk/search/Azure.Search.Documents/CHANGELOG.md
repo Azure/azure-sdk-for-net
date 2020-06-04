@@ -8,6 +8,7 @@
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
+- Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
 
 ## 1.0.0-preview.3 (2020-05-05)
 
@@ -67,3 +68,5 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
+
+[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values

@@ -69,6 +69,9 @@ namespace Azure.Storage
         public const string Https = "https";
         public const string Http = "http";
 
+        public const string PercentSign = "%";
+        public const string EncodedPercentSign = "%25";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>

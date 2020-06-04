@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -61,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("stemEnglishPossessive");
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (ProtectedWords != null)
+            if (ProtectedWords != null && ProtectedWords.Any())
             {
                 writer.WritePropertyName("protectedWords");
                 writer.WriteStartArray();

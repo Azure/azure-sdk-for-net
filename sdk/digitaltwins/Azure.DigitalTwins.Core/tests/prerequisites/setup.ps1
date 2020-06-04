@@ -182,12 +182,13 @@ else
 $user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("Writing user config file - $fileName`n")
+$appSecretJsonEscaped = ConvertTo-Json $appSecret
 $config = @"
 {
     "DigitalTwinsInstanceHostName": "https://$($dtHostName)",
     "ApplicationId": "$appId",
-    "ClientSecret": "$appSecret",
-	"TestMode":  "Live"
+    "ClientSecret": $appSecretJsonEscaped,
+    "TestMode":  "Live"
 }
 "@
 $config | Out-File "$PSScriptRoot\..\config\$fileName"

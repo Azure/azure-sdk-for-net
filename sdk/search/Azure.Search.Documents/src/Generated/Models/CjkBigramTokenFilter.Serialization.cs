@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IgnoreScripts != null)
+            if (IgnoreScripts != null && IgnoreScripts.Any())
             {
                 writer.WritePropertyName("ignoreScripts");
                 writer.WriteStartArray();

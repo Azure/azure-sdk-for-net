@@ -122,15 +122,13 @@ namespace Azure.DigitalTwins.Core.Queries
 }
 namespace Azure.DigitalTwins.Core.Serialization
 {
-    public partial class BasicDigitalTwin
+    public partial class BasicDigitalTwin : Azure.DigitalTwins.Core.Serialization.ModelProperties
     {
         public BasicDigitalTwin() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
+        public string ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -152,7 +150,15 @@ namespace Azure.DigitalTwins.Core.Serialization
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
         public string ModelId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> ModelProperties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> WriteableProperties { get { throw null; } set { } }
+    }
+    public partial class ModelProperties
+    {
+        public ModelProperties() { }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
+        public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
     public partial class UpdateOperationsUtility
     {

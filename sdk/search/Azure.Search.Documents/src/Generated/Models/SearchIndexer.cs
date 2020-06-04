@@ -35,6 +35,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;
+            FieldMappings = new List<FieldMapping>();
+            OutputFieldMappings = new List<FieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -58,8 +60,8 @@ namespace Azure.Search.Documents.Indexes.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
-            FieldMappings = fieldMappings;
-            OutputFieldMappings = outputFieldMappings;
+            FieldMappings = fieldMappings ?? new List<FieldMapping>();
+            OutputFieldMappings = outputFieldMappings ?? new List<FieldMapping>();
             IsDisabled = isDisabled;
             _etag = Etag;
         }
@@ -78,10 +80,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexingSchedule Schedule { get; set; }
         /// <summary> Parameters for indexer execution. </summary>
         public IndexingParameters Parameters { get; set; }
-        /// <summary> Defines mappings between fields in the data source and corresponding target fields in the index. </summary>
-        public IList<FieldMapping> FieldMappings { get; set; }
-        /// <summary> Output field mappings are applied after enrichment and immediately before indexing. </summary>
-        public IList<FieldMapping> OutputFieldMappings { get; set; }
         /// <summary> A value indicating whether the indexer is disabled. Default is false. </summary>
         public bool? IsDisabled { get; set; }
     }

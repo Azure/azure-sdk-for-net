@@ -6,7 +6,7 @@ namespace Azure.Core.Spatial
     /// <summary>
     /// A base type for all spatial types.
     /// </summary>
-    public class Geometry
+    public abstract class Geometry
     {
         internal static readonly GeometryProperties DefaultProperties = new GeometryProperties();
 

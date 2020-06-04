@@ -15,31 +15,24 @@ namespace Azure.DigitalTwins.Samples
 {
     internal class ModelLifecycleSamples
     {
-        private DigitalTwinsClient DigitalTwinsClient { get; }
-
-        public ModelLifecycleSamples(DigitalTwinsClient dtClient)
-        {
-            DigitalTwinsClient = dtClient;
-        }
-
         /// <summary>
         /// Creates a new model with a random Id
         /// Decommission the newly created model and check for success
         /// </summary>
-        public async Task RunSamplesAsync()
+        public async Task RunSamplesAsync(DigitalTwinsClient client)
         {
             PrintHeader("MODEL LIFECYCLE SAMPLE");
 
-            // For the purpose of this example We will create temporary models using random model Ids and then decommission a model.
+            // For the purpose of this example we will create temporary models using random model Ids and then decommission a model.
             // We have to make sure these model Ids are unique within the DT instance.
 
-            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
-            string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
+            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
+            string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, client);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
                 .Replace(SamplesConstants.ComponentId, newComponentModelId);
 
-            string newModelPayload = SamplesConstants.TemporaryModelPayload
+            string newModelPayload = SamplesConstants.TemporaryModelWithComponentPayload
                 .Replace(SamplesConstants.ModelId, sampleModelId)
                 .Replace(SamplesConstants.ComponentId, newComponentModelId);
 
@@ -47,12 +40,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                #region Snippet:DigitalTwinSampleCreateModels
+                #region Snippet:DigitalTwinsSampleCreateModels
 
-                Response<IReadOnlyList<ModelData>> response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
+                Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
                 Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
 
-                #endregion Snippet:DigitalTwinSampleCreateModels
+                #endregion Snippet:DigitalTwinsSampleCreateModels
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
             {
@@ -66,11 +59,11 @@ namespace Azure.DigitalTwins.Samples
             // Get Model
             try
             {
-                #region Snippet:DigitalTwinSampleGetModel
+                #region Snippet:DigitalTwinsSampleGetModel
 
-                Response<ModelData> sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
+                Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
 
-                #endregion Snippet:DigitalTwinSampleGetModel
+                #endregion Snippet:DigitalTwinsSampleGetModel
 
                 Console.WriteLine($"{sampleModel.Value.Id} has decommission status of {sampleModel.Value.Decommissioned}");
             }
@@ -81,11 +74,11 @@ namespace Azure.DigitalTwins.Samples
 
             // Now we decommission the model
 
-            #region Snippet:DigitalTwinSampleDecommisionModel
+            #region Snippet:DigitalTwinsSampleDecommisionModel
 
             try
             {
-                await DigitalTwinsClient.DecommissionModelAsync(sampleModelId).ConfigureAwait(false);
+                await client.DecommissionModelAsync(sampleModelId);
 
                 Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
             }
@@ -94,15 +87,15 @@ namespace Azure.DigitalTwins.Samples
                 FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
             }
 
-            #endregion Snippet:DigitalTwinSampleDecommisionModel
+            #endregion Snippet:DigitalTwinsSampleDecommisionModel
 
             // Now delete created model
 
-            #region Snippet:DigitalTwinSampleDeleteModel
+            #region Snippet:DigitalTwinsSampleDeleteModel
 
             try
             {
-                await DigitalTwinsClient.DeleteModelAsync(sampleModelId).ConfigureAwait(false);
+                await client.DeleteModelAsync(sampleModelId);
 
                 Console.WriteLine($"Deleted model {sampleModelId}");
             }
@@ -111,7 +104,7 @@ namespace Azure.DigitalTwins.Samples
                 FatalError($"Failed to delete model {sampleModelId} due to:\n{ex}");
             }
 
-            #endregion Snippet:DigitalTwinSampleDeleteModel
+            #endregion Snippet:DigitalTwinsSampleDeleteModel
         }
     }
 }

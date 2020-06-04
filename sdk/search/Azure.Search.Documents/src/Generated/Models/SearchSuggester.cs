@@ -23,12 +23,10 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             SearchMode = searchMode;
-            SourceFields = sourceFields;
+            SourceFields = sourceFields ?? new List<string>();
         }
 
         /// <summary> The name of the suggester. </summary>
         public string Name { get; set; }
-        /// <summary> The list of field names to which the suggester applies. Each field must be searchable. </summary>
-        public IList<string> SourceFields { get; set; }
     }
 }

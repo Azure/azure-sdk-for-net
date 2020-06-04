@@ -3,6 +3,9 @@
 ## 12.3.0-preview.1 (Unreleased)
 
 
+## 12.2.1 (2020-06)
+- Fixed bug where download could hang indefinietly on .NET Framework
+
 ## 12.2.0 (2020-05)
 - Added DataLakeFileClient.Upload() overload that allows setting metadata, permissions and umask.
 - Fixed bug where PathClient.Rename() was not functioning correctly with SAS.

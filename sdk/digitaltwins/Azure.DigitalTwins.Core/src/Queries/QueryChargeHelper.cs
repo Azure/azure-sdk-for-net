@@ -21,12 +21,12 @@ namespace Azure.DigitalTwins.Core.Queries
         /// <param name="page">The page that contains the query-charge header.</param>
         /// <param name="queryCharge">The query charge extracted from the header.</param>
         /// <returns>True if the header contains a query-charge field, otherwise false.</returns>
-        /// <code snippet="Snippet:DigitalTwinSampleQueryTwinsWithQueryCharge">
+        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge">
         /// // This code snippet demonstrates how you could extract the query charges incurred when calling
         /// // the query API. It iterates over the response pages first to access to the query-charge header,
         /// // and then the digital twin results within each page.
         ///
-        /// AsyncPageable&lt;string&gt; asyncPageableResponseWithCharge = DigitalTwinsClient.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
+        /// AsyncPageable&lt;string&gt; asyncPageableResponseWithCharge = client.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
         /// int pageNum = 0;
         ///
         /// // The &quot;await&quot; keyword here is required as a call is made when fetching a new page.
