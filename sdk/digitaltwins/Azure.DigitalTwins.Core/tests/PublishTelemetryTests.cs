@@ -20,6 +20,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public PublishTelemetryTests(bool isAsync)
             : base(isAsync)
         {
+            Sanitizer = new PublishTelemetryRecordedTestSanitizer();
         }
 
         // Infrastructure setup script uses this hardcoded value when linking the test eventhub to the test digital twins instance.

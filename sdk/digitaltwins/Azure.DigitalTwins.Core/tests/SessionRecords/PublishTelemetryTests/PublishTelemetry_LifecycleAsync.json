@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Jun 2020 23:19:06 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -44,7 +44,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Jun 2020 23:19:11 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -71,7 +71,7 @@
       "ResponseHeaders": {
         "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Jun 2020 23:19:11 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -102,7 +102,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:12 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -126,10 +126,10 @@
       "ResponseHeaders": {
         "Content-Length": "317",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Jun 2020 23:19:20 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11112\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-03T23:19:20.1501919\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;114383368\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-03T23:19:20.1503535\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11112\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-04T01:31:52.9059837\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;114383368\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-04T01:31:52.9061117\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://barustum-rg3.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin1651711051?api-version=2020-05-31-preview",
@@ -150,13 +150,13 @@
       "ResponseHeaders": {
         "Content-Length": "1003",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Jun 2020 23:19:21 GMT",
-        "ETag": "W/\u002202ae4534-05c3-4518-b4b3-1ad8ca3b6b9d\u0022",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
+        "ETag": "W/\u00226f6523d8-e25a-4e18-9279-23617b8b6096\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomWithWifiTwin1651711051",
-        "$etag": "02ae4534-05c3-4518-b4b3-1ad8ca3b6b9d",
+        "$etag": "6f6523d8-e25a-4e18-9279-23617b8b6096",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -222,8 +222,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "dt-id": "2d80020c-ab51-4509-ab30-ba1d30695331",
-        "dt-timestamp": "06/03/20 23:19:21 \u002B00:00",
+        "dt-id": "Sanitized",
+        "dt-timestamp": "Sanitized",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200603.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
@@ -235,7 +235,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:21 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -247,8 +247,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "25",
         "Content-Type": "application/json",
-        "dt-id": "26030467-a958-47bf-89bc-1be1436f0027",
-        "dt-timestamp": "06/03/20 23:19:21 \u002B00:00",
+        "dt-id": "Sanitized",
+        "dt-timestamp": "Sanitized",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200603.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
@@ -262,7 +262,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:21 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -283,7 +283,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:21 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -304,7 +304,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:21 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -325,7 +325,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:23 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -346,7 +346,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 03 Jun 2020 23:19:27 GMT",
+        "Date": "Thu, 04 Jun 2020 01:31:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
