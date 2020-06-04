@@ -1,15 +1,11 @@
-﻿using DigitalTwins.Tests.ScenarioTests;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DigitalTwins.Tests.ScenarioTests
+﻿namespace DigitalTwins.Tests.ScenarioTests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using DigitalTwins.Tests.Helpers;
     using Microsoft.Azure.Management.DigitalTwins;
+    using Microsoft.Azure.Management.DigitalTwins.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -20,6 +16,12 @@ namespace DigitalTwins.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+
+                var digitalTwinsDescription = new DigitalTwinsDescription()
+                {
+                    Location = location,
+                };
+
                 this.Initialize(context);
 
                 // Create Resource Group
@@ -45,10 +47,6 @@ namespace DigitalTwins.Tests.ScenarioTests
                 Assert.Equal(DigitalTwinsTestUtilities.DefaultInstanceName, digitalTwinsInstance.Name);
                 Assert.Equal(DigitalTwinsTestUtilities.DefaultLocation, digitalTwinsInstance.Location);
 
-                // Add an endpoint
-                var digitalTwinsEndpoint = digitalTwinsClient.DigitalTwinsEndpoint.CreateOrUpdate(DigitalTwinsTestUtilities.DefaultResourceGroupName, DigitalTwinsTestUtilities.DefaultInstanceName, DigitalTwinsTestUtilities.DefaultEndpointName);
-                Assert.NotNull(digitalTwinsEndpoint);
-
                 // Add and Get Tags
                 IDictionary<string, string> tags = new Dictionary<string, string>();
                 tags.Add("key1", "value1");
@@ -63,25 +61,34 @@ namespace DigitalTwins.Tests.ScenarioTests
                 var twinsResources = this.digitalTwinsClient.DigitalTwins.ListByResourceGroup(DigitalTwinsTestUtilities.DefaultResourceGroupName);
                 Assert.True(twinsResources.Count() > 0);
 
-                // Get all of the available DigitalTwins REST API operations
+                // Get all of the available operations, ensure CRUD
                 var operationList = this.digitalTwinsClient.Operations.List();
                 Assert.True(operationList.Count() > 0);
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}", StringComparison.OrdinalIgnoreCase));
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}/endpoints", StringComparison.OrdinalIgnoreCase));
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}/endpoints/{DigitalTwinsTestUtilities.DefaultEndpointName}", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/read", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/write", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/delete", StringComparison.OrdinalIgnoreCase));
 
-                // Get DigitalTwins REST API operations
-                var digitalTwinOperations = operationList.Where(e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}", StringComparison.OrdinalIgnoreCase));
-                Assert.True(digitalTwinOperations.Count().Equals(4));
-                Assert.Equal("Microsoft DigitalTwins", digitalTwinOperations.First().Display.Provider, ignoreCase: true);
+                // Get other operations
 
-                // Get DigitalTwins REST API Endpoint list operation
-                digitalTwinOperations = operationList.Where(e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}/endpoints", StringComparison.OrdinalIgnoreCase));
-                Assert.True(digitalTwinOperations.Count().Equals(1));
+                // Register Operation
+                var registerOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/register"));
+                Assert.True(registerOperations.Count() > 0);
 
-                // Get Endpoint operations
-                digitalTwinOperations = operationList.Where(e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/{DigitalTwinsTestUtilities.DefaultInstanceName}/endpoints/{DigitalTwinsTestUtilities.DefaultEndpointName}", StringComparison.OrdinalIgnoreCase));
-                Assert.True(digitalTwinOperations.Count().Equals(3));
+                // Twin Operations
+                var twinOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/digitaltwins"));
+                Assert.True(twinOperations.Count() > 0);
+
+                // Event Route Operations
+                var eventRouteOperations =  operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/eventroutes"));
+                Assert.True(eventRouteOperations.Count() > 0);
+
+                // Model operations
+                var modelOperations =  operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/models"));
+                Assert.True(modelOperations.Count() > 0);
+
+                // Delete instance
+                var deleteOp = this.digitalTwinsClient.DigitalTwins.BeginDelete(DigitalTwinsTestUtilities.DefaultResourceGroupName, DigitalTwinsTestUtilities.DefaultInstanceName);
+                Assert.True(deleteOp.ProvisioningState == ProvisioningState.Deleting);
 
             }
         }

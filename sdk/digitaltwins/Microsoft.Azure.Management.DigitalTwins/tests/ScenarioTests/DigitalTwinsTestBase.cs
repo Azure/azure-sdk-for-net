@@ -7,6 +7,7 @@
     using Microsoft.Azure.Management.DigitalTwins.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
+    using System.Reflection;
     using System.Net;
     public class DigitalTwinsTestBase
     {
@@ -51,6 +52,12 @@
             {
                 Location = location,
             };
+
+            PropertyInfo sku = digitalTwinsDescription.GetType().BaseType.GetProperty("Sku");
+            DigitalTwinsSkuInfo newSku = new DigitalTwinsSkuInfo();
+            newSku.GetType().GetProperty("Name").SetValue(newSku, "S1");
+            sku.SetValue(digitalTwinsDescription, newSku);
+
             return this.digitalTwinsClient.DigitalTwins.CreateOrUpdate(
                 resourceGroup.Name,
                 digitalTwinsInstanceName,

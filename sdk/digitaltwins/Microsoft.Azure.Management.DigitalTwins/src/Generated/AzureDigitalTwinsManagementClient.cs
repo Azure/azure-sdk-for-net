@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <summary>
         /// The subscription identifier.
         /// </summary>
-        public System.Guid SubscriptionId { get; set; }
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// Version of the DigitalTwinsInstance Management API.

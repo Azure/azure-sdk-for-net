@@ -1,4 +1,4 @@
-﻿namespace DigitalTwins.Tests.Helpers
+namespace DigitalTwins.Tests.Helpers
 {
 
     using Microsoft.Azure.Management.DigitalTwins;
@@ -7,10 +7,10 @@
     using System.Net;
     class DigitalTwinsTestUtilities
     {
-        public static string DefaultLocation = "WestUS";
-        public static string DefaultInstanceName = "DigitalTwins";
-        public static string DefaultEndpointName = "DigitalTwinsEndpoint";
-        public static string DefaultResourceGroupName = "DigitalTwinsResourceGroup";
+        public static string DefaultLocation = "westus2";
+        public static string DefaultInstanceName = "DigitalTwinsSDK";
+        public static string DefaultEndpointName = "DigitalTwinsSDKEndpoint";
+        public static string DefaultResourceGroupName = "DigitalTwinsSDKResourceGroup";
 
         public static AzureDigitalTwinsManagementClient GetDigitalTwinsClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
