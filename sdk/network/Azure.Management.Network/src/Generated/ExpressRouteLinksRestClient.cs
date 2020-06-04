@@ -68,7 +68,7 @@ namespace Azure.Management.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ExpressRouteLink>> GetAsync(string resourceGroupName, string expressRoutePortName, string linkName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteLink>> GetAsync(string resourceGroupName, string expressRoutePortName, string linkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -172,7 +172,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ExpressRouteLinkListResult>> ListAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteLinkListResult>> ListAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -261,7 +261,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ExpressRouteLinkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteLinkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

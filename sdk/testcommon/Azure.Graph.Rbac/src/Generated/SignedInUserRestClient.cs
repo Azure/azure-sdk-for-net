@@ -67,7 +67,7 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Gets the details for the currently logged-in user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<User>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<User>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -136,7 +136,7 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnedObjectsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnedObjectsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOwnedObjectsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,7 +207,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnedObjectsNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnedObjectsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -285,7 +285,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the list of directory objects that are owned by the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnedObjectsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnedObjectsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

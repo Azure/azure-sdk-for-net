@@ -345,14 +345,11 @@ if ($Language -eq "java")
 if ($Language -eq "c")
 {
     # The documentation publishing process for C differs from the other
-    # langauges in this file because this script is invoked once per library
+    # langauges in this file because this script is invoked for the whole SDK
     # publishing. It is not, for example, invoked once per service publishing.
-    # This is also the case for other langauge publishing steps above... Those
-    # loops are left over from previous versions of this script which were used
-    # to publish multiple docs packages in a single invocation.
+    # There is a similar situation for other langauge publishing steps above...
+    # Those loops are left over from previous versions of this script which were
+    # used to publish multiple docs packages in a single invocation.
     $pkgInfo = Get-Content $DocLocation/package-info.json | ConvertFrom-Json
-    $pkgName = $pkgInfo.name
-    $pkgVersion = $pkgInfo.version
-
-    Upload-Blobs -DocDir $DocLocation -PkgName $pkgName -DocVersion $pkgVersion
+    Upload-Blobs -DocDir $DocLocation -PkgName 'docs' -DocVersion $pkgInfo.version
 }

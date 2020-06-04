@@ -681,7 +681,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateLinkServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateLinkServicesDeleteOperation> StartDeleteAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -740,7 +740,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private link service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateLinkServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateLinkServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string serviceName, PrivateLinkService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -808,7 +808,7 @@ namespace Azure.Management.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="peConnectionName"> The name of the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateLinkServicesDeletePrivateEndpointConnectionOperation> StartDeletePrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateLinkServicesDeletePrivateEndpointConnectionOperation> StartDeletePrivateEndpointConnectionAsync(string resourceGroupName, string serviceName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

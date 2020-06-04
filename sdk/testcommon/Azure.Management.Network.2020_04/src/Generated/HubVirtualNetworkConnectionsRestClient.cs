@@ -68,7 +68,7 @@ namespace Azure.Management.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<HubVirtualNetworkConnection>> GetAsync(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<HubVirtualNetworkConnection>> GetAsync(string resourceGroupName, string virtualHubName, string connectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -172,7 +172,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListHubVirtualNetworkConnectionsResult>> ListAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -261,7 +261,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListHubVirtualNetworkConnectionsResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListHubVirtualNetworkConnectionsResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

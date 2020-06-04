@@ -178,7 +178,7 @@ namespace Azure.Management.Network
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SecurityRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<SecurityRulesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Management.Network
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SecurityRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<SecurityRulesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

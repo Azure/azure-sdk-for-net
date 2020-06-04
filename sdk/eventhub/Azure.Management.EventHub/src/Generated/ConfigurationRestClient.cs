@@ -71,7 +71,7 @@ namespace Azure.Management.EventHub
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -181,7 +181,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ClusterQuotaConfigurationProperties>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterQuotaConfigurationProperties>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

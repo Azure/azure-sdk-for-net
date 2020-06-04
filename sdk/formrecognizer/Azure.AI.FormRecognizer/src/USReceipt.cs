@@ -128,12 +128,12 @@ namespace Azure.AI.FormRecognizer.Models
             FormField value;
             if (RecognizedForm.Fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Value.Type == FieldValueType.ListType);
+                Debug.Assert(value.Value.Type == FieldValueType.List);
 
                 IReadOnlyList<FormField> itemList = value.Value.AsList();
                 foreach (var item in itemList)
                 {
-                    Debug.Assert(item.Value.Type == FieldValueType.DictionaryType);
+                    Debug.Assert(item.Value.Type == FieldValueType.Dictionary);
 
                     IReadOnlyDictionary<string, FormField> itemFields = item.Value.AsDictionary();
 

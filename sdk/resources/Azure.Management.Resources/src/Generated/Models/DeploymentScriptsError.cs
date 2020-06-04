@@ -8,7 +8,7 @@
 namespace Azure.Management.Resources.Models
 {
     /// <summary> Deployment scripts error response. </summary>
-    public partial class DeploymentScriptsError
+    internal partial class DeploymentScriptsError
     {
         /// <summary> Initializes a new instance of DeploymentScriptsError. </summary>
         internal DeploymentScriptsError()

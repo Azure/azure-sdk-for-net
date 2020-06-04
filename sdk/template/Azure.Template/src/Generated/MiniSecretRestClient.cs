@@ -63,7 +63,7 @@ namespace Azure.Template
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
             if (secretName == null)
             {

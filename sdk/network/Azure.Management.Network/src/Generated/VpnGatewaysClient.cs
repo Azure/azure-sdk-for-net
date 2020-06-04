@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnGatewayParameters"> Parameters supplied to create or Update a virtual wan vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, VpnGateway vpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string gatewayName, VpnGateway vpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -405,7 +405,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnGatewaysResetOperation> StartResetAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnGatewaysResetOperation> StartResetAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

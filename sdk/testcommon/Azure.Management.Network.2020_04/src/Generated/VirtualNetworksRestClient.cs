@@ -65,7 +65,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -80,8 +80,9 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -107,8 +108,9 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -142,7 +144,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetwork>> GetAsync(string resourceGroupName, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetwork>> GetAsync(string resourceGroupName, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -242,7 +244,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -261,8 +263,8 @@ namespace Azure.Management.Network
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -293,8 +295,8 @@ namespace Azure.Management.Network
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -328,7 +330,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to update virtual network tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetwork>> UpdateTagsAsync(string resourceGroupName, string virtualNetworkName, TagsObject parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetwork>> UpdateTagsAsync(string resourceGroupName, string virtualNetworkName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -426,7 +428,7 @@ namespace Azure.Management.Network
 
         /// <summary> Gets all virtual networks in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListResult>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -498,7 +500,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all virtual networks in a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -586,7 +588,7 @@ namespace Azure.Management.Network
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string resourceGroupName, string virtualNetworkName, string ipAddress, CancellationToken cancellationToken = default)
+        public async Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string resourceGroupName, string virtualNetworkName, string ipAddress, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -690,7 +692,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListUsageResult>> ListUsageAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListUsageResult>> ListUsageAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -777,7 +779,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all virtual networks in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -856,7 +858,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -945,7 +947,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VirtualNetworkListUsageResult>> ListUsageNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetworkListUsageResult>> ListUsageNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

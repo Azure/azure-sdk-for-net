@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableServiceError
+    internal partial class TableServiceError
     {
         internal static TableServiceError DeserializeTableServiceError(JsonElement element)
         {

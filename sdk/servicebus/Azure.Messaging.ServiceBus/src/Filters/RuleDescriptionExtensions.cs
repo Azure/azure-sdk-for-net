@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Management;
@@ -19,9 +20,12 @@ namespace Azure.Messaging.ServiceBus.Filters
 
             if (description.Name.Contains(Constants.PathDelimiter) || description.Name.Contains(@"\"))
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly. Specifying the Name property
+                               // is more intuitive, than just description.
                 throw new ArgumentException(
                     Resources.InvalidCharacterInEntityName.FormatForUser(Constants.PathDelimiter, description.Name),
                     nameof(description.Name));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             string[] uriSchemeKeys = { "@", "?", "#" };
@@ -113,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Filters
                         ruleDescription.Action = RuleActionExtensions.ParseFromXElement(element);
                         break;
                     case "CreatedAt":
-                        ruleDescription.CreatedAt = DateTime.Parse(element.Value);
+                        ruleDescription.CreatedAt = DateTime.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
                 }
             }

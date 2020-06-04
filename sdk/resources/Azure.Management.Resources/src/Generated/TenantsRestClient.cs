@@ -50,7 +50,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TenantListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<TenantListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,7 +117,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TenantListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -228,18 +228,18 @@ Train a machine-learned model on your own form types. The resulting model will b
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Created On: {model.CreatedOn}");
-Console.WriteLine($"    Last Modified: {model.LastModified}");
+Console.WriteLine($"    Requested on: {model.RequestedOn}");
+Console.WriteLine($"    Completed on: {model.CompletedOn}");
 
-foreach (CustomFormSubModel subModel in model.Models)
+foreach (CustomFormSubmodel submodel in model.Submodels)
 {
-    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-    foreach (CustomFormModelField field in subModel.Fields.Values)
+    Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+    foreach (CustomFormModelField field in submodel.Fields.Values)
     {
         Console.Write($"    FieldName: {field.Name}");
         if (field.Label != null)
@@ -270,22 +270,22 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
     Console.WriteLine($"Custom Model Info:");
     Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
     Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
-    Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+    Console.WriteLine($"    Requested on: {modelInfo.RequestedOn}");
+    Console.WriteLine($"    Completed on: {modelInfo.CompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
 
 Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
 
-foreach (CustomFormSubModel subModel in modelCopy.Models)
+foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 {
-    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
-    foreach (CustomFormModelField field in subModel.Fields.Values)
+    Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
+    foreach (CustomFormModelField field in submodel.Fields.Values)
     {
         Console.Write($"    FieldName: {field.Name}");
         if (field.Label != null)

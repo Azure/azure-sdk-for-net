@@ -63,7 +63,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all of the available subnet delegations for this subscription in this region. </summary>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableDelegationsResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Management.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

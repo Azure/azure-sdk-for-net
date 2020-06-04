@@ -75,7 +75,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="operationId"> The ID of the operation to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentOperation>> GetAsync(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentOperation>> GetAsync(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -184,7 +184,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentOperationsListResult>> ListAsync(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentOperationsListResult>> ListAsync(string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -275,7 +275,7 @@ namespace Azure.Management.Resources
         /// <param name="deploymentName"> The name of the deployment with the operation to get. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentOperationsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentOperationsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

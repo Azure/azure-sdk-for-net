@@ -60,7 +60,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureOperationsListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureOperationsListResult>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureOperationsListResult>> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureOperationsListResult>> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -217,7 +217,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureResult>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureResult>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -312,7 +312,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureResult>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureResult>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -407,7 +407,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureResult>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureResult>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -494,7 +494,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureOperationsListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureOperationsListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -573,7 +573,7 @@ namespace Azure.Management.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FeatureOperationsListResult>> ListNextPageAsync(string nextLink, string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureOperationsListResult>> ListNextPageAsync(string nextLink, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -1694,6 +1694,59 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
+
+        [Test]
+        public async Task GetBlockBlobClient_AsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            //Act
+            BlockBlobClient blob = test.Container.GetBlockBlobClient(blobName);
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(content: stream);
+            }
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
+        }
+
+        [Test]
+        public async Task GetBlockBlobClient_NonAsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewNonAsciiBlobName();
+
+            //Act
+            BlockBlobClient blob = test.Container.GetBlockBlobClient(blobName);
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(content: stream);
+            }
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
+        }
+
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
             {

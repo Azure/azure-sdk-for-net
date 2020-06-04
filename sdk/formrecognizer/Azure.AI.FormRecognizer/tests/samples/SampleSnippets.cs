@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Samples
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
-            string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
+            string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
 
             #region Snippet:FormRecognizerRecognizeReceiptFromFile
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
@@ -132,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // Firstly, create a trained model we can use to recognize the custom form.
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Proceed with the custom form recognition.
 

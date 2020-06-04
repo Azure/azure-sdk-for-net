@@ -8,7 +8,7 @@
 namespace Azure.Management.AppConfiguration.Models
 {
     /// <summary> AppConfiguration error object. </summary>
-    public partial class Error
+    internal partial class Error
     {
         /// <summary> Initializes a new instance of Error. </summary>
         internal Error()

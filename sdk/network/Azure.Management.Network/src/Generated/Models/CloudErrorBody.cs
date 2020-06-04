@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Management.Network.Models
 {
     /// <summary> An error response from the service. </summary>
-    public partial class CloudErrorBody
+    internal partial class CloudErrorBody
     {
         /// <summary> Initializes a new instance of CloudErrorBody. </summary>
         internal CloudErrorBody()

@@ -178,7 +178,7 @@ namespace Azure.Management.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateDnsZoneGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateDnsZoneGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -247,7 +247,7 @@ namespace Azure.Management.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateDnsZoneGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateDnsZoneGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

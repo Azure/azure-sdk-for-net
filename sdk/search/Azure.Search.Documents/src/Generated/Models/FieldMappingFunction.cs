@@ -23,6 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
+            Parameters = new Dictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
@@ -31,12 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
         internal FieldMappingFunction(string name, IDictionary<string, object> parameters)
         {
             Name = name;
-            Parameters = parameters;
+            Parameters = parameters ?? new Dictionary<string, object>();
         }
 
         /// <summary> The name of the field mapping function. </summary>
         public string Name { get; set; }
-        /// <summary> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </summary>
-        public IDictionary<string, object> Parameters { get; set; }
     }
 }

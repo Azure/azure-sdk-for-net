@@ -8,7 +8,7 @@
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Table Service error. </summary>
-    public partial class TableServiceError
+    internal partial class TableServiceError
     {
         /// <summary> Initializes a new instance of TableServiceError. </summary>
         internal TableServiceError()

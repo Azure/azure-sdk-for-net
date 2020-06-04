@@ -60,7 +60,7 @@ namespace Azure.Management.Network
 
         /// <summary> Gets all the Azure Firewall FQDN Tags in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AzureFirewallFqdnTagListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AzureFirewallFqdnTagListResult>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,7 +127,7 @@ namespace Azure.Management.Network
         /// <summary> Gets all the Azure Firewall FQDN Tags in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AzureFirewallFqdnTagListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureFirewallFqdnTagListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -46,7 +46,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
         public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
-        public string GetNewNonAsciiBlobName() => $"test-β£©þ‽-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiBlobName() => $"test-β£©þ‽%3A-{Recording.Random.NewGuid()}";
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {

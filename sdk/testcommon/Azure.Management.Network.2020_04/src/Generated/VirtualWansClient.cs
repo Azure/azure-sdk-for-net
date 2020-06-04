@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
         /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualWansCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualWANName, VirtualWAN wANParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualWansCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string virtualWANName, VirtualWAN wANParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VirtualWan. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VirtualWansDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualWansDeleteOperation> StartDeleteAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

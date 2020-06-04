@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-preview.1 (Unreleased)
+## 1.2.2 (2020-06-04)
 
 ### Bugfix
 - Retry server timeouts on .NET Framework.

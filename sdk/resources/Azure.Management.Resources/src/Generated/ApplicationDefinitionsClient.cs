@@ -201,7 +201,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationDefinitionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationDefinitionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -260,7 +260,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationDefinitionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationDefinitionName, ApplicationDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationDefinitionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationDefinitionName, ApplicationDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -326,7 +326,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes the managed application definition. </summary>
         /// <param name="applicationDefinitionId"> The fully qualified ID of the managed application definition, including the managed application name and the managed application definition resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applicationDefinitions/{applicationDefinition-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationDefinitionsDeleteByIdOperation> StartDeleteByIdAsync(string applicationDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationDefinitionsDeleteByIdOperation> StartDeleteByIdAsync(string applicationDefinitionId, CancellationToken cancellationToken = default)
         {
             if (applicationDefinitionId == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationDefinitionId"> The fully qualified ID of the managed application definition, including the managed application name and the managed application definition resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applicationDefinitions/{applicationDefinition-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationDefinitionsCreateOrUpdateByIdOperation> StartCreateOrUpdateByIdAsync(string applicationDefinitionId, ApplicationDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationDefinitionsCreateOrUpdateByIdOperation> StartCreateOrUpdateByIdAsync(string applicationDefinitionId, ApplicationDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (applicationDefinitionId == null)
             {

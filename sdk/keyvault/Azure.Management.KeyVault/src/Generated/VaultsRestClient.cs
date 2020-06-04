@@ -77,7 +77,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -96,8 +96,8 @@ namespace Azure.Management.KeyVault
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -128,8 +128,8 @@ namespace Azure.Management.KeyVault
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -163,7 +163,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Vault>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<Vault>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -268,7 +268,7 @@ namespace Azure.Management.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -338,7 +338,7 @@ namespace Azure.Management.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Vault>> GetAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<Vault>> GetAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -440,7 +440,7 @@ namespace Azure.Management.KeyVault
         /// <param name="operationKind"> Name of the operation. </param>
         /// <param name="parameters"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -549,7 +549,7 @@ namespace Azure.Management.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VaultListResult>> ListByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> ListByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -635,7 +635,7 @@ namespace Azure.Management.KeyVault
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VaultListResult>> ListBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> ListBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListBySubscriptionRequest(top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -705,7 +705,7 @@ namespace Azure.Management.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeletedVaultListResult>> ListDeletedAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> ListDeletedAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListDeletedRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -779,7 +779,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="location"> The location of the deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeletedVault>> GetDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVault>> GetDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -874,7 +874,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> PurgeDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response> PurgeDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -889,8 +889,8 @@ namespace Azure.Management.KeyVault
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -916,8 +916,8 @@ namespace Azure.Management.KeyVault
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -947,7 +947,7 @@ namespace Azure.Management.KeyVault
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1022,7 +1022,7 @@ namespace Azure.Management.KeyVault
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {
@@ -1102,7 +1102,7 @@ namespace Azure.Management.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VaultListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1191,7 +1191,7 @@ namespace Azure.Management.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<VaultListResult>> ListBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> ListBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1270,7 +1270,7 @@ namespace Azure.Management.KeyVault
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeletedVaultListResult>> ListDeletedNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> ListDeletedNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1349,7 +1349,7 @@ namespace Azure.Management.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceListResult>> ListNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceListResult>> ListNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

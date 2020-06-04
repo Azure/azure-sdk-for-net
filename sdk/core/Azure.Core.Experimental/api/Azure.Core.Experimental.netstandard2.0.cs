@@ -1,3 +1,47 @@
+namespace Azure.Core
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BinaryData
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BinaryData(System.ReadOnlyMemory<byte> data) { throw null; }
+        public System.Threading.Tasks.ValueTask<T> AsAsync<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public System.ReadOnlyMemory<byte> AsBytes() { throw null; }
+        public System.IO.Stream AsStream() { throw null; }
+        public string AsString() { throw null; }
+        public string AsString(System.Text.Encoding encoding) { throw null; }
+        public T As<T>(Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData Create(System.IO.Stream stream) { throw null; }
+        public static Azure.Core.BinaryData Create(string data) { throw null; }
+        public static Azure.Core.BinaryData Create(string data, System.Text.Encoding encoding) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Core.BinaryData> CreateAsync<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        public static Azure.Core.BinaryData Create<T>(T data, Azure.Core.ObjectSerializer serializer) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (Azure.Core.BinaryData data) { throw null; }
+    }
+    public partial class JsonObjectSerializer : Azure.Core.ObjectSerializer
+    {
+        public JsonObjectSerializer() { }
+        public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
+        public override object Deserialize(System.IO.Stream stream, System.Type returnType) { throw null; }
+        public override System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType) { throw null; }
+        public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType) { }
+        public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType) { throw null; }
+    }
+    public abstract partial class ObjectSerializer
+    {
+        protected ObjectSerializer() { }
+        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType);
+        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType);
+        public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType);
+        public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType);
+    }
+}
 namespace Azure.Core.Spatial
 {
     public sealed partial class CollectionGeometry : Azure.Core.Spatial.Geometry
@@ -6,7 +50,7 @@ namespace Azure.Core.Spatial
         public CollectionGeometry(System.Collections.Generic.IEnumerable<Azure.Core.Spatial.Geometry> geometries, Azure.Core.Spatial.GeometryProperties properties) : base (default(Azure.Core.Spatial.GeometryProperties)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.Geometry> Geometries { get { throw null; } }
     }
-    public partial class Geometry
+    public abstract partial class Geometry
     {
         protected Geometry(Azure.Core.Spatial.GeometryProperties properties) { }
         public Azure.Core.Spatial.GeometryProperties Properties { get { throw null; } }
@@ -30,6 +74,7 @@ namespace Azure.Core.Spatial
     public partial class GeometryJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Spatial.Geometry>
     {
         public GeometryJsonConverter() { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Spatial.Geometry Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Spatial.Geometry value, System.Text.Json.JsonSerializerOptions options) { }
     }

@@ -124,7 +124,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

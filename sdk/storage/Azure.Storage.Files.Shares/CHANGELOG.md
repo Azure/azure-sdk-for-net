@@ -3,6 +3,10 @@
 ## 12.3.0-preview.1 (Unreleased)
 
 
+## 12.2.2 (2020-06)
+- Fixed bug where copy from URL did not handle non-ASCII characters correctly
+- Fixed bug where download could hang indefinietly on .NET Framework
+
 ## 12.2.1 (2020-05)
 - Fixed bug where blob, file and directory names were not URL encoded.
 

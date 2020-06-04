@@ -73,7 +73,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -170,7 +170,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateLinkResource>> GetAsync(string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResource>> GetAsync(string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -268,7 +268,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

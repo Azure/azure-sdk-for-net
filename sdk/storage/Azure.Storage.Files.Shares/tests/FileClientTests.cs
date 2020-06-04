@@ -2552,6 +2552,50 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
+        [Test]
+        public async Task GetFileClient_AsciiName()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            var name = GetNewFileName();
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
+            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
+        [Test]
+        public async Task GetFileClient_NonAsciiName()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            // Act
+            var name = GetNewNonAsciiFileName();
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(name));
+            Response<ShareFileInfo> response = await file.CreateAsync(maxSize: Constants.MB);
+
+            // Assert
+            List<string> names = new List<string>();
+            await foreach (ShareFileItem item in test.Directory.GetFilesAndDirectoriesAsync())
+            {
+                names.Add(item.Name);
+            }
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(name, names);
+        }
+
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)
         {
             CopyStatus status = CopyStatus.Pending;

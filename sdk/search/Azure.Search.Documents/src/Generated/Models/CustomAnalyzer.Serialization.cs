@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer");
             writer.WriteStringValue(Tokenizer.ToString());
-            if (TokenFilters != null)
+            if (TokenFilters != null && TokenFilters.Any())
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null)
+            if (CharFilters != null && CharFilters.Any())
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();

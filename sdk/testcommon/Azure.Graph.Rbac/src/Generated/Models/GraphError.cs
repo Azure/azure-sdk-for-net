@@ -8,7 +8,7 @@
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Active Directory error information. </summary>
-    public partial class GraphError
+    internal partial class GraphError
     {
         /// <summary> Initializes a new instance of GraphError. </summary>
         internal GraphError()

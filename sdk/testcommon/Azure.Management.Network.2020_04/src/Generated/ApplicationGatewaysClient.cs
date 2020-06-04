@@ -560,7 +560,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysDeleteOperation> StartDeleteAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -619,7 +619,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update application gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -686,7 +686,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysStartOperation> StartStartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysStartOperation> StartStartAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -744,7 +744,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysStopOperation> StartStopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysStopOperation> StartStopAsync(string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -803,7 +803,7 @@ namespace Azure.Management.Network
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysBackendHealthOperation> StartBackendHealthAsync(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysBackendHealthOperation> StartBackendHealthAsync(string resourceGroupName, string applicationGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -864,7 +864,7 @@ namespace Azure.Management.Network
         /// <param name="probeRequest"> Request body for on-demand test probe operation. </param>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ApplicationGatewaysBackendHealthOnDemandOperation> StartBackendHealthOnDemandAsync(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ApplicationGatewaysBackendHealthOnDemandOperation> StartBackendHealthOnDemandAsync(string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
