@@ -7,8 +7,8 @@ parameters:
   TimeoutInMinutes: 60
   ArmTemplateParameters: '@{}'
   Location: ''
-  SubscriptionConfiguration: $(sub-config-gov-test-resources)
-  ScenarioName: ''
+  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  ScenarioName: 'AzureCloud'
 
 jobs:
   - job:
