@@ -87,6 +87,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     new DateTimeOffset(2020, 03, 17, 20, 25, 30, TimeSpan.Zero))).RoundUpToNearestHour());
 
             Assert.AreEqual(
+                new DateTimeOffset?(
+                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero)),
+                (new DateTimeOffset?(
+                    new DateTimeOffset(2020, 03, 17, 21, 0, 0, TimeSpan.Zero))).RoundUpToNearestHour());
+
+            Assert.AreEqual(
                 null,
                 ((DateTimeOffset?)null).RoundUpToNearestHour());
         }
