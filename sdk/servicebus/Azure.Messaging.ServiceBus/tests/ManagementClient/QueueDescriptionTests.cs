@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.\r\nParameter name: ForwardTo", ex.Message);
+            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardTo", ex.Message);
             Assert.AreEqual($"ForwardTo", ex.ParamName);
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.\r\nParameter name: ForwardDeadLetteredMessagesTo", ex.Message);
+            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardDeadLetteredMessagesTo", ex.Message);
             Assert.AreEqual($"ForwardDeadLetteredMessagesTo", ex.ParamName);
         }
 
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.Name = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.\r\nParameter name: Name", ex.Message);
+            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: Name", ex.Message);
             Assert.AreEqual($"Name", ex.ParamName);
         }
 
