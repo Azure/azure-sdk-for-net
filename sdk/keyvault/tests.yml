@@ -5,6 +5,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    ScenarioName: AzureCloud
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.net' }"
     EnvVars:
@@ -15,6 +16,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    ScenarioName: AzureUSGovernment
     SubscriptionConfiguration: $(sub-config-gov-test-resources)
     ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.usgovcloudapi.net' }"
     EnvVars:
@@ -25,6 +27,7 @@ jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    ScenarioName: AzureChinaCloud
     SubscriptionConfiguration: $(sub-config-cn-test-resources)
     ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.cn' }"
     EnvVars:
