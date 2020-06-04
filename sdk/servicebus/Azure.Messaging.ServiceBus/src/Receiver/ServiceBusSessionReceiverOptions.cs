@@ -70,18 +70,6 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusReceiverOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="ServiceBusReceiverOptions" />.</returns>
-        internal ServiceBusSessionReceiverOptions Clone() =>
-            new ServiceBusSessionReceiverOptions
-            {
-                ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount
-            };
-
         internal ServiceBusReceiverOptions ToReceiverOptions() =>
             new ServiceBusReceiverOptions()
             {
