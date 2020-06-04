@@ -29,7 +29,7 @@ jobs:
     ServiceDirectory: keyvault
     ScenarioName: AzureChinaCloud
     SubscriptionConfiguration: $(sub-config-cn-test-resources)
-    ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.cn' }"
+    ArmTemplateParameters: "@{ keyVaultDomainSuffix = '.vault.azure.cn'; keyVaultSku = 'standard' }"
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
