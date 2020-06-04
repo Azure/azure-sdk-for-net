@@ -113,10 +113,52 @@ namespace Azure.Core
         /// <summary>
         ///
         /// </summary>
+        /// <param name="writer"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void WriteTo(Utf8JsonWriter writer)
+        {
+            switch (_kind)
+            {
+                case JsonValueKind.Null:
+                case JsonValueKind.String:
+                    writer.WriteStringValue((string?)_value);
+                    break;
+                case JsonValueKind.Number:
+                    writer.WriteNumberValue((int)_value!);
+                    break;
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    writer.WriteBooleanValue((bool)_value!);
+                    break;
+                case JsonValueKind.Object:
+                    writer.WriteStartObject();
+                    foreach (var property in EnsureObject())
+                    {
+                        writer.WritePropertyName(property.Key);
+                        property.Value.WriteTo(writer);
+                    }
+                    writer.WriteEndObject();
+                    break;
+                case JsonValueKind.Array:
+                    writer.WriteStartArray();
+                    foreach (var item in EnsureArray())
+                    {
+                        item.WriteTo(writer);
+                    }
+                    writer.WriteEndArray();
+                    break;
+            }
+        }
+        /// <summary>
+        ///
+        /// </summary>
         /// <returns></returns>
         public JsonElement AsJsonElement()
         {
-            return _element;
+            var memoryStream = new MemoryStream();
+            var writer = new Utf8JsonWriter(memoryStream);
+            WriteTo(writer);
+            return JsonDocument.Parse(memoryStream.ToArray()).RootElement;
         }
 
         /// <inheritdoc />
@@ -125,7 +167,7 @@ namespace Azure.Core
             using var memoryStream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(memoryStream))
             {
-                _element.WriteTo(writer);
+                WriteTo(writer);
             }
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
@@ -146,6 +188,17 @@ namespace Azure.Core
             }
 
             throw new InvalidOperationException($"Property {propertyName} not found");
+        }
+
+        private object? SetValue(string propertyName, object? value)
+        {
+            if (!(value is DynamicJson json))
+            {
+                json = new DynamicJson(value);
+            }
+
+            EnsureObject()[propertyName] = json;
+            return value;
         }
 
         private List<DynamicJson> EnsureArray()
@@ -240,6 +293,18 @@ namespace Azure.Core
                 return getProperty;
             }
 
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                Expression targetObject = Expression.Convert(Expression, LimitType);
+                var methodImplementation = typeof(DynamicJson).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
+                var arguments = new Expression[2] { Expression.Constant(binder.Name), Expression.Convert(value.Expression, typeof(object)) };
+
+                Expression setPropertyCall = Expression.Call(targetObject, methodImplementation, arguments);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
+                return setProperty;
+            }
+
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
             {
                 var sourceInstance = Expression.Convert(Expression, LimitType);
@@ -279,18 +344,38 @@ namespace Azure.Core
         ///
         /// </summary>
         /// <returns></returns>
-        public static DynamicJson Object(IEnumerable<KeyValuePair<string, DynamicJson>> values = null)
+#pragma warning disable CA1720 // Identifier 'Object' contains type name
+        public static DynamicJson Object()
         {
-            return new DynamicJson(values);
+            return Object(System.Array.Empty<KeyValuePair<string, DynamicJson>>());
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public static DynamicJson Array(IEnumerable<DynamicJson> values = null)
+        public static DynamicJson Object(IEnumerable<KeyValuePair<string, DynamicJson>> values)
         {
-            return new DynamicJson(values ?? System.Array.Empty<DynamicJson>());
+            return new DynamicJson(values);
+        }
+#pragma warning restore CA1720
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public static DynamicJson Array()
+        {
+            return Array(System.Array.Empty<DynamicJson>());
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public static DynamicJson Array(IEnumerable<DynamicJson> values)
+        {
+            return new DynamicJson(values);
         }
 
         /// <summary>
@@ -330,7 +415,7 @@ namespace Azure.Core
         /// <param name="options"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static DynamicJson Serialize<T>(T value, JsonSerializerOptions options = null)
+        public static DynamicJson Serialize<T>(T value, JsonSerializerOptions? options = null)
         {
             var serialized = JsonSerializer.Serialize<T>(value, options);
             return new DynamicJson(JsonDocument.Parse(serialized).RootElement);

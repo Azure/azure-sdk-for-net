@@ -18,14 +18,18 @@ namespace Azure.Core.Tests
             dynamicJson[1] = 2;
             dynamicJson[2] = null;
             dynamicJson[3] = "string";
+
+            Assert.AreEqual(dynamicJson.ToString(), "[2, null, \"string\"]");
         }
 
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            var json = DynamicJson.Parse("{\"a\": 1}");
+            var json = DynamicJson.Parse("{\"a\":1}");
             dynamic dynamicJson = json;
             dynamicJson.a = "2";
+
+            Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
         }
 
         [Test]
@@ -34,6 +38,8 @@ namespace Azure.Core.Tests
             var json = DynamicJson.Parse("{}");
             dynamic dynamicJson = json;
             dynamicJson.a = "2";
+
+            Assert.AreEqual(json.ToString(), "{\"a\":\"2\"}");
         }
 
         [Test]
@@ -42,6 +48,8 @@ namespace Azure.Core.Tests
             var json = DynamicJson.Parse("{}");
             dynamic dynamicJson = json;
             dynamicJson.a = DynamicJson.Array(1, 2, null, "string");
+
+            Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
         }
 
         [Test]
@@ -49,7 +57,12 @@ namespace Azure.Core.Tests
         {
             var json = DynamicJson.Parse("{}");
             dynamic dynamicJson = json;
-            dynamicJson.a = DynamicJson.Serialize(new PointGeometry(new GeometryPosition(1, 2)));
+            dynamicJson.a = DynamicJson.Serialize(new PointGeometry(new GeometryPosition(1, 2)), new JsonSerializerOptions()
+            {
+                Converters = { new GeometryJsonConverter() }
+            });
+
+            Assert.AreEqual("", json.ToString());
         }
     }
 }
