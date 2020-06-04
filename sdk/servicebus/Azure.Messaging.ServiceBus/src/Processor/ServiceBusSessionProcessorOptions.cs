@@ -133,28 +133,6 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusProcessorOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
-        internal ServiceBusProcessorOptions Clone()
-        {
-            var clone = new ServiceBusProcessorOptions
-            {
-                ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxReceiveWaitTime = MaxReceiveWaitTime
-            };
-            if (MaxConcurrentCalls > 0)
-            {
-                clone.MaxConcurrentCalls = MaxConcurrentCalls;
-            }
-            return clone;
-        }
-
         internal ServiceBusProcessorOptions ToProcessorOptions()
         {
             var clone = new ServiceBusProcessorOptions
