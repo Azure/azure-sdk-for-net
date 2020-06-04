@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static DeploymentResource CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the update operation
             /// </param>
-            public static DeploymentResource Update(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource Update(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> UpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> UpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static DeploymentResource BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -639,7 +639,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the update operation
             /// </param>
-            public static DeploymentResource BeginUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource BeginUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -669,7 +669,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> BeginUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> BeginUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
