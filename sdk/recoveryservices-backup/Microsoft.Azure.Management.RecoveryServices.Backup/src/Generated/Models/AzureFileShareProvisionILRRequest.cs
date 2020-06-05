@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// Update snapshot Uri with the correct friendly Name of the source Azure
     /// file share.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureFileShareProvisionILRRequest")]
     public partial class AzureFileShareProvisionILRRequest : ILRRequest
     {
         /// <summary>

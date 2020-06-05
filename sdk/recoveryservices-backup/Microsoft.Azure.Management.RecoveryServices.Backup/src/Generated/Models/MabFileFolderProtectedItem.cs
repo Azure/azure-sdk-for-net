@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// MAB workload-specific backup item.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MabFileFolderProtectedItem")]
     public partial class MabFileFolderProtectedItem : ProtectedItem
     {
         /// <summary>

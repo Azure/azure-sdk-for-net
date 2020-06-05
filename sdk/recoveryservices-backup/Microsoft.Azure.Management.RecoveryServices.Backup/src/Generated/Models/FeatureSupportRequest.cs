@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for feature request
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FeatureSupportRequest")]
     public partial class FeatureSupportRequest
     {
         /// <summary>

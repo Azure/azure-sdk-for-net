@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// The base backup engine class. All workload specific backup engines
     /// derive from this class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("BackupEngineBase")]
     public partial class BackupEngineBase
     {
         /// <summary>

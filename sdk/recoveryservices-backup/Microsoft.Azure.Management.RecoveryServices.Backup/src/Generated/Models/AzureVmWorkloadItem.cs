@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure VM workload-specific workload item.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureVmWorkloadItem")]
     public partial class AzureVmWorkloadItem : WorkloadItem
     {
         /// <summary>

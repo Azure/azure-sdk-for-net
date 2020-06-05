@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Azure Recovery Services Vault specific protection intent item.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureWorkloadAutoProtectionIntent")]
     public partial class AzureWorkloadAutoProtectionIntent : AzureRecoveryServiceVaultProtectionIntent
     {
         /// <summary>

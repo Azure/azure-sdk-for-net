@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Base class for backup items.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ProtectedItem")]
     public partial class ProtectedItem
     {
         /// <summary>

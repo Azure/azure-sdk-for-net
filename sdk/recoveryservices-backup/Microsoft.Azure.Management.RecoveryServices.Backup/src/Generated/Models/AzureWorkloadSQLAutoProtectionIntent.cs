@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure Workload SQL Auto Protection intent item.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureWorkloadSQLAutoProtectionIntent")]
     public partial class AzureWorkloadSQLAutoProtectionIntent : AzureWorkloadAutoProtectionIntent
     {
         /// <summary>

@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for backup schedule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SchedulePolicy")]
     public partial class SchedulePolicy
     {
         /// <summary>

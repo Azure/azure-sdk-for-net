@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// Base class for backup item. Workload-specific backup items are derived
     /// from this class.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("WorkloadItem")]
     public partial class WorkloadItem
     {
         /// <summary>

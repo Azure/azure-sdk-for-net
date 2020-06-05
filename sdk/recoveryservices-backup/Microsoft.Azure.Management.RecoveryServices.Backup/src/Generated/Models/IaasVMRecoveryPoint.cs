@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// IaaS VM workload specific backup copy.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("IaasVMRecoveryPoint")]
     public partial class IaasVMRecoveryPoint : RecoveryPoint
     {
         /// <summary>

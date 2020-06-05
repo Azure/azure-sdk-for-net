@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Azure IaaS VM workload-specific job object.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureIaaSVMJob")]
     public partial class AzureIaaSVMJob : Job
     {
         /// <summary>

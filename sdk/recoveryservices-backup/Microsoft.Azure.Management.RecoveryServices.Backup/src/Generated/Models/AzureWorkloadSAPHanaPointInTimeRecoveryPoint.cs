@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Recovery point specific to PointInTime in SAPHana
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureWorkloadSAPHanaPointInTimeRecoveryPoint")]
     public partial class AzureWorkloadSAPHanaPointInTimeRecoveryPoint : AzureWorkloadPointInTimeRecoveryPoint
     {
         /// <summary>
