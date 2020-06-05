@@ -43,10 +43,18 @@ namespace Azure.AI.FormRecognizer.Training
 
         private RequestFailedException _requestFailedException;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets an ID representing the operation that can be used to poll for the status
+        /// of the long-running operation.
+        /// </summary>
         public override string Id { get; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Final result of the long-running operation.
+        /// </summary>
+        /// <remarks>
+        /// This property can be accessed only after the operation completes successfully (HasValue is true).
+        /// </remarks>
         public override CustomFormModelInfo Value
         {
             get
@@ -60,10 +68,14 @@ namespace Azure.AI.FormRecognizer.Training
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns true if the long-running operation completed.
+        /// </summary>
         public override bool HasCompleted => _hasCompleted;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
+        /// </summary>
         public override bool HasValue => _value != null;
 
         /// <summary>
@@ -129,22 +141,62 @@ namespace Azure.AI.FormRecognizer.Training
             Id = string.Join("/", substrs, substrs.Length - 3, 3);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// The last HTTP response received from the server.
+        /// </summary>
+        /// <remarks>
+        /// The last response returned from the server during the lifecycle of this instance.
+        /// An instance of <see cref="RecognizeCustomFormsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// Responses from these requests can be accessed using GetRawResponse.
+        /// </remarks>
         public override Response GetRawResponse() => _response;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
         public override ValueTask<Response<CustomFormModelInfo>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="pollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
         public override ValueTask<Response<CustomFormModelInfo>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
              this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -152,8 +204,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// Calls the server to get updated status of the long-running operation.
         /// </summary>
         /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The HTTP response from the service.</returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
