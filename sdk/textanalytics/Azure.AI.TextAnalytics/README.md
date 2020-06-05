@@ -34,13 +34,13 @@ You can create either resource using:
 Below is an example of how you can create a Text Analytics resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the text analytics resource -
+# Create a new resource group to hold the Text Analytics resource -
 # if using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
 
 ```PowerShell
-# Create text analytics
+# Create Text Analytics
 az cognitiveservices account create \
     --name <your-resource-name> \
     --resource-group <your-resource-group-name> \
@@ -325,7 +325,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
+[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
