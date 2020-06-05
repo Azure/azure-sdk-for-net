@@ -71,8 +71,6 @@ namespace Azure.Storage.Queues
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
-        private readonly IClientSideDecryptionFailureListener _missingClientSideEncryptionKeyListener;
-
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -142,8 +140,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
         }
 
         /// <summary>
@@ -230,8 +227,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _missingClientSideEncryptionKeyListener = options._onClientSideDecryptionFailure;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
         }
         #endregion ctors
 
@@ -248,7 +244,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, _missingClientSideEncryptionKeyListener);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption);
 
         #region GetQueues
         /// <summary>

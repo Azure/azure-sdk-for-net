@@ -85,7 +85,6 @@ namespace Azure.Storage.Queues
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
-        internal IClientSideDecryptionFailureListener _onClientSideDecryptionFailure;
         #endregion
 
         /// <summary>

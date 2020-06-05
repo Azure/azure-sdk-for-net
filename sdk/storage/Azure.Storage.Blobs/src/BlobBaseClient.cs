@@ -714,7 +714,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (UsingClientSideEncryption)
                     {
                         stream = await new BlobClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption))
-                            .ClientSideDecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                            .DecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
                     }
 
                     response.Value.Content = stream;

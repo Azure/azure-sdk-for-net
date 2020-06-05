@@ -38,51 +38,5 @@ namespace Azure.Storage.Queues.Specialized
             get => _clientSideEncryptionOptions;
             set => _clientSideEncryptionOptions = value;
         }
-
-        /// <summary>
-        /// Behavior when receiving a queue message that cannot be decrypted due to lack of key access.
-        /// Messages in the list of results that cannot be decrypted will be filtered out of the list and
-        /// sent to this listener. Default behavior, when no listener is provided, is for the overall message
-        /// fetch to throw.
-        /// </summary>
-        public IClientSideDecryptionFailureListener OnClientSideDecryptionFailure
-        {
-            get => _onClientSideDecryptionFailure;
-            set => _onClientSideDecryptionFailure = value;
-        }
-    }
-
-    /// <summary>
-    /// Describes a listener to handle queue messages who's client-side encryption keys cannot be resolved.
-    /// </summary>
-    public interface IClientSideDecryptionFailureListener
-    {
-        /// <summary>
-        /// Handle a decryption failure in a <see cref="QueueClient.ReceiveMessages()"/> call.
-        /// </summary>
-        /// <param name="message">Message that couldn't be decrypted.</param>
-        /// <param name="exception">Exception of the failure.</param>
-        void OnFailure(QueueMessage message, Exception exception);
-
-        /// <summary>
-        /// Handle a decryption failure in a <see cref="QueueClient.ReceiveMessagesAsync()"/> call.
-        /// </summary>
-        /// <param name="message">Message that couldn't be decrypted.</param>
-        /// <param name="exception">Exception of the failure.</param>
-        Task OnFailureAsync(QueueMessage message, Exception exception);
-
-        /// <summary>
-        /// Handle a decryption failure in a <see cref="QueueClient.PeekMessages(int?, System.Threading.CancellationToken)"/> call.
-        /// </summary>
-        /// <param name="message">Message that couldn't be decrypted.</param>
-        /// <param name="exception">Exception of the failure.</param>
-        void OnFailure(PeekedMessage message, Exception exception);
-
-        /// <summary>
-        /// Handle a decryption failure in a <see cref="QueueClient.PeekMessagesAsync(int?, System.Threading.CancellationToken)"/> call.
-        /// </summary>
-        /// <param name="message">Message that couldn't be decrypted.</param>
-        /// <param name="exception">Exception of the failure.</param>
-        Task OnFailureAsync(PeekedMessage message, Exception exception);
     }
 }

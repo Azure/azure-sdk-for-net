@@ -230,61 +230,61 @@ namespace Azure.Storage.Queues.Test
             return result;
         }
 
-        private Mock<IClientSideDecryptionFailureListener> GetFailureListener()
-        {
-            var mock = new Mock<IClientSideDecryptionFailureListener>(MockBehavior.Strict);
-            if (IsAsync)
-            {
-                mock.Setup(l => l.OnFailureAsync(IsNotNull<PeekedMessage>(), IsNotNull<Exception>()))
-                    .Returns(Task.CompletedTask);
-                mock.Setup(l => l.OnFailureAsync(IsNotNull<QueueMessage>(), IsNotNull<Exception>()))
-                    .Returns(Task.CompletedTask);
-            }
-            else
-            {
-                mock.Setup(l => l.OnFailure(IsNotNull<PeekedMessage>(), IsNotNull<Exception>()));
-                mock.Setup(l => l.OnFailure(IsNotNull<QueueMessage>(), IsNotNull<Exception>()));
-            }
-
-            return mock;
-        }
-
         [Test]
         [LiveOnly]
         public void CanSwapKey()
         {
-            var options1 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            int options1EventCalled = 0;
+            int options2EventCalled = 0;
+            void Options1_DecryptionFailed(object sender, ClientSideDecryptionFailureEventArgs e)
+            {
+                options1EventCalled++;
+            }
+            void Options2_DecryptionFailed(object sender, ClientSideDecryptionFailureEventArgs e)
+            {
+                options2EventCalled++;
+            }
+            var options1 = new QueueClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
                 KeyWrapAlgorithm = "foo"
             };
-            var options2 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            options1.DecryptionFailed += Options1_DecryptionFailed;
+            var options2 = new QueueClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
                 KeyWrapAlgorithm = "bar"
             };
-            var listener1 = GetFailureListener().Object;
-            var listener2 = GetFailureListener().Object;
+            options2.DecryptionFailed += Options2_DecryptionFailed;
 
             var client = new QueueClient(new Uri("http://someuri.com"), new SpecializedQueueClientOptions()
             {
-                ClientSideEncryption = options1,
-                OnClientSideDecryptionFailure = listener1
+                ClientSideEncryption = options1
             });
 
             Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
             Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
             Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
-            Assert.AreEqual(listener1, client.OnClientSideDecryptionFailure);
 
-            client = client.WithClientSideEncryptionOptions(options2).WithClientSideEncryptionFailureListener(listener2);
+            Assert.AreEqual(0, options1EventCalled);
+            Assert.AreEqual(0, options2EventCalled);
+            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            Assert.AreEqual(1, options1EventCalled);
+            Assert.AreEqual(0, options2EventCalled);
+
+            client = client.WithClientSideEncryptionOptions(options2);
 
             Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
             Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
             Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
-            Assert.AreEqual(listener2, client.OnClientSideDecryptionFailure);
+
+            Assert.AreEqual(1, options1EventCalled);
+            Assert.AreEqual(0, options2EventCalled);
+            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            Assert.AreEqual(1, options1EventCalled);
+            Assert.AreEqual(1, options2EventCalled);
         }
 
         [TestCase(16, false)] // a single cipher block
@@ -328,7 +328,7 @@ namespace Azure.Storage.Queues.Test
                     encryptionMetadata.ContentEncryptionIV);
 
                 // compare data
-                Assert.AreEqual(expectedEncryptedMessage, parsedEncryptedMessage.EncryptedMessageContents);
+                Assert.AreEqual(expectedEncryptedMessage, parsedEncryptedMessage.EncryptedMessageText);
             }
         }
 
@@ -613,12 +613,6 @@ namespace Azure.Storage.Queues.Test
         [LiveOnly]
         public async Task CannotFindKeyAsync(bool useListener, bool resolverThrows, bool peek)
         {
-            Mock<IClientSideDecryptionFailureListener> listener = null;
-            if (useListener)
-            {
-                listener = GetFailureListener();
-            }
-
             const int numMessages = 5;
             var message = "any old message";
             var mockKey = GetIKeyEncryptionKey().Object;
@@ -640,17 +634,22 @@ namespace Azure.Storage.Queues.Test
                 bool threw = false;
                 var resolver = GetAlwaysFailsKeyResolver(resolverThrows);
                 int returnedMessages = int.MinValue; // obviously wrong value, but need to initialize to something before try block
+                int failureEventCalled = 0;
                 try
                 {
                     // download but can't find key
-                    var options = GetOptions();
-                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    var encryptionOptions = new QueueClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
                         // note decryption will throw whether the resolver throws or just returns null
                         KeyResolver = resolver.Object,
                         KeyWrapAlgorithm = "test"
                     };
-                    options._onClientSideDecryptionFailure = listener.Object;
+                    if (useListener)
+                    {
+                        encryptionOptions.DecryptionFailed += (source, args) => failureEventCalled++;
+                    }
+                    var options = GetOptions();
+                    options._clientSideEncryptionOptions = encryptionOptions;
                     var badQueueClient = InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials(), options));
                     returnedMessages = peek
                         ? (await badQueueClient.PeekMessagesAsync(numMessages, cancellationToken: s_cancellationToken)).Value.Length
@@ -673,42 +672,8 @@ namespace Azure.Storage.Queues.Test
                         // we already asserted the correct method was called in `catch (MockException e)`
                         Assert.AreEqual(numMessages, resolver.Invocations.Count);
 
-                        // 4 possible methods we could have been testing
-                        System.Reflection.MethodInfo onReceiveFailAsync = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailureAsync", new Type[] { typeof(QueueMessage), typeof(Exception) });
-                        System.Reflection.MethodInfo onReceiveFail = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailure", new Type[] { typeof(QueueMessage), typeof(Exception) });
-                        System.Reflection.MethodInfo onPeekFailAsync = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailureAsync", new Type[] { typeof(PeekedMessage), typeof(Exception) });
-                        System.Reflection.MethodInfo onPeekFail = typeof(IClientSideDecryptionFailureListener).GetMethod("OnFailure", new Type[] { typeof(PeekedMessage), typeof(Exception) });
-
-                        // determine what method we were testing and which we weren't
-                        System.Reflection.MethodInfo targetMethod;
-                        IEnumerable<System.Reflection.MethodInfo> nonTargetMethods;
-                        if (IsAsync && peek)
-                        {
-                            targetMethod = onPeekFailAsync;
-                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onReceiveFailAsync, onPeekFail };
-                        }
-                        else if (IsAsync)
-                        {
-                            targetMethod = onReceiveFailAsync;
-                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onPeekFail, onPeekFailAsync };
-                        }
-                        else if (peek)
-                        {
-                            targetMethod = onPeekFail;
-                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onReceiveFail, onReceiveFailAsync, onPeekFailAsync };
-                        }
-                        else
-                        {
-                            targetMethod = onReceiveFail;
-                            nonTargetMethods = new List<System.Reflection.MethodInfo> { onPeekFailAsync, onReceiveFailAsync, onPeekFail };
-                        }
-
-                        // assert target method was called the expected number of times and other methods weren't called at all
-                        Assert.AreEqual(numMessages, listener.Invocations.Count(invocation => invocation.Method == targetMethod));
-                        foreach (var method in nonTargetMethods)
-                        {
-                            Assert.AreEqual(0, listener.Invocations.Count(invocation => invocation.Method == method));
-                        }
+                        // assert event was called for each message
+                        Assert.AreEqual(numMessages, failureEventCalled);
 
                         // assert all messages were filtered out of formal response
                         Assert.AreEqual(0, returnedMessages);

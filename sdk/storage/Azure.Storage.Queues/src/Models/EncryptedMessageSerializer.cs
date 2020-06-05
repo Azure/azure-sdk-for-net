@@ -10,6 +10,8 @@ namespace Azure.Storage.Queues.Specialized.Models
 {
     internal static class EncryptedMessageSerializer
     {
+        private const string EncryptedMessage_EncryptedMessageTextName = "EncryptedMessageContents";
+
         #region Serialize
         public static string Serialize(EncryptedMessage data)
         {
@@ -31,7 +33,7 @@ namespace Azure.Storage.Queues.Specialized.Models
 
         public static void WriteEncryptedMessage(Utf8JsonWriter json, EncryptedMessage message)
         {
-            json.WriteString(nameof(message.EncryptedMessageContents), message.EncryptedMessageContents);
+            json.WriteString(EncryptedMessage_EncryptedMessageTextName, message.EncryptedMessageText);
 
             json.WriteStartObject(nameof(message.EncryptionData));
             EncryptionDataSerializer.WriteEncryptionData(json, message.EncryptionData);
@@ -81,9 +83,9 @@ namespace Azure.Storage.Queues.Specialized.Models
 
         private static void ReadPropertyValue(EncryptedMessage data, JsonProperty property)
         {
-            if (property.NameEquals(nameof(data.EncryptedMessageContents)))
+            if (property.NameEquals(EncryptedMessage_EncryptedMessageTextName))
             {
-                data.EncryptedMessageContents = property.Value.GetString();
+                data.EncryptedMessageText = property.Value.GetString();
             }
             else if (property.NameEquals(nameof(data.EncryptionData)))
             {

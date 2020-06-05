@@ -65,7 +65,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            switch (encryptionData.EncryptionAgent.Protocol)
+            switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
                 case ClientSideEncryptionVersion.V1_0:
                     return await DecryptInternalV1_0(
@@ -76,7 +76,7 @@ namespace Azure.Storage.Cryptography
                         async,
                         cancellationToken).ConfigureAwait(false);
                 default:
-                    throw Errors.ClientSideEncryption.BadEncryptionAgent(encryptionData.EncryptionAgent.Protocol.ToString());
+                    throw Errors.ClientSideEncryption.BadEncryptionAgent(encryptionData.EncryptionAgent.EncryptionVersion.ToString());
             }
         }
 

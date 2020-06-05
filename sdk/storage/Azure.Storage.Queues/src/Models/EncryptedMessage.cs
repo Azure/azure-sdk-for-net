@@ -7,7 +7,7 @@ namespace Azure.Storage.Queues.Specialized.Models
 {
     internal class EncryptedMessage
     {
-        public string EncryptedMessageContents { get; set; }
+        public string EncryptedMessageText { get; set; }
 
         public EncryptionData EncryptionData { get; set; }
     }

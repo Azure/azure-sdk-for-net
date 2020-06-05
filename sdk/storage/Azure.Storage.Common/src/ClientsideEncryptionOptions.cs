@@ -11,10 +11,13 @@ namespace Azure.Storage
     /// </summary>
     public class ClientSideEncryptionOptions
     {
+        // NOTE there is a non-public Clone method for this class, compile-included into relevant packages from
+        // Shared/ClientsideEncryption/ClientSideEncryptionOptionsExtensions.cs
+
         /// <summary>
         /// The version of clientside encryption to use.
         /// </summary>
-        public ClientSideEncryptionVersion Version { get; }
+        public ClientSideEncryptionVersion EncryptionVersion { get; }
 
         /// <summary>
         /// Required for upload operations.
@@ -44,7 +47,7 @@ namespace Azure.Storage
         /// <param name="version">The version of clientside encryption to use.</param>
         public ClientSideEncryptionOptions(ClientSideEncryptionVersion version)
         {
-            Version = version;
+            EncryptionVersion = version;
         }
     }
 }

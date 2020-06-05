@@ -73,7 +73,7 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageContents = Convert.ToBase64String(result.ciphertext),
+                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
                 EncryptionData = result.encryptionData
             };
 
@@ -95,7 +95,7 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageContents = Convert.ToBase64String(result.ciphertext),
+                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
                 EncryptionData = result.encryptionData
             };
             var serializedMessage = EncryptedMessageSerializer.Serialize(encryptedMessage);
@@ -118,7 +118,7 @@ namespace Azure.Storage.Queues.Test
                 default).EnsureCompleted();
             var encryptedMessage = new EncryptedMessage()
             {
-                EncryptedMessageContents = Convert.ToBase64String(result.ciphertext),
+                EncryptedMessageText = Convert.ToBase64String(result.ciphertext),
                 EncryptionData = result.encryptionData
             };
             var serializedMessage = EncryptedMessageSerializer.Serialize(encryptedMessage);
@@ -143,7 +143,7 @@ namespace Azure.Storage.Queues.Test
 
         #region ModelComparison
         private static bool AreEqual(EncryptedMessage left, EncryptedMessage right)
-            => left.EncryptedMessageContents.Equals(right.EncryptedMessageContents, StringComparison.InvariantCulture)
+            => left.EncryptedMessageText.Equals(right.EncryptedMessageText, StringComparison.InvariantCulture)
             && AreEqual(left.EncryptionData, right.EncryptionData);
 
         private static bool AreEqual(EncryptionData left, EncryptionData right)
@@ -160,7 +160,7 @@ namespace Azure.Storage.Queues.Test
 
         private static bool AreEqual(EncryptionAgent left, EncryptionAgent right)
             => left.EncryptionAlgorithm.Equals(right.EncryptionAlgorithm)
-            && left.Protocol.Equals(right.Protocol);
+            && left.EncryptionVersion.Equals(right.EncryptionVersion);
 
         private static bool AreEqual(IDictionary<string, string> left, IDictionary<string, string> right)
         {

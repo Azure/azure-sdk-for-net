@@ -11,7 +11,7 @@ namespace Azure.Storage.Cryptography.Models
         /// <summary>
         /// The protocol version used for encryption.
         /// </summary>
-        public ClientSideEncryptionVersion Protocol { get; set; }
+        public ClientSideEncryptionVersion EncryptionVersion { get; set; }
 
         /// <summary>
         /// The algorithm used for encryption.

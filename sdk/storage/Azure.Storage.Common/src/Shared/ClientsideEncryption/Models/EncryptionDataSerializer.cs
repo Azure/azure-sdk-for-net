@@ -10,6 +10,8 @@ namespace Azure.Storage.Cryptography.Models
 {
     internal static class EncryptionDataSerializer
     {
+        private const string EncryptionAgent_EncryptionVersionName = "Protocol";
+
         #region Serialize
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace Azure.Storage.Cryptography.Models
 
         private static void WriteEncryptionAgent(Utf8JsonWriter json, EncryptionAgent encryptionAgent)
         {
-            json.WriteString(nameof(encryptionAgent.Protocol), encryptionAgent.Protocol.Serialize());
+            json.WriteString(EncryptionAgent_EncryptionVersionName, encryptionAgent.EncryptionVersion.Serialize());
             json.WriteString(nameof(encryptionAgent.EncryptionAlgorithm), encryptionAgent.EncryptionAlgorithm.ToString());
         }
 
@@ -186,9 +188,9 @@ namespace Azure.Storage.Cryptography.Models
             {
                 agent.EncryptionAlgorithm = new ClientSideEncryptionAlgorithm(property.Value.GetString());
             }
-            else if (property.NameEquals(nameof(agent.Protocol)))
+            else if (property.NameEquals(EncryptionAgent_EncryptionVersionName))
             {
-                agent.Protocol = property.Value.GetString().ToClientSideEncryptionVersion();
+                agent.EncryptionVersion = property.Value.GetString().ToClientSideEncryptionVersion();
             }
         }
         #endregion

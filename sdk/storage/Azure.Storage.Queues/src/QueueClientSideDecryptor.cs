@@ -17,12 +17,12 @@ namespace Azure.Storage.Queues
     internal class QueueClientSideDecryptor
     {
         private readonly ClientSideDecryptor _decryptor;
-        private readonly IClientSideDecryptionFailureListener _listener;
+        public QueueClientSideEncryptionOptions Options { get; }
 
-        public QueueClientSideDecryptor(ClientSideDecryptor decryptor, IClientSideDecryptionFailureListener listener)
+        public QueueClientSideDecryptor(QueueClientSideEncryptionOptions options)
         {
-            _decryptor = decryptor;
-            _listener = listener;
+            _decryptor = new ClientSideDecryptor(options);
+            Options = options;
         }
 
         public async Task<QueueMessage[]> ClientSideDecryptMessagesInternal(QueueMessage[] messages, bool async, CancellationToken cancellationToken)
@@ -35,16 +35,9 @@ namespace Azure.Storage.Queues
                     message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
-                catch (Exception e) when (_listener != default)
+                catch (Exception e) when (Options.UsingDecryptionFailureHandler)
                 {
-                    if (async)
-                    {
-                        await _listener.OnFailureAsync(message, e).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _listener.OnFailure(message, e);
-                    }
+                    Options.OnDecryptionFailed(message, e);
                 }
             }
             return filteredMessages.ToArray();
@@ -59,16 +52,9 @@ namespace Azure.Storage.Queues
                     message.MessageText = await ClientSideDecryptInternal(message.MessageText, async, cancellationToken).ConfigureAwait(false);
                     filteredMessages.Add(message);
                 }
-                catch (Exception e) when (_listener != default)
+                catch (Exception e) when (Options.UsingDecryptionFailureHandler)
                 {
-                    if (async)
-                    {
-                        await _listener.OnFailureAsync(message, e).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        _listener.OnFailure(message, e);
-                    }
+                    Options.OnDecryptionFailed(message, e);
                 }
             }
             return filteredMessages.ToArray();
@@ -81,7 +67,7 @@ namespace Azure.Storage.Queues
                 return downloadedMessage; // not recognized as client-side encrypted message
             }
 
-            var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageContents));
+            var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageText));
             var decryptedMessageStream = await _decryptor.DecryptInternal(
                 encryptedMessageStream,
                 encryptedMessage.EncryptionData,

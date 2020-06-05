@@ -31,7 +31,7 @@ namespace Azure.Storage.Queues
 
             return EncryptedMessageSerializer.Serialize(new EncryptedMessage
             {
-                EncryptedMessageContents = Convert.ToBase64String(ciphertext),
+                EncryptedMessageText = Convert.ToBase64String(ciphertext),
                 EncryptionData = encryptionData
             });
         }

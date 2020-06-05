@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs
             _decryptor = decryptor;
         }
 
-        public async Task<Stream> ClientSideDecryptInternal(
+        public async Task<Stream> DecryptInternal(
             Stream content,
             Metadata metadata,
             HttpRange originalRange,
@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs
             EncryptionData encryptionData = GetAndValidateEncryptionDataOrDefault(metadata);
             if (encryptionData == default)
             {
-                return await TrimStreamInternal(content, originalRange, contentRange, pulledOutIv: false, async, cancellationToken).ConfigureAwait(false);
+                return await TrimStreamInternal(content, originalRange, contentRange, pulledOutIV: false, async, cancellationToken).ConfigureAwait(false);
             }
 
             bool ivInStream = originalRange.Offset >= Constants.ClientSideEncryption.EncryptionBlockSize;
@@ -53,22 +53,31 @@ namespace Azure.Storage.Blobs
             return await TrimStreamInternal(plaintext, originalRange, contentRange, ivInStream, async, cancellationToken).ConfigureAwait(false);
         }
 
-        private static async Task<Stream> TrimStreamInternal(Stream stream, HttpRange originalRange, ContentRange? receivedRange, bool pulledOutIv, bool async, CancellationToken cancellationToken)
+        private static async Task<Stream> TrimStreamInternal(
+            Stream stream,
+            HttpRange originalRange,
+            ContentRange? receivedRange,
+            bool pulledOutIV,
+            bool async,
+            CancellationToken cancellationToken)
         {
             // retrim start of stream to original requested location
             // keeping in mind whether we already pulled the IV out of the stream as well
             int gap = (int)(originalRange.Offset - (receivedRange?.Start ?? 0))
-                - (pulledOutIv ? Constants.ClientSideEncryption.EncryptionBlockSize : 0);
-            if (gap > 0)
+                - (pulledOutIV ? Constants.ClientSideEncryption.EncryptionBlockSize : 0);
+
+            int read = 0;
+            while (gap > read)
             {
+                int toRead = gap - read;
                 // throw away initial bytes we want to trim off; stream cannot seek into future
                 if (async)
                 {
-                    await stream.ReadAsync(new byte[gap], 0, gap, cancellationToken).ConfigureAwait(false);
+                    read += await stream.ReadAsync(new byte[toRead], 0, toRead, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    stream.Read(new byte[gap], 0, gap);
+                    read += stream.Read(new byte[toRead], 0, toRead);
                 }
             }
 
@@ -112,7 +121,7 @@ namespace Azure.Storage.Blobs
         private static bool CanIgnorePadding(ContentRange? contentRange)
         {
             // if Content-Range not present, we requested the whole blob
-            if (!contentRange.HasValue)
+            if (contentRange == null)
             {
                 return false;
             }

@@ -58,7 +58,7 @@ namespace Azure.Storage.Cryptography.Models
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
-                    Protocol = ClientSideEncryptionVersion.V1_0
+                    EncryptionVersion = ClientSideEncryptionVersion.V1_0
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {

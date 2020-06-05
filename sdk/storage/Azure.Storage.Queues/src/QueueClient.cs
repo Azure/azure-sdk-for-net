@@ -4,18 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
-using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
-using Azure.Storage.Queues.Specialized.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -80,20 +76,16 @@ namespace Azure.Storage.Queues
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
-        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+        private readonly QueueClientSideEncryptionOptions _clientSideEncryption;
 
         /// <summary>
-        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// The <see cref="QueueClientSideEncryptionOptions"/> to be used when sending/receiving requests.
         /// </summary>
-        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+        internal virtual QueueClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
         internal bool UsingClientSideEncryption => ClientSideEncryption != default;
-
-        private readonly IClientSideDecryptionFailureListener _onClientSideDecryptionFailure;
-
-        internal virtual IClientSideDecryptionFailureListener OnClientSideDecryptionFailure => _onClientSideDecryptionFailure;
 
         /// <summary>
         /// QueueMaxMessagesPeek indicates the maximum number of messages
@@ -201,8 +193,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _onClientSideDecryptionFailure = options._onClientSideDecryptionFailure;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
         }
 
         /// <summary>
@@ -294,8 +285,7 @@ namespace Azure.Storage.Queues
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _onClientSideDecryptionFailure = options._onClientSideDecryptionFailure;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
         }
 
         /// <summary>
@@ -320,24 +310,19 @@ namespace Azure.Storage.Queues
         /// <param name="encryptionOptions">
         /// Options for client-side encryption.
         /// </param>
-        /// <param name="listener">
-        /// Listener regarding partial decryption failures using clientside encryption.
-        /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipeline pipeline,
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
-            ClientSideEncryptionOptions encryptionOptions,
-            IClientSideDecryptionFailureListener listener)
+            ClientSideEncryptionOptions encryptionOptions)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
             _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _clientSideEncryption = encryptionOptions?.Clone();
-            _onClientSideDecryptionFailure = listener;
+            _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
         }
         #endregion ctors
 
@@ -1712,7 +1697,7 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await new QueueClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption), OnClientSideDecryptionFailure)
+                            await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
@@ -1831,7 +1816,7 @@ namespace Azure.Storage.Queues
                     else if (UsingClientSideEncryption)
                     {
                         return Response.FromValue(
-                            await new QueueClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption), OnClientSideDecryptionFailure)
+                            await new QueueClientSideDecryptor(ClientSideEncryption)
                                 .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
@@ -2088,6 +2073,11 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
+                    messageText = UsingClientSideEncryption
+                        ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
+                        : messageText;
+
                     return await QueueRestClient.MessageId.UpdateAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -2136,23 +2126,6 @@ namespace Azure.Storage.Queues.Specialized
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
-                clientSideEncryptionOptions,
-                client.OnClientSideDecryptionFailure);
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="QueueClient"/> class, maintaining all the same
-        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
-        /// </summary>
-        /// <param name="client">Client to base off of.</param>
-        /// <param name="listener">Listener for when decryption of a single message fails.</param>
-        /// <returns>New instance with provided options and same internals otherwise.</returns>
-        public static QueueClient WithClientSideEncryptionFailureListener(this QueueClient client, IClientSideDecryptionFailureListener listener)
-            => new QueueClient(
-                client.Uri,
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.ClientSideEncryption,
-                listener);
+                clientSideEncryptionOptions);
     }
 }
