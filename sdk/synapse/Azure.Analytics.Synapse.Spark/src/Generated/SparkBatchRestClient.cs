@@ -167,7 +167,7 @@ namespace Azure.Analytics.Synapse.Spark
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkBatchJobOptions);
             request.Content = content;
             return message;

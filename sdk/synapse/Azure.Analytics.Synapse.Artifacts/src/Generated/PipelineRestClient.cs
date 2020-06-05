@@ -130,7 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pipeline);
             request.Content = content;
             return message;
@@ -389,7 +389,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Content-Type", "application/json");
             if (parameters != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in parameters)
                 {
