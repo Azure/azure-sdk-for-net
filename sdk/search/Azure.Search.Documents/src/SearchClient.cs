@@ -1602,7 +1602,7 @@ namespace Azure.Search.Documents
                     request.Uri = uri;
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
-                    using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                    Utf8JsonRequestContent content = new Utf8JsonRequestContent();
                     content.JsonWriter.WriteObjectValue(documents);
                     request.Content = content;
                 }

@@ -25,7 +25,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string Prop1 { get; set; }
 
         [JsonPropertyName("Prop2")]
-        public string Prop2 { get; set; }
+        public int Prop2 { get; set; }
 
         [JsonPropertyName("Component1")]
         public Component1 Component1 { get; set; }
@@ -40,7 +40,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ComponentProp1 { get; set; }
 
         [JsonPropertyName("ComponentProp2")]
-        public string ComponentProp2 { get; set; }
+        public int ComponentProp2 { get; set; }
     }
 
     internal class Metadata

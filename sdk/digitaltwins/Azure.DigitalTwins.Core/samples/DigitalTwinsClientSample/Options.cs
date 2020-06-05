@@ -29,8 +29,8 @@ namespace Azure.DigitalTwins.Core.Samples
         [Option('s', "clientSecret", Required = false, HelpText = "Application client secret. Only applicable when using LoginMethod of AppId.")]
         public string ClientSecret { get; set; }
 
-        [Option('e', "eventHubName", Required = true, HelpText = "Event Hub Name linked to digital twins instance")]
-        public string EventHubName { get; set; }
+        [Option('e', "eventHubEndpointName", Required = true, HelpText = "Event Hub endpoint linked to digital twins instance")]
+        public string EventHubEndpointName { get; set; }
 
         internal LoginMethod GetLoginMethod()
         {

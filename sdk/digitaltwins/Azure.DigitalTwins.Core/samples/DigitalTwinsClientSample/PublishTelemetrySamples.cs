@@ -39,8 +39,7 @@ namespace Azure.DigitalTwins.Samples
 
             // Then we create the models.
             await client
-                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload })
-                ;
+                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
