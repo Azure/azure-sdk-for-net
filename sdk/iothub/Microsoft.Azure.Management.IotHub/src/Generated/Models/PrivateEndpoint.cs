@@ -11,33 +11,28 @@
 namespace Microsoft.Azure.Management.IotHub.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The device streams properties of iothub.
+    /// The private endpoint property of a private endpoint connection
     /// </summary>
-    public partial class IotHubPropertiesDeviceStreams
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the IotHubPropertiesDeviceStreams
-        /// class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public IotHubPropertiesDeviceStreams()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotHubPropertiesDeviceStreams
-        /// class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="streamingEndpoints">List of Device Streams
-        /// Endpoints.</param>
-        public IotHubPropertiesDeviceStreams(IList<string> streamingEndpoints = default(IList<string>))
+        /// <param name="id">The resource identifier.</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            StreamingEndpoints = streamingEndpoints;
+            Id = id;
             CustomInit();
         }
 
@@ -47,10 +42,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of Device Streams Endpoints.
+        /// Gets the resource identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "streamingEndpoints")]
-        public IList<string> StreamingEndpoints { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }
