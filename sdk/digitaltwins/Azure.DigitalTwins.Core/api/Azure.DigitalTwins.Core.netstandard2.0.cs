@@ -63,6 +63,10 @@ namespace Azure.DigitalTwins.Core
             V2020_05_31_preview = 1,
         }
     }
+    public static partial class QueryChargeHelper
+    {
+        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
+    }
     public partial class RequestOptions
     {
         public RequestOptions() { }
@@ -111,13 +115,6 @@ namespace Azure.DigitalTwins.Core.Models
         public TelemetryOptions() { }
         public string MessageId { get { throw null; } set { } }
         public System.DateTimeOffset TimeStamp { get { throw null; } set { } }
-    }
-}
-namespace Azure.DigitalTwins.Core.Queries
-{
-    public static partial class QueryChargeHelper
-    {
-        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
     }
 }
 namespace Azure.DigitalTwins.Core.Serialization

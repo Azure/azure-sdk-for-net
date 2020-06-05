@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Queries
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// A helper class for working with the query APIs for digital twins.
