@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer");
-            writer.WriteStringValue(Tokenizer.ToString());
+            writer.WriteStringValue(TokenizerName.ToString());
             if (TokenFilters != null && TokenFilters.Any())
             {
                 writer.WritePropertyName("tokenFilters");

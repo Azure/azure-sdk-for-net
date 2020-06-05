@@ -18,15 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (Analyzer != null)
+            if (AnalyzerName != null)
             {
                 writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (Tokenizer != null)
+            if (TokenizerName != null)
             {
                 writer.WritePropertyName("tokenizer");
-                writer.WriteStringValue(Tokenizer.Value.ToString());
+                writer.WriteStringValue(TokenizerName.Value.ToString());
             }
             if (TokenFilters != null && TokenFilters.Any())
             {

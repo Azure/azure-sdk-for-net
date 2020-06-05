@@ -14,12 +14,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Initializes a new instance of AnalyzeRequest.
         /// </summary>
         /// <param name="text">Required text to break into tokens.</param>
-        /// <param name="analyzer">The name of the analyzer to use to break the given <paramref name="text"/>.</param>
+        /// <param name="analyzerName">The name of the analyzer to use to break the given <paramref name="text"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalAnalyzerName analyzer)
+        public AnalyzeTextOptions(string text, LexicalAnalyzerName analyzerName)
         {
             Text = text ?? throw new ArgumentNullException(nameof(text));
-            Analyzer = analyzer;
+            AnalyzerName = analyzerName;
 
             TokenFilters = new List<TokenFilterName>();
             CharFilters = new List<string>();
@@ -29,12 +29,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Initializes a new instance of AnalyzeRequest.
         /// </summary>
         /// <param name="text">Required text to break into tokens.</param>
-        /// <param name="tokenizer">The name of the tokenizer to use to break the given <paramref name="text"/>.</param>
+        /// <param name="tokenizerName">The name of the tokenizer to use to break the given <paramref name="text"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is null.</exception>
-        public AnalyzeTextOptions(string text, LexicalTokenizerName tokenizer)
+        public AnalyzeTextOptions(string text, LexicalTokenizerName tokenizerName)
         {
             Text = text ?? throw new ArgumentNullException(nameof(text));
-            Tokenizer = tokenizer;
+            TokenizerName = tokenizerName;
 
             TokenFilters = new List<TokenFilterName>();
             CharFilters = new List<string>();
@@ -42,11 +42,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         [CodeGenMember("Analyzer")]
-        public LexicalAnalyzerName? Analyzer { get; }
+        public LexicalAnalyzerName? AnalyzerName { get; }
 
         /// <summary> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         [CodeGenMember("Tokenizer")]
-        public LexicalTokenizerName? Tokenizer { get; }
+        public LexicalTokenizerName? TokenizerName { get; }
 
         /// <summary> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
         [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]

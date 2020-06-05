@@ -215,13 +215,13 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AnalyzeTextOptions
     {
         public AnalyzeTextOptions(string text) { }
-        public AnalyzeTextOptions(string text, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName analyzer) { }
-        public AnalyzeTextOptions(string text, Azure.Search.Documents.Indexes.Models.LexicalTokenizerName tokenizer) { }
-        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? Analyzer { get { throw null; } }
+        public AnalyzeTextOptions(string text, Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName analyzerName) { }
+        public AnalyzeTextOptions(string text, Azure.Search.Documents.Indexes.Models.LexicalTokenizerName tokenizerName) { }
+        public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? AnalyzerName { get { throw null; } }
         public System.Collections.Generic.IList<string> CharFilters { get { throw null; } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilterName> TokenFilters { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalTokenizerName? Tokenizer { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.LexicalTokenizerName? TokenizerName { get { throw null; } }
     }
     public partial class AsciiFoldingTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
@@ -295,10 +295,10 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class CustomAnalyzer : Azure.Search.Documents.Indexes.Models.LexicalAnalyzer
     {
-        public CustomAnalyzer(string name, Azure.Search.Documents.Indexes.Models.LexicalTokenizerName tokenizer) { }
+        public CustomAnalyzer(string name, Azure.Search.Documents.Indexes.Models.LexicalTokenizerName tokenizerName) { }
         public System.Collections.Generic.IList<string> CharFilters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilterName> TokenFilters { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalTokenizerName Tokenizer { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalTokenizerName TokenizerName { get { throw null; } set { } }
     }
     public partial class DataChangeDetectionPolicy
     {
