@@ -51,8 +51,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// you to see a screenshot of the VM from the hypervisor.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="assignedHost">Resource id of the dedicated host, on
-        /// which the virtual machine is allocated through automatic
-        /// placement.</param>
+        /// which the virtual machine is allocated through automatic placement,
+        /// when the virtual machine is associated with a dedicated host group
+        /// that has automatic placement enabled.</param>
         /// <param name="placementGroupId">The placement group in which the VM
         /// is running. If the VM is deallocated it will not have a
         /// placementGroupId.</param>
@@ -145,7 +146,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets resource id of the dedicated host, on which the
-        /// virtual machine is allocated through automatic placement.
+        /// virtual machine is allocated through automatic placement, when the
+        /// virtual machine is associated with a dedicated host group that has
+        /// automatic placement enabled.
         /// </summary>
         [JsonProperty(PropertyName = "assignedHost")]
         public string AssignedHost { get; set; }

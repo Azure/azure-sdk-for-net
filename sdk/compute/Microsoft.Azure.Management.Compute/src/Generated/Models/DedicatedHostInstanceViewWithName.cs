@@ -16,7 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The instance view of a dedicated host.
+    /// The instance view of a dedicated host that includes the name of the
+    /// dedicated host. It is used for the response to the instance view of a
+    /// dedicated host group.
     /// </summary>
     public partial class DedicatedHostInstanceViewWithName : DedicatedHostInstanceView
     {

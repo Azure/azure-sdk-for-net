@@ -40,14 +40,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="hosts">A list of references to all dedicated hosts in
         /// the dedicated host group.</param>
-        /// <param name="instanceView">The dedicated host group instance
-        /// view.</param>
+        /// <param name="instanceView">The dedicated host group instance view,
+        /// which has the list of instance view of the dedicated hosts under
+        /// the dedicated host group.</param>
         /// <param name="supportAutomaticPlacement">Specifies whether virtual
         /// machines or virtual machine scale sets can be placed automatically
         /// on the dedicated host group. Automatic placement means resources
         /// are allocated on dedicated hosts, that are chosen by Azure, under
         /// the dedicated host group. The value is defaulted to 'true' when not
-        /// provided.</param>
+        /// provided. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2020-06-01.</param>
         /// <param name="zones">Availability Zone to use for this host group.
         /// Only single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
@@ -83,7 +85,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<SubResourceReadOnly> Hosts { get; private set; }
 
         /// <summary>
-        /// Gets the dedicated host group instance view.
+        /// Gets the dedicated host group instance view, which has the list of
+        /// instance view of the dedicated hosts under the dedicated host
+        /// group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
         public DedicatedHostGroupInstanceView InstanceView { get; private set; }
@@ -94,6 +98,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Automatic placement means resources are allocated on dedicated
         /// hosts, that are chosen by Azure, under the dedicated host group.
         /// The value is defaulted to 'true' when not provided.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportAutomaticPlacement")]
         public bool? SupportAutomaticPlacement { get; set; }

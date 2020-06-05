@@ -107,7 +107,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// api-version: 2018-10-01.</param>
         /// <param name="hostGroup">Specifies information about the dedicated
         /// host group that the virtual machine resides in.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01.</param>
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. NOTE: User
+        /// cannot specify both host and hostGroup properties.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine instance
@@ -312,7 +313,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies information about the dedicated host group
         /// that the virtual machine resides in.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2020-06-01.
+        /// 2020-06-01. NOTE: User cannot specify both host and hostGroup
+        /// properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostGroup")]
         public SubResource HostGroup { get; set; }
