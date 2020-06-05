@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Samples
                 #region Snippet:DigitalTwinsSampleCreateModels
 
                 Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
-                Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
+                Console.WriteLine($"Created models with Ids {newComponentModelId} and {sampleModelId}. Response status: {response.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinsSampleCreateModels
             }
@@ -62,10 +62,10 @@ namespace Azure.DigitalTwins.Samples
                 #region Snippet:DigitalTwinsSampleGetModel
 
                 Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
+                Console.WriteLine($"Retrieved model with id {sampleModelId}. Response status: {sampleModel.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinsSampleGetModel
 
-                Console.WriteLine($"{sampleModel.Value.Id} has decommission status of {sampleModel.Value.Decommissioned}");
             }
             catch (Exception ex)
             {
@@ -78,13 +78,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.DecommissionModelAsync(sampleModelId);
-
-                Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
+                Response decommissionModelResponse = await client.DecommissionModelAsync(sampleModelId);
+                Console.WriteLine($"Decommissioned model with Id {sampleModelId}. Response status: {decommissionModelResponse.Status}");
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to decommision model with Id {sampleModelId} due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDecommisionModel
@@ -95,13 +94,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.DeleteModelAsync(sampleModelId);
-
-                Console.WriteLine($"Deleted model {sampleModelId}");
+                Response deleteModelResponse = await client.DeleteModelAsync(sampleModelId);
+                Console.WriteLine($"Deleted model with Id {sampleModelId}. Response status: {deleteModelResponse.Status}");
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to delete model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to delete model with id {sampleModelId} due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDeleteModel
