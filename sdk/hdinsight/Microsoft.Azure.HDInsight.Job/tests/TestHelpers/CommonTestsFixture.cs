@@ -176,7 +176,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
             try 
             {
                 context = contextToUse;
-                Location = "East US";
+                Location = "North Central US";
                 HDInsightClusterType = "Hadoop";
                 WorkNodeSize = "Large";
                 HDInsightClusterVersion = "3.6";
