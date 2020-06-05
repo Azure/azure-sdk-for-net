@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AnalyzeRequest : IUtf8JsonSerializable
+    public partial class AnalyzeTextOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (Analyzer != null)
+            if (AnalyzerName != null)
             {
                 writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (Tokenizer != null)
+            if (TokenizerName != null)
             {
                 writer.WritePropertyName("tokenizer");
-                writer.WriteStringValue(Tokenizer.Value.ToString());
+                writer.WriteStringValue(TokenizerName.Value.ToString());
             }
             if (TokenFilters != null && TokenFilters.Any())
             {
