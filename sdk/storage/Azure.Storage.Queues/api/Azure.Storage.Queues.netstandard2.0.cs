@@ -321,7 +321,6 @@ namespace Azure.Storage.Queues.Specialized
     {
         internal ClientSideDecryptionFailureEventArgs() { }
         public System.Exception Exception { get { throw null; } }
-        public object Message { get { throw null; } }
     }
     public partial class QueueClientSideEncryptionOptions : Azure.Storage.ClientSideEncryptionOptions
     {
