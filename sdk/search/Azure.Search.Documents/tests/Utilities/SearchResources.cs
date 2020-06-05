@@ -391,7 +391,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         using MemoryStream stream = new MemoryStream();
                         await JsonSerializer
-                            .SerializeAsync(stream, hotel, JsonExtensions.SerializerOptions, cts.Token)
+                            .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
                             .ConfigureAwait(false);
 
                         stream.Seek(0, SeekOrigin.Begin);

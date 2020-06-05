@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027dffkrygn\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027fslewiae\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "3987",
+        "Content-Length": "4183",
         "Content-Type": "application/json",
-        "traceparent": "00-3b3da68800703941a8e0b584b117d957-b87b3060f84a3d4e-00",
+        "traceparent": "00-b839df41971c4c479de756cfb3f15ac0-0e51723f6fe0d045-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "29f6f4a77f5e31d972d6cd1564c8ad19",
         "x-ms-return-client-request-id": "true"
@@ -34,6 +34,13 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1970-01-18T00:00:00.0000000-05:00",
             "rating": 4,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -73.975403,
+                40.760586000000004
+              ]
+            },
             "address": {
               "streetAddress": "677 5th Ave",
               "city": "New York",
@@ -85,6 +92,13 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1999-09-06T00:00:00.0000000\u002B00:00",
             "rating": 3,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -78.940483,
+                35.904159999999997
+              ]
+            },
             "address": {
               "streetAddress": "6910 Fayetteville Rd",
               "city": "Durham",
@@ -131,6 +145,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -146,6 +161,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -161,6 +177,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": {
               "streetAddress": null,
               "city": null,
@@ -186,16 +203,18 @@
       "StatusCode": 207,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "29f6f4a7-7f5e-31d9-72d6-cd1564c8ad19",
         "Content-Length": "344",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 07:00:02 GMT",
-        "elapsed-time": "90",
+        "Date": "Mon, 01 Jun 2020 12:07:14 GMT",
+        "elapsed-time": "107",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "29f6f4a7-7f5e-31d9-72d6-cd1564c8ad19",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "29f6f4a7-7f5e-31d9-72d6-cd1564c8ad19"
       },
       "ResponseBody": {
         "value": [
@@ -233,15 +252,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027dffkrygn\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027fslewiae\u0027)/docs/$count?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-b9f99d1200f3f84ca50f60d614426bff-0066f0850615ef43-00",
+        "traceparent": "00-f6354468818cba41b7943c09a6f38650-e71e7e4d5fbfe247-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "af1f911a22849c17a2de57a0c0a6b790",
         "x-ms-return-client-request-id": "true"
@@ -250,29 +269,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "af1f911a-2284-9c17-a2de-57a0c0a6b790",
         "Content-Length": "4",
         "Content-Type": "text/plain",
-        "Date": "Fri, 08 May 2020 07:00:04 GMT",
-        "elapsed-time": "3",
+        "Date": "Mon, 01 Jun 2020 12:07:16 GMT",
+        "elapsed-time": "5",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "af1f911a-2284-9c17-a2de-57a0c0a6b790",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "af1f911a-2284-9c17-a2de-57a0c0a6b790"
       },
       "ResponseBody": "\uFEFF3"
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027dffkrygn\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027fslewiae\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-d70de6d0cdd29f458d88101afd34bf9d-3d124b572302ee47-00",
+        "traceparent": "00-0a408d236d081449b5aaef51de740140-48f1b6ed2edda642-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2429633e754415328f09316c404368ac",
         "x-ms-return-client-request-id": "true"
@@ -281,20 +302,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 08 May 2020 07:00:04 GMT",
-        "elapsed-time": "207",
+        "client-request-id": "2429633e-7544-1532-8f09-316c404368ac",
+        "Date": "Mon, 01 Jun 2020 12:07:16 GMT",
+        "elapsed-time": "767",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "2429633e-7544-1532-8f09-316c404368ac",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "2429633e-7544-1532-8f09-316c404368ac"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1761363080",
-    "SearchIndexName": "dffkrygn",
+    "SearchIndexName": "fslewiae",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }
 }

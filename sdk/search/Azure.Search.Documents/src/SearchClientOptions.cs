@@ -51,6 +51,16 @@ namespace Azure.Search.Documents
         /// </summary>
         public ServiceVersion Version { get; }
 
+#if EXPERIMENTAL_SERIALIZER
+        /// <summary>
+        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.  The
+        /// serializer needs to support JSON and <see cref="JsonObjectSerializer"/>
+        /// will be used if no value is provided.
+        /// </summary>
+        public ObjectSerializer Serializer { get; set; }
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
         /// class.

@@ -47,6 +47,14 @@ namespace Azure.Search.Documents
         /// </summary>
         public virtual string IndexName { get; }
 
+#if EXPERIMENTAL_SERIALIZER
+        /// <summary>
+        /// Gets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.
+        /// </summary>
+        private ObjectSerializer Serializer { get; }
+#endif
+
         /// <summary>
         /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
@@ -159,6 +167,9 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             IndexName = indexName;
+#if EXPERIMENTAL_SERIALIZER
+            Serializer = options.Serializer;
+#endif
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
             Version = options.Version;
@@ -172,6 +183,7 @@ namespace Azure.Search.Documents
                 Version.ToVersionString());
         }
 
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
         /// <see cref="SearchIndexClient"/>.
@@ -183,6 +195,10 @@ namespace Azure.Search.Documents
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
+        /// </param>
+        /// <param name="serializer">
+        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.
         /// </param>
         /// <param name="pipeline">
         /// The authenticated <see cref="HttpPipeline"/> used for sending
@@ -199,9 +215,13 @@ namespace Azure.Search.Documents
         internal SearchClient(
             Uri endpoint,
             string indexName,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             SearchClientOptions.ServiceVersion version)
+        #pragma warning restore CS1572
         {
             Debug.Assert(endpoint != null);
             Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));
@@ -214,6 +234,9 @@ namespace Azure.Search.Documents
 
             Endpoint = endpoint;
             IndexName = indexName;
+#if EXPERIMENTAL_SERIALIZER
+            Serializer = serializer;
+#endif
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
             Version = version;
@@ -288,156 +311,6 @@ namespace Azure.Search.Documents
         #endregion GetDocumentCount
 
         #region GetDocument
-        /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
-        /// when a user clicks on a specific search result, and you want to
-        /// look up specific details about that document. You can only get one
-        /// document at a time.  Use Search to get multiple documents in a
-        /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
-        /// </summary>
-        /// <param name="key">
-        /// Required.  An string value that uniquely identifies each document
-        /// in the index.  The key is sometimes referred to as a document ID.
-        /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
-        /// for the rules for constructing valid document keys.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the GetDocument and GetDocumentAsync
-        /// that return a <see cref="SearchDocument"/> make a best-effort
-        /// attempt to map JSON types in the response payload to .NET types.
-        /// See <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual Response<SearchDocument> GetDocument(
-            string key,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            GetDocumentInternal<SearchDocument>(
-                key,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
-        /// when a user clicks on a specific search result, and you want to
-        /// look up specific details about that document. You can only get one
-        /// document at a time.  Use Search to get multiple documents in a
-        /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
-        /// </summary>
-        /// <param name="key">
-        /// Required.  An string value that uniquely identifies each document
-        /// in the index.  The key is sometimes referred to as a document ID.
-        /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
-        /// for the rules for constructing valid document keys.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the GetDocument and GetDocumentAsync
-        /// that return a <see cref="SearchDocument"/> make a best-effort
-        /// attempt to map JSON types in the response payload to .NET types.
-        /// This mapping does not have the benefit of precise type information
-        /// from the index, so the mapping is not always correct. In
-        /// particular, be aware of the following cases:
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Any numeric value without a decimal point will be deserialized to
-        /// a System.Int32 (int in C#, int32 in F#) if it can be converted or
-        /// a System.Int64 (long in C#, int64 in F#) otherwise.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Special double-precision floating point values such as NaN and
-        /// Infinity will be deserialized as type System.String rather than
-        /// System.Double, even if they are in arrays with regular floating
-        /// point values.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any string field with a value formatted like a DateTimeOffset will
-        /// be deserialized incorrectly. This applies to such values in arrays
-        /// of strings as well.  We recommend storing such values in
-        /// Edm.DateTimeOffset fields rather than Edm.String fields.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any Edm.DateTimeOffset field will be deserialized as a
-        /// System.DateTimeOffset, not System.DateTime.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any empty JSON array will be deserialized as an array of
-        /// System.Object (object[] in C#, obj[] in F#).
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any array of a primitive type will be deserialized as an array of
-        /// its corresponding .NET type, not as an array of System.Object,
-        /// unless the values cannot all be deserialized to the same type. For
-        /// example, the arrays [3.14, "NaN"] and
-        /// ["hello", "2016-10-10T17:41:05.123-07:00"] will both deserialize as
-        /// arrays of System.Object (object[] in C#, obj[] in F#).  This is
-        /// because special double values always deserialize as strings, while
-        /// strings that look like DateTimeOffset always deserialize as
-        /// DateTimeOffset.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Complex fields will be recursively deserialized into instances of
-        /// type <see cref="SearchDocument"/>.  Similarly, complex collection
-        /// fields will be deserialized into arrays of such instances.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        public virtual async Task<Response<SearchDocument>> GetDocumentAsync(
-            string key,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await GetDocumentInternal<SearchDocument>(
-                key,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
         /// <summary>
         /// Retrieves a document from Azure Cognitive Search.  This is useful
         /// when a user clicks on a specific search result, and you want to
@@ -523,11 +396,11 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the GetDocument and GetDocumentAsync
-        /// methods support mapping of Azure Search field types to .NET types
-        /// via the type parameter T.  Note that all search field types except
-        /// collections are nullable, so we recommend using nullable types for
-        /// the properties of T.  The type mapping is as follows:
+        /// The GetDocument and GetDocumentAsync methods support mapping of
+        /// Azure Search field types to .NET types via the type parameter T.
+        /// Note that all search field types except collections are nullable,
+        /// so we recommend using nullable types for the properties of T.  The
+        /// type mapping is as follows:
         /// <list type="table">
         /// <listheader>
         /// <term>Search field type</term>
@@ -651,6 +524,69 @@ namespace Azure.Search.Documents
         /// </description>
         /// </item>
         /// </list>
+        /// You can also use the dynamic <see cref="SearchDocument"/> as your
+        /// <typeparamref name="T"/> and we will make a best-effort attempt to
+        /// map JSON types in the response payload to .NET types. This mapping
+        /// does not have the benefit of precise type information from the
+        /// index, so the mapping is not always correct. In particular, be
+        /// aware of the following cases:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Any numeric value without a decimal point will be deserialized to
+        /// a System.Int32 (int in C#, int32 in F#) if it can be converted or
+        /// a System.Int64 (long in C#, int64 in F#) otherwise.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Special double-precision floating point values such as NaN and
+        /// Infinity will be deserialized as type System.String rather than
+        /// System.Double, even if they are in arrays with regular floating
+        /// point values.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any string field with a value formatted like a DateTimeOffset will
+        /// be deserialized incorrectly. This applies to such values in arrays
+        /// of strings as well.  We recommend storing such values in
+        /// Edm.DateTimeOffset fields rather than Edm.String fields.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any Edm.DateTimeOffset field will be deserialized as a
+        /// System.DateTimeOffset, not System.DateTime.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any empty JSON array will be deserialized as an array of
+        /// System.Object (object[] in C#, obj[] in F#).
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any array of a primitive type will be deserialized as an array of
+        /// its corresponding .NET type, not as an array of System.Object,
+        /// unless the values cannot all be deserialized to the same type. For
+        /// example, the arrays [3.14, "NaN"] and
+        /// ["hello", "2016-10-10T17:41:05.123-07:00"] will both deserialize as
+        /// arrays of System.Object (object[] in C#, obj[] in F#).  This is
+        /// because special double values always deserialize as strings, while
+        /// strings that look like DateTimeOffset always deserialize as
+        /// DateTimeOffset.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Complex fields will be recursively deserialized into instances of
+        /// type <see cref="SearchDocument"/>.  Similarly, complex collection
+        /// fields will be deserialized into arrays of such instances.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </remarks>
         public virtual async Task<Response<T>> GetDocumentAsync<T>(
             string key,
@@ -687,9 +623,13 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     {
-                        T value = async ?
-                            await message.Response.ContentStream.DeserializeAsync<T>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<T>();
+                        T value = await message.Response.ContentStream.DeserializeAsync<T>(
+#if EXPERIMENTAL_SERIALIZER
+                            Serializer,
+#endif
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                         return Response.FromValue(value, message.Response);
                     }
                     default:
@@ -707,110 +647,6 @@ namespace Azure.Search.Documents
         #endregion Get
 
         #region Search
-        /// <summary>
-        /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// A full-text search query expression;  Use "*" or omit this
-        /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
-        /// for more information about search query syntax.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying filtering, sorting, faceting, paging,
-        /// and other search query behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the documents matching the query.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Search and SearchAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
-        /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
-        /// will automatically continue making additional requests as you
-        /// enumerate through the results.  You can also process the results a
-        /// page at a time with the <see cref="Pageable{T}.AsPages(string, int?)"/>
-        /// method.
-        /// </para>
-        /// </remarks>
-        public virtual Response<SearchResults<SearchDocument>> Search(
-            string searchText,
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            SearchInternal<SearchDocument>(
-                searchText,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// A full-text search query expression;  Use "*" or omit this
-        /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
-        /// for more information about search query syntax.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying filtering, sorting, faceting, paging,
-        /// and other search query behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the documents matching the query.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Search and SearchAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
-        /// a single response in which case
-        /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
-        /// continue making additional requests as you enumerate through the
-        /// results.  You can also process the results a page at a time with
-        /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
-        /// </para>
-        /// </remarks>
-        public async virtual Task<Response<SearchResults<SearchDocument>>> SearchAsync(
-            string searchText,
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await SearchInternal<SearchDocument>(
-                searchText,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
         /// <summary>
         /// Searches for documents in the search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
@@ -841,9 +677,11 @@ namespace Azure.Search.Documents
         /// </exception>
         /// <remarks>
         /// <para>
-        /// The generic overloads of the Search and SearchAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </para>
         /// <para>
@@ -896,9 +734,11 @@ namespace Azure.Search.Documents
         /// </exception>
         /// <remarks>
         /// <para>
-        /// The generic overloads of the Search and SearchAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </para>
         /// <para>
@@ -969,9 +809,14 @@ namespace Azure.Search.Documents
                     case 200:
                     {
                         // Deserialize the results
-                        SearchResults<T> results = async ?
-                            await message.Response.ContentStream.DeserializeAsync<SearchResults<T>>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<SearchResults<T>>();
+                        SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
+                            message.Response.ContentStream,
+#if EXPERIMENTAL_SERIALIZER
+                            Serializer,
+#endif
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
 
                         // Cache the client and raw response so we can abstract
                         // away server-side paging
@@ -994,110 +839,6 @@ namespace Azure.Search.Documents
         #endregion Search
 
         #region Suggest
-        /// <summary>
-        /// Executes a "search-as-you-type" query consisting of a partial text
-        /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
-        /// values in fields that are predefined in a Suggester.  For example,
-        /// if you enable suggestions on a city field, typing "sea" produces
-        /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
-        /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// The search text to use to suggest documents. Must be at least 1
-        /// character, and no more than 100 characters.
-        /// </param>
-        /// <param name="suggesterName">
-        /// The name of the suggester as specified in the suggesters collection
-        /// that's part of the index definition.
-        /// </param>
-        /// <param name="options">
-        /// Options for filtering, sorting, and other suggestions query
-        /// behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing suggestion query results from an index.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the Suggest and SuggestAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual Response<SuggestResults<SearchDocument>> Suggest(
-            string searchText,
-            string suggesterName,
-            SuggestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            SuggestInternal<SearchDocument>(
-                searchText,
-                suggesterName,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Executes a "search-as-you-type" query consisting of a partial text
-        /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
-        /// values in fields that are predefined in a Suggester.  For example,
-        /// if you enable suggestions on a city field, typing "sea" produces
-        /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
-        /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// The search text to use to suggest documents. Must be at least 1
-        /// character, and no more than 100 characters.
-        /// </param>
-        /// <param name="suggesterName">
-        /// The name of the suggester as specified in the suggesters collection
-        /// that's part of the index definition.
-        /// </param>
-        /// <param name="options">
-        /// Options for filtering, sorting, and other suggestions query
-        /// behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing suggestion query results from an index.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the Suggest and SuggestAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual async Task<Response<SuggestResults<SearchDocument>>> SuggestAsync(
-            string searchText,
-            string suggesterName,
-            SuggestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await SuggestInternal<SearchDocument>(
-                searchText,
-                suggesterName,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
         /// <summary>
         /// Executes a "search-as-you-type" query consisting of a partial text
         /// input (three character minimum).  It returns matching text found in
@@ -1135,9 +876,11 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the Suggest and SuggestAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Suggest and SuggestAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </remarks>
         public virtual Response<SuggestResults<T>> Suggest<T>(
@@ -1190,9 +933,11 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the Suggest and SuggestAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Suggest and SuggestAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </remarks>
         public virtual async Task<Response<SuggestResults<T>>> SuggestAsync<T>(
@@ -1236,9 +981,14 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     {
-                        SuggestResults<T> suggestions = async ?
-                            await message.Response.ContentStream.DeserializeAsync<SuggestResults<T>>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<SuggestResults<T>>();
+                        SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
+                            message.Response.ContentStream,
+#if EXPERIMENTAL_SERIALIZER
+                            Serializer,
+#endif
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                         return Response.FromValue(suggestions, message.Response);
                     }
                     default:
@@ -1508,7 +1258,15 @@ namespace Azure.Search.Documents
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
                     Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-                    content.JsonWriter.WriteObjectValue(batch);
+                    await batch.SerializeAsync(
+                        content.JsonWriter,
+#if EXPERIMENTAL_SERIALIZER
+                        Serializer,
+#endif
+                        JsonSerialization.SerializerOptions,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                     request.Content = content;
                 }
 
