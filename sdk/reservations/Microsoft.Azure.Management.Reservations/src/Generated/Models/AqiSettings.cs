@@ -11,28 +11,29 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Settings for auto quota increase.
+    /// </summary>
+    public partial class AqiSettings
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the AqiSettings class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public AqiSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the AqiSettings class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="autoQuotaIncreaseState">If the subscription has
+        /// enabled automatic quota increase.</param>
+        public AqiSettings(object autoQuotaIncreaseState = default(object))
         {
-            Scopes = scopes;
+            AutoQuotaIncreaseState = autoQuotaIncreaseState;
             CustomInit();
         }
 
@@ -42,9 +43,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets if the subscription has enabled automatic quota
+        /// increase.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "autoQuotaIncreaseState")]
+        public object AutoQuotaIncreaseState { get; set; }
 
     }
 }
