@@ -62,6 +62,11 @@ try {
                     }
         }
 
+    Write-Host "Validating sample readmes"
+    Invoke-Block {
+        & $PSScriptRoot\Validate-Sample-readmes.ps1 @script:PSBoundParameters
+    }
+
     Write-Host "Re-generating readmes"
     Invoke-Block {
         & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
