@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             string merchantName = merchantNameField.Value.AsString();
 
-                            Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
+                            Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
                         }
                     }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             DateTime transactionDate = transactionDateField.Value.AsDate();
 
-                            Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
+                            Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
                         }
                     }
 
@@ -62,29 +62,31 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             foreach (FormField itemField in itemsField.Value.AsList())
                             {
+                                Console.WriteLine("Item:");
+
                                 if (itemField.Value.Type == FieldValueType.Dictionary)
                                 {
                                     IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
                                     FormField itemNameField;
-                                    if (itemFields.TryGetValue("MerchantName", out itemNameField))
+                                    if (itemFields.TryGetValue("Name", out itemNameField))
                                     {
                                         if (itemNameField.Value.Type == FieldValueType.String)
                                         {
                                             string itemName = itemNameField.Value.AsString();
 
-                                            Console.WriteLine($"    Merchant Name: '{itemName}', with confidence {itemNameField.Confidence}");
+                                            Console.WriteLine($"    Name: '{itemName}', with confidence {itemNameField.Confidence}");
                                         }
                                     }
 
                                     FormField itemTotalPriceField;
-                                    if (itemFields.TryGetValue("TotalPriceField", out itemTotalPriceField))
+                                    if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
                                     {
                                         if (itemTotalPriceField.Value.Type == FieldValueType.Float)
                                         {
                                             float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
-                                            Console.WriteLine($"    Merchant Name: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
+                                            Console.WriteLine($"    Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
                                         }
                                     }
                                 }
@@ -99,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             float total = totalField.Value.AsFloat();
 
-                            Console.WriteLine($"    Total: '{total}', with confidence '{totalField.Confidence}'");
+                            Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
                         }
                     }
                 }
