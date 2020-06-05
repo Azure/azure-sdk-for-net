@@ -137,7 +137,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(searchRequest);
             request.Content = content;
             return message;
@@ -347,7 +347,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(suggestRequest);
             request.Content = content;
             return message;
@@ -438,7 +438,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batch);
             request.Content = content;
             return message;
@@ -531,7 +531,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(autocompleteRequest);
             request.Content = content;
             return message;

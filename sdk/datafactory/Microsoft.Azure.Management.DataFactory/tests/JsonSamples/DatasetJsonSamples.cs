@@ -1161,6 +1161,34 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string XmlDataset = @"
+{
+  name: ""MyXml"",
+  properties: {
+    type: ""Xml"",
+    linkedServiceName: 
+    {  
+        referenceName : ""ls"",
+        type : ""LinkedServiceReference""
+    },
+    typeProperties: {
+        location: {
+            type: ""AzureBlobStorageLocation"",
+            folderPath: ""testFolder"",
+            fileName: ""test.json"",
+            container: ""MyContainer""
+        },
+        encodingName: ""UTF-8"",
+        nullValue: ""null"",
+        compression: {
+            type: ""GZip"",
+            level: ""Optimal""
+        }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string Json = @"
 {
   name: ""MyJson"",

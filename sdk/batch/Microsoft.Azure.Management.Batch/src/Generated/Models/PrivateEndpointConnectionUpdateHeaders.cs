@@ -31,13 +31,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Initializes a new instance of the
         /// PrivateEndpointConnectionUpdateHeaders class.
         /// </summary>
-        /// <param name="eTag">The ETag HTTP response header. This is an opaque
-        /// string. You can use it to detect whether the resource has changed
-        /// between requests. In particular, you can pass the ETag to one of
-        /// the If-Match or If-None-Match headers.</param>
-        public PrivateEndpointConnectionUpdateHeaders(string eTag = default(string))
+        /// <param name="location">The URL of the resource used to check the
+        /// status of the asynchronous operation.</param>
+        /// <param name="retryAfter">Suggested delay to check the status of the
+        /// asynchronous operation. The value is an integer that represents the
+        /// seconds.</param>
+        public PrivateEndpointConnectionUpdateHeaders(string location = default(string), int? retryAfter = default(int?))
         {
-            ETag = eTag;
+            Location = location;
+            RetryAfter = retryAfter;
             CustomInit();
         }
 
@@ -47,13 +49,19 @@ namespace Microsoft.Azure.Management.Batch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ETag HTTP response header. This is an opaque
-        /// string. You can use it to detect whether the resource has changed
-        /// between requests. In particular, you can pass the ETag to one of
-        /// the If-Match or If-None-Match headers.
+        /// Gets or sets the URL of the resource used to check the status of
+        /// the asynchronous operation.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "Location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets suggested delay to check the status of the
+        /// asynchronous operation. The value is an integer that represents the
+        /// seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "Retry-After")]
+        public int? RetryAfter { get; set; }
 
     }
 }

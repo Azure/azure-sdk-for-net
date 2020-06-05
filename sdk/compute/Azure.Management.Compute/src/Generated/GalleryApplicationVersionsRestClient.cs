@@ -63,7 +63,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(galleryApplicationVersion);
             request.Content = content;
             return message;
@@ -175,7 +175,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(galleryApplicationVersion);
             request.Content = content;
             return message;

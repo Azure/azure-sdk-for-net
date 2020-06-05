@@ -36,4 +36,4 @@ To delete the digital twins instance, you need to first delete the endpoint adde
 
 In order to maintain the functionality of the Setup.ps1 file, make sure this document stays updated with all the required changes if you run/alter this script.
 
-Currently, this script works with version 0.0.1.dev8.
+Currently, this script works with version 0.0.1.dev9.

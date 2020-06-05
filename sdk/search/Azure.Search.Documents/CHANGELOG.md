@@ -4,11 +4,16 @@
 
 ### Breaking Changes
 
+- Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
 - Moved models for managing indexes, indexers, and skillsets to `Azure.Search.Documents.Indexes.Models`.
-- Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
+- Removed the `SynonymMap.Format` property since only the "solr" format is supported currently.
+- Renamed `AnalyzeRequest` to `AnalyzeTextOptions`, and overloaded constructors with required parameters.
+- Renamed `AnalyzeTextOptions.Analyzer` to `AnalyzeTextOptions.AnalyzerName`.
+- Renamed `AnalyzeTextOptions.Tokenizer` to `AnalyzeTextOptions.TokenizerName`.
+- Renamed `CustomAnalyzer.Tokenizer` to `CustomAnalyzer.TokenizerName`.
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
-- Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
+- Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
 
 ## 1.0.0-preview.3 (2020-05-05)
 

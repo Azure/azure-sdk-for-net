@@ -3,6 +3,9 @@
 ## 12.5.0-preview.1 (Unreleased)
 
 
+## 12.4.4 (2020-06)
+- This release contains bug fixes to improve quality.
+
 ## 12.4.3 (2020-06)
 - Fixed bug where copy from URL did not handle non-ASCII characters correctly
 - Fixed bug where download could hang indefinietly on .NET Framework
