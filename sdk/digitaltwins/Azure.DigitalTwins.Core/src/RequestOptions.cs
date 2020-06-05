@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.DigitalTwins.Core
 {
     /// <summary>
@@ -13,13 +9,13 @@ namespace Azure.DigitalTwins.Core
     public class RequestOptions
     {
         /// <summary>
-        /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232. The request's operation is performed
+        /// An Azure.Core.Etag object for the entity that this request performs an operation against, as per RFC7232. The request's operation is performed
         /// only if this ETag matches the value maintained by the server, indicating that the entity has not been modified since it was last retrieved.
         /// To force the operation to execute only if the entity exists, set the ETag to the wildcard character '*'. To force the operation to execute unconditionally, leave this value null.
         /// </summary>
         /// <remarks>
         /// If this value is not set, it defaults to null, and the ifMatch header will not be sent with the request. This means that update and delete will be unconditional and the operation will execute regardless of the existence of the resource.
         /// </remarks>
-        public string IfMatchEtag { get; set; } = null;
+        public ETag? IfMatchEtag { get; set; }
     }
 }

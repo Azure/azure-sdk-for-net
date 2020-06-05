@@ -257,7 +257,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteAsync(digitalTwinId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteAsync(digitalTwinId, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Response DeleteDigitalTwin(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Delete(digitalTwinId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.Delete(digitalTwinId, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Task<Response<string>> UpdateDigitalTwinAsync(string digitalTwinId, string digitalTwinUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateAsync(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateAsync(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response<string> UpdateDigitalTwin(string digitalTwinId, string digitalTwinUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Update(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.Update(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Task<Response<string>> UpdateComponentAsync(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
             // TODO how can we make this patch easier to construct?
-            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response<string> UpdateComponent(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -747,7 +747,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string relationshipUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
             // TODO how can we make this patch easier to construct?
-            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -903,7 +903,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, string relationshipUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag?.ToString(), cancellationToken);
         }
 
         /// <summary>
