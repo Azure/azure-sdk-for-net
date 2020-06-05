@@ -30,26 +30,7 @@ namespace Azure.Storage.Queues.Specialized
 
         internal void OnDecryptionFailed(object message, Exception e)
         {
-            DecryptionFailed?.Invoke(this, new ClientSideDecryptionFailureEventArgs(message, e));
-        }
-
-        /// <summary>
-        /// Clones this class as this subclass instead of the base class.
-        /// </summary>
-        /// <remarks>
-        /// Compiler restriction: can only copy an event in an instance method on the class containing the event.
-        /// This class exists to allow us to copy the event.
-        /// </remarks>
-        private QueueClientSideEncryptionOptions CloneAsQueueClientSideEncryptionOptions()
-        {
-            // clone base class but as instance of this class
-            var newOptions = new QueueClientSideEncryptionOptions(EncryptionVersion);
-            ClientSideEncryptionOptionsExtensions.CopyOptions(this, newOptions);
-
-            // clone data specific to this subclass
-            newOptions.DecryptionFailed = DecryptionFailed;
-
-            return newOptions;
+            DecryptionFailed?.Invoke(message, new ClientSideDecryptionFailureEventArgs(e));
         }
 
         /// <summary>
@@ -64,18 +45,13 @@ namespace Azure.Storage.Queues.Specialized
             {
                 return default;
             }
-            else if (options is QueueClientSideEncryptionOptions)
+            var newOptions = new QueueClientSideEncryptionOptions(options.EncryptionVersion);
+            ClientSideEncryptionOptionsExtensions.CopyOptions(options, newOptions);
+            if (options is QueueClientSideEncryptionOptions queueOptions)
             {
-                return ((QueueClientSideEncryptionOptions)options).CloneAsQueueClientSideEncryptionOptions();
+                newOptions.DecryptionFailed = queueOptions.DecryptionFailed;
             }
-            else
-            {
-                // clone base class but as instance of this class
-                var newOptions = new QueueClientSideEncryptionOptions(options.EncryptionVersion);
-                ClientSideEncryptionOptionsExtensions.CopyOptions(options, newOptions);
-
-                return newOptions;
-            }
+            return newOptions;
         }
     }
 
@@ -89,15 +65,8 @@ namespace Azure.Storage.Queues.Specialized
         /// </summary>
         public Exception Exception { get; }
 
-        /// <summary>
-        /// Message the failure occured with. Can be an instance of either
-        /// <see cref="Queues.Models.QueueMessage"/> or <see cref="Queues.Models.PeekedMessage"/>.
-        /// </summary>
-        public object Message { get; }
-
-        internal ClientSideDecryptionFailureEventArgs(object message, Exception exception)
+        internal ClientSideDecryptionFailureEventArgs(Exception exception)
         {
-            Message = message;
             Exception = exception;
         }
     }
