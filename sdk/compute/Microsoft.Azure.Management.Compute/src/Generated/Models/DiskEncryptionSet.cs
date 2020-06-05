@@ -39,9 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="encryptionType">The type of key used to encrypt the
-        /// data of the disk. EncryptionType can't be changed once the disk
-        /// encryption set has been created. Possible values include:
+        /// <param name="encryptionType">Possible values include:
         /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
@@ -75,9 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of key used to encrypt the data of the disk.
-        /// EncryptionType can't be changed once the disk encryption set has
-        /// been created. Possible values include:
+        /// Gets or sets possible values include:
         /// 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'

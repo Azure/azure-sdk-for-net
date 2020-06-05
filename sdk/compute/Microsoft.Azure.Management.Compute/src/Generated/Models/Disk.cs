@@ -97,9 +97,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="shareInfo">Details of the list of all VMs that have
         /// the disk attached. maxShares should be set to a value greater than
         /// one for disks to allow attaching them to multiple VMs.</param>
-        /// <param name="networkAccessPolicy">Policy for accessing the disk via
-        /// network. Possible values include: 'AllowAll', 'AllowPrivate',
-        /// 'DenyAll'</param>
+        /// <param name="networkAccessPolicy">Possible values include:
+        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
         public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string))
@@ -290,8 +289,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<ShareInfoElement> ShareInfo { get; private set; }
 
         /// <summary>
-        /// Gets or sets policy for accessing the disk via network. Possible
-        /// values include: 'AllowAll', 'AllowPrivate', 'DenyAll'
+        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
+        /// 'DenyAll'
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
         public string NetworkAccessPolicy { get; set; }

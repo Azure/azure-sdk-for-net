@@ -65,9 +65,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
-        /// <param name="networkAccessPolicy">Policy for accessing the disk via
-        /// network. Possible values include: 'AllowAll', 'AllowPrivate',
-        /// 'DenyAll'</param>
+        /// <param name="networkAccessPolicy">Possible values include:
+        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
         /// <param name="tags">Resource tags</param>
@@ -168,8 +167,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
-        /// Gets or sets policy for accessing the disk via network. Possible
-        /// values include: 'AllowAll', 'AllowPrivate', 'DenyAll'
+        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
+        /// 'DenyAll'
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
         public string NetworkAccessPolicy { get; set; }
