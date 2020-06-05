@@ -53,7 +53,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// <summary>
         /// The application/json description of a temporary model
         /// </summary>
-        public const string TemporaryModelPayload = @"
+        public const string TemporaryModelWithComponentPayload = @"
             {
                 ""@id"": ""MODEL_ID"",
                 ""@type"": ""Interface"",
@@ -68,12 +68,17 @@ namespace Azure.DigitalTwins.Core.Samples
                     {
                         ""@type"": ""Property"",
                         ""name"": ""Prop2"",
-                        ""schema"": ""string""
+                        ""schema"": ""integer""
                     },
                     {
                         ""@type"": ""Component"",
                         ""name"": ""Component1"",
                         ""schema"": ""COMPONENT_ID""
+                    },
+                    {
+                        ""@type"": ""Telemetry"",
+                        ""name"": ""Telemetry1"",
+                        ""schema"": ""integer""
                     }
                 ]
             }";
@@ -101,7 +106,12 @@ namespace Azure.DigitalTwins.Core.Samples
                     {
                         ""@type"": ""Property"",
                         ""name"": ""ComponentProp2"",
-                        ""schema"": ""string""
+                        ""schema"": ""integer""
+                    },
+                    {
+                        ""@type"": ""Telemetry"",
+                        ""name"": ""ComponentTelemetry1"",
+                        ""schema"": ""integer""
                     }
                 ]
             }";
@@ -120,13 +130,13 @@ namespace Azure.DigitalTwins.Core.Samples
                 ""$model"": ""MODEL_ID""
               },
               ""Prop1"": ""Value"",
-              ""Prop2"": ""Value"",
+              ""Prop2"": 987,
               ""Component1"":{
                 ""$metadata"":{
                   ""$model"": ""COMPONENT_ID""
                 },
                 ""ComponentProp1"": ""Value"",
-                ""ComponentProp2"": ""Value""
+                ""ComponentProp2"": 123
               }
             }";
     }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
     ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
-    ///  <see cref="ServiceBusClient.CreateSessionReceiverAsync(string, ServiceBusReceiverOptions, string, CancellationToken)"/>.
+    ///  <see cref="ServiceBusClient.CreateSessionReceiverAsync(string, string, ServiceBusSessionReceiverOptions, CancellationToken)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
@@ -35,7 +35,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="sessionId">The sessionId for this receiver</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -43,15 +42,13 @@ namespace Azure.Messaging.ServiceBus
         internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
             string entityPath,
             ServiceBusConnection connection,
-            string sessionId = default,
-            ServiceBusReceiverOptions options = default,
+            ServiceBusSessionReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,
-                options: options,
-                sessionId: sessionId);
+                options: options);
             try
             {
                 await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
@@ -72,14 +69,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
-        /// <param name="sessionId"></param>
-        ///
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
-            ServiceBusReceiverOptions options,
-            string sessionId = default) :
-            base(connection, entityPath, true, options, sessionId)
+            ServiceBusSessionReceiverOptions options) :
+            base(connection, entityPath, true, options?.ToReceiverOptions(), options?.SessionId)
         {
         }
 

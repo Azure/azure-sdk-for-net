@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 {
     internal sealed class AmqpRuleDescriptionCodec : DescribedList
     {
-        public static readonly string Name = AmqpConstants.Vendor + ":rule-description:list";
+        public const string Name = AmqpConstants.Vendor + ":rule-description:list";
         public const ulong Code = 0x0000013700000004;
         private const int Fields = 4;
 

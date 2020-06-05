@@ -33,7 +33,7 @@ messageBatch.TryAdd(
 await sender.SendAsync(messageBatch);
 
 // get the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+var options = new ServiceBusSessionProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.

@@ -33,6 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Uri = uri;
+            HttpHeaders = new Dictionary<string, string>();
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal WebApiSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
         {
             Uri = uri;
-            HttpHeaders = httpHeaders;
+            HttpHeaders = httpHeaders ?? new Dictionary<string, string>();
             HttpMethod = httpMethod;
             Timeout = timeout;
             BatchSize = batchSize;
@@ -62,8 +63,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The url for the Web API. </summary>
         public string Uri { get; set; }
-        /// <summary> The headers required to make the http request. </summary>
-        public IDictionary<string, string> HttpHeaders { get; set; }
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }
         /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>

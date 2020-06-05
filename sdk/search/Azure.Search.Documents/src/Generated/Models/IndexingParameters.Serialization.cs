@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maxFailedItemsPerBatch");
                 writer.WriteNumberValue(MaxFailedItemsPerBatch.Value);
             }
-            if (Configuration != null)
+            if (Configuration != null && Configuration.Any())
             {
                 writer.WritePropertyName("configuration");
                 writer.WriteStartObject();

@@ -91,7 +91,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (value < TimeSpan.Zero)
                 {
+#pragma warning disable CA2208 // Instantiate argument exceptions. Using property name is more intuitive than Value.
                     throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(TryTimeout));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 Argument.AssertInRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));

@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
 
         public const int MaxDeadLetterReasonLength = 4096;
 
-        public static readonly long DefaultLastPeekedSequenceNumber = 0;
+        public const long DefaultLastPeekedSequenceNumber = 0;
 
         public static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
 

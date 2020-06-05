@@ -76,14 +76,14 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets specifies how the LCM(Local Configuration Manager) actually
-        /// applies the configuration to the target nodes. Possible values are
-        /// ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. Possible
-        /// values include: 'ApplyOnly', 'ApplyAndMonitor',
+        /// Gets or sets specifies how the LCM(Local Configuration Manager)
+        /// actually applies the configuration to the target nodes. Possible
+        /// values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect.
+        /// Possible values include: 'ApplyOnly', 'ApplyAndMonitor',
         /// 'ApplyAndAutoCorrect'
         /// </summary>
         [JsonProperty(PropertyName = "configurationMode")]
-        public string ConfigurationMode { get; private set; }
+        public string ConfigurationMode { get; set; }
 
         /// <summary>
         /// Gets or sets if true - new configurations downloaded from the pull
@@ -94,41 +94,42 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public string AllowModuleOverwrite { get; set; }
 
         /// <summary>
-        /// Gets specifies what happens after a reboot during the application
-        /// of a configuration. The possible values are ContinueConfiguration
-        /// and StopConfiguration. Possible values include:
-        /// 'ContinueConfiguration', 'StopConfiguration'
+        /// Gets or sets specifies what happens after a reboot during the
+        /// application of a configuration. The possible values are
+        /// ContinueConfiguration and StopConfiguration. Possible values
+        /// include: 'ContinueConfiguration', 'StopConfiguration'
         /// </summary>
         [JsonProperty(PropertyName = "actionAfterReboot")]
-        public string ActionAfterReboot { get; private set; }
+        public string ActionAfterReboot { get; set; }
 
         /// <summary>
-        /// Gets the time interval, in minutes, at which the LCM checks a pull
-        /// service to get updated configurations. This value is ignored if the
-        /// LCM is not configured in pull mode. The default value is 30.
+        /// Gets or sets the time interval, in minutes, at which the LCM checks
+        /// a pull service to get updated configurations. This value is ignored
+        /// if the LCM is not configured in pull mode. The default value is 30.
         /// </summary>
         [JsonProperty(PropertyName = "refreshFrequencyMins")]
-        public double? RefreshFrequencyMins { get; private set; }
+        public double? RefreshFrequencyMins { get; set; }
 
         /// <summary>
-        /// Gets set this to true to automatically reboot the node after a
-        /// configuration that requires reboot is applied. Otherwise, you will
-        /// have to manually reboot the node for any configuration that
-        /// requires it. The default value is false. To use this setting when a
-        /// reboot condition is enacted by something other than DSC (such as
-        /// Windows Installer), combine this setting with the xPendingReboot
-        /// module. Possible values include: 'True', 'False'
+        /// Gets or sets set this to true to automatically reboot the node
+        /// after a configuration that requires reboot is applied. Otherwise,
+        /// you will have to manually reboot the node for any configuration
+        /// that requires it. The default value is false. To use this setting
+        /// when a reboot condition is enacted by something other than DSC
+        /// (such as Windows Installer), combine this setting with the
+        /// xPendingReboot module. Possible values include: 'True', 'False'
         /// </summary>
         [JsonProperty(PropertyName = "rebootIfNeeded")]
-        public string RebootIfNeeded { get; private set; }
+        public string RebootIfNeeded { get; set; }
 
         /// <summary>
-        /// Gets how often, in minutes, the current configuration is checked
-        /// and applied. This property is ignored if the ConfigurationMode
-        /// property is set to ApplyOnly. The default value is 15.
+        /// Gets or sets how often, in minutes, the current configuration is
+        /// checked and applied. This property is ignored if the
+        /// ConfigurationMode property is set to ApplyOnly. The default value
+        /// is 15.
         /// </summary>
         [JsonProperty(PropertyName = "configurationModeFrequencyMins")]
-        public double? ConfigurationModeFrequencyMins { get; private set; }
+        public double? ConfigurationModeFrequencyMins { get; set; }
 
     }
 }

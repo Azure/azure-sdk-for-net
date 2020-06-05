@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core.Serialization
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
-    /// The ModelProperties dictionary on <see cref="DigitalTwinMetadata" />.
+    /// The ModelProperties dictionary on <see cref="DigitalTwinMetadata"/>.
     /// </summary>
     /// <remarks>
     /// A writable property is one that the service may request a change for from the device.
