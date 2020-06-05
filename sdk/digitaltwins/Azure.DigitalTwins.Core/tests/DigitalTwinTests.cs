@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -49,7 +48,14 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin).ConfigureAwait(false);
+
+                // create request options to force the update using "*" ifMatch value
+                var reqeustOptions = new RequestOptions()
+                {
+                    IfMatch = new ETag("*")
+                };
+
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin, reqeustOptions).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
