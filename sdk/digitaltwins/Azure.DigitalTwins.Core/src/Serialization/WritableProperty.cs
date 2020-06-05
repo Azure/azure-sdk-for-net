@@ -10,7 +10,12 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// The ModelProperties dictionary on <see cref="DigitalTwinMetadata"/>.
     /// </summary>
     /// <remarks>
+    /// <para>
     /// A writable property is one that the service may request a change for from the device.
+    /// </para>
+    /// <para>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </para>
     /// </remarks>
     public class WritableProperty
     {

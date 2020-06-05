@@ -9,6 +9,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <summary>
     /// Properties on a digital twin that adhere to a specific model.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     public class ModelProperties
     {
         /// <summary>
