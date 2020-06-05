@@ -10,6 +10,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Azure.Management.Billing.Models;
 
 namespace Billing.Tests.ScenarioTests
 {
@@ -112,6 +113,89 @@ namespace Billing.Tests.ScenarioTests
                 Assert.True(billingSubscriptions.Any());
                 Assert.Contains(billingSubscriptions, bs => bs.BillingProfileId.Contains(BillingProfileName));
                 Assert.Contains(billingSubscriptions, bs => bs.InvoiceSectionId.Contains(InvoiceSectionName));
+            }
+        }
+
+        [Fact]
+        public void MoveBillingSubscriptionTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var destinationInvoiceSectionId = "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the agreements
+                var billingSubscription = billingMgmtClient.BillingSubscriptions.Move(
+                    BillingAccountName, new TransferBillingSubscriptionRequestProperties
+                    {
+                        DestinationInvoiceSectionId = destinationInvoiceSectionId
+                    });
+
+                // Verify the response
+                Assert.NotNull(billingSubscription);
+                
+                Assert.Contains(billingSubscription.InvoiceSectionId, destinationInvoiceSectionId);
+            }
+        }
+
+        [Fact]
+        public void IsEligibleToMoveBillingSubscriptionTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var destinationInvoiceSectionId = "/providers/Microsoft.Billing/billingAccounts/692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31/billingProfiles/DSNH-WUZE-BG7-TGB/invoiceSections/3b613781-98a4-49ac-b8bb-e4f5c13d6407";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the agreements
+                var validateMove = billingMgmtClient.BillingSubscriptions.ValidateMove(
+                    BillingAccountName, 
+                    new TransferBillingSubscriptionRequestProperties
+                    {
+                        DestinationInvoiceSectionId = destinationInvoiceSectionId
+                    });
+
+                // Verify the response
+                Assert.NotNull(validateMove);
+                Assert.NotNull(validateMove.IsMoveEligible);
+                Assert.True(validateMove.IsMoveEligible.Value);
+            }
+        }
+
+        [Fact]
+        public void UpdateBillingSubscriptionTest()
+        {
+            var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
+            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var costCenter = "NewCostCenter";
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                // Create client
+                var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Get the agreements
+                var updatedBillingsubscription = billingMgmtClient.BillingSubscriptions.Update(
+                    BillingAccountName, 
+                    new BillingSubscription
+                    {
+                        CostCenter = costCenter
+                    });
+
+                // Verify the response
+                Assert.NotNull(updatedBillingsubscription);
+                Assert.NotNull(updatedBillingsubscription.CostCenter);
+                Assert.Equal(updatedBillingsubscription.CostCenter, costCenter);
             }
         }
     }
