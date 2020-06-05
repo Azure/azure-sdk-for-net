@@ -15,9 +15,9 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio Code
+    /// Enables authentication to Azure Active Directory using data from Visual Studio Code.
     /// </summary>
-    internal class VisualStudioCodeCredential : TokenCredential
+    public class VisualStudioCodeCredential : TokenCredential
     {
         private const string CredentialsSection = "VS Code Azure";
         private const string ClientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
@@ -28,12 +28,15 @@ namespace Azure.Identity
         private readonly MsalPublicClient _client;
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-        protected VisualStudioCodeCredential() : this(default, default) {}
+        public VisualStudioCodeCredential() : this(null) { }
 
-        /// <inheritdoc />
-        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Options for configuring the credential.</param>
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
 
         internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
             : this(tenantId, pipeline, default, fileSystem, vscAdapter)
