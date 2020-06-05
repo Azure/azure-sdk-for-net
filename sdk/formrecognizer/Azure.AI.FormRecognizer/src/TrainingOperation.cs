@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.Training
 
                 if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
                 {
-                    // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
                     _value = new CustomFormModel(update.Value);
                     _hasCompleted = true;
                 }

@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer
             FormContentType contentType = recognizeOptions.ContentType ?? DetectContentType(form, nameof(form));
 
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.AnalyzeLayoutAsync(contentType, form, cancellationToken);
-            return new RecognizeContentOperation(ServiceClient, Diagnostics,response.Headers.OperationLocation);
+            return new RecognizeContentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation);
         }
 
         /// <summary>
