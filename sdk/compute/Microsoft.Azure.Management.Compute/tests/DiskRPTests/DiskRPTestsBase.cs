@@ -331,10 +331,12 @@ namespace Compute.Tests.DiskRPTests
                     NM.Subnet subnet = CreateVNET(rgName, disablePEPolicies: true);
 
                     // Put Private Endpoint associating it with disk access
-                    NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id);
+                    //TODO: Uncomment below after network dll upgrade
+                    //NM.PrivateEndpoint privateEndpoint = CreatePrivateEndpoint(rgName, privateEndpointName, diskAccessOut.Id, subnet.Id);
 
                     diskAccessOut = m_CrpClient.DiskAccesses.Get(rgName, diskAccessName);
-                    Validate(diskAccess, diskAccessOut, diskAccessName, privateEndpoint.Id);
+                    //TODO: Uncomment below after network dll upgrade
+                    //Validate(diskAccess, diskAccessOut, diskAccessName, privateEndpoint.Id);
 
                     // Patch DiskAccess
                     const string tagKey = "tagKey";
@@ -346,7 +348,8 @@ namespace Compute.Tests.DiskRPTests
                     PrivateLinkResourceListResult privateLinkResources = m_CrpClient.DiskAccesses.GetPrivateLinkResources(rgName, diskAccessName);
                     Validate(privateLinkResources);
 
-                    m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
+                    //TODO: Uncomment below after network dll upgrade
+                    //m_NrpClient.PrivateEndpoints.DeleteWithHttpMessagesAsync(rgName, privateEndpointName).GetAwaiter().GetResult();
 
                     // Delete DiskAccess
                     m_CrpClient.DiskAccesses.Delete(rgName, diskAccessName);
@@ -1039,31 +1042,32 @@ namespace Compute.Tests.DiskRPTests
 
         #region Helpers
 
-        protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId)
-        {
-            string plsConnectionName = TestUtilities.GenerateName("pls");
-            NM.PrivateEndpoint privateEndpoint = new NM.PrivateEndpoint
-            {
-                Subnet = new NM.Subnet
-                {
-                    Id = subnetId
-                },
-                Location = m_location,
-                PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
-                {
-                    new NM.PrivateLinkServiceConnection
-                    {
-                        GroupIds = new List<string> { "disks" },
-                        Name = plsConnectionName,
-                        PrivateLinkServiceId = diskAccessId
-                    }
-                }
-            };
+        //TODO: Uncomment after network dll upgrade
+        //protected NM.PrivateEndpoint CreatePrivateEndpoint(string rgName, string peName, string diskAccessId, string subnetId)
+        //{
+        //    string plsConnectionName = TestUtilities.GenerateName("pls");
+        //    NM.PrivateEndpoint privateEndpoint = new NM.PrivateEndpoint
+        //    {
+        //        Subnet = new NM.Subnet
+        //        {
+        //            Id = subnetId
+        //        },
+        //        Location = m_location,
+        //        PrivateLinkServiceConnections = new List<NM.PrivateLinkServiceConnection>
+        //        {
+        //            new NM.PrivateLinkServiceConnection
+        //            {
+        //                GroupIds = new List<string> { "disks" },
+        //                Name = plsConnectionName,
+        //                PrivateLinkServiceId = diskAccessId
+        //            }
+        //        }
+        //    };
 
-            NM.PrivateEndpoint privateEndpointOut = m_NrpClient.PrivateEndpoints.CreateOrUpdateWithHttpMessagesAsync(rgName, peName, privateEndpoint).GetAwaiter().GetResult().Body;
+        //    NM.PrivateEndpoint privateEndpointOut = m_NrpClient.PrivateEndpoints.CreateOrUpdateWithHttpMessagesAsync(rgName, peName, privateEndpoint).GetAwaiter().GetResult().Body;
 
-            return privateEndpointOut;
-        }
+        //    return privateEndpointOut;
+        //}
 
         #endregion
 
