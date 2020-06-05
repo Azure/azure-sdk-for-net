@@ -323,10 +323,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            AnalyzeTextRequest request = new AnalyzeTextRequest("The quick brown fox jumped over the lazy dog.")
-            {
-                Tokenizer = LexicalTokenizerName.Whitespace,
-            };
+            AnalyzeTextOptions request = new AnalyzeTextOptions("The quick brown fox jumped over the lazy dog.", LexicalTokenizerName.Whitespace);
 
             Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;

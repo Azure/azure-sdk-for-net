@@ -7,12 +7,12 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
 {
-    public class AnalyzeTextRequestTests
+    public class AnalyzeTextOptionsTests
     {
         [Test]
         public void RequiresText()
         {
-            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new AnalyzeTextRequest(null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => new AnalyzeTextOptions(null, LexicalTokenizerName.Whitespace));
             Assert.AreEqual("text", ex.ParamName);
         }
     }

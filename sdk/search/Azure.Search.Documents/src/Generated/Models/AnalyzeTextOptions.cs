@@ -11,16 +11,29 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies some text and analysis components used to break that text into tokens. </summary>
-    public partial class AnalyzeTextRequest
+    public partial class AnalyzeTextOptions
     {
+        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <param name="text"> The text to break into tokens. </param>
+        public AnalyzeTextOptions(string text)
+        {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
-        /// <summary> Initializes a new instance of AnalyzeTextRequest. </summary>
+            Text = text;
+            TokenFilters = new List<TokenFilterName>();
+            CharFilters = new List<string>();
+        }
+
+        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
         /// <param name="text"> The text to break into tokens. </param>
         /// <param name="analyzer"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
         /// <param name="tokenizer"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
         /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
         /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
-        internal AnalyzeTextRequest(string text, LexicalAnalyzerName? analyzer, LexicalTokenizerName? tokenizer, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
+        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzer, LexicalTokenizerName? tokenizer, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
         {
             Text = text;
             Analyzer = analyzer;
@@ -31,9 +44,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The text to break into tokens. </summary>
         public string Text { get; }
-        /// <summary> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
-        public LexicalAnalyzerName? Analyzer { get; set; }
-        /// <summary> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
-        public LexicalTokenizerName? Tokenizer { get; set; }
     }
 }

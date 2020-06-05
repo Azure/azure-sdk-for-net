@@ -227,7 +227,7 @@ namespace Azure.Search.Documents.Indexes
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="request">The <see cref="AnalyzeTextRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="request">The <see cref="AnalyzeTextOptions"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
@@ -236,7 +236,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
-            AnalyzeTextRequest request,
+            AnalyzeTextOptions request,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -261,7 +261,7 @@ namespace Azure.Search.Documents.Indexes
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="request">The <see cref="AnalyzeTextRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="request">The <see cref="AnalyzeTextOptions"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
@@ -270,7 +270,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
-            AnalyzeTextRequest request,
+            AnalyzeTextOptions request,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
