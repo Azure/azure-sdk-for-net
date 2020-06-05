@@ -58,16 +58,16 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the guest configuration assignment.
+        /// Gets or sets name of the guest configuration assignment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets region where the VM is located.
+        /// Gets or sets region where the VM is located.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets the type of the resource.

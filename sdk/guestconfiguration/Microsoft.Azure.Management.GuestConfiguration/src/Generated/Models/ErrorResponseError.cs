@@ -13,28 +13,26 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Represents a configuration parameter.
-    /// </summary>
-    public partial class ConfigurationParameter
+    public partial class ErrorResponseError
     {
         /// <summary>
-        /// Initializes a new instance of the ConfigurationParameter class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        public ConfigurationParameter()
+        public ErrorResponseError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ConfigurationParameter class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        /// <param name="name">Name of the configuration parameter.</param>
-        /// <param name="value">Value of the configuration parameter.</param>
-        public ConfigurationParameter(string name = default(string), string value = default(string))
+        /// <param name="code">Error code.</param>
+        /// <param name="message">Detail error message indicating why the
+        /// operation failed.</param>
+        public ErrorResponseError(string code = default(string), string message = default(string))
         {
-            Name = name;
-            Value = value;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -44,16 +42,17 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the configuration parameter.
+        /// Gets or sets error code.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets value of the configuration parameter.
+        /// Gets or sets detail error message indicating why the operation
+        /// failed.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
