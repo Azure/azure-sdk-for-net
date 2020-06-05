@@ -2073,7 +2073,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    messageText = UsingClientSideEncryption
+                    messageText = UsingClientSideEncryption && messageText != default
                         ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
                             .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
                         : messageText;

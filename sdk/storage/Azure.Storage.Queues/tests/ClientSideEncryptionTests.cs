@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -547,6 +548,54 @@ namespace Azure.Storage.Queues.Test
                 Assert.AreEqual(0, IsAsync
                     ? mockKey.Invocations.Count(invocation => invocation.Method == wrapSyncMethod)
                     : mockKey.Invocations.Count(invocation => invocation.Method == wrapAsyncMethod));
+            }
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task UpdateEncryptedMessage()
+        {
+            var message1 = GetRandomMessage(Constants.KB);
+            var message2 = GetRandomMessage(Constants.KB);
+            var mockKey = GetIKeyEncryptionKey();
+            await using (var disposable = await GetTestEncryptedQueueAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = mockKey.Object,
+                KeyWrapAlgorithm = s_algorithmName
+            }))
+            {
+                var queue = disposable.Queue;
+
+                // upload with encryption
+                await queue.SendMessageAsync(message1, cancellationToken: s_cancellationToken); // invokes key wrap first time
+
+                // download and update message
+                var messageToUpdate = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value[0];
+                await queue.UpdateMessageAsync(messageToUpdate.MessageId, messageToUpdate.PopReceipt, message2, cancellationToken: s_cancellationToken); // invokes key unwrap first time and key wrap second time
+
+                // download with decryption
+                var receivedMessages = (await queue.ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value; // invokes key unwrap second time
+                Assert.AreEqual(1, receivedMessages.Length);
+                var downloadedMessage = receivedMessages[0].MessageText;
+
+                // compare data
+                Assert.AreEqual(message2, downloadedMessage);
+
+                // assert key wrap and unwrap were each invoked twice
+                MethodInfo keyWrap;
+                MethodInfo keyUnwrap;
+                if (IsAsync)
+                {
+                    keyWrap = typeof(IKeyEncryptionKey).GetMethod("WrapKeyAsync");
+                    keyUnwrap = typeof(IKeyEncryptionKey).GetMethod("UnwrapKeyAsync");
+                }
+                else
+                {
+                    keyWrap = typeof(IKeyEncryptionKey).GetMethod("WrapKey");
+                    keyUnwrap = typeof(IKeyEncryptionKey).GetMethod("UnwrapKey");
+                }
+                Assert.AreEqual(2, mockKey.Invocations.Count(invocation => invocation.Method == keyWrap));
+                Assert.AreEqual(2, mockKey.Invocations.Count(invocation => invocation.Method == keyUnwrap));
             }
         }
 
