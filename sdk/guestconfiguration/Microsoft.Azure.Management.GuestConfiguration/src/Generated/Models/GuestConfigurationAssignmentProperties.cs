@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="guestConfiguration">The guest configuration to
         /// assign.</param>
         /// <param name="complianceStatus">A value indicating compliance status
-        /// of the virtual machine for the assigned guest configuration.
-        /// Possible values include: 'Compliant', 'NonCompliant',
-        /// 'Pending'</param>
+        /// of the machine for the assigned guest configuration. Possible
+        /// values include: 'Compliant', 'NonCompliant', 'Pending'</param>
         /// <param name="lastComplianceStatusChecked">Date and time when last
         /// compliance status was checked.</param>
         /// <param name="latestReportId">Id of the latest report for the guest
@@ -72,9 +71,9 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
 
         /// <summary>
-        /// Gets a value indicating compliance status of the virtual machine
-        /// for the assigned guest configuration. Possible values include:
-        /// 'Compliant', 'NonCompliant', 'Pending'
+        /// Gets a value indicating compliance status of the machine for the
+        /// assigned guest configuration. Possible values include: 'Compliant',
+        /// 'NonCompliant', 'Pending'
         /// </summary>
         [JsonProperty(PropertyName = "complianceStatus")]
         public string ComplianceStatus { get; private set; }

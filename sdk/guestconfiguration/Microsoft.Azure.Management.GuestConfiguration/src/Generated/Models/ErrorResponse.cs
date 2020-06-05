@@ -29,11 +29,9 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string message = default(string))
+        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
         {
-            Message = message;
+            Error = error;
             CustomInit();
         }
 
@@ -43,10 +41,9 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponseError Error { get; set; }
 
     }
 }

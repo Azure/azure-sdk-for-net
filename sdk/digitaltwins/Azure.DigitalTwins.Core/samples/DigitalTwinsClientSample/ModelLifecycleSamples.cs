@@ -81,7 +81,7 @@ namespace Azure.DigitalTwins.Samples
                 Response decommissionModelResponse = await client.DecommissionModelAsync(sampleModelId);
                 Console.WriteLine($"Decommissioned model with Id {sampleModelId}. Response status: {decommissionModelResponse.Status}");
             }
-            catch (Exception ex)
+            catch (RequestFailedException ex)
             {
                 FatalError($"Failed to decommision model with Id {sampleModelId} due to:\n{ex}");
             }
