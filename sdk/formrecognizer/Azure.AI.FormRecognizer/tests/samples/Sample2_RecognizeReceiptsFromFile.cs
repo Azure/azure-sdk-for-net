@@ -31,7 +31,10 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
 
-                foreach (var receipt in receipts)
+                // To see the list of the supported fields returned by service and its corresponding types, consult:
+                // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+
+                foreach (RecognizedReceipt receipt in receipts)
                 {
                     FormField merchantNameField;
                     if (receipt.RecognizedForm.Fields.TryGetValue("MerchantName", out merchantNameField))

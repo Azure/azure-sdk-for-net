@@ -138,7 +138,10 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
     RecognizedReceiptCollection receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
 
-    foreach (var receipt in receipts)
+    // To see the list of the supported fields returned by service and its corresponding types, consult:
+    // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+
+    foreach (RecognizedReceipt receipt in receipts)
     {
         FormField merchantNameField;
         if (receipt.RecognizedForm.Fields.TryGetValue("MerchantName", out merchantNameField))
@@ -147,7 +150,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
                 string merchantName = merchantNameField.Value.AsString();
 
-                Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
+                Console.WriteLine($"Merchant Name: '{merchantName}', with confidence {merchantNameField.Confidence}");
             }
         }
 
@@ -158,7 +161,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
                 DateTime transactionDate = transactionDateField.Value.AsDate();
 
-                Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
+                Console.WriteLine($"Transaction Date: '{transactionDate}', with confidence {transactionDateField.Confidence}");
             }
         }
 
@@ -169,29 +172,31 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
                 foreach (FormField itemField in itemsField.Value.AsList())
                 {
+                    Console.WriteLine("Item:");
+
                     if (itemField.Value.Type == FieldValueType.Dictionary)
                     {
                         IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
 
                         FormField itemNameField;
-                        if (itemFields.TryGetValue("MerchantName", out itemNameField))
+                        if (itemFields.TryGetValue("Name", out itemNameField))
                         {
                             if (itemNameField.Value.Type == FieldValueType.String)
                             {
                                 string itemName = itemNameField.Value.AsString();
 
-                                Console.WriteLine($"    Merchant Name: '{itemName}', with confidence {itemNameField.Confidence}");
+                                Console.WriteLine($"    Name: '{itemName}', with confidence {itemNameField.Confidence}");
                             }
                         }
 
                         FormField itemTotalPriceField;
-                        if (itemFields.TryGetValue("TotalPriceField", out itemTotalPriceField))
+                        if (itemFields.TryGetValue("TotalPrice", out itemTotalPriceField))
                         {
                             if (itemTotalPriceField.Value.Type == FieldValueType.Float)
                             {
                                 float itemTotalPrice = itemTotalPriceField.Value.AsFloat();
 
-                                Console.WriteLine($"    Merchant Name: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
+                                Console.WriteLine($"    Total Price: '{itemTotalPrice}', with confidence {itemTotalPriceField.Confidence}");
                             }
                         }
                     }
@@ -206,7 +211,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
                 float total = totalField.Value.AsFloat();
 
-                Console.WriteLine($"    Total: '{total}', with confidence '{totalField.Confidence}'");
+                Console.WriteLine($"Total: '{total}', with confidence '{totalField.Confidence}'");
             }
         }
     }
