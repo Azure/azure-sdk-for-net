@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Assembly props -->
   <PropertyGroup>
-    <AssemblyTitle>DigitalTwins SDK</AssemblyTitle>
+    <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <EnableApiCompat>false</EnableApiCompat>
