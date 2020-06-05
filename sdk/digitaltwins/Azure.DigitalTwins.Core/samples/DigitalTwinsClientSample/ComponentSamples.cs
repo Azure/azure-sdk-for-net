@@ -36,30 +36,47 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Replace(SamplesConstants.ComponentId, componentModelId);
 
             // Then we create models
-            Response<IReadOnlyList<Models.ModelData>> createModelsResponse = await client
-                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
-            Console.WriteLine($"Successfully created models Ids {componentModelId} and {modelId} with response {createModelsResponse.GetRawResponse().Status}.");
+            Response<IReadOnlyList<Models.ModelData>> createModelsResponse = await client.CreateModelsAsync(
+                new[]
+                {
+                    newComponentModelPayload,
+                    newModelPayload
+                });
+            Console.WriteLine($"Created models Ids {componentModelId} and {modelId} with response {createModelsResponse.GetRawResponse().Status}.");
 
             #region Snippet:DigitalTwinsSampleCreateBasicTwin
 
             // Create digital twin with component payload using the BasicDigitalTwin serialization helper
 
-            var basicDigitalTwin = new BasicDigitalTwin
+            var basicTwin = new BasicDigitalTwin
             {
-                Id = basicDtId
+                Id = basicDtId,
+                // model Id of digital twin
+                Metadata = { ModelId = modelId },
+                CustomProperties =
+                {
+                    // digital twin properties
+                    { "Prop1", "Value1" },
+                    { "Prop2", 987 },
+                    // component
+                    {
+                        "Component1",
+                        new ModelProperties
+                        {
+                            // model Id of component
+                            Metadata = { ModelId = componentModelId },
+                            // component properties
+                            CustomProperties =
+                            {
+                                { "ComponentProp1", "Component value 1" },
+                                { "ComponentProp2", 123 },
+                            },
+                        }
+                    },
+                },
             };
-            basicDigitalTwin.Metadata.ModelId = modelId;
-            basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
-            basicDigitalTwin.CustomProperties.Add("Prop2", 987);
 
-            var componentMetadata = new ModelProperties();
-            componentMetadata.Metadata.ModelId = componentModelId;
-            componentMetadata.CustomProperties.Add("ComponentProp1", "ComponentValue1");
-            componentMetadata.CustomProperties.Add("ComponentProp2", 123);
-
-            basicDigitalTwin.CustomProperties.Add("Component1", componentMetadata);
-
-            string basicDtPayload = JsonSerializer.Serialize(basicDigitalTwin);
+            string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
             Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
             Console.WriteLine($"Created digital twin {basicDtId} with response {createBasicDtResponse.GetRawResponse().Status}.");
@@ -81,12 +98,17 @@ namespace Azure.DigitalTwins.Core.Samples
                 string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
                 var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
-                Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id} with ETag {basicDt.ETag} " +
-                    $"and Prop1: '{basicDt.CustomProperties["Prop1"]}', Prop2: {basicDt.CustomProperties["Prop2"]}," +
-                    $"ComponentProp1: '{component1["ComponentProp1"]}', ComponentProp2: {component1["ComponentProp2"]}");
+                Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
+                    $"ETag: {basicDt.ETag}\n\t" +
+                    $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
+                    $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
+                    $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+                    $"ComponentProp2: {component1["ComponentProp2"]}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetBasicDigitalTwin
+
+            string customDtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, client);
 
             // Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
             // By specifying your properties and types directly, it requires less code or knowledge of the type for
@@ -94,8 +116,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleCreateCustomTwin
 
-            string customDtId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, client);
-            var customDigitalTwin = new CustomDigitalTwin
+            var customTwin = new CustomDigitalTwin
             {
                 Id = customDtId,
                 Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
@@ -108,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     ComponentProp2 = 123,
                 }
             };
-            string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
+            string dt2Payload = JsonSerializer.Serialize(customTwin);
 
             Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
             Console.WriteLine($"Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.");
@@ -124,9 +145,12 @@ namespace Azure.DigitalTwins.Core.Samples
             if (getCustomDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
             {
                 CustomDigitalTwin customDt = JsonSerializer.Deserialize<CustomDigitalTwin>(getCustomDtResponse.Value);
-                Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id} with ETag {customDt.ETag} " +
-                    $"and Prop1: '{customDt.Prop1}', Prop2: {customDt.Prop2}," +
-                    $"ComponentProp1: '{customDt.Component1.ComponentProp1}', ComponentProp2: {customDt.Component1.ComponentProp2}");
+                Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
+                    $"ETag: {customDt.ETag}\n\t" +
+                    $"Prop1: {customDt.Prop1}\n\t" +
+                    $"Prop2: {customDt.Prop2}\n\t" +
+                    $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
+                    $"ComponentProp2: {customDt.Component1.ComponentProp2}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetCustomDigitalTwin
