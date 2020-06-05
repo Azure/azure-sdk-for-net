@@ -13,10 +13,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
     public class ServiceBusManagementClientLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        [NonParallelizable]
         public async Task BasicQueueCrudOperations()
         {
-            var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var queueName = nameof(BasicQueueCrudOperations).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
             var queueDescription = new QueueDescription(queueName)
@@ -65,7 +64,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 queueList.Add(queue);
             }
-            Assert.True(queueList.Count == 1);
+
+            queueList = queueList.Where(e => e.Name.StartsWith(nameof(BasicQueueCrudOperations).ToLower())).ToList();
+            Assert.True(queueList.Count == 1, $"Expected 1 queue but {queueList.Count} queues returned");
             Assert.AreEqual(queueList.First().Name, queueName);
 
             await client.DeleteQueueAsync(updatedQueue.Name);
@@ -80,10 +81,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
-        [NonParallelizable]
         public async Task BasicTopicCrudOperations()
         {
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = nameof(BasicTopicCrudOperations).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
             var topicDescription = new TopicDescription(topicName)
@@ -122,7 +122,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 topicList.Add(topic);
             }
-            Assert.True(topicList.Count == 1);
+            topicList = topicList.Where(e => e.Name.StartsWith(nameof(BasicTopicCrudOperations).ToLower())).ToList();
+            Assert.True(topicList.Count == 1, $"Expected 1 topic but {topicList.Count} topics returned");
             Assert.AreEqual(topicList.First().Name, topicName);
 
             await client.DeleteTopicAsync(updatedTopic.Name);
@@ -137,10 +138,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
-        [NonParallelizable]
         public async Task BasicSubscriptionCrudOperations()
         {
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = nameof(BasicSubscriptionCrudOperations).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
@@ -181,8 +181,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 subscriptionList.Add(subscription);
             }
-            Assert.True(subscriptionList.Count == 1);
-            Assert.AreEqual(subscriptionList.First().TopicName, topicName);	            Assert.Contains(getSubscription, subscriptionList);
+            subscriptionList = subscriptionList.Where(e => e.TopicName.StartsWith(nameof(BasicSubscriptionCrudOperations).ToLower())).ToList();
+            Assert.True(subscriptionList.Count == 1, $"Expected 1 subscription but {subscriptionList.Count} subscriptions returned");
+            Assert.AreEqual(subscriptionList.First().TopicName, topicName);
             Assert.AreEqual(subscriptionList.First().SubscriptionName, subscriptionName);
 
             await client.DeleteSubscriptionAsync(subscriptionDescription.TopicName, subscriptionDescription.SubscriptionName);
@@ -286,10 +287,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
-        [NonParallelizable]
         public async Task GetQueueRuntimeInfo()
         {
-            var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var queueName = nameof(GetQueueRuntimeInfo).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var mgmtClient = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
@@ -316,7 +316,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(queueRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
+            runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetQueueRuntimeInfo).ToLower())).ToList();
+            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 queue but {runtimeInfoList.Count} queues returned");
             QueueRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
@@ -344,10 +345,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
-        [NonParallelizable]
         public async Task GetSubscriptionRuntimeInfoTest()
         {
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = nameof(GetSubscriptionRuntimeInfoTest).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var mgmtClient = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
             await using var sbClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
@@ -381,7 +381,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(subscriptionRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
+            runtimeInfoList = runtimeInfoList.Where(e => e.TopicName.StartsWith(nameof(GetSubscriptionRuntimeInfoTest).ToLower())).ToList();
+            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 subscription but {runtimeInfoList.Count} subscriptions returned");
             SubscriptionRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
@@ -412,10 +413,9 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
-        [NonParallelizable]
         public async Task GetTopicRuntimeInfo()
         {
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = nameof(GetTopicRuntimeInfo).ToLower() + Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var client = new ServiceBusManagementClient(TestEnvironment.ServiceBusConnectionString);
 
@@ -432,7 +432,8 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
             {
                 runtimeInfoList.Add(topicRuntimeInfo);
             }
-            Assert.True(runtimeInfoList.Count == 1);
+            runtimeInfoList = runtimeInfoList.Where(e => e.Name.StartsWith(nameof(GetTopicRuntimeInfo).ToLower())).ToList();
+            Assert.True(runtimeInfoList.Count == 1, $"Expected 1 topic but {runtimeInfoList.Count} topics returned");
             TopicRuntimeInfo runtimeInfo = runtimeInfoList.First();
             Assert.NotNull(runtimeInfo);
 
