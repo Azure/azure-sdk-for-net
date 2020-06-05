@@ -50,7 +50,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
 
                 // create request options to force the update using "*" ifMatch value
-                var reqeustOptions = new RequestOptions()
+                var reqeustOptions = new RequestOptions
                 {
                     IfMatch = new ETag("*")
                 };
