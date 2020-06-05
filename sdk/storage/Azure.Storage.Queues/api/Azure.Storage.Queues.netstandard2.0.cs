@@ -317,22 +317,24 @@ namespace Azure.Storage.Queues.Models
 }
 namespace Azure.Storage.Queues.Specialized
 {
-    public partial interface IClientSideDecryptionFailureListener
+    public partial class ClientSideDecryptionFailureEventArgs
     {
-        void OnFailure(Azure.Storage.Queues.Models.PeekedMessage message, System.Exception exception);
-        void OnFailure(Azure.Storage.Queues.Models.QueueMessage message, System.Exception exception);
-        System.Threading.Tasks.Task OnFailureAsync(Azure.Storage.Queues.Models.PeekedMessage message, System.Exception exception);
-        System.Threading.Tasks.Task OnFailureAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Exception exception);
+        internal ClientSideDecryptionFailureEventArgs() { }
+        public System.Exception Exception { get { throw null; } }
+        public object Message { get { throw null; } }
+    }
+    public partial class QueueClientSideEncryptionOptions : Azure.Storage.ClientSideEncryptionOptions
+    {
+        public QueueClientSideEncryptionOptions(Azure.Storage.ClientSideEncryptionVersion version) : base (default(Azure.Storage.ClientSideEncryptionVersion)) { }
+        public event System.EventHandler<Azure.Storage.Queues.Specialized.ClientSideDecryptionFailureEventArgs> DecryptionFailed { add { } remove { } }
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
         public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
-        public Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener OnClientSideDecryptionFailure { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions
     {
-        public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionFailureListener(this Azure.Storage.Queues.QueueClient client, Azure.Storage.Queues.Specialized.IClientSideDecryptionFailureListener listener) { throw null; }
         public static Azure.Storage.Queues.QueueClient WithClientSideEncryptionOptions(this Azure.Storage.Queues.QueueClient client, Azure.Storage.ClientSideEncryptionOptions clientSideEncryptionOptions) { throw null; }
     }
 }
