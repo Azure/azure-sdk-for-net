@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.ServiceBus.Filters;
+using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.RuleManager

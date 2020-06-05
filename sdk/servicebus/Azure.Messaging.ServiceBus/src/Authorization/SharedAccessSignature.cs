@@ -276,7 +276,9 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                        throw new ArgumentException(
+                            Resources.InvalidSharedAccessSignature,
+                            nameof(sharedAccessSignature));
                     }
 
                     // Compare the token against the known signature properties and capture the

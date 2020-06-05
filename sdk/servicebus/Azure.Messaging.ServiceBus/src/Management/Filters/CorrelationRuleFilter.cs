@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
     /// Represents the correlation rule filter expression.

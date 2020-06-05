@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
     /// Describes a filter expression that is evaluated against a Message.

@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Management;
 using Azure.Messaging.ServiceBus.Primitives;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     internal static class RuleDescriptionExtensions
     {
@@ -33,9 +32,11 @@ namespace Azure.Messaging.ServiceBus.Filters
             {
                 if (description.Name.Contains(uriSchemeKey))
                 {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                     throw new ArgumentException(
-                        nameof(description.Name),
-                        Resources.CharacterReservedForUriScheme.FormatForUser(nameof(description.Name), uriSchemeKey));
+                        Resources.CharacterReservedForUriScheme.FormatForUser(nameof(description.Name), uriSchemeKey),
+                        nameof(description.Name));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
             }
         }

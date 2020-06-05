@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
     /// Represents the filter actions which are allowed for the transformation

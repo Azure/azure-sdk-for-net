@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
     /// Matches none the messages arriving to be selected for the subscription.

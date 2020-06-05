@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
-using Azure.Messaging.ServiceBus.Filters;
 
 namespace Azure.Messaging.ServiceBus.Management
 {

@@ -3,9 +3,8 @@
 
 using System.Xml.Linq;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Management;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     internal static class CorrelationRuleFilterExtensions
     {

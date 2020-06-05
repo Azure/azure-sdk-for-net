@@ -13,8 +13,6 @@ namespace Azure.Messaging.ServiceBus.Management
     /// </summary>
     public class AuthorizationRules : List<AuthorizationRule>, IEquatable<AuthorizationRules>
     {
-        private bool RequiresEncryption => Count > 0;
-
         internal XElement Serialize()
         {
             var rules = new XElement(
@@ -40,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Management
             int hash = 7;
             unchecked
             {
-                foreach (var rule in this)
+                foreach (AuthorizationRule rule in this)
                 {
                     hash = (hash * 7) + rule.GetHashCode();
                 }
@@ -63,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Management
         /// </summary>
         public bool Equals(AuthorizationRules other)
         {
-            if (ReferenceEquals(other, null) || Count != other.Count)
+            if (other is null || Count != other.Count)
             {
                 return false;
             }
@@ -93,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Management
                 return true;
             }
 
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            if (left is null || right is null)
             {
                 return false;
             }

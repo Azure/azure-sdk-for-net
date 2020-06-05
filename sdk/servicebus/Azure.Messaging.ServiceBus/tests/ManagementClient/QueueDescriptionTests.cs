@@ -25,6 +25,16 @@ namespace Azure.Messaging.ServiceBus.Tests.ManagementClient
         }
 
         [Test]
+        public void AutoDeleteOnIdleThrowsOutOfRangeException()
+        {
+            var sub = new QueueDescription("Fake Name");
+            ArgumentOutOfRangeException ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.AutoDeleteOnIdle = TimeSpan.FromMinutes(2));
+
+            Assert.AreEqual($"The value supplied must be greater than or equal to {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}.{Environment.NewLine}Parameter name: AutoDeleteOnIdle", ex.Message);
+            Assert.AreEqual($"AutoDeleteOnIdle", ex.ParamName);
+        }
+
+        [Test]
         [TestCase("sb://fakepath/", 261)]
         [TestCase("", 261)]
         public void ForwardDeadLetteredMessagesToThrowsArgumentOutOfRangeException(string baseUrl, int lengthOfName)

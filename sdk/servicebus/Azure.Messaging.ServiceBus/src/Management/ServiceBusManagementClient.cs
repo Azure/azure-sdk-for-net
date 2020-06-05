@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Filters;
 
 namespace Azure.Messaging.ServiceBus.Management
 {

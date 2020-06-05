@@ -3,9 +3,8 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
     /// Represents a description of a rule.

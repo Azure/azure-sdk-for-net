@@ -7,30 +7,24 @@ using System.Globalization;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
-namespace Azure.Messaging.ServiceBus.Filters
+namespace Azure.Messaging.ServiceBus.Management
 {
     /// <summary>
-    /// Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline.
+    /// Represents set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusMessage" />.
     /// </summary>
-    /// <remarks>
-    /// A <see cref="SqlRuleFilter"/> holds a SQL-like condition expression that is evaluated in the broker against the arriving messages'
-    /// user-defined properties and system properties. All system properties (which are all properties explicitly listed
-    /// on the <see cref="ServiceBusMessage"/> class) must be prefixed with <code>sys.</code> in the condition expression. The SQL subset implements
-    /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators,
-    /// numeric arithmetic, and simple text pattern matching with LIKE.
-    /// </remarks>
-    public class SqlRuleFilter : RuleFilter
+    public sealed class SqlRuleAction : RuleAction
     {
         internal PropertyDictionary parameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlRuleFilter" /> class using the specified SQL expression.
+        /// Initializes a new instance of the <see cref="SqlRuleAction" /> class with the specified SQL expression.
         /// </summary>
+        /// <param name="sqlExpression">The SQL expression.</param>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
-        public SqlRuleFilter(string sqlExpression)
+        public SqlRuleAction(string sqlExpression)
         {
-            Argument.AssertNotNullOrEmpty(sqlExpression, nameof(sqlExpression));
-            Argument.AssertNotTooLong(sqlExpression, Constants.MaximumSqlRuleFilterStatementLength, nameof(sqlExpression));
+            Argument.AssertNotNullOrWhiteSpace(sqlExpression, nameof(sqlExpression));
+            Argument.AssertNotTooLong(sqlExpression, Constants.MaximumSqlRuleActionStatementLength, nameof(sqlExpression));
 
             SqlExpression = sqlExpression;
         }
@@ -43,19 +37,18 @@ namespace Azure.Messaging.ServiceBus.Filters
         public string SqlExpression { get; }
 
         /// <summary>
-        /// Sets the value of a filter expression.
-        /// Allowed types: string, int, long, bool, double
+        /// Sets the value of a rule action.
         /// </summary>
-        /// <value>The value of a filter expression.</value>
+        /// <value>The value of a rule action.</value>
         public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
-        /// Returns a string representation of <see cref="SqlRuleFilter" />.
+        /// Returns a string representation of <see cref="SqlRuleAction" />.
         /// </summary>
-        /// <returns>The string representation of <see cref="SqlRuleFilter" />.</returns>
+        /// <returns>The string representation of <see cref="SqlRuleAction" />.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "SqlRuleFilter: {0}", SqlExpression);
+            return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", SqlExpression);
         }
 
         /// <inheritdoc/>
@@ -67,29 +60,29 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            var other = obj as RuleFilter;
+            var other = obj as RuleAction;
             return Equals(other);
         }
 
         /// <inheritdoc/>
-        public override bool Equals(RuleFilter other)
+        public override bool Equals(RuleAction other)
         {
-            if (other is SqlRuleFilter sqlRuleFilter)
+            if (other is SqlRuleAction sqlRuleAction)
             {
-                if (string.Equals(SqlExpression, sqlRuleFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (parameters != null && sqlRuleFilter.parameters != null
-                        || parameters == null && sqlRuleFilter.parameters == null))
+                if (string.Equals(SqlExpression, sqlRuleAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (parameters != null && sqlRuleAction.parameters != null
+                        || parameters == null && sqlRuleAction.parameters == null))
                 {
                     if (parameters != null)
                     {
-                        if (parameters.Count != sqlRuleFilter.parameters.Count)
+                        if (parameters.Count != sqlRuleAction.parameters.Count)
                         {
                             return false;
                         }
 
                         foreach (var param in parameters)
                         {
-                            if (!sqlRuleFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!sqlRuleAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||
                                 (param.Value != null && !param.Value.Equals(otherParamValue)))
                             {
@@ -111,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(SqlRuleFilter left, SqlRuleFilter right)
+        public static bool operator ==(SqlRuleAction left, SqlRuleAction right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -132,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Filters
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(SqlRuleFilter left, SqlRuleFilter right)
+        public static bool operator !=(SqlRuleAction left, SqlRuleAction right)
         {
             return !(left == right);
         }

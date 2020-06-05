@@ -9,12 +9,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
-using Azure.Messaging.ServiceBus.Filters;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Primitives;
 using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
+using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {

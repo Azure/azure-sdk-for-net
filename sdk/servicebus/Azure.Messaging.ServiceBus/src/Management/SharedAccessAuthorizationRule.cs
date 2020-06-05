@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 
 namespace Azure.Messaging.ServiceBus.Management
@@ -72,21 +73,19 @@ namespace Azure.Messaging.ServiceBus.Management
             get { return internalKeyName; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentNullException(null, nameof(KeyName));
-                }
-
-                if (value.Length > SharedAccessSignature.MaximumKeyNameLength)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        $"The argument cannot exceed {SharedAccessSignature.MaximumKeyNameLength} characters",
-                        nameof(KeyName));
-                }
+                Argument.AssertNotNullOrWhiteSpace(value, nameof(KeyName));
+                Argument.AssertNotTooLong(
+                    value,
+                    SharedAccessSignature.MaximumKeyNameLength,
+                    nameof(KeyName));
 
                 if (!string.Equals(value, HttpUtility.UrlEncode(value), StringComparison.InvariantCulture))
                 {
-                    throw new ArgumentException("The key name specified contains invalid characters");
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                    throw new ArgumentException(
+                        "The key name specified contains invalid characters",
+                        nameof(KeyName));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 internalKeyName = value;
@@ -100,21 +99,23 @@ namespace Azure.Messaging.ServiceBus.Management
             get { return internalPrimaryKey; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentNullException(null, nameof(PrimaryKey));
-                }
+                Argument.AssertNotNullOrWhiteSpace(value, nameof(PrimaryKey));
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                     throw new ArgumentOutOfRangeException(
-                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes",
-                        nameof(PrimaryKey));
+                        nameof(PrimaryKey),
+                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 if (!CheckBase64(value))
                 {
-                    throw new ArgumentException(nameof(PrimaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                    throw new ArgumentException($"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.",
+                        nameof(PrimaryKey));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 internalPrimaryKey = value;
@@ -128,21 +129,24 @@ namespace Azure.Messaging.ServiceBus.Management
             get { return internalSecondaryKey; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentNullException(null, nameof(SecondaryKey));
-                }
+                Argument.AssertNotNullOrWhiteSpace(value, nameof(SecondaryKey));
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                     throw new ArgumentOutOfRangeException(
-                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes",
-                        nameof(SecondaryKey));
+                        nameof(SecondaryKey),
+                        $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 if (!CheckBase64(value))
                 {
-                    throw new ArgumentException(nameof(SecondaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                    throw new ArgumentException(
+                        $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.",
+                    nameof(SecondaryKey));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                 }
 
                 internalSecondaryKey = value;
