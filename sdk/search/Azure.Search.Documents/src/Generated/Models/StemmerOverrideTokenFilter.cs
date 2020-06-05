@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides the ability to override other stemming filters with custom dictionary-based stemming. Any dictionary-stemmed terms will be marked as keywords so that they will not be stemmed with stemmers down the chain. Must be placed before any stemming filters. This token filter is implemented using Apache Lucene. </summary>
     public partial class StemmerOverrideTokenFilter : TokenFilter
@@ -38,11 +38,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
         internal StemmerOverrideTokenFilter(string oDataType, string name, IList<string> rules) : base(oDataType, name)
         {
-            Rules = rules;
+            Rules = rules ?? new List<string>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
-
-        /// <summary> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </summary>
-        public IList<string> Rules { get; set; }
     }
 }

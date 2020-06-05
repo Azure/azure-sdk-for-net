@@ -7078,7 +7078,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -7324,7 +7324,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-requires-sync", "true");
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
@@ -8767,7 +8767,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-page-write", "update");
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-source-range", sourceRange);
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-range", range);
@@ -9225,7 +9225,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
-                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.ToString()); }
+                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.AbsoluteUri); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -9833,7 +9833,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", copySource.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10663,7 +10663,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Headers.SetValue("x-ms-version", version);
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
@@ -11497,7 +11497,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.AbsoluteUri);
                 _request.Headers.SetValue("x-ms-version", version);
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }

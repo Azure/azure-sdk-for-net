@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Filters;
+using Azure.Messaging.ServiceBus.Management;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -73,7 +73,8 @@ namespace Azure.Messaging.ServiceBus
             SubscriptionPath = subscriptionPath;
             InnerRuleManager = _connection.CreateTransportRuleManager(
                 subscriptionPath: SubscriptionPath,
-                retryPolicy: connection.RetryOptions.ToRetryPolicy());
+                retryPolicy: connection.RetryOptions.ToRetryPolicy(),
+                identifier: Identifier);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
@@ -94,7 +95,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         public virtual async Task AddRuleAsync(
             string ruleName,
-            Filter filter,
+            RuleFilter filter,
             CancellationToken cancellationToken = default)
         {
             await AddRuleAsync(new RuleDescription(name: ruleName, filter: filter), cancellationToken).ConfigureAwait(false);
@@ -109,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueRuleFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
@@ -133,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AddRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.AddRuleException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -166,7 +167,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception.ToString());
                 throw;
             }
 
@@ -195,7 +196,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.GetRuleException(Identifier, exception);
+                ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
                 throw;
             }
 

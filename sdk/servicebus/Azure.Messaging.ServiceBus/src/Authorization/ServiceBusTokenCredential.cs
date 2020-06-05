@@ -16,9 +16,6 @@ namespace Azure.Messaging.ServiceBus.Authorization
     ///
     internal class ServiceBusTokenCredential : TokenCredential
     {
-        /// <summary>The default scope used for token authentication with EventHubs.</summary>
-        private const string DefaultScope = "https://servicebus.azure.net/.default";
-
         /// <summary>
         ///   The Service Bus resource to which the token is intended to serve as authorization.
         /// </summary>
@@ -103,6 +100,6 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) =>
-            GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
+            GetTokenAsync(new TokenRequestContext(new string[] { Constants.DefaultScope }), cancellationToken);
     }
 }

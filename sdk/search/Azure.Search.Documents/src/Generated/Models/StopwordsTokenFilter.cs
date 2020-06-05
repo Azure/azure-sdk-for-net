@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Removes stop words from a token stream. This token filter is implemented using Apache Lucene. </summary>
     public partial class StopwordsTokenFilter : TokenFilter
@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new List<string>();
             ODataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
 
@@ -34,15 +35,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </param>
         internal StopwordsTokenFilter(string oDataType, string name, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(oDataType, name)
         {
-            Stopwords = stopwords;
+            Stopwords = stopwords ?? new List<string>();
             StopwordsList = stopwordsList;
             IgnoreCase = ignoreCase;
             RemoveTrailingStopWords = removeTrailingStopWords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
-
-        /// <summary> The list of stopwords. This property and the stopwords list property cannot both be set. </summary>
-        public IList<string> Stopwords { get; set; }
         /// <summary> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </summary>
         public StopwordsList? StopwordsList { get; set; }
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,7 +18,12 @@ namespace Azure.AI.FormRecognizer.Training
     public class TrainingOperation : Operation<CustomFormModel>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceClient _serviceClient;
+        private readonly ServiceRestClient _serviceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
+        private RequestFailedException _requestFailedException;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
@@ -31,16 +38,24 @@ namespace Azure.AI.FormRecognizer.Training
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override CustomFormModel Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormModel Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdoc/>
         public override bool HasValue => _value != null;
-        // TODO: This will make the model available even if status is failed to train.
-        // is it useful to make the value available if training has failed?
-        // https://github.com/Azure/azure-sdk-for-net/issues/10392
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
@@ -53,16 +68,10 @@ namespace Azure.AI.FormRecognizer.Training
         public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrainingOperation"/> class for mocking.
-        /// </summary>
-        protected TrainingOperation()
-        {
-        }
-
-        internal TrainingOperation(string location, ServiceClient allOperations)
+        internal TrainingOperation(string location, ServiceRestClient allOperations, ClientDiagnostics diagnostics)
         {
             _serviceClient = allOperations;
+            _diagnostics = diagnostics;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -77,6 +86,7 @@ namespace Azure.AI.FormRecognizer.Training
         public TrainingOperation(string operationId, FormTrainingClient client)
         {
             Id = operationId;
+            _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
         }
 
@@ -103,13 +113,25 @@ namespace Azure.AI.FormRecognizer.Training
                     ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
-                if (update.Value.ModelInfo.Status != CustomFormModelStatus.Training)
-                {
-                    _hasCompleted = true;
-                    _value = new CustomFormModel(update.Value);
-                }
-
                 _response = update.GetRawResponse();
+
+                if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
+                {
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                    _value = new CustomFormModel(update.Value);
+                    _hasCompleted = true;
+                }
+                else if (update.Value.ModelInfo.Status == CustomFormModelStatus.Invalid)
+                {
+                    _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
+                                                    async,
+                                                    _diagnostics,
+                                                    _response,
+                                                    update.Value.TrainResult.Errors,
+                                                    $"Invalid model created with ID {update.Value.ModelInfo.ModelId}").ConfigureAwait(false);
+                    _hasCompleted = true;
+                    throw _requestFailedException;
+                }
             }
 
             return GetRawResponse();

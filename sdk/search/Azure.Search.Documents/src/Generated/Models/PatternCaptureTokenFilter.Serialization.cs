@@ -6,23 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternCaptureTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("patterns");
-            writer.WriteStartArray();
-            foreach (var item in Patterns)
+            if (Patterns != null && Patterns.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("patterns");
+                writer.WriteStartArray();
+                foreach (var item in Patterns)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (PreserveOriginal != null)
             {
                 writer.WritePropertyName("preserveOriginal");
@@ -45,6 +49,10 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("patterns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

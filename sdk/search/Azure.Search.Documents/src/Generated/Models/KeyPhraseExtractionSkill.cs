@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that uses text analytics for key phrase extraction. </summary>
     public partial class KeyPhraseExtractionSkill : SearchIndexerSkill

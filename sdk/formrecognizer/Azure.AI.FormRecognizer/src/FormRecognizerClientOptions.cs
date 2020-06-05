@@ -22,6 +22,7 @@ namespace Azure.AI.FormRecognizer
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+            AddLoggedHeadersAndQueryParameters();
         }
 
         /// <summary>
@@ -49,6 +50,24 @@ namespace Azure.AI.FormRecognizer
                 ServiceVersion.V2_0_Preview => "v2.0-preview",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
+        }
+
+        /// <summary>
+        /// Add headers and query parameters that are considered safe for logging or including in
+        /// error messages by default.
+        /// </summary>
+        private void AddLoggedHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Location");
+            Diagnostics.LoggedHeaderNames.Add("Operation-Location");
+            Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
+            Diagnostics.LoggedHeaderNames.Add("X-Content-Type-Options");
+            Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
+
+            Diagnostics.LoggedQueryParameters.Add("includeKeys");
+            Diagnostics.LoggedQueryParameters.Add("includeTextDetails");
+            Diagnostics.LoggedQueryParameters.Add("op");
         }
     }
 }

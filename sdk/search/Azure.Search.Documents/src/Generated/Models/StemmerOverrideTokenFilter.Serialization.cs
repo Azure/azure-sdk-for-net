@@ -6,23 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class StemmerOverrideTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rules");
-            writer.WriteStartArray();
-            foreach (var item in Rules)
+            if (Rules != null && Rules.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("rules");
+                writer.WriteStartArray();
+                foreach (var item in Rules)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name");
@@ -39,6 +43,10 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("rules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

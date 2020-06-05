@@ -168,7 +168,7 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void RetrhowsExceptionFromClientCreation()
+        public void RethrowsExceptionFromClientCreation()
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => builder.AddTestClient("throw"));

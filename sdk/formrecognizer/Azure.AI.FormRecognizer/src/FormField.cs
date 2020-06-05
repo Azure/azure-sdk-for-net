@@ -19,19 +19,15 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
 
             BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
-            IReadOnlyList<FormContent> labelFormContent = default;
-            if (field.Key.Elements != null)
-            {
-                labelFormContent = ConvertTextReferences(field.Key.Elements, readResults);
-            }
+            IReadOnlyList<FormContent> labelFormContent = field.Key.Elements != null
+                ? ConvertTextReferences(field.Key.Elements, readResults)
+                : new List<FormContent>();
             LabelText = new FieldText(field.Key.Text, pageNumber, labelBoundingBox, labelFormContent);
 
             BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
-            IReadOnlyList<FormContent> valueFormContent = default;
-            if (field.Value.Elements != null)
-            {
-                valueFormContent = ConvertTextReferences(field.Value.Elements, readResults);
-            }
+            IReadOnlyList<FormContent> valueFormContent = field.Value.Elements != null
+                ? ConvertTextReferences(field.Value.Elements, readResults)
+                : new List<FormContent>();
             ValueText = new FieldText(field.Value.Text, pageNumber, valueBoundingBox, valueFormContent);
 
             Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
@@ -43,11 +39,9 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
             LabelText = null;
 
-            IReadOnlyList<FormContent> formContent = default;
-            if (fieldValue.Elements != null)
-            {
-                formContent = ConvertTextReferences(fieldValue.Elements, readResults);
-            }
+            IReadOnlyList<FormContent> formContent = fieldValue.Elements != null
+                ? ConvertTextReferences(fieldValue.Elements, readResults)
+                : new List<FormContent>();
 
             // TODO: FormEnum<T> ?
             BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
@@ -59,22 +53,22 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; internal set; }
+        public FieldText LabelText { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; internal set; }
+        public FieldText ValueText { get; }
 
         /// <summary>
         /// The strongly-typed value of this <see cref="FormField"/>.
         /// </summary>
-        public FieldValue Value { get; internal set; }
+        public FieldValue Value { get; }
 
         /// <summary>
         /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].

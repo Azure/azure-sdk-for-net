@@ -1,0 +1,17 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview",
+    "id": "myTwinId",
+    "relationshipId": "myRelationshipId",
+    "patchDocument": [
+      {
+        "op": "add",
+        "path": "/property",
+        "value": 1
+      }
+    ]
+  },
+  "responses": {
+    "204": {}
+  }
+}

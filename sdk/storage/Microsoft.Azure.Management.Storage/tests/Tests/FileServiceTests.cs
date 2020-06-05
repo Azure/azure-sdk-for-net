@@ -47,9 +47,14 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 // implement case
                 try
@@ -67,15 +72,17 @@ namespace Storage.Tests
                     metaData.Add("metadata2", "value2");
                     int shareQuota = 500;
                     FileShare share2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName2, 
-                        new FileShare( metadata: metaData,shareQuota: shareQuota));
+                        new FileShare( metadata: metaData,shareQuota: shareQuota, accessTier: ShareAccessTier.Hot));
                     Assert.Equal(2, share2.Metadata.Count);
                     Assert.Equal(metaData, share2.Metadata);
                     Assert.Equal(shareQuota, share2.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Hot, share2.AccessTier);
 
                     share2 = storageMgmtClient.FileShares.Get(rgName, accountName, shareName2);
                     Assert.Equal(2, share2.Metadata.Count);
                     Assert.Equal(metaData, share2.Metadata);
                     Assert.Equal(shareQuota, share2.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Hot, share2.AccessTier);
 
                     //Delete share
                     storageMgmtClient.FileShares.Delete(rgName, accountName, shareName);
@@ -117,7 +124,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = new StorageAccountCreateParameters
                 {
-                    Location = "westeurope",
+                    Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     LargeFileSharesState = LargeFileSharesState.Enabled
@@ -136,15 +143,17 @@ namespace Storage.Tests
                     metaData.Add("metadata2", "value2");
                     int shareQuota = 5200;
                     var shareSet = storageMgmtClient.FileShares.Update(rgName, accountName, shareName,
-                        new FileShare(metadata: metaData, shareQuota: shareQuota));
+                        new FileShare(metadata: metaData, shareQuota: shareQuota, accessTier: ShareAccessTier.Cool));
                     Assert.NotNull(shareSet.Metadata);
                     Assert.Equal(shareQuota, shareSet.ShareQuota);
                     Assert.Equal(metaData, shareSet.Metadata);
-                    
+                    Assert.Equal(ShareAccessTier.Cool, shareSet.AccessTier);
+
                     var shareGet = storageMgmtClient.FileShares.Get(rgName, accountName, shareName);
                     Assert.NotNull(shareGet.Metadata);
                     Assert.Equal(metaData, shareGet.Metadata);
                     Assert.Equal(shareQuota, shareGet.ShareQuota);
+                    Assert.Equal(ShareAccessTier.Cool, shareGet.AccessTier);
                 }
                 finally
                 {

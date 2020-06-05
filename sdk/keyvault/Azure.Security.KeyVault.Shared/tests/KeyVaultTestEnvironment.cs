@@ -19,6 +19,6 @@ namespace Azure.Security.KeyVault.Tests
         /// <remarks>
         /// Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
         /// </remarks>
-        public string Sku => GetRecordedOptionalVariable("SKU") ?? "premium";
+        public string Sku => GetOptionalVariable("SKU") ?? "premium";
     }
 }

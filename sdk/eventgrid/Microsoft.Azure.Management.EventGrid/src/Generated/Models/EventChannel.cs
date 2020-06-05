@@ -43,15 +43,32 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="provisioningState">Provisioning state of the event
         /// channel. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
+        /// <param name="partnerTopicReadinessState">The readiness state of the
+        /// corresponding partner topic. Possible values include:
+        /// 'NotActivatedByUserYet', 'ActivatedByUser', 'DeactivatedByUser',
+        /// 'DeletedByUser'</param>
+        /// <param name="expirationTimeIfNotActivatedUtc">Expiration time of
+        /// the event channel. If this timer expires while the corresponding
+        /// partner topic is never activated,
+        /// the event channel and corresponding partner topic are
+        /// deleted.</param>
         /// <param name="filter">Information about the filter for the event
         /// channel.</param>
-        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), EventChannelFilter filter = default(EventChannelFilter))
+        /// <param name="partnerTopicFriendlyDescription">Friendly description
+        /// about the topic. This can be set by the publisher/partner to show
+        /// custom description for the customer partner topic.
+        /// This will be helpful to remove any ambiguity of the origin of
+        /// creation of the partner topic for the customer.</param>
+        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), string partnerTopicReadinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), EventChannelFilter filter = default(EventChannelFilter), string partnerTopicFriendlyDescription = default(string))
             : base(id, name, type)
         {
             Source = source;
             Destination = destination;
             ProvisioningState = provisioningState;
+            PartnerTopicReadinessState = partnerTopicReadinessState;
+            ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
             Filter = filter;
+            PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
             CustomInit();
         }
 
@@ -82,10 +99,36 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets the readiness state of the corresponding partner topic.
+        /// Possible values include: 'NotActivatedByUserYet',
+        /// 'ActivatedByUser', 'DeactivatedByUser', 'DeletedByUser'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerTopicReadinessState")]
+        public string PartnerTopicReadinessState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets expiration time of the event channel. If this timer
+        /// expires while the corresponding partner topic is never activated,
+        /// the event channel and corresponding partner topic are deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationTimeIfNotActivatedUtc")]
+        public System.DateTime? ExpirationTimeIfNotActivatedUtc { get; set; }
+
+        /// <summary>
         /// Gets or sets information about the filter for the event channel.
         /// </summary>
         [JsonProperty(PropertyName = "properties.filter")]
         public EventChannelFilter Filter { get; set; }
+
+        /// <summary>
+        /// Gets or sets friendly description about the topic. This can be set
+        /// by the publisher/partner to show custom description for the
+        /// customer partner topic.
+        /// This will be helpful to remove any ambiguity of the origin of
+        /// creation of the partner topic for the customer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerTopicFriendlyDescription")]
+        public string PartnerTopicFriendlyDescription { get; set; }
 
     }
 }

@@ -20,19 +20,11 @@ namespace Azure.Core
 
         public static DateTimeOffset GetDateTimeOffsetValue(this XElement element, string format) => format switch
         {
-            "D" => (DateTimeOffset)element,
-            "S" => DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture),
-            "R" => DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture),
             "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
-            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
+            _ => TypeFormatters.ParseDateTimeOffset(element.Value, format)
         };
 
-        public static TimeSpan GetTimeSpanValue(this XElement element, string format) => format switch
-        {
-            "P" => XmlConvert.ToTimeSpan(element.Value),
-            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
-        };
-
+        public static TimeSpan GetTimeSpanValue(this XElement element, string format) => TypeFormatters.ParseTimeSpan(element.Value, format);
         #pragma warning disable CA1801 //Parameter format of method GetObjectValue is never used. Remove the parameter or use it in the method body.
         public static object GetObjectValue(this XElement element, string format)
         #pragma warning restore

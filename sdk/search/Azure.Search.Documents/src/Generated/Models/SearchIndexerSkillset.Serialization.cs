@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerSkillset : IUtf8JsonSerializable
     {
@@ -18,15 +19,21 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("description");
-            writer.WriteStringValue(Description);
-            writer.WritePropertyName("skills");
-            writer.WriteStartArray();
-            foreach (var item in Skills)
+            if (Description != null)
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
             }
-            writer.WriteEndArray();
+            if (Skills != null && Skills.Any())
+            {
+                writer.WritePropertyName("skills");
+                writer.WriteStartArray();
+                foreach (var item in Skills)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (CognitiveServicesAccount != null)
             {
                 writer.WritePropertyName("cognitiveServices");
@@ -56,11 +63,19 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skills"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

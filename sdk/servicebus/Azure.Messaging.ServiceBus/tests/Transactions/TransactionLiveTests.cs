@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Messaging.ServiceBus.Filters;
-using Moq;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -41,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
             };
         }
@@ -68,14 +66,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message1.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
 
                 receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.AreEqual(message2.Body.AsString(), receivedMessage.Body.AsString());
                 await receiver.CompleteAsync(receivedMessage);
             };
         }
@@ -157,102 +155,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             };
         }
 
-        //[Test]
-        //public async Task TransactionalRuleManagement()
-        //{
-        //    await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
-        //    {
-        //        var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-
-        //        ServiceBusSender sender = client.CreateSender(scope.TopicName);
-
-        //        var messageId1 = Guid.NewGuid().ToString();
-        //        var messageId2 = Guid.NewGuid().ToString();
-        //        var messageId3 = Guid.NewGuid().ToString();
-        //        await sender.SendAsync(new ServiceBusMessage { MessageId = messageId1, Label = "Blue" });
-
-        //        ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
-        //        IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(1);
-
-        //        ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
-        //        IEnumerable<RuleDescription> rulesDescription = await ruleManager.GetRulesAsync();
-        //        Assert.AreEqual(1, rulesDescription.Count());
-        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
-
-        //        using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-        //        {
-        //            await ruleManager.RemoveRuleAsync(RuleDescription.DefaultRuleName);
-        //            await ruleManager.AddRuleAsync(new RuleDescription
-        //            {
-        //                Filter = new CorrelationFilter { Label = "Red" },
-        //                Name = "CorrelationFilter"
-        //            });
-
-        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId2, Label = "Red" });
-        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId3, Label = "Green" });
-        //            await receiver.CompleteAsync(receivedMessages);
-        //            ts.Complete();
-        //        }
-
-        //        rulesDescription = await ruleManager.GetRulesAsync();
-        //        Assert.AreEqual(1, rulesDescription.Count());
-        //        Assert.AreEqual("CorrelationFilter", rulesDescription.First().Name);
-
-        //        receivedMessages = await receiver.ReceiveBatchAsync(3);
-        //        Assert.NotNull(receivedMessages);
-        //        Assert.AreEqual(1, receivedMessages.Count());
-        //        Assert.AreEqual(messageId2, receivedMessages.First().MessageId);
-        //    };
-        //}
-
-        //[Test]
-        //public async Task TransactionalRuleManagementRollback()
-        //{
-        //    await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
-        //    {
-        //        var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-
-        //        ServiceBusSender sender = client.CreateSender(scope.TopicName);
-
-        //        var messageId1 = Guid.NewGuid().ToString();
-        //        var messageId2 = Guid.NewGuid().ToString();
-        //        var messageId3 = Guid.NewGuid().ToString();
-        //        await sender.SendAsync(new ServiceBusMessage { MessageId = messageId1, Label = "Blue" });
-
-        //        ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
-        //        IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(1);
-
-        //        ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
-        //        IEnumerable<RuleDescription> rulesDescription = await ruleManager.GetRulesAsync();
-        //        Assert.AreEqual(1, rulesDescription.Count());
-        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
-
-        //        using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-        //        {
-        //            await ruleManager.RemoveRuleAsync(RuleDescription.DefaultRuleName);
-        //            await ruleManager.AddRuleAsync(new RuleDescription
-        //            {
-        //                Filter = new CorrelationFilter { Label = "Red" },
-        //                Name = "CorrelationFilter"
-        //            });
-
-        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId2, Label = "Red" });
-        //            await sender.SendAsync(new ServiceBusMessage { MessageId = messageId3, Label = "Green" });
-        //            await receiver.CompleteAsync(receivedMessages);
-        //            // not completing the transaction
-        //        }
-
-        //        rulesDescription = await ruleManager.GetRulesAsync();
-        //        Assert.AreEqual(1, rulesDescription.Count());
-        //        Assert.AreEqual(RuleDescription.DefaultRuleName, rulesDescription.First().Name);
-
-        //        receivedMessages = await receiver.ReceiveBatchAsync(3);
-        //        Assert.NotNull(receivedMessages);
-        //        Assert.AreEqual(1, receivedMessages.Count());
-        //        Assert.AreEqual(messageId1, receivedMessages.First().MessageId);
-        //    };
-        //}
-
         [Test]
         [TestCase(false, false)]
         [TestCase(false, true)]
@@ -274,7 +176,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     // not completing the transaction
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: "sessionId") : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ?
+                    await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions
+                        {
+                            SessionId = "sessionId"
+                        })
+                    : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 
@@ -283,11 +192,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(true, true)]
-        public async Task TransactionalComplete(bool partitioned, bool sessionEnabled)
+        [TestCase(false, false, true)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, false)]
+        [TestCase(true, true, false)]
+        public async Task TransactionalCompleteRollback(bool partitioned, bool sessionEnabled, bool completeInTransactionAfterRollback)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
@@ -321,15 +230,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 // Operating on the same message should not be done.
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                if (completeInTransactionAfterRollback)
+                {
+                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        await receiver.CompleteAsync(deferredMessage);
+                        ts.Complete();
+                    }
+                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                    // Operating on the same message should not be done.
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                }
+                else
                 {
                     await receiver.CompleteAsync(deferredMessage);
-                    ts.Complete();
                 }
 
-                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                // Operating on the same message should not be done.
-                await Task.Delay(TimeSpan.FromSeconds(2));
                 Assert.That(
                     async () =>
                     await receiver.CompleteAsync(deferredMessage), Throws.InstanceOf<ServiceBusException>()

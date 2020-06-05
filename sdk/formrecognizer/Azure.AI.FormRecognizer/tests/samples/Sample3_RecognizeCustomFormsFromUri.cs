@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
@@ -27,20 +26,20 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
 
             // Proceed with the custom form recognition.
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
+            string formUri = FormRecognizerTestEnvironment.CreateUriString("Form_1.jpg");
             string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
             //@@ string modelId = "<modelId>";
 
-            Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
-            foreach (RecognizedForm form in forms.Value)
+            RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+            foreach (RecognizedForm form in forms)
             {
                 Console.WriteLine($"Form of type: {form.FormType}");
                 foreach (FormField field in form.Fields.Values)

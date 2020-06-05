@@ -5,11 +5,17 @@ parameters:
   MaxParallel: 0
   BuildInParallel: true
   TimeoutInMinutes: 60
+  Location: ''
+  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
 
 jobs:
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
+      - name: SubscriptionConfiguration
+        value: ${{ parameters.SubscriptionConfiguration }}
+      - name: Location
+        value: ${{ parameters.Location }}
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -17,31 +23,21 @@ jobs:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
         Linux:
-          OSName: "Linux"
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
         Windows_NetCoreApp:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
         Windows_NetCoreApp_ProjectReferences:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
-          OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: AzureCloud
         MacOs:
-          OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: AzureCloud
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -50,9 +46,7 @@ jobs:
       
       - ${{ parameters.PreSteps }}
 
-      - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
-        parameters:
-          OSName: $(OSName)
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
 
       - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
@@ -68,12 +62,14 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
+          Location: $(Location)
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx"
+          --logger "trx"
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false
@@ -91,12 +87,13 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testResultsFiles: "**/*.trx"
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true

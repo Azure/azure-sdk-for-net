@@ -31,10 +31,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.String"/>.</exception>
         public string AsString()
         {
-            if (Type != FieldValueType.StringType)
+            if (Type != FieldValueType.String)
             {
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {Type}.");
             }
@@ -43,13 +43,13 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as an <see cref="int"/>.
+        /// Gets the value of the field as a <see cref="long"/>.
         /// </summary>
-        /// <returns>The value of the field converted to an <see cref="int"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.IntegerType"/> or when the value is <c>null</c>.</exception>
-        public int AsInt32()
+        /// <returns>The value of the field converted to a <see cref="long"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Integer"/> or when the value is <c>null</c>.</exception>
+        public long AsInt64()
         {
-            if (Type != FieldValueType.IntegerType)
+            if (Type != FieldValueType.Integer)
             {
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {Type}.");
             }
@@ -66,10 +66,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="float"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.FloatType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Float"/>.</exception>
         public float AsFloat()
         {
-            if (Type != FieldValueType.FloatType)
+            if (Type != FieldValueType.Float)
             {
                 throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {Type}.");
             }
@@ -93,10 +93,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DateType"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Date"/> or when the value is <c>null</c>.</exception>
         public DateTime AsDate()
         {
-            if (Type != FieldValueType.DateType)
+            if (Type != FieldValueType.Date)
             {
                 throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {Type}.");
             }
@@ -113,10 +113,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.TimeType"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Time"/> or when the value is <c>null</c>.</exception>
         public TimeSpan AsTime()
         {
-            if (Type != FieldValueType.TimeType)
+            if (Type != FieldValueType.Time)
             {
                 throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {Type}.");
             }
@@ -133,10 +133,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.String"/>.</exception>
         public string AsPhoneNumber()
         {
-            if (Type != FieldValueType.PhoneNumberType)
+            if (Type != FieldValueType.PhoneNumber)
             {
                 throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {Type}.");
             }
@@ -148,10 +148,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as an <see cref="IReadOnlyList{T}"/>.
         /// </summary>
         /// <returns>The value of the field converted to an <see cref="IReadOnlyList{T}"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.ListType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.List"/>.</exception>
         public IReadOnlyList<FormField> AsList()
         {
-            if (Type != FieldValueType.ListType)
+            if (Type != FieldValueType.List)
             {
                 throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {Type}.");
             }
@@ -169,10 +169,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DictionaryType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.Dictionary"/>.</exception>
         public IReadOnlyDictionary<string, FormField> AsDictionary()
         {
-            if (Type != FieldValueType.DictionaryType)
+            if (Type != FieldValueType.Dictionary)
             {
                 throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {Type}.");
             }

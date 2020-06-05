@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using data from Visual Studio
     /// </summary>
-    internal class VisualStudioCredential : TokenCredential
+    public class VisualStudioCredential : TokenCredential
     {
         private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
         private const string ResourceArgumentName = "--resource";
@@ -32,12 +32,15 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
         /// </summary>
-        protected VisualStudioCredential() : this(default, default) {}
+        public VisualStudioCredential() : this(null) { }
 
-        /// <inheritdoc />
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Options for configuring the credential.</param>
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
         {
@@ -75,14 +78,9 @@ namespace Azure.Identity
                 var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(accessToken);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -120,7 +118,7 @@ namespace Azure.Identity
                 }
                 catch (JsonException exception)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has invalid output: {output}.", exception));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
                 catch (Exception exception)
                 {

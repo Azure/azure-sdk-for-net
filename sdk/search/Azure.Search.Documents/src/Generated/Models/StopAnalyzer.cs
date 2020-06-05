@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text at non-letters; Applies the lowercase and stopword token filters. This analyzer is implemented using Apache Lucene. </summary>
     public partial class StopAnalyzer : LexicalAnalyzer
@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new List<string>();
             ODataType = "#Microsoft.Azure.Search.StopAnalyzer";
         }
 
@@ -31,11 +32,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="stopwords"> A list of stopwords. </param>
         internal StopAnalyzer(string oDataType, string name, IList<string> stopwords) : base(oDataType, name)
         {
-            Stopwords = stopwords;
+            Stopwords = stopwords ?? new List<string>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";
         }
-
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
     }
 }

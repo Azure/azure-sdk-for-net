@@ -687,6 +687,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StageBlockFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blobSize = Constants.KB;
+            var data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewNonAsciiBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceBlob.UploadAsync(stream);
+            }
+
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await RetryAsync(
+                async () => await destBlob.StageBlockFromUriAsync(sourceBlob.Uri, ToBase64(GetNewBlockName())),
+                _retryStageBlockFromUri);
+        }
+
+        [Test]
         public async Task CommitBlockListAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1669,6 +1692,59 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(progress.List.Count == 0);
 
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+        }
+
+
+        [Test]
+        public async Task GetBlockBlobClient_AsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            //Act
+            BlockBlobClient blob = test.Container.GetBlockBlobClient(blobName);
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(content: stream);
+            }
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
+        }
+
+        [Test]
+        public async Task GetBlockBlobClient_NonAsciiName()
+        {
+            //Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewNonAsciiBlobName();
+
+            //Act
+            BlockBlobClient blob = test.Container.GetBlockBlobClient(blobName);
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(content: stream);
+            }
+
+            //Assert
+            List<string> names = new List<string>();
+            await foreach (BlobItem pathItem in test.Container.GetBlobsAsync())
+            {
+                names.Add(pathItem.Name);
+            }
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(blobName, names);
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

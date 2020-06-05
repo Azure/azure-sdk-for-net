@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchField : IUtf8JsonSerializable
     {
@@ -53,32 +54,32 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("facetable");
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Analyzer != null)
+            if (AnalyzerName != null)
             {
                 writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (SearchAnalyzer != null)
+            if (SearchAnalyzerName != null)
             {
                 writer.WritePropertyName("searchAnalyzer");
-                writer.WriteStringValue(SearchAnalyzer.Value.ToString());
+                writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
             }
-            if (IndexAnalyzer != null)
+            if (IndexAnalyzerName != null)
             {
                 writer.WritePropertyName("indexAnalyzer");
-                writer.WriteStringValue(IndexAnalyzer.Value.ToString());
+                writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (SynonymMaps != null)
+            if (SynonymMapNames != null && SynonymMapNames.Any())
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
-                foreach (var item in SynonymMaps)
+                foreach (var item in SynonymMapNames)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
