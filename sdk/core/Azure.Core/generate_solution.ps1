@@ -1,17 +1,8 @@
 $RepoRoot = Resolve-Path $PSScriptRoot\..\..\..
 $ObjDirectory = "$RepoRoot\artifacts\obj";
-$TempPath = [System.IO.Path]::GetTempPath() + "\Azure.Core.All"
 dotnet restore $RepoRoot\eng\service.proj
 
 $slnName = "Azure.Core.All.sln";
-if (Test-Path $slnName)
-{
-    Remove-Item $slnName
-}
-
-dotnet new sln -o $TempPath
-Move-Item $tempPath\$slnName .\$slnName
-Remove-Item $TempPath -Force
 
 foreach ($projectName in Get-ChildItem -Directory $ObjDirectory)
 {
@@ -25,12 +16,3 @@ foreach ($projectName in Get-ChildItem -Directory $ObjDirectory)
         dotnet sln $slnName add $projectPath
     }
 }
-
-$header = "
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
-MinimumVisualStudioVersion = 15.0.26124.0";
-
-$Utf8BomEncoding = New-Object System.Text.UTF8Encoding $True
-$header, (Get-Content $slnName | Select-Object -Skip 5) | Out-File $slnName -Encoding $Utf8BomEncoding
