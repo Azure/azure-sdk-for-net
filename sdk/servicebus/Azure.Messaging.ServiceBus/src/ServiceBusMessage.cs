@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -27,8 +28,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new message.
         /// </summary>
-        public ServiceBusMessage()
-            : this(default(ReadOnlyMemory<byte>))
+        public ServiceBusMessage() :
+            this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -57,10 +58,9 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
+            this(new BinaryData(body))
         {
-            Body = new BinaryData(body);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -107,6 +107,26 @@ namespace Azure.Messaging.ServiceBus
         /// </code>
         /// </remarks>
         public BinaryData Body { get; set; }
+
+        internal enum AmqpBodyType
+        {
+            Unspecified,
+            Data,
+            Sequence,
+            Value
+        }
+
+        internal AmqpBodyType AmqpBodyTypeHint { get; set; }
+
+        internal ReadOnlyMemory<byte> AmqpData
+        {
+            get => Body.AsBytes();
+            set => Body = new BinaryData(value);
+        }
+
+        internal IEnumerable<IList> AmqpSequence { get; set; }
+
+        internal object AmqpValue { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.

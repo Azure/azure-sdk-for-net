@@ -154,9 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body.AsBytes();
-            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
-            var amqpMessage = AmqpMessage.Create(new Data { Value = body });
+            var amqpMessage = sbMessage.CreateAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
@@ -223,54 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
 
-            ServiceBusReceivedMessage sbMessage;
-
-            if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
-                && amqpMessage.ValueBody.Value != null)
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-
-                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out var dotNetObject))
-                {
-                    sbMessage.BodyObject = dotNetObject;
-                }
-                else
-                {
-                    sbMessage.BodyObject = amqpMessage.ValueBody.Value;
-                }
-            }
-            else if ((amqpMessage.BodyType & SectionFlag.Data) != 0
-                && amqpMessage.DataBody != null)
-            {
-                var dataSegments = new List<byte>();
-                foreach (var data in amqpMessage.DataBody)
-                {
-                    if (data.Value is byte[] byteArrayValue)
-                    {
-                        dataSegments.AddRange(byteArrayValue);
-                    }
-                    else if (data.Value is ArraySegment<byte> arraySegmentValue)
-                    {
-                        byte[] byteArray;
-                        if (arraySegmentValue.Count == arraySegmentValue.Array.Length)
-                        {
-                            byteArray = arraySegmentValue.Array;
-                        }
-                        else
-                        {
-                            byteArray = new byte[arraySegmentValue.Count];
-                            Array.ConstrainedCopy(arraySegmentValue.Array, arraySegmentValue.Offset, byteArray, 0, arraySegmentValue.Count);
-                        }
-                        dataSegments.AddRange(byteArray);
-                    }
-                }
-                sbMessage = new ServiceBusReceivedMessage(dataSegments.ToArray());
-            }
-            else
-            {
-                sbMessage = new ServiceBusReceivedMessage();
-            }
-
+            ServiceBusReceivedMessage sbMessage = amqpMessage.CreateServiceBusReceivedMessage();
             var sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {
@@ -585,7 +536,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpObject != null;
         }
 
-        private static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
+        internal static bool TryGetNetObjectFromAmqpObject(object amqpObject, MappingType mappingType, out object netObject)
         {
             netObject = null;
             if (amqpObject == null)
