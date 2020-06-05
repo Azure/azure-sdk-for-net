@@ -8,6 +8,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     /// <example>
     /// Here's an example of  how to use the BasicDigitalTwin helper class to serialize and create a digital twin.
     ///

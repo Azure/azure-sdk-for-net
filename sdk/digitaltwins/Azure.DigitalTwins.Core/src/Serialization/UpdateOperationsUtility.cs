@@ -9,6 +9,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <summary>
     /// A utility to create the application/json-patch+json operations payload required for update operations.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     /// <example>
     /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
     /// // Update Component1 by replacing the property ComponentProp1 value
