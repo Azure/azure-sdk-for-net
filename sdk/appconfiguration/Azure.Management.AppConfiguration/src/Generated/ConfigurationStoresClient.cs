@@ -423,7 +423,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConfigurationStoresCreateOperation> StartCreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ConfigurationStoresCreateOperation> StartCreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -490,7 +490,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConfigurationStoresDeleteOperation> StartDeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<ConfigurationStoresDeleteOperation> StartDeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -549,7 +549,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<ConfigurationStoresUpdateOperation> StartUpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ConfigurationStoresUpdateOperation> StartUpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

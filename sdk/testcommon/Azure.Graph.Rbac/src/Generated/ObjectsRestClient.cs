@@ -63,7 +63,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets the directory objects specified in a list of object IDs. You can also specify which resource collections (users, groups, etc.) should be searched by specifying the optional types parameter. </summary>
         /// <param name="parameters"> Objects filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsAsync(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsAsync(GetObjectsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -232,7 +232,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets AD group membership for the specified AD object IDs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> GetObjectsByObjectIdsNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

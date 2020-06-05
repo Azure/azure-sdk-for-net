@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            TokenChars = new List<TokenCharacterKind>();
             ODataType = "#Microsoft.Azure.Search.NGramTokenizer";
         }
 
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            TokenChars = tokenChars;
+            TokenChars = tokenChars ?? new List<TokenCharacterKind>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenizer";
         }
 
@@ -43,7 +44,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MinGram { get; set; }
         /// <summary> The maximum n-gram length. Default is 2. Maximum is 300. </summary>
         public int? MaxGram { get; set; }
-        /// <summary> Character classes to keep in the tokens. </summary>
-        public IList<TokenCharacterKind> TokenChars { get; set; }
     }
 }

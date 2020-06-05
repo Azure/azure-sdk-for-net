@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
-using System.Xml.Schema;
+using System.Text;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,7 +25,7 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _timeToLive;
 
         /// <summary>
-        /// Creates a new Message
+        /// Creates a new message.
         /// </summary>
         public ServiceBusMessage()
             : this(default(ReadOnlyMemory<byte>))
@@ -35,10 +33,41 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new message from the specified string, using UTF-8 encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        public ServiceBusMessage(string body) :
+            this(body, Encoding.UTF8)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified string, using the specified encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        /// <param name="encoding">The encoding to use for the body.</param>
+        public ServiceBusMessage(string body, Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            Body = BinaryData.Create(body, encoding);
+            Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="body">The payload of the message in bytes</param>
+        /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        {
+            Body = new BinaryData(body);
+            Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="BinaryData"/> instance.
+        /// </summary>
+        /// <param name="body">The payload of the message.</param>
+        public ServiceBusMessage(BinaryData body)
         {
             Body = body;
             Properties = new Dictionary<string, object>();
@@ -77,7 +106,7 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public ReadOnlyMemory<byte> Body { get; set; }
+        public BinaryData Body { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -258,12 +287,6 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
         public DateTimeOffset ScheduledEnqueueTime { get; set; }
-
-        // TODO: Calculate the size of the properties and body
-        /// <summary>
-        /// Gets the total size of the message body in bytes.
-        /// </summary>
-        public long Size => !Body.IsEmpty ? Body.Length : 0;
 
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.

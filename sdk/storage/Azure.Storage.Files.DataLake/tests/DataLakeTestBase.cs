@@ -42,7 +42,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         public string GetGarbageLeaseId() => Recording.Random.NewGuid().ToString();
         public string GetNewFileSystemName() => $"test-filesystem-{Recording.Random.NewGuid()}";
         public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiDirectoryName() => $"test-dire¢t Ø®ϒ%3A-{Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiFileName() => $"test-ƒ¡£€‽%3A-{Recording.Random.NewGuid()}";
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
         {

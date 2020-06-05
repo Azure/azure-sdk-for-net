@@ -59,7 +59,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", "2019-10-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deploymentScript);
             request.Content = content;
             return message;
@@ -70,7 +70,7 @@ namespace Azure.Management.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -89,8 +89,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -121,8 +121,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -147,7 +147,7 @@ namespace Azure.Management.Resources
             request.Headers.Add("Content-Type", "application/json");
             if (deploymentScript != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(deploymentScript);
                 request.Content = content;
             }
@@ -159,7 +159,7 @@ namespace Azure.Management.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScript>> UpdateAsync(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScript>> UpdateAsync(string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -254,7 +254,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScript>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScript>> GetAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -348,7 +348,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -415,7 +415,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScriptListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -490,7 +490,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ScriptLogsList>> GetLogsAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptLogsList>> GetLogsAsync(string resourceGroupName, string scriptName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -590,7 +590,7 @@ namespace Azure.Management.Resources
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ScriptLog>> GetLogsDefaultAsync(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptLog>> GetLogsDefaultAsync(string resourceGroupName, string scriptName, int? tail = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -683,7 +683,7 @@ namespace Azure.Management.Resources
         /// <summary> Lists deployments scripts. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -761,7 +761,7 @@ namespace Azure.Management.Resources
         /// <summary> Lists all deployment scripts for a given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -840,7 +840,7 @@ namespace Azure.Management.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeploymentScriptListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

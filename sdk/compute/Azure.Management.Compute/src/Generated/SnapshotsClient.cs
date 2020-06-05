@@ -240,7 +240,7 @@ namespace Azure.Management.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string snapshotName, Snapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string snapshotName, Snapshot snapshot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -308,7 +308,7 @@ namespace Azure.Management.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SnapshotsUpdateOperation> StartUpdateAsync(string resourceGroupName, string snapshotName, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<SnapshotsUpdateOperation> StartUpdateAsync(string resourceGroupName, string snapshotName, SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SnapshotsDeleteOperation> StartDeleteAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<SnapshotsDeleteOperation> StartDeleteAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -434,7 +434,7 @@ namespace Azure.Management.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SnapshotsGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string snapshotName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual async Task<SnapshotsGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string snapshotName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -501,7 +501,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

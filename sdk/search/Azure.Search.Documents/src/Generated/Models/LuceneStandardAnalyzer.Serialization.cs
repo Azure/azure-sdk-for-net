@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Stopwords != null)
+            if (Stopwords != null && Stopwords.Any())
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();

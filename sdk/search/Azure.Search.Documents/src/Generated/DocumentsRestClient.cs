@@ -80,7 +80,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<long>> CountAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<long>> CountAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateCountRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -137,7 +137,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(searchRequest);
             request.Content = content;
             return message;
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
@@ -240,7 +240,7 @@ namespace Azure.Search.Documents
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(suggestRequest);
             request.Content = content;
             return message;
@@ -356,7 +356,7 @@ namespace Azure.Search.Documents
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
@@ -438,7 +438,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batch);
             request.Content = content;
             return message;
@@ -447,7 +447,7 @@ namespace Azure.Search.Documents
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
+        public async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
@@ -531,7 +531,7 @@ namespace Azure.Search.Documents
             }
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(autocompleteRequest);
             request.Content = content;
             return message;
@@ -540,7 +540,7 @@ namespace Azure.Search.Documents
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {

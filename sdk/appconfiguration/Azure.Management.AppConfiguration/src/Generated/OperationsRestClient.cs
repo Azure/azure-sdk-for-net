@@ -63,7 +63,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(checkNameAvailabilityParameters);
             request.Content = content;
             return message;
@@ -72,7 +72,7 @@ namespace Azure.Management.AppConfiguration
         /// <summary> Checks whether the configuration store name is available for use. </summary>
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<NameAvailabilityStatus>> CheckNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<NameAvailabilityStatus>> CheckNameAvailabilityAsync(CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityParameters == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Management.AppConfiguration
         /// <summary> Lists the operations available from this provider. </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<OperationDefinitionListResult>> ListAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationDefinitionListResult>> ListAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -224,7 +224,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<OperationDefinitionListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationDefinitionListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

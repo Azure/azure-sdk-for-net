@@ -28,7 +28,7 @@ namespace Azure.Management.KeyVault
         public virtual Azure.Response<Azure.Management.KeyVault.Models.PrivateEndpointConnection> Put(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.Management.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.KeyVault.Models.PrivateEndpointConnection>> PutAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Azure.Management.KeyVault.Models.PrivateEndpointConnection properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.KeyVault.PrivateEndpointConnectionsDeleteOperation StartDelete(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.KeyVault.PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.KeyVault.PrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.Management.KeyVault.Models.PrivateEndpointConnection>
     {
@@ -69,9 +69,9 @@ namespace Azure.Management.KeyVault
         public virtual Azure.Pageable<Azure.Management.KeyVault.Models.DeletedVault> ListDeleted(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Management.KeyVault.Models.DeletedVault> ListDeletedAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.KeyVault.VaultsCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.KeyVault.VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.KeyVault.VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Management.KeyVault.VaultsPurgeDeletedOperation StartPurgeDeleted(string vaultName, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Management.KeyVault.VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(string vaultName, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Management.KeyVault.VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(string vaultName, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.KeyVault.Models.Vault> Update(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.VaultPatchParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Management.KeyVault.Models.VaultAccessPolicyParameters> UpdateAccessPolicy(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.AccessPolicyUpdateKind operationKind, Azure.Management.KeyVault.Models.VaultAccessPolicyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Management.KeyVault.Models.VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, Azure.Management.KeyVault.Models.AccessPolicyUpdateKind operationKind, Azure.Management.KeyVault.Models.VaultAccessPolicyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -158,17 +158,6 @@ namespace Azure.Management.KeyVault.Models
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.Management.KeyVault.Models.Reason? Reason { get { throw null; } }
-    }
-    public partial class CloudError
-    {
-        internal CloudError() { }
-        public Azure.Management.KeyVault.Models.CloudErrorBody Error { get { throw null; } }
-    }
-    public partial class CloudErrorBody
-    {
-        internal CloudErrorBody() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
     }
     public enum CreateMode
     {

@@ -321,7 +321,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkProfileName"> The name of the NetworkProfile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<NetworkProfilesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<NetworkProfilesDeleteOperation> StartDeleteAsync(string resourceGroupName, string networkProfileName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

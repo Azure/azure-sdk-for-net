@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(5, true)]
         [TestCase(10, false)]
         [TestCase(20, true)]
-        public async Task ProcessEvent(int numThreads, bool autoComplete)
+        public async Task ProcessMessages(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
                 Assert.IsTrue(messageCt >= numThreads);
-                Assert.IsTrue(messageCt < messageSendCt);
+                Assert.IsTrue(messageCt <= messageSendCt, messageCt.ToString());
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // we complete each task after one message being processed, so the total number of messages
                 // processed should equal the number of threads, but it's possible that we may process a few more per thread.
                 Assert.IsTrue(messageCt >= numThreads);
-                Assert.IsTrue(messageCt < messageSendCt);
+                Assert.IsTrue(messageCt <= messageSendCt, messageCt.ToString());
             }
         }
 
@@ -227,7 +227,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
+                Assert.IsTrue(processor.IsProcessing);
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(processor.IsProcessing);
                 Assert.AreEqual(numThreads, messageCt);
             }
         }
@@ -239,7 +241,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
         {
-            var lockDuration = TimeSpan.FromSeconds(10);
+            var lockDuration = TimeSpan.FromSeconds(5);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false,
@@ -275,29 +277,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    try
+                    var message = args.Message;
+                    var lockedUntil = message.LockedUntil;
+                    await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
+                    if (!args.CancellationToken.IsCancellationRequested)
                     {
-                        var message = args.Message;
-                        var lockedUntil = message.LockedUntil;
-                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
-                        if (!args.CancellationToken.IsCancellationRequested)
-                        {
-                            // only do the assertion if cancellation wasn't requested as otherwise
-                            // the exception we would get is a TaskCanceledException rather than ServiceBusException
-                            Assert.AreEqual(lockedUntil, message.LockedUntil);
-                            Assert.That(
-                                async () => await args.CompleteAsync(message, args.CancellationToken),
-                                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageLockLost));
-                            Interlocked.Increment(ref messageCt);
-                        }
-                    }
-                    finally
-                    {
+                        // only do the assertion if cancellation wasn't requested as otherwise
+                        // the exception we would get is a TaskCanceledException rather than ServiceBusException
+                        Assert.AreEqual(lockedUntil, message.LockedUntil);
+                        Assert.That(
+                            async () => await args.CompleteAsync(message, args.CancellationToken),
+                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageLockLost));
+                        Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        if (setIndex < numThreads)
-                        {
-                            completionSources[setIndex].SetResult(true);
-                        }
+                        completionSources[setIndex].SetResult(true);
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));

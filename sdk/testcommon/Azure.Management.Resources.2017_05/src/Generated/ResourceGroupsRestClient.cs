@@ -69,7 +69,7 @@ namespace Azure.Management.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -124,7 +124,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -134,7 +134,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group to create or update. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroup>> CreateOrUpdateAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroup>> CreateOrUpdateAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -227,7 +227,7 @@ namespace Azure.Management.Resources
         /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to delete. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -238,8 +238,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -260,8 +260,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -287,7 +287,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -364,7 +364,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -374,7 +374,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
         /// <param name="parameters"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroup>> UpdateAsync(string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroup>> UpdateAsync(string resourceGroupName, ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -461,7 +461,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -471,7 +471,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group to export as a template. </param>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroupExportResult>> ExportTemplateAsync(string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroupExportResult>> ExportTemplateAsync(string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -570,7 +570,7 @@ namespace Azure.Management.Resources
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroupListResult>> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroupListResult>> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -641,7 +641,7 @@ namespace Azure.Management.Resources
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ResourceGroupListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroupListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -60,7 +60,7 @@ namespace Azure.Management.EventHub
 
         /// <summary> List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AvailableClustersList>> ListAvailableClustersAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableClustersList>> ListAvailableClustersAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListAvailableClustersRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Azure.Management.EventHub
         /// <summary> Lists the available Event Hubs Clusters within an ARM resource group. </summary>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ClusterListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -217,7 +217,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Cluster>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<Cluster>> GetAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -311,7 +311,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> PutAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response> PutAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -326,8 +326,9 @@ namespace Azure.Management.EventHub
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -353,8 +354,9 @@ namespace Azure.Management.EventHub
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -377,7 +379,7 @@ namespace Azure.Management.EventHub
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -388,7 +390,7 @@ namespace Azure.Management.EventHub
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="parameters"> The properties of the Event Hubs Cluster which should be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> PatchAsync(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchAsync(string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -407,8 +409,9 @@ namespace Azure.Management.EventHub
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -439,8 +442,9 @@ namespace Azure.Management.EventHub
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -469,7 +473,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -484,8 +488,9 @@ namespace Azure.Management.EventHub
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -511,8 +516,9 @@ namespace Azure.Management.EventHub
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -542,7 +548,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<EHNamespaceIdListResult>> ListNamespacesAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<EHNamespaceIdListResult>> ListNamespacesAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -630,7 +636,7 @@ namespace Azure.Management.EventHub
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ClusterListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

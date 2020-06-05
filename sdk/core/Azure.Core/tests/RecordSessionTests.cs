@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -16,6 +17,7 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("{\"json\":\"\\\"value\\\"\"}", "application/json")]
         [TestCase("{\"json\":{\"json\":\"value\"}}", "application/json")]
         [TestCase("{\"json\"\n:\"value\"}", "application/json")]
         [TestCase("{\"json\" :\"value\"}", "application/json")]

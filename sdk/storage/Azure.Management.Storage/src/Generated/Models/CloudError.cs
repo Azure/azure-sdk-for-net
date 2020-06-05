@@ -8,7 +8,7 @@
 namespace Azure.Management.Storage.Models
 {
     /// <summary> An error response from the Storage service. </summary>
-    public partial class CloudError
+    internal partial class CloudError
     {
         /// <summary> Initializes a new instance of CloudError. </summary>
         internal CloudError()

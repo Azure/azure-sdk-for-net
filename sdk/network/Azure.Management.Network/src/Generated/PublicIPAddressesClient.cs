@@ -551,7 +551,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PublicIPAddressesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
+        public virtual async Task<PublicIPAddressesDeleteOperation> StartDeleteAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -610,7 +610,7 @@ namespace Azure.Management.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<PublicIPAddressesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<PublicIPAddressesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

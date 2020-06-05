@@ -282,7 +282,7 @@ namespace Azure.Management.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<IpGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ipGroupsName, IpGroup parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<IpGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ipGroupsName, IpGroup parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -349,7 +349,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<IpGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
+        public virtual async Task<IpGroupsDeleteOperation> StartDeleteAsync(string resourceGroupName, string ipGroupsName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

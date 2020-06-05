@@ -118,7 +118,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DdosCustomPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<DdosCustomPoliciesDeleteOperation> StartDeleteAsync(string resourceGroupName, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -177,7 +177,7 @@ namespace Azure.Management.Network
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DdosCustomPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<DdosCustomPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

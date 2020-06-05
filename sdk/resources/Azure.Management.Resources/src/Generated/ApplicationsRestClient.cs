@@ -65,7 +65,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> GetAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> GetAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -163,7 +163,7 @@ namespace Azure.Management.Resources
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -229,7 +229,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", "2018-06-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -240,7 +240,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string applicationName, Application parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -259,8 +259,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -291,8 +291,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -317,7 +317,7 @@ namespace Azure.Management.Resources
             request.Headers.Add("Content-Type", "application/json");
             if (parameters != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
             }
@@ -329,7 +329,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> UpdateAsync(string resourceGroupName, string applicationName, Application parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> UpdateAsync(string resourceGroupName, string applicationName, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -422,7 +422,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all the applications within a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -502,7 +502,7 @@ namespace Azure.Management.Resources
 
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -571,7 +571,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> GetByIdAsync(string applicationId, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> GetByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
             {
@@ -655,7 +655,7 @@ namespace Azure.Management.Resources
         /// <summary> Deletes the managed application. </summary>
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteByIdAsync(string applicationId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
             {
@@ -708,7 +708,7 @@ namespace Azure.Management.Resources
             uri.AppendQuery("api-version", "2018-06-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -718,7 +718,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateOrUpdateByIdAsync(string applicationId, Application parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateByIdAsync(string applicationId, Application parameters, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
             {
@@ -733,8 +733,8 @@ namespace Azure.Management.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -760,8 +760,8 @@ namespace Azure.Management.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -782,7 +782,7 @@ namespace Azure.Management.Resources
             request.Headers.Add("Content-Type", "application/json");
             if (parameters != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
             }
@@ -793,7 +793,7 @@ namespace Azure.Management.Resources
         /// <param name="applicationId"> The fully qualified ID of the managed application, including the managed application name and the managed application resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.Solutions/applications/{application-name}. </param>
         /// <param name="parameters"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> UpdateByIdAsync(string applicationId, Application parameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> UpdateByIdAsync(string applicationId, Application parameters = null, CancellationToken cancellationToken = default)
         {
             if (applicationId == null)
             {
@@ -873,7 +873,7 @@ namespace Azure.Management.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -960,7 +960,7 @@ namespace Azure.Management.Resources
         /// <summary> Gets all the applications within a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Remove mgmt plane tests from nightly live runs: https://github.com/Azure/azure-sdk-for-net/issues/12211 -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)..\keyvault\Azure.Management.KeyVault\tests\Azure.Management.KeyVault.Tests.csproj" Condition="'$(AZURE_KEYVAULT_TEST_MODE)' == 'Live'" />
+  </ItemGroup>
+</Project>

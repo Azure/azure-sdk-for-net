@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.SignalR
         public virtual ISignalROperations SignalR { get; private set; }
 
         /// <summary>
+        /// Gets the ISignalRPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual ISignalRPrivateEndpointConnectionsOperations SignalRPrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ISignalRPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual ISignalRPrivateLinkResourcesOperations SignalRPrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
@@ -334,9 +344,11 @@ namespace Microsoft.Azure.Management.SignalR
         {
             Operations = new Operations(this);
             SignalR = new SignalROperations(this);
+            SignalRPrivateEndpointConnections = new SignalRPrivateEndpointConnectionsOperations(this);
+            SignalRPrivateLinkResources = new SignalRPrivateLinkResourcesOperations(this);
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-10-01";
+            ApiVersion = "2020-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

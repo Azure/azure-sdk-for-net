@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -1601,7 +1602,7 @@ namespace Azure.Search.Documents
                     request.Uri = uri;
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
-                    using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                    Utf8JsonRequestContent content = new Utf8JsonRequestContent();
                     content.JsonWriter.WriteObjectValue(documents);
                     request.Content = content;
                 }

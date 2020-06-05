@@ -25,7 +25,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string SequenceNumberName = "x-opt-sequence-number";
         private const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
         private const string LockedUntilName = "x-opt-locked-until";
-        private const string PublisherName = "x-opt-publisher";
         private const string PartitionKeyName = "x-opt-partition-key";
         private const string PartitionIdName = "x-opt-partition-id";
         private const string ViaPartitionKeyName = "x-opt-via-partition-key";
@@ -155,7 +154,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var body = new ArraySegment<byte>((sbMessage.Body.IsEmpty) ? Array.Empty<byte>() : sbMessage.Body.ToArray());
+            ReadOnlyMemory<byte> bodyBytes = sbMessage.Body.AsBytes();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var amqpMessage = AmqpMessage.Create(new Data { Value = body });
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;

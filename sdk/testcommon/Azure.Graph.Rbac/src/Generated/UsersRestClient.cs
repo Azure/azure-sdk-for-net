@@ -63,7 +63,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new user. </summary>
         /// <param name="parameters"> Parameters to create a user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<User>> CreateAsync(UserCreateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<User>> CreateAsync(UserCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets list of users for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UserListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UserListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -229,7 +229,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets user information from the directory. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user for which to get information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<User>> GetAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<User>> GetAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
             {
@@ -306,7 +306,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -316,7 +316,7 @@ namespace Azure.Graph.Rbac
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to update. </param>
         /// <param name="parameters"> Parameters to update an existing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string upnOrObjectId, UserUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string upnOrObjectId, UserUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
             {
@@ -383,7 +383,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete a user. </summary>
         /// <param name="upnOrObjectId"> The object ID or principal name of the user to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string upnOrObjectId, CancellationToken cancellationToken = default)
         {
             if (upnOrObjectId == null)
             {
@@ -437,7 +437,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -447,7 +447,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the user for which to get group membership. </param>
         /// <param name="parameters"> User filtering parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UserGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<UserGetMemberGroupsResult>> GetMemberGroupsAsync(string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -538,7 +538,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UserListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<UserListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -616,7 +616,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of users for the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<UserListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<UserListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

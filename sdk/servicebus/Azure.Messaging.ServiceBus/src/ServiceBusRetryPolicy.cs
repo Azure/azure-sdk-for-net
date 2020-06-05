@@ -3,14 +3,12 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {

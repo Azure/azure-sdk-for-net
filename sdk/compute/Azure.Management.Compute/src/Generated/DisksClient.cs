@@ -240,7 +240,7 @@ namespace Azure.Management.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
+        public virtual async Task<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -308,7 +308,7 @@ namespace Azure.Management.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DisksUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskName, DiskUpdate disk, CancellationToken cancellationToken = default)
+        public virtual async Task<DisksUpdateOperation> StartUpdateAsync(string resourceGroupName, string diskName, DiskUpdate disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DisksDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<DisksDeleteOperation> StartDeleteAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -434,7 +434,7 @@ namespace Azure.Management.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DisksGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string diskName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual async Task<DisksGrantAccessOperation> StartGrantAccessAsync(string resourceGroupName, string diskName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -501,7 +501,7 @@ namespace Azure.Management.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<DisksRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<DisksRevokeAccessOperation> StartRevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

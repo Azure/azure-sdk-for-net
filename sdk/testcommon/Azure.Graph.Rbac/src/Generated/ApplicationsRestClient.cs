@@ -63,7 +63,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -72,7 +72,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Create a new application. </summary>
         /// <param name="parameters"> The parameters for creating an application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> CreateAsync(ApplicationCreateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> CreateAsync(ApplicationCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Lists applications by filter parameters. </summary>
         /// <param name="filter"> The filters to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -229,7 +229,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get an application by object ID. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> GetAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> GetAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -364,7 +364,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -374,7 +374,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> PatchAsync(string applicationObjectId, ApplicationUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> PatchAsync(string applicationObjectId, ApplicationUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -442,7 +442,7 @@ namespace Azure.Graph.Rbac
         /// <summary> The owners are a set of non-admin users who are allowed to modify this object. </summary>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -520,7 +520,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -530,7 +530,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application to which to add the owner. </param>
         /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> AddOwnerAsync(string applicationObjectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> AddOwnerAsync(string applicationObjectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -600,7 +600,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> The object ID of the application from which to remove the owner. </param>
         /// <param name="ownerObjectId"> Owner object id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> RemoveOwnerAsync(string applicationObjectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveOwnerAsync(string applicationObjectId, string ownerObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -668,7 +668,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the keyCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<KeyCredentialListResult>> ListKeyCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyCredentialListResult>> ListKeyCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -746,7 +746,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -756,7 +756,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update the keyCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateKeyCredentialsAsync(string applicationObjectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateKeyCredentialsAsync(string applicationObjectId, KeyCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -824,7 +824,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Get the passwordCredentials associated with an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<PasswordCredentialListResult>> ListPasswordCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<PasswordCredentialListResult>> ListPasswordCredentialsAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -902,7 +902,7 @@ namespace Azure.Graph.Rbac
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -912,7 +912,7 @@ namespace Azure.Graph.Rbac
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="parameters"> Parameters to update passwordCredentials of an existing application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdatePasswordCredentialsAsync(string applicationObjectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePasswordCredentialsAsync(string applicationObjectId, PasswordCredentialsUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -980,7 +980,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets an object id for a given application id from the current tenant. </summary>
         /// <param name="applicationID"> The application ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdAsync(string applicationID, CancellationToken cancellationToken = default)
+        public async Task<Response<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdAsync(string applicationID, CancellationToken cancellationToken = default)
         {
             if (applicationID == null)
             {
@@ -1062,7 +1062,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1141,7 +1141,7 @@ namespace Azure.Graph.Rbac
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="applicationObjectId"> The object ID of the application for which to get owners. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response<DirectoryObjectListResult>> ListOwnersNextPageAsync(string nextLink, string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1228,7 +1228,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of applications from the current tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

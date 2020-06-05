@@ -70,7 +70,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Restores the deleted application in the directory. </summary>
         /// <param name="objectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Application>> RestoreAsync(string objectId, CancellationToken cancellationToken = default)
+        public async Task<Response<Application>> RestoreAsync(string objectId, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -227,7 +227,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Hard-delete an application. </summary>
         /// <param name="applicationObjectId"> Application object ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> HardDeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
+        public async Task<Response> HardDeleteAsync(string applicationObjectId, CancellationToken cancellationToken = default)
         {
             if (applicationObjectId == null)
             {
@@ -285,7 +285,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> Next link for the list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListNextAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -363,7 +363,7 @@ namespace Azure.Graph.Rbac
         /// <summary> Gets a list of deleted applications in the directory. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationListResult>> ListNextNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

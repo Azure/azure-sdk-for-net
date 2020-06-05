@@ -63,7 +63,7 @@ namespace Azure.Management.EventHub
         /// <summary> Gets the available Regions for a given sku. </summary>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<MessagingRegionsListResult>> ListBySkuAsync(string sku, CancellationToken cancellationToken = default)
+        public async Task<Response<MessagingRegionsListResult>> ListBySkuAsync(string sku, CancellationToken cancellationToken = default)
         {
             if (sku == null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Management.EventHub
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<MessagingRegionsListResult>> ListBySkuNextPageAsync(string nextLink, string sku, CancellationToken cancellationToken = default)
+        public async Task<Response<MessagingRegionsListResult>> ListBySkuNextPageAsync(string nextLink, string sku, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

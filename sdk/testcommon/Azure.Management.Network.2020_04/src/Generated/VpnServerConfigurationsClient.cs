@@ -280,7 +280,7 @@ namespace Azure.Management.Network
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being created or updated. </param>
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to create or update VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnServerConfigurationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vpnServerConfigurationName, VpnServerConfiguration vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnServerConfigurationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vpnServerConfigurationName, VpnServerConfiguration vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -347,7 +347,7 @@ namespace Azure.Management.Network
         /// <param name="resourceGroupName"> The resource group name of the VpnServerConfiguration. </param>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VpnServerConfigurationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<VpnServerConfigurationsDeleteOperation> StartDeleteAsync(string resourceGroupName, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

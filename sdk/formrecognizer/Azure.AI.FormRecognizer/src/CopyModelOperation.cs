@@ -105,19 +105,16 @@ namespace Azure.AI.FormRecognizer.Training
 
             string[] substrs = operationLocation.Split('/');
 
+            if (substrs.Length < 3)
+            {
+                throw new ArgumentException($"Invalid {operationLocation}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationLocation);
+            }
+
             _resultId = substrs[substrs.Length - 1];
             _modelId = substrs[substrs.Length - 3];
 
             Id = string.Join("/", substrs, substrs.Length - 3, 3);
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
-        /// </summary>
-        protected CopyModelOperation()
-        {
-        }
-
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
@@ -162,7 +159,7 @@ namespace Azure.AI.FormRecognizer.Training
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-
+                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Invalid);
                     throw await CreateExceptionForFailedOperationAsync(async, update.Value.CopyResult.Errors).ConfigureAwait(false);
                 }
             }
@@ -193,7 +190,7 @@ namespace Azure.AI.FormRecognizer.Training
             }
             else
             {
-                errorMessage = "Get copy model operation failed.";
+                errorMessage = "Copy model operation failed.";
             }
 
             var errorInfo = new Dictionary<string, string>();

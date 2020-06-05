@@ -63,7 +63,7 @@ namespace Azure.Management.Network
         /// <summary> Gets a list of service tag information resources. </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServiceTagsListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceTagsListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {

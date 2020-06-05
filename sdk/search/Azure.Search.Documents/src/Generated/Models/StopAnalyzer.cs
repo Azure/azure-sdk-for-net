@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new List<string>();
             ODataType = "#Microsoft.Azure.Search.StopAnalyzer";
         }
 
@@ -31,11 +32,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="stopwords"> A list of stopwords. </param>
         internal StopAnalyzer(string oDataType, string name, IList<string> stopwords) : base(oDataType, name)
         {
-            Stopwords = stopwords;
+            Stopwords = stopwords ?? new List<string>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";
         }
-
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
     }
 }

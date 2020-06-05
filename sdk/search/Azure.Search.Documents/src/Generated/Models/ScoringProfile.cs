@@ -23,6 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             Name = name;
+            Functions = new List<ScoringFunction>();
         }
 
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
@@ -34,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             TextWeights = textWeights;
-            Functions = functions;
+            Functions = functions ?? new List<ScoringFunction>();
             FunctionAggregation = functionAggregation;
         }
 
@@ -42,8 +43,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
         public TextWeights TextWeights { get; set; }
-        /// <summary> The collection of functions that influence the scoring of documents. </summary>
-        public IList<ScoringFunction> Functions { get; set; }
         /// <summary> A value indicating how the results of individual scoring functions should be combined. Defaults to &quot;Sum&quot;. Ignored if there are no scoring functions. </summary>
         public ScoringFunctionAggregation? FunctionAggregation { get; set; }
     }

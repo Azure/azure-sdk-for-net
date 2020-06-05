@@ -589,7 +589,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -656,7 +656,7 @@ namespace Azure.Management.KeyVault
         /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
+        public virtual async Task<VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(string vaultName, string location, CancellationToken cancellationToken = default)
         {
             if (vaultName == null)
             {

@@ -13,6 +13,7 @@
 - `ContentType` renamed to `FormContentType`.
 - Parameter `useLabels` in `FormTrainingClient.StartTraining` renamed to `useTrainingLabels`.
 - Parameter `trainingFiles` in `FormTrainingClient.StartTraining` renamed to `trainingFilesUri`.
+- Parameter `filter` in `FormTrainingClient.StartTraining` renamed to `trainingFileFilter`.
 - Removed `Type` suffix from all `FieldValueType` values.
 - Parameters `formFileStream` and `formFileUri` in `StartRecognizeContent` have been renamed to `form` and `formUrl` respectively.
 - Parameters `receiptFileStream` and `receiptFileUri` in `StartRecognizeReceipts` have been renamed to `receipt` and `receiptUrl` respectively.
@@ -25,12 +26,14 @@
 - `RecognizeCustomFormsOperation` now returns a `RecognizedFormCollection`.
 - In preparation for service-side changes, `FieldValue.AsInt32` has been replaced by `FieldValue.AsInt64`, which returns a `long`.
 - The order of the values for `USReceiptType` have changed so that `Other` has now a value of `1`.
+- Parameter `useTrainingLabels` is now required for `FormTrainingClient.StartTraining`.
+- Protected constructors have been removed from `Operation` types, such as `TrainingOperation` or `RecognizeContentOperation`.
 
 ### New Features
 
 - `FormRecognizerClient` and `FormTrainingClient` support authentication with Azure Active Directory.
 - Support to copy a custom model from one Form Recognizer resource to another.
-- Headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
+- Headers and query parameters that were marked as `REDACTED` in error messages and logs are now exposed by default.
 
 ### Fixes
 

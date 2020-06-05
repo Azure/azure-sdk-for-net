@@ -72,7 +72,7 @@ namespace Azure.Management.AppConfiguration
         /// <summary> Lists the configuration stores for a given subscription. </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationStoreListResult>> ListAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -150,7 +150,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationStoreListResult>> ListByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupAsync(string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -236,7 +236,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationStore>> GetAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStore>> GetAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -324,7 +324,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreCreationParameters);
             request.Content = content;
             return message;
@@ -335,7 +335,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreCreationParameters"> The parameters for creating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> CreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceGroupName, string configStoreName, ConfigurationStore configStoreCreationParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -354,8 +354,8 @@ namespace Azure.Management.AppConfiguration
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -386,8 +386,8 @@ namespace Azure.Management.AppConfiguration
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -416,7 +416,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -431,8 +431,9 @@ namespace Azure.Management.AppConfiguration
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -458,8 +459,9 @@ namespace Azure.Management.AppConfiguration
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
                 case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -482,7 +484,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configStoreUpdateParameters);
             request.Content = content;
             return message;
@@ -493,7 +495,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="configStoreUpdateParameters"> The parameters for updating a configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> UpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceGroupName, string configStoreName, ConfigurationStoreUpdateParameters configStoreUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -512,8 +514,8 @@ namespace Azure.Management.AppConfiguration
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -544,8 +546,8 @@ namespace Azure.Management.AppConfiguration
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 201:
                 case 200:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -580,7 +582,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApiKeyListResult>> ListKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyListResult>> ListKeysAsync(string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -670,7 +672,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regenerateKeyParameters);
             request.Content = content;
             return message;
@@ -681,7 +683,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="regenerateKeyParameters"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKey>> RegenerateKeyAsync(string resourceGroupName, string configStoreName, RegenerateKeyParameters regenerateKeyParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -779,7 +781,7 @@ namespace Azure.Management.AppConfiguration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(listKeyValueParameters);
             request.Content = content;
             return message;
@@ -790,7 +792,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -887,7 +889,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationStoreListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -968,7 +970,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationStoreListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationStoreListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1059,7 +1061,7 @@ namespace Azure.Management.AppConfiguration
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ApiKeyListResult>> ListKeysNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiKeyListResult>> ListKeysNextPageAsync(string nextLink, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

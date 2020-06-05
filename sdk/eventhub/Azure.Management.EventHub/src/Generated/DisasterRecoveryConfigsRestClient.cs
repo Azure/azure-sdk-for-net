@@ -69,7 +69,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AuthorizationRuleListResult>> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,7 +178,7 @@ namespace Azure.Management.EventHub
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AuthorizationRule>> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRule>> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -297,7 +297,7 @@ namespace Azure.Management.EventHub
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AccessKeys>> ListKeysAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessKeys>> ListKeysAsync(string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.Management.EventHub
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -415,7 +415,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -519,7 +519,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ArmDisasterRecoveryListResult>> ListAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecoveryListResult>> ListAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -609,7 +609,7 @@ namespace Azure.Management.EventHub
             uri.AppendQuery("api-version", "2017-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
@@ -621,7 +621,7 @@ namespace Azure.Management.EventHub
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ArmDisasterRecovery>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string @alias, ArmDisasterRecovery parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecovery>> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string @alias, ArmDisasterRecovery parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -740,7 +740,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -822,7 +822,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ArmDisasterRecovery>> GetAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecovery>> GetAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -929,7 +929,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> BreakPairingAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response> BreakPairingAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1012,7 +1012,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> FailOverAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response> FailOverAsync(string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1087,7 +1087,7 @@ namespace Azure.Management.EventHub
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AuthorizationRuleListResult>> ListAuthorizationRulesNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1194,7 +1194,7 @@ namespace Azure.Management.EventHub
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ArmDisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
