@@ -4,6 +4,7 @@ languages:
 - csharp
 products:
 - azure
+- azure-cognitive-services
 - azure-form-recognizer
 name: Azure Form Recognizer samples for .NET
 description: Samples for the Azure.AI.FormRecognizer client library
