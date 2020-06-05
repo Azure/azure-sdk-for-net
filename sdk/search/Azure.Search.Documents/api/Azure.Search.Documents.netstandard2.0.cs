@@ -1584,7 +1584,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public SynonymMap(string name, string synonyms) { }
         public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public string Format { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Synonyms { get { throw null; } set { } }
     }
