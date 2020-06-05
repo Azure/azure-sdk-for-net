@@ -1,10 +1,19 @@
 # Release History
 
-## 10.1.0-preview.1 (Unreleased)
+## 11.0.0 (2020-06-01)
+### REST API version
+- This version targets REST API version 2020-05-01.
+
+### Features
+- Added `BatchAccountIdentity` property on `BatchAccount` for enabling system assigned identity when `Microsoft.KeyVault` is specified as the `BatchAccount` encryption property.
+
+### Bug Fixes
+- **[Breaking]** Convert the `PrivateEndpointConnection` update operation to a long running operation.
 
 ## 10.0.0 (2020-04-11)
 ### REST API version
 - This version targets REST API version 2020-03-01.
+- **[Warning]** It is not recommended to use this SDK version. Please update to 11.0.0 or greater.
 
 ### Features
 - Added ability to access the Batch DataPlane API without needing a public DNS entry for the account via the new `PublicNetworkAccess` property on `BatchAccount`.
