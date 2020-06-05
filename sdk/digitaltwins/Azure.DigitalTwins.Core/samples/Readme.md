@@ -31,13 +31,9 @@ In this samples, we illustrate how to use one derived class: ClientSecretCredent
 > To do this, use the Azure CLI command: `az dt rbac assign-role --assignee '<user-email | application-id>' --role owner -n '<your-digital-twins-instance>'`
 
 ```C# Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
-// By using the ClientSecretCredential, a specified application Id can login using a
-// client secret.
-var tokenCredential = new ClientSecretCredential(
-    tenantId,
-    clientId,
-    clientSecret,
-    new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+// It attempts to use multiple credential types in an order until it finds a working credential.
+var tokenCredential = new DefaultAzureCredential();
 
 var client = new DigitalTwinsClient(
     new Uri(adtEndpoint),

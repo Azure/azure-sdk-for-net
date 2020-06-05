@@ -43,13 +43,9 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret">
-        /// // By using the ClientSecretCredential, a specified application Id can login using a
-        /// // client secret.
-        /// var tokenCredential = new ClientSecretCredential(
-        ///     tenantId,
-        ///     clientId,
-        ///     clientSecret,
-        ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+        /// // It attempts to use multiple credential types in an order until it finds a working credential.
+        /// var tokenCredential = new DefaultAzureCredential();
         ///
         /// var client = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
@@ -78,28 +74,6 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin">
-        /// // This illustrates how to specify client options, in this case, by providing an
-        /// // instance of HttpClient for the digital twins client to use.
-        /// var clientOptions = new DigitalTwinsClientOptions
-        /// {
-        ///     Transport = new HttpClientTransport(httpClient),
-        /// };
-        ///
-        /// // By using the InteractiveBrowserCredential, the current user can login using a web browser
-        /// // interactively with the AAD
-        /// var tokenCredential = new InteractiveBrowserCredential(
-        ///     tenantId,
-        ///     clientId,
-        ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
-        ///
-        /// var client = new DigitalTwinsClient(
-        ///     new Uri(adtEndpoint),
-        ///     tokenCredential,
-        ///     clientOptions);
-        /// </code>
-        /// </example>
         public DigitalTwinsClient(Uri endpoint, TokenCredential credential, DigitalTwinsClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
