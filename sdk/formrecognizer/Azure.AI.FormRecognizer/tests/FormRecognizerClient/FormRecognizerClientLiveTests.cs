@@ -102,7 +102,6 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             await operation.WaitForCompletionAsync();
-
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -866,8 +865,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
 
             Assert.True(operation.HasCompleted);
-            Assert.True(operation.HasValue);
-            Assert.AreEqual(0, operation.Value.Count);
+            Assert.False(operation.HasValue);
+            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
         }
 
         private void ValidateFormPage(FormPage formPage, bool includeTextContent, int expectedPageNumber)

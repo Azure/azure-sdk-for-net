@@ -41,11 +41,24 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
         private readonly string _resultId;
 
+        private RequestFailedException _requestFailedException;
+
         /// <inheritdoc/>
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override CustomFormModelInfo Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormModelInfo Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -88,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
         internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
@@ -153,14 +166,17 @@ namespace Azure.AI.FormRecognizer.Training
 
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
-                    _hasCompleted = true;
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
                     _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Ready);
+                    _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
+                    _requestFailedException = await ClientCommon
+                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.CopyResult.Errors)
+                        .ConfigureAwait(false);
                     _hasCompleted = true;
-                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Invalid);
-                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.CopyResult.Errors).ConfigureAwait(false);
+                    throw _requestFailedException;
                 }
             }
 
@@ -174,37 +190,6 @@ namespace Azure.AI.FormRecognizer.Training
                 result.CreatedDateTime,
                 result.LastUpdatedDateTime,
                 status);
-        }
-
-        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
-        {
-            string errorMessage = default;
-            string errorCode = default;
-
-            if (errors.Count > 0)
-            {
-                var firstError = errors[0];
-
-                errorMessage = firstError.Message;
-                errorCode = firstError.ErrorCode;
-            }
-            else
-            {
-                errorMessage = "Copy model operation failed.";
-            }
-
-            var errorInfo = new Dictionary<string, string>();
-            int index = 0;
-
-            foreach (var error in errors)
-            {
-                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
-                index++;
-            }
-
-            return async
-                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }
