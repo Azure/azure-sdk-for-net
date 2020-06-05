@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Azure.Messaging.ServiceBus.Management
 {
