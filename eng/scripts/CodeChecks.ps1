@@ -44,7 +44,7 @@ try {
         & dotnet msbuild -version
     }
 
-    Write-Host "Checking that solutions are up to date"
+        Write-Host "Checking that solutions are up to date"
     Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
         | Resolve-Path `
         | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
@@ -65,7 +65,7 @@ try {
     Write-Host "Validating sample readmes"
     $root = "$PSScriptRoot/../../sdk/$ServiceDirectory"
     foreach ($projectDirName in Get-ChildItem -Recurse -Directory $root -Filter "Azure.*"){
-        $sampleReadmePath = $root + '/' + $projectDirName + '/samples/README.md';
+        $sampleReadmePath = "$projectDirName/samples/README.md"
         if (Test-Path $sampleReadmePath) {
             $content = Get-Content -Path $sampleReadmePath
             $matches = $content | Select-String -Pattern "(.md|.cs)\)"
