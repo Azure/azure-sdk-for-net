@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Action descriptor.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Action")]
     public partial class Action
     {
         /// <summary>
