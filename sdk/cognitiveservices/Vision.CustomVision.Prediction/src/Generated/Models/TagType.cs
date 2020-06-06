@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models
 {
 
     /// <summary>

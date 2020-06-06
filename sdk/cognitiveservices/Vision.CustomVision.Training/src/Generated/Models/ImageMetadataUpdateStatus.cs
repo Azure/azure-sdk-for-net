@@ -12,12 +12,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for TagType.
+    /// Defines values for ImageMetadataUpdateStatus.
     /// </summary>
-    public static class TagType
+    public static class ImageMetadataUpdateStatus
     {
-        public const string Regular = "Regular";
-        public const string Negative = "Negative";
-        public const string GeneralProduct = "GeneralProduct";
+        public const string OK = "OK";
+        public const string ErrorImageNotFound = "ErrorImageNotFound";
+        public const string ErrorLimitExceed = "ErrorLimitExceed";
+        public const string ErrorUnknown = "ErrorUnknown";
     }
 }
