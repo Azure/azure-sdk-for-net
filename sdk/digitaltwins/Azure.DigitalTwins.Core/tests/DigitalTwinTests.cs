@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // get twin
-                Response<string> twin = await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
