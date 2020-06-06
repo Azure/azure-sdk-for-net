@@ -3,6 +3,7 @@
 ## 2.0.0 (unreleased)
 ### Changed
 - Updated CustomVisionPredictionClient to take in a credentials class for use with different types of authentication credentials. The client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
+- TagType is now returned in the Prediction payload.
 
 ## 1.0.0
 ### Changed

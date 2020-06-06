@@ -4,6 +4,8 @@
 ### Added
 - Added support to import and export projects.
 - Added support to train on a subset of training tags.
+- Added support to add, update, and retrieve metadata (key/value string pairs) on images
+- Added support for VNET scenarios to securely retrieve artifacts by calling GetArtifact
 
 ### Changed
 - Updated CustomVisionTrainingClient to take in a credentials class for use with different types of authentication credentials. The client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
