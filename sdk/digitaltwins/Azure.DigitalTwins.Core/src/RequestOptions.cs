@@ -21,6 +21,6 @@ namespace Azure.DigitalTwins.Core
         /// This means that update and delete will be unconditional and the operation will execute regardless of the existence of the resource.
         /// </para>
         /// </remarks>
-        public string IfMatch { get; set; } = null;
+        public string IfMatch { get; set; }
     }
 }
