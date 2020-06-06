@@ -138,8 +138,7 @@ var basicTwin = new BasicDigitalTwin
             "Component1",
             new ModelProperties
             {
-                // model Id of component
-                Metadata = { ModelId = componentModelId },
+                Metadata = { },
                 // component properties
                 CustomProperties =
                 {
@@ -170,7 +169,7 @@ var customTwin = new CustomDigitalTwin
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { ModelId = componentModelId },
+        Metadata = new Component1Metadata { },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
@@ -195,7 +194,7 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
     string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
-    var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+    IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
@@ -218,7 +217,7 @@ var customTwin = new CustomDigitalTwin
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { ModelId = componentModelId },
+        Metadata = new Component1Metadata { },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }

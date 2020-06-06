@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B14036604?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B14036604?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "548551592ad0eace100bb6a559053072",
@@ -17,7 +17,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:06 GMT",
+        "Date": "Sat, 06 Jun 2020 01:07:38 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -28,12 +28,12 @@
       }
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B177323580?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B177323580?includeModelDefinition=true\u0026api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7700d087c66c71e0fa47354c2bbc9ba4",
@@ -44,7 +44,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:06 GMT",
+        "Date": "Sat, 06 Jun 2020 01:07:40 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -55,14 +55,14 @@
       }
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/models?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "804",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "530f4b325a0c208f46b0209ce2459219",
@@ -73,18 +73,18 @@
       "ResponseHeaders": {
         "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
+        "Date": "Sat, 06 Jun 2020 01:07:40 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;177323580\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-02T19:05:07.7706281\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;177323580\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-06-06T01:07:40.8997187\u002B00:00\u0022}]"
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin54248529?api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin54248529?api-version=2020-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ad11bcb1ed55a58be2d5e3989ee44e1a",
@@ -95,7 +95,7 @@
       "ResponseHeaders": {
         "Content-Length": "269",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
+        "Date": "Sat, 06 Jun 2020 01:07:40 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -106,14 +106,14 @@
       }
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin54248529?api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin54248529?api-version=2020-05-31-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "150",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "20ba26004c1f402ce031bba5448eb5b4",
@@ -122,15 +122,15 @@
       "RequestBody": "{  \u0022$metadata\u0022: {    \u0022$model\u0022: \u0022dtmi:example:room;177323580\u0022  },  \u0022Temperature\u0022: 80,  \u0022Humidity\u0022: 25,  \u0022IsOccupied\u0022: true,  \u0022EmployeeId\u0022: \u0022Employee1\u0022}",
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "652",
+        "Content-Length": "658",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
-        "ETag": "W/\u002240fc1d5e-a62b-4cf2-bfbf-10274428673b\u0022",
+        "Date": "Sat, 06 Jun 2020 01:07:41 GMT",
+        "ETag": "W/\u0022ef153cde-c939-4ca5-80d9-f4e29206a455\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomTwin54248529",
-        "$etag": "40fc1d5e-a62b-4cf2-bfbf-10274428673b",
+        "$etag": "W/\u0022ef153cde-c939-4ca5-80d9-f4e29206a455\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -169,14 +169,14 @@
       }
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/query?api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/query?api-version=2020-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "62",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ff7afb1cf7895edd84ae2985ac88a7cb",
@@ -187,24 +187,631 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "37",
+        "Content-Length": "10258",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Jun 2020 19:05:07 GMT",
-        "query-charge": "5.85",
+        "Date": "Sat, 06 Jun 2020 01:07:41 GMT",
+        "query-charge": "9.69",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "items": [],
+        "items": [
+          {
+            "$dtId": "roomTwin85354616",
+            "$etag": "W/\u002216f58fdb-1277-48a4-8acc-aa167050bc79\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;117583237",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1564632336",
+            "$etag": "W/\u0022c945a83a-55b4-4f04-b3b6-48d281bc1c2d\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;162636476",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin571378823",
+            "$etag": "W/\u002200917ad8-e8c9-43a2-9d0c-c95cf5ec318c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;129241954",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin89336587",
+            "$etag": "W/\u002266f181e4-947c-4e9f-8260-67b215cef72a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;146187114",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin921066506",
+            "$etag": "W/\u0022d237ac2e-c16e-49ab-975d-90973da4b525\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;165205986",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1360245673",
+            "$etag": "W/\u00229fca00cd-b789-4d6e-b3db-92fa0998478a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;119709458",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1758964623",
+            "$etag": "W/\u0022df434db9-8886-4dcf-bc2c-a2adf890cc1b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;117239542",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1136004814",
+            "$etag": "W/\u0022106c5fad-715c-4b3b-be09-3cc6b4aa1815\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;128247992",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin63969779",
+            "$etag": "W/\u0022cd6e65fd-1d05-4593-8611-a21933d7c087\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;116021967",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1198642780",
+            "$etag": "W/\u0022067dc34e-b4cc-4d3b-a807-08b34f4f4d54\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;155676011",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1602405457",
+            "$etag": "W/\u0022c7e98c39-1533-4456-9521-f8fc28f46228\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;115458187",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1860073482",
+            "$etag": "W/\u002233b505d8-5120-43ab-9401-e2efe49e33ac\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;116397119",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1758731274",
+            "$etag": "W/\u0022e0f00e51-7811-41a6-bd7a-4b472627c514\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;118597655",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1426489962",
+            "$etag": "W/\u0022aebc8f6e-1b44-40f5-809c-50a99649db67\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;111276434",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          },
+          {
+            "$dtId": "RoomTwin",
+            "$etag": "W/\u0022e5a058dc-2afb-4a88-ac9e-a9c7738f3aa8\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "wifiAccessPoint": {
+              "RouterName": "Cisco1",
+              "Network": "Room1",
+              "$metadata": {
+                "$model": "dtmi:samples:Wifi;1",
+                "RouterName": {
+                  "desiredValue": "Cisco1",
+                  "desiredVersion": 1,
+                  "ackVersion": 1,
+                  "ackCode": 200,
+                  "ackDescription": "Auto-Sync"
+                },
+                "Network": {
+                  "desiredValue": "Room1",
+                  "desiredVersion": 1,
+                  "ackVersion": 1,
+                  "ackCode": 200,
+                  "ackDescription": "Auto-Sync"
+                }
+              }
+            },
+            "$metadata": {
+              "$model": "dtmi:samples:Room;1",
+              "Temperature": {
+                "desiredValue": 80,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "Humidity": {
+                "desiredValue": 25,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "IsOccupied": {
+                "desiredValue": true,
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              },
+              "EmployeeId": {
+                "desiredValue": "Employee1",
+                "desiredVersion": 1,
+                "ackVersion": 1,
+                "ackCode": 200,
+                "ackDescription": "Auto-Sync"
+              }
+            }
+          }
+        ],
         "continuationToken": null
       }
     },
     {
-      "RequestUri": "https://vinageshnew.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B177323580?api-version=2020-05-31-preview",
+      "RequestUri": "https://barustum-rg4.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B177323580?api-version=2020-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200602.1",
+          "azsdk-net-DigitalTwins.Core/1.0.0-dev.20200605.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1fe281d1f8d8643190d1cd2331e56054",
@@ -214,14 +821,14 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 02 Jun 2020 19:05:09 GMT",
+        "Date": "Sat, 06 Jun 2020 01:07:41 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DIGITALTWINS_URL": "https://vinageshnew.api.wus2.digitaltwins.azure.net",
+    "DIGITALTWINS_URL": "https://barustum-rg4.api.wus2.digitaltwins.azure.net",
     "RandomSeed": "277400192"
   }
 }

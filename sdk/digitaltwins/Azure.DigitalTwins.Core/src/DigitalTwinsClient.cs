@@ -194,7 +194,7 @@ namespace Azure.DigitalTwins.Core
         ///     Prop2 = 987,
         ///     Component1 = new Component1
         ///     {
-        ///         Metadata = new Component1Metadata { ModelId = componentModelId },
+        ///         Metadata = new Component1Metadata { },
         ///         ComponentProp1 = &quot;Component prop1 val&quot;,
         ///         ComponentProp2 = 123,
         ///     }

@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core.Serialization
 {
     /// <summary>
     /// An optional, helper class for deserializing a digital twin.
-    /// The ModelProperties dictionary on <see cref="DigitalTwinMetadata"/>.
+    /// The ModelProperties dictionary on <see cref="ComponentMetadata"/>.
     /// </summary>
     /// <remarks>
     /// <para>

@@ -58,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public WritableProperty Prop2 { get; set; }
     }
 
-    internal class Component1Metadata : Metadata
+    internal class Component1Metadata
     {
         [JsonPropertyName("ComponentProp1")]
         public WritableProperty ComponentProp1 { get; set; }
