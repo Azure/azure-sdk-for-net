@@ -49,13 +49,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
 
-                // create request options to force the update using "*" ifMatch value
-                var requestOptions = new RequestOptions
-                {
-                    IfMatch = "*"
-                };
-
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin, requestOptions).ConfigureAwait(false);
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
