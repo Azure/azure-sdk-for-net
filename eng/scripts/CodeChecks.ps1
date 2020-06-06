@@ -44,7 +44,7 @@ try {
         & dotnet msbuild -version
     }
 
-        Write-Host "Checking that solutions are up to date"
+    Write-Host "Checking that solutions are up to date"
     Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
         | Resolve-Path `
         | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
