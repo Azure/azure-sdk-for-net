@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // get twin
-                await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
+                Response<string> twin = await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
 
                 // update twin
                 string updateTwin = TestAssetsHelper.GetRoomTwinUpdatePayload();
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // create request options to force the update using "*" ifMatch value
                 var reqeustOptions = new RequestOptions
                 {
-                    IfMatch = new ETag("*")
+                    IfMatch = "*"
                 };
 
                 await client.UpdateDigitalTwinAsync(roomTwinId, updateTwin, reqeustOptions).ConfigureAwait(false);
@@ -65,6 +65,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     await client.GetDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
                 };
+
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
