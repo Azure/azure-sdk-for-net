@@ -137,11 +137,12 @@ pr:
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - eng/pipelines/mgmt.yml
     - eng/pipelines/templates/jobs/archetype-sdk-mgmt.yml
-resources:
-  repositories:
-  - repository: azure-sdk-tools
-    type: github
-    name: Azure/azure-sdk-tools
+repositories:
+- repository: azure-sdk-tools
+  type: github
+  name: Azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.2
     endpoint: azure
 variables:
   DotNetCoreSDKVersion: '2.2.202'
@@ -154,3 +155,4 @@ jobs:
 - template: templates/jobs/archetype-sdk-mgmt.yml
   parameters:
     Scope: $(Scope)
+
