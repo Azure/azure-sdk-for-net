@@ -3,13 +3,14 @@
 
 resources:
   repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-    - repository: azure-sdk-build-tools
-      type: git
-      name: internal/azure-sdk-build-tools
+- repository: azure-sdk-tools
+  type: github
+  name: Azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200606.1
+- repository: azure-sdk-build-tools
+  type: git
+  name: internal/azure-sdk-build-tools
 
 trigger:
   branches:
@@ -40,3 +41,4 @@ stages:
     Artifacts:
     - name: Microsoft.Azure.Graph.RBAC
       safeName: MicrosoftAzureGraphRBAC
+
