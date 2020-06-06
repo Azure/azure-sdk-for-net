@@ -3,13 +3,14 @@
 
 resources:
   repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-    - repository: azure-sdk-build-tools
-      type: git
-      name: internal/azure-sdk-build-tools
+- repository: azure-sdk-tools
+  type: github
+  name: Azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.3
+- repository: azure-sdk-build-tools
+  type: git
+  name: internal/azure-sdk-build-tools
 
 trigger:
   branches:
@@ -52,3 +53,4 @@ stages:
       safeName: AzureCoreExperimental
     - name: Microsoft.Extensions.Azure
       safeName: MicrosoftExtensionsAzure
+

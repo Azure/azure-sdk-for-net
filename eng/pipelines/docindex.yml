@@ -1,9 +1,16 @@
 resources:
   repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: azure/azure-sdk-tools
-      endpoint: azure
+- repository: azure-sdk-tools
+  type: github
+  name: azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.3
+      repositories:
+- repository: azure-sdk-tools
+  type: github
+  name: azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.3
 
 jobs:
   - job: GenerateDocIndex
