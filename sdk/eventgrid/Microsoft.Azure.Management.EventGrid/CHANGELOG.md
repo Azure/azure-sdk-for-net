@@ -91,3 +91,7 @@
 	* Introducing expiration date for event subscription, 
 	Introducing advanced filtering for event subscription, 
 - The stable version of the SDK targeting the 2018-01-01 API version continues to exist as version 1.3.0
+
+## 2.0.0-preview (2018-05)
+- This is a preview SDK for the new features introduced in 2018-05-01-preview API version. 
+- The stable version of the SDK targeting the 2018-01-01 API version continues to exist as version 1.3.0.
