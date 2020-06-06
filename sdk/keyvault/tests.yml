@@ -1,11 +1,17 @@
 trigger: none
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
+repositories:
+- repository: azure-sdk-tools
+  type: github
+  name: Azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.5
+      repositories:
+- repository: azure-sdk-tools
+  type: github
+  name: Azure/azure-sdk-tools
+  endpoint: azure
+  ref: refs/tags/azure-sdk-tools_20200605.5
 
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
@@ -14,3 +20,4 @@ jobs:
     EnvVars:
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+
