@@ -16,51 +16,48 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Frontend IP configuration of an application gateway.
+    /// The application gateway private link ip configuration.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
+    public partial class ApplicationGatewayPrivateLinkIpConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayFrontendIPConfiguration class.
+        /// ApplicationGatewayPrivateLinkIpConfiguration class.
         /// </summary>
-        public ApplicationGatewayFrontendIPConfiguration()
+        public ApplicationGatewayPrivateLinkIpConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayFrontendIPConfiguration class.
+        /// ApplicationGatewayPrivateLinkIpConfiguration class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="privateIPAddress">PrivateIPAddress of the network
-        /// interface IP Configuration.</param>
+        /// <param name="privateIPAddress">The private IP address of the IP
+        /// configuration.</param>
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
         /// <param name="subnet">Reference to the subnet resource.</param>
-        /// <param name="publicIPAddress">Reference to the PublicIP
-        /// resource.</param>
-        /// <param name="privateLinkConfiguration">Reference to the application
-        /// gateway private link configuration.</param>
+        /// <param name="primary">Whether the ip configuration is primary or
+        /// not.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// frontend IP configuration resource. Possible values include:
-        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
-        /// <param name="name">Name of the frontend IP configuration that is
-        /// unique within an Application Gateway.</param>
+        /// application gateway private link IP configuration. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of application gateway private link ip
+        /// configuration.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayFrontendIPConfiguration(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), SubResource privateLinkConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        /// <param name="type">The resource type.</param>
+        public ApplicationGatewayPrivateLinkIpConfiguration(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), bool? primary = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            PrivateLinkConfiguration = privateLinkConfiguration;
+            Primary = primary;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -74,8 +71,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets privateIPAddress of the network interface IP
-        /// Configuration.
+        /// Gets or sets the private IP address of the IP configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
@@ -94,29 +90,22 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to the PublicIP resource.
+        /// Gets or sets whether the ip configuration is primary or not.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public SubResource PublicIPAddress { get; set; }
+        [JsonProperty(PropertyName = "properties.primary")]
+        public bool? Primary { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to the application gateway private link
-        /// configuration.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateLinkConfiguration")]
-        public SubResource PrivateLinkConfiguration { get; set; }
-
-        /// <summary>
-        /// Gets the provisioning state of the frontend IP configuration
-        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// Gets the provisioning state of the application gateway private link
+        /// IP configuration. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets name of the frontend IP configuration that is unique
-        /// within an Application Gateway.
+        /// Gets or sets the name of application gateway private link ip
+        /// configuration.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -129,7 +118,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource.
+        /// Gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

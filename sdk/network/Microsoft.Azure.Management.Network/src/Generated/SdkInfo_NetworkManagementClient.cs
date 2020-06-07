@@ -21,6 +21,8 @@ namespace Microsoft.Azure.Management.Network
               {
                 new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2018-10-01"),
+                new Tuple<string, string, string>("Network", "ApplicationGatewayPrivateEndpointConnections", "2020-05-01"),
+                new Tuple<string, string, string>("Network", "ApplicationGatewayPrivateLinkResources", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "ApplicationGateways", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "ApplicationSecurityGroups", "2020-05-01"),
                 new Tuple<string, string, string>("Network", "AvailableDelegations", "2020-05-01"),
