@@ -58,8 +58,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables
         /// you to see a screenshot of the VM from the hypervisor.</param>
         /// <param name="assignedHost">Resource id of the dedicated host, on
-        /// which the virtual machine is allocated through automatic placement.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01.</param>
+        /// which the virtual machine is allocated through automatic placement,
+        /// when the virtual machine is associated with a dedicated host group
+        /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2020-06-01.</param>
         /// <param name="statuses">The resource status information.</param>
         public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), string assignedHost = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
@@ -165,13 +167,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
 
         /// <summary>
-        /// Gets or sets resource id of the dedicated host, on which the
-        /// virtual machine is allocated through automatic placement.
+        /// Gets resource id of the dedicated host, on which the virtual
+        /// machine is allocated through automatic placement, when the virtual
+        /// machine is associated with a dedicated host group that has
+        /// automatic placement enabled.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
         /// 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "assignedHost")]
-        public string AssignedHost { get; set; }
+        public string AssignedHost { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
