@@ -58,7 +58,6 @@ namespace Compute.Tests
                     Assert.NotNull(assessPatchesResult);
                     Assert.Equal("Succeeded", assessPatchesResult.Status);
                     Assert.NotNull(assessPatchesResult.StartDateTime);
-                    Assert.NotNull(assessPatchesResult.LastModifiedDateTime);
 
                     passed = true;
                 }
