@@ -85,8 +85,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Tests", "..\..\storage\Azure.Storage.Blobs.Batch\tests\Azure.Storage.Blobs.Batch.Tests.csproj", "{EA651D86-70EE-4F32-AF1D-E5EB85ACF79F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Cryptography", "..\..\storage\Azure.Storage.Blobs.Cryptography\src\Azure.Storage.Blobs.Cryptography.csproj", "{908FBA6A-12B2-44DA-BCFB-11750B613FFA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples.Tests", "..\..\storage\Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{83DC827C-9AD6-4C76-883F-53AB4A027E82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests", "..\..\storage\Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{02708856-2D84-47E2-80DD-65A3A31E01C8}"
