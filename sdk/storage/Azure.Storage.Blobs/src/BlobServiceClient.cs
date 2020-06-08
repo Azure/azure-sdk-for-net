@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -81,6 +82,16 @@ namespace Azure.Storage.Blobs
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
         /// <summary>
         /// The name of the Encryption Scope to be used when sending request.
@@ -163,6 +174,7 @@ namespace Azure.Storage.Blobs
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -252,6 +264,7 @@ namespace Azure.Storage.Blobs
                   options?.Version ?? BlobClientOptions.LatestVersion,
                   new ClientDiagnostics(options),
                   options?.CustomerProvidedKey,
+                  options?._clientSideEncryptionOptions?.Clone(),
                   options?.EncryptionScope,
                   options.Build(authentication))
         {
@@ -277,6 +290,7 @@ namespace Azure.Storage.Blobs
         /// diagnostic scopes every request.
         /// </param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption">Client-side encryption options.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
@@ -287,6 +301,7 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope,
             HttpPipeline pipeline)
         {
@@ -296,12 +311,15 @@ namespace Azure.Storage.Blobs
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
+        /// Intended for DataLake to create a backing blob client.
+        ///
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
         /// class.
         /// </summary>
@@ -330,7 +348,15 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             HttpPipeline pipeline)
         {
-            return new BlobServiceClient(serviceUri, authentication, options.Version, new ClientDiagnostics(options), null, null, pipeline);
+            return new BlobServiceClient(
+                serviceUri,
+                authentication,
+                options.Version,
+                new ClientDiagnostics(options),
+                customerProvidedKey: null,
+                clientSideEncryption: null,
+                encryptionScope: null,
+                pipeline);
         }
         #endregion ctors
 
@@ -347,7 +373,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>
