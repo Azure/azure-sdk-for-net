@@ -7,7 +7,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
 
 ### Added
-- Added the ServiceBusManagementClient for CRUD operations on a namespace
+- Add the ServiceBusManagementClient for CRUD operations on a namespace
 - Add constructor for ServiceBusMessage taking a string
 - Use the BinaryData type for ServiceBusMessage.Body
 - Add diagnostic tracing
