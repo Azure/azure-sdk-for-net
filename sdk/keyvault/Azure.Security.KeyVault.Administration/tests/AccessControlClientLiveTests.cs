@@ -12,8 +12,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
-        private const string pricipalID = "4ae6842b-2a3e-4919-8305-7db89f3d6edd";
-        private const string roleName = "Azure Key Vault Managed HSM Administrator";
+        private const string roleName = "Azure Key Vault Managed HSM Crypto User";
         private const string roleAssignmentId = "e7ae2aff-eb17-4c9d-84f0-d12f7f468f16";
 
         public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
@@ -41,7 +40,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Root).ToEnumerableAsync().ConfigureAwait(false);
             var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
 
-            var properties = new RoleAssignmentProperties(definitionToAssign.Id, pricipalID);
+            var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             RoleAssignment result = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Root, properties, roleAssignmentId).ConfigureAwait(false);
 
             RegisterForCleanup(result);
@@ -59,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Root).ToEnumerableAsync().ConfigureAwait(false);
             var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
 
-            var properties = new RoleAssignmentProperties(definitionToAssign.Id, pricipalID);
+            var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Root, properties, roleAssignmentId).ConfigureAwait(false);
 
             RegisterForCleanup(assignment);
@@ -80,7 +79,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             List<RoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(RoleAssignmentScope.Root).ToEnumerableAsync().ConfigureAwait(false);
             var definitionToAssign = definitions.FirstOrDefault(d => d.RoleName == roleName);
 
-            var properties = new RoleAssignmentProperties(definitionToAssign.Id, pricipalID);
+            var properties = new RoleAssignmentProperties(definitionToAssign.Id, TestEnvironment.ClientObjectId);
             RoleAssignment assignment = await Client.CreateRoleAssignmentAsync(RoleAssignmentScope.Root, properties, roleAssignmentId).ConfigureAwait(false);
 
             RoleAssignment result = await Client.DeleteRoleAssignmentAsync(RoleAssignmentScope.Root, assignment.Name).ConfigureAwait(false);

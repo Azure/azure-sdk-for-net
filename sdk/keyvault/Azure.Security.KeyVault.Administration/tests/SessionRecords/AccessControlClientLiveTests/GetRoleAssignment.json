@@ -18,7 +18,7 @@
         "Content-Type": "application/json",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "03c34d72-a07e-11ea-b186-0242ac12000a"
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
       },
       "ResponseBody": "OK"
     },
@@ -42,7 +42,7 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "03c34d72-a07e-11ea-b186-0242ac12000a"
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
       },
       "ResponseBody": {
         "value": [
@@ -198,7 +198,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "181",
         "Content-Type": "application/json",
-        "Request-Id": "|6e6b2bc9-4048e160b0eca19f.",
+        "Request-Id": "|3e6cb382-4eecfa4a673ebe60.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
@@ -207,8 +207,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/a290e904-7015-4bba-90c8-60543313cdb4",
-        "principalId": "4ae6842b-2a3e-4919-8305-7db89f3d6edd"
+        "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
+        "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -217,14 +217,14 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "03c34d72-a07e-11ea-b186-0242ac12000a"
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
         "name": "e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
         "properties": {
-          "principalId": "4ae6842b-2a3e-4919-8305-7db89f3d6edd",
-          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/a290e904-7015-4bba-90c8-60543313cdb4",
+          "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
           "scope": "/"
         },
         "type": "Microsoft.Authorization/roleAssignments"
@@ -235,7 +235,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Request-Id": "|6e6b2bca-4048e160b0eca19f.",
+        "Request-Id": "|3e6cb383-4eecfa4a673ebe60.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Administration/4.1.0-dev.20200608.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
@@ -251,14 +251,14 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "addr=72.176.254.191",
         "x-ms-keyvault-region": "EASTUS",
-        "x-ms-request-id": "03c34d72-a07e-11ea-b186-0242ac12000a"
+        "x-ms-request-id": "040cdf98-a06d-11ea-af9a-0242ac12000b"
       },
       "ResponseBody": {
         "id": "/providers/Microsoft.Authorization/roleAssignments/e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
         "name": "e7ae2aff-eb17-4c9d-84f0-d12f7f468f16",
         "properties": {
-          "principalId": "4ae6842b-2a3e-4919-8305-7db89f3d6edd",
-          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/a290e904-7015-4bba-90c8-60543313cdb4",
+          "principalId": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
+          "roleDefinitionId": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/21dbd100-6940-42c2-9190-5d6cb909625b",
           "scope": "/"
         },
         "type": "Microsoft.Authorization/roleAssignments"
@@ -267,6 +267,7 @@
   ],
   "Variables": {
     "AZURE_KEYVAULT_URL": "https://eastus.clitest.managedhsm-preview.azure.net",
+    "CLIENT_OBJECTID": "693a17da-7022-4cdd-9d4e-4e72e4ad449d",
     "RandomSeed": "1965379599"
   }
 }

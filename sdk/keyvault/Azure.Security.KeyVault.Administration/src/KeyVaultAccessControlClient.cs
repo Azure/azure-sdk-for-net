@@ -6,13 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.KeyVault;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// The Client.
+    /// The KeyVaultAccessControlClient provides synchronous and asynchronous methods to view and manage Role Based Access for the Azure Key Vault.
+    /// The client supports creating, listing, updating, and deleting <see cref="RoleAssignment"/>.
+    /// The client also supports listing <see cref="RoleDefinition" />.
     /// </summary>
     public class KeyVaultAccessControlClient
     {
