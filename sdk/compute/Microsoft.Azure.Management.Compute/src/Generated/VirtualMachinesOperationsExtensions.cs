@@ -950,6 +950,46 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static VirtualMachineAssessPatchesResult AssessPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.AssessPatchesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineAssessPatchesResult> AssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Run command on the VM.
             /// </summary>
             /// <param name='operations'>
@@ -1537,6 +1577,46 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginPerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static VirtualMachineAssessPatchesResult BeginAssessPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.BeginAssessPatchesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Assess patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineAssessPatchesResult> BeginAssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginAssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
