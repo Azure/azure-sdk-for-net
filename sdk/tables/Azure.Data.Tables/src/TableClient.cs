@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Queryable;
 using Azure.Data.Tables.Sas;
@@ -22,16 +23,18 @@ namespace Azure.Data.Tables
     {
         private readonly string _table;
         private readonly OdataMetadataFormat _format;
+        private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
 
-        internal TableClient(string table, TableRestClient tableOperations, string version, bool isPremiumEndpoint)
+        internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
         {
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
             _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
+            _diagnostics = diagnostics;
             _isPremiumEndpoint = isPremiumEndpoint;
         }
 
@@ -70,11 +73,20 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [ForwardsClientCalls]
         public virtual Response<TableItem> Create(CancellationToken cancellationToken = default)
         {
-            var response = _tableOperations.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
-            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -82,11 +94,20 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<TableItem>> CreateAsync(CancellationToken cancellationToken = default)
         {
-            var response = await _tableOperations.CreateAsync(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Create)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.CreateAsync(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -95,20 +116,28 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<ReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-
-            var response = await _tableOperations.InsertEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.InsertEntityAsync(_table,
                                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                                      queryOptions: new QueryOptions() { Format = _format },
                                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-            dict.CastAndRemoveAnnotations();
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -117,20 +146,28 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        [ForwardsClientCalls]
         public virtual Response<ReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
-
-            var response = _tableOperations.InsertEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.InsertEntity(_table,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
 
-            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-            dict.CastAndRemoveAnnotations();
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -139,18 +176,26 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response<T>> InsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-
-            var response = await _tableOperations.InsertEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.InsertEntityAsync(_table,
                                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                                      queryOptions: new QueryOptions() { Format = _format },
                                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-            return Response.FromValue(result, response.GetRawResponse());
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -159,18 +204,26 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
-        [ForwardsClientCalls]
         public virtual Response<T> Insert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-
-            var response = _tableOperations.InsertEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Insert)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.InsertEntity(_table,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
 
-            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-            return Response.FromValue(result, response.GetRawResponse());
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
 
@@ -181,7 +234,6 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -197,12 +249,22 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return await _tableOperations.UpdateEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.UpdateEntityAsync(_table,
                                                             partitionKey as string,
                                                             rowKey as string,
                                                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                             queryOptions: new QueryOptions() { Format = _format },
                                                             cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -211,7 +273,6 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -227,12 +288,22 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return _tableOperations.UpdateEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.UpdateEntity(_table,
                                                  partitionKey as string,
                                                  rowKey as string,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -241,18 +312,26 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> UpsertAsync<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-
-            return await _tableOperations.UpdateEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.UpdateEntityAsync(_table,
                                                             entity.PartitionKey,
                                                             entity.RowKey,
                                                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                             queryOptions: new QueryOptions() { Format = _format },
                                                             cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -261,18 +340,26 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response Upsert<T>(T entity, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
             Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
-
-            return _tableOperations.UpdateEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Upsert)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.UpdateEntity(_table,
                                                  entity.PartitionKey,
                                                  entity.RowKey,
                                                  tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -282,7 +369,6 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> UpdateAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -299,13 +385,23 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return await _tableOperations.UpdateEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.UpdateEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      ifMatch: eTag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -315,7 +411,6 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response Update(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -332,13 +427,23 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return _tableOperations.UpdateEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Update)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.UpdateEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -348,7 +453,6 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -364,13 +468,23 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return (await _tableOperations.MergeEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
+            scope.Start();
+            try
+            {
+                return (await _tableOperations.MergeEntityAsync(_table,
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                                      ifMatch: eTag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -380,7 +494,6 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(entity, nameof(entity));
@@ -396,13 +509,23 @@ namespace Azure.Data.Tables
                 throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
             }
 
-            return _tableOperations.MergeEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Merge)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.MergeEntity(_table,
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                                           ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -413,10 +536,13 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
@@ -445,6 +571,12 @@ namespace Azure.Data.Tables
                                        CreateContinuationTokenFromHeaders(response.Headers),
                                        response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -455,38 +587,59 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        [ForwardsClientCalls]
         public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
+
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response = _tableOperations.QueryEntities(_table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.QueryEntities(_table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        cancellationToken: cancellationToken);
 
-                response.Value.Value.CastAndRemoveAnnotations();
+                    response.Value.Value.CastAndRemoveAnnotations();
 
-                return Page.FromValues(
-                    response.Value.Value,
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
+                    return Page.FromValues(
+                        response.Value.Value,
+                        CreateContinuationTokenFromHeaders(response.Headers),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }, (continuationToken, _) =>
             {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.QueryEntities(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken);
+                    var response = _tableOperations.QueryEntities(
+                        _table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        nextPartitionKey: NextPartitionKey,
+                        nextRowKey: NextRowKey,
+                        cancellationToken: cancellationToken);
 
-                response.Value.Value.CastAndRemoveAnnotations();
+                    response.Value.Value.CastAndRemoveAnnotations();
 
-                return Page.FromValues(response.Value.Value,
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value,
+                                           CreateContinuationTokenFromHeaders(response.Headers),
+                                           response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             });
+
         }
 
         /// <summary>
@@ -497,12 +650,35 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) =>
-            QueryAsync(Bind(filter), top, select, cancellationToken);
+        public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return QueryAsync(Bind(filter), top, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
-        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) =>
-            Query(Bind(filter), top, select, cancellationToken);
+        public virtual Pageable<IDictionary<string, object>> Query(Expression<Func<IDictionary<string, object>, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return Query(Bind(filter), top, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Queries entities in the table.
@@ -512,9 +688,20 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
-            QueryAsync<T>(Bind(filter), top, select, cancellationToken);
+        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return QueryAsync<T>(Bind(filter), top, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Queries entities in the table.
@@ -524,10 +711,13 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.QueryEntitiesAsync(
                     _table,
@@ -552,6 +742,12 @@ namespace Azure.Data.Tables
                                        CreateContinuationTokenFromHeaders(response.Headers),
                                        response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -562,9 +758,20 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        [ForwardsClientCalls]
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new() =>
-            Query<T>(Bind(filter), top, select, cancellationToken);
+        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return Query<T>(Bind(filter), top, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Queries entities in the table.
@@ -574,33 +781,53 @@ namespace Azure.Data.Tables
         /// <param name="select">Returns the desired properties of an entity from the set. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
-        [ForwardsClientCalls]
         public virtual Pageable<T> Query<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
+
             return PageableHelpers.CreateEnumerable((int? _) =>
             {
-                var response = _tableOperations.QueryEntities(_table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.QueryEntities(_table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                            cancellationToken: cancellationToken);
 
-                return Page.FromValues(
-                    response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
+                    return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }, (continuationToken, _) =>
             {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.QueryEntities(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken);
+                    var response = _tableOperations.QueryEntities(
+                        _table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        nextPartitionKey: NextPartitionKey,
+                        nextRowKey: NextRowKey,
+                        cancellationToken: cancellationToken);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                                        CreateContinuationTokenFromHeaders(response.Headers),
+                                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             });
         }
 
@@ -612,18 +839,26 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
-
-            return await _tableOperations.DeleteEntityAsync(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.DeleteEntityAsync(_table,
                                                      partitionKey,
                                                      rowKey,
                                                      ifMatch: eTag,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -634,40 +869,66 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [ForwardsClientCalls]
         public virtual Response Delete(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
-
-            return _tableOperations.DeleteEntity(_table,
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.DeleteEntity(_table,
                                           partitionKey,
                                           rowKey,
                                           ifMatch: eTag,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
-            var response = await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value, response.GetRawResponse());
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
+            scope.Start();
+            try
+            {
+                var response = await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
-            var response = _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
-            return Response.FromValue(response.Value, response.GetRawResponse());
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
+            scope.Start();
+            try
+            {
+                var response = _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
+                return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
@@ -675,18 +936,40 @@ namespace Azure.Data.Tables
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            await _tableOperations.SetAccessPolicyAsync(_table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
+            scope.Start();
+            try
+            {
+                return await _tableOperations.SetAccessPolicyAsync(_table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
+        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
+            scope.Start();
+            try
+            {
+                return _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         internal ExpressionParser GetExpressionParser()
         {
