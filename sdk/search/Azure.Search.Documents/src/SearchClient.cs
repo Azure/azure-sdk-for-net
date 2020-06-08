@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -166,12 +167,13 @@ namespace Azure.Search.Documents
                 Pipeline,
                 endpoint.ToString(),
                 IndexName,
+                null,
                 Version.ToVersionString());
         }
 
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
-        /// <see cref="SearchServiceClient"/>.
+        /// <see cref="SearchIndexClient"/>.
         /// </summary>
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
@@ -220,6 +222,7 @@ namespace Azure.Search.Documents
                 Pipeline,
                 endpoint.ToString(),
                 IndexName,
+                null,
                 Version.ToVersionString());
         }
         #endregion ctors
@@ -228,9 +231,6 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -239,20 +239,26 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
-        [ForwardsClientCalls]
         public virtual Response<long> GetDocumentCount(
-            SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            Protocol.Count(
-                options?.ClientRequestId,
-                cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
+            scope.Start();
+            try
+            {
+                return Protocol.Count(
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -261,14 +267,23 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
-        [ForwardsClientCalls]
         public virtual async Task<Response<long>> GetDocumentCountAsync(
-            SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await Protocol.CountAsync(
-                options?.ClientRequestId,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
+            scope.Start();
+            try
+            {
+                return await Protocol.CountAsync(
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         #endregion GetDocumentCount
 
         #region GetDocument
@@ -658,7 +673,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull, options?.ClientRequestId);
+                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -939,7 +954,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options, options.ClientRequestId);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1207,7 +1222,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSuggestPostRequest(options, options.ClientRequestId);
+                using HttpMessage message = Protocol.CreateSuggestPostRequest(options);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1264,19 +1279,30 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
-        [ForwardsClientCalls]
         public virtual Response<AutocompleteResults> Autocomplete(
             string searchText,
             string suggesterName,
             AutocompleteOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            AutocompleteInternal(
-                searchText,
-                suggesterName,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(Autocomplete)}");
+            scope.Start();
+            try
+            {
+                return AutocompleteInternal(
+                    searchText,
+                    suggesterName,
+                    options,
+                    async: false,
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
@@ -1302,19 +1328,30 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
-        [ForwardsClientCalls]
         public virtual async Task<Response<AutocompleteResults>> AutocompleteAsync(
             string searchText,
             string suggesterName,
             AutocompleteOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await AutocompleteInternal(
-                searchText,
-                suggesterName,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(Autocomplete)}");
+            scope.Start();
+            try
+            {
+                return await AutocompleteInternal(
+                    searchText,
+                    suggesterName,
+                    options,
+                    async: true,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         private async Task<Response<AutocompleteResults>> AutocompleteInternal(
             string searchText,
@@ -1328,8 +1365,8 @@ namespace Azure.Search.Documents
             options.SuggesterName = suggesterName;
 
             return async ?
-                await Protocol.AutocompletePostAsync(options, options.ClientRequestId, cancellationToken).ConfigureAwait(false) :
-                Protocol.AutocompletePost(options, options.ClientRequestId, cancellationToken);
+                await Protocol.AutocompletePostAsync(options, cancellationToken).ConfigureAwait(false) :
+                Protocol.AutocompletePost(options, cancellationToken);
         }
         #endregion Autocomplete
 
@@ -1563,10 +1600,6 @@ namespace Azure.Search.Documents
                     uri.AppendPath("/docs/search.index", false);
                     uri.AppendQuery("api-version", Version.ToVersionString(), true);
                     request.Uri = uri;
-                    if (options?.ClientRequestId != null)
-                    {
-                        request.ClientRequestId = options?.ClientRequestId.ToString();
-                    }
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
                     using Utf8JsonRequestContent content = new Utf8JsonRequestContent();

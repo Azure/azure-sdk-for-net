@@ -688,7 +688,10 @@ namespace Azure.Storage.Blobs.Test
                 await WaitForProgressAsync(progressList, data.LongLength);
                 Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
-                Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                if (progressList.Count > 0)
+                {
+                    Assert.GreaterOrEqual(data.LongLength, progressList.Last(), "Final progress has unexpected value");
+                }
             }
 
             // Assert
@@ -1006,6 +1009,30 @@ namespace Azure.Storage.Blobs.Test
                         actualException => Assert.IsTrue(true)
                     );
                 }
+            }
+        }
+
+        [Test]
+        public async Task AppendBlockFromUriAsync_NonAsciiSourceUri()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewNonAsciiBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateAsync();
+
+                // Act
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
             }
         }
 

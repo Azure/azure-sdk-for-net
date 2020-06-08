@@ -15,7 +15,7 @@ namespace Azure.Search.Documents
     /// query behaviors.
     /// </summary>
     [CodeGenModel("SearchRequest")]
-    public partial class SearchOptions : SearchRequestOptions
+    public partial class SearchOptions
     {
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
@@ -189,7 +189,6 @@ namespace Azure.Search.Documents
             destination.ScoringProfile = source.ScoringProfile;
             destination.SearchMode = source.SearchMode;
             destination.Skip = source.Skip;
-            destination.ClientRequestId = source.ClientRequestId;
         }
 
         /// <summary>

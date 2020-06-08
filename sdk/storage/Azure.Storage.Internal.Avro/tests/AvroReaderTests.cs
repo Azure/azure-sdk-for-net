@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -48,7 +49,8 @@ namespace Azure.Storage.Internal.Avro.Tests
             foreach (TestCase testCase in testCases)
             {
                 // Arrange
-                using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{testCase.Path}");
+                using FileStream stream = File.OpenRead(
+                    $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{testCase.Path}");
                 AvroReader avroReader = new AvroReader(stream);
 
                 // Act

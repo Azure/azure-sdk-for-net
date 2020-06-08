@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -2746,6 +2747,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -2779,6 +2781,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             DataLakeFileUploadOptions options,
@@ -2861,6 +2864,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task<Response<PathInfo>> UploadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2894,6 +2898,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             bool overwrite = false,
@@ -2927,6 +2932,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             DataLakeFileUploadOptions options,
@@ -2974,6 +2980,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             PathHttpHeaders httpHeaders = default,
@@ -3016,6 +3023,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Upload(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3049,6 +3057,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             string path,
             bool overwrite = false,
@@ -3082,6 +3091,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             DataLakeFileUploadOptions options,
@@ -3134,6 +3144,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             PathHttpHeaders httpHeaders = default,
@@ -3169,6 +3180,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> UploadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -3202,6 +3214,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             bool overwrite = false,
@@ -3318,33 +3331,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<PathInfo> ScheduleDeletion(
+        internal virtual Response<PathInfo> ScheduleDeletion(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
-            try
-            {
-                scope.Start();
-
-                Response<BlobInfo> response = _blockBlobClient.ScheduleDeletion(
-                    options.ToBlobScheduleDeletionOptions(),
-                    cancellationToken);
-
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
+            => ScheduleDeletionInternal(
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// Schedules the file for deletation.
@@ -3363,34 +3357,112 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+        internal virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
             DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
+            => await ScheduleDeletionInternal(
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Schedules the file for deletion.
+        /// </summary>
+        /// <param name="options">
+        /// Schedule deletion parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> ScheduleDeletionInternal(
+            DataLakeFileScheduleDeletionOptions options,
+            bool async,
+            CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
-            try
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
-                scope.Start();
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakeFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options.TimeToExpire)}: {options.TimeToExpire}\n" +
+                    $"{nameof(options.SetExpiryRelativeTo)}: {options.SetExpiryRelativeTo}\n" +
+                    $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
+                try
+                {
 
-                Response<BlobInfo> response = await _blockBlobClient.ScheduleDeletionAsync(
-                    options.ToBlobScheduleDeletionOptions(),
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    PathExpiryOptions blobExpiryOptions;
+                    string expiresOn = null;
 
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
+                    // Relative
+                    if (options.TimeToExpire.HasValue)
+                    {
+                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOffset.CreationTime)
+                        {
+                            blobExpiryOptions = PathExpiryOptions.RelativeToCreation;
+                        }
+                        else
+                        {
+                            blobExpiryOptions = PathExpiryOptions.RelativeToNow;
+                        }
+                        expiresOn = options.TimeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                    }
+                    // Absolute
+                    else
+                    {
+                        if (options.ExpiresOn.HasValue)
+                        {
+                            blobExpiryOptions = PathExpiryOptions.Absolute;
+                            expiresOn = options.ExpiresOn?.ToString("R", CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            blobExpiryOptions = PathExpiryOptions.NeverExpire;
+                        }
+                    }
+
+                    Response<PathSetExpiryInternal> response = await DataLakeRestClient.Path.SetExpiryAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        BlobUri,
+                        Version.ToVersionString(),
+                        blobExpiryOptions,
+                        expiresOn: expiresOn,
+                        async: async,
+                        operationName: $"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}",
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileClient));
+                }
             }
         }
+
         #endregion ScheduleDeletion
 
         #region Query
@@ -3523,6 +3595,10 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken).ConfigureAwait(false),
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     // Append data
                     await client.AppendInternal(
                         stream,
@@ -3556,6 +3632,11 @@ namespace Azure.Storage.Files.DataLake
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>
                 {
                     (var offset, var size) = partitions.LastOrDefault();
+
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
                     return await client.FlushInternal(
                         offset + size,
                         retainUncommittedData: default,

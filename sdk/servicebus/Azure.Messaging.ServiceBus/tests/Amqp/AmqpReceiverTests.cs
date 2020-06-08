@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using Moq;
@@ -108,33 +108,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             await receiver.CloseAsync(CancellationToken.None);
             Assert.That(receiver.IsClosed, Is.True, "The receiver should be marked as closed after closing");
         }
-
-        ///// <summary>
-        /////   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
-        /////   method.
-        ///// </summary>
-        /////
-        //[Test]
-        //[TestCase(-32768)]
-        //[TestCase(-1)]
-        //[TestCase(0)]
-        //public void ReceiveAsyncValidatesTheMaximumMessageCount(int count)
-        //{
-        //    var eventHub = "eventHubName";
-        //    var consumerGroup = "$DEFAULT";
-        //    var partition = "3";
-        //    var eventPosition = EventPosition.FromOffset(123);
-        //    var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-        //    var retriableException = new EventHubsException(true, "Test");
-        //    var mockConverter = new Mock<AmqpMessageConverter>();
-        //    var mockCredential = new Mock<TokenCredential>();
-        //    var mockScope = new Mock<AmqpConnectionScope>();
-
-        //    using var cancellationSource = new CancellationTokenSource();
-
-        //    var consumer = new AmqpReceiver(eventHub, consumerGroup, partition, eventPosition, true, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-        //    Assert.That(async () => await consumer.ReceiveAsync(count, null, cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
-        //}
 
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
@@ -276,7 +249,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var entityName = "entityName";
             var tokenValue = "123ABC";
-            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var mockLogger = new Mock<ServiceBusEventSource>();
+            var retryPolicy = new BasicRetryPolicy(retryOptions)
+            {
+                Logger = mockLogger.Object
+            };
             var retriableException = new Error
             {
                 Condition = AmqpClientConstants.ServerBusyError.ToString()
@@ -320,6 +297,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
+
+            mockLogger
+                .Verify(
+                    log => log.RunOperationExceptionEncountered(It.IsAny<string>()),
+                Times.Exactly(retryOptions.MaxRetries));
         }
 
         /// <summary>

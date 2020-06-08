@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// The error code.
         /// </summary>
         [CodeGenMember("Code")]
-        public string Code { get; internal set; }
+        public string ErrorCode { get; internal set; }
 
         /// <summary>
         /// The error message.

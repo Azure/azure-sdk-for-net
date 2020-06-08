@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Divides text using language-specific rules. </summary>
     public partial class MicrosoftLanguageTokenizer : LexicalTokenizer

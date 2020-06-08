@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SplitSkill : IUtf8JsonSerializable
     {
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Models
             if (TextSplitMode != null)
             {
                 writer.WritePropertyName("textSplitMode");
-                writer.WriteStringValue(TextSplitMode.Value.ToSerialString());
+                writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
             if (MaximumPageLength != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    textSplitMode = property.Value.GetString().ToTextSplitMode();
+                    textSplitMode = new TextSplitMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maximumPageLength"))

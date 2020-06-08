@@ -93,6 +93,83 @@
         }
 
         [Fact]
+        public void AddExampleWithChildren()
+        {
+            UseClientFor(async client =>
+            {
+                var appId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "Examples Test App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+
+                await client.Model.AddIntentAsync(appId, "0.1", new ModelCreateObject
+                {
+                    Name = "WeatherInPlace"
+                });
+
+                await client.Model.AddEntityAsync(appId, "0.1", new EntityModelCreateObject
+                {
+                    Name = "Place",
+                    Children = new ChildEntityModelCreateObject[]
+                    {
+                        new ChildEntityModelCreateObject
+                        {
+                            Name = "City"
+                        },
+                        new ChildEntityModelCreateObject
+                        {
+                            Name = "Country"
+                        }
+                    }
+                });
+
+                var example = new ExampleLabelObject
+                {
+                    Text = "whats the weather in buenos aires, argentina?",
+                    IntentName = "WeatherInPlace",
+                    EntityLabels = new List<EntityLabelObject>()
+                    {
+                        new EntityLabelObject()
+                        {
+                            EntityName = "Place",
+                            StartCharIndex = 21,
+                            EndCharIndex = 43,
+                            Children = new EntityLabelObject[]
+                            {
+                                new EntityLabelObject()
+                                {
+                                    EntityName = "City",
+                                    StartCharIndex = 21,
+                                    EndCharIndex = 32
+                                },
+                                new EntityLabelObject()
+                                {
+                                    EntityName = "Country",
+                                    StartCharIndex = 35,
+                                    EndCharIndex = 43
+                                }
+                            }
+                        }
+                    }
+                };
+
+                var result = await client.Examples.AddAsync(appId, versionId, example, true);
+
+                var examples = await client.Examples.ListAsync(appId, versionId, enableNestedChildren: true);
+
+                Assert.Equal(examples[0].EntityLabels[0].Children.Count, example.EntityLabels[0].Children.Count);
+
+                await client.Apps.DeleteAsync(appId);
+
+                Assert.Equal(example.Text, result.UtteranceText);
+            });
+        }
+
+        [Fact]
         public void AddExamplesInBatch()
         {
             UseClientFor(async client =>

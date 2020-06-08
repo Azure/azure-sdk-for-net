@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Text analytics entity recognition. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill

@@ -28,12 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendAsync(batch);
 
                 await using var receiver = client.CreateReceiver(scope.QueueName);
-
-                Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
-                foreach (ServiceBusMessage message in sentMessages)
-                {
-                    sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body.ToArray()));
-                }
+                var messageEnum = sentMessages.GetEnumerator();
 
                 var ct = 0;
                 while (ct < messageCt)
@@ -41,7 +36,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAsync(
                     maxMessages: messageCt))
                     {
-                        var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
                         ct++;
                     }
                 }
@@ -266,6 +262,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
                 }
+            }
+        }
+
+        [Test]
+        public async Task CanPeekADeferredMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var receivedMsg = await receiver.ReceiveAsync();
+
+                await receiver.DeferAsync(receivedMsg);
+                var peekedMsg = await receiver.PeekAsync();
+                Assert.AreEqual(receivedMsg.MessageId, peekedMsg.MessageId);
+                Assert.AreEqual(receivedMsg.SequenceNumber, peekedMsg.SequenceNumber);
+
+                var deferredMsg = await receiver.ReceiveDeferredMessageAsync(peekedMsg.SequenceNumber);
+                Assert.AreEqual(peekedMsg.MessageId, deferredMsg.MessageId);
+                Assert.AreEqual(peekedMsg.SequenceNumber, deferredMsg.SequenceNumber);
             }
         }
 

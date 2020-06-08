@@ -2091,51 +2091,6 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task RestoreAsync()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SoftDelete();
-            string containerName = GetNewContainerName();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync();
-            await container.DeleteAsync();
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
-            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
-
-            // It takes some time for the Container to be deleted.
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(30000);
-            }
-
-            // Act
-            Response response = await container.RestoreAsync(containerItem.Name, containerItem.Version);
-
-            // Assert
-            await container.GetPropertiesAsync();
-
-            // Cleanup
-            await container.DeleteAsync();
-        }
-
-        [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task RestoreAsync_Error()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_SoftDelete();
-            string containerName = GetNewContainerName();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.RestoreAsync(GetNewBlobName(), "01D60F8BB59A4652"),
-                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
-        }
-
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()

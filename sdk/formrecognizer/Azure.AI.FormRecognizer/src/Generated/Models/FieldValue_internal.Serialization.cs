@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             TimeSpan? valueTime = default;
             string valuePhoneNumber = default;
             float? valueNumber = default;
-            int? valueInteger = default;
+            long? valueInteger = default;
             IReadOnlyList<FieldValue_internal> valueArray = default;
             IReadOnlyDictionary<string, FieldValue_internal> valueObject = default;
             string text = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueInteger = property.Value.GetInt32();
+                    valueInteger = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("valueArray"))

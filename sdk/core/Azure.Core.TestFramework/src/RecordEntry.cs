@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
@@ -180,9 +181,22 @@ namespace Azure.Core.TestFramework
                     // fallback to generic string writing
                     if (document.RootElement.ValueKind != JsonValueKind.Array)
                     {
-                        jsonWriter.WritePropertyName(name.AsSpan());
-                        document.RootElement.WriteTo(jsonWriter);
-                        return;
+                        // Make sure we can replay JSON is exactly the same as the source
+                        // for the case where service response was pre-formatted
+                        // fallback to generic string writing
+                        var memoryStream = new MemoryStream();
+                        // Settings of this writer should be in sync with the one used in deserialiation
+                        using (var reformattedWriter = new Utf8JsonWriter(memoryStream))
+                        {
+                            document.RootElement.WriteTo(reformattedWriter);
+                        }
+
+                        if (memoryStream.ToArray().SequenceEqual(requestBody))
+                        {
+                            jsonWriter.WritePropertyName(name.AsSpan());
+                            document.RootElement.WriteTo(jsonWriter);
+                            return;
+                        }
                     }
                 }
                 catch (Exception)

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EntityRecognitionSkill : IUtf8JsonSerializable
     {
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Models
                     List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToEntityCategory());
+                        array.Add(new EntityCategory(item.GetString()));
                     }
                     categories = array;
                     continue;

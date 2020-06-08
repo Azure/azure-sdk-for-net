@@ -47,13 +47,13 @@ namespace Azure.Storage.Internal.Avro
         /// The byte offset within the Avro file (both header and data)
         /// of the start of the current block.
         /// </summary>
-        public long BlockOffset { get; private set; }
+        public virtual long BlockOffset { get; private set; }
 
         /// <summary>
         /// The index of the current object within the current block.
         /// </summary>
         /// <returns></returns>
-        public long ObjectIndex { get; private set; }
+        public virtual long ObjectIndex { get; private set; }
 
         /// <summary>
         /// If this Avro Reader has been initalized.
@@ -90,6 +90,11 @@ namespace Azure.Storage.Internal.Avro
             ObjectIndex = indexWithinCurrentBlock;
             _initalized = false;
         }
+
+        /// <summary>
+        /// Constructor for mocking.  Do not use.
+        /// </summary>
+        public AvroReader() { }
 
         private async Task Initalize(bool async, CancellationToken cancellationToken = default)
         {
@@ -141,9 +146,9 @@ namespace Azure.Storage.Internal.Avro
             }
         }
 
-        public bool HasNext() => !_initalized || _itemsRemainingInBlock > 0;
+        public virtual bool HasNext() => !_initalized || _itemsRemainingInBlock > 0;
 
-        public async Task<object> Next(bool async, CancellationToken cancellationToken = default)
+        public virtual async Task<object> Next(bool async, CancellationToken cancellationToken = default)
         {
             // Initialize AvroReader, if necessary.
             if (!_initalized)

@@ -114,7 +114,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
     }

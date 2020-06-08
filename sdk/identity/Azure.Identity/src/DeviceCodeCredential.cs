@@ -167,15 +167,9 @@ namespace Azure.Identity
 
                 return _record;
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -208,15 +202,9 @@ namespace Azure.Identity
 
                 return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 

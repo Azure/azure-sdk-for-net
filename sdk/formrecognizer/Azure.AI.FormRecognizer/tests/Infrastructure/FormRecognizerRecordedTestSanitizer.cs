@@ -16,6 +16,8 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
             }
+
+            base.SanitizeHeaders(headers);
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)

@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static class QuickQueryExtensions
     {
-        internal static QuickQuerySerialization ToQuickQuerySerialization(
+        internal static QuerySerialization ToQuickQuerySerialization(
             this BlobQueryTextConfiguration textConfiguration)
         {
             if (textConfiguration == default)
@@ -22,9 +22,9 @@ namespace Azure.Storage.Blobs
                 return default;
             }
 
-            QuickQuerySerialization serialization = new QuickQuerySerialization
+            QuerySerialization serialization = new QuerySerialization
             {
-                Format = new QuickQueryFormat()
+                Format = new QueryFormat()
             };
 
             serialization.Format.DelimitedTextConfiguration = default;
@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs
             if (textConfiguration.GetType() == typeof(BlobQueryCsvTextConfiguration))
             {
                 BlobQueryCsvTextConfiguration cvsTextConfiguration = textConfiguration as BlobQueryCsvTextConfiguration;
-                serialization.Format.Type = QuickQueryFormatType.Delimited;
+                serialization.Format.Type = QueryFormatType.Delimited;
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
                     ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs
             else if (textConfiguration.GetType() == typeof(BlobQueryJsonTextConfiguration))
             {
                 BlobQueryJsonTextConfiguration jsonTextConfiguration = textConfiguration as BlobQueryJsonTextConfiguration;
-                serialization.Format.Type = QuickQueryFormatType.Json;
+                serialization.Format.Type = QueryFormatType.Json;
                 serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
                 {
                     RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs
             return serialization;
         }
 
-        internal static BlobDownloadInfo ToBlobDownloadInfo(this BlobQuickQueryResult quickQueryResult)
+        internal static BlobDownloadInfo ToBlobDownloadInfo(this BlobQueryResult quickQueryResult)
             => BlobsModelFactory.BlobDownloadInfo(
                 lastModified: quickQueryResult.LastModified,
                 blobSequenceNumber: quickQueryResult.BlobSequenceNumber,

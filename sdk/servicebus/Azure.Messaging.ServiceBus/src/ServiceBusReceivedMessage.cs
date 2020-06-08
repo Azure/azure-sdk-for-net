@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -13,13 +14,18 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
+        /// <summary>
+        /// Indicates whether the user has settled the message as part of their callback.
+        /// If they have done so, we will not autocomplete.
+        /// </summary>
+        internal bool IsSettled { get; set; }
 
         internal ServiceBusMessage SentMessage { get; set; } = new ServiceBusMessage();
 
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public ReadOnlyMemory<byte> Body => SentMessage.Body;
+        public BinaryData Body => SentMessage.Body;
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -139,12 +145,6 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
         public DateTimeOffset ScheduledEnqueueTime => SentMessage.ScheduledEnqueueTime;
-
-        // TODO: Calculate the size of the properties and body
-        /// <summary>
-        /// Gets the total size of the message body in bytes.
-        /// </summary>
-        public long Size => SentMessage.Size;
 
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.

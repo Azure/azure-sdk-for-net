@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // Create the request message and the management link.
 
-                        var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+                        var token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -306,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // Create the request message and the management link.
 
-                        token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+                        token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
-            var clientType = GetType();
+            var clientType = GetType().Name;
 
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The token to use for service authorization.</returns>
         ///
-        private async Task<string> AquireAccessTokenAsync(CancellationToken cancellationToken)
+        private async Task<string> AcquireAccessTokenAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
