@@ -10,12 +10,12 @@ using System;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
-    public partial class Autocompletion
+    public partial class AutocompleteItem
     {
-        /// <summary> Initializes a new instance of Autocompletion. </summary>
+        /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
-        internal Autocompletion(string text, string queryPlusText)
+        internal AutocompleteItem(string text, string queryPlusText)
         {
             if (text == null)
             {

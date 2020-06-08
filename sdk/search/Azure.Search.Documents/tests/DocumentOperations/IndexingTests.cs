@@ -54,6 +54,79 @@ namespace Azure.Search.Documents.Tests
         #endregion Utilities
 
         [Test]
+        public async Task IndexingConveniences()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            SearchClient client = resources.GetSearchClient();
+
+            // Upload
+            var doc1 = new SearchDocument
+            {
+                ["hotelId"] = "1",
+                ["hotelName"] = "Highway Hole in the Wall"
+            };
+            var doc2 = new SearchDocument
+            {
+                ["hotelId"] = "2",
+                ["hotelName"] = "Freeway Flophouse"
+            };
+            Response<IndexDocumentsResult> response = await client.UploadDocumentsAsync(new[] { doc1, doc2 });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 201);
+            AssertActionSucceeded("2", response.Value.Results[1], 201);
+            await resources.WaitForIndexingAsync();
+            long count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(2L, count);
+
+            // Merge
+            response = await client.MergeDocumentsAsync(
+                new[]
+                {
+                    new SearchDocument { ["hotelId"] = "1", ["hotelName"] = "Highway Haven" }
+                });
+            Assert.AreEqual(1, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(2L, count);
+            SearchDocument merged = await client.GetDocumentAsync<SearchDocument>("1");
+            Assert.AreNotEqual(doc1["hotelName"], merged["hotelName"]);
+
+            // Upload or Merge
+            response = await client.MergeOrUploadDocumentsAsync(
+                new[]
+                {
+                    new SearchDocument { ["hotelId"] = "2", ["hotelName"] = "Freeway Freedom" },
+                    new SearchDocument { ["hotelId"] = "3", ["hotelName"] = "Basically a gas station bathroom, but with beds" },
+                });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("2", response.Value.Results[0], 200);
+            AssertActionSucceeded("3", response.Value.Results[1], 201);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(3L, count);
+            merged = await client.GetDocumentAsync<SearchDocument>("2");
+            Assert.AreNotEqual(doc2["hotelName"], merged["hotelName"]);
+
+            // Delete by document
+            response = await client.DeleteDocumentsAsync(new[] { doc1, doc2 });
+            Assert.AreEqual(2, response.Value.Results.Count);
+            AssertActionSucceeded("1", response.Value.Results[0], 200);
+            AssertActionSucceeded("2", response.Value.Results[1], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(1L, count);
+
+            // Delete by key
+            response = await client.DeleteDocumentsAsync("hotelId", new[] { "3" });
+            Assert.AreEqual(1, response.Value.Results.Count);
+            AssertActionSucceeded("3", response.Value.Results[0], 200);
+            await resources.WaitForIndexingAsync();
+            count = await client.GetDocumentCountAsync();
+            Assert.AreEqual(0L, count);
+        }
+
+        [Test]
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
