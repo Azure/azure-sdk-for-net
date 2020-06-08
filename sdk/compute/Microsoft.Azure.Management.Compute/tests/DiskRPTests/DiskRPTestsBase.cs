@@ -190,7 +190,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void DiskEncryptionSet_CRUD_Execute(string methodName, string location = null)
+        protected void DiskEncryptionSet_CRUD_Execute(string methodName, string encryptionType, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -200,7 +200,7 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var desName = TestUtilities.GenerateName(DiskNamePrefix);
-                DiskEncryptionSet des = GenerateDefaultDiskEncryptionSet(DiskRPLocation);
+                DiskEncryptionSet des = GenerateDefaultDiskEncryptionSet(DiskRPLocation, encryptionType);
 
                 try
                 {
@@ -961,7 +961,7 @@ namespace Compute.Tests.DiskRPTests
             return copyDisk;
         }
 
-        protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location)
+        protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location, string encryptionType = EncryptionType.EncryptionAtRestWithCustomerKey)
         {
             string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault";
             string encryptionKeyUri = @"https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c";
@@ -980,7 +980,8 @@ namespace Compute.Tests.DiskRPTests
                         Id = testVaultId
                     },
                     KeyUrl = encryptionKeyUri
-                }
+                },
+                EncryptionType = encryptionType
             };
             return des;
         }
