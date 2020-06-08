@@ -653,10 +653,10 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReadOnlyCollection<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             var response = await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value as ReadOnlyCollection<SignedIdentifier>, response.GetRawResponse());
+            return Response.FromValue(response.Value, response.GetRawResponse());
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
@@ -664,10 +664,10 @@ namespace Azure.Data.Tables
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ReadOnlyCollection<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default)
         {
             var response = _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
-            return Response.FromValue(response.Value as ReadOnlyCollection<SignedIdentifier>, response.GetRawResponse());
+            return Response.FromValue(response.Value, response.GetRawResponse());
         }
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
