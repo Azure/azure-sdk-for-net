@@ -63,8 +63,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         "Component1",
                         new ModelProperties
                         {
-                            // model Id of component
-                            Metadata = { ModelId = componentModelId },
                             // component properties
                             CustomProperties =
                             {
@@ -119,12 +117,11 @@ namespace Azure.DigitalTwins.Core.Samples
             var customTwin = new CustomDigitalTwin
             {
                 Id = customDtId,
-                Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+                Metadata = { ModelId = modelId },
                 Prop1 = "Prop1 val",
                 Prop2 = 987,
                 Component1 = new Component1
                 {
-                    Metadata = new Component1Metadata { ModelId = componentModelId },
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
                 }

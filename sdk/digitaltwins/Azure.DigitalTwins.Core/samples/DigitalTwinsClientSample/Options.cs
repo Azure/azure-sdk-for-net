@@ -6,12 +6,6 @@ using CommandLine;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
-    internal enum LoginMethod
-    {
-        AppId,
-        User,
-    };
-
     public class Options
     {
         [Option('a', "adtEndpoint", Required = true, HelpText = "Digital twins service endpoint")]
@@ -19,9 +13,6 @@ namespace Azure.DigitalTwins.Core.Samples
 
         [Option('i', "clientId", Required = true, HelpText = "Client Id of the application Id to login, or the application Id used to log the user in.")]
         public string ClientId { get; set; }
-
-        [Option('m', "loginMethod", Required = false, Default = "AppId", HelpText = "Choose between: AppId, User.")]
-        public string LoginMethod { get; set; }
 
         [Option('t', "tenantId", Required = true, HelpText = "Application tenant Id")]
         public string TenantId { get; set; }
@@ -31,15 +22,5 @@ namespace Azure.DigitalTwins.Core.Samples
 
         [Option('e', "eventHubEndpointName", Required = true, HelpText = "Event Hub endpoint linked to digital twins instance")]
         public string EventHubEndpointName { get; set; }
-
-        internal LoginMethod GetLoginMethod()
-        {
-            if (Enum.TryParse<LoginMethod>(LoginMethod, out LoginMethod loginMethod))
-            {
-                return loginMethod;
-            }
-
-            return Samples.LoginMethod.AppId;
-        }
     }
 }

@@ -45,8 +45,7 @@ namespace Azure.DigitalTwins.Samples
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
-                .Replace(SamplesConstants.ModelId, modelId)
-                .Replace(SamplesConstants.ComponentId, componentModelId);
+                .Replace(SamplesConstants.ModelId, modelId);
 
             await client.CreateDigitalTwinAsync(twinId, twinPayload);
             Console.WriteLine($"Created digital twin {twinId}.");

@@ -37,6 +37,15 @@ namespace Azure.Storage.Test
         private IDictionary<string, TenantConfiguration> Tenants { get; set; }
 
         /// <summary>
+        /// Gets or sets a mapping of keyvault names to definitions.  The
+        /// Target*TenantName properties define the keys to use with this
+        /// dictionary.  You should only access the tenants via the GetTenant
+        /// method that will Assert.Inconclusive if the desired tenant wasn't
+        /// defined in this configuration.
+        /// </summary>
+        private IDictionary<string, KeyVaultConfiguration> KeyVaults { get; set; }
+
+        /// <summary>
         /// Gets the name of the tenant in the Tenants dictionary to use by
         /// default for our tests.
         /// </summary>
@@ -65,6 +74,12 @@ namespace Azure.Storage.Test
         /// any tests that require authentication with Azure AD.
         /// </summary>
         private string TargetOAuthTenantName { get; set; }
+
+        /// <summary>
+        /// Gets the name of the tenant in the keyvaults dictionary to use for
+        /// any tests that require integration with key vault.
+        /// </summary>
+        private string TargetKeyVaultName { get; set; }
 
         /// <summary>
         /// Gets the name of the tenant in the Tenants dictionary to use for
@@ -109,6 +124,12 @@ namespace Azure.Storage.Test
         /// </summary>
         public static TenantConfiguration DefaultTargetOAuthTenant =>
             GetTenant("TargetOAuthTenant", s_configurations.Value.TargetOAuthTenantName);
+
+        /// <summary>
+        /// Gets a keyvault to use for any tests that require keyvault access.
+        /// </summary>
+        public static KeyVaultConfiguration DefaultTargetKeyVault =>
+            GetKeyVault("TargetKeyVault", s_configurations.Value.TargetKeyVaultName);
 
         /// <summary>
         /// Gets a tenant to use for any tests that require hierarchical namespace.
@@ -169,6 +190,26 @@ namespace Azure.Storage.Test
         }
 
         /// <summary>
+        /// Get the live test configuration for a specific key vault type, or
+        /// stop running the test via Assert.Inconclusive if not found.
+        /// </summary>
+        /// <param name="type">
+        /// The name of the key vault type (XML element) to get.
+        /// </param>
+        /// <param name="name">The name of the keyvault.</param>
+        /// <returns>
+        /// The live test configuration for a specific tenant type.
+        /// </returns>
+        private static KeyVaultConfiguration GetKeyVault(string type, string name)
+        {
+            if (!s_configurations.Value.KeyVaults.TryGetValue(name, out KeyVaultConfiguration config))
+            {
+                Assert.Inconclusive($"Live test configuration key vault type '{type}' named '{name}' was not found in file {TestConfigurationsPath}!");
+            }
+            return config;
+        }
+
+        /// <summary>
         /// Load the test configurations file from the path pointed to by the
         /// AZ_STORAGE_CONFIG_PATH environment variable or the local copy of
         /// the TestConfigurations.xml if present.  If we fail to find or load
@@ -217,12 +258,17 @@ namespace Azure.Storage.Test
                 TargetPremiumBlobTenantName = Get("TargetPremiumBlobTenant"),
                 TargetPreviewBlobTenantName = Get("TargetPreviewBlobTenant"),
                 TargetOAuthTenantName = Get("TargetOAuthTenant"),
+                TargetKeyVaultName = Get("TargetKeyVault"),
                 TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
                 TargetManagedDiskTenantName = Get("TargetManagedDiskTenant"),
                 Tenants =
                     config.Element("TenantConfigurations").Elements("TenantConfiguration")
                     .Select(TenantConfiguration.Parse)
-                    .ToDictionary(tenant => tenant.TenantName)
+                    .ToDictionary(tenant => tenant.TenantName),
+                KeyVaults =
+                    config.Element("KeyVaultConfigurations").Elements("KeyVaultConfiguration")
+                    .Select(KeyVaultConfiguration.Parse)
+                    .ToDictionary(keyvault => keyvault.VaultName)
             };
         }
     }

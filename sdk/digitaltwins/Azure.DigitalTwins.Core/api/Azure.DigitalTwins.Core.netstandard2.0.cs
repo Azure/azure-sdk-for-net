@@ -63,10 +63,14 @@ namespace Azure.DigitalTwins.Core
             V2020_05_31_preview = 1,
         }
     }
+    public static partial class QueryChargeHelper
+    {
+        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
+    }
     public partial class RequestOptions
     {
         public RequestOptions() { }
-        public string IfMatchEtag { get { throw null; } set { } }
+        public string IfMatch { get { throw null; } set { } }
     }
 }
 namespace Azure.DigitalTwins.Core.Models
@@ -113,22 +117,19 @@ namespace Azure.DigitalTwins.Core.Models
         public System.DateTimeOffset TimeStamp { get { throw null; } set { } }
     }
 }
-namespace Azure.DigitalTwins.Core.Queries
-{
-    public static partial class QueryChargeHelper
-    {
-        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
-    }
-}
 namespace Azure.DigitalTwins.Core.Serialization
 {
-    public partial class BasicDigitalTwin : Azure.DigitalTwins.Core.Serialization.ModelProperties
+    public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
         public string ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
+        public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -144,6 +145,12 @@ namespace Azure.DigitalTwins.Core.Serialization
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
         public string TargetId { get { throw null; } set { } }
     }
+    public partial class ComponentMetadata
+    {
+        public ComponentMetadata() { }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> WriteableProperties { get { throw null; } }
+    }
     public partial class DigitalTwinMetadata
     {
         public DigitalTwinMetadata() { }
@@ -158,7 +165,7 @@ namespace Azure.DigitalTwins.Core.Serialization
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> CustomProperties { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.Serialization.DigitalTwinMetadata Metadata { get { throw null; } }
+        public Azure.DigitalTwins.Core.Serialization.ComponentMetadata Metadata { get { throw null; } }
     }
     public partial class UpdateOperationsUtility
     {

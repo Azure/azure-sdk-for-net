@@ -4,6 +4,7 @@
 
 ### New Features
 - Makes `AzureCliCredential`, `VisualStudioCredential` and `VisualStudioCodeCredential` public to allow direct usage.
+- Added `Authenticate` methods to `UsernamePasswordCredential`
 
 ## 1.2.0-preview.3
 
