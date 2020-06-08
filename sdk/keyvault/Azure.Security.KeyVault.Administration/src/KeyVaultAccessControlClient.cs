@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultAccessControlClient
     {
+        private readonly ClientDiagnostics _diagnostics;
         private readonly RoleDefinitionsRestClient _definitionsRestClient;
         private readonly RoleAssignmentsRestClient _assignmentsRestClient;
 
@@ -66,164 +67,277 @@ namespace Azure.Security.KeyVault.Administration
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
 
-            var diagnostics = new ClientDiagnostics(options);
-            _definitionsRestClient = new RoleDefinitionsRestClient(diagnostics, pipeline, apiVersion);
-            _assignmentsRestClient = new RoleAssignmentsRestClient(diagnostics, pipeline, apiVersion);
+            _diagnostics = new ClientDiagnostics(options);
+            _definitionsRestClient = new RoleDefinitionsRestClient(_diagnostics, pipeline, apiVersion);
+            _assignmentsRestClient = new RoleAssignmentsRestClient(_diagnostics, pipeline, apiVersion);
         }
 
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Pageable<RoleDefinition> GetRoleDefinitions(RoleAssignmentScope scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleDefinition> GetRoleDefinitions(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
-            return PageableHelpers.CreateEnumerable(_ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleDefinitions)}");
+            scope.Start();
+            try
             {
-                var response = _definitionsRestClient.List(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken);
+                return PageableHelpers.CreateEnumerable(_ =>
+            {
+                var response = _definitionsRestClient.List(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             }, (nextLink, _) =>
             {
-                var response = _definitionsRestClient.ListNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken);
+                var response = _definitionsRestClient.ListNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="roleScope"> The scope of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(RoleAssignmentScope scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleDefinitions)}");
+            scope.Start();
+            try
             {
-                var response = await _definitionsRestClient.ListAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken)
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _definitionsRestClient.ListAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             }, async (nextLink, _) =>
             {
-                var response = await _definitionsRestClient.ListNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken)
+                var response = await _definitionsRestClient.ListNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Pageable<RoleAssignment> GetRoleAssignments(RoleAssignmentScope scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleAssignment> GetRoleAssignments(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
-            return PageableHelpers.CreateEnumerable(_ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignments)}");
+            scope.Start();
+            try
             {
-                var response = _assignmentsRestClient.ListForScope(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken);
+                return PageableHelpers.CreateEnumerable(_ =>
+            {
+                var response = _assignmentsRestClient.ListForScope(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             }, (nextLink, _) =>
             {
-                var response = _assignmentsRestClient.ListForScopeNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken);
+                var response = _assignmentsRestClient.ListForScopeNextPage(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>0
         /// Gets the <see cref="RoleAssignment"/>s for a scope.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(RoleAssignmentScope scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
-            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignments)}");
+            scope.Start();
+            try
             {
-                var response = await _assignmentsRestClient.ListForScopeAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken)
+                return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                var response = await _assignmentsRestClient.ListForScopeAsync(vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             }, async (nextLink, _) =>
             {
-                var response = await _assignmentsRestClient.ListForScopeNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: scope.ToString(), cancellationToken: cancellationToken)
+                var response = await _assignmentsRestClient.ListForScopeNextPageAsync(nextLink: nextLink, vaultBaseUrl: VaultUri.AbsoluteUri, scope: roleScope.ToString(), cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
             });
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Creates a <see cref="RoleAssignment"/>.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleScope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
-            _assignmentsRestClient.Create(VaultUri.AbsoluteUri, scope.ToString(), Guid.NewGuid().ToString(), properties, cancellationToken);
+        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), Guid.NewGuid().ToString(), properties, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Creates a <see cref="RoleAssignment"/>.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleScope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="name">The Name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope scope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default) =>
-            _assignmentsRestClient.Create(VaultUri.AbsoluteUri, scope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken);
+        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Creates a <see cref="RoleAssignment"/>.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleScope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="name">The name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(RoleAssignmentScope scope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default) =>
-            await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken)
+        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken)
                 .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Get the specified role assignment.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignment> GetRoleAssignment(RoleAssignmentScope scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
-            _assignmentsRestClient.Get(VaultUri.AbsoluteUri, scope.ToString(), roleAssignmentName, cancellationToken);
+        public virtual Response<RoleAssignment> GetRoleAssignment(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return _assignmentsRestClient.Get(VaultUri.AbsoluteUri, roleScope.ToString(), roleAssignmentName, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Get the specified role assignment.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignment>> GetRoleAssignmentAsync(RoleAssignmentScope scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
-            await _assignmentsRestClient.GetAsync(VaultUri.AbsoluteUri, scope.ToString(), roleAssignmentName, cancellationToken)
+        public virtual async Task<Response<RoleAssignment>> GetRoleAssignmentAsync(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return await _assignmentsRestClient.GetAsync(VaultUri.AbsoluteUri, roleScope.ToString(), roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete the specified role assignment.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignment> DeleteRoleAssignment(RoleAssignmentScope scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
-            _assignmentsRestClient.Delete(VaultUri.AbsoluteUri, scope.ToString(), roleAssignmentName, cancellationToken);
+        public virtual Response<RoleAssignment> DeleteRoleAssignment(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return _assignmentsRestClient.Delete(VaultUri.AbsoluteUri, roleScope.ToString(), roleAssignmentName, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Delete the specified role assignment.
         /// </summary>
-        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleScope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(RoleAssignmentScope scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
-            await _assignmentsRestClient.DeleteAsync(VaultUri.AbsoluteUri, scope.ToString(), roleAssignmentName, cancellationToken)
+        public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                return await _assignmentsRestClient.DeleteAsync(VaultUri.AbsoluteUri, roleScope.ToString(), roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
