@@ -58,6 +58,7 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12599")]
         public async Task TestCreateAndDeleteRoleAssignment()
         {
             string sqlAdminRoleId = "7af0c69a-a548-47d6-aea3-d00e69bd83aa";
