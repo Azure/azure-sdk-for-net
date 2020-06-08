@@ -103,6 +103,16 @@ namespace Azure.Search.Documents
         public const string CountKey = "count";
 
         /// <summary>
+        /// The to key.
+        /// </summary>
+        public const string FromKey = "from";
+
+        /// <summary>
+        /// The from key.
+        /// </summary>
+        public const string ToKey = "to";
+
+        /// <summary>
         /// Initial ArrayPool rental size for copying unseekable streams in
         /// our sync <see cref="JsonExtensions.Deserialize{T}"/> method.
         /// </summary>
