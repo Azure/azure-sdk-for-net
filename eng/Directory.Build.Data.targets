@@ -107,6 +107,8 @@
 
   <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
 
+  <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
+
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
