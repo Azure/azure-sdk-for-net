@@ -579,6 +579,7 @@ namespace Azure.Storage.Blobs.Models
         public bool? IsCurrentVersion { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string Name { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, string>> ObjectReplicationSourceProperties { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobItemProperties Properties { get { throw null; } }
         public string Snapshot { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
