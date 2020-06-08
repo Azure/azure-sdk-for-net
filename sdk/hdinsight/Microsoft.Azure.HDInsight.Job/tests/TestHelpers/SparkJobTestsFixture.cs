@@ -10,13 +10,6 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
         /// Gets or sets the mock context.
         /// </summary>
         private MockContext context;
-        /// <summary>
-        /// Ctor.
-        /// </summary>
-        public SparkJobTestsFixture()
-        {
-            var context = MockContext.Start(this.GetType(), ".ctor");
-        }
 
         /// <summary>
         /// Initializes common data properties.
@@ -60,6 +53,7 @@ namespace Microsoft.Azure.HDInsight.Job.Tests
                      this.Location,
                      this.ContainerName,
                      out string storageAccountSuffix);
+
                 HDInsightManagementHelper.SubmitSparkJobFile(ResourceGroupName, StorageAccountName, ContainerName, StorageAccountAccessKey);
 
                 HDInsightManagementHelper.CreateSqlServer(
