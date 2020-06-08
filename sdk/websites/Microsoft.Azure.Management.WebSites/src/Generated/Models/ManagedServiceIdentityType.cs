@@ -21,12 +21,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ManagedServiceIdentityType
     {
-        [EnumMember(Value = "None")]
-        None,
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
         [EnumMember(Value = "UserAssigned")]
-        UserAssigned
+        UserAssigned,
+        [EnumMember(Value = "SystemAssigned, UserAssigned")]
+        SystemAssignedUserAssigned,
+        [EnumMember(Value = "None")]
+        None
     }
     internal static class ManagedServiceIdentityTypeEnumExtension
     {
@@ -39,12 +41,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             switch( value )
             {
-                case ManagedServiceIdentityType.None:
-                    return "None";
                 case ManagedServiceIdentityType.SystemAssigned:
                     return "SystemAssigned";
                 case ManagedServiceIdentityType.UserAssigned:
                     return "UserAssigned";
+                case ManagedServiceIdentityType.SystemAssignedUserAssigned:
+                    return "SystemAssigned, UserAssigned";
+                case ManagedServiceIdentityType.None:
+                    return "None";
             }
             return null;
         }
@@ -53,12 +57,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             switch( value )
             {
-                case "None":
-                    return ManagedServiceIdentityType.None;
                 case "SystemAssigned":
                     return ManagedServiceIdentityType.SystemAssigned;
                 case "UserAssigned":
                     return ManagedServiceIdentityType.UserAssigned;
+                case "SystemAssigned, UserAssigned":
+                    return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+                case "None":
+                    return ManagedServiceIdentityType.None;
             }
             return null;
         }
