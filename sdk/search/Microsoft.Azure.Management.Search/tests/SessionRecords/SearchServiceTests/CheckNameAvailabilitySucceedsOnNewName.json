@@ -7,15 +7,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "74ee1f57-aca9-4228-b218-217d2154e7b1"
+          "d518f3e9-b50f-40b3-8ac0-304200fc13fe"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.5.0.0"
         ]
       },
@@ -23,29 +23,29 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 09 Apr 2020 18:38:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
-          "a486d53e-4247-4aca-9dcf-2b7997975090"
+          "701f2b46-a9fa-4eb3-9c86-075f547f3a67"
         ],
         "x-ms-correlation-request-id": [
-          "a486d53e-4247-4aca-9dcf-2b7997975090"
+          "701f2b46-a9fa-4eb3-9c86-075f547f3a67"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200409T183830Z:a486d53e-4247-4aca-9dcf-2b7997975090"
+          "NORTHEUROPE:20200528T223756Z:701f2b46-a9fa-4eb3-9c86-075f547f3a67"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 28 May 2020 22:37:56 GMT"
         ],
         "Content-Length": [
           "2842"
@@ -61,21 +61,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet2372?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQyMzcyP2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet9019?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5MDE5P2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87b1ddb9-6271-48c6-b9a9-490b5c5dbbe5"
+          "868d0f33-3ed9-4e52-8b08-8bfd2a8f127b"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.5.0.0"
         ],
         "Content-Type": [
@@ -89,9 +89,6 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 09 Apr 2020 18:38:31 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
@@ -99,19 +96,22 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "43882090-e57b-4cfa-91fb-640bd02ca5f6"
+          "a115dcd9-1ec0-41ae-a624-466d73c14714"
         ],
         "x-ms-correlation-request-id": [
-          "43882090-e57b-4cfa-91fb-640bd02ca5f6"
+          "a115dcd9-1ec0-41ae-a624-466d73c14714"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200409T183831Z:43882090-e57b-4cfa-91fb-640bd02ca5f6"
+          "NORTHEUROPE:20200528T223757Z:a115dcd9-1ec0-41ae-a624-466d73c14714"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 28 May 2020 22:37:56 GMT"
         ],
         "Content-Length": [
           "175"
@@ -123,7 +123,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2372\",\r\n  \"name\": \"azsmnet2372\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet9019\",\r\n  \"name\": \"azsmnet9019\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -133,16 +133,16 @@
       "RequestBody": "{\r\n  \"name\": \"newservice\",\r\n  \"type\": \"searchServices\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "96b2bef1-8d6f-4336-aa7c-ab0a493655e5"
+          "a1b0430d-2eed-40d0-97cd-ca5af27953d1"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Search.SearchManagementClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -155,9 +155,6 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 09 Apr 2020 18:38:34 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
@@ -165,13 +162,13 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "96b2bef1-8d6f-4336-aa7c-ab0a493655e5"
+          "a1b0430d-2eed-40d0-97cd-ca5af27953d1"
         ],
         "request-id": [
-          "96b2bef1-8d6f-4336-aa7c-ab0a493655e5"
+          "a1b0430d-2eed-40d0-97cd-ca5af27953d1"
         ],
         "elapsed-time": [
-          "813"
+          "718"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -180,13 +177,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "ec05d0b9-268a-4144-92dd-621fbc147c46"
+          "d9aec665-3771-4006-a5d7-06b218c260ee"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200409T183834Z:ec05d0b9-268a-4144-92dd-621fbc147c46"
+          "NORTHEUROPE:20200528T223759Z:d9aec665-3771-4006-a5d7-06b218c260ee"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 28 May 2020 22:37:59 GMT"
         ],
         "Content-Length": [
           "51"
@@ -204,7 +204,7 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet2372"
+      "azsmnet9019"
     ]
   },
   "Variables": {
