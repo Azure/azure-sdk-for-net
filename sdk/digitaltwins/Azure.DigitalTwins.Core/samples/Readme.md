@@ -138,7 +138,6 @@ var basicTwin = new BasicDigitalTwin
             "Component1",
             new ModelProperties
             {
-                Metadata = { },
                 // component properties
                 CustomProperties =
                 {
@@ -164,12 +163,11 @@ You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure
 var customTwin = new CustomDigitalTwin
 {
     Id = customDtId,
-    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
@@ -212,12 +210,11 @@ Custom types provide the best possible experience.
 var customTwin = new CustomDigitalTwin
 {
     Id = customDtId,
-    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
