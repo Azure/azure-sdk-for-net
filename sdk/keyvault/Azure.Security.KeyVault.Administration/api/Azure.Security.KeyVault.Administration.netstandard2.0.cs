@@ -49,6 +49,11 @@ namespace Azure.Security.KeyVault.Administration
 }
 namespace Azure.Security.KeyVault.Administration.Models
 {
+    public static partial class KeyVaultModelFactory
+    {
+        public static Azure.Security.KeyVault.Administration.Models.RoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.Models.RoleAssignmentPropertiesWithScope properties) { throw null; }
+        public static Azure.Security.KeyVault.Administration.Models.RoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.KeyVaultPermission> permissions, System.Collections.Generic.IReadOnlyList<string> assignableScopes) { throw null; }
+    }
     public partial class KeyVaultPermission
     {
         internal KeyVaultPermission() { }
