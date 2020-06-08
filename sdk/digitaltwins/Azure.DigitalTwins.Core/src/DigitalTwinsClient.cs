@@ -38,15 +38,14 @@ namespace Azure.DigitalTwins.Core
         /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
         /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret">
-        /// // By using the ClientSecretCredential, a specified application Id can login using a
-        /// // client secret.
-        /// var tokenCredential = new ClientSecretCredential(
-        ///     tenantId,
-        ///     clientId,
-        ///     clientSecret,
-        ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+        /// // It attempts to use multiple credential types in an order until it finds a working credential.
+        /// var tokenCredential = new DefaultAzureCredential();
         ///
         /// var client = new DigitalTwinsClient(
         ///     new Uri(adtEndpoint),
@@ -65,33 +64,16 @@ namespace Azure.DigitalTwins.Core
         /// <param name="credential">The <see cref="TokenCredential"/> implementation which will be used to request for the authentication token.</param>
         /// <param name="options">Options that allow configuration of requests sent to the digital twins service.</param>
         /// <remarks>
+        /// <para>
         /// The options parameter provides an opportunity to override default behavior, including specifying API version,
         /// overriding <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md">transport</see>,
         /// enabling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md">diagnostics</see>,
         /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
-        /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin">
-        /// // This illustrates how to specify client options, in this case, by providing an
-        /// // instance of HttpClient for the digital twins client to use.
-        /// var clientOptions = new DigitalTwinsClientOptions
-        /// {
-        ///     Transport = new HttpClientTransport(httpClient),
-        /// };
-        ///
-        /// // By using the InteractiveBrowserCredential, the current user can login using a web browser
-        /// // interactively with the AAD
-        /// var tokenCredential = new InteractiveBrowserCredential(
-        ///     tenantId,
-        ///     clientId,
-        ///     new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
-        ///
-        /// var client = new DigitalTwinsClient(
-        ///     new Uri(adtEndpoint),
-        ///     tokenCredential,
-        ///     clientOptions);
-        /// </code>
-        /// </example>
         public DigitalTwinsClient(Uri endpoint, TokenCredential credential, DigitalTwinsClientOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -119,9 +101,14 @@ namespace Azure.DigitalTwins.Core
         /// Gets a digital twin asynchronously. After the task completes, the result will be set to <see cref="Response{T}"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The returned application/json string can always be deserialized into an instance of <see cref="Serialization.BasicDigitalTwin"/>.
         /// It may also be deserialized into custom digital twin types that extend the <see cref="Serialization.BasicDigitalTwin"/> with additional
         /// strongly typed properties provided that you know the definition of the retrieved digital twin prior to deserialization.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -158,9 +145,14 @@ namespace Azure.DigitalTwins.Core
         /// Gets a digital twin synchronously. After the task completes, the result will be set to <see cref="Response{T}"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The returned application/json string can always be deserialized into an instance of <see cref="Serialization.BasicDigitalTwin"/>.
         /// It may also be deserialized into custom digital twin types that extend the <see cref="Serialization.BasicDigitalTwin"/> with additional
         /// strongly typed properties provided that you know the definition of the retrieved digital twin prior to deserialization.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -183,6 +175,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -194,12 +189,11 @@ namespace Azure.DigitalTwins.Core
         /// var customTwin = new CustomDigitalTwin
         /// {
         ///     Id = customDtId,
-        ///     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+        ///     Metadata = { ModelId = modelId },
         ///     Prop1 = &quot;Prop1 val&quot;,
         ///     Prop2 = 987,
         ///     Component1 = new Component1
         ///     {
-        ///         Metadata = new Component1Metadata { ModelId = componentModelId },
         ///         ComponentProp1 = &quot;Component prop1 val&quot;,
         ///         ComponentProp2 = 123,
         ///     }
@@ -222,6 +216,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="digitalTwin"/> is <c>null</c>.
@@ -240,6 +237,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -256,7 +256,7 @@ namespace Azure.DigitalTwins.Core
         /// </example>
         public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteAsync(digitalTwinId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteAsync(digitalTwinId, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -266,18 +266,23 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// <para>
+        /// To delete a digital twin, any relationships referencing it must be deleted first.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        /// <remarks>
-        /// To delete a digital twin, any relationships referencing it must be deleted first.
-        /// </remarks>
         public virtual Response DeleteDigitalTwin(string digitalTwinId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Delete(digitalTwinId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.Delete(digitalTwinId, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -288,6 +293,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -296,7 +304,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Task<Response<string>> UpdateDigitalTwinAsync(string digitalTwinId, string digitalTwinUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateAsync(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateAsync(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -307,6 +315,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -318,7 +329,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response<string> UpdateDigitalTwin(string digitalTwinId, string digitalTwinUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.Update(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.Update(digitalTwinId, digitalTwinUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -328,6 +339,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentPath">The component being retrieved.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -353,6 +367,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentPath">The component being retrieved.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Json string representation of the component corresponding to the provided componentPath and the HTTP response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -376,6 +393,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -397,7 +417,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Task<Response<string>> UpdateComponentAsync(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
             // TODO how can we make this patch easier to construct?
-            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -409,6 +429,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentPath"/> is <c>null</c>.
@@ -420,7 +443,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response<string> UpdateComponent(string digitalTwinId, string componentPath, string componentUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateComponent(digitalTwinId, componentPath, componentUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -430,6 +453,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -490,6 +516,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -547,6 +576,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships directed towards the specified digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -601,6 +633,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of application/json relationships directed towards the specified digital twin and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -654,6 +689,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -672,6 +710,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json relationship corresponding to the provided relationshipId and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -694,6 +735,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -702,7 +746,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -713,6 +757,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -724,7 +771,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -735,15 +782,20 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationship">The application/json relationship to be created.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// <para>
+        /// Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <remarks>
-        /// <para>Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.</para>
-        /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateRelationship">
         /// // From loaded relationships, get the source Id and Id from each one,
@@ -781,15 +833,20 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationship">The application/json relationship to be created.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// <para>
+        /// Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <remarks>
-        /// <para>Relationships are a one-way link from a source digital twin to another, as described at creation time of the assigned model of the digital twin.</para>
-        /// </remarks>
         /// <seealso cref="CreateRelationshipAsync(string, string, string, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
@@ -807,6 +864,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -816,7 +876,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, string relationshipUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
             // TODO how can we make this patch easier to construct?
-            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -828,6 +888,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="requestOptions">The optional settings for this request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -839,7 +902,7 @@ namespace Azure.DigitalTwins.Core
         /// </seealso>
         public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, string relationshipUpdateOperations, RequestOptions requestOptions = default, CancellationToken cancellationToken = default)
         {
-            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatchEtag, cancellationToken);
+            return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, relationshipUpdateOperations, requestOptions?.IfMatch, cancellationToken);
         }
 
         /// <summary>
@@ -850,6 +913,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The options to follow when listing the models. For example, the page size hint can be specified.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json models and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -907,6 +973,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The options to follow when listing the models. For example, the page size hint can be specified.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json models and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -956,6 +1025,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId">The Id of the model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json model and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -979,6 +1051,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId">The Id of the model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json model and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1000,17 +1075,22 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId">The Id of the model to decommission.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// <para>
+        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// However, existing digital twins may continue to use this model.
+        /// Once a model is decomissioned, it may not be recommissioned.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <remarks>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
-        /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
-        /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel">
         /// try
@@ -1035,17 +1115,22 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId">The Id of the model to decommission.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// <para>
+        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
+        /// However, existing digital twins may continue to use this model.
+        /// Once a model is decomissioned, it may not be recommissioned.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
-        /// <remarks>
-        /// When a model is decomissioned, new digital twins will no longer be able to be defined by this model.
-        /// However, existing digital twins may continue to use this model.
-        /// Once a model is decomissioned, it may not be recommissioned.
-        /// </remarks>
         /// <seealso cref="DecommissionModelAsync(string, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
@@ -1064,10 +1149,15 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <remarks>
+        /// <para>
         /// Bulk model creation is useful when several models have references to each other.
         /// It simplifies creation for the client because otherwise the models would have to be created in a very specific order.
         /// The service evaluates all models to ensure all references are satisfied, and then accepts or rejects the set.
         /// So using this method, model creation is transactional.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
@@ -1086,15 +1176,20 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models">The set of models to create. Each string corresponds to exactly one model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the http response.</returns>
-        /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
-        /// </exception>
         /// <remarks>
+        /// <para>
         /// Bulk model creation is useful when several models have references to each other.
         /// It simplifies creation for the client because otherwise the models would have to be created in a very specific order.
         /// The service evaluates all models to ensure all references are satisfied, and then accepts or rejects the set.
         /// So using this method, model creation is transactional.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
+        /// <exception cref="RequestFailedException">
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// </exception>
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
@@ -1109,20 +1204,25 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The http response.</returns>
-        /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
-        /// </exception>
         /// <remarks>
+        /// <para>
         /// A model can only be deleted if no other models reference it.
         /// Status codes:
         /// 204 (No Content): Success.
         /// 400 (Bad Request): The request is invalid.
         /// 404 (Not Found): There is no model with the provided id.
         /// 409 (Conflict): There are dependencies on the model that prevent it from being deleted.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
+        /// <exception cref="RequestFailedException">
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
+        /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleDeleteModel">
         /// try
@@ -1148,20 +1248,25 @@ namespace Azure.DigitalTwins.Core
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The http response.</returns>
-        /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
-        /// </exception>
         /// <remarks>
+        /// <para>
         /// A model can only be deleted if no other models reference it.
         /// Status codes:
         /// 204 (No Content): Success.
         /// 400 (Bad Request): The request is invalid.
         /// 404 (Not Found): There is no model with the provided id.
         /// 409 (Conflict): There are dependencies on the model that prevent it from being deleted.
+        /// </para>
+        /// <para>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </para>
         /// </remarks>
+        /// <exception cref="RequestFailedException">
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
+        /// </exception>
         /// <seealso cref="DeleteModelAsync(string, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
@@ -1176,6 +1281,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of query results.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1248,6 +1356,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list of query results.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1310,6 +1421,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The options to use when listing the event routes. One can set the maximum number of items to retrieve per request, however the service may return less than requested.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json event routes and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1365,6 +1479,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The options to use when listing the event routes. One can set the maximum number of items to retrieve per request, however the service may return less than requested.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A pageable set of application/json event routes and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1414,6 +1531,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json event routes and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1431,6 +1551,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The application/json event routes and the http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1452,6 +1575,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1481,6 +1607,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1501,6 +1630,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1523,6 +1655,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1547,6 +1682,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1579,6 +1717,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1607,6 +1748,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1647,6 +1791,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The additional information to be used when processing a telemetry request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+        /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>

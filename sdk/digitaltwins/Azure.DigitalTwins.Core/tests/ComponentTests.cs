@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
-                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
+                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
 
                 await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin);
 

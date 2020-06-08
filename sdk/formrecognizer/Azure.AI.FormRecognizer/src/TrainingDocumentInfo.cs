@@ -15,6 +15,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// The number of pages the document has.
         /// </summary>
         [CodeGenMember("pages")]
-        public int PageCount { get; internal set; }
+        public int PageCount { get; }
     }
 }

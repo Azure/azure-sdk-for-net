@@ -133,7 +133,6 @@ namespace Azure.DigitalTwins.Core.Samples
               ""Prop2"": 987,
               ""Component1"":{
                 ""$metadata"":{
-                  ""$model"": ""COMPONENT_ID""
                 },
                 ""ComponentProp1"": ""Value"",
                 ""ComponentProp2"": 123

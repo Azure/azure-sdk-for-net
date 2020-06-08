@@ -63,8 +63,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         "Component1",
                         new ModelProperties
                         {
-                            // model Id of component
-                            Metadata = { ModelId = componentModelId },
                             // component properties
                             CustomProperties =
                             {
@@ -96,7 +94,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
                 string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
-                var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+                IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
                 Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
                     $"ETag: {basicDt.ETag}\n\t" +
@@ -119,12 +117,11 @@ namespace Azure.DigitalTwins.Core.Samples
             var customTwin = new CustomDigitalTwin
             {
                 Id = customDtId,
-                Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+                Metadata = { ModelId = modelId },
                 Prop1 = "Prop1 val",
                 Prop2 = 987,
                 Component1 = new Component1
                 {
-                    Metadata = new Component1Metadata { ModelId = componentModelId },
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
                 }

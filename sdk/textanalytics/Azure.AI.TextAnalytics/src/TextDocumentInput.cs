@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// An input representing an individual text document to
-    /// be analyzed by the text analytics predictive model for a given operation.
+    /// be analyzed by the Text Analytics predictive model for a given operation.
     /// The document contains the document's id, the full text of the document,
     /// and the language that the document is written in.
     /// </summary>
