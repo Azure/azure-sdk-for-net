@@ -20,3 +20,4 @@
 
 ## 1.0.0-preview.2
 
+- Official public preview of Azure.DigitalTwins.Core SDK
