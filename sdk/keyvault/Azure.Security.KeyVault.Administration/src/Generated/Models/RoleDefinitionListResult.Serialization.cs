@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class RoleDefinitionListResult
+    internal partial class RoleDefinitionListResult
     {
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
         {

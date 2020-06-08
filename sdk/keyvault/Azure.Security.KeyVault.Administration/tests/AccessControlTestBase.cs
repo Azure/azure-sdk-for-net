@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public AccessControlClient Client { get; set; }
+        public KeyVaultAccessControlClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
 
@@ -25,15 +25,28 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public AccessControlTestBase(bool isAsync) : base(isAsync)
         { }
 
-        internal AccessControlClient GetClient(TestRecording recording = null)
+        internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
             return InstrumentClient
-                (new AccessControlClient(
+                (new KeyVaultAccessControlClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new AccessControlClientOptions())));
+                    recording.InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+        }
+
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                Client = GetClient();
+
+                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+            }
         }
 
         [TearDown]

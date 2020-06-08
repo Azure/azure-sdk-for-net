@@ -1,43 +1,50 @@
 namespace Azure.Security.KeyVault.Administration
 {
-    public partial class AccessControlClient
+    public partial class KeyVaultAccessControlClient
     {
-        protected AccessControlClient() { }
-        public AccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
-        public AccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.AccessControlClientOptions options) { }
+        protected KeyVaultAccessControlClient() { }
+        public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
+        public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> CreateRoleAssignment(string scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> CreateRoleAssignment(string Name, string scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> CreateRoleAssignment(System.Uri scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> CreateRoleAssignmentAsync(string scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> CreateRoleAssignmentAsync(string Name, string scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> CreateRoleAssignmentAsync(System.Uri scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> DeleteRoleAssignment(string scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> DeleteRoleAssignment(System.Uri scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> DeleteRoleAssignmentAsync(string scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> DeleteRoleAssignmentAsync(System.Uri scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignment(string scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> GetRoleAssignmentAsync(string scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignments(string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignments(System.Uri scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignmentsAsync(string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignmentsAsync(System.Uri scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitions(string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitions(System.Uri scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitionsAsync(string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitionsAsync(System.Uri scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> CreateRoleAssignment(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, string name = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> CreateRoleAssignment(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> CreateRoleAssignmentAsync(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, Azure.Security.KeyVault.Administration.Models.RoleAssignmentProperties properties, string name = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> DeleteRoleAssignment(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> DeleteRoleAssignmentAsync(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignment(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.RoleAssignment>> GetRoleAssignmentAsync(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignments(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleAssignment> GetRoleAssignmentsAsync(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitions(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.Models.RoleDefinition> GetRoleDefinitionsAsync(Azure.Security.KeyVault.Administration.RoleAssignmentScope scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AccessControlClientOptions : Azure.Core.ClientOptions
+    public partial class KeyVaultAccessControlClientOptions : Azure.Core.ClientOptions
     {
-        public AccessControlClientOptions(Azure.Security.KeyVault.Administration.AccessControlClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.AccessControlClientOptions.ServiceVersion.V7_2_Preview) { }
-        public Azure.Security.KeyVault.Administration.AccessControlClientOptions.ServiceVersion Version { get { throw null; } }
+        public KeyVaultAccessControlClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientOptions.ServiceVersion.V7_2_Preview) { }
+        public Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_2_Preview = 1,
         }
     }
-    public static partial class KeyVaultAdministrationConstants
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleAssignmentScope : System.IEquatable<Azure.Security.KeyVault.Administration.RoleAssignmentScope>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleAssignmentScope(string value) { throw null; }
+        public RoleAssignmentScope(System.Uri ResourceId) { throw null; }
+        public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Keys { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.RoleAssignmentScope Root { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.RoleAssignmentScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.RoleAssignmentScope left, Azure.Security.KeyVault.Administration.RoleAssignmentScope right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.RoleAssignmentScope (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.RoleAssignmentScope left, Azure.Security.KeyVault.Administration.RoleAssignmentScope right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Security.KeyVault.Administration.Models
@@ -88,11 +95,5 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string RoleName { get { throw null; } }
         public string RoleType { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class RoleDefinitionListResult
-    {
-        internal RoleDefinitionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.RoleDefinition> Value { get { throw null; } }
     }
 }

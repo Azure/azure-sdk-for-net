@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role definition list operation result. </summary>
-    public partial class RoleDefinitionListResult
+    internal partial class RoleDefinitionListResult
     {
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         internal RoleDefinitionListResult()
