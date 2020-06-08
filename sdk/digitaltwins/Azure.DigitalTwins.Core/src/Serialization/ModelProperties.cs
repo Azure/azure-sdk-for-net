@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// Information about the model a component conforms to. This field is present on every digital twin.
         /// </summary>
         [JsonPropertyName("$metadata")]
-        public ComponentMetadata Metadata { get; } = new ComponentMetadata();
+        public ComponentMetadata Metadata { get; internal set; } = new ComponentMetadata();
 
         /// <summary>
         /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.

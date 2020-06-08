@@ -189,12 +189,11 @@ namespace Azure.DigitalTwins.Core
         /// var customTwin = new CustomDigitalTwin
         /// {
         ///     Id = customDtId,
-        ///     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+        ///     Metadata = { ModelId = modelId },
         ///     Prop1 = &quot;Prop1 val&quot;,
         ///     Prop2 = 987,
         ///     Component1 = new Component1
         ///     {
-        ///         Metadata = new Component1Metadata { },
         ///         ComponentProp1 = &quot;Component prop1 val&quot;,
         ///         ComponentProp2 = 123,
         ///     }
