@@ -70,7 +70,7 @@ namespace Azure.DigitalTwins.Core
     public partial class RequestOptions
     {
         public RequestOptions() { }
-        public string IfMatchEtag { get { throw null; } set { } }
+        public string IfMatch { get { throw null; } set { } }
     }
 }
 namespace Azure.DigitalTwins.Core.Models
