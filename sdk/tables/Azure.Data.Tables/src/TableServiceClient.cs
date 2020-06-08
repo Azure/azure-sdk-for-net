@@ -142,33 +142,44 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-            scope.Start();
-            try
+
+            return PageableHelpers.CreateEnumerable(_ =>
             {
-                return PageableHelpers.CreateEnumerable(_ =>
-            {
-                var response = _tableOperations.Query(
-                    null,
-                    null,
-                    new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
-                    cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.Query(
+                            null,
+                            null,
+                            new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                            cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }, (nextLink, _) =>
             {
-                var response = _tableOperations.Query(
-                       null,
-                       nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
-                       cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.Query(
+                        null,
+                        nextTableName: nextLink,
+                        new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
+                        cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
 
         /// <summary>

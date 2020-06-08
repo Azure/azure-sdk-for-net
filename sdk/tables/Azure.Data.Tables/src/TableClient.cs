@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.Create(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
-            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.CreateAsync(new TableProperties(_table), null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+                return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace Azure.Data.Tables
                                                                      queryOptions: new QueryOptions() { Format = _format },
                                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-            dict.CastAndRemoveAnnotations();
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -158,10 +158,10 @@ namespace Azure.Data.Tables
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
 
-            var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
-            dict.CastAndRemoveAnnotations();
+                var dict = new Dictionary<string, object>((IDictionary<string, object>)response.Value);
+                dict.CastAndRemoveAnnotations();
 
-            return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
+                return Response.FromValue(new ReadOnlyDictionary<string, object>(dict), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -188,8 +188,8 @@ namespace Azure.Data.Tables
                                                                      queryOptions: new QueryOptions() { Format = _format },
                                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-            return Response.FromValue(result, response.GetRawResponse());
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -216,8 +216,8 @@ namespace Azure.Data.Tables
                                                  queryOptions: new QueryOptions() { Format = _format },
                                                  cancellationToken: cancellationToken);
 
-            var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
-            return Response.FromValue(result, response.GetRawResponse());
+                var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -589,45 +589,57 @@ namespace Azure.Data.Tables
 
         public virtual Pageable<IDictionary<string, object>> Query(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return PageableHelpers.CreateEnumerable(_ =>
-            {
-                var response = _tableOperations.QueryEntities(_table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken);
 
-                response.Value.Value.CastAndRemoveAnnotations();
+            return PageableHelpers.CreateEnumerable(_ =>
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.QueryEntities(_table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        cancellationToken: cancellationToken);
 
-                return Page.FromValues(
-                    response.Value.Value,
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
+                    response.Value.Value.CastAndRemoveAnnotations();
+
+                    return Page.FromValues(
+                        response.Value.Value,
+                        CreateContinuationTokenFromHeaders(response.Headers),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }, (continuationToken, _) =>
             {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.QueryEntities(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken);
+                    var response = _tableOperations.QueryEntities(
+                        _table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        nextPartitionKey: NextPartitionKey,
+                        nextRowKey: NextRowKey,
+                        cancellationToken: cancellationToken);
 
-                response.Value.Value.CastAndRemoveAnnotations();
+                    response.Value.Value.CastAndRemoveAnnotations();
 
-                return Page.FromValues(response.Value.Value,
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value,
+                                           CreateContinuationTokenFromHeaders(response.Headers),
+                                           response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+
         }
 
         /// <summary>
@@ -771,41 +783,52 @@ namespace Azure.Data.Tables
 
         public virtual Pageable<T> Query<T>(string filter = null, int? top = null, string select = null, CancellationToken cancellationToken = default) where T : TableEntity, new()
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return PageableHelpers.CreateEnumerable((int? _) =>
-            {
-                var response = _tableOperations.QueryEntities(_table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken);
 
-                return Page.FromValues(
-                    response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
+            return PageableHelpers.CreateEnumerable((int? _) =>
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var response = _tableOperations.QueryEntities(_table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                            cancellationToken: cancellationToken);
+
+                    return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }, (continuationToken, _) =>
             {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                scope.Start();
+                try
+                {
+                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = _tableOperations.QueryEntities(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken);
+                    var response = _tableOperations.QueryEntities(
+                        _table,
+                        queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
+                        nextPartitionKey: NextPartitionKey,
+                        nextRowKey: NextRowKey,
+                        cancellationToken: cancellationToken);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                                       CreateContinuationTokenFromHeaders(response.Headers),
-                                       response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                                        CreateContinuationTokenFromHeaders(response.Headers),
+                                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
         }
 
         /// <summary>
@@ -879,7 +902,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -899,7 +922,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
-            return Response.FromValue(response.Value, response.GetRawResponse());
+                return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
