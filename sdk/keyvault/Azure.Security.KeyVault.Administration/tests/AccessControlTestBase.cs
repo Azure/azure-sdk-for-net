@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                     recording.InstrumentClientOptions(new AccessControlClientOptions())));
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public async Task Cleanup()
         {
             // Start deleting resources as soon as possible.

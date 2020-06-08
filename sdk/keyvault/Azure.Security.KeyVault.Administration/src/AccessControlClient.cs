@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration
         /// The vault Uri.
         /// </summary>
         /// <value></value>
-        public Uri VaultUri { get; }
+        public virtual Uri VaultUri { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessControlClient"/> class for mocking.
@@ -73,6 +73,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Pageable<RoleDefinition> GetRoleDefinitions(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleDefinitions(scope.AbsolutePath, cancellationToken);
 
@@ -82,6 +83,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Pageable<RoleDefinition> GetRoleDefinitions(string scope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
@@ -101,6 +103,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleDefinitionsAsync(scope.AbsolutePath, cancellationToken);
 
@@ -110,6 +113,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(string scope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
@@ -131,6 +135,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Pageable<RoleAssignment> GetRoleAssignments(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleAssignments(scope.AbsolutePath, cancellationToken);
 
@@ -140,6 +145,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Pageable<RoleAssignment> GetRoleAssignments(string scope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
@@ -159,6 +165,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(Uri scope, CancellationToken cancellationToken = default) =>
             GetRoleAssignmentsAsync(scope.AbsolutePath, cancellationToken);
 
@@ -168,6 +175,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(string scope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
@@ -187,6 +195,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Creates a <see cref="RoleAssignment"/>.
         /// </summary>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Response<RoleAssignment> CreateRoleAssignment(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
             CreateRoleAssignment(scope.AbsolutePath, properties, cancellationToken);
 
@@ -197,6 +206,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Response<RoleAssignment> CreateRoleAssignment(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
             _assignmentsRestClient.Create(VaultUri.AbsoluteUri, scope, Guid.NewGuid().ToString(), properties, cancellationToken);
 
@@ -206,6 +216,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(Uri scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
             await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope.AbsolutePath, Guid.NewGuid().ToString(), properties, cancellationToken)
                 .ConfigureAwait(false);
@@ -216,8 +227,33 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment to create. </param>
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
             await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope, Guid.NewGuid().ToString(), properties, cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <param name="Name">Pre-selected Name used to create the role assignment.</param>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="properties"> Properties for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual Response<RoleAssignment> CreateRoleAssignment(string Name, string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            _assignmentsRestClient.Create(VaultUri.AbsoluteUri, scope, Name, properties, cancellationToken);
+
+        /// <summary>
+        /// Creates a <see cref="RoleAssignment"/>.
+        /// </summary>
+        /// <param name="Name">Pre-selected Id used to create the role assignment.</param>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="properties"> Properties for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(string Name, string scope, RoleAssignmentProperties properties, CancellationToken cancellationToken = default) =>
+            await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, scope, Name, properties, cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -226,6 +262,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<RoleAssignment> GetRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             _assignmentsRestClient.Get(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken);
 
@@ -235,6 +272,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignment>> GetRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             await _assignmentsRestClient.GetAsync(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
@@ -245,6 +283,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<RoleAssignment> DeleteRoleAssignment(Uri scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             _assignmentsRestClient.Delete(VaultUri.AbsoluteUri, scope.AbsolutePath, roleAssignmentName, cancellationToken);
 
@@ -254,6 +293,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(Uri scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             await _assignmentsRestClient.DeleteAsync(VaultUri.AbsoluteUri, scope.AbsolutePath, roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
@@ -264,6 +304,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<RoleAssignment> DeleteRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             _assignmentsRestClient.Delete(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken);
 
@@ -273,6 +314,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignment. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default) =>
             await _assignmentsRestClient.DeleteAsync(VaultUri.AbsoluteUri, scope, roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
