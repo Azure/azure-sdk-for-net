@@ -119,7 +119,9 @@ namespace Azure.Messaging.ServiceBus
             var tokenCredential = new ServiceBusTokenCredential(
                 sharedCredential,
                 BuildAudienceResource(TransportType, FullyQualifiedNamespace, EntityPath));
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             _innerClient = CreateTransportClient(tokenCredential, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
         /// <summary>
@@ -156,7 +158,9 @@ namespace Azure.Messaging.ServiceBus
             Options = options;
             RetryOptions = options.RetryOptions;
 
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             _innerClient = CreateTransportClient(tokenCredential, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
         /// <summary>
@@ -267,7 +271,7 @@ namespace Azure.Messaging.ServiceBus
                     return new AmqpClient(FullyQualifiedNamespace, credential, options);
 
                 default:
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options));
             }
         }
 
@@ -296,7 +300,7 @@ namespace Azure.Messaging.ServiceBus
                 UserName = string.Empty,
             };
 
-            if (builder.Path.EndsWith("/"))
+            if (builder.Path.EndsWith("/", StringComparison.Ordinal))
             {
                 builder.Path = builder.Path.TrimEnd('/');
             }

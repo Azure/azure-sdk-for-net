@@ -767,6 +767,252 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesCollection GetBasicPublishingCredentialsPolicies(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetBasicPublishingCredentialsPoliciesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesCollection> GetBasicPublishingCredentialsPoliciesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBasicPublishingCredentialsPoliciesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetFtpAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateFtpAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetScmAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetScmAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateScmAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateScmAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>

@@ -38,11 +38,24 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
         private readonly string _resultId;
 
+        private RequestFailedException _requestFailedException;
+
         /// <inheritdoc/>
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override RecognizedFormCollection Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedFormCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -142,15 +155,17 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
-                    _hasCompleted = true;
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
                     _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                    _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
+                    _requestFailedException = await ClientCommon
+                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                        .ConfigureAwait(false);
                     _hasCompleted = true;
-                    _value = new RecognizedFormCollection(new List<RecognizedForm>());
-
-                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                    throw _requestFailedException;
                 }
             }
 
@@ -182,37 +197,6 @@ namespace Azure.AI.FormRecognizer.Models
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return new RecognizedFormCollection(forms);
-        }
-
-        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
-        {
-            string errorMessage = default;
-            string errorCode = default;
-
-            if (errors.Count > 0)
-            {
-                var firstError = errors[0];
-
-                errorMessage = firstError.Message;
-                errorCode = firstError.ErrorCode;
-            }
-            else
-            {
-                errorMessage = "RecognizeCustomForms operation failed.";
-            }
-
-            var errorInfo = new Dictionary<string, string>();
-            int index = 0;
-
-            foreach (var error in errors)
-            {
-                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
-                index++;
-            }
-
-            return async
-                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }

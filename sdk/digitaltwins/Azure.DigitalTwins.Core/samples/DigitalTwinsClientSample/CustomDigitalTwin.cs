@@ -15,6 +15,9 @@ namespace Azure.DigitalTwins.Core.Samples
         [JsonPropertyName("$dtId")]
         public string Id { get; set; }
 
+        [JsonPropertyName("$etag")]
+        public string ETag { get; set; }
+
         [JsonPropertyName("$metadata")]
         public CustomDigitalTwinMetadata Metadata { get; set; }
 
@@ -22,7 +25,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string Prop1 { get; set; }
 
         [JsonPropertyName("Prop2")]
-        public string Prop2 { get; set; }
+        public int Prop2 { get; set; }
 
         [JsonPropertyName("Component1")]
         public Component1 Component1 { get; set; }
@@ -37,7 +40,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ComponentProp1 { get; set; }
 
         [JsonPropertyName("ComponentProp2")]
-        public string ComponentProp2 { get; set; }
+        public int ComponentProp2 { get; set; }
     }
 
     internal class Metadata
@@ -55,7 +58,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public WritableProperty Prop2 { get; set; }
     }
 
-    internal class Component1Metadata : Metadata
+    internal class Component1Metadata
     {
         [JsonPropertyName("ComponentProp1")]
         public WritableProperty ComponentProp1 { get; set; }

@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            IgnoreScripts = new List<CjkBigramTokenFilterScripts>();
             ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
@@ -32,13 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputUnigrams"> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </param>
         internal CjkBigramTokenFilter(string oDataType, string name, IList<CjkBigramTokenFilterScripts> ignoreScripts, bool? outputUnigrams) : base(oDataType, name)
         {
-            IgnoreScripts = ignoreScripts;
+            IgnoreScripts = ignoreScripts ?? new List<CjkBigramTokenFilterScripts>();
             OutputUnigrams = outputUnigrams;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
-
-        /// <summary> The scripts to ignore. </summary>
-        public IList<CjkBigramTokenFilterScripts> IgnoreScripts { get; set; }
         /// <summary> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </summary>
         public bool? OutputUnigrams { get; set; }
     }

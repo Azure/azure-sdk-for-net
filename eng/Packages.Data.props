@@ -10,7 +10,8 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.2.1" />
+    <PackageReference Update="Azure.Core" Version="1.2.2" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.1" />
     <PackageReference Update="Azure.Identity" Version="1.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
@@ -46,6 +47,7 @@
     <PackageReference Update="Microsoft.Azure.Search" Version="10.1.0" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.0.0" />
+    <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />

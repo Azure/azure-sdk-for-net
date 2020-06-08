@@ -24,8 +24,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Weights = weights;
         }
-
-        /// <summary> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </summary>
-        public IDictionary<string, double> Weights { get; set; }
     }
 }

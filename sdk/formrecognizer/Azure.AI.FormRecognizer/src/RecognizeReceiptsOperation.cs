@@ -19,6 +19,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceRestClient _serviceClient;
 
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
+        private RequestFailedException _requestFailedException;
+
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
@@ -32,7 +37,18 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override RecognizedReceiptCollection Value => OperationHelpers.GetValue(ref _value);
+        public override RecognizedReceiptCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -54,16 +70,19 @@ namespace Azure.AI.FormRecognizer.Models
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeReceiptsOperation(ServiceRestClient serviceClient, string operationLocation)
+        internal RecognizeReceiptsOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
+            _diagnostics = diagnostics;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -100,18 +119,22 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
-                {
-                    _hasCompleted = true;
-
-                    // TODO: When they support extracting more than one receipt, add a pageable method for this.
-                    // https://github.com/Azure/azure-sdk-for-net/issues/10389
-
-                    //_value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
-                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
-                }
-
                 _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
+                {
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
+                    _hasCompleted = true;
+                }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _requestFailedException = await ClientCommon
+                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                        .ConfigureAwait(false);
+                    _hasCompleted = true;
+                    throw _requestFailedException;
+                }
             }
 
             return GetRawResponse();

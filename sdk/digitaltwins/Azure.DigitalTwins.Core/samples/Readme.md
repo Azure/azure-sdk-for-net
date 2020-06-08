@@ -1,111 +1,107 @@
-# Digital Twin Samples
-You can explore azure digital twin APIs (using the SDK) using the samples project. 
+# Introduction
+
+Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview). 
+
+For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/en-us/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
+
+The guides mentioned above can help you get started with key elements of Azure Digital Twins, such as creating Azure Digital Twins instances, models, twin graphs, etc. Use this samples guide below to familiarize yourself with the various APIs that help you program against Azure Digital Twins.
+
+# Digital Twins Samples
+
+You can explore azure digital twin APIs (using the client library) using the samples project. 
+
 Sample project demonstrates the following:
-* Create, get and decommision models
-* Create, query and delete a Digital Twin
-* Get and update components for a Digital Twin
-* Create, get and delete relationships between Digital Twins
-* Create, get and delete event routes for Digital Twin
-* Publish telemetry messages to a Digital Twin and Digital Twin component
 
-## Creating Digital Twin Client
+- Instantiate the client
+- Create, get, and decommission models
+- Create, query, and delete a digital twin
+- Get and update components for a digital twin
+- Create, get, and delete relationships between digital twins
+- Create, get, and delete event routes for digital twin
+- Publish telemetry messages to a digital twin and digital twin component
 
-To create a new Digital Twin Client, you need the endpoint to an Azure Digital Twin and credentials.
+## Creating the digital twins client
+
+To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
 The client requires an instance of [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
-In these samples, we illustrate how to use two derived classes: ClientSecretCredential, InteractiveLogin.
+In this samples, we illustrate how to use one derived class: ClientSecretCredential.
+
+> Note: In order to access the data plane for the Digital Twins service, the entity must be given permissions.
+> To do this, use the Azure CLI command: `az dt rbac assign-role --assignee '<user-email | application-id>' --role owner -n '<your-digital-twins-instance>'`
 
 ```C# Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
-// By using the ClientSecretCredential, a specified application Id can login using a
-// client secret.
-var tokenCredential = new ClientSecretCredential(
-    tenantId,
-    clientId,
-    clientSecret,
-    new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+// It attempts to use multiple credential types in an order until it finds a working credential.
+var tokenCredential = new DefaultAzureCredential();
 
-var dtClient = new DigitalTwinsClient(
+var client = new DigitalTwinsClient(
     new Uri(adtEndpoint),
     tokenCredential);
 ```
 
-Also, if you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via client options. This parameter is optional.
+Also, if you need to override pipeline behavior, such as provide your own HttpClient instance, you can do that via the other constructor that takes a client options.
+It provides an opportunity to override default behavior including:
 
-```C# Snippet:DigitalTwinsSampleCreateServiceClientInteractiveLogin
-// This illustrates how to specify client options, in this case, by providing an
-// instance of HttpClient for the digital twins client to use.
-var clientOptions = new DigitalTwinsClientOptions
-{
-    Transport = new HttpClientTransport(httpClient),
-};
+- Specifying API version
+- Overriding [transport](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Pipeline.md)
+- Enabling [diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md)
+- Controlling [retry strategy](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md)
 
-// By using the InteractiveBrowserCredential, the current user can login using a web browser
-// interactively with the AAD
-var tokenCredential = new InteractiveBrowserCredential(
-    tenantId,
-    clientId,
-    new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+## Create, list, decommission, and delete models
 
-var dtClient = new DigitalTwinsClient(
-    new Uri(adtEndpoint),
-    tokenCredential,
-    clientOptions);
-```
+### Create models
 
-## Create, List, Decommision and Delete Models
-
-### Create Models
-
-Let's create models using the code below. You need to pass in List<string> containing list of json models. Check out sample models [here](https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/Models "Models")
+Let's create models using the code below. You need to pass in `List<string>` containing list of json models.
+Check out sample models [here](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/Models).
 
 ```C# Snippet:DigitalTwinsSampleCreateModels
-Response<IReadOnlyList<ModelData>> response = await DigitalTwinsClient.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload }).ConfigureAwait(false);
+Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
 ```
 
-### List Models
+### List models
 
-Using `GetModelsAsync`, all created models are listed as AsyncPageable<ModelData>
+Using `GetModelsAsync`, all created models are returned as `AsyncPageable<ModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<ModelData> allModels = DigitalTwinsClient.GetModelsAsync();
+AsyncPageable<ModelData> allModels = client.GetModelsAsync();
 await foreach (ModelData model in allModels)
 {
     Console.WriteLine($"Model Id: {model.Id}, display name: {model.DisplayName["en"]}, upload time: {model.UploadTime}, is decommissioned: {model.Decommissioned}");
 }
 ```
 
-Use `GetModelAsync` with model's unique identifier to get a specific model
+Use `GetModelAsync` with model's unique identifier to get a specific model.
 
 ```C# Snippet:DigitalTwinsSampleGetModel
-Response<ModelData> sampleModel = await DigitalTwinsClient.GetModelAsync(sampleModelId).ConfigureAwait(false);
+Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
 ```
 
-### Decommission Models
+### Decommission models
 
-To decommision a model, pass in a model id for the model you want to decommision
+To decommision a model, pass in a model Id for the model you want to decommision.
 
 ```C# Snippet:DigitalTwinsSampleDecommisionModel
 try
 {
-    await DigitalTwinsClient.DecommissionModelAsync(sampleModelId).ConfigureAwait(false);
-
+    await client.DecommissionModelAsync(sampleModelId);
     Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
 }
-catch (Exception ex)
+catch (RequestFailedException ex)
 {
     FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
 }
 ```
 
-### Delete Models
+### Delete models
 
-To delete a model, pass in a model id for the model you want to delete
+To delete a model, pass in a model Id for the model you want to delete.
 
 ```C# Snippet:DigitalTwinsSampleDeleteModel
 try
 {
-    await DigitalTwinsClient.DeleteModelAsync(sampleModelId).ConfigureAwait(false);
+    await client.DeleteModelAsync(sampleModelId);
 
     Console.WriteLine($"Deleted model {sampleModelId}");
 }
@@ -115,9 +111,9 @@ catch (Exception ex)
 }
 ```
 
-## Create and delete Digital Twin
+## Create and delete digital twins
 
-### Create Digital Twin
+### Create digital twins
 
 For Creating Twin you will need to provide Id of a digital Twin such as `myTwin` and the application/json digital twin based on the model created earlier. You can look at sample application/json [here](https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins "DigitalTwin").
 
@@ -125,61 +121,121 @@ One option is to use the provided class BasicDigitalTwin for serialization and d
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
 
 ```C# Snippet:DigitalTwinsSampleCreateBasicTwin
-// Create digital twin with Component payload using the BasicDigitalTwin serialization helper
+// Create digital twin with component payload using the BasicDigitalTwin serialization helper
 
-var basicDigitalTwin = new BasicDigitalTwin
+var basicTwin = new BasicDigitalTwin
 {
-    Id = dtId1
+    Id = basicDtId,
+    // model Id of digital twin
+    Metadata = { ModelId = modelId },
+    CustomProperties =
+    {
+        // digital twin properties
+        { "Prop1", "Value1" },
+        { "Prop2", 987 },
+        // component
+        {
+            "Component1",
+            new ModelProperties
+            {
+                Metadata = { },
+                // component properties
+                CustomProperties =
+                {
+                    { "ComponentProp1", "Component value 1" },
+                    { "ComponentProp2", 123 },
+                },
+            }
+        },
+    },
 };
-basicDigitalTwin.Metadata.ModelId = modelId;
-basicDigitalTwin.CustomProperties.Add("Prop1", "Value1");
-basicDigitalTwin.CustomProperties.Add("Prop2", "Value2");
 
-var componentMetadata = new ModelProperties();
-componentMetadata.Metadata.ModelId = componentModelId;
-componentMetadata.CustomProperties.Add("ComponentProp1", "ComponentValue1");
-componentMetadata.CustomProperties.Add("ComponentProp2", "ComponentValue2");
+string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
-basicDigitalTwin.CustomProperties.Add("Component1", componentMetadata);
-
-string dt1Payload = JsonSerializer.Serialize(basicDigitalTwin);
-
-Response<string> createDt1Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId1, dt1Payload).ConfigureAwait(false);
-Console.WriteLine($"Created digital twin {dtId1} with response {createDt1Response.GetRawResponse().Status}.");
+Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
+Console.WriteLine($"Created digital twin {basicDtId} with response {createBasicDtResponse.GetRawResponse().Status}.");
 ```
 
-For known twin model types, it may be best to create your own class that maps all the properties.
-This makes your code more readable, and properties easier to work with.
+Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
+By specifying your properties and types directly, it requires less code or knowledge of the type for interaction.
+You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/CustomDigitalTwin.cs).
 
 ```C# Snippet:DigitalTwinsSampleCreateCustomTwin
-string dtId2 = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
-var customDigitalTwin = new CustomDigitalTwin
+var customTwin = new CustomDigitalTwin
 {
-    Id = dtId2,
+    Id = customDtId,
     Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
     Prop1 = "Prop1 val",
-    Prop2 = "Prop2 val",
+    Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { ModelId = componentModelId },
+        Metadata = new Component1Metadata { },
         ComponentProp1 = "Component prop1 val",
-        ComponentProp2 = "Component prop2 val",
+        ComponentProp2 = 123,
     }
 };
-string dt2Payload = JsonSerializer.Serialize(customDigitalTwin);
+string dt2Payload = JsonSerializer.Serialize(customTwin);
 
-Response<string> createDt2Response = await DigitalTwinsClient.CreateDigitalTwinAsync(dtId2, dt2Payload).ConfigureAwait(false);
-Console.WriteLine($"Created digital twin {dtId2} with response {createDt2Response.GetRawResponse().Status}.");
+Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
+Console.WriteLine($"Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.");
 ```
 
-### Query Digital Twin
+### Get and deserialize a digital twin
+
+
+You can get a digital twin and deserialize it into a BasicDigitalTwin.
+It works well for basic stuff, but as you can see it gets more difficult when delving into more complex properties, like components.
+
+```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
+Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
+{
+    BasicDigitalTwin basicDt = JsonSerializer.Deserialize<BasicDigitalTwin>(getBasicDtResponse.Value);
+
+    // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+    string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+    IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+
+    Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
+        $"ETag: {basicDt.ETag}\n\t" +
+        $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
+        $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+        $"ComponentProp2: {component1["ComponentProp2"]}");
+}
+```
+
+Getting and deserializing a digital twin into a custom data type is extremely easy.
+Custom types provide the best possible experience.
+
+```C# Snippet:DigitalTwinsSampleCreateCustomTwin
+var customTwin = new CustomDigitalTwin
+{
+    Id = customDtId,
+    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Prop1 = "Prop1 val",
+    Prop2 = 987,
+    Component1 = new Component1
+    {
+        Metadata = new Component1Metadata { },
+        ComponentProp1 = "Component prop1 val",
+        ComponentProp2 = 123,
+    }
+};
+string dt2Payload = JsonSerializer.Serialize(customTwin);
+
+Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
+Console.WriteLine($"Created digital twin {customDtId} with response {createCustomDtResponse.GetRawResponse().Status}.");
+```
+
+### Query digital twins
 
 Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/en-us/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<string> asyncPageableResponse = DigitalTwinsClient.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<string> asyncPageableResponse = client.QueryAsync("SELECT * FROM digitaltwins");
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -191,14 +247,14 @@ await foreach (string response in asyncPageableResponse)
 }
 ```
 
-The SDK also allows you to extract the `query-charge` header from the pagebale response. Here's an example of how to query for digital twins and how to iterate over the pageable response to extract the `query-charge` header.
+The SDK also allows you to extract the `query-charge` header from the pageable response. Here's an example of how to query for digital twins and how to iterate over the pageable response to extract the `query-charge` header.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge
 // This code snippet demonstrates how you could extract the query charges incurred when calling
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<string> asyncPageableResponseWithCharge = DigitalTwinsClient.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<string> asyncPageableResponseWithCharge = client.QueryAsync("SELECT * FROM digitaltwins");
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
@@ -222,19 +278,19 @@ await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
 }
 ```
 
-### Delete Digital Twin
+### Delete digital twins
 
-Delete a digital twin simply by providing id of a digital twin as below.
+Delete a digital twin simply by providing Id of a digital twin as below.
 
 ```C# Snippet:DigitalTwinsSampleDeleteTwin
-await DigitalTwinsClient.DeleteDigitalTwinAsync(twin.Key).ConfigureAwait(false);
+await client.DeleteDigitalTwinAsync(twin.Key);
 ```
 
-## Get and update Digital Twin Component
+## Get and update digital twin components
 
-### Update Digital Twin Component
+### Update digital twin components
 
-To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.  
+To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need Id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.
 
 ```C# Snippet:DigitalTwinsSampleUpdateComponent
 // Update Component1 by replacing the property ComponentProp1 value
@@ -242,96 +298,110 @@ var componentUpdateUtility = new UpdateOperationsUtility();
 componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
 string updatePayload = componentUpdateUtility.Serialize();
 
-Response<string> response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, "Component1", updatePayload);
+Response<string> response = await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
 
-Console.WriteLine($"Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}");
+Console.WriteLine($"Updated component for digital twin {basicDtId}. Update response status: {response.GetRawResponse().Status}");
 ```
 
-### Get Digital Twin Component
+### Get digital twin components
 
-Get a component by providing name of a component and id of digital twin it belongs to.
+Get a component by providing name of a component and Id of digital twin to which it belongs.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-response = await DigitalTwinsClient.GetComponentAsync(dtId1, SamplesConstants.ComponentPath).ConfigureAwait(false);
+response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
 
 Console.WriteLine($"Get component for digital twin: \n{response.Value}. Get response status: {response.GetRawResponse().Status}");
 ```
 
-## Create and list Digital Twin edges
+## Create and list digital twin relationships
 
-### Create Digital Twin Edge
+### Create digital twin relationships
 
-`CreateEdgeAsync` creates a relationship edge on a digital twin provided with id of a digital twin, name of relationship such as "contains", id of an edge such as "FloorContainsRoom" and an application/json edge to be created. Must contain property with key "$targetId" to specify the target of the edge. Sample payloads for relationships can be found [here](https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalEdges.json "RelationshipExamples").
+`CreateRelationshipAsync` creates a relationship on a digital twin provided with Id of a digital twin, name of relationship such as "contains", Id of an relationship such as "FloorContainsRoom" and an application/json relationship to be created. Must contain property with key "$targetId" to specify the target of the relationship. Sample payloads for relationships can be found [here](https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json "RelationshipExamples").
 
 ```C# Snippet:DigitalTwinsSampleCreateRelationship
-string serializedRelationship = JsonSerializer.Serialize(relationship);
+// From loaded relationships, get the source Id and Id from each one,
+// and create it with full relationship payload
+foreach (BasicRelationship relationship in relationships)
+{
+    try
+    {
+        string serializedRelationship = JsonSerializer.Serialize(relationship);
 
-await DigitalTwinsClient
-    .CreateRelationshipAsync(
-        relationship.SourceId,
-        relationship.Id,
-        serializedRelationship)
-    .ConfigureAwait(false);
+        await client.CreateRelationshipAsync(
+            relationship.SourceId,
+            relationship.Id,
+            serializedRelationship);
+
+        Console.WriteLine($"Linked twin {relationship.SourceId} to twin {relationship.TargetId} as '{relationship.Name}'");
+    }
+    catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
+    {
+        Console.WriteLine($"Relationship {relationship.Id} already exists: {ex.Message}");
+    }
+}
 ```
-### List Digital Twin Edges
+### List digital twin relationships
 
-`GetEdgesAsync` and `GetIncomingEdgesAsync` lists all the edges and all incoming edges respectively of a digital twin
+`GetrelationshipsAsync` and `GetIncomingRelationshipsAsync` lists all the relationships and all incoming relationships respectively of a digital twin.
 
 ```C# Snippet:DigitalTwinsSampleGetRelationships
-AsyncPageable<string> relationships = DigitalTwinsClient.GetRelationshipsAsync(twin.Key);
+AsyncPageable<string> relationships = client.GetRelationshipsAsync(twin.Key);
 ```
 
 ```C# Snippet:DigitalTwinsSampleGetIncomingRelationships
-AsyncPageable<IncomingRelationship> incomingRelationships = DigitalTwinsClient.GetIncomingRelationshipsAsync(twin.Key);
+AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
 ```
 
-## Create, list and delete event routes of Digital Twin
+## Create, list, and delete event routes of digital twins
 
-### Create Event Route
+### Create event routes
 
-To create Event route, one needs to provide id of an event route such as "sampleEventRoute" and event route data containing the endpoint and optional filter like the example shown below
+To create an event route, provide an Id of an event route such as "sampleEventRoute" and event route data containing the endpoint and optional filter like the example shown below.
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(_eventhubEndpointName)
+var eventRoute = new EventRoute(eventhubEndpointName)
 {
     Filter = eventFilter
 };
 
-Response createEventRouteResponse = await DigitalTwinsClient.CreateEventRouteAsync(_eventRouteId, eventRoute).ConfigureAwait(false);
+Response createEventRouteResponse = await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
 ```
 
-### List Event Routes
+For more information on the event route filter language, see the "how to manage routes" [filter events documentation](https://github.com/Azure/azure-digital-twins/blob/private-preview/Documentation/how-to-manage-routes.md#filter-events).
 
-List a specific event route given event route id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
+### List event routes
+
+List a specific event route given event route Id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetEventRoutes
-AsyncPageable<EventRoute> response = DigitalTwinsClient.GetEventRoutesAsync();
+AsyncPageable<EventRoute> response = client.GetEventRoutesAsync();
 await foreach (EventRoute er in response)
 {
     Console.WriteLine($"Event route: {er.Id}, endpoint name: {er.EndpointName}");
 }
 ```
 
-### Delete Event Route
+### Delete event routes
 
-Delete an event route given event route id
+Delete an event route given event route Id.
 
 ```C# Snippet:DigitalTwinsSampleDeleteEventRoute
-Response response = await DigitalTwinsClient.DeleteEventRouteAsync(_eventRouteId).ConfigureAwait(false);
+Response response = await client.DeleteEventRouteAsync(_eventRouteId);
 ```
 
-### Publish telemetry messages to a Digital Twin
+### Publish telemetry messages for a digital twin
 
-To publish a telemetry message to a digital twin, you need to provide the digital twin id, along with the payload on which telemetry that needs the update.
+To publish a telemetry message for a digital twin, you need to provide the digital twin Id, along with the payload on which telemetry that needs the update.
 
 ```C# Snippet:DigitalTwinsSamplePublishTelemetry
 // construct your json telemetry payload by hand.
-Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
 Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
 ```
 
-You can also publish a telemetry message to a specific component in a digital twin. In addition to the digital twin id and payload, you need to specify the target component id.
+You can also publish a telemetry message for a specific component in a digital twin. In addition to the digital twin Id and payload, you need to specify the target component Id.
 
 ```C# Snippet:DigitalTwinsSamplePublishComponentTelemetry
 // construct your json telemetry payload by serializing a dictionary.
@@ -339,6 +409,9 @@ var telemetryPayload = new Dictionary<string, int>
 {
     { "ComponentTelemetry1", 9}
 };
-Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
+Response publishTelemetryToComponentResponse = await client.PublishComponentTelemetryAsync(
+    twinId,
+    "Component1",
+    JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
 ```

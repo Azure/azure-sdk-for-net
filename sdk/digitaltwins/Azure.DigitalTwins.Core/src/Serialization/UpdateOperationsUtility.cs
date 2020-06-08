@@ -9,6 +9,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <summary>
     /// A utility to create the application/json-patch+json operations payload required for update operations.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     /// <example>
     /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
     /// // Update Component1 by replacing the property ComponentProp1 value
@@ -16,9 +19,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// componentUpdateUtility.AppendReplaceOp(&quot;/ComponentProp1&quot;, &quot;Some new value&quot;);
     /// string updatePayload = componentUpdateUtility.Serialize();
     ///
-    /// Response&lt;string&gt; response = await DigitalTwinsClient.UpdateComponentAsync(dtId1, &quot;Component1&quot;, updatePayload);
+    /// Response&lt;string&gt; response = await client.UpdateComponentAsync(basicDtId, &quot;Component1&quot;, updatePayload);
     ///
-    /// Console.WriteLine($&quot;Updated component for digital twin {dtId1}. Update response status: {response.GetRawResponse().Status}&quot;);
+    /// Console.WriteLine($&quot;Updated component for digital twin {basicDtId}. Update response status: {response.GetRawResponse().Status}&quot;);
     /// </code>
     /// </example>
     public class UpdateOperationsUtility

@@ -15,27 +15,20 @@ namespace Azure.DigitalTwins.Samples
 {
     internal class PublishTelemetrySamples
     {
-        private DigitalTwinsClient DigitalTwinsClient { get; }
-
-        public PublishTelemetrySamples(DigitalTwinsClient dtClient)
-        {
-            DigitalTwinsClient = dtClient;
-        }
-
         /// <summary>
         /// Create a temporary component model, twin model and digital twin instance.
         /// Publish a telemetry message and a component telemetry message to the digital twin instance.
         /// </summary>
-        public async Task RunSamplesAsync()
+        public async Task RunSamplesAsync(DigitalTwinsClient client)
         {
             PrintHeader("PUBLISH TELEMETRY MESSAGE SAMPLE");
 
             // For the purpose of this example we will create temporary models using a random model Ids.
             // We will also create temporary twin instances to publish the telemetry to.
 
-            string componentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
-            string modelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, DigitalTwinsClient).ConfigureAwait(false);
-            string twinId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, DigitalTwinsClient).ConfigureAwait(false);
+            string componentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
+            string modelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, client);
+            string twinId = await GetUniqueTwinIdAsync(SamplesConstants.TemporaryTwinPrefix, client);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
                 .Replace(SamplesConstants.ComponentId, componentModelId);
@@ -45,18 +38,16 @@ namespace Azure.DigitalTwins.Samples
                 .Replace(SamplesConstants.ComponentId, componentModelId);
 
             // Then we create the models.
-            await DigitalTwinsClient
-                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload })
-                .ConfigureAwait(false);
+            await client
+                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
-                .Replace(SamplesConstants.ModelId, modelId)
-                .Replace(SamplesConstants.ComponentId, componentModelId);
+                .Replace(SamplesConstants.ModelId, modelId);
 
-            await DigitalTwinsClient.CreateDigitalTwinAsync(twinId, twinPayload).ConfigureAwait(false);
+            await client.CreateDigitalTwinAsync(twinId, twinPayload);
             Console.WriteLine($"Created digital twin {twinId}.");
 
             try
@@ -64,7 +55,7 @@ namespace Azure.DigitalTwins.Samples
                 #region Snippet:DigitalTwinsSamplePublishTelemetry
 
                 // construct your json telemetry payload by hand.
-                Response publishTelemetryResponse = await DigitalTwinsClient.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+                Response publishTelemetryResponse = await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
                 Console.WriteLine($"Successfully published telemetry message, status: {publishTelemetryResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishTelemetry
@@ -76,7 +67,10 @@ namespace Azure.DigitalTwins.Samples
                 {
                     { "ComponentTelemetry1", 9}
                 };
-                Response publishTelemetryToComponentResponse = await DigitalTwinsClient.PublishComponentTelemetryAsync(twinId, "Component1", JsonSerializer.Serialize(telemetryPayload));
+                Response publishTelemetryToComponentResponse = await client.PublishComponentTelemetryAsync(
+                    twinId,
+                    "Component1",
+                    JsonSerializer.Serialize(telemetryPayload));
                 Console.WriteLine($"Successfully published component telemetry message, status: {publishTelemetryToComponentResponse.Status}");
 
                 #endregion Snippet:DigitalTwinsSamplePublishComponentTelemetry
@@ -89,11 +83,11 @@ namespace Azure.DigitalTwins.Samples
             try
             {
                 // Delete the twin.
-                await DigitalTwinsClient.DeleteDigitalTwinAsync(twinId).ConfigureAwait(false);
+                await client.DeleteDigitalTwinAsync(twinId);
 
                 // Delete the models.
-                await DigitalTwinsClient.DeleteModelAsync(modelId).ConfigureAwait(false);
-                await DigitalTwinsClient.DeleteModelAsync(componentModelId).ConfigureAwait(false);
+                await client.DeleteModelAsync(modelId);
+                await client.DeleteModelAsync(componentModelId);
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
             {
