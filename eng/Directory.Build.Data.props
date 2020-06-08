@@ -35,7 +35,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Management.'))">true</IsMgmtClientLibrary>
+    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
