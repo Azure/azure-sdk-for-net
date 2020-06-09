@@ -1377,6 +1377,106 @@ namespace Azure.Search.Documents
         /// index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
         /// </summary>
+        /// <param name="documents">
+        /// The batch of document index actions.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The non-generic overloads of the Index and IndexAsync methods make
+        /// a best-effort attempt to map JSON types in the response payload to
+        /// .NET types.  See
+        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> IndexDocuments(
+            IndexDocumentsBatch<SearchDocument> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocumentsInternal<SearchDocument>(
+                documents,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Sends a batch of upload, merge, and/or delete actions to the search
+        /// index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// </summary>
+        /// <param name="documents">
+        /// The batch of document index actions.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The non-generic overloads of the Index and IndexAsync methods make
+        /// a best-effort attempt to map JSON types in the response payload to
+        /// .NET types.  See
+        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more information.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync(
+            IndexDocumentsBatch<SearchDocument> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsInternal<SearchDocument>(
+                documents,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sends a batch of upload, merge, and/or delete actions to the search
+        /// index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
@@ -1411,7 +1511,8 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>
         public virtual Response<IndexDocumentsResult> IndexDocuments<T>(
@@ -1464,9 +1565,10 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
-        /// </remarks>
+        /// </remarks>>
         public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
@@ -1532,25 +1634,36 @@ namespace Azure.Search.Documents
                             JsonDocument.Parse(message.Response.ContentStream, default);
                         IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
 
-                        // TODO: #10593 - Ensure input and output document order is in sync while batching
-                        // (waiting until we figure out the broader batching
-                        // story)
-
                         // Optionally throw an exception if any individual
                         // write failed
                         if (options?.ThrowOnAnyError == true)
                         {
+                            List<RequestFailedException> failures = new List<RequestFailedException>();
+                            List<string> failedKeys = new List<string>();
                             foreach (IndexingResult result in value.Results)
                             {
                                 if (!result.Succeeded)
                                 {
-                                    // TODO: #10594 - Aggregate the failed operations into a single exception
-                                    // (waiting until we figure out the broader
-                                    // batching story)
-                                    throw new RequestFailedException(result.Status, result.ErrorMessage);
+                                    failedKeys.Add(result.Key);
+                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                    ex.Data["Key"] = result.Key;
+                                    failures.Add(ex);
                                 }
                             }
+                            if (failures.Count > 0)
+                            {
+                                throw new AggregateException(
+                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                    failures);
+                            }
                         }
+
+                        // TODO: #10593 - Ensure input and output document
+                        // order is in sync while batching (this is waiting on
+                        // both our broader batching story and adding something
+                        // on the client that can potentially indicate the Key
+                        // column since we have no way to tell that at present.)
+
                         return Response.FromValue(value, message.Response);
                     }
                     default:

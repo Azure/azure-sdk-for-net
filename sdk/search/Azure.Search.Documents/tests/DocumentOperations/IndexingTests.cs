@@ -543,12 +543,37 @@ namespace Azure.Search.Documents.Tests
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(new Hotel { HotelId = "1", Category = "Luxury" }),
                 IndexDocumentsAction.Merge(new Hotel { HotelId = "2" }));
-            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+            AggregateException ex = await CatchAsync<AggregateException>(
                 async () => await client.IndexDocumentsAsync(
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
-            Assert.AreEqual(404, ex.Status);
-            Assert.AreEqual("Document not found.", ex.Message);
+            RequestFailedException inner = ex.InnerException as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
+        }
+
+        [Test]
+        public async Task ThrowsAggregateException()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            SearchClient client = resources.GetSearchClient();
+
+            IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
+                IndexDocumentsAction.Upload(new Hotel { HotelId = "1", Category = "Luxury" }),
+                IndexDocumentsAction.Merge(new Hotel { HotelId = "2" }),
+                IndexDocumentsAction.Merge(new Hotel { HotelId = "3" }));
+            AggregateException ex = await CatchAsync<AggregateException>(
+                async () => await client.IndexDocumentsAsync(
+                    batch,
+                    new IndexDocumentsOptions { ThrowOnAnyError = true }));
+
+            StringAssert.StartsWith("Failed to index document(s): 2, 3.", ex.Message);
+            RequestFailedException inner = ex.InnerExceptions[0] as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
+            inner = ex.InnerExceptions[1] as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            Assert.AreEqual("Document not found.", inner.Message);
         }
 
         [Test]
@@ -1312,7 +1337,6 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-
         [Test]
         public async Task ThrowsWhenMergingWithNewKey()
         {
@@ -1321,12 +1345,13 @@ namespace Azure.Search.Documents.Tests
 
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Merge(
                 new[] { new SearchDocument { ["hotelId"] = "42" } });
-            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+            AggregateException ex = await CatchAsync<AggregateException>(
                 async () => await client.IndexDocumentsAsync(
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
-            Assert.AreEqual(404, ex.Status);
-            StringAssert.StartsWith("Document not found.", ex.Message);
+            RequestFailedException inner = ex.InnerException as RequestFailedException;
+            Assert.AreEqual(404, inner.Status);
+            StringAssert.StartsWith("Document not found.", inner.Message);
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation
