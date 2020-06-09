@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -1745,6 +1746,36 @@ namespace Azure.Storage.Blobs.Test
             // Verify the file name exists in the filesystem
             Assert.AreEqual(1, names.Count);
             Assert.Contains(blobName, names);
+        }
+
+        [Test]
+        public async Task OpenWriteAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = test.Container.GetBlockBlobClient(GetNewBlobName());
+            await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            Stream stream = await blob.OpenWriteAsync(bufferSize: Constants.KB);
+
+            byte[] data = GetRandomBuffer(16 * Constants.KB);
+
+            // Act
+            await stream.WriteAsync(data, 0, 512);
+            await stream.WriteAsync(data, 512, 1024);
+            await stream.WriteAsync(data, 1536, 2048);
+            await stream.WriteAsync(data, 3584, 77);
+            await stream.WriteAsync(data, 3661, 2066);
+            await stream.WriteAsync(data, 5727, 4096);
+            await stream.WriteAsync(data, 9823, 6561);
+            await stream.FlushAsync();
+
+            // Assert
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(new HttpRange(0, data.Length));
+            var dataResult = new MemoryStream();
+            await result.Value.Content.CopyToAsync(dataResult);
+            Assert.AreEqual(data.Length, dataResult.Length);
+            TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

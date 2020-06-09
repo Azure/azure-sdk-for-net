@@ -2,33 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Shared;
 
-namespace Azure.Storage.Files.DataLake
+namespace Azure.Storage.Blobs
 {
-    internal class DataLakeFileWriteStream : WriteStream
+    internal class BlockBlobWriteStream : WriteStream
     {
-        private readonly DataLakeFileClient _fileClient;
-        private readonly DataLakeRequestConditions _conditions;
-        private long _writeIndex;
+        private readonly BlockBlobClient _blockBlobClient;
+        private readonly BlobRequestConditions _conditions;
+        private readonly List<string> _blockIds;
 
-        public DataLakeFileWriteStream(
-            DataLakeFileClient fileClient,
+        public BlockBlobWriteStream(
+            BlockBlobClient blockBlobClient,
             int bufferSize,
             long position,
-            DataLakeRequestConditions conditions,
+            BlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
                 position,
                 bufferSize,
                 progressHandler)
         {
             ValidateBufferSize(bufferSize);
-            _fileClient = fileClient;
+            _blockBlobClient = blockBlobClient;
             _conditions = conditions;
-            _writeIndex = position;
+            _blockIds = new List<string>();
         }
 
         protected override async Task WriteInternal(bool async, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -44,7 +47,7 @@ namespace Azure.Storage.Files.DataLake
             else
             {
                 // Flush the buffer.
-                await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
                 while (remaining > 0)
                 {
@@ -58,7 +61,7 @@ namespace Azure.Storage.Files.DataLake
                     // Renaming bytes won't fit in buffer.
                     if (remaining > _buffer.Capacity)
                     {
-                        await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                        await AppendInternal(async, cancellationToken).ConfigureAwait(false);
                         remaining -= _buffer.Capacity;
                         offset += _buffer.Capacity;
                     }
@@ -79,27 +82,29 @@ namespace Azure.Storage.Files.DataLake
             {
                 _buffer.Position = 0;
 
+                string blockId = GenerateBlockId();
+
                 if (async)
                 {
-                    await _fileClient.AppendAsync(
+                    await _blockBlobClient.StageBlockAsync(
+                        base64BlockId: blockId,
                         content: _buffer,
-                        offset: _writeIndex,
-                        leaseId: _conditions?.LeaseId,
+                        conditions: _conditions,
                         progressHandler: _progressHandler,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 else
                 {
-                    _fileClient.Append(
+                    _blockBlobClient.StageBlock(
+                        base64BlockId: blockId,
                         content: _buffer,
-                        offset: _writeIndex,
-                        leaseId: _conditions?.LeaseId,
+                        conditions: _conditions,
                         progressHandler: _progressHandler,
                         cancellationToken: cancellationToken);
                 }
 
-                _writeIndex += _buffer.Length;
+                _blockIds.Add(blockId);
                 _buffer.SetLength(0);
             }
         }
@@ -110,16 +115,16 @@ namespace Azure.Storage.Files.DataLake
 
             if (async)
             {
-                await _fileClient.FlushAsync(
-                    position: _writeIndex,
+                await _blockBlobClient.CommitBlockListAsync(
+                    base64BlockIds: _blockIds,
                     conditions: _conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
             else
             {
-                _fileClient.Flush(
-                    position: _writeIndex,
+                _blockBlobClient.CommitBlockList(
+                    base64BlockIds: _blockIds,
                     conditions: _conditions,
                     cancellationToken: cancellationToken);
             }
@@ -136,6 +141,13 @@ namespace Azure.Storage.Files.DataLake
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 100 MB");
             }
+        }
+
+        private static string GenerateBlockId()
+        {
+            Guid guid = Guid.NewGuid();
+            byte[] bytes = Encoding.UTF8.GetBytes(guid.ToString());
+            return Convert.ToBase64String(bytes);
         }
     }
 }
