@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="nvaSku">Network Virtual Appliance SKU.</param>
         /// <param
         /// name="bootStrapConfigurationBlobs">BootStrapConfigurationBlobs
         /// storage URLs.</param>
@@ -59,12 +60,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', 'Failed'</param>
         /// <param name="identity">The service principal that has read access
         /// to cloud-init and config blob.</param>
-        /// <param name="sku">Network Virtual Appliance SKU.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), VirtualApplianceSkuProperties sku = default(VirtualApplianceSkuProperties), string etag = default(string))
+        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            NvaSku = nvaSku;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
             VirtualHub = virtualHub;
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
@@ -74,7 +75,6 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualApplianceSites = virtualApplianceSites;
             ProvisioningState = provisioningState;
             Identity = identity;
-            Sku = sku;
             Etag = etag;
             CustomInit();
         }
@@ -83,6 +83,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets network Virtual Appliance SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nvaSku")]
+        public VirtualApplianceSkuProperties NvaSku { get; set; }
 
         /// <summary>
         /// Gets or sets bootStrapConfigurationBlobs storage URLs.
@@ -140,12 +146,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary>
-        /// Gets or sets network Virtual Appliance SKU.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public VirtualApplianceSkuProperties Sku { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
