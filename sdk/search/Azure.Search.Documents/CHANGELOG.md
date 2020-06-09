@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.4 (2020-05-09)
 
 ### Added
 
+- Added `SearchClientBuilderExtensions` to integrate with ASP.NET Core.
 - Added `SearchModelFactory` to mock output model types.
 
 ### Breaking Changes
