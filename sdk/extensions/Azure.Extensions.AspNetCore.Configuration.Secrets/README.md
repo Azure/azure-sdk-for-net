@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing c
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets -v 1.0.0-preview.2
+dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets
 ```
 
 ### Prerequisites
@@ -62,7 +62,7 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/src
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.Configuration.Secrets
-[nuget]: https://www.nuget.org/storage-quickstart-create-account?tabs=azure-powershell
+[nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [keyvault_create_ps]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-powershell#create-a-key-vault
