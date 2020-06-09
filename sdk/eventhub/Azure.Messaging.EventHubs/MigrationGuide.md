@@ -61,7 +61,7 @@ In order to allow for a single focus and clear responsibility, the core function
   
   One of the key features of the `EventProcessorClient` is enabling tracking of which events have been processed by interacting with a durable storage provider.  This process is commonly referred to as [checkpointing](https://docs.microsoft.com/azure/event-hubs/event-hubs-features#checkpointing) and the persisted state as a checkpoint.  This version of the `EventProcessorClient` only supports Azure Storage Blobs.  
   
-  **_Important note on checkpoints:_**  It is unfortunate, but the [EventProcessorClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) does not support legacy checkpoint data.  In order to meet the goals set for unifying checkpoint data across languages for the new set of Event Hubs libraries and to make improvements to the algorithm used for managing partition ownership, breaking changes were necessary.  An approach for migrating legacy checkpoints can be found in the [migration samples](#migration-samples) below.
+  **_Important note on checkpoints:_**  The [EventProcessorClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) does not support legacy checkpoint data created using the v4 `EventProcessorHost`.  In order to allow for a unified format for checkpoint data across languages, a more efficient approach to data storage, and improvements to the algorithm used for managing partition ownership, breaking changes were necessary.  An approach for migrating the v4 `EventProcessorHost` checkpoints can be found in the [migration samples](#migrating-event-processor-checkpoints) below.
 
 #### Specialized
 
