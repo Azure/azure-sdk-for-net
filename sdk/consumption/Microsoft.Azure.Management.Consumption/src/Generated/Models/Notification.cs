@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// notification to when the threshold is exceeded.</param>
         /// <param name="contactGroups">Action groups to send the budget
         /// notification to when the threshold is exceeded.</param>
-        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>), IList<string> contactGroups = default(IList<string>))
+        /// <param name="thresholdType">The type of threshold. Possible values
+        /// include: 'Actual'</param>
+        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>), IList<string> contactGroups = default(IList<string>), string thresholdType = default(string))
         {
             Enabled = enabled;
             OperatorProperty = operatorProperty;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
             ContactEmails = contactEmails;
             ContactRoles = contactRoles;
             ContactGroups = contactGroups;
+            ThresholdType = thresholdType;
             CustomInit();
         }
 
@@ -103,6 +106,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "contactGroups")]
         public IList<string> ContactGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of threshold. Possible values include:
+        /// 'Actual'
+        /// </summary>
+        [JsonProperty(PropertyName = "thresholdType")]
+        public string ThresholdType { get; set; }
 
         /// <summary>
         /// Validate the object.
