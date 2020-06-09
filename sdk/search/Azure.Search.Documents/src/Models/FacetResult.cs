@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
         /// particular field value and Range facets count documents with a
         /// field value in a particular range.
         /// </summary>
-        public FacetType Type => (Value != null) ? FacetType.Value : FacetType.Range;
+        public FacetType FacetType => (Value != null) ? FacetType.Value : FacetType.Range;
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (Type != FacetType.Range) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Range) { throw new InvalidCastException(); }
             return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (Type != FacetType.Value) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Value) { throw new InvalidCastException(); }
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
     }

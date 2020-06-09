@@ -1871,12 +1871,12 @@ namespace Azure.Search.Documents.Models
     {
         internal FacetResult() { }
         public long? Count { get { throw null; } }
+        public Azure.Search.Documents.Models.FacetType FacetType { get { throw null; } }
         public object From { get { throw null; } }
         public object this[string key] { get { throw null; } }
         public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
         int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         public object To { get { throw null; } }
-        public Azure.Search.Documents.Models.FacetType Type { get { throw null; } }
         public object Value { get { throw null; } }
         public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
         public Azure.Search.Documents.Models.RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct { throw null; }
