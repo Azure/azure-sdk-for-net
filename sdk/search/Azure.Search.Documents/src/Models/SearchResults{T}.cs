@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
-        internal IList<SearchResult<T>> Values { get; set; } = new List<SearchResult<T>>();
+        internal List<SearchResult<T>> Values { get; } = new List<SearchResult<T>>();
 
         /// <summary>
         /// Gets or sets the fully constructed URI for the next page of
@@ -484,19 +484,22 @@ namespace Azure.Search.Documents.Models
         /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
         /// <returns>A new SearchResults instance for mocking.</returns>
         public static SearchResults<T> SearchResults<T>(
-            IList<SearchResult<T>> values,
+            IEnumerable<SearchResult<T>> values,
             long? totalCount,
             IDictionary<string, IList<FacetResult>> facets,
             double? coverage,
-            Response rawResponse) =>
-            new SearchResults<T>()
+            Response rawResponse)
+        {
+            var results = new SearchResults<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
                 Facets = facets,
-                Values = values,
                 RawResponse = rawResponse
             };
+            results.Values.AddRange(values);
+            return results;
+        }
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>
         /// <typeparam name="T">

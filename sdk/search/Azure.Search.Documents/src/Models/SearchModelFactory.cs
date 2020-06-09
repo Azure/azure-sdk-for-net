@@ -25,38 +25,6 @@ namespace Azure.Search.Documents.Models
             int position) =>
             new AnalyzedTokenInfo(token, startOffset, endOffset, position);
 
-        /// <summary> Initializes a new instance of CharFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
-        /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <returns> A new CharFilter instance for mocking. </returns>
-        public static CharFilter CharFilter(
-            string oDataType,
-            string name) =>
-            new CharFilter(oDataType, name);
-
-        /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
-        /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
-        /// <returns> A new CognitiveServicesAccount instance for mocking. </returns>
-        public static CognitiveServicesAccount CognitiveServicesAccount(
-            string oDataType,
-            string description) =>
-            new CognitiveServicesAccount(oDataType, description);
-
-        /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
-        /// <returns> A new DataChangeDetectionPolicy instance for mocking. </returns>
-        public static DataChangeDetectionPolicy DataChangeDetectionPolicy(
-            string oDataType) =>
-            new DataChangeDetectionPolicy(oDataType);
-
-        /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
-        /// <returns> A new DataDeletionDetectionPolicy instance for mocking. </returns>
-        public static DataDeletionDetectionPolicy DataDeletionDetectionPolicy(
-            string oDataType) =>
-            new DataDeletionDetectionPolicy(oDataType);
-
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
@@ -81,37 +49,6 @@ namespace Azure.Search.Documents.Models
             string initialTrackingState,
             string finalTrackingState) =>
             new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
-
-        /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
-        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <returns> A new LexicalAnalyzer instance for mocking. </returns>
-        public static LexicalAnalyzer LexicalAnalyzer(
-            string oDataType,
-            string name) =>
-            new LexicalAnalyzer(oDataType, name);
-
-        /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
-        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <returns> A new LexicalTokenizer instance for mocking. </returns>
-        public static LexicalTokenizer LexicalTokenizer(
-            string oDataType,
-            string name) =>
-            new LexicalTokenizer(oDataType, name);
-
-        /// <summary> Initializes a new instance of ScoringFunction. </summary>
-        /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
-        /// <returns> A new ScoringFunction instance for mocking. </returns>
-        public static ScoringFunction ScoringFunction(
-            string type,
-            string fieldName,
-            double boost,
-            ScoringFunctionInterpolation? interpolation) =>
-            new ScoringFunction(type, fieldName, boost, interpolation);
 
         /// <summary> Initializes a new instance of SearchIndexerError. </summary>
         /// <param name="key"> The key of the item for which indexing failed. </param>
@@ -140,23 +77,6 @@ namespace Azure.Search.Documents.Models
             long? maxDocumentExtractionSize,
             long? maxDocumentContentCharactersToExtract) =>
             new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
-
-        /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
-        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
-        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
-        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <returns> A new SearchIndexerSkill instance for mocking. </returns>
-        public static SearchIndexerSkill SearchIndexerSkill(
-            string oDataType,
-            string name,
-            string description,
-            string context,
-            IList<InputFieldMappingEntry> inputs,
-            IList<OutputFieldMappingEntry> outputs) =>
-            new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs);
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -245,39 +165,23 @@ namespace Azure.Search.Documents.Models
             SearchServiceLimits limits) =>
             new SearchServiceStatistics(counters, limits);
 
-        /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
-        /// <param name="oDataType"> . </param>
-        /// <returns> A new SimilarityAlgorithm instance for mocking. </returns>
-        public static SimilarityAlgorithm SimilarityAlgorithm(
-            string oDataType) =>
-            new SimilarityAlgorithm(oDataType);
-
-        /// <summary> Initializes a new instance of TokenFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <returns> A new TokenFilter instance for mocking. </returns>
-        public static TokenFilter TokenFilter(
-            string oDataType,
-            string name) =>
-            new TokenFilter(oDataType, name);
-
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
         /// <returns> A new AutocompleteResults instance for mocking. </returns>
         public static AutocompleteResults AutocompleteResults(
             double? coverage,
-            IReadOnlyList<Autocompletion> results) =>
+            IReadOnlyList<AutocompleteItem> results) =>
             new AutocompleteResults(coverage, results);
 
-        /// <summary> Initializes a new instance of Autocompletion. </summary>
+        /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
-        /// <returns> A new Autocompletion instance for mocking. </returns>
-        public static Autocompletion Autocompletion(
+        /// <returns> A new AutocompleteItem instance for mocking. </returns>
+        public static AutocompleteItem Autocompletion(
             string text,
             string queryPlusText) =>
-            new Autocompletion(text, queryPlusText);
+            new AutocompleteItem(text, queryPlusText);
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
