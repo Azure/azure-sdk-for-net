@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Management.Compute
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\GitSwagger\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "8ba18e990a5c1a98d505018329d53272ce43f334";
+      public static readonly String GithubCommidId = "3c09c5f5e3a7c6a543ae1a9eea7f06a3cfda83a8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -208,18 +208,18 @@ namespace Compute.Tests.DiskRPTests
 
                     // Put DiskEncryptionSet
                     DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName, desName, des);
-                    Validate(des, desOut, desName);
+                    Validate(des, desOut, desName, encryptionType);
 
                     // Get DiskEncryptionSet
                     desOut = m_CrpClient.DiskEncryptionSets.Get(rgName, desName);
-                    Validate(des, desOut, desName);
+                    Validate(des, desOut, desName, encryptionType);
 
                     // Patch DiskEncryptionSet
                     const string tagKey = "tageKey";
                     var updateDes = new DiskEncryptionSetUpdate();
                     updateDes.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
                     desOut = m_CrpClient.DiskEncryptionSets.Update(rgName, desName, updateDes);
-                    Validate(des, desOut, desName);
+                    Validate(des, desOut, desName, encryptionType);
                     Assert.Equal(1, desOut.Tags.Count);
 
                     // Delete DiskEncryptionSet
@@ -1074,7 +1074,7 @@ namespace Compute.Tests.DiskRPTests
 
         #region Validation
 
-        private void Validate(DiskEncryptionSet diskEncryptionSetExpected, DiskEncryptionSet diskEncryptionSetActual, string expectedDESName)
+        private void Validate(DiskEncryptionSet diskEncryptionSetExpected, DiskEncryptionSet diskEncryptionSetActual, string expectedDESName, string expectedEncryptionType)
         {
             Assert.Equal(expectedDESName, diskEncryptionSetActual.Name);
             Assert.Equal(diskEncryptionSetExpected.Location, diskEncryptionSetActual.Location);
@@ -1082,6 +1082,7 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(diskEncryptionSetExpected.ActiveKey.KeyUrl, diskEncryptionSetActual.ActiveKey.KeyUrl);
             Assert.NotNull(diskEncryptionSetActual.Identity);
             Assert.Equal(ResourceIdentityType.SystemAssigned.ToString(), diskEncryptionSetActual.Identity.Type);
+            Assert.Equal(expectedEncryptionType, diskEncryptionSetActual.EncryptionType);
         }
 
         private void Validate(DiskAccess diskAccessExpected, DiskAccess diskAccessActual, string expectedDiskAccessName, string privateEndpointId = null)
