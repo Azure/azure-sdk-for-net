@@ -12,29 +12,33 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void CreateTable()
+        public void TableCreateError()
         {
             string storageUri = StorageUri;
             string accountName = AccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "mytesttable";
-
-            #region Snippet:TablesSample1CreateClient
+            string tableName = "OfficeSupplies2";
 
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
-            #endregion
-
-            #region Snippet:CreateTable
-
-            serviceClient.CreateTable(tableName);
-            var client = serviceClient.GetTableClient(tableName);
-
-            #endregion
-
-            serviceClient.DeleteTable(tableName);
+            try
+            {
+                #region Snippet:TablesSample1CreateExistingTable
+                serviceClient.CreateTable(tableName);
+                serviceClient.CreateTable(tableName); // second create request
+                #endregion
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"TableErrors threw an exception.");
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                serviceClient.DeleteTable(tableName);
+            }
         }
     }
 }
