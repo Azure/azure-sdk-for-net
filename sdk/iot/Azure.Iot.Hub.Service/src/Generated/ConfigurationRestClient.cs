@@ -61,7 +61,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TwinConfiguration>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<TwinConfiguration>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.Iot.Hub.Service
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configuration);
             request.Content = content;
             return message;
@@ -151,7 +151,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="configuration"> The Configuration to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -248,7 +248,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> The String to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -308,7 +308,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<TwinConfiguration>>> GetConfigurationsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetConfigurationsRequest(top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -396,7 +396,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -405,7 +405,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Validates the target condition query and custom metric queries for a configuration. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="input"> The ConfigurationQueriesTestInput to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationQueriesTestResponse>> TestQueriesAsync(ConfigurationQueriesTestInput input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -481,7 +481,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content0 = new Utf8JsonRequestContent();
+            var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             return message;
@@ -491,7 +491,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> Device ID. </param>
         /// <param name="content"> Configuration Content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<object>> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> ApplyOnEdgeDeviceAsync(string id, ConfigurationContent content, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
