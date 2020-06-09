@@ -2820,7 +2820,6 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 scope.Dispose();
             }
-
         }
         #endregion OpenWrite
     }

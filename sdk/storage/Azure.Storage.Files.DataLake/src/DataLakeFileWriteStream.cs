@@ -4,30 +4,29 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Shared;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Files.DataLake
 {
-    internal class PageBlobWriteStream : WriteStream
+    internal class DataLakeFileWriteStream : WriteStream
     {
-        private readonly PageBlobClient _pageBlobClient;
-        private readonly PageBlobRequestConditions _conditions;
+        private readonly DataLakeFileClient _fileClient;
+        private readonly DataLakeRequestConditions _conditions;
         private long _writeIndex;
 
-        public PageBlobWriteStream(
-            PageBlobClient pageBlobClient,
+        public DataLakeFileWriteStream(
+            DataLakeFileClient fileClient,
             int bufferSize,
             long position,
-            PageBlobRequestConditions conditions,
+            DataLakeRequestConditions conditions,
             IProgress<long> progressHandler) : base(
                 position,
                 bufferSize,
                 progressHandler)
         {
             ValidateBufferSize(bufferSize);
-            _pageBlobClient = pageBlobClient;
+            _fileClient = fileClient;
             _conditions = conditions;
             _writeIndex = position;
         }
@@ -44,15 +43,6 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                // We need a multiple of 512 to flush.
-                if (_buffer.Length % 512 != 0)
-                {
-                    int bytesToWrite = (int)(512 - _buffer.Length % 512);
-                    await WriteToBuffer(async, buffer, offset, bytesToWrite, cancellationToken).ConfigureAwait(false);
-                    remaining -= bytesToWrite;
-                    offset += bytesToWrite;
-                }
-
                 // Flush the buffer.
                 await FlushInternal(async, cancellationToken).ConfigureAwait(false);
 
@@ -83,7 +73,7 @@ namespace Azure.Storage.Blobs
             _position += count;
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        private async Task AppendInternal(bool async, CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -91,26 +81,47 @@ namespace Azure.Storage.Blobs
 
                 if (async)
                 {
-                    await _pageBlobClient.UploadPagesAsync(
-                        _buffer,
-                        _writeIndex,
-                        conditions: _conditions,
+                    await _fileClient.AppendAsync(
+                        content: _buffer,
+                        offset: _writeIndex,
+                        leaseId: _conditions?.LeaseId,
                         progressHandler: _progressHandler,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 else
                 {
-                    _pageBlobClient.UploadPages(
-                        _buffer,
-                        _writeIndex,
-                        conditions: _conditions,
+                    _fileClient.Append(
+                        content: _buffer,
+                        offset: _writeIndex,
+                        leaseId: _conditions?.LeaseId,
                         progressHandler: _progressHandler,
                         cancellationToken: cancellationToken);
                 }
 
                 _writeIndex += _buffer.Length;
                 _buffer.SetLength(0);
+            }
+        }
+
+        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        {
+            await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+
+            if (async)
+            {
+                await _fileClient.FlushAsync(
+                    position: _writeIndex,
+                    conditions: _conditions,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                _fileClient.Flush(
+                    position: _writeIndex,
+                    conditions: _conditions,
+                    cancellationToken: cancellationToken);
             }
         }
 
@@ -121,14 +132,9 @@ namespace Azure.Storage.Blobs
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be >= 1");
             }
 
-            if (bufferSize > 4 * Constants.MB)
+            if (bufferSize > 100 * Constants.MB)
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
-            }
-
-            if (bufferSize % 512 != 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be a multiple of 512");
             }
         }
     }
