@@ -309,13 +309,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/BulkRegistryOperationResult"
+              "$ref": "#/definitions/BulkRegistryOperationResponse"
             }
           },
           "400": {
             "description": "BadRequest",
             "schema": {
-              "$ref": "#/definitions/BulkRegistryOperationResult"
+              "$ref": "#/definitions/BulkRegistryOperationResponse"
             }
           }
         }
@@ -2215,7 +2215,7 @@
         }
       }
     },
-    "BulkRegistryOperationResult": {
+    "BulkRegistryOperationResponse": {
       "description": "Encapsulates the result of a bulk registry operation.",
       "type": "object",
       "properties": {
