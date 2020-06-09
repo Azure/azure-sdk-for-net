@@ -1,9 +1,10 @@
 # Release History
 
-## 1.0.0-preview.4 (2020-05-09)
+## 1.0.0-preview.4 (2020-06-09)
 
 ### Added
 
+- Referencing `Azure.Core.Experimental` which brings new spatial types and custom serializers.
 - Added `SearchClientBuilderExtensions` to integrate with ASP.NET Core.
 - Added `SearchModelFactory` to mock output model types.
 
@@ -21,6 +22,8 @@
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
 - `SearchClient.IndexDocuments` now throws an `AggregateException` wrapping all the `RequestFailedException`s in the batch.
+- Removed `dynamic` support from `SearchDocument` for the time being.
+
 
 ## 1.0.0-preview.3 (2020-05-05)
 

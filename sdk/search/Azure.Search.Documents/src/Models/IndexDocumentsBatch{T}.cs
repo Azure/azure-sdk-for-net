@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -19,7 +21,7 @@ namespace Azure.Search.Documents.Models
     /// Contains a batch of document write actions to send to a search index
     /// via <see cref="SearchClient.IndexDocuments"/>.
     /// </summary>
-    public partial class IndexDocumentsBatch<T> : IUtf8JsonSerializable
+    public partial class IndexDocumentsBatch<T>
     {
         /// <summary>
         /// The actions in the batch.
@@ -54,19 +56,47 @@ namespace Azure.Search.Documents.Models
             }
         }
 
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Serialize the document batch.
         /// </summary>
         /// <param name="writer">The JSON writer.</param>
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>A task representing the serialization.</returns>
+        internal async Task SerializeAsync(
+            Utf8JsonWriter writer,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
+            JsonSerializerOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1572
         {
             Debug.Assert(writer != null);
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName(Constants.ValueKeyJson);
             writer.WriteStartArray();
             foreach (IndexDocumentsAction<T> action in Actions)
             {
-                writer.WriteObjectValue(action);
+                await action.SerializeAsync(
+                    writer,
+#if EXPERIMENTAL_SERIALIZER
+                    serializer,
+#endif
+                    options,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

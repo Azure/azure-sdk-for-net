@@ -3,8 +3,11 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -23,7 +26,6 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
-    [JsonConverter(typeof(SearchSuggestionConverterFactory))]
     public class SearchSuggestion<T>
     {
         /// <summary>
@@ -40,70 +42,72 @@ namespace Azure.Search.Documents.Models
         /// Initializes a new instance of the SearchSuggestion class.
         /// </summary>
         internal SearchSuggestion() { }
-    }
 
-    /// <summary>
-    /// JsonConverterFactory to create closed instances of
-    /// <see cref="SuggestResultsConverter{T}"/>.
-    /// </summary>
-    internal class SearchSuggestionConverterFactory : ModelConverterFactory
-    {
-        protected override Type GenericType => typeof(SearchSuggestion<>);
-        protected override Type GenericConverterType => typeof(SearchSuggestionConverter<>);
-    }
-
-    /// <summary>
-    /// Convert from JSON to <see cref="SearchSuggestion{T}"/>.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The .NET type that maps to the index schema. Instances of this type can
-    /// be retrieved as documents from the index.
-    /// </typeparam>
-    internal class SearchSuggestionConverter<T> : JsonConverter<SearchSuggestion<T>>
-    {
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
-        /// Serializing SearchSuggestion isn't supported as it's an output only
-        /// model type.  This always fails.
+        /// Deserialize a SearchSuggestion and its model.
         /// </summary>
-        /// <param name="writer">The JSON writer.</param>
-        /// <param name="value">The suggestion.</param>
-        /// <param name="options">Serialization options.</param>
-        public override void Write(Utf8JsonWriter writer, SearchSuggestion<T> value, JsonSerializerOptions options) =>
-            throw new NotSupportedException($"{nameof(SearchSuggestion<T>)} cannot be serialized to JSON.");
-
-        /// <summary>
-        /// Parse a SearchSuggestion and its model.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="typeToConvert">The type to parse into.</param>
-        /// <param name="options">Serialization options.</param>
-        /// <returns>The deserialized suggestion.</returns>
-        public override SearchSuggestion<T> Read(
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions options)
+        /// <param name="element">A JSON element.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchSuggestion.</returns>
+        internal static async Task<SearchSuggestion<T>> DeserializeAsync(
+            JsonElement element,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
+            JsonSerializerOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1572
         {
             Debug.Assert(options != null);
-            SearchSuggestion<T> suggestion = new SearchSuggestion<T>();
 
-            // Clone the reader so we can get the search text property without
-            // advancing the reader over any properties needed to deserialize
-            // the user's model type.
-            Utf8JsonReader clone = reader;
-            clone.Expects(JsonTokenType.StartObject);
-            while (clone.Read() && clone.TokenType != JsonTokenType.EndObject)
+            SearchSuggestion<T> suggestion = new SearchSuggestion<T>();
+            foreach (JsonProperty prop in element.EnumerateObject())
             {
-                string name = clone.ExpectsPropertyName();
-                if (name == Constants.SearchTextKey)
+                if (prop.NameEquals(Constants.SearchTextKeyJson.EncodedUtf8Bytes))
                 {
-                    suggestion.Text = clone.ExpectsString();
-                    break;
+                    suggestion.Text = prop.Value.GetString();
+                    break; // We only have one non-model property
                 }
             }
 
             // Deserialize the model
-            T document = JsonSerializer.Deserialize<T>(ref reader, options);
-            suggestion.Document = document;
+#if EXPERIMENTAL_SERIALIZER
+            if (serializer != null)
+            {
+                using Stream stream = element.ToStream();
+                T document = async ?
+                    (T)await serializer.DeserializeAsync(stream, typeof(T)).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T));
+                suggestion.Document = document;
+            }
+            else
+            {
+#endif
+                T document;
+                if (async)
+                {
+                    using Stream stream = element.ToStream();
+                    document = await JsonSerializer.DeserializeAsync<T>(stream, options, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), options);
+                }
+                suggestion.Document = document;
+#if EXPERIMENTAL_SERIALIZER
+            }
+#endif
 
             return suggestion;
         }

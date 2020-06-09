@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fcsqltcg\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027uuimiwom\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "1384",
+        "Content-Length": "1458",
         "Content-Type": "application/json",
-        "traceparent": "00-0fb691263dc06546aa8874685a065e75-9da3005dba286247-00",
+        "traceparent": "00-62f986e7d8fe1e45b8fcd511bf31c12e-b87f93273684504b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "4601d57268f632293dd1260264c08611",
         "x-ms-return-client-request-id": "true"
@@ -34,6 +34,13 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1999-09-06T00:00:00.0000000\u002B00:00",
             "rating": 3,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -78.940483,
+                35.904159999999997
+              ]
+            },
             "address": {
               "streetAddress": "6910 Fayetteville Rd",
               "city": "Durham",
@@ -73,16 +80,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "4601d572-68f6-3229-3dd1-260264c08611",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:50:38 GMT",
-        "elapsed-time": "112",
+        "Date": "Mon, 01 Jun 2020 12:05:45 GMT",
+        "elapsed-time": "100",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "4601d572-68f6-3229-3dd1-260264c08611",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "4601d572-68f6-3229-3dd1-260264c08611"
       },
       "ResponseBody": {
         "value": [
@@ -96,15 +105,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fcsqltcg\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027uuimiwom\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-829b00ba73c63147a08b337cd2821644-ca850814e1072543-00",
+        "traceparent": "00-b2948efadc6d7547ad8266c08b2b4888-6fe354fef7eb5f4c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "630df8ec3f929a8179bffcb17ecb2dbb",
         "x-ms-return-client-request-id": "true"
@@ -113,43 +122,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "630df8ec-3f92-9a81-79bf-fcb17ecb2dbb",
         "Content-Length": "288",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:50:40 GMT",
-        "elapsed-time": "7",
+        "Date": "Mon, 01 Jun 2020 12:05:47 GMT",
+        "elapsed-time": "10",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "630df8ec-3f92-9a81-79bf-fcb17ecb2dbb",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "630df8ec-3f92-9a81-79bf-fcb17ecb2dbb"
       },
-      "ResponseBody": {
-        "hotelName": "Countryside Hotel",
-        "description": "Save up to 50% off traditional hotels.  Free WiFi, great location near downtown, full kitchen, washer \u0026 dryer, 24/7 support, bowling alley, fitness center and more.",
-        "address": {
-          "city": "Durham"
-        },
-        "rooms": [
-          {
-            "baseRate": 2.44
-          },
-          {
-            "baseRate": 7.69
-          }
-        ]
-      }
+      "ResponseBody": "{\u0022hotelName\u0022:\u0022Countryside Hotel\u0022,\u0022description\u0022:\u0022Save up to 50% off traditional hotels.  Free WiFi, great location near downtown, full kitchen, washer \u0026 dryer, 24/7 support, bowling alley, fitness center and more.\u0022,\u0022address\u0022:{\u0022city\u0022:\u0022Durham\u0022},\u0022rooms\u0022:[{\u0022baseRate\u0022:2.44},{\u0022baseRate\u0022:7.69}]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027fcsqltcg\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027uuimiwom\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-ed86a7ee137e5f4492f6b5b84d3f940a-70513738c463e145-00",
+        "traceparent": "00-9dcb347b33febf408d0ad71c82ca442e-d9a685fccce3b242-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ffc541c8c037b5bd6ff1a35b4863fc4b",
         "x-ms-return-client-request-id": "true"
@@ -158,21 +155,23 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 08 May 2020 06:50:40 GMT",
-        "elapsed-time": "262",
+        "client-request-id": "ffc541c8-c037-b5bd-6ff1-a35b4863fc4b",
+        "Date": "Mon, 01 Jun 2020 12:05:47 GMT",
+        "elapsed-time": "534",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "ffc541c8-c037-b5bd-6ff1-a35b4863fc4b",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "ffc541c8-c037-b5bd-6ff1-a35b4863fc4b"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "495263731",
-    "SearchIndexName": "fcsqltcg",
+    "SearchIndexName": "uuimiwom",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }
 }

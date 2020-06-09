@@ -4,7 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -116,13 +121,12 @@ namespace Azure.Search.Documents.Tests
         #endregion Utilities
 
         [Test]
-        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient();
-            SearchResults<SearchDocument> response = await client.SearchAsync("*");
+            SearchResults<SearchDocument> response = await client.SearchAsync<SearchDocument>("*");
             Assert.IsNull(response.TotalCount);
             Assert.IsNull(response.Coverage);
             Assert.IsNull(response.Facets);
@@ -133,14 +137,13 @@ namespace Azure.Search.Documents.Tests
             {
                 Assert.AreEqual(1, docs[i].Score);
                 Assert.IsNull(docs[i].Highlights);
-                Assert.AreEqual(
+                SearchTestBase.AssertApproximate(
                     SearchResources.TestDocuments[i].AsDocument(),
                     docs[i].Document);
             }
         }
 
         [Test]
-        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task StaticDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -161,6 +164,46 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
+#if EXPERIMENTAL_SERIALIZER
+        [Test]
+#endif
+        public async Task StaticDocumentsWithCustomSerializer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchClient client = resources.GetQueryClient(
+                new SearchClientOptions()
+                {
+#if EXPERIMENTAL_SERIALIZER
+                    Serializer = new JsonObjectSerializer(
+                        new JsonSerializerOptions()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            Converters =
+                            {
+#if EXPERIMENTAL_SPATIAL
+                                new GeometryJsonConverter()
+#endif
+                            }
+                        })
+#endif
+                });
+            SearchResults<UncasedHotel> response = await client.SearchAsync<UncasedHotel>("*");
+            Assert.IsNull(response.TotalCount);
+            Assert.IsNull(response.Coverage);
+            Assert.IsNull(response.Facets);
+
+            List<SearchResult<UncasedHotel>> docs = await response.GetResultsAsync().ToListAsync();
+            Assert.AreEqual(SearchResources.TestDocuments.Length, docs.Count);
+            for (int i = 0; i < docs.Count; i++)
+            {
+                Assert.AreEqual(1, docs[i].Score);
+                Assert.IsNull(docs[i].Highlights);
+                // Flip expected/actual order because we implemented Equals in UncasedHotel
+                Assert.AreEqual(docs[i].Document, SearchResources.TestDocuments[i]);
+            }
+        }
+
         [Test]
         public async Task ThrowsWhenRequestIsMalformed()
         {
@@ -169,7 +212,7 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = resources.GetQueryClient();
             SearchOptions invalidOptions = new SearchOptions { Filter = "This is not a valid filter." };
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await client.SearchAsync("*", invalidOptions));
+                async () => await client.SearchAsync<SearchDocument>("*", invalidOptions));
             Assert.AreEqual(400, ex.Status);
             StringAssert.StartsWith("Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'", ex.Message);
         }
@@ -272,7 +315,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task OrderByProgressivelyBreaksTies()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -449,7 +491,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await client.SearchAsync(
+                async () => await client.SearchAsync<SearchDocument>(
                     @"/.*/.*/",
                     new SearchOptions { QueryType = SearchQueryType.Full }));
             Assert.AreEqual(400, ex.Status);
@@ -493,7 +535,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchOptions
                     {
                         ScoringProfile = "nearest",
-                        ScoringParameters = new[] { new ScoringParameter("myloc", GeographyPoint.Create(49, -122)) },
+                        ScoringParameters = new[] { new ScoringParameter("myloc", TestExtensions.CreatePoint(49, -122)) },
                         Filter = "rating eq 5 or rating eq 1"
                     });
             await AssertKeysEqual(
@@ -675,7 +717,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
             SearchClient client = resources.GetQueryClient();
             Response<SearchResults<SearchDocument>> response =
-                await client.SearchAsync(
+                await client.SearchAsync<SearchDocument>(
                     "*",
                     new SearchOptions
                     {
@@ -692,14 +734,14 @@ namespace Azure.Search.Documents.Tests
             Assert.NotNull(page.ContinuationToken);
 
             // Get the second page
-            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
             Assert.LessOrEqual(page.Values.Count, 1000);
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
             Assert.NotNull(page.ContinuationToken);
 
             // Get the third page
-            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
             Assert.LessOrEqual(page.Values.Count, 1000);
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
@@ -718,7 +760,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
             SearchClient client = resources.GetQueryClient();
             Response<SearchResults<SearchDocument>> response =
-                await client.SearchAsync(
+                await client.SearchAsync<SearchDocument>(
                     "*",
                     new SearchOptions
                     {
@@ -734,21 +776,21 @@ namespace Azure.Search.Documents.Tests
             Assert.NotNull(page.ContinuationToken);
 
             // Get the second page
-            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
             Assert.LessOrEqual(page.Values.Count, 50);
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
             Assert.NotNull(page.ContinuationToken);
 
             // Get the third page
-            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
             Assert.LessOrEqual(page.Values.Count, 50);
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
             Assert.NotNull(page.ContinuationToken);
 
             // Get the final page
-            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            response = await client.SearchAsync<SearchDocument>(null, new SearchOptions(page.ContinuationToken));
             page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
             Assert.LessOrEqual(page.Values.Count, 50);
             ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
@@ -777,7 +819,7 @@ namespace Azure.Search.Documents.Tests
             const int size = 2001;
             await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
             Response<SearchResults<SearchDocument>> response =
-                await resources.GetQueryClient().SearchAsync(
+                await resources.GetQueryClient().SearchAsync<SearchDocument>(
                     "*",
                     new SearchOptions
                     {

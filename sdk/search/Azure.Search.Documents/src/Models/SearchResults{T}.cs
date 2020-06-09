@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -23,7 +25,6 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>
-    [JsonConverter(typeof(SearchResultsConverterFactory))]
     public class SearchResults<T>
     {
         /// <summary>
@@ -146,6 +147,110 @@ namespace Azure.Search.Documents.Models
                         cancellationToken);
             }
             return next;
+        }
+
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+        /// <summary>
+        /// Deserialize the SearchResults.
+        /// </summary>
+        /// <param name="json">A JSON stream.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResults<T>> DeserializeAsync(
+            Stream json,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1572
+        {
+            // Parse the JSON
+            using JsonDocument doc = async ?
+                await JsonDocument.ParseAsync(json, cancellationToken: cancellationToken).ConfigureAwait(false) :
+                JsonDocument.Parse(json);
+
+            JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
+
+            SearchResults<T> results = new SearchResults<T>();
+            foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
+            {
+                if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.TotalCount = prop.Value.GetInt64();
+                }
+                else if (prop.NameEquals(Constants.SearchCoverageKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.Coverage = prop.Value.GetDouble();
+                }
+                else if (prop.NameEquals(Constants.SearchFacetsKeyJson.EncodedUtf8Bytes))
+                {
+                    results.Facets = new Dictionary<string, IList<FacetResult>>();
+                    foreach (JsonProperty facetObject in prop.Value.EnumerateObject())
+                    {
+                        // Get the values of the facet
+                        List<FacetResult> facets = new List<FacetResult>();
+                        foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
+                        {
+                            Dictionary<string, object> facetValues = new Dictionary<string, object>();
+                            long? facetCount = null;
+                            foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
+                            {
+                                if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetCount = facetProperty.Value.GetInt64();
+                                    }
+                                }
+                                else
+                                {
+                                    object value = facetProperty.Value.GetSearchObject();
+                                    facetValues[facetProperty.Name] = value;
+                                }
+                            }
+                            facets.Add(new FacetResult(facetCount, facetValues));
+                        }
+                        // Add the facet to the results
+                        results.Facets[facetObject.Name] = facets;
+                    }
+                }
+                else if (prop.NameEquals(Constants.ODataNextLinkKeyJson.EncodedUtf8Bytes))
+                {
+                    results.NextUri = new Uri(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
+                {
+                    results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
+                }
+                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
+                {
+                    foreach (JsonElement element in prop.Value.EnumerateArray())
+                    {
+                        SearchResult<T> result = await SearchResult<T>.DeserializeAsync(
+                            element,
+#if EXPERIMENTAL_SERIALIZER
+                            serializer,
+#endif
+                            defaultSerializerOptions,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                        results.Values.Add(result);
+                    }
+                }
+            }
+            return results;
         }
     }
 
@@ -277,196 +382,6 @@ namespace Azure.Search.Documents.Models
             {
                 yield return new SearchResultsPage<T>(results);
             }
-        }
-    }
-
-    /// <summary>
-    /// JsonConverterFactory to create closed instances of
-    /// <see cref="SearchResultsConverter{T}"/>.
-    /// </summary>
-    internal class SearchResultsConverterFactory : ModelConverterFactory
-    {
-        protected override Type GenericType => typeof(SearchResults<>);
-        protected override Type GenericConverterType => typeof(SearchResultsConverter<>);
-        protected override bool ConstructWithOptions => true;
-    }
-
-    /// <summary>
-    /// Convert from JSON to <see cref="SearchResults{T}"/>.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The .NET type that maps to the index schema. Instances of this type can
-    /// be retrieved as documents from the index.
-    /// </typeparam>
-    internal class SearchResultsConverter<T> : JsonConverter<SearchResults<T>>
-    {
-        private Type _resultType;
-        private readonly JsonConverter<SearchResult<T>> _resultConverter;
-
-        /// <summary>
-        /// Initializes a new instance of the SearchResultsConverter class.
-        /// </summary>
-        /// <param name="options">Serialization options.</param>
-        public SearchResultsConverter(JsonSerializerOptions options)
-        {
-            Debug.Assert(options != null);
-
-            // Cache the SearchResult<T> converter
-            _resultConverter = (JsonConverter<SearchResult<T>>)options.GetConverter(typeof(SearchResult<T>));
-            _resultType = typeof(SearchResult<T>);
-        }
-
-        /// <summary>
-        /// Serializing SearchResults isn't supported as it's an output only
-        /// model type.  This always fails.
-        /// </summary>
-        /// <param name="writer">The JSON writer.</param>
-        /// <param name="value">The search result.</param>
-        /// <param name="options">Serialization options.</param>
-        public override void Write(Utf8JsonWriter writer, SearchResults<T> value, JsonSerializerOptions options) =>
-            throw new NotSupportedException($"{nameof(SearchResults<T>)} cannot be serialized to JSON.");
-
-        /// <summary>
-        /// Parse the SearchResults and its search results.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="typeToConvert">The type to parse into.</param>
-        /// <param name="options">Serialization options.</param>
-        /// <returns>The deserialized search results.</returns>
-        public override SearchResults<T> Read(
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions options)
-        {
-            Debug.Assert(typeToConvert != null);
-            Debug.Assert(typeToConvert.IsAssignableFrom(typeof(SearchResults<T>)));
-            Debug.Assert(options != null);
-
-            SearchResults<T> results = new SearchResults<T>();
-            reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
-            {
-                switch (reader.ExpectsPropertyName())
-                {
-                    case Constants.ODataCountKey:
-                        results.TotalCount = reader.ExpectsNullableLong();
-                        break;
-                    case Constants.SearchCoverageKey:
-                        results.Coverage = reader.ExpectsNullableDouble();
-                        break;
-                    case Constants.SearchFacetsKey:
-                        ReadFacets(ref reader, results, options);
-                        break;
-                    case Constants.ODataNextLinkKey:
-                        results.NextUri = new Uri(reader.ExpectsString());
-                        break;
-                    case Constants.SearchNextPageKey:
-                        results.NextOptions = ReadNextPageOptions(ref reader);
-                        break;
-                    case Constants.ValueKey:
-                        reader.Expects(JsonTokenType.StartArray);
-                        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
-                        {
-                            SearchResult<T> result = _resultConverter.Read(ref reader, _resultType, options);
-                            results.Values.Add(result);
-                        }
-                        break;
-                    default:
-                        // Ignore other properties (including OData context, etc.)
-                        reader.Skip();
-                        break;
-                }
-            }
-            return results;
-        }
-
-        /// <summary>
-        /// Read the @search.facets property value.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <param name="results">The SearchResults to add the facets to.</param>
-        /// <param name="options">JSON serializer options.</param>
-        private static void ReadFacets(
-            ref Utf8JsonReader reader,
-            SearchResults<T> results,
-            JsonSerializerOptions options)
-        {
-            Debug.Assert(results != null);
-
-            // Facets are optional, so short circuit if nothing is found
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return;
-            }
-
-            results.Facets = new Dictionary<string, IList<FacetResult>>();
-            reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
-            {
-                // Get the name of the facet
-                string facetName = reader.ExpectsPropertyName();
-
-                // Get the values of the facet
-                List<FacetResult> facets = new List<FacetResult>();
-                reader.Expects(JsonTokenType.StartArray);
-                while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
-                {
-                    FacetResult facet = ReadFacetResult(ref reader, options);
-                    facets.Add(facet);
-                }
-
-                // Add the facet to the results
-                results.Facets[facetName] = facets;
-            }
-        }
-
-        /// <summary>
-        /// Read the facet result value.
-        /// </summary>
-        /// <param name="reader">JSON reader.</param>
-        /// <param name="options">Serializer options.</param>
-        /// <returns>The facet result.</returns>
-        private static FacetResult ReadFacetResult(
-            ref Utf8JsonReader reader,
-            JsonSerializerOptions options)
-        {
-            Dictionary<string, object> facet = new Dictionary<string, object>();
-            long? count = default;
-            reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
-            {
-                // Get the name of the facet property
-                string facetName = reader.ExpectsPropertyName();
-                if (facetName == Constants.CountKey)
-                {
-                    count = reader.ExpectsNullableLong();
-                }
-                else
-                {
-                    object value = reader.ReadObject(options);
-                    facet[facetName] = value;
-                }
-            }
-            return new FacetResult(count, facet);
-        }
-
-        /// <summary>
-        /// Read the @search.nextPageParameters property value.
-        /// </summary>
-        /// <param name="reader">The JSON reader.</param>
-        /// <returns>The next SearchOptions.</returns>
-        private static SearchOptions ReadNextPageOptions(ref Utf8JsonReader reader)
-        {
-            // Next page options aren't required, so short circuit if nothing
-            // is found
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-
-            // Use the generated SearchOptions parsing code
-            using JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            return SearchOptions.DeserializeSearchOptions(doc.RootElement);
         }
     }
 

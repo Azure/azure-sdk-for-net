@@ -3,7 +3,10 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -21,7 +24,7 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
-    public class IndexDocumentsAction<T> : IUtf8JsonSerializable
+    public class IndexDocumentsAction<T>
     {
         /// <summary>
         /// The operation to perform on a document in an indexing batch.
@@ -53,22 +56,65 @@ namespace Azure.Search.Documents.Models
             Document = doc;
         }
 
+        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+        #pragma warning disable CA1801 // Not all parameters are used depending on feature flags
+        #pragma warning disable CS1998 // Won't await depending on feature flags
         /// <summary>
         /// Serialize the document write action.
         /// </summary>
         /// <param name="writer">The JSON writer.</param>
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>A task representing the serialization.</returns>
+        internal async Task SerializeAsync(
+            Utf8JsonWriter writer,
+#if EXPERIMENTAL_SERIALIZER
+            ObjectSerializer serializer,
+#endif
+            JsonSerializerOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        #pragma warning restore CS1998
+        #pragma warning restore CA1801
+        #pragma warning restore CS1572
         {
             Debug.Assert(writer != null);
 
             writer.WriteStartObject();
-            writer.WriteString(Constants.SearchActionKey, ActionType.ToSerialString());
-
-            // TODO: #10589 - Investigate a more efficient way of injecting properties into user models with System.Text.Json
+            writer.WriteString(Constants.SearchActionKeyJson, ActionType.ToSerialString());
 
             // HACK: Serialize the user's model, parse it, and then write each
             // of its properties as if they were our own.
-            byte[] json = JsonSerializer.SerializeToUtf8Bytes<T>(Document, JsonExtensions.SerializerOptions);
+            byte[] json;
+#if EXPERIMENTAL_SERIALIZER
+            if (serializer != null)
+            {
+                using MemoryStream stream = new MemoryStream();
+                if (async)
+                {
+                    await serializer.SerializeAsync(stream, Document, typeof(T)).ConfigureAwait(false);
+                }
+                else
+                {
+                    serializer.Serialize(stream, Document, typeof(T));
+                }
+                json = stream.ToArray();
+            }
+            else
+            {
+#endif
+                json = JsonSerializer.SerializeToUtf8Bytes<T>(Document, options);
+#if EXPERIMENTAL_SERIALIZER
+            }
+#endif
             using JsonDocument nested = JsonDocument.Parse(json);
             foreach (JsonProperty property in nested.RootElement.EnumerateObject())
             {
