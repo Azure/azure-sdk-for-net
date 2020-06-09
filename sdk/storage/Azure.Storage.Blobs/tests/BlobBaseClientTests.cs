@@ -3504,7 +3504,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.SetTagsAsync(tags);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3529,7 +3529,7 @@ namespace Azure.Storage.Blobs.Test
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3644,7 +3644,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.SetTagsAsync(tags);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3667,7 +3667,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3785,7 +3785,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.SetTagsAsync(tags);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3808,7 +3808,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3947,7 +3947,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.SetTagsAsync(tags);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -3970,7 +3970,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -4094,7 +4094,7 @@ namespace Azure.Storage.Blobs.Test
 
             await blob.SetTagsAsync(tags);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
@@ -4120,7 +4120,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
-            BlobTagRequestConditions conditions = new BlobTagRequestConditions
+            BlobLeaseRequestConditions conditions = new BlobLeaseRequestConditions
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };

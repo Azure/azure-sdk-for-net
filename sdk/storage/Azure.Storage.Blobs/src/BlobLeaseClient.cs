@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Acquire
         /// <summary>
-        /// The <see cref="Acquire(TimeSpan, BlobTagRequestConditions, CancellationToken)"/> operation acquires a lease on
+        /// The <see cref="Acquire"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
         ///
@@ -151,11 +151,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/>
-        /// or <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -169,99 +169,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobLease> Acquire(
-            TimeSpan duration,
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            AcquireInternal(
-                duration,
-                conditions,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="AcquireAsync(TimeSpan, BlobTagRequestConditions, CancellationToken)"/> operation acquires a lease on
-        /// the blob or container.  The lease <paramref name="duration"/> must
-        /// be between 15 to 60 seconds, or infinite (-1).
-        ///
-        /// If the container does not have an active lease, the Blob service
-        /// creates a lease on the blob or container and returns it.  If the
-        /// container has an active lease, you can only request a new lease
-        /// using the active lease ID as <see cref="LeaseId"/>, but you can
-        /// specify a new <paramref name="duration"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or specify
-        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
-        /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/>
-        /// or <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/>.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on acquiring a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobLease>> AcquireAsync(
-            TimeSpan duration,
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            await AcquireInternal(
-                duration,
-                conditions,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="Acquire(TimeSpan, RequestConditions, CancellationToken)"/> operation acquires a lease on
-        /// the blob or container.  The lease <paramref name="duration"/> must
-        /// be between 15 to 60 seconds, or infinite (-1).
-        ///
-        /// If the container does not have an active lease, the Blob service
-        /// creates a lease on the blob or container and returns it.  If the
-        /// container has an active lease, you can only request a new lease
-        /// using the active lease ID as <see cref="LeaseId"/>, but you can
-        /// specify a new <paramref name="duration"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="duration">
-        /// Specifies the duration of the lease, in seconds, or specify
-        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
-        /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/>
-        /// or <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/>.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on acquiring a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobLease> Acquire(
             TimeSpan duration,
             RequestConditions conditions = default,
@@ -274,7 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Acquire(TimeSpan, RequestConditions, CancellationToken)"/> operation acquires a lease on
+        /// The <see cref="Acquire"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
         ///
@@ -290,11 +197,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/>
-        /// or <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -308,7 +215,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobLease>> AcquireAsync(
             TimeSpan duration,
             RequestConditions conditions = default,
@@ -337,11 +243,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/>
-        /// or <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="async">
@@ -378,9 +284,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagCondition = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobTagRequestConditions))
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
-                        tagCondition = ((BlobTagRequestConditions)conditions).TagConditions;
+                        tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
                     if (BlobClient != null)
@@ -440,7 +346,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Renew
         /// <summary>
-        /// The <see cref="Renew(BlobTagRequestConditions, CancellationToken)"/> operation renews the blob or
+        /// The <see cref="Renew"/> operation renews the blob or
         /// container's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
@@ -452,7 +358,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -466,79 +372,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobLease> Renew(
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            RenewInternal(
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="RenewAsync(BlobTagRequestConditions, CancellationToken)"/> operation renews the blob or
-        /// container's previously-acquired lease.
-        ///
-        /// The lease can be renewed if the leaseId
-        /// matches that associated with the blob or container.  Note that the]
-        /// lease may be renewed even if it has expired as long as the blob or
-        /// container has not been leased again since the expiration of that
-        /// lease.  When you renew a lease, the lease duration clock resets.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on renewing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobLease>> RenewAsync(
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            await RenewInternal(
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="Renew(RequestConditions, CancellationToken)"/> operation renews the blob or
-        /// container's previously-acquired lease.
-        ///
-        /// The lease can be renewed if the leaseId
-        /// matches that associated with the blob or container.  Note that the]
-        /// lease may be renewed even if it has expired as long as the blob or
-        /// container has not been leased again since the expiration of that
-        /// lease.  When you renew a lease, the lease duration clock resets.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on renewing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobLease> Renew(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
@@ -549,7 +382,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="RenewAsync(RequestConditions, CancellationToken)"/> operation renews the blob or
+        /// The <see cref="RenewAsync"/> operation renews the blob or
         /// container's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
@@ -561,7 +394,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -575,7 +408,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobLease>> RenewAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
@@ -598,7 +430,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="async">
@@ -631,9 +463,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagConditions = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobTagRequestConditions))
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
-                        tagConditions = ((BlobTagRequestConditions)conditions).TagConditions;
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
                     if (BlobClient != null)
@@ -691,7 +523,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Release
         /// <summary>
-        /// The <see cref="Release(BlobTagRequestConditions, CancellationToken)"/> operation releases the
+        /// The <see cref="Release"/> operation releases the
         /// container or blob's previously-acquired lease.
         ///
         /// The lease may be released if the <see cref="LeaseId"/>
@@ -702,7 +534,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -717,79 +549,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<ReleasedObjectInfo> Release(
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            ReleaseInternal(
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="ReleaseAsync(BlobTagRequestConditions, CancellationToken)"/> operation releases the
-        /// container or blob's previously-acquired lease.
-        ///
-        /// The lease may be released if the <see cref="LeaseId"/>
-        /// matches that associated with the container or blob.  Releasing the
-        /// lease allows another client to immediately acquire the lease for the
-        /// container or blob as soon as the release is complete.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on releasing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{ReleasedObjectInfo}"/> describing the
-        /// updated blob or container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            await ReleaseInternal(
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="Release(RequestConditions, CancellationToken)"/> operation releases the
-        /// container or blob's previously-acquired lease.
-        ///
-        /// The lease may be released if the <see cref="LeaseId"/>
-        /// matches that associated with the container or blob.  Releasing the
-        /// lease allows another client to immediately acquire the lease for the
-        /// container or blob as soon as the release is complete.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on releasing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{ReleaseObjectLeaseInfo}"/> describing the
-        /// updated blob or container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ReleasedObjectInfo> Release(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
@@ -800,7 +559,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ReleaseAsync(RequestConditions, CancellationToken)"/> operation releases the
+        /// The <see cref="ReleaseAsync"/> operation releases the
         /// container or blob's previously-acquired lease.
         ///
         /// The lease may be released if the <see cref="LeaseId"/>
@@ -811,7 +570,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -826,7 +585,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
@@ -848,7 +606,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="async">
@@ -887,9 +645,9 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     string tagConditions = default;
 
-                    if (conditions != null && conditions.GetType() == typeof(BlobTagRequestConditions))
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
-                        tagConditions = ((BlobTagRequestConditions)conditions).TagConditions;
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
                     if (BlobClient != null)
@@ -951,7 +709,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Change
         /// <summary>
-        /// The <see cref="Change(string, BlobTagRequestConditions, CancellationToken)"/> operation changes the lease
+        /// The <see cref="Change"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
@@ -963,7 +721,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -977,83 +735,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobLease> Change(
-            string proposedId,
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            ChangeInternal(
-                proposedId,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="ChangeAsync(string, BlobTagRequestConditions, CancellationToken)"/> operation changes the lease
-        /// of an active lease.  A change must include the current
-        /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="proposedId">
-        /// An optional proposed lease ID, in a GUID string format. A
-        /// <see cref="RequestFailedException"/> will be thrown if the
-        /// proposed lease ID is not in the correct format.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on changing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobLease>> ChangeAsync(
-            string proposedId,
-            BlobTagRequestConditions conditions,
-            CancellationToken cancellationToken = default) =>
-            await ChangeInternal(
-                proposedId,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="Change(string, RequestConditions, CancellationToken)"/> operation changes the lease
-        /// of an active lease.  A change must include the current
-        /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="proposedId">
-        /// An optional proposed lease ID, in a GUID string format. A
-        /// <see cref="RequestFailedException"/> will be thrown if the
-        /// proposed lease ID is not in the correct format.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on changing a lease.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobLease> Change(
             string proposedId,
             RequestConditions conditions = default,
@@ -1066,7 +747,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ChangeAsync(string, RequestConditions, CancellationToken)"/> operation changes the lease
+        /// The <see cref="ChangeAsync"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
@@ -1078,7 +759,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -1092,7 +773,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobLease>> ChangeAsync(
             string proposedId,
             RequestConditions conditions = default,
@@ -1117,7 +797,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="async">
@@ -1153,9 +833,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagCondition = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobTagRequestConditions))
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
-                        tagCondition = ((BlobTagRequestConditions)conditions).TagConditions;
+                        tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
                     if (BlobClient != null)
@@ -1215,121 +895,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Break
         /// <summary>
-        /// The <see cref="Break(BlobTagRequestConditions, TimeSpan?, CancellationToken)"/> operation breaks the blob or
-        /// container's previously-acquired lease (if it exists).
-        ///
-        /// Once a lease is broken, it cannot be renewed.  Any authorized
-        /// request can break the lease; the request is not required to
-        /// specify a matching lease ID.  When a lease is broken, the lease
-        /// break <paramref name="breakPeriod"/> is allowed to elapse,
-        /// during which time no lease operation except
-        /// <see cref="Break(BlobTagRequestConditions, TimeSpan?, CancellationToken)"/>
-        /// and <see cref="Release(BlobTagRequestConditions, CancellationToken)"/> can be
-        /// performed on the blob or container.  When a lease is successfully
-        /// broken, the response indicates the interval in seconds until a new
-        /// lease can be acquired.
-        ///
-        /// A lease that has been broken can also be released.  A client can
-        /// immediately acquire a blob or container lease that has been
-        /// released.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on breaking a lease.
-        /// </param>
-        /// <param name="breakPeriod">
-        /// Specifies the proposed duration the lease should continue before
-        /// it is broken, in seconds, between 0 and 60.  This break period is
-        /// only used if it is shorter than the time remaining on the lease.
-        /// If longer, the time remaining on the lease is used.  A new lease
-        /// will not be available before the break period has expired, but the
-        /// lease may be held for longer than the break period.  If this value
-        /// is not provided, a fixed-duration lease breaks after the remaining
-        /// lease period elapses, and an infinite lease breaks immediately.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the broken lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<BlobLease> Break(
-            BlobTagRequestConditions conditions,
-            TimeSpan? breakPeriod = default,
-            CancellationToken cancellationToken = default) =>
-            BreakInternal(
-                breakPeriod,
-                conditions,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="BreakAsync(BlobTagRequestConditions, TimeSpan?, CancellationToken)"/> operation breaks the blob or
-        /// container's previously-acquired lease (if it exists).
-        ///
-        /// Once a lease is broken, it cannot be renewed.  Any authorized
-        /// request can break the lease; the request is not required to
-        /// specify a matching lease ID.  When a lease is broken, the lease
-        /// break <paramref name="breakPeriod"/> is allowed to elapse,
-        /// during which time no lease operation except
-        /// <see cref="BreakAsync(BlobTagRequestConditions, TimeSpan?, CancellationToken)"/>
-        /// and <see cref="ReleaseAsync(BlobTagRequestConditions, CancellationToken)"/> can be
-        /// performed on the blob or container.  When a lease is successfully
-        /// broken, the response indicates the interval in seconds until a new
-        /// lease can be acquired.
-        ///
-        /// A lease that has been broken can also be released.  A client can
-        /// immediately acquire a blob or container lease that has been
-        /// released.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
-        /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
-        /// conditions on breaking a lease.
-        /// </param>
-        /// <param name="breakPeriod">
-        /// Specifies the proposed duration the lease should continue before
-        /// it is broken, in seconds, between 0 and 60.  This break period is
-        /// only used if it is shorter than the time remaining on the lease.
-        /// If longer, the time remaining on the lease is used.  A new lease
-        /// will not be available before the break period has expired, but the
-        /// lease may be held for longer than the break period.  If this value
-        /// is not provided, a fixed-duration lease breaks after the remaining
-        /// lease period elapses, and an infinite lease breaks immediately.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{Lease}"/> describing the broken lease.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobLease>> BreakAsync(
-            BlobTagRequestConditions conditions,
-            TimeSpan? breakPeriod = default,
-            CancellationToken cancellationToken = default) =>
-            await BreakInternal(
-                breakPeriod,
-                conditions,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="Break(TimeSpan?, RequestConditions, CancellationToken)"/> operation breaks the blob or
+        /// The <see cref="Break"/> operation breaks the blob or
         /// container's previously-acquired lease (if it exists).
         ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
@@ -1338,7 +904,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
         /// <see cref="Break(TimeSpan?, RequestConditions, CancellationToken)"/>
-        /// and <see cref="Release(BlobTagRequestConditions, CancellationToken)"/> can be
+        /// and <see cref="Release"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -1360,7 +926,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -1374,7 +940,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobLease> Break(
             TimeSpan? breakPeriod = default,
             RequestConditions conditions = default,
@@ -1387,7 +952,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="BreakAsync(TimeSpan?, RequestConditions, CancellationToken)"/> operation breaks the blob or
+        /// The <see cref="BreakAsync"/> operation breaks the blob or
         /// container's previously-acquired lease (if it exists).
         ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
@@ -1396,7 +961,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
         /// <see cref="BreakAsync(TimeSpan?, RequestConditions, CancellationToken)"/>
-        /// and <see cref="ReleaseAsync(BlobTagRequestConditions, CancellationToken)"/> can be
+        /// and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -1418,7 +983,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -1432,7 +997,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobLease>> BreakAsync(
             TimeSpan? breakPeriod = default,
             RequestConditions conditions = default,
@@ -1453,8 +1017,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="BreakAsync(BlobTagRequestConditions, TimeSpan?, CancellationToken)"/>
-        /// and <see cref="ReleaseAsync(BlobTagRequestConditions, CancellationToken)"/> can be
+        /// <see cref="BreakAsync"/>
+        /// and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -1476,7 +1040,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="async">
@@ -1512,9 +1076,9 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     string tagConditions = null;
-                    if (conditions != null && conditions.GetType() == typeof(BlobTagRequestConditions))
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
                     {
-                        tagConditions = ((BlobTagRequestConditions)conditions).TagConditions;
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
                     if (BlobClient != null)
