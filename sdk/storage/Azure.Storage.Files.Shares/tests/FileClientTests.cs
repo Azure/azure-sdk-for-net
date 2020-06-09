@@ -2601,10 +2601,17 @@ namespace Azure.Storage.Files.Shares.Test
         {
             // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
-            ShareFileClient file = test.Directory.GetFileClient(GetNewFileName());
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(16 * Constants.KB);
 
-            Stream stream = await file.OpenWriteAsync(bufferSize: Constants.KB);
+            ShareFileOpenWriteOptions options = new ShareFileOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await file.OpenWriteAsync(
+                position: 0,
+                options: options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 

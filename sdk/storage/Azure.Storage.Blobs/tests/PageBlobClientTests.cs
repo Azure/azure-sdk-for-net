@@ -2293,7 +2293,14 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 16 * Constants.KB);
 
-            Stream stream = await blob.OpenWriteAsync(bufferSize: Constants.KB);
+            PageBlobOpenWriteOptions options = new PageBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await blob.OpenWriteAsync(
+                position: 0,
+                options: options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 

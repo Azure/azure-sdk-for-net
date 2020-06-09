@@ -1753,10 +1753,15 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            BlockBlobClient blob = test.Container.GetBlockBlobClient(GetNewBlobName());
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             await blob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
 
-            Stream stream = await blob.OpenWriteAsync(bufferSize: Constants.KB);
+            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await blob.OpenWriteAsync(options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 

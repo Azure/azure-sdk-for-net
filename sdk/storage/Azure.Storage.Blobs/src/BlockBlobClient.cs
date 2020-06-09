@@ -1544,21 +1544,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
-        /// <param name="overwrite">
-        /// Whether the upload should overwrite any existing blobs.  The
-        /// default value is false.
-        /// </param>
-        /// <param name="bufferSize">
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 100 MB.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on appending content to this block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1574,38 +1561,19 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            bool overwrite = false,
-            int bufferSize = Constants.MB,
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
+            BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => OpenWriteInternal(
                 async: false,
-                overwrite: overwrite,
-                bufferSize: bufferSize,
-                conditions: conditions,
-                progressHandler: progressHandler,
+                options: options,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
-        /// <param name="overwrite">
-        /// Whether the upload should overwrite any existing blobs.  The
-        /// default value is false.
-        /// </param>
-        /// <param name="bufferSize">
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 100 MB.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on appending content to this block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1621,17 +1589,11 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            bool overwrite = false,
-            int bufferSize = Constants.MB,
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressHandler = default,
+            BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
             => await OpenWriteInternal(
                 async: true,
-                overwrite: overwrite,
-                bufferSize: bufferSize,
-                conditions: conditions,
-                progressHandler: progressHandler,
+                options: options,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1641,21 +1603,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="overwrite">
-        /// Whether the upload should overwrite any existing blobs.  The
-        /// default value is false.
-        /// </param>
-        /// <param name="bufferSize">
-        /// The size of the buffer to use.  Default is 1 MB, and the max
-        /// buffer size is 100 MB.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on appending content to this block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1670,10 +1619,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Stream> OpenWriteInternal(
             bool async,
-            bool overwrite,
-            int bufferSize,
-            BlobRequestConditions conditions,
-            IProgress<long> progressHandler,
+            BlockBlobOpenWriteOptions options,
             CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
@@ -1684,14 +1630,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 long position = 0;
 
-                if (overwrite)
+                if (options != null && options.Overwrite)
                 {
                     if (async)
                     {
                         await UploadAsync(
                             content: new MemoryStream(Array.Empty<byte>()),
-                            conditions: conditions,
-                            progressHandler: progressHandler,
+                            conditions: options.Conditions,
+                            progressHandler: options.ProgressHandler,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1699,8 +1645,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         Upload(
                             content: new MemoryStream(Array.Empty<byte>()),
-                            conditions: conditions,
-                            progressHandler: progressHandler,
+                            conditions: options.Conditions,
+                            progressHandler: options.ProgressHandler,
                             cancellationToken: cancellationToken);
                     }
                 }
@@ -1722,10 +1668,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 return new BlockBlobWriteStream(
                     blockBlobClient: this,
-                    bufferSize: bufferSize,
+                    bufferSize: options?.BufferSize ?? Constants.MB,
                     position: position,
-                    conditions: conditions,
-                    progressHandler: progressHandler);
+                    conditions: options?.Conditions,
+                    progressHandler: options?.ProgressHandler);
             }
             catch (Exception ex)
             {

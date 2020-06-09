@@ -3031,7 +3031,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateAsync();
 
-            Stream stream = await file.OpenWriteAsync(bufferSize: Constants.KB);
+            DataLakeFileOpenWriteOptions options = new DataLakeFileOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await file.OpenWriteAsync(options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 

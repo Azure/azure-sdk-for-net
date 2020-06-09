@@ -1014,7 +1014,12 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             await blob.CreateAsync();
 
-            Stream stream = await blob.OpenWriteAsync(bufferSize: Constants.KB);
+            AppendBlobOpenWriteOptions options = new AppendBlobOpenWriteOptions
+            {
+                BufferSize = Constants.KB
+            };
+
+            Stream stream = await blob.OpenWriteAsync(options);
 
             byte[] data = GetRandomBuffer(16 * Constants.KB);
 
