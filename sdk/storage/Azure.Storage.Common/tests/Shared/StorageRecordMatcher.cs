@@ -59,6 +59,7 @@ namespace Azure.Storage.Test.Shared
             "ske",
             "snapshot",
             "prevsnapshot",
+            "blockid",
 
             // Storage XML
             "Start",

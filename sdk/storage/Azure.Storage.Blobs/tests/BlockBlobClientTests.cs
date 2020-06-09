@@ -1749,6 +1749,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Can't record volatile block id - https://github.com/Azure/azure-sdk-for-net/issues/12660")]
         public async Task OpenWriteAsync()
         {
             // Arrange
