@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicesbackup/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ConfigFileTag "package-2017-07"
