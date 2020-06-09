@@ -69,7 +69,7 @@ jobs:
       - script: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "TestCategory!=Weekly&TestCategory!=Manually"
+          --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
