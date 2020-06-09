@@ -62,7 +62,9 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
         public async Task TestCreateAndDeleteRoleAssignment()
         {
             string sqlAdminRoleId = "7af0c69a-a548-47d6-aea3-d00e69bd83aa";
-            string principalId = Guid.NewGuid().ToString();
+
+            // This is a random GUID for testing.
+            string principalId = "1d271944-6c4b-4464-b6ef-c77eb8bd03a9";
 
             // Create role assignment.
             RoleAssignmentDetails actualRoleAssignment = await AccessControlClient.CreateRoleAssignmentAsync(new RoleAssignmentOptions(roleId:sqlAdminRoleId, principalId: principalId));
