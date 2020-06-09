@@ -289,8 +289,8 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(containerItem.Deleted);
-            Assert.IsNotNull(containerItem.Version);
+            Assert.IsTrue(containerItem.IsDeleted);
+            Assert.IsNotNull(containerItem.VersionId);
             Assert.IsNotNull(containerItem.Properties.DeletedTime);
             Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
                 containerItem.Name,
-                containerItem.Version,
+                containerItem.VersionId,
                 GetNewContainerName());
 
             // Assert
