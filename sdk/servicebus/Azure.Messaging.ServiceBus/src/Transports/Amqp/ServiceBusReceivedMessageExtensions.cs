@@ -4,8 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Azure.Messaging.ServiceBus.Addons
+namespace Azure.Messaging.ServiceBus.Transports.Amqp
 {
     /// <summary>
     /// Extension methods for <see cref="ServiceBusReceivedMessage"/>.
@@ -16,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Addons
         /// Gets the Data body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns></returns>
+        /// <returns>If the message contains an AMQP body, returns the Data body. Otherwise, <see cref="ReadOnlyMemory{T}.Empty"/>.</returns>
         public static ReadOnlyMemory<byte> GetAmqpDataBody(this ServiceBusReceivedMessage message) =>
             message.SentMessage.GetAmqpDataBody();
 
@@ -24,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Addons
         /// Gets the Sequence body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns></returns>
+        /// <returns>If the message contains an AMQP body, returns the Sequence body. Otherwise, <see cref="Enumerable.Empty{T}()"/>.</returns>
         public static IEnumerable<IList> GetAmqpSequenceBody(this ServiceBusReceivedMessage message) =>
             message.SentMessage.GetAmqpSequenceBody();
 
@@ -32,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Addons
         /// Gets the Value body type from an AMQP <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
         /// <param name="message">The message to use.</param>
-        /// <returns></returns>
+        /// <returns>If the message contains an AMQP body, returns the Value body. Otherwise, null.</returns>
         public static object GetAmqpValueBody(this ServiceBusReceivedMessage message) =>
             message.SentMessage.GetAmqpValueBody();
     }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Transports;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -106,27 +107,13 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public BinaryData Body { get; set; }
-
-        internal enum AmqpBodyType
+        public BinaryData Body
         {
-            Unspecified,
-            Data,
-            Sequence,
-            Value
+            get => TransportBody.Body;
+            set => TransportBody.Body = value;
         }
 
-        internal AmqpBodyType AmqpBodyTypeHint { get; set; }
-
-        internal ReadOnlyMemory<byte> AmqpData
-        {
-            get => Body.AsBytes();
-            set => Body = new BinaryData(value);
-        }
-
-        internal IEnumerable<IList> AmqpSequence { get; set; }
-
-        internal object AmqpValue { get; set; }
+        internal ITransportBody TransportBody { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.

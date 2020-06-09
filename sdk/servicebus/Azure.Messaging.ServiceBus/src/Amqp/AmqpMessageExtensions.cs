@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.ServiceBus.Addons;
+using Azure.Messaging.ServiceBus.Transports.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -14,44 +14,44 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         private static AmqpMessage CreateAmqpDataMessage(ServiceBusMessage message)
         {
-            ReadOnlyMemory<byte> bodyBytes = message.AmqpData;
+            ReadOnlyMemory<byte> bodyBytes = message.GetAmqpDataBody();
             var body = new ArraySegment<byte>(bodyBytes.IsEmpty ? Array.Empty<byte>() : bodyBytes.ToArray());
             return AmqpMessage.Create(new Data { Value = body });
         }
 
         private static AmqpMessage CreateAmqpSequenceMessage(ServiceBusMessage message) =>
-            AmqpMessage.Create(message.AmqpSequence.Select(s => new AmqpSequence(s)));
+            AmqpMessage.Create(message.GetAmqpSequenceBody().Select(s => new AmqpSequence(s)));
 
         private static AmqpMessage CreateAmqpValueMessage(ServiceBusMessage message) =>
-            AmqpMessage.Create(new AmqpValue { Value = message.AmqpValue });
+            AmqpMessage.Create(new AmqpValue { Value = message.GetAmqpValueBody() });
 
         public static AmqpMessage CreateAmqpMessage(this ServiceBusMessage message) =>
-            message.AmqpBodyTypeHint switch
+            message.GetAmqpBodyType() switch
             {
-                ServiceBusMessage.AmqpBodyType.Sequence => CreateAmqpSequenceMessage(message),
-                ServiceBusMessage.AmqpBodyType.Value => CreateAmqpValueMessage(message),
+                AmqpBodyType.Sequence => CreateAmqpSequenceMessage(message),
+                AmqpBodyType.Value => CreateAmqpValueMessage(message),
                 // Both Data and Unspecified
                 _ => CreateAmqpDataMessage(message)
             };
 
-        public static ServiceBusMessage.AmqpBodyType GetBodyType(this AmqpMessage message)
+        public static AmqpBodyType GetBodyType(this AmqpMessage message)
         {
             if ((message.BodyType & SectionFlag.Data) != 0 && message.DataBody != null)
             {
-                return ServiceBusMessage.AmqpBodyType.Data;
+                return AmqpBodyType.Data;
             }
 
             if ((message.BodyType & SectionFlag.AmqpSequence) != 0 && message.SequenceBody != null)
             {
-                return ServiceBusMessage.AmqpBodyType.Sequence;
+                return AmqpBodyType.Sequence;
             }
 
             if ((message.BodyType & SectionFlag.AmqpValue) != 0 && message.ValueBody.Value != null)
             {
-                return ServiceBusMessage.AmqpBodyType.Value;
+                return AmqpBodyType.Value;
             }
 
-            return ServiceBusMessage.AmqpBodyType.Unspecified;
+            return AmqpBodyType.Unspecified;
         }
 
         private static ServiceBusReceivedMessage CreateServiceBusDataMessage(AmqpMessage message)
@@ -78,11 +78,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     dataSegments.AddRange(byteArray);
                 }
             }
-            return new ServiceBusReceivedMessage(dataSegments.ToArray());
+            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpDataMessage(dataSegments.ToArray()) };
         }
 
         private static ServiceBusReceivedMessage CreateServiceBusSequenceMessage(AmqpMessage message) =>
-            new ServiceBusReceivedMessage { SentMessage = ServiceBusClientExtensions.CreateAmqpSequenceMessage(message.SequenceBody.Select(s => s.List)) };
+            new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpSequenceMessage(message.SequenceBody.Select(s => s.List)) };
 
         private static ServiceBusReceivedMessage CreateServiceBusValueMessage(AmqpMessage message)
         {
@@ -90,15 +90,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 AmqpMessageConverter.TryGetNetObjectFromAmqpObject(message.ValueBody.Value, MappingType.MessageBody, out var dotNetObject)
                 ? dotNetObject
                 : message.ValueBody.Value;
-            return new ServiceBusReceivedMessage { SentMessage = ServiceBusClientExtensions.CreateAmqpValueMessage(value) };
+            return new ServiceBusReceivedMessage { SentMessage = ServiceBusSenderExtensions.CreateAmqpValueMessage(value) };
         }
 
         public static ServiceBusReceivedMessage CreateServiceBusReceivedMessage(this AmqpMessage message) =>
             message.GetBodyType() switch
             {
-                ServiceBusMessage.AmqpBodyType.Data => CreateServiceBusDataMessage(message),
-                ServiceBusMessage.AmqpBodyType.Sequence => CreateServiceBusSequenceMessage(message),
-                ServiceBusMessage.AmqpBodyType.Value => CreateServiceBusValueMessage(message),
+                AmqpBodyType.Data => CreateServiceBusDataMessage(message),
+                AmqpBodyType.Sequence => CreateServiceBusSequenceMessage(message),
+                AmqpBodyType.Value => CreateServiceBusValueMessage(message),
                 // Unspecified
                 _ => new ServiceBusReceivedMessage()
             };
