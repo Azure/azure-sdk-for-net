@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the buffer to use.  Default is 1 MB, and the max
         /// buffer size is 4 MB.
         /// </summary>
-        public int? BufferSize { get; set; }
+        public int BufferSize { get; set; }
 
         /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
