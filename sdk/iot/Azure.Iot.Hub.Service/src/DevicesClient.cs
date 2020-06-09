@@ -134,7 +134,9 @@ namespace Azure.Iot.Hub.Service
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
                     ParentScopes = x.Key.ParentScopes,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     Tags = x.Value.Tags,
                     Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
@@ -162,7 +164,9 @@ namespace Azure.Iot.Hub.Service
                     Capabilities = x.Key.Capabilities,
                     DeviceScope = x.Key.DeviceScope,
                     ParentScopes = x.Key.ParentScopes,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Key.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.Key.StatusReason,
                     Tags = x.Value.Tags,
                     Properties = new PropertyContainer(x.Value.Properties?.Desired, x.Value.Properties?.Reported),
@@ -189,7 +193,9 @@ namespace Azure.Iot.Hub.Service
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
                     ParentScopes = x.ParentScopes,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
@@ -214,7 +220,9 @@ namespace Azure.Iot.Hub.Service
                     Capabilities = x.Capabilities,
                     DeviceScope = x.DeviceScope,
                     ParentScopes = x.ParentScopes,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = ExportImportDeviceImportMode.Create
                 });
@@ -241,7 +249,9 @@ namespace Azure.Iot.Hub.Service
                     DeviceScope = x.DeviceScope,
                     ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
@@ -268,7 +278,9 @@ namespace Azure.Iot.Hub.Service
                     DeviceScope = x.DeviceScope,
                     ParentScopes = x.ParentScopes,
                     ETag = x.Etag,
-                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase) ? ExportImportDeviceStatus.Disabled : ExportImportDeviceStatus.Enabled,
+                    Status = string.Equals(ExportImportDeviceStatus.Disabled.ToString(), x.Status?.ToString(), StringComparison.OrdinalIgnoreCase)
+                                ? ExportImportDeviceStatus.Disabled
+                                : ExportImportDeviceStatus.Enabled,
                     StatusReason = x.StatusReason,
                     ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Update : ExportImportDeviceImportMode.UpdateIfMatchETag
                 });
