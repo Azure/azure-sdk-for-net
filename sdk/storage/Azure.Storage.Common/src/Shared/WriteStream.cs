@@ -88,6 +88,8 @@ namespace Azure.Storage.Shared
 
         protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
 
+        protected abstract Task AppendInternal(bool async, CancellationToken cancellationToken);
+
         protected abstract void ValidateBufferSize(int bufferSize);
 
         protected async Task WriteToBuffer(

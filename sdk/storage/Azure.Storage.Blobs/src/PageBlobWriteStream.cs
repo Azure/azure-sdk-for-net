@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Flush the buffer.
-                await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
                 while (remaining > 0)
                 {
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs
                     // Renaming bytes won't fit in buffer.
                     if (remaining > _buffer.Capacity)
                     {
-                        await FlushInternal(async, cancellationToken).ConfigureAwait(false);
+                        await AppendInternal(async, cancellationToken).ConfigureAwait(false);
                         remaining -= _buffer.Capacity;
                         offset += _buffer.Capacity;
                     }
@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs
             _position += count;
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -112,6 +112,11 @@ namespace Azure.Storage.Blobs
                 _writeIndex += _buffer.Length;
                 _buffer.SetLength(0);
             }
+        }
+
+        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        {
+            await AppendInternal(async, cancellationToken).ConfigureAwait(false);
         }
 
         protected override void ValidateBufferSize(int bufferSize)

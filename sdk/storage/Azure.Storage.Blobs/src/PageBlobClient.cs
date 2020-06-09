@@ -2743,7 +2743,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// buffer size is 4 MB.
         /// </param>
         /// <param name="size">
-        /// Required for overwriting and existing Page Blob.
+        /// Required for overwriting an existing Page Blob.
         /// Specifies the maximum size for the page blob, up to 8 TB.  The
         /// size must be aligned to a 512-byte boundary.
         /// </param>

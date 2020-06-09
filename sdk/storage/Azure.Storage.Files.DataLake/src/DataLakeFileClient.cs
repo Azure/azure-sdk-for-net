@@ -3539,7 +3539,7 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Opens a stream for writing to the file..
+        /// Opens a stream for writing to the file.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.

@@ -3023,7 +3023,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task OpenReadAsync()
+        public async Task OpenWriteAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 

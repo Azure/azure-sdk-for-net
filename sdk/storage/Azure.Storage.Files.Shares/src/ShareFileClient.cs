@@ -4384,5 +4384,212 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion ForceCloseHandles
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing files.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required for overwriting an existing file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add
+        /// conditions on appending content to this file.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite = false,
+            int bufferSize = Constants.MB,
+            long maxSize = default,
+            long position = default,
+            ShareFileRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                async: false,
+                overwrite: overwrite,
+                bufferSize: bufferSize,
+                maxSize: maxSize,
+                position: position,
+                conditions: conditions,
+                progressHandler: progressHandler,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing files.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required for overwriting an existing file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add
+        /// conditions on appending content to this file.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite = false,
+            int bufferSize = Constants.MB,
+            long maxSize = default,
+            long position = default,
+            ShareFileRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                async: true,
+                overwrite: overwrite,
+                bufferSize: bufferSize,
+                maxSize: maxSize,
+                position: position,
+                conditions: conditions,
+                progressHandler: progressHandler,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing files.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="maxSize">
+        /// Required for overwriting an existing file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add
+        /// conditions on appending content to this file.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool async,
+            bool overwrite,
+            int bufferSize,
+            long maxSize,
+            long position,
+            ShareFileRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                if (overwrite)
+                {
+                    if (async)
+                    {
+                        await CreateAsync(
+                            maxSize: maxSize,
+                            conditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Create(
+                            maxSize: maxSize,
+                            conditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+                }
+                return new ShareFileWriteStream(
+                    fileClient: this,
+                    bufferSize: bufferSize,
+                    position: position,
+                    conditions: conditions,
+                    progressHandler: progressHandler);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
     }
 }
