@@ -6,7 +6,6 @@
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
