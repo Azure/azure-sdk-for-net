@@ -703,6 +703,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(BlockBlobClient)}.{nameof(Upload)}",
@@ -1575,6 +1576,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}",
@@ -1761,6 +1763,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}",
                         cancellationToken: cancellationToken)
