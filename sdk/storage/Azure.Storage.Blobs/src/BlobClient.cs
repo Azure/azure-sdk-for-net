@@ -594,7 +594,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -626,7 +626,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default) =>
             StagedUploadInternal(
                 content,
@@ -698,7 +698,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             StagedUploadInternal(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -712,7 +712,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(string, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -744,7 +744,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             string path,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -824,7 +824,7 @@ namespace Azure.Storage.Blobs
             {
                 return StagedUploadInternal(
                     stream,
-                    new UploadBlobOptions
+                    new BlobUploadOptions
                     {
                         HttpHeaders = httpHeaders,
                         Metadata = metadata,
@@ -872,7 +872,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default) =>
             await StagedUploadInternal(
                 content,
@@ -945,7 +945,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             StagedUploadInternal(
                 content,
-                new UploadBlobOptions
+                new BlobUploadOptions
                 {
                     HttpHeaders = httpHeaders,
                     Metadata = metadata,
@@ -958,7 +958,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
         /// any existing metadata on the blob.
@@ -990,7 +990,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -1071,7 +1071,7 @@ namespace Azure.Storage.Blobs
             {
                 return await StagedUploadInternal(
                     stream,
-                    new UploadBlobOptions
+                    new BlobUploadOptions
                     {
                         HttpHeaders = httpHeaders,
                         Metadata = metadata,
@@ -1113,7 +1113,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
             Stream content,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1160,7 +1160,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
             string path,
-            UploadBlobOptions options,
+            BlobUploadOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1176,7 +1176,7 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
-        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+        internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)

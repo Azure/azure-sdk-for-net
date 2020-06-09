@@ -240,7 +240,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Create
         /// <summary>
-        /// The <see cref="Create(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="Create(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
         /// to the append blob, call the <see cref="AppendBlock"/> operation.
@@ -261,7 +261,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> Create(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 httpHeaders: options?.HttpHeaders,
@@ -273,7 +273,7 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
         /// to the append blob, call the <see cref="AppendBlock"/> operation.
@@ -294,7 +294,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 httpHeaders: options?.HttpHeaders,
@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExists(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
         /// the append blob, call the <see cref="AppendBlockAsync"/> operation.
@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<BlobContentInfo> CreateIfNotExists(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 options?.HttpHeaders,
@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync(CreateAppendBlobOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
         /// the append blob, call the <see cref="AppendBlockAsync"/> operation.
@@ -455,7 +455,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
-            CreateAppendBlobOptions options,
+            AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 options?.HttpHeaders,

@@ -523,7 +523,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 { tagKey, tagValue }
             };
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
             };

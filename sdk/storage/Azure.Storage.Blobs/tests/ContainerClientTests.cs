@@ -1563,7 +1563,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             IDictionary<string, string> tags = BuildTags();
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
             };
@@ -1816,7 +1816,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             IDictionary<string, string> tags = BuildTags();
-            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
             };
