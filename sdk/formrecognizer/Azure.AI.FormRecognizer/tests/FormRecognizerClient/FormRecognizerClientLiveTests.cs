@@ -840,6 +840,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
             var client = CreateInstrumentedFormRecognizerClient();
