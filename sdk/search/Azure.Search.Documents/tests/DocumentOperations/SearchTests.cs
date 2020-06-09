@@ -534,6 +534,20 @@ namespace Azure.Search.Documents.Tests
                 GetFacetsForField(response.Value.Facets, "lastRenovationDate", 2),
                 MakeRangeFacet(count: 5, from: null, to: new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 MakeRangeFacet(count: 2, from: new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), to: null));
+
+            // Check strongly typed range facets
+            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "rooms/baseRate", 4);
+            RangeFacetResult<double> first = facets.ElementAt(0).AsRangeFacetResult<double>();
+            Assert.AreEqual(1, first.Count);
+            Assert.AreEqual(5, first.To);
+            RangeFacetResult<double> second = facets.ElementAt(1).AsRangeFacetResult<double>();
+            Assert.AreEqual(1, second.Count);
+            Assert.AreEqual(5, second.From);
+            Assert.AreEqual(8, second.To);
+            RangeFacetResult<double> last = facets.ElementAt(3).AsRangeFacetResult<double>();
+            Assert.AreEqual(null, first.From);
+            Assert.AreEqual(null, last.To);
+
         }
 
         [Test]
@@ -600,6 +614,15 @@ namespace Azure.Search.Documents.Tests
                 MakeValueFacet(1, "restaurant"),
                 MakeValueFacet(1, "view"),
                 MakeValueFacet(4, "wifi"));
+
+            // Check strongly typed value facets
+            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "rating", 2);
+            ValueFacetResult<int> first = facets.ElementAt(0).AsValueFacetResult<int>();
+            Assert.AreEqual(5, first.Value);
+            Assert.AreEqual(1, first.Count);
+            ValueFacetResult<int> second = facets.ElementAt(1).AsValueFacetResult<int>();
+            Assert.AreEqual(4, second.Value);
+            Assert.AreEqual(4, second.Count);
         }
 
         [Test]

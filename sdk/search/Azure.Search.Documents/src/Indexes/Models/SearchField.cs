@@ -33,6 +33,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
             Type = type;
+
+            Fields = new List<SearchField>();
+            SynonymMapNames = new List<string>();
         }
 
         /// <summary>
@@ -180,14 +183,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets a list of names of synonym maps associated with this field. Only fields where <see cref="IsSearchable"/> is true can have associated synonym maps.
         /// </summary>
-        [CodeGenMember("synonymMaps")]
-        public IList<string> SynonymMapNames { get; internal set; }
+        [CodeGenMember("synonymMaps", EmptyAsUndefined = true, Initialize = true)]
+        public IList<string> SynonymMapNames { get; }
 
         /// <summary>
         /// Gets a list of nested fields if this field is of type <see cref="SearchFieldDataType.Complex"/> or "Collection(DataType.Complex)".
         /// </summary>
-        [CodeGenMember("fields")]
-        public IList<SearchField> Fields { get; internal set; }
+        [CodeGenMember("fields", EmptyAsUndefined = true, Initialize = true)]
+        public IList<SearchField> Fields { get; }
 
 
         /// <inheritdoc/>

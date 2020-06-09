@@ -94,17 +94,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsBatch<T>(IndexActionType.Upload, documents);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// upload.
-        /// </summary>
-        /// <param name="documents">The documents to upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to upload.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Upload(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Upload, documents);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to merge.
         /// </summary>
         /// <typeparam name="T">
@@ -117,17 +106,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsBatch<T> Merge<T>(IEnumerable<T> documents) =>
             new IndexDocumentsBatch<T>(IndexActionType.Merge, documents);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// merge.
-        /// </summary>
-        /// <param name="documents">The documents to merge.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to merge.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Merge(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Merge, documents);
 
         /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to merge or upload.
@@ -144,18 +122,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsBatch<T>(IndexActionType.MergeOrUpload, documents);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// merge or upload.
-        /// </summary>
-        /// <param name="documents">The documents to merge or upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to merge or
-        /// upload.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> MergeOrUpload(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.MergeOrUpload, documents);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsBatch{T}"/> to delete.
         /// </summary>
         /// <typeparam name="T">
@@ -168,17 +134,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsBatch<T> Delete<T>(IEnumerable<T> documents) =>
             new IndexDocumentsBatch<T>(IndexActionType.Delete, documents);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to
-        /// delete.
-        /// </summary>
-        /// <param name="documents">The documents to delete.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to delete.
-        /// </returns>
-        public static IndexDocumentsBatch<SearchDocument> Delete(IEnumerable<SearchDocument> documents) =>
-            new IndexDocumentsBatch<SearchDocument>(IndexActionType.Delete, documents);
 
         /// <summary>
         ///Create an <see cref="IndexDocumentsBatch{SearchDocument}"/> to

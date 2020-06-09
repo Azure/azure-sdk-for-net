@@ -111,5 +111,10 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
+
     }
 }

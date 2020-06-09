@@ -1,13 +1,26 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.4 (2020-05-09)
+
+### Added
+
+- Added `SearchClientBuilderExtensions` to integrate with ASP.NET Core.
+- Added `SearchModelFactory` to mock output model types.
 
 ### Breaking Changes
 
+- Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
 - Moved models for managing indexes, indexers, and skillsets to `Azure.Search.Documents.Indexes.Models`.
-- Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
+- Removed the `SynonymMap.Format` property since only the "solr" format is supported currently.
+- Renamed `AnalyzeRequest` to `AnalyzeTextOptions`, and overloaded constructors with required parameters.
+- Renamed `AnalyzeTextOptions.Analyzer` to `AnalyzeTextOptions.AnalyzerName`.
+- Renamed `AnalyzeTextOptions.Tokenizer` to `AnalyzeTextOptions.TokenizerName`.
+- Renamed `CustomAnalyzer.Tokenizer` to `CustomAnalyzer.TokenizerName`.
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
+- Renamed `Autocompletion` to `AutocompleteItem`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
+- Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
+- `SearchClient.IndexDocuments` now throws an `AggregateException` wrapping all the `RequestFailedException`s in the batch.
 
 ## 1.0.0-preview.3 (2020-05-05)
 
@@ -67,3 +80,5 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
+
+[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values

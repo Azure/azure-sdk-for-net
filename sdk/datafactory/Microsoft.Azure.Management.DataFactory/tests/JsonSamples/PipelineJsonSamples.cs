@@ -4960,6 +4960,107 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_Xml_AzureBlob = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""XmlSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true,
+              ""wildcardFolderPath"":  ""abc*d"",
+              ""wildcardFileName"":  ""*.xml""
+            },
+            ""formatSettings"": {
+              ""type"": ""XmlReadSettings"",
+              ""validationMode"": ""xsd""
+            }
+          },
+          ""sink"": {
+            ""type"": ""JsonSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""JsonWriteSettings"",
+              ""filePattern"": ""arrayOfObjects""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""sourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""sinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""XmlSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""XmlReadSettings"",
+              ""compressionProperties"": {
+                ""type"": ""ZipDeflateReadSettings"",
+                ""preserveZipFileNameAsFolder"": false
+              }
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""name"": ""XmlBlobToBlob_Unzip"",
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Binary_Binary = @"{
   ""name"": ""MyPipeline"",
   ""properties"": {

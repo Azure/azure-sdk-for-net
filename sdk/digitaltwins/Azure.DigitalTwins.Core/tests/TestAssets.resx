@@ -330,7 +330,6 @@
   "EmployeeId": "Employee1",
   "WIFI_COMPONENT_NAME": {
         "$metadata": {
-            "$model": "WIFI_MODEL_ID"
         },
         "RouterName": "Cisco1",
         "Network": "Room1"

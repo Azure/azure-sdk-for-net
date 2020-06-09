@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
@@ -1376,109 +1377,11 @@ namespace Azure.Search.Documents
         /// index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
         /// </summary>
-        /// <param name="documents">
-        /// The batch of document index actions.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying document indexing behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the status of operations for all actions in the
-        /// batch of actions.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Index and IndexAsync methods make
-        /// a best-effort attempt to map JSON types in the response payload to
-        /// .NET types.  See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// By default, an exception will only be thrown if the entire request
-        /// fails.  Individual failures are described in the
-        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
-        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
-        /// </para>
-        /// </remarks>
-        public virtual Response<IndexDocumentsResult> IndexDocuments(
-            IndexDocumentsBatch<SearchDocument> documents,
-            IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocumentsInternal<SearchDocument>(
-                documents,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the search
-        /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
-        /// </summary>
-        /// <param name="documents">
-        /// The batch of document index actions.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying document indexing behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the status of operations for all actions in the
-        /// batch of actions.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Index and IndexAsync methods make
-        /// a best-effort attempt to map JSON types in the response payload to
-        /// .NET types.  See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// By default, an exception will only be thrown if the entire request
-        /// fails.  Individual failures are described in the
-        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
-        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
-        /// </para>
-        /// </remarks>
-        public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync(
-            IndexDocumentsBatch<SearchDocument> documents,
-            IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsInternal<SearchDocument>(
-                documents,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the search
-        /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
-        /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">
+        /// <param name="batch">
         /// The batch of document index actions.
         /// </param>
         /// <param name="options">
@@ -1508,15 +1411,16 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>
         public virtual Response<IndexDocumentsResult> IndexDocuments<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexDocumentsInternal<T>(
-                documents,
+                batch,
                 options,
                 async: false,
                 cancellationToken)
@@ -1531,7 +1435,7 @@ namespace Azure.Search.Documents
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">
+        /// <param name="batch">
         /// The batch of document index actions.
         /// </param>
         /// <param name="options">
@@ -1561,27 +1465,28 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
-        /// </remarks>
+        /// </remarks>>
         public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexDocumentsInternal<T>(
-                documents,
+                batch,
                 options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         private async Task<Response<IndexDocumentsResult>> IndexDocumentsInternal<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(batch, nameof(batch));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(IndexDocuments)}");
             scope.Start();
@@ -1602,8 +1507,8 @@ namespace Azure.Search.Documents
                     request.Uri = uri;
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
-                    using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-                    content.JsonWriter.WriteObjectValue(documents);
+                    Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                    content.JsonWriter.WriteObjectValue(batch);
                     request.Content = content;
                 }
 
@@ -1629,25 +1534,36 @@ namespace Azure.Search.Documents
                             JsonDocument.Parse(message.Response.ContentStream, default);
                         IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
 
-                        // TODO: #10593 - Ensure input and output document order is in sync while batching
-                        // (waiting until we figure out the broader batching
-                        // story)
-
                         // Optionally throw an exception if any individual
                         // write failed
                         if (options?.ThrowOnAnyError == true)
                         {
+                            List<RequestFailedException> failures = new List<RequestFailedException>();
+                            List<string> failedKeys = new List<string>();
                             foreach (IndexingResult result in value.Results)
                             {
                                 if (!result.Succeeded)
                                 {
-                                    // TODO: #10594 - Aggregate the failed operations into a single exception
-                                    // (waiting until we figure out the broader
-                                    // batching story)
-                                    throw new RequestFailedException(result.Status, result.ErrorMessage);
+                                    failedKeys.Add(result.Key);
+                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                    ex.Data["Key"] = result.Key;
+                                    failures.Add(ex);
                                 }
                             }
+                            if (failures.Count > 0)
+                            {
+                                throw new AggregateException(
+                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                    failures);
+                            }
                         }
+
+                        // TODO: #10593 - Ensure input and output document
+                        // order is in sync while batching (this is waiting on
+                        // both our broader batching story and adding something
+                        // on the client that can potentially indicate the Key
+                        // column since we have no way to tell that at present.)
+
                         return Response.FromValue(value, message.Response);
                     }
                     default:
@@ -1663,5 +1579,484 @@ namespace Azure.Search.Documents
             }
         }
         #endregion IndexDocuments
+
+        #region Index Documents Conveniences
+        /// <summary>
+        /// Upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the UploadDocuments and UploadDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<IndexDocumentsResult> UploadDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocuments<T>(
+                IndexDocumentsBatch.Upload<T>(documents),
+                options,
+                cancellationToken);
+
+        /// <summary>
+        /// Upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the UploadDocuments and UploadDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IndexDocumentsResult>> UploadDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsAsync<T>(
+                IndexDocumentsBatch.Upload<T>(documents),
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Merge documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeDocuments and MergeDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<IndexDocumentsResult> MergeDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocuments<T>(
+                IndexDocumentsBatch.Merge<T>(documents),
+                options,
+                cancellationToken);
+
+        /// <summary>
+        /// Merge documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeDocuments and MergeDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IndexDocumentsResult>> MergeDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsAsync<T>(
+                IndexDocumentsBatch.Merge<T>(documents),
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Merge or upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeOrUploadDocuments and
+        /// MergeOrUploadDocumentsAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<IndexDocumentsResult> MergeOrUploadDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocuments<T>(
+                IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                options,
+                cancellationToken);
+
+        /// <summary>
+        /// Merge or upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeOrUploadDocuments and
+        /// MergeOrUploadDocumentsAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsAsync<T>(
+                IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Delete documents from the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the DeleteDocuments and DeleteDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<IndexDocumentsResult> DeleteDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocuments<T>(
+                IndexDocumentsBatch.Delete<T>(documents),
+                options,
+                cancellationToken);
+
+        /// <summary>
+        /// Delete documents from the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the DeleteDocuments and DeleteDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsAsync<T>(
+                IndexDocumentsBatch.Delete<T>(documents),
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Delete documents from the index as a batch given only their keys.
+        /// </summary>
+        /// <param name="keyName">
+        /// The name of the key field that uniquely identifies documents in
+        /// the index.
+        /// </param>
+        /// <param name="keyValues">
+        /// The keys of the documents to delete.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<IndexDocumentsResult> DeleteDocuments(
+            string keyName,
+            IEnumerable<string> keyValues,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexDocuments(
+                IndexDocumentsBatch.Delete(keyName, keyValues),
+                options,
+                cancellationToken);
+
+        /// <summary>
+        /// Delete documents from the index as a batch given only their keys.
+        /// </summary>
+        /// <param name="keyName">
+        /// The name of the key field that uniquely identifies documents in
+        /// the index.
+        /// </param>
+        /// <param name="keyValues">
+        /// The keys of the documents to delete.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync(
+            string keyName,
+            IEnumerable<string> keyValues,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexDocumentsAsync(
+                IndexDocumentsBatch.Delete(keyName, keyValues),
+                options,
+                cancellationToken)
+                .ConfigureAwait(false);
+        #endregion Index Documents Conveniences
     }
 }

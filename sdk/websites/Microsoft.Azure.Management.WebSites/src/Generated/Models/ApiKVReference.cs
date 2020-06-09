@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Resolved', 'InvalidSyntax', 'MSINotEnabled', 'VaultNotFound',
         /// 'SecretNotFound', 'SecretVersionNotFound',
         /// 'AccessToKeyVaultDenied', 'OtherReasons'</param>
-        /// <param name="identityType">Possible values include: 'None',
-        /// 'SystemAssigned', 'UserAssigned'</param>
+        /// <param name="identityType">Possible values include:
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
+        /// 'None'</param>
         /// <param name="source">Possible values include: 'KeyVault'</param>
         /// <param name="location">Possible values include:
         /// 'ApplicationSetting'</param>
@@ -87,8 +88,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string SecretVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'None', 'SystemAssigned',
-        /// 'UserAssigned'
+        /// Gets or sets possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "identityType")]
         public ManagedServiceIdentityType? IdentityType { get; set; }

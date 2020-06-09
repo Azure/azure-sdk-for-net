@@ -101,17 +101,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsAction<T>(IndexActionType.Upload, document);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsAction{SearchDocument}"/> to
-        /// upload.
-        /// </summary>
-        /// <param name="document">The document to upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsAction{SearchDocument}"/> to upload.
-        /// </returns>
-        public static IndexDocumentsAction<SearchDocument> Upload(SearchDocument document) =>
-            new IndexDocumentsAction<SearchDocument>(IndexActionType.Upload, document);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsAction{T}"/> to merge.
         /// </summary>
         /// <typeparam name="T">
@@ -124,17 +113,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsAction<T> Merge<T>(T document) =>
             new IndexDocumentsAction<T>(IndexActionType.Merge, document);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsAction{SearchDocument}"/> to
-        /// merge.
-        /// </summary>
-        /// <param name="document">The document to merge.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsAction{SearchDocument}"/> to merge.
-        /// </returns>
-        public static IndexDocumentsAction<SearchDocument> Merge(SearchDocument document) =>
-            new IndexDocumentsAction<SearchDocument>(IndexActionType.Merge, document);
 
         /// <summary>
         /// Create an <see cref="IndexDocumentsAction{T}"/> to merge or upload.
@@ -151,18 +129,6 @@ namespace Azure.Search.Documents.Models
             new IndexDocumentsAction<T>(IndexActionType.MergeOrUpload, document);
 
         /// <summary>
-        /// Create an <see cref="IndexDocumentsAction{SearchDocument}"/> to
-        /// merge or upload.
-        /// </summary>
-        /// <param name="document">The document to merge or upload.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsAction{SearchDocument}"/> to merge or
-        /// upload.
-        /// </returns>
-        public static IndexDocumentsAction<SearchDocument> MergeOrUpload(SearchDocument document) =>
-            new IndexDocumentsAction<SearchDocument>(IndexActionType.MergeOrUpload, document);
-
-        /// <summary>
         /// Create an <see cref="IndexDocumentsAction{T}"/> to delete.
         /// </summary>
         /// <typeparam name="T">
@@ -175,17 +141,6 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsAction<T> Delete<T>(T document) =>
             new IndexDocumentsAction<T>(IndexActionType.Delete, document);
-
-        /// <summary>
-        /// Create an <see cref="IndexDocumentsAction{SearchDocument}"/> to
-        /// delete.
-        /// </summary>
-        /// <param name="document">The document to delete.</param>
-        /// <returns>
-        /// An <see cref="IndexDocumentsAction{SearchDocument}"/> to delete.
-        /// </returns>
-        public static IndexDocumentsAction<SearchDocument> Delete(SearchDocument document) =>
-            new IndexDocumentsAction<SearchDocument>(IndexActionType.Delete, document);
 
         /// <summary>
         /// Create an <see cref="IndexDocumentsAction{SearchDocument}"/> to

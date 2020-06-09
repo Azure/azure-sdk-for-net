@@ -6,6 +6,6 @@ parameters:
 steps:
   - pwsh: |
       New-Item -Force -Type Directory -Name ${{parameters.TargetFolder}} -Path $(Pipeline.Workspace)
-      Write-Host "Copy-Item -Force $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}"
-      Copy-Item -Force $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}
+      Write-Host "Copy-Item -Force -Recurse $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}"
+      Copy-Item -Force -Recurse $(Pipeline.Workspace)/${{parameters.SourceFolder}}/${{parameters.FileFilter}} $(Pipeline.Workspace)/${{parameters.TargetFolder}}
     displayName: Stage artifacts

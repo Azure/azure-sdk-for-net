@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeContentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/layout/analyzeResults/00000000000000000000000000000000"));
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
 
             var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
 
             var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "host/custom/models/00000000000000000000000000000000/analyzeResults/00000000000000000000000000000000"));
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/custom/models/00000000000000000000000000000000/analyzeResults/00000000000000000000000000000000"));
 
             var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };

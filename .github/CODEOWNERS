@@ -37,7 +37,7 @@
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
-/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire
+/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
 /sdk/servicebus/Microsoft.*/                    @nemakam
 
 /sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft

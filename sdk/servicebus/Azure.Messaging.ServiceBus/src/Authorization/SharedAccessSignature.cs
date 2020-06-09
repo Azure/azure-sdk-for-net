@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
     internal class SharedAccessSignature
     {
         /// <summary>The maximum allowed length of the SAS key name.</summary>
-        private const int MaximumKeyNameLength = 256;
+        internal const int MaximumKeyNameLength = 256;
 
         /// <summary>The maximum allowed length of the SAS key.</summary>
         private const int MaximumKeyLength = 256;
@@ -276,7 +276,9 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                        throw new ArgumentException(
+                            Resources.InvalidSharedAccessSignature,
+                            nameof(sharedAccessSignature));
                     }
 
                     // Compare the token against the known signature properties and capture the

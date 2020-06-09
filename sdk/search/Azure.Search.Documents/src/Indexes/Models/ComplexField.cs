@@ -31,15 +31,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
         {
-            // TODO: Remove allocation when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
-            IList<SearchField> fields = field.Fields ?? new List<SearchField>();
-
+            IList<SearchField> fields = field.Fields;
             foreach (SearchFieldTemplate child in Fields)
             {
                 fields.Add(child);
             }
-
-            field.Fields = fields;
         }
     }
 }

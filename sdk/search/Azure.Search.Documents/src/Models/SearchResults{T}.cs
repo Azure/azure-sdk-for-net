@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
-        internal IList<SearchResult<T>> Values { get; } = new List<SearchResult<T>>();
+        internal List<SearchResult<T>> Values { get; } = new List<SearchResult<T>>();
 
         /// <summary>
         /// Gets or sets the fully constructed URI for the next page of
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Models
         /// Gets the raw Response that obtained these results from the service.
         /// This is only used when paging.
         /// </summary>
-        internal Response RawResponse { get; private set; }
+        internal Response RawResponse { get; set; }
 
         /// <summary>
         /// The SearchClient used to fetch the next page of results.  This is
@@ -468,5 +468,48 @@ namespace Azure.Search.Documents.Models
             using JsonDocument doc = JsonDocument.ParseValue(ref reader);
             return SearchOptions.DeserializeSearchOptions(doc.RootElement);
         }
+    }
+
+    public static partial class SearchModelFactory
+    {
+        /// <summary> Initializes a new instance of SearchResults. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="values">The search result values.</param>
+        /// <param name="totalCount">The total count of results found by the search operation.</param>
+        /// <param name="facets">The facet query results for the search operation.</param>
+        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
+        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
+        /// <returns>A new SearchResults instance for mocking.</returns>
+        public static SearchResults<T> SearchResults<T>(
+            IEnumerable<SearchResult<T>> values,
+            long? totalCount,
+            IDictionary<string, IList<FacetResult>> facets,
+            double? coverage,
+            Response rawResponse)
+        {
+            var results = new SearchResults<T>()
+            {
+                TotalCount = totalCount,
+                Coverage = coverage,
+                Facets = facets,
+                RawResponse = rawResponse
+            };
+            results.Values.AddRange(values);
+            return results;
+        }
+
+        /// <summary> Initializes a new instance of SearchResultsPage. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="results">The search results for this page.</param>
+        /// <returns>A new SearchResultsPage instance for mocking.</returns>
+        public static SearchResultsPage<T> SearchResultsPage<T>(
+            SearchResults<T> results) =>
+            new SearchResultsPage<T>(results);
     }
 }
