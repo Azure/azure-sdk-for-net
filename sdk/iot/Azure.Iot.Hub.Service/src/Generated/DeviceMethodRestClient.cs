@@ -56,7 +56,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(directMethodRequest);
             request.Content = content;
             return message;
@@ -66,7 +66,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId"> The String to use. </param>
         /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CloudToDeviceMethodResponse>> InvokeDeviceMethodAsync(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudToDeviceMethodResponse>> InvokeDeviceMethodAsync(string deviceId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)
             {
@@ -153,7 +153,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(directMethodRequest);
             request.Content = content;
             return message;
@@ -164,7 +164,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleId"> The String to use. </param>
         /// <param name="directMethodRequest"> The CloudToDeviceMethod to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CloudToDeviceMethodResponse>> InvokeModuleMethodAsync(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudToDeviceMethodResponse>> InvokeModuleMethodAsync(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)
             {

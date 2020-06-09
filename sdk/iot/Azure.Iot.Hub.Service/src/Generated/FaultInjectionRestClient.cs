@@ -58,7 +58,7 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FaultInjectionProperties>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<FaultInjectionProperties>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -121,7 +121,7 @@ namespace Azure.Iot.Hub.Service
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(value);
             request.Content = content;
             return message;
@@ -130,7 +130,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="value"> The FaultInjectionProperties to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
+        public async Task<Response> SetAsync(FaultInjectionProperties value, CancellationToken cancellationToken = default)
         {
             if (value == null)
             {
