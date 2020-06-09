@@ -1871,14 +1871,25 @@ namespace Azure.Search.Documents.Models
     {
         internal FacetResult() { }
         public long? Count { get { throw null; } }
+        public Azure.Search.Documents.Models.FacetType FacetType { get { throw null; } }
+        public object From { get { throw null; } }
         public object this[string key] { get { throw null; } }
         public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
         int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        public object To { get { throw null; } }
+        public object Value { get { throw null; } }
         public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        public Azure.Search.Documents.Models.RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct { throw null; }
+        public Azure.Search.Documents.Models.ValueFacetResult<T> AsValueFacetResult<T>() { throw null; }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
+    }
+    public enum FacetType
+    {
+        Value = 0,
+        Range = 1,
     }
     public enum IndexActionType
     {
@@ -1927,6 +1938,13 @@ namespace Azure.Search.Documents.Models
         public string Key { get { throw null; } }
         public int Status { get { throw null; } }
         public bool Succeeded { get { throw null; } }
+    }
+    public partial class RangeFacetResult<T> where T : struct
+    {
+        public RangeFacetResult(long count, T? from, T? to) { }
+        public long Count { get { throw null; } }
+        public T? From { get { throw null; } }
+        public T? To { get { throw null; } }
     }
     public partial class SearchDocument : System.Dynamic.DynamicObject, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -1999,5 +2017,11 @@ namespace Azure.Search.Documents.Models
         internal SuggestResults() { }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchSuggestion<T>> Results { get { throw null; } }
+    }
+    public partial class ValueFacetResult<T>
+    {
+        public ValueFacetResult(long count, T value) { }
+        public long Count { get { throw null; } }
+        public T Value { get { throw null; } }
     }
 }
