@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class BulkRegistryOperationResult
+    public partial class BulkRegistryOperationResponse
     {
-        internal static BulkRegistryOperationResult DeserializeBulkRegistryOperationResult(JsonElement element)
+        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
         {
             bool? isSuccessful = default;
             IReadOnlyList<DeviceRegistryOperationError> errors = default;
@@ -72,7 +72,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new BulkRegistryOperationResult(isSuccessful, errors, warnings);
+            return new BulkRegistryOperationResponse(isSuccessful, errors, warnings);
         }
     }
 }
