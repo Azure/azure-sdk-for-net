@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -14,10 +12,17 @@ namespace Azure.Storage.Shared
     internal abstract class WriteStream : Stream
     {
         protected long _position;
+        protected readonly IProgress<long> _progressHandler;
+        protected readonly MemoryStream _buffer;
 
-        protected WriteStream(long position)
+        protected WriteStream(
+            long position,
+            int bufferSize,
+            IProgress<long> progressHandler)
         {
             _position = position;
+            _progressHandler = progressHandler;
+            _buffer = new MemoryStream(bufferSize);
         }
 
         public override bool CanRead => false;
@@ -82,6 +87,25 @@ namespace Azure.Storage.Shared
                 cancellationToken).ConfigureAwait(false);
 
         protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
+
+        protected abstract void ValidateBufferSize(int bufferSize);
+
+        protected async Task WriteToBuffer(
+            bool async,
+            byte[] buffer,
+            int offset,
+            int count,
+            CancellationToken cancellationToken)
+        {
+            if (async)
+            {
+                await _buffer.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                _buffer.Write(buffer, offset, count);
+            }
+        }
 
         protected static void ValidateWriteParameters(byte[] buffer, int offset, int count)
         {

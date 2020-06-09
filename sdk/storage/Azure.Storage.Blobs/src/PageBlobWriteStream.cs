@@ -11,32 +11,29 @@ using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
-    internal class AppendBlobWriteStream : WriteStream
+    internal class PageBlobWriteStream : WriteStream
     {
-        private readonly AppendBlobClient _appendBlobClient;
-        private readonly AppendBlobRequestConditions _conditions;
+        private readonly PageBlobClient _pageBlobClient;
+        private readonly PageBlobRequestConditions _conditions;
+        private long _lastWriteIndex;
 
-        public AppendBlobWriteStream(
-            AppendBlobClient appendBlobClient,
+        public PageBlobWriteStream(
+            PageBlobClient pageBlobClient,
             int bufferSize,
             long position,
-            AppendBlobRequestConditions conditions,
+            PageBlobRequestConditions conditions,
             IProgress<long> progressHandler) : base(
                 position,
                 bufferSize,
                 progressHandler)
         {
             ValidateBufferSize(bufferSize);
-            _appendBlobClient = appendBlobClient;
+            _pageBlobClient = pageBlobClient;
             _conditions = conditions;
+            _lastWriteIndex = position;
         }
 
-        protected override async Task WriteInternal(
-            bool async,
-            byte[] buffer,
-            int offset,
-            int count,
-            CancellationToken cancellationToken)
+        protected override async Task WriteInternal(bool async, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             ValidateWriteParameters(buffer, offset, count);
             int remaining = count;
@@ -48,6 +45,15 @@ namespace Azure.Storage.Blobs
             }
             else
             {
+                // We need a multiple of 512 to flush.
+                if (_buffer.Length % 512 != 0)
+                {
+                    int bytesToWrite = (int)(512 - _buffer.Length % 512);
+                    await WriteToBuffer(async, buffer, offset, bytesToWrite, cancellationToken).ConfigureAwait(false);
+                    remaining -= bytesToWrite;
+                    offset += bytesToWrite;
+                }
+
                 // Flush the buffer.
                 await FlushInternal(async, cancellationToken).ConfigureAwait(false);
 
@@ -78,9 +84,7 @@ namespace Azure.Storage.Blobs
             _position += count;
         }
 
-        protected override async Task FlushInternal(
-            bool async,
-            CancellationToken cancellationToken)
+        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -88,23 +92,27 @@ namespace Azure.Storage.Blobs
 
                 if (async)
                 {
-                    await _appendBlobClient.AppendBlockAsync(
+                    await _pageBlobClient.UploadPagesAsync(
                         _buffer,
+                        _lastWriteIndex,
                         conditions: _conditions,
                         progressHandler: _progressHandler,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 else
                 {
-                    _appendBlobClient.AppendBlock(
+                    _pageBlobClient.UploadPages(
                         _buffer,
+                        _lastWriteIndex,
                         conditions: _conditions,
                         progressHandler: _progressHandler,
                         cancellationToken: cancellationToken);
                 }
-            }
 
-            _buffer.SetLength(0);
+                _lastWriteIndex += _buffer.Length;
+                _buffer.SetLength(0);
+            }
         }
 
         protected override void ValidateBufferSize(int bufferSize)
@@ -117,6 +125,11 @@ namespace Azure.Storage.Blobs
             if (bufferSize > 4 * Constants.MB)
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must <= 4 MB");
+            }
+
+            if (bufferSize % 512 != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bufferSize), "Must be a multiple of 512");
             }
         }
     }

@@ -1038,7 +1038,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion AppendBlockFromUri
 
-        #region Open Write
+        #region OpenWrite
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
         }
-        #endregion Open Write
+        #endregion OpenWrite
     }
 
     /// <summary>

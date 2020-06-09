@@ -2608,6 +2608,221 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion UploadPagesFromUri
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="size">
+        /// Required for overwriting and existing Page Blob.
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on appending content to this page blob.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite = false,
+            long size = default,
+                        long position = default,
+            int bufferSize = Constants.MB,
+            PageBlobRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                async: false,
+                overwrite: overwrite,
+                size: size,
+                position: position,
+                bufferSize: bufferSize,
+                conditions: conditions,
+                progressHandler: progressHandler,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="size">
+        /// Required for overwriting and existing Page Blob.
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on appending content to this page blob.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite = false,
+            long size = default,
+            long position = default,
+            int bufferSize = Constants.MB,
+            PageBlobRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                async: true,
+                overwrite: overwrite,
+                size: size,
+                position: position,
+                bufferSize: bufferSize,
+                conditions: conditions,
+                progressHandler: progressHandler,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the blob.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite any existing blobs.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The size of the buffer to use.  Default is 1 MB, and the max
+        /// buffer size is 4 MB.
+        /// </param>
+        /// <param name="size">
+        /// Required for overwriting and existing Page Blob.
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on appending content to this page blob.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the Append Blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool async,
+            bool overwrite,
+            long size,
+            long position,
+            int bufferSize,
+            PageBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                if (overwrite)
+                {
+                    if (async)
+                    {
+                        await CreateAsync(
+                            size: size,
+                            conditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Create(
+                            size: size,
+                            conditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+                }
+
+                return new PageBlobWriteStream(
+                    pageBlobClient: this,
+                    bufferSize: bufferSize,
+                    position: position,
+                    conditions: conditions,
+                    progressHandler: progressHandler);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+
+        }
+        #endregion OpenWrite
     }
 
     /// <summary>
