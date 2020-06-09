@@ -49,8 +49,7 @@ namespace Compute.Tests
                 {
                     EnsureClientsInitialized(context);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
-                    VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
-                    
+                    VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();  
                     // Set extension sequencing (ext2 is provisioned after ext1)
                     vmssExtProfile.Extensions[1].ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[0].Name };
 
@@ -71,7 +70,6 @@ namespace Compute.Tests
                         getVmssExtResponse = m_CrpClient.VirtualMachineScaleSetExtensions.Get(rgName, vmssName, vmssExtProfile.Extensions[i].Name);
                         ValidateVmssExtension(vmssExtProfile.Extensions[i], getVmssExtResponse);
                     }
-                    
                     // Add a new extension to the VMSS (ext3 is provisioned after ext2)
                     VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension(name: "3", publisher: "Microsoft.CPlat.Core", type: "NullLinux", version: "4.0");
                     vmssExtension.ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[1].Name };
