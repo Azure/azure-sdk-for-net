@@ -391,6 +391,29 @@ namespace Azure.Storage
             }
         }
 
+        internal static class ClientSideEncryption
+        {
+            public const ClientSideEncryptionVersion CurrentVersion = ClientSideEncryptionVersion.V1_0;
+
+            public const string AgentMetadataKey = "EncryptionLibrary";
+
+            public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
+
+            public const string AesCbcNoPadding = "AES/CBC/NoPadding";
+
+            public const string Aes = "AES";
+
+            public const string EncryptionDataKey = "encryptiondata";
+
+            public const string EncryptionMode = "FullBlob";
+
+            public const int EncryptionBlockSize = 16;
+
+            public const int EncryptionKeySizeBits = 256;
+
+            public const string XMsRange = "x-ms-range";
+        }
+
         /// <summary>
         /// XML Element Name constant values.
         /// </summary>

@@ -8,9 +8,9 @@ The guides mentioned above can help you get started with key elements of Azure D
 
 # Digital Twins Samples
 
-You can explore azure digital twin APIs (using the client library) using the samples project. 
+You can explore the digital twins APIs (using the client library) using the samples project.
 
-Sample project demonstrates the following:
+The samples project demonstrates the following:
 
 - Instantiate the client
 - Create, get, and decommission models
@@ -31,13 +31,9 @@ In this samples, we illustrate how to use one derived class: ClientSecretCredent
 > To do this, use the Azure CLI command: `az dt rbac assign-role --assignee '<user-email | application-id>' --role owner -n '<your-digital-twins-instance>'`
 
 ```C# Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret
-// By using the ClientSecretCredential, a specified application Id can login using a
-// client secret.
-var tokenCredential = new ClientSecretCredential(
-    tenantId,
-    clientId,
-    clientSecret,
-    new TokenCredentialOptions { AuthorityHost = KnownAuthorityHosts.AzureCloud });
+// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+// It attempts to use multiple credential types in an order until it finds a working credential.
+var tokenCredential = new DefaultAzureCredential();
 
 var client = new DigitalTwinsClient(
     new Uri(adtEndpoint),
@@ -142,8 +138,6 @@ var basicTwin = new BasicDigitalTwin
             "Component1",
             new ModelProperties
             {
-                // model Id of component
-                Metadata = { ModelId = componentModelId },
                 // component properties
                 CustomProperties =
                 {
@@ -169,12 +163,11 @@ You can review the [CustomDigitalTwin definition](https://github.com/Azure/azure
 var customTwin = new CustomDigitalTwin
 {
     Id = customDtId,
-    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { ModelId = componentModelId },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
@@ -199,7 +192,7 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
     string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
-    var component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+    IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
@@ -217,12 +210,11 @@ Custom types provide the best possible experience.
 var customTwin = new CustomDigitalTwin
 {
     Id = customDtId,
-    Metadata = new CustomDigitalTwinMetadata { ModelId = modelId },
+    Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
     Component1 = new Component1
     {
-        Metadata = new Component1Metadata { ModelId = componentModelId },
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }

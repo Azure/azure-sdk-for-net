@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
 {
@@ -81,6 +82,10 @@ namespace Azure.Storage.Queues
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        #region Advanced Options
+        internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        #endregion
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

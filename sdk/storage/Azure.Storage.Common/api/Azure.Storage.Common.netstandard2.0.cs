@@ -1,5 +1,17 @@
 namespace Azure.Storage
 {
+    public partial class ClientSideEncryptionOptions
+    {
+        public ClientSideEncryptionOptions(Azure.Storage.ClientSideEncryptionVersion version) { }
+        public Azure.Storage.ClientSideEncryptionVersion EncryptionVersion { get { throw null; } }
+        public Azure.Core.Cryptography.IKeyEncryptionKey KeyEncryptionKey { get { throw null; } set { } }
+        public Azure.Core.Cryptography.IKeyEncryptionKeyResolver KeyResolver { get { throw null; } set { } }
+        public string KeyWrapAlgorithm { get { throw null; } set { } }
+    }
+    public enum ClientSideEncryptionVersion
+    {
+        V1_0 = 1,
+    }
     public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
