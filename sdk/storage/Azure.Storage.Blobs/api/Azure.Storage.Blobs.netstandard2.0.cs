@@ -186,7 +186,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class AppendBlobOpenWriteOptions
     {
         public AppendBlobOpenWriteOptions() { }
-        public int? BufferSize { get { throw null; } set { } }
+        public int BufferSize { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions Conditions { get { throw null; } set { } }
         public bool Overwrite { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
