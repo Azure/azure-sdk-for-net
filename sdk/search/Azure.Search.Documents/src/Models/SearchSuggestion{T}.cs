@@ -108,4 +108,20 @@ namespace Azure.Search.Documents.Models
             return suggestion;
         }
     }
+
+    public static partial class SearchModelFactory
+    {
+        /// <summary> Initializes a new instance of SearchSuggestion. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document being suggested.</param>
+        /// <param name="text">The text of the suggestion result.</param>
+        /// <returns>A new SuggestResults instance for mocking.</returns>
+        public static SearchSuggestion<T> SearchSuggestion<T>(
+            T document,
+            string text) =>
+            new SearchSuggestion<T>() { Document = document, Text = text };
+    }
 }

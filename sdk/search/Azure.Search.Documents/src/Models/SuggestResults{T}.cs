@@ -133,4 +133,20 @@ namespace Azure.Search.Documents.Models
             return suggestions;
         }
     }
+
+    public static partial class SearchModelFactory
+    {
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="results"></param>
+        /// <param name="coverage"></param>
+        /// <returns>A new SuggestResults instance for mocking.</returns>
+        public static SuggestResults<T> SuggestResults<T>(
+            IList<SearchSuggestion<T>> results,
+            double? coverage) =>
+            new SuggestResults<T>() { Coverage = coverage, Results = results };
+    }
 }
