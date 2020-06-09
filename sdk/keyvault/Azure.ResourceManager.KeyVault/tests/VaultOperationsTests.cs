@@ -32,8 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [TearDown]
         public async Task CleanupResourceGroup()
         {
-            var resGroup = await ResourceGroupsClient.StartDeleteAsync(ResGroupName);
-            await WaitForCompletionAsync(resGroup);
+            await CleanupResourceGroupsAsync();
         }
 
         [Test]

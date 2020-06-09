@@ -10,11 +10,12 @@ using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.Management.Resources;
+using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [ClientTestFixture]
-    public abstract class VaultOperationsTestsBase : RecordedTestBase<KeyVaultManagementTestEnvironment>
+    public abstract class VaultOperationsTestsBase : ManagementRecordedTestBase<KeyVaultManagementTestEnvironment>
     {
         private const string ObjectIdKey = "ObjectId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
@@ -114,25 +115,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
-        }
-
-        internal ResourcesManagementClient GetResourceManagementClient()
-        {
-            return InstrumentClient(new ResourcesManagementClient(TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new ResourcesManagementClientOptions())));
-        }
-
-        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return operation.WaitForCompletionAsync(ZeroPollingInterval, default);
-            }
-            else
-            {
-                return operation.WaitForCompletionAsync();
-            }
         }
     }
 }
