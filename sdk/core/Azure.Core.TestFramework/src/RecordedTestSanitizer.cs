@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.TestFramework
 {
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
+        public static List<string> JsonPathSanitizers = new List<string>();
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
         private static readonly string[] s_sanitizedHeaders = { "Authorization" };
@@ -33,12 +36,28 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            foreach (var jsonPath in JsonPathSanitizers)
+            {
+                return SanitizeJsonBody(body, jsonPath);
+            }
+
             return body;
         }
 
         public virtual byte[] SanitizeBody(string contentType, byte[] body)
         {
             return body;
+        }
+
+        public virtual string SanitizeJsonBody(string body, string jsonPath)
+        {
+            var jsonO = JObject.Parse(body);
+
+            foreach (JToken token in jsonO.SelectTokens(jsonPath))
+            {
+                token.Replace(JToken.FromObject(SanitizeValue));
+            }
+            return JsonConvert.SerializeObject(jsonO);
         }
 
         public virtual string SanitizeVariable(string variableName, string environmentVariableValue) => environmentVariableValue;
