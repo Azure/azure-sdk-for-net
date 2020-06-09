@@ -72,16 +72,12 @@ namespace Azure.Search.Documents.Models
             Debug.Assert(options != null);
 
             SearchSuggestion<T> suggestion = new SearchSuggestion<T>();
-            if (element.ValueKind == JsonValueKind.Object)
+            foreach (JsonProperty prop in element.EnumerateObject())
             {
-                foreach (JsonProperty prop in element.EnumerateObject())
+                if (prop.NameEquals(Constants.SearchTextKeyJson.EncodedUtf8Bytes))
                 {
-                    if (prop.NameEquals(Constants.SearchTextKeyJson.EncodedUtf8Bytes) &&
-                        prop.Value.ValueKind == JsonValueKind.String)
-                    {
-                        suggestion.Text = prop.Value.GetString();
-                        break; // We only have one non-model property
-                    }
+                    suggestion.Text = prop.Value.GetString();
+                    break; // We only have one non-model property
                 }
             }
 

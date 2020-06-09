@@ -757,5 +757,23 @@ namespace Azure.Search.Documents.Tests
             Assert.IsInstanceOf<IDynamicMetaObjectProvider>(new SearchDocument());
             Assert.IsNotInstanceOf<DynamicObject>(new SearchDocument());
         }
+
+        [Test]
+        public void TooDeepToParse()
+        {
+            string Wrap(string value) => "{\"x\":" + value + ",\"y\":[1,2,3]}";
+
+            // Push it to the limit
+            string json = "1";
+            for (int i = 0; i < 63; i++)
+            {
+                json = Wrap(json);
+            }
+            JsonSerializer.Deserialize<SearchDocument>(json);
+
+            // Go just a little too far
+            json = Wrap(json);
+            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<SearchDocument>(json));
+        }
     }
 }

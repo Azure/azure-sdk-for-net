@@ -200,12 +200,12 @@ namespace Azure.Search.Documents
             Debug.Assert(typeToConvert.IsAssignableFrom(typeof(SearchDocument)));
 
             recursionDepth ??= options?.MaxDepth ?? Constants.MaxJsonRecursionDepth;
-            if (recursionDepth <= 0)
+            if (!recursionDepth.HasValue || recursionDepth.Value <= 0)
             {
                 // JsonSerializerOptions uses 0 to mean pick their default of 64
                 recursionDepth = Constants.MaxJsonRecursionDepth;
             }
-            if (recursionDepth.Value <= 0) { throw new JsonException("Exceeded maximum recursion depth."); }
+            if (recursionDepth.Value < 0) { throw new JsonException("Exceeded maximum recursion depth."); }
 
             SearchDocument doc = new SearchDocument();
             Expects(reader, JsonTokenType.StartObject);
@@ -231,7 +231,7 @@ namespace Azure.Search.Documents
 
             object ReadSearchDocObject(ref Utf8JsonReader reader, int depth)
             {
-                if (depth <= 0) { throw new JsonException("Exceeded maximum recursion depth."); }
+                if (depth < 0) { throw new JsonException("Exceeded maximum recursion depth."); }
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.String:
@@ -273,7 +273,6 @@ namespace Azure.Search.Documents
                         var list = new List<object>();
                         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                         {
-                            recursionDepth--;
                             object value = ReadSearchDocObject(ref reader, depth - 1);
                             list.Add(value);
                         }

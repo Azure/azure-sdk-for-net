@@ -113,7 +113,7 @@ namespace Azure.Search.Documents
                     while (true)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        var read = source.Read(buffer, 0, buffer.Length);
+                        int read = source.Read(buffer, 0, buffer.Length);
                         if (read <= 0) { break; }
                         cancellationToken.ThrowIfCancellationRequested();
                         destination.Write(buffer, 0, read);

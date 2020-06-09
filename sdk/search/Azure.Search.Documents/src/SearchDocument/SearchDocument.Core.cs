@@ -69,9 +69,13 @@ namespace Azure.Search.Documents.Models
         /// <returns>A value indicating whether the property was found.</returns>
         private protected bool TryGetValue(string name, Type type, out object value)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            type ??= typeof(object);
+            if (string.IsNullOrEmpty(name))
+            {
+                value = null;
+                return false;
+            }
 
+            type ??= typeof(object);
             bool found = _values.TryGetValue(name, out value);
             if (found && type != typeof(object))
             {
@@ -122,13 +126,15 @@ namespace Azure.Search.Documents.Models
             // don't convert until a user requests them in a given format
             if (value is string text)
             {
-                if (type == typeof(DateTime))
+                if (type == typeof(DateTime) &&
+                    DateTime.TryParse(text, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
                 {
-                    return DateTime.Parse(text, CultureInfo.InvariantCulture);
+                    return date;
                 }
-                else if (type == typeof(DateTimeOffset))
+                else if (type == typeof(DateTimeOffset) &&
+                    DateTimeOffset.TryParse(text, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset dateOffset))
                 {
-                    return DateTimeOffset.Parse(text, CultureInfo.InvariantCulture);
+                    return dateOffset;
                 }
                 else if (type == typeof(double))
                 {

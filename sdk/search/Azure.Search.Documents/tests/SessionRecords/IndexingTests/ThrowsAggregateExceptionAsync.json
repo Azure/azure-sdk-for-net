@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027rliglujs\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027tyfrjlun\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "721",
+        "Content-Length": "769",
         "Content-Type": "application/json",
-        "traceparent": "00-8fe9a6c3a8b2124388c78af7da6ad21d-4adc82b6820d1c4b-00",
+        "traceparent": "00-69894115f0c4f84d968942ce8ad0ae23-362ded8726065a46-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200608.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200609.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e1dc2a35bb449e391f375bd48651e32e",
@@ -30,6 +30,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -45,6 +46,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           },
@@ -60,6 +62,7 @@
             "smokingAllowed": null,
             "lastRenovationDate": null,
             "rating": null,
+            "location": null,
             "address": null,
             "rooms": []
           }
@@ -71,8 +74,8 @@
         "client-request-id": "e1dc2a35-bb44-9e39-1f37-5bd48651e32e",
         "Content-Length": "236",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Tue, 09 Jun 2020 02:07:00 GMT",
-        "elapsed-time": "103",
+        "Date": "Tue, 09 Jun 2020 17:50:03 GMT",
+        "elapsed-time": "108",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -105,14 +108,14 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027rliglujs\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027tyfrjlun\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-27f4d82c584b98418b149c3dac3c00ca-66864749eea99042-00",
+        "traceparent": "00-8444f103170938408ca1e45d39aceb92-fbe40280ed9fd548-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200608.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200609.1",
           "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e7e1f3e58ea4e2d056c9eda841626f26",
@@ -123,8 +126,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "e7e1f3e5-8ea4-e2d0-56c9-eda841626f26",
-        "Date": "Tue, 09 Jun 2020 02:07:00 GMT",
-        "elapsed-time": "555",
+        "Date": "Tue, 09 Jun 2020 17:50:03 GMT",
+        "elapsed-time": "563",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "e7e1f3e5-8ea4-e2d0-56c9-eda841626f26",
@@ -136,7 +139,7 @@
   ],
   "Variables": {
     "RandomSeed": "1044182692",
-    "SearchIndexName": "rliglujs",
+    "SearchIndexName": "tyfrjlun",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }

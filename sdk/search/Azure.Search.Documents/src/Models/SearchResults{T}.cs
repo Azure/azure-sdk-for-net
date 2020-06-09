@@ -181,73 +181,59 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
-            if (doc.RootElement.ValueKind != JsonValueKind.Object) { return results; }
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Number &&
-                    prop.Value.TryGetInt64(out long totalCount))
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.TotalCount = totalCount;
+                    results.TotalCount = prop.Value.GetInt64();
                 }
                 else if (prop.NameEquals(Constants.SearchCoverageKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Number &&
-                    prop.Value.TryGetDouble(out double coverage))
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.Coverage = coverage;
+                    results.Coverage = prop.Value.GetDouble();
                 }
-                else if (prop.NameEquals(Constants.SearchFacetsKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Object)
+                else if (prop.NameEquals(Constants.SearchFacetsKeyJson.EncodedUtf8Bytes))
                 {
                     results.Facets = new Dictionary<string, IList<FacetResult>>();
                     foreach (JsonProperty facetObject in prop.Value.EnumerateObject())
                     {
                         // Get the values of the facet
                         List<FacetResult> facets = new List<FacetResult>();
-                        if (facetObject.Value.ValueKind == JsonValueKind.Array)
+                        foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
                         {
-                            foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
+                            Dictionary<string, object> facetValues = new Dictionary<string, object>();
+                            long? facetCount = null;
+                            foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
-                                Dictionary<string, object> facetValues = new Dictionary<string, object>();
-                                long? facetCount = null;
-                                if (facetValue.ValueKind == JsonValueKind.Object)
+                                if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
                                 {
-                                    foreach (JsonProperty facetDetail in facetValue.EnumerateObject())
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
                                     {
-                                        if (facetDetail.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
-                                        {
-                                            if (facetDetail.Value.ValueKind == JsonValueKind.Number &&
-                                                facetDetail.Value.TryGetInt64(out long count))
-                                            {
-                                                facetCount = count;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            object value = facetDetail.Value.GetSearchObject();
-                                            facetValues[facetDetail.Name] = value;
-                                        }
+                                        facetCount = facetProperty.Value.GetInt64();
                                     }
                                 }
-                                facets.Add(new FacetResult(facetCount, facetValues));
+                                else
+                                {
+                                    object value = facetProperty.Value.GetSearchObject();
+                                    facetValues[facetProperty.Name] = value;
+                                }
                             }
+                            facets.Add(new FacetResult(facetCount, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
                     }
                 }
-                else if (prop.NameEquals(Constants.ODataNextLinkKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.String)
+                else if (prop.NameEquals(Constants.ODataNextLinkKeyJson.EncodedUtf8Bytes))
                 {
                     results.NextUri = new Uri(prop.Value.GetString());
                 }
-                else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Object)
+                else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
-                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Array)
+                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {

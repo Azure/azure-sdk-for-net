@@ -344,11 +344,12 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the GetDocument and GetDocumentAsync
-        /// methods support mapping of Azure Search field types to .NET types
-        /// via the type parameter T.  Note that all search field types except
+        /// The generic overloads of the <see cref="GetDocument"/> and
+        /// <see cref="GetDocumentAsync"/> methods support mapping of Azure
+        /// Search field types to .NET types via the type parameter
+        /// <typeparamref name="T"/>.  Note that all search field types except
         /// collections are nullable, so we recommend using nullable types for
-        /// the properties of T. See
+        /// the properties of <typeparamref name="T"/>. See
         /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more information.
         /// </remarks>
@@ -396,11 +397,12 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The GetDocument and GetDocumentAsync methods support mapping of
-        /// Azure Search field types to .NET types via the type parameter T.
-        /// Note that all search field types except collections are nullable,
-        /// so we recommend using nullable types for the properties of T.  The
-        /// type mapping is as follows:
+        /// The <see cref="GetDocument"/> and <see cref="GetDocumentAsync"/>
+        /// methods support mapping of Azure Search field types to .NET types
+        /// via the type parameter <typeparamref name="T"/>.  Note that all
+        /// search field types except collections are nullable, so we recommend
+        /// using nullable types for the properties of <typeparamref name="T"/>.
+        /// The type mapping is as follows:
         /// <list type="table">
         /// <listheader>
         /// <term>Search field type</term>
@@ -408,32 +410,32 @@ namespace Azure.Search.Documents
         /// </listheader>
         /// <item>
         /// <term>Edm.String</term>
-        /// <description>System.String (string in C# and F#)</description>
+        /// <description><see cref="String"/> (string in C# and F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Boolean</term>
-        /// <description>System.Nullable&lt;System.Boolean&gt; (bool? in C#,\
+        /// <description><see cref="Nullable{Boolean}"/> (bool? in C#,\
         /// Nullable&lt;bool&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Double</term>
-        /// <description>System.Nullable&lt;System.Double&gt; (double? in C#,
+        /// <description><see cref="Nullable{Double}"/> (double? in C#,
         /// Nullable&lt;float&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int32</term>
-        /// <description>System.Nullable&lt;System.Int32&gt; (int? in C#,
+        /// <description><see cref="Nullable{Int32}"/> (int? in C#,
         /// Nullable&lt;int&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int64</term>
-        /// <description>System.Nullable&lt;System.Int64&gt; (long? in C#,
+        /// <description><see cref="Nullable{Int64}"/> (long? in C#,
         /// Nullable&lt;int64&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.DateTimeOffset</term>
         /// <description>
-        /// System.Nullable&lt;System.DateTimeOffset&gt; (DateTimeOffset? in
+        /// <see cref="Nullable{DateTimeOffset}"/> (DateTimeOffset? in
         /// C#, Nullable&lt;DateTimeOffset&gt; in F#) or
         /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#,
         /// Nullable&lt;DateTime&gt; in F#). Both types work, although we
@@ -460,8 +462,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Edm.GeographyPoint</term>
-        /// <description>Currently treated as a complex object but will soon be
-        /// replaced with something like Microsoft.Spatial.GeographyPoint
+        /// <description> <see cref="Azure.Core.Spatial.PointGeometry"/>
         /// </description>
         /// </item>
         /// <item>
@@ -475,108 +476,86 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Collection(Edm.String)</term>
-        /// <description>IEnumerable&lt;System.String&gt; (seq&lt;string&gt;
+        /// <description><see cref="IEnumerable{String}"/> (seq&lt;string&gt;
         /// in F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Boolean)</term>
-        /// <description>IEnumerable&lt;System.Boolean&gt; (seq&lt;bool&gt; in
+        /// <description><see cref="IEnumerable{Boolean}"/> (seq&lt;bool&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Double)</term>
-        /// <description>IEnumerable&lt;System.Double&gt; (seq&lt;float&gt; in
+        /// <description><see cref="IEnumerable{Double}"/> (seq&lt;float&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Int32)</term>
-        /// <description>IEnumerable&lt;System.Int32&gt; (seq&lt;int&gt; in
+        /// <description><see cref="IEnumerable{Int32}"/> (seq&lt;int&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Int64)</term>
-        /// <description>IEnumerable&lt;System.Int64&gt; (seq&lt;int64&gt; in
+        /// <description><see cref="IEnumerable{Int64}"/> (seq&lt;int64&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.DateTimeOffset)</term>
         /// <description>
-        /// IEnumerable&lt;System.DateTimeOffset&gt; or
-        /// IEnumerable&lt;System.DateTime&gt; (seq&lt;DateTimeOffset&gt; or
+        /// <see cref="IEnumerable{DateTimeOffset}"/> or
+        /// <see cref="IEnumerable{DateTime}"/> (seq&lt;DateTimeOffset&gt; or
         /// seq&lt;DateTime&gt; in F#). Both types work, although we recommend
-        /// using IEnumerable&lt;System.DateTimeOffset&gt;.  See the notes
+        /// using <see cref="IEnumerable{DateTimeOffset}"/>.  See the notes
         /// above on Edm.DateTimeOffset for details.
         /// </description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.GeographyPoint)</term>
-        /// <description>Currently treated like Collection(Edm.ComplexType) but
-        /// will soon be replaced with something more like
-        /// IEnumerable&lt;Microsoft.Spatial.GeographyPoint&gt;
-        /// (seq&lt;GeographyPoint&gt; in F#)</description>
+        /// <description>sequence of <see cref="Azure.Core.Spatial.PointGeometry"/>
+        /// (seq&lt;PointGeometry&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.ComplexType)</term>
         /// <description>
-        /// IEnumerable&lt;U&gt; (seq&lt;U&gt; in F#) where U is any type that
-        /// can be deserialized from the JSON objects in the complex collection
-        /// field. This can be a value type or a reference type.
+        /// <see cref="IEnumerable{T}"/> (seq&lt;T&gt; in F#) where T is any
+        /// type that can be deserialized from the JSON objects in the complex
+        /// collection field. This can be a value type or a reference type.
         /// </description>
         /// </item>
         /// </list>
         /// You can also use the dynamic <see cref="SearchDocument"/> as your
-        /// <typeparamref name="T"/> and we will make a best-effort attempt to
-        /// map JSON types in the response payload to .NET types. This mapping
-        /// does not have the benefit of precise type information from the
-        /// index, so the mapping is not always correct. In particular, be
-        /// aware of the following cases:
+        /// <typeparamref name="T"/> and we will attempt to map JSON types in
+        /// the response payload to .NET types. This mapping does not
+        /// have the benefit of precise type information from the index, so the
+        /// mapping is not always correct. In particular, be aware of the
+        /// following cases:
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// Any numeric value without a decimal point will be deserialized to
-        /// a System.Int32 (int in C#, int32 in F#) if it can be converted or
-        /// a System.Int64 (long in C#, int64 in F#) otherwise.
+        /// a <see cref="Int32"/> (int in C#, int32 in F#) if it can be
+        /// converted or a <see cref="Int64"/> (long in C#, int64 in F#)
+        /// otherwise.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
         /// Special double-precision floating point values such as NaN and
-        /// Infinity will be deserialized as type System.String rather than
-        /// System.Double, even if they are in arrays with regular floating
-        /// point values.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any string field with a value formatted like a DateTimeOffset will
-        /// be deserialized incorrectly. This applies to such values in arrays
-        /// of strings as well.  We recommend storing such values in
-        /// Edm.DateTimeOffset fields rather than Edm.String fields.
+        /// Infinity will be deserialized as type <see cref="String"/> rather
+        /// than <see cref="Double"/>, even if they are in arrays with regular
+        /// floating point values.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
         /// Any Edm.DateTimeOffset field will be deserialized as a
-        /// System.DateTimeOffset, not System.DateTime.
+        /// <see cref="DateTimeOffset"/>, not <see cref="DateTime"/>.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
         /// Any empty JSON array will be deserialized as an array of
-        /// System.Object (object[] in C#, obj[] in F#).
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any array of a primitive type will be deserialized as an array of
-        /// its corresponding .NET type, not as an array of System.Object,
-        /// unless the values cannot all be deserialized to the same type. For
-        /// example, the arrays [3.14, "NaN"] and
-        /// ["hello", "2016-10-10T17:41:05.123-07:00"] will both deserialize as
-        /// arrays of System.Object (object[] in C#, obj[] in F#).  This is
-        /// because special double values always deserialize as strings, while
-        /// strings that look like DateTimeOffset always deserialize as
-        /// DateTimeOffset.
+        /// <see cref="Object"/> (object[] in C#, obj[] in F#).
         /// </description>
         /// </item>
         /// <item>

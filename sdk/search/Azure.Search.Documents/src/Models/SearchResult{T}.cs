@@ -79,35 +79,24 @@ namespace Azure.Search.Documents.Models
         {
             Debug.Assert(options != null);
             SearchResult<T> result = new SearchResult<T>();
-            if (element.ValueKind == JsonValueKind.Object)
+            foreach (JsonProperty prop in element.EnumerateObject())
             {
-                foreach (JsonProperty prop in element.EnumerateObject())
+                if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
-                        prop.Value.ValueKind == JsonValueKind.Number &&
-                        prop.Value.TryGetDouble(out double score))
+                    result.Score = prop.Value.GetDouble();
+                }
+                else if (prop.NameEquals(Constants.SearchHighlightsKeyJson.EncodedUtf8Bytes))
+                {
+                    result.Highlights = new Dictionary<string, IList<string>>();
+                    foreach (JsonProperty highlight in prop.Value.EnumerateObject())
                     {
-                        result.Score = score;
-                    }
-                    else if (prop.NameEquals(Constants.SearchHighlightsKeyJson.EncodedUtf8Bytes) &&
-                        prop.Value.ValueKind == JsonValueKind.Object)
-                    {
-                        result.Highlights = new Dictionary<string, IList<string>>();
-                        foreach (JsonProperty highlight in prop.Value.EnumerateObject())
+                        // Add the highlight values
+                        List<string> values = new List<string>();
+                        result.Highlights[highlight.Name] = values;
+                        foreach (JsonElement highlightValue in highlight.Value.EnumerateArray())
                         {
-                            // Add the highlight values
-                            List<string> values = new List<string>();
-                            result.Highlights[highlight.Name] = values;
-                            if (highlight.Value.ValueKind == JsonValueKind.Array)
-                            {
-                                foreach (JsonElement highlightValue in highlight.Value.EnumerateArray())
-                                {
-                                    if (highlightValue.ValueKind == JsonValueKind.String)
-                                    {
-                                        values.Add(highlightValue.GetString());
-                                    }
-                                }
-                            }
+                            values.Add(highlightValue.GetString());
                         }
                     }
                 }

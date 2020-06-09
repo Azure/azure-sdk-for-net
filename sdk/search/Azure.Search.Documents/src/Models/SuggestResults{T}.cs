@@ -77,17 +77,14 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SuggestResults<T> suggestions = new SuggestResults<T>();
-            if (doc.RootElement.ValueKind != JsonValueKind.Object) { return suggestions; }
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.SearchCoverageKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Number &&
-                    prop.Value.TryGetDouble(out double coverage))
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    suggestions.Coverage = coverage;
+                    suggestions.Coverage = prop.Value.GetDouble();
                 }
-                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Array)
+                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {
