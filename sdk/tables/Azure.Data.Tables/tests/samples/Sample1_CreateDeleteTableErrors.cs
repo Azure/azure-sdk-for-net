@@ -32,12 +32,25 @@ namespace Azure.Data.Tables.Samples
             }
             catch (Exception e)
             {
-                Console.WriteLine($"TableErrors threw an exception.");
+                Console.WriteLine("Create Existing Table throws the following:");
                 Console.WriteLine(e.Message);
             }
             finally
             {
                 serviceClient.DeleteTable(tableName);
+            }
+
+            try
+            {
+                #region Snippet:TablesSample1DeleteNonexistentTable
+                serviceClient.DeleteTable(tableName);
+                serviceClient.DeleteTable(tableName);
+                #endregion
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Delete Nonexistent Table throws the following:");
+                Console.WriteLine(e.Message);
             }
         }
     }
