@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class Autocompletion
+    public partial class AutocompleteItem
     {
-        internal static Autocompletion DeserializeAutocompletion(JsonElement element)
+        internal static AutocompleteItem DeserializeAutocompleteItem(JsonElement element)
         {
             string text = default;
             string queryPlusText = default;
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new Autocompletion(text, queryPlusText);
+            return new AutocompleteItem(text, queryPlusText);
         }
     }
 }
