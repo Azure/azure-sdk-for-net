@@ -59,12 +59,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="Boolean"/> array property called
+        /// <see cref="Boolean"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public bool[] GetBooleanArray(string key) => GetValue<bool[]>(key);
+        public IReadOnlyList<bool> GetBooleanCollection(string key) => GetValue<bool[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
@@ -77,12 +77,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="Int32"/> array property called
+        /// <see cref="Int32"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public int[] GetInt32Array(string key) => GetValue<int[]>(key);
+        public IReadOnlyList<int> GetInt32Collection(string key) => GetValue<int[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
@@ -95,12 +95,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="Int64"/> array property called
+        /// <see cref="Int64"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public long[] GetInt64Array(string key) => GetValue<long[]>(key);
+        public IReadOnlyList<long> GetInt64Collection(string key) => GetValue<long[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
@@ -113,12 +113,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="Double"/> array property called
+        /// <see cref="Double"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public double[] GetDoubleArray(string key) => GetValue<double[]>(key);
+        public IReadOnlyList<double> GetDoubleCollection(string key) => GetValue<double[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
@@ -131,12 +131,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="DateTimeOffset"/> array property called
+        /// <see cref="DateTimeOffset"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public DateTimeOffset[] GetDateTimeOffsetArray(string key) => GetValue<DateTimeOffset[]>(key);
+        public IReadOnlyList<DateTimeOffset> GetDateTimeOffsetCollection(string key) => GetValue<DateTimeOffset[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
@@ -149,12 +149,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="String"/> array property called
+        /// <see cref="String"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public string[] GetStringArray(string key) => GetValue<string[]>(key);
+        public IReadOnlyList<string> GetStringCollection(string key) => GetValue<string[]>(key);
 
 #if EXPERIMENTAL_SPATIAL
         /// <summary>
@@ -168,12 +168,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="PointGeometry"/> array property called
+        /// <see cref="PointGeometry"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public PointGeometry[] GetPointArray(string key) => GetValue<PointGeometry[]>(key);
+        public IReadOnlyList<PointGeometry> GetPointCollection(string key) => GetValue<PointGeometry[]>(key);
 #endif
 
         /// <summary>
@@ -187,12 +187,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// complex <see cref="SearchDocument"/> array property called
+        /// complex <see cref="SearchDocument"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public SearchDocument[] GetObjectArray(string key) => GetValue<SearchDocument[]>(key);
+        public IReadOnlyList<SearchDocument> GetObjectCollection(string key) => GetValue<SearchDocument[]>(key);
 
         /// <inheritdoc />
         public override string ToString()

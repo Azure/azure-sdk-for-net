@@ -1954,22 +1954,22 @@ namespace Azure.Search.Documents.Models
         public void Clear() { }
         public bool ContainsKey(string key) { throw null; }
         public bool? GetBoolean(string key) { throw null; }
-        public bool[] GetBooleanArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<bool> GetBooleanCollection(string key) { throw null; }
         public System.DateTimeOffset? GetDateTimeOffset(string key) { throw null; }
-        public System.DateTimeOffset[] GetDateTimeOffsetArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> GetDateTimeOffsetCollection(string key) { throw null; }
         public double? GetDouble(string key) { throw null; }
-        public double[] GetDoubleArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<double> GetDoubleCollection(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
         public int? GetInt32(string key) { throw null; }
-        public int[] GetInt32Array(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<int> GetInt32Collection(string key) { throw null; }
         public long? GetInt64(string key) { throw null; }
-        public long[] GetInt64Array(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<long> GetInt64Collection(string key) { throw null; }
         public Azure.Search.Documents.Models.SearchDocument GetObject(string key) { throw null; }
-        public Azure.Search.Documents.Models.SearchDocument[] GetObjectArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchDocument> GetObjectCollection(string key) { throw null; }
         public Azure.Core.Spatial.PointGeometry GetPoint(string key) { throw null; }
-        public Azure.Core.Spatial.PointGeometry[] GetPointArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.Spatial.PointGeometry> GetPointCollection(string key) { throw null; }
         public string GetString(string key) { throw null; }
-        public string[] GetStringArray(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<string> GetStringCollection(string key) { throw null; }
         public bool Remove(string key) { throw null; }
         void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> item) { }
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
@@ -1987,8 +1987,8 @@ namespace Azure.Search.Documents.Models
     public static partial class SearchModelFactory
     {
         public static Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo AnalyzedTokenInfo(string token, int startOffset, int endOffset, int position) { throw null; }
+        public static Azure.Search.Documents.Models.AutocompleteItem AutocompleteItem(string text, string queryPlusText) { throw null; }
         public static Azure.Search.Documents.Models.AutocompleteResults AutocompleteResults(double? coverage, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> results) { throw null; }
-        public static Azure.Search.Documents.Models.AutocompleteItem Autocompletion(string text, string queryPlusText) { throw null; }
         public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties) { throw null; }
         public static Azure.Search.Documents.Models.IndexDocumentsResult IndexDocumentsResult(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.IndexingResult> results) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status, string errorMessage, System.DateTimeOffset? startTime, System.DateTimeOffset? endTime, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState) { throw null; }

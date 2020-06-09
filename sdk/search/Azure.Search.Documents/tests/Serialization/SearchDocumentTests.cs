@@ -11,7 +11,6 @@ using System.Text.Json;
 using Azure.Core.Spatial;
 #endif
 using Azure.Search.Documents.Models;
-using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -97,6 +96,10 @@ namespace Azure.Search.Documents.Tests
             public TestValue<U> As<U>() =>
                 new TestValue<U>(JsonValue, (U)(object)Expected, CanReadDictionary, CanReadDynamic, CanReadGetter);
 
+            private static bool IsCollection<U>() =>
+                typeof(U).IsGenericType &&
+                typeof(U).GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
+
             public void Check(Func<SearchDocument, string, T> getter = null)
             {
                 SearchDocument doc = null;
@@ -140,10 +143,10 @@ namespace Azure.Search.Documents.Tests
             {
                 object actual = doc["Value"];
 
-                bool isArray = typeof(T).IsArray;
+                bool isCollection = IsCollection<T>();
                 if (actual != null)
                 {
-                    if (!isArray)
+                    if (!isCollection)
                     {
                         Assert.IsInstanceOf<T>(actual);
                     }
@@ -154,7 +157,7 @@ namespace Azure.Search.Documents.Tests
                     }
                 }
 
-                if (!isArray)
+                if (!isCollection)
                 {
                     SearchTestBase.AssertApproximate(Expected, actual);
                 }
@@ -162,7 +165,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     if (actual != null)
                     {
-                        CollectionAssert.AllItemsAreInstancesOfType(actual as IEnumerable, typeof(T).GetElementType());
+                        CollectionAssert.AllItemsAreInstancesOfType(actual as IEnumerable, typeof(T).GetGenericArguments()[0]);
                     }
                     AssertCollectionEqual(Expected as IEnumerable, actual as IEnumerable);
                 }
@@ -170,7 +173,7 @@ namespace Azure.Search.Documents.Tests
 
             private static void AssertReadDictionaryFails(SearchDocument doc)
             {
-                if (!typeof(T).IsArray)
+                if (!IsCollection<T>())
                 {
                     object actual = doc["Value"];
                     Assert.IsNotInstanceOf<T>(actual);
@@ -184,7 +187,7 @@ namespace Azure.Search.Documents.Tests
             private void AssertReadDynamic(SearchDocument doc)
             {
                 dynamic dyn = doc;
-                if (!typeof(T).IsArray)
+                if (!IsCollection<T>())
                 {
                     T actual = dyn.Value;
                     SearchTestBase.AssertApproximate(Expected, actual);
@@ -201,7 +204,7 @@ namespace Azure.Search.Documents.Tests
             {
                 dynamic dyn = doc;
                 object actual = dyn.Value;
-                if (actual != null && typeof(T).IsArray)
+                if (actual != null && IsCollection<T>())
                 {
                     Assert.IsNotInstanceOf<T>(actual);
                 }
@@ -216,7 +219,7 @@ namespace Azure.Search.Documents.Tests
             {
                 Assert.IsNotNull(getter);
                 T actual = getter(doc, "Value");
-                if (!typeof(T).IsArray)
+                if (!IsCollection<T>())
                 {
                     SearchTestBase.AssertApproximate(Expected, actual);
                 }
@@ -260,24 +263,24 @@ namespace Azure.Search.Documents.Tests
             return cases.ToArray();
         }
 
-        private static TestValue<T[]>[] GetCollectionValues<T>(params TestValue<T[]>[] values)
+        private static TestValue<IReadOnlyList<T>>[] GetCollectionValues<T>(params TestValue<IReadOnlyList<T>>[] values)
         {
             var common = new[]
             {
-                TestValue<T[]>.Exact("[]", new T[] { }),
-                TestValue<T[]>.Exact("null", null),
+                TestValue<IReadOnlyList<T>>.Exact("[]", new T[] { }),
+                TestValue<IReadOnlyList<T>>.Exact("null", null),
 
-                TestValue<T[]>.Fail("true"),
-                TestValue<T[]>.Fail("false"),
-                TestValue<T[]>.Fail("\"\""),
-                TestValue<T[]>.Fail("\"hello\""),
-                TestValue<T[]>.Fail("{}"),
-                TestValue<T[]>.Fail("0"),
-                TestValue<T[]>.Fail("1"),
-                TestValue<T[]>.Fail("0.5"),
+                TestValue<IReadOnlyList<T>>.Fail("true"),
+                TestValue<IReadOnlyList<T>>.Fail("false"),
+                TestValue<IReadOnlyList<T>>.Fail("\"\""),
+                TestValue<IReadOnlyList<T>>.Fail("\"hello\""),
+                TestValue<IReadOnlyList<T>>.Fail("{}"),
+                TestValue<IReadOnlyList<T>>.Fail("0"),
+                TestValue<IReadOnlyList<T>>.Fail("1"),
+                TestValue<IReadOnlyList<T>>.Fail("0.5"),
             };
 
-            List<TestValue<T[]>> cases = new List<TestValue<T[]>>();
+            List<TestValue<IReadOnlyList<T>>> cases = new List<TestValue<IReadOnlyList<T>>>();
             cases.AddRange(values);
             cases.AddRange(common);
             return cases.ToArray();
@@ -310,12 +313,12 @@ namespace Azure.Search.Documents.Tests
         private static TestValue<bool?>[] NullableBooleanValues => GetNullableValues(BooleanValues);
 
         [TestCaseSource(nameof(BooleanCollectionValues))]
-        public void GetBoolCollections(TestValue<bool[]> test) => test.Check((d, n) => d.GetBooleanArray(n));
-        private static TestValue<bool[]>[] BooleanCollectionValues =>
+        public void GetBoolCollections(TestValue<IReadOnlyList<bool>> test) => test.Check((d, n) => d.GetBooleanCollection(n));
+        private static TestValue<IReadOnlyList<bool>>[] BooleanCollectionValues =>
             GetCollectionValues(
-                TestValue<bool[]>.Exact("[true]", new bool[] { true }),
-                TestValue<bool[]>.Exact("[false]", new bool[] { false }),
-                TestValue<bool[]>.Exact("[true, false]", new bool[] { true, false }));
+                TestValue<IReadOnlyList<bool>>.Exact("[true]", new bool[] { true }),
+                TestValue<IReadOnlyList<bool>>.Exact("[false]", new bool[] { false }),
+                TestValue<IReadOnlyList<bool>>.Exact("[true, false]", new bool[] { true, false }));
 
         [TestCaseSource(nameof(StringValues))]
         public void GetStrings(TestValue<string> test) => test.Check((d, n) => d.GetString(n));
@@ -341,12 +344,12 @@ namespace Azure.Search.Documents.Tests
             };
 
         [TestCaseSource(nameof(StringCollectionValues))]
-        public void GetStringCollections(TestValue<string[]> test) => test.Check((d, n) => d.GetStringArray(n));
-        private static TestValue<string[]>[] StringCollectionValues =>
+        public void GetStringCollections(TestValue<IReadOnlyList<string>> test) => test.Check((d, n) => d.GetStringCollection(n));
+        private static TestValue<IReadOnlyList<string>>[] StringCollectionValues =>
             GetCollectionValues(
-                TestValue<string[]>.Exact("[\"a\"]", new string[] { "a" }),
-                TestValue<string[]>.Exact("[\"\"]", new string[] { "" }),
-                TestValue<string[]>.Exact("[\"a\", \"b\", \"\"]", new string[] { "a", "b", "" }));
+                TestValue<IReadOnlyList<string>>.Exact("[\"a\"]", new string[] { "a" }),
+                TestValue<IReadOnlyList<string>>.Exact("[\"\"]", new string[] { "" }),
+                TestValue<IReadOnlyList<string>>.Exact("[\"a\", \"b\", \"\"]", new string[] { "a", "b", "" }));
 
         [TestCaseSource(nameof(Int32Values))]
         public void GetInt32s(TestValue<int> test) => test.Check((d,n) => d.GetInt32(n).Value);
@@ -380,15 +383,15 @@ namespace Azure.Search.Documents.Tests
         private static TestValue<int?>[] NullableInt32Values => GetNullableValues(Int32Values);
 
         [TestCaseSource(nameof(Int32CollectionValues))]
-        public void GetInt32Collections(TestValue<int[]> test) => test.Check((d, n) => d.GetInt32Array(n));
-        private static TestValue<int[]>[] Int32CollectionValues =>
+        public void GetInt32Collections(TestValue<IReadOnlyList<int>> test) => test.Check((d, n) => d.GetInt32Collection(n));
+        private static TestValue<IReadOnlyList<int>>[] Int32CollectionValues =>
             GetCollectionValues(
-                TestValue<int[]>.Exact("[0]", new int[] { 0 }),
-                TestValue<int[]>.Exact("[10]", new int[] { 10 }),
-                TestValue<int[]>.Exact("[1, 2, 3]", new int[] { 1, 2, 3 }),
-                TestValue<int[]>.Exact("[-1, -2, -3]", new int[] { -1, -2, -3 }),
-                TestValue<int[]>.Exact("[0, 2147483647, -2147483648]", new int[] { 0, int.MaxValue, int.MinValue }),
-                TestValue<int[]>.Fail("[0, 2147483648, -2147483649]"));
+                TestValue<IReadOnlyList<int>>.Exact("[0]", new int[] { 0 }),
+                TestValue<IReadOnlyList<int>>.Exact("[10]", new int[] { 10 }),
+                TestValue<IReadOnlyList<int>>.Exact("[1, 2, 3]", new int[] { 1, 2, 3 }),
+                TestValue<IReadOnlyList<int>>.Exact("[-1, -2, -3]", new int[] { -1, -2, -3 }),
+                TestValue<IReadOnlyList<int>>.Exact("[0, 2147483647, -2147483648]", new int[] { 0, int.MaxValue, int.MinValue }),
+                TestValue<IReadOnlyList<int>>.Fail("[0, 2147483648, -2147483649]"));
 
         [TestCaseSource(nameof(Int64Values))]
         public void GetInt64s(TestValue<long> test) => test.Check((d, n) => d.GetInt64(n).Value);
@@ -427,16 +430,16 @@ namespace Azure.Search.Documents.Tests
         private static TestValue<long?>[] NullableInt64Values => GetNullableValues(Int64Values);
 
         [TestCaseSource(nameof(Int64CollectionValues))]
-        public void GetInt64Collections(TestValue<long[]> test) => test.Check((d, n) => d.GetInt64Array(n));
-        private static TestValue<long[]>[] Int64CollectionValues =>
+        public void GetInt64Collections(TestValue<IReadOnlyList<long>> test) => test.Check((d, n) => d.GetInt64Collection(n));
+        private static TestValue<IReadOnlyList<long>>[] Int64CollectionValues =>
             GetCollectionValues(
-                TestValue<long[]>.Exact("[2147483648]", new long[] { int.MaxValue + 1L }),
-                TestValue<long[]>.Exact("[-2147483649]", new long[] { int.MinValue - 1L }),
-                TestValue<long[]>.Exact("[2147483648, -2147483649]", new long[] { int.MaxValue + 1L, int.MinValue - 1L }),
-                TestValue<long[]>.Convert("[1]", new long[] { 1 }),
-                TestValue<long[]>.Convert("[1, 2, 3]", new long[] { 1, 2, 3 }),
-                TestValue<long[]>.Convert("[0, 2147483648, -2147483649]", new long[] { 0L, int.MaxValue + 1L, int.MinValue - 1L }),
-                TestValue<long[]>.Fail("[0, 9223372036854775808, -9223372036854775809]"));
+                TestValue<IReadOnlyList<long>>.Exact("[2147483648]", new long[] { int.MaxValue + 1L }),
+                TestValue<IReadOnlyList<long>>.Exact("[-2147483649]", new long[] { int.MinValue - 1L }),
+                TestValue<IReadOnlyList<long>>.Exact("[2147483648, -2147483649]", new long[] { int.MaxValue + 1L, int.MinValue - 1L }),
+                TestValue<IReadOnlyList<long>>.Convert("[1]", new long[] { 1 }),
+                TestValue<IReadOnlyList<long>>.Convert("[1, 2, 3]", new long[] { 1, 2, 3 }),
+                TestValue<IReadOnlyList<long>>.Convert("[0, 2147483648, -2147483649]", new long[] { 0L, int.MaxValue + 1L, int.MinValue - 1L }),
+                TestValue<IReadOnlyList<long>>.Fail("[0, 9223372036854775808, -9223372036854775809]"));
 
         [TestCaseSource(nameof(DoubleValues))]
         public void GetDoubles(TestValue<double> test) => test.Check((d, n) => d.GetDouble(n).Value);
@@ -484,12 +487,12 @@ namespace Azure.Search.Documents.Tests
         private static TestValue<double?>[] NullableDoubleValues => GetNullableValues(DoubleValues);
 
         [TestCaseSource(nameof(DoubleCollectionValues))]
-        public void GetDoubleCollections(TestValue<double[]> test) => test.Check((d, n) => d.GetDoubleArray(n));
-        private static TestValue<double[]>[] DoubleCollectionValues =>
+        public void GetDoubleCollections(TestValue<IReadOnlyList<double>> test) => test.Check((d, n) => d.GetDoubleCollection(n));
+        private static TestValue<IReadOnlyList<double>>[] DoubleCollectionValues =>
             GetCollectionValues(
-                TestValue<double[]>.Exact("[0.5]", new double[] { 0.5 }),
-                TestValue<double[]>.Exact("[0.0, 0.5, 1.0]", new double[] { 0.0, 0.5, 1.0 }),
-                TestValue<double[]>.Convert("[0, 0.5, 1]", new double[] { 0.0, 0.5, 1.0 }));
+                TestValue<IReadOnlyList<double>>.Exact("[0.5]", new double[] { 0.5 }),
+                TestValue<IReadOnlyList<double>>.Exact("[0.0, 0.5, 1.0]", new double[] { 0.0, 0.5, 1.0 }),
+                TestValue<IReadOnlyList<double>>.Convert("[0, 0.5, 1]", new double[] { 0.0, 0.5, 1.0 }));
 
         [TestCaseSource(nameof(DateTimeOffsetValues))]
         public void GetDateTimeOffsets(TestValue<DateTimeOffset> test) => test.Check((d, n) => d.GetDateTimeOffset(n).Value);
@@ -523,16 +526,16 @@ namespace Azure.Search.Documents.Tests
         private static TestValue<DateTimeOffset?>[] NullableDateTimeOffsetValues => GetNullableValues(DateTimeOffsetValues);
 
         [TestCaseSource(nameof(DateTimeOffsetCollectionValues))]
-        public void GetDateTimeOffsetCollections(TestValue<DateTimeOffset[]> test) => test.Check((d, n) => d.GetDateTimeOffsetArray(n));
-        private static TestValue<DateTimeOffset[]>[] DateTimeOffsetCollectionValues =>
+        public void GetDateTimeOffsetCollections(TestValue<IReadOnlyList<DateTimeOffset>> test) => test.Check((d, n) => d.GetDateTimeOffsetCollection(n));
+        private static TestValue<IReadOnlyList<DateTimeOffset>>[] DateTimeOffsetCollectionValues =>
             GetCollectionValues(
-                TestValue<DateTimeOffset[]>.Convert(
+                TestValue<IReadOnlyList<DateTimeOffset>>.Convert(
                     "[\"2020-01-20T15:50:00+00:00\"]",
                     new DateTimeOffset[] { new DateTimeOffset(2020, 1, 20, 15, 50, 0, TimeSpan.Zero) }),
-                TestValue<DateTimeOffset[]>.Convert(
+                TestValue<IReadOnlyList<DateTimeOffset>>.Convert(
                     "[\"2017-01-13T14:03:00-08:00\"]",
                     new DateTimeOffset[] { new DateTimeOffset(2017, 1, 13, 14, 3, 0, 0, TimeSpan.FromHours(-8)) }),
-                TestValue<DateTimeOffset[]>.Convert(
+                TestValue<IReadOnlyList<DateTimeOffset>>.Convert(
                     "[\"2020-01-20T15:50:00+00:00\", \"2017-01-13T14:03:00-08:00\", \"2017-01-13T22:03:00+00:00\"]",
                     new DateTimeOffset[]
                     {
@@ -568,13 +571,13 @@ namespace Azure.Search.Documents.Tests
             };
 
         [TestCaseSource(nameof(PointCollectionValues))]
-        public void GetPointCollections(TestValue<PointGeometry[]> test) => test.Check((d, n) => d.GetPointArray(n));
-        private static TestValue<PointGeometry[]>[] PointCollectionValues =>
+        public void GetPointCollections(TestValue<IReadOnlyList<PointGeometry>> test) => test.Check((d, n) => d.GetPointCollection(n));
+        private static TestValue<IReadOnlyList<PointGeometry>>[] PointCollectionValues =>
             GetCollectionValues(
-                TestValue<PointGeometry[]>.Exact(
+                TestValue<IReadOnlyList<PointGeometry>>.Exact(
                     "[{\"type\":\"Point\",\"coordinates\":[0, 1]}]",
                     new[] { new PointGeometry(new GeometryPosition(0, 1)) }),
-                TestValue<PointGeometry[]>.Exact(
+                TestValue<IReadOnlyList<PointGeometry>>.Exact(
                     "[{\"type\":\"Point\",\"coordinates\":[0, 1]},{\"type\":\"Point\",\"coordinates\":[2, 3]}]",
                     new[]
                     {
@@ -661,22 +664,22 @@ namespace Azure.Search.Documents.Tests
             };
 
         [TestCaseSource(nameof(ComplexCollectionValues))]
-        public void GetComplexCollections(TestValue<SearchDocument[]> test) => test.Check((d, n) => d.GetObjectArray(n));
-        private static TestValue<SearchDocument[]>[] ComplexCollectionValues =>
+        public void GetComplexCollections(TestValue<IReadOnlyList<SearchDocument>> test) => test.Check((d, n) => d.GetObjectCollection(n));
+        private static TestValue<IReadOnlyList<SearchDocument>>[] ComplexCollectionValues =>
             GetCollectionValues(
-                TestValue<SearchDocument[]>.Exact(
+                TestValue<IReadOnlyList<SearchDocument>>.Exact(
                     "[{ }]",
                     new[] { new SearchDocument() }),
-                TestValue<SearchDocument[]>.Exact(
+                TestValue<IReadOnlyList<SearchDocument>>.Exact(
                     $"[{new Complex().ToJson()}]",
                     new[] { new Complex().ToDocument() }),
-                TestValue<SearchDocument[]>.Exact(
+                TestValue<IReadOnlyList<SearchDocument>>.Exact(
                     $"[{new Complex(1, true, "hi").ToJson()}, {new Complex(2, false, "bye").ToJson()}]",
                     new[] { new Complex(1, true, "hi").ToDocument(), new Complex(2, false, "bye").ToDocument() }),
-                TestValue<SearchDocument[]>.Exact(
+                TestValue<IReadOnlyList<SearchDocument>>.Exact(
                     $"[{new ComplexNullable(1, true, "hi").ToJson()}, {new ComplexNullable(2, false, "bye").ToJson()}]",
                     new[] { new ComplexNullable(1, true, "hi").ToDocument(), new ComplexNullable(2, false, "bye").ToDocument() }),
-                TestValue<SearchDocument[]>.Exact(
+                TestValue<IReadOnlyList<SearchDocument>>.Exact(
                     $"[{new Complex().ToJson()}, {new ComplexNullable().ToJson()}]",
                     new[] { new Complex().ToDocument(), new ComplexNullable().ToDocument() }));
 

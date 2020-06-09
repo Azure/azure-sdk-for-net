@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
         /// <returns> A new AutocompleteItem instance for mocking. </returns>
-        public static AutocompleteItem Autocompletion(
+        public static AutocompleteItem AutocompleteItem(
             string text,
             string queryPlusText) =>
             new AutocompleteItem(text, queryPlusText);
