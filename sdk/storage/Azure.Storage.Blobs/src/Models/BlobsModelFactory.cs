@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs.Models
                 BlobType = blobType,
                 VersionId = versionId,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
-                IsCurrentVersion = isCurrentVersion,
+                IsLatestVersion = isCurrentVersion,
                 ObjectReplicationDestinationPolicy = objectReplicationDestinationPolicy,
                 TagCount = tagCount,
                 Metadata = metadata,

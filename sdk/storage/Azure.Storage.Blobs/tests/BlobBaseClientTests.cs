@@ -2390,7 +2390,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.VersionId);
-            Assert.IsFalse(response.Value.IsCurrentVersion);
+            Assert.IsFalse(response.Value.IsLatestVersion);
         }
 
         private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)

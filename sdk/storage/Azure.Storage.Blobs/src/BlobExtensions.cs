@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs
                 ArchiveStatus = properties.ArchiveStatus,
                 AccessTierChangedOn = properties.AccessTierChangedOn,
                 VersionId = properties.VersionId,
-                IsCurrentVersion = properties.IsCurrentVersion,
+                IsLatestVersion = properties.IsCurrentVersion,
                 TagCount = properties.TagCount,
                 ExpiresOn = properties.ExpiresOn,
                 IsSealed = properties.IsSealed,

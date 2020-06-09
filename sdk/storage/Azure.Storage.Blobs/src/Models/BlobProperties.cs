@@ -232,7 +232,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The value of this header indicates whether version of this blob is a current version, see also x-ms-version-id header.
         /// </summary>
-        public bool IsCurrentVersion { get; internal set; }
+        public bool IsLatestVersion { get; internal set; }
 
         /// <summary>
         /// The number of tags associated with the blob.

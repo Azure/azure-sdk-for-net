@@ -1491,7 +1491,7 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
+### Hide some types.
 ``` yaml
 directive:
 - from: swagger-document

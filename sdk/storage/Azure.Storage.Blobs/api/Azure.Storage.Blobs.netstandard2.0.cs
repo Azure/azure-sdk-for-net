@@ -11,25 +11,25 @@ namespace Azure.Storage.Blobs
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, bool overwrite = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path, bool overwrite = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string path, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, bool overwrite = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path, bool overwrite = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string path, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -201,6 +201,14 @@ namespace Azure.Storage.Blobs.Models
         BlobStorage = 1,
         StorageV2 = 2,
     }
+    public partial class AppendBlobCreateOptions
+    {
+        public AppendBlobCreateOptions() { }
+        public Azure.Storage.Blobs.Models.AppendBlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+    }
     public partial class AppendBlobRequestConditions : Azure.Storage.Blobs.Models.BlobRequestConditions
     {
         public AppendBlobRequestConditions() { }
@@ -278,10 +286,10 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobContainerItem
     {
         internal BlobContainerItem() { }
-        public bool? Deleted { get { throw null; } }
+        public bool? IsDeleted { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get { throw null; } }
-        public string Version { get { throw null; } }
+        public string VersionId { get { throw null; } }
     }
     public partial class BlobContainerProperties
     {
@@ -669,8 +677,8 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionScope { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public bool IsCurrentVersion { get { throw null; } }
         public bool IsIncrementalCopy { get { throw null; } }
+        public bool IsLatestVersion { get { throw null; } }
         public bool IsSealed { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
@@ -771,7 +779,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobContainerInfo BlobContainerInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobContainerItem BlobContainerItem(string name, Azure.Storage.Blobs.Models.BlobContainerProperties properties) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobContainerItem BlobContainerItem(string name, Azure.Storage.Blobs.Models.BlobContainerProperties properties, bool? deleted = default(bool?), string version = null) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobContainerItem BlobContainerItem(string name, Azure.Storage.Blobs.Models.BlobContainerProperties properties, bool? isDeleted = default(bool?), string versionId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobContainerProperties BlobContainerProperties(System.DateTimeOffset lastModified, Azure.ETag eTag, Azure.Storage.Blobs.Models.LeaseState? leaseState, Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration, Azure.Storage.Blobs.Models.PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, System.Collections.Generic.IDictionary<string, string> metadata, bool? hasLegalHold) { throw null; }
         public static Azure.Storage.Blobs.Models.BlobContainerProperties BlobContainerProperties(System.DateTimeOffset lastModified, Azure.ETag eTag, Azure.Storage.Blobs.Models.LeaseState? leaseState = default(Azure.Storage.Blobs.Models.LeaseState?), Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default(Azure.Storage.Blobs.Models.LeaseDurationType?), Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default(Azure.Storage.Blobs.Models.PublicAccessType?), bool? hasImmutabilityPolicy = default(bool?), Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default(Azure.Storage.Blobs.Models.LeaseStatus?), string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = default(bool?), System.DateTimeOffset? deletedTime = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null, bool? hasLegalHold = default(bool?)) { throw null; }
@@ -872,6 +880,17 @@ namespace Azure.Storage.Blobs.Models
         Page = 1,
         Append = 2,
     }
+    public partial class BlobUploadOptions
+    {
+        public BlobUploadOptions() { }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
+    }
     public partial class BlockInfo
     {
         internal BlockInfo() { }
@@ -933,23 +952,6 @@ namespace Azure.Storage.Blobs.Models
         Success = 1,
         Aborted = 2,
         Failed = 3,
-    }
-    public partial class CreateAppendBlobOptions
-    {
-        public CreateAppendBlobOptions() { }
-        public Azure.Storage.Blobs.Models.AppendBlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-    }
-    public partial class CreatePageBlobOptions
-    {
-        public CreatePageBlobOptions() { }
-        public Azure.Storage.Blobs.Models.PageBlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public long? SequenceNumber { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomerProvidedKey : System.IEquatable<Azure.Storage.Blobs.Models.CustomerProvidedKey>
@@ -1029,6 +1031,15 @@ namespace Azure.Storage.Blobs.Models
         Metadata = 0,
         Deleted = 1,
     }
+    public partial class PageBlobCreateOptions
+    {
+        public PageBlobCreateOptions() { }
+        public Azure.Storage.Blobs.Models.PageBlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public long? SequenceNumber { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+    }
     public partial class PageBlobInfo
     {
         internal PageBlobInfo() { }
@@ -1105,17 +1116,6 @@ namespace Azure.Storage.Blobs.Models
         StandardZrs = 3,
         PremiumLrs = 4,
     }
-    public partial class UploadBlobOptions
-    {
-        public UploadBlobOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
-    }
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
@@ -1144,18 +1144,18 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(System.IO.Stream content, byte[] transactionalContentHash = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUri(System.Uri sourceUri, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions sourceConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(System.Uri sourceUri, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions sourceConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(Azure.Storage.Blobs.Models.AppendBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(Azure.Storage.Blobs.Models.CreateAppendBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(Azure.Storage.Blobs.Models.AppendBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(Azure.Storage.Blobs.Models.CreateAppendBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(Azure.Storage.Blobs.Models.AppendBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(Azure.Storage.Blobs.Models.CreateAppendBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.AppendBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.CreateAppendBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> Seal(Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> SealAsync(Azure.Storage.Blobs.Models.AppendBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public new Azure.Storage.Blobs.Specialized.AppendBlobClient WithSnapshot(string snapshot) { throw null; }
@@ -1283,10 +1283,10 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(System.Uri sourceUri, string base64BlockId, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.RequestConditions sourceConditions = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.UploadBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public new Azure.Storage.Blobs.Specialized.BlockBlobClient WithSnapshot(string snapshot) { throw null; }
         protected sealed override Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
         public new Azure.Storage.Blobs.Specialized.BlockBlobClient WithVersion(string versionId) { throw null; }
@@ -1303,16 +1303,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual int PageBlobPageBytes { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPages(Azure.HttpRange range, Azure.Storage.Blobs.Models.PageBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(Azure.HttpRange range, Azure.Storage.Blobs.Models.PageBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(long size, Azure.Storage.Blobs.Models.CreatePageBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(long size, Azure.Storage.Blobs.Models.PageBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Create(long size, long? sequenceNumber = default(long?), Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.PageBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(long size, Azure.Storage.Blobs.Models.CreatePageBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(long size, Azure.Storage.Blobs.Models.PageBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(long size, long? sequenceNumber = default(long?), Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.PageBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(long size, Azure.Storage.Blobs.Models.CreatePageBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(long size, Azure.Storage.Blobs.Models.PageBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateIfNotExists(long size, long? sequenceNumber = default(long?), Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(long size, Azure.Storage.Blobs.Models.CreatePageBlobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(long size, Azure.Storage.Blobs.Models.PageBlobCreateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateIfNotExistsAsync(long size, long? sequenceNumber = default(long?), Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetManagedDiskPageRangesDiff(Azure.HttpRange? range = default(Azure.HttpRange?), string snapshot = null, System.Uri previousSnapshotUri = null, Azure.Storage.Blobs.Models.PageBlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
