@@ -2,6 +2,10 @@
 
 ## 1.0.0-preview.4 (Unreleased)
 
+### Added
+
+- Added `SearchModelFactory` to mock output model types.
+
 ### Breaking Changes
 
 - Made collection- and dictionary-type properties read-only, i.e. has only get-accessors, based on [.NET Guidelines][net-guidelines-collection-properties].
@@ -12,6 +16,7 @@
 - Renamed `AnalyzeTextOptions.Tokenizer` to `AnalyzeTextOptions.TokenizerName`.
 - Renamed `CustomAnalyzer.Tokenizer` to `CustomAnalyzer.TokenizerName`.
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
+- Renamed `Autocompletion` to `AutocompleteItem`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
 - `SearchClient.IndexDocuments` now throws an `AggregateException` wrapping all the `RequestFailedException`s in the batch.

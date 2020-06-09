@@ -163,4 +163,33 @@ namespace Azure.Search.Documents.Models
             }
         }
     }
+
+    public static partial class SearchModelFactory
+    {
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document found by the search query.</param>
+        /// <param name="score">
+        /// The relevance score of the document compared to other documents
+        /// returned by the query.
+        /// </param>
+        /// <param name="highlights">
+        /// Text fragments from the document that indicate the matching search
+        /// terms, organized by each applicable field; null if hit highlighting
+        /// was not enabled for the query.
+        /// </param>
+        /// <returns>A new SearchResult instance for mocking.</returns>
+        public static SearchResult<T> SearchResult<T>(
+            T document,
+            double? score,
+            IDictionary<string, IList<string>> highlights) =>
+            new SearchResult<T>()
+            {
+                Score = score,
+                Highlights = highlights,
+                Document = document };
+    }
 }
