@@ -14,6 +14,7 @@
 - Renamed `SearchIndexerDataSource` to `SearchIndexerDataSourceConnection`.
 - Renamed methods on `SearchIndexerClient` matching "\*DataSource" to "\*DataSourceConnection".
 - Split `SearchServiceClient` into `SearchIndexClient` for managing indexes, and `SearchIndexerClient` for managing indexers, both of which are now in `Azure.Search.Documents.Indexes`.
+- `SearchClient.IndexDocuments` now throws an `AggregateException` wrapping all the `RequestFailedException`s in the batch.
 
 ## 1.0.0-preview.3 (2020-05-05)
 

@@ -1411,7 +1411,8 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>
         public virtual Response<IndexDocumentsResult> IndexDocuments<T>(
@@ -1464,9 +1465,10 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
-        /// </remarks>
+        /// </remarks>>
         public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
@@ -1532,25 +1534,36 @@ namespace Azure.Search.Documents
                             JsonDocument.Parse(message.Response.ContentStream, default);
                         IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
 
-                        // TODO: #10593 - Ensure input and output document order is in sync while batching
-                        // (waiting until we figure out the broader batching
-                        // story)
-
                         // Optionally throw an exception if any individual
                         // write failed
                         if (options?.ThrowOnAnyError == true)
                         {
+                            List<RequestFailedException> failures = new List<RequestFailedException>();
+                            List<string> failedKeys = new List<string>();
                             foreach (IndexingResult result in value.Results)
                             {
                                 if (!result.Succeeded)
                                 {
-                                    // TODO: #10594 - Aggregate the failed operations into a single exception
-                                    // (waiting until we figure out the broader
-                                    // batching story)
-                                    throw new RequestFailedException(result.Status, result.ErrorMessage);
+                                    failedKeys.Add(result.Key);
+                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                    ex.Data["Key"] = result.Key;
+                                    failures.Add(ex);
                                 }
                             }
+                            if (failures.Count > 0)
+                            {
+                                throw new AggregateException(
+                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                    failures);
+                            }
                         }
+
+                        // TODO: #10593 - Ensure input and output document
+                        // order is in sync while batching (this is waiting on
+                        // both our broader batching story and adding something
+                        // on the client that can potentially indicate the Key
+                        // column since we have no way to tell that at present.)
+
                         return Response.FromValue(value, message.Response);
                     }
                     default:
