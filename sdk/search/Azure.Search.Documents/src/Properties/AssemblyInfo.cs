@@ -25,8 +25,8 @@ using Azure.Core;
     "3924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7" +
     "d3113e92484cf7045cc7")]
 
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Analyzer")]
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Skill")]
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Skillset")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Search service terminology", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Analyzer")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Search service terminology", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Skill")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Search service terminology", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Skillset")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Search service terminology", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Suggester")]
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Tokenizer")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Search service terminology", Scope = "type", Target = "~T:Azure.Search.Documents.Models.Tokenizer")]

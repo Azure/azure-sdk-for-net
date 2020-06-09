@@ -1763,7 +1763,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// MergeOrUpload documents to the index as a batch.
+        /// Merge or upload documents to the index as a batch.
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1860,7 +1860,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Delete documents to the index as a batch.
+        /// Delete documents from the index as a batch.
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1908,7 +1908,7 @@ namespace Azure.Search.Documents
                 cancellationToken);
 
         /// <summary>
-        /// Delete documents to the index as a batch.
+        /// Delete documents from the index as a batch.
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1957,7 +1957,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Delete documents to the index as a batch given only their keys.
+        /// Delete documents from the index as a batch given only their keys.
         /// </summary>
         /// <param name="keyName">
         /// The name of the key field that uniquely identifies documents in
@@ -2001,7 +2001,7 @@ namespace Azure.Search.Documents
                 cancellationToken);
 
         /// <summary>
-        /// Delete documents to the index as a batch given only their keys.
+        /// Delete documents from the index as a batch given only their keys.
         /// </summary>
         /// <param name="keyName">
         /// The name of the key field that uniquely identifies documents in
