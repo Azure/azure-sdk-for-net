@@ -123,10 +123,9 @@ namespace Azure.Iot.Hub.Service
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResult>> CreateIdentitiesWithTwinAsync(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = devices
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.Key.DeviceId,
@@ -153,10 +152,9 @@ namespace Azure.Iot.Hub.Service
         /// where device and twin have a definition, the device value will override the twin value.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResult> CreateIdentitiesWithTwin(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentitiesWithTwin(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = devices
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.Key.DeviceId,
@@ -182,10 +180,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceIdentities">The devices identities to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResult>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -209,10 +206,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceIdentities">The device identities to create.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResult> CreateIdentities(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> CreateIdentities(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -237,10 +233,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResult>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -266,10 +261,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResult> UpdateIdenties(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> UpdateIdenties(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -295,10 +289,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk deletion.</returns>
-        public virtual Task<Response<BulkRegistryOperationResult>> DeleteIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -316,10 +309,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk deletion.</returns>
-        public virtual Response<BulkRegistryOperationResult> DeleteIdentities(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
@@ -451,7 +443,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResult>> UpdateTwinsAsync(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = twinUpdates
                 .Select(x => new ExportImportDevice()
@@ -473,10 +465,9 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResult> UpdateTwins(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> UpdateTwins(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = twinUpdates
-                .ToList()
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,

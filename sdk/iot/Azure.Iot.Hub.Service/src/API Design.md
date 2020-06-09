@@ -103,7 +103,7 @@ public class Devices
     /// where device and twin have a definition, the device value will override the twin value.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Task<Response<BulkRegistryOperationResult>> CreateIdentitiesWithTwinAsync(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
+    public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Create multiple devices with an initial twin. A maximum of 100 creations can be done per call, and each creation must have a unique device identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -112,7 +112,7 @@ public class Devices
     /// where device and twin have a definition, the device value will override the twin value.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Response<BulkRegistryOperationResult> CreateIdentitiesWithTwin(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
+    public virtual Response<BulkRegistryOperationResponse> CreateIdentitiesWithTwin(IDictionary<DeviceIdentity, TwinData> devices, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Create multiple devices. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -120,7 +120,7 @@ public class Devices
     /// <param name="deviceIdentities">The devices identities to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Task<Response<BulkRegistryOperationResult>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
+    public virtual Task<Response<BulkRegistryOperationResponse>> CreateIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Create multiple devices. A maximum of 100 creations can be done per call, and each device identity must be unique. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -128,7 +128,7 @@ public class Devices
     /// <param name="deviceIdentities">The device identities to create.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Response<BulkRegistryOperationResult> CreateIdentities(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
+    public virtual Response<BulkRegistryOperationResponse> CreateIdentities(IEnumerable<DeviceIdentity> deviceIdentities, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Update multiple devices. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>..
@@ -137,7 +137,7 @@ public class Devices
     /// <param name="precondition">The condition on which to update each device identity.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Task<Response<BulkRegistryOperationResult>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Update multiple devices. A maximum of 100 updates can be done per call, and each operation must be done on a different identity. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -146,7 +146,7 @@ public class Devices
     /// <param name="precondition">The condition on which to update each device identity.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Response<BulkRegistryOperationResult> UpdateIdenties(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Response<BulkRegistryOperationResponse> UpdateIdenties(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Delete multiple devices. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -155,7 +155,7 @@ public class Devices
     /// <param name="precondition">The condition on which to delete each device identity.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk deletion.</returns>
-    public virtual Task<Response<BulkRegistryOperationResult>> DeleteIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Delete multiple devices. A maximum of 100 deletions can be done per call. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -164,7 +164,7 @@ public class Devices
     /// <param name="precondition">The condition on which to delete each device identity.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk deletion.</returns>
-    public virtual Response<BulkRegistryOperationResult> DeleteIdentities(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// List a set of device twins.
@@ -223,7 +223,7 @@ public class Devices
     /// <param name="precondition">The condition on which to update each device twin.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Task<Response<BulkRegistryOperationResult>> UpdateTwinsAsync(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Update multiple devices' twins. A maximum of 100 updates can be done per call, and each operation must be done on a different device twin. For larger scale operations, consider using <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">IoT Hub jobs</see>.
@@ -232,7 +232,7 @@ public class Devices
     /// <param name="precondition">The condition on which to update each device twin.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The result of the bulk operation.</returns>
-    public virtual Response<BulkRegistryOperationResult> UpdateTwins(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+    public virtual Response<BulkRegistryOperationResponse> UpdateTwins(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
 
     /// <summary>
     /// Invoke a method on a device.
