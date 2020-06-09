@@ -116,6 +116,9 @@ namespace Azure.Storage.Shared
             _position += count;
         }
 
+        protected virtual async Task FlushInternal(bool async, CancellationToken cancellationToken)
+            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+
         public override void Flush()
             => FlushInternal(
                 async: false,
@@ -125,8 +128,6 @@ namespace Azure.Storage.Shared
             => await FlushInternal(
                 async: true,
                 cancellationToken).ConfigureAwait(false);
-
-        protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
 
         protected abstract Task AppendInternal(bool async, CancellationToken cancellationToken);
 
