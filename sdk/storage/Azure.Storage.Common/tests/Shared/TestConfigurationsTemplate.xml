@@ -125,6 +125,7 @@
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
+
   <KeyVaultConfigurations>
     <KeyVaultConfiguration>
       <VaultName>ClientsideEncryptionKeyvault</VaultName>
