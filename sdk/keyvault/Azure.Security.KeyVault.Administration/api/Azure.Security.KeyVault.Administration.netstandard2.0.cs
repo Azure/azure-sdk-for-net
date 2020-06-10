@@ -70,12 +70,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         public Azure.Security.KeyVault.Administration.Models.RoleAssignmentPropertiesWithScope Properties { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class RoleAssignmentListResult
-    {
-        internal RoleAssignmentListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.Models.RoleAssignment> Value { get { throw null; } }
-    }
     public partial class RoleAssignmentProperties
     {
         public RoleAssignmentProperties(string roleDefinitionId, string principalId) { }
