@@ -48,6 +48,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         protected IoTHubServiceClient()
         {
+            // This constructor only exists for mocking purposes in unit tests. It should not be used otherwise.
         }
 
         /// <summary>
