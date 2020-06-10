@@ -46,7 +46,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity.</returns>
-        public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(DeviceIdentity deviceIdentity, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<DeviceIdentity>> CreateOrUpdateIdentityAsync(
+            DeviceIdentity deviceIdentity,
+            IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
@@ -60,7 +63,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity.</returns>
-        public virtual Response<DeviceIdentity> CreateOrUpdateIdentity(DeviceIdentity deviceIdentity, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceIdentity> CreateOrUpdateIdentity(
+            DeviceIdentity deviceIdentity,
+            IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
@@ -96,7 +102,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
-        public virtual Task<Response> DeleteIdentityAsync(DeviceIdentity deviceIdentity, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteIdentityAsync(
+            DeviceIdentity deviceIdentity,
+            IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
@@ -110,7 +119,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
-        public virtual Response DeleteIdentity(DeviceIdentity deviceIdentity, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response DeleteIdentity(
+            DeviceIdentity deviceIdentity,
+            IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(deviceIdentity, nameof(deviceIdentity));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, deviceIdentity.Etag);
@@ -234,7 +246,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateIdentiesAsync(
+            IEnumerable<DeviceIdentity> deviceIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
                 .Select(x => new ExportImportDevice()
@@ -262,7 +277,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResponse> UpdateIdenties(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> UpdateIdenties(
+            IEnumerable<DeviceIdentity> deviceIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
                 .Select(x => new ExportImportDevice()
@@ -290,14 +308,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk deletion.</returns>
-        public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> DeleteIdentitiesAsync(
+            IEnumerable<DeviceIdentity> deviceIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
                     ETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Delete : ExportImportDeviceImportMode.DeleteIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrudAsync(registryOperations, cancellationToken);
@@ -310,14 +333,19 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to delete each device identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk deletion.</returns>
-        public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(IEnumerable<DeviceIdentity> deviceIdentities, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> DeleteIdentities(
+            IEnumerable<DeviceIdentity> deviceIdentities,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = deviceIdentities
                 .Select(x => new ExportImportDevice()
                 {
                     Id = x.DeviceId,
                     ETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.Delete : ExportImportDeviceImportMode.DeleteIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.Delete
+                        : ExportImportDeviceImportMode.DeleteIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
@@ -338,7 +366,12 @@ namespace Azure.Iot.Hub.Service
                 {
                     Query = "select * from devices"
                 };
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
+                    querySpecification,
+                    null,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken).ConfigureAwait(false);
+
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
@@ -347,7 +380,12 @@ namespace Azure.Iot.Hub.Service
             async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
+                    querySpecification,
+                    nextLink,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken).ConfigureAwait(false);
+
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
             }
@@ -370,7 +408,11 @@ namespace Azure.Iot.Hub.Service
                     Query = "select * from devices"
                 };
 
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                    querySpecification,
+                    null,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken);
 
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
@@ -380,7 +422,12 @@ namespace Azure.Iot.Hub.Service
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                    querySpecification,
+                    nextLink,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken);
+
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
             }
@@ -445,7 +492,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Task<Response<BulkRegistryOperationResponse>> UpdateTwinsAsync(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = twinUpdates
                 .Select(x => new ExportImportDevice()
@@ -467,7 +517,10 @@ namespace Azure.Iot.Hub.Service
         /// <param name="precondition">The condition on which to update each device twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The result of the bulk operation.</returns>
-        public virtual Response<BulkRegistryOperationResponse> UpdateTwins(IEnumerable<TwinData> twinUpdates, BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
+        public virtual Response<BulkRegistryOperationResponse> UpdateTwins(
+            IEnumerable<TwinData> twinUpdates,
+            BulkIfMatchPrecondition precondition = BulkIfMatchPrecondition.IfMatch,
+            CancellationToken cancellationToken = default)
         {
             IEnumerable<ExportImportDevice> registryOperations = twinUpdates
                 .Select(x => new ExportImportDevice()
@@ -476,7 +529,9 @@ namespace Azure.Iot.Hub.Service
                     Tags = x.Tags,
                     Properties = new PropertyContainer(x.Properties?.Desired, x.Properties?.Reported),
                     TwinETag = x.Etag,
-                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional ? ExportImportDeviceImportMode.UpdateTwin : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
+                    ImportMode = precondition == BulkIfMatchPrecondition.Unconditional
+                        ? ExportImportDeviceImportMode.UpdateTwin
+                        : ExportImportDeviceImportMode.UpdateTwinIfMatchETag
                 });
 
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);

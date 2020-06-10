@@ -204,7 +204,11 @@ namespace Azure.Iot.Hub.Service
                     Query = "select * from modules"
                 };
 
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                    querySpecification,
+                    null,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken);
 
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
@@ -214,7 +218,12 @@ namespace Azure.Iot.Hub.Service
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
+                    querySpecification,
+                    nextLink,
+                    pageSizeHint?.ToString(CultureInfo.InvariantCulture),
+                    cancellationToken);
+
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
             }
