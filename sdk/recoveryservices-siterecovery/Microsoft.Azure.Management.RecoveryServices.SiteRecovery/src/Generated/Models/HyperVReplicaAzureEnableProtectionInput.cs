@@ -60,7 +60,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover VM is to be created.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
-        public HyperVReplicaAzureEnableProtectionInput(string hvHostVmId = default(string), string vmName = default(string), string osType = default(string), string vhdId = default(string), string targetStorageAccountId = default(string), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
+        /// <param name="targetAvailabilityZone">The target availability
+        /// zone.</param>
+        /// <param name="targetProximityPlacementGroupId">The proximity
+        /// placement group ARM Id.</param>
+        public HyperVReplicaAzureEnableProtectionInput(string hvHostVmId = default(string), string vmName = default(string), string osType = default(string), string vhdId = default(string), string targetStorageAccountId = default(string), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string))
         {
             HvHostVmId = hvHostVmId;
             VmName = vmName;
@@ -76,6 +80,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetAzureV1ResourceGroupId = targetAzureV1ResourceGroupId;
             TargetAzureV2ResourceGroupId = targetAzureV2ResourceGroupId;
             UseManagedDisks = useManagedDisks;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             CustomInit();
         }
 
@@ -173,6 +179,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
         public string UseManagedDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetAvailabilityZone")]
+        public string TargetAvailabilityZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the proximity placement group ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetProximityPlacementGroupId")]
+        public string TargetProximityPlacementGroupId { get; set; }
 
     }
 }

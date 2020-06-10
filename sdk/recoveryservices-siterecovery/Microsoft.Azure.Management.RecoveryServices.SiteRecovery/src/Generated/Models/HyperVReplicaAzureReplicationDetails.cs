@@ -74,11 +74,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// group Id.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set Id.</param>
+        /// <param name="targetAvailabilityZone">The target availability
+        /// zone.</param>
+        /// <param name="targetProximityPlacementGroupId">The target proximity
+        /// placement group Id.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
         /// <param name="licenseType">License Type of the VM to be
         /// used.</param>
-        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVmDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVmName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), System.DateTime? lastReplicatedTime = default(System.DateTime?), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRamSizeInMB = default(int?), int? sourceVmCpuCount = default(int?), string enableRdpOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string))
+        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVmDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVmName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), System.DateTime? lastReplicatedTime = default(System.DateTime?), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRamSizeInMB = default(int?), int? sourceVmCpuCount = default(int?), string enableRdpOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string targetAvailabilityZone = default(string), string targetProximityPlacementGroupId = default(string), string useManagedDisks = default(string), string licenseType = default(string))
         {
             AzureVmDiskDetails = azureVmDiskDetails;
             RecoveryAzureVmName = recoveryAzureVmName;
@@ -102,6 +106,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             EnableRdpOnTargetOption = enableRdpOnTargetOption;
             RecoveryAzureResourceGroupId = recoveryAzureResourceGroupId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
             UseManagedDisks = useManagedDisks;
             LicenseType = licenseType;
             CustomInit();
@@ -248,6 +254,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAvailabilitySetId")]
         public string RecoveryAvailabilitySetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetAvailabilityZone")]
+        public string TargetAvailabilityZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetProximityPlacementGroupId")]
+        public string TargetProximityPlacementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether managed disks should be
