@@ -17,6 +17,7 @@ namespace Azure.Iot.Hub.Service
     public class ModulesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
+        private const string HubModuleQuery = "select * from modules";
 
         private readonly RegistryManagerRestClient _registryManagerClient;
         private readonly TwinRestClient _twinClient;
@@ -165,7 +166,7 @@ namespace Azure.Iot.Hub.Service
             {
                 var querySpecification = new QuerySpecification
                 {
-                    Query = "select * from modules"
+                    Query = HubModuleQuery
                 };
 
                 Response<IReadOnlyList<TwinData>> response =
@@ -202,7 +203,7 @@ namespace Azure.Iot.Hub.Service
             {
                 var querySpecification = new QuerySpecification
                 {
-                    Query = "select * from modules"
+                    Query = HubModuleQuery
                 };
 
                 Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(

@@ -18,6 +18,7 @@ namespace Azure.Iot.Hub.Service
     public class DevicesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
+        private const string HubDeviceQuery = "select * from devices";
 
         private readonly RegistryManagerRestClient _registryManagerClient;
         private readonly TwinRestClient _twinClient;
@@ -363,7 +364,7 @@ namespace Azure.Iot.Hub.Service
             {
                 var querySpecification = new QuerySpecification
                 {
-                    Query = "select * from devices"
+                    Query = HubDeviceQuery
                 };
                 Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(
                     querySpecification,
@@ -404,7 +405,7 @@ namespace Azure.Iot.Hub.Service
             {
                 var querySpecification = new QuerySpecification
                 {
-                    Query = "select * from devices"
+                    Query = HubDeviceQuery
                 };
 
                 Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(
