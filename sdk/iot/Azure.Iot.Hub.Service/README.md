@@ -31,7 +31,6 @@ All service operations will throw RequestFailedException on failure reported by 
 
 ## Next steps
 
-
 ## Contributing
 
 This project welcomes contributions and suggestions.
