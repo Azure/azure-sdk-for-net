@@ -1190,7 +1190,6 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshot(string snapshot) { throw null; }
         protected virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithVersion(string versionId) { throw null; }
-        protected virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithVersionCore(string versionId) { throw null; }
     }
     public partial class BlobLeaseClient
     {
@@ -1345,7 +1344,7 @@ namespace Azure.Storage.Sas
         public BlobSasBuilder() { }
         public string BlobContainerName { get { throw null; } set { } }
         public string BlobName { get { throw null; } set { } }
-        public string BlobVersion { get { throw null; } set { } }
+        public string BlobVersionId { get { throw null; } set { } }
         public string CacheControl { get { throw null; } set { } }
         public string ContentDisposition { get { throw null; } set { } }
         public string ContentEncoding { get { throw null; } set { } }
