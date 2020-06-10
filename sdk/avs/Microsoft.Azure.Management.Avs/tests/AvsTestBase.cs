@@ -5,7 +5,7 @@ using System;
 using Microsoft.Azure.Management.AVS;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
-namespace AVS.Tests
+namespace Avs.Tests
 {
     class AvsTestBase : TestBase, IDisposable
     {
@@ -18,7 +18,7 @@ namespace AVS.Tests
 
         public void Dispose()
         {
-            this.AzureVMwareSolutionAPIClient.Dispose();
+            this.AvsClient.Dispose();
         }
     }
 }
