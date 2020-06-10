@@ -29,8 +29,8 @@ pr:
     exclude:
     - eng/mgmt/
 
-stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
     ServiceToBuild: '*'

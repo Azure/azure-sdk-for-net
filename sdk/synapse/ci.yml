@@ -23,8 +23,8 @@ pr:
     include:
     - sdk/synapse/
 
-stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: synapse
     ArtifactName: packages

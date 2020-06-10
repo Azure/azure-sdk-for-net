@@ -22,12 +22,11 @@ pr:
     include:
     - sdk/attestation/
 
-stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: attestation
     ArtifactName: packages
     Artifacts:
     - name: Microsoft.Azure.Attestation
       safeName: MicrosoftAzureAttestation
-      

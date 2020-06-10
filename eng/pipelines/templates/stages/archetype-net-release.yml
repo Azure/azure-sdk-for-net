@@ -1,10 +1,3 @@
-resources:
-  repositories:
-    - repository: azure-sdk-build-tools
-      type: git
-      name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20200514.1
-
 parameters:
   Artifacts: []
   ArtifactName: 'not-specified'

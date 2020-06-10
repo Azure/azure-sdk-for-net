@@ -1,12 +1,39 @@
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: azure/azure-sdk-tools
+      endpoint: azure
+      ref: refs/tags/azure-sdk-tools_20200608.1
+
 parameters:
-  PreSteps: []
-  PostSteps: []
-  EnvVars: {}
-  MaxParallel: 0
-  BuildInParallel: true
-  TimeoutInMinutes: 60
-  Location: ''
-  SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SubscriptionConfiguration
+  type: string
+  default: $(sub-config-azure-cloud-test-resources)
+- name: ServiceDirectory
+  type: string
+  default: not-specified
 
 jobs:
   - job: "Test"
