@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.AVS</PackageId>
     <Description>Provides developers with libraries for Azure VMware Solution.</Description>
-    <Version>0.1.0.0</Version>
+    <Version>0.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.AVS</AssemblyName>
     <PackageTags>management;VMware;AVS;</PackageTags>
   </PropertyGroup>
