@@ -3630,7 +3630,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -3701,7 +3701,7 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -7168,7 +7168,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -7236,7 +7236,7 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterix (‘*’) is a wildcard that specifies all handles.</param>
+            /// <param name="handleId">Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
@@ -9723,12 +9723,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Deleted
         /// </summary>
-        public bool? Deleted { get; internal set; }
+        public bool? IsDeleted { get; internal set; }
 
         /// <summary>
         /// Version
         /// </summary>
-        public string Version { get; internal set; }
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// Properties of a share.
@@ -9778,12 +9778,12 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
             if (_child != null)
             {
-                _value.Deleted = bool.Parse(_child.Value);
+                _value.IsDeleted = bool.Parse(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
             if (_child != null)
             {
-                _value.Version = _child.Value;
+                _value.VersionId = _child.Value;
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
@@ -9809,16 +9809,16 @@ namespace Azure.Storage.Files.Shares.Models
             string name,
             Azure.Storage.Files.Shares.Models.ShareProperties properties,
             string snapshot = default,
-            bool? deleted = default,
-            string version = default)
+            bool? isDeleted = default,
+            string versionId = default)
         {
             return new ShareItem()
             {
                 Name = name,
                 Properties = properties,
                 Snapshot = snapshot,
-                Deleted = deleted,
-                Version = version,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
             };
         }
     }
@@ -10160,7 +10160,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// DeletedTime
         /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// RemainingRetentionDays
@@ -10240,7 +10240,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
             if (_child != null)
             {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
             if (_child != null)
@@ -10283,7 +10283,7 @@ namespace Azure.Storage.Files.Shares.Models
             int? provisionedIngressMBps = default,
             int? provisionedEgressMBps = default,
             System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
-            System.DateTimeOffset? deletedTime = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             int? quotaInGB = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
@@ -10296,7 +10296,7 @@ namespace Azure.Storage.Files.Shares.Models
                 ProvisionedIngressMBps = provisionedIngressMBps,
                 ProvisionedEgressMBps = provisionedEgressMBps,
                 NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
-                DeletedTime = deletedTime,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,

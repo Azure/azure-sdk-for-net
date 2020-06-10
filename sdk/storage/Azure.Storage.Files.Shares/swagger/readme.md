@@ -859,6 +859,25 @@ directive:
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
 ```
 
+### Rename ShareItem fields
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareItem.properties.Deleted["x-ms-client-name"] = "IsDeleted";
+    $.ShareItem.properties.Version["x-ms-client-name"] = "VersionId";
+```
+
+### Rename ShareProperties fields
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareProperties.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
