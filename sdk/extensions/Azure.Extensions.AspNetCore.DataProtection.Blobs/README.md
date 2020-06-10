@@ -61,7 +61,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ## Next steps
 
-Read more about [DataProtection in ASP.NET Core](aspnetcore_dataprotection_doc).
+Read more about [DataProtection in ASP.NET Core][aspnetcore_dataprotection_doc].
 
 ## Contributing
 
