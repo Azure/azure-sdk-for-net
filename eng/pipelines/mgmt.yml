@@ -55,6 +55,7 @@ pr:
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices
     - sdk/devspaces/Microsoft.Azure.Management.DevSpaces
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
+    - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
     - sdk/eng/mgmt
