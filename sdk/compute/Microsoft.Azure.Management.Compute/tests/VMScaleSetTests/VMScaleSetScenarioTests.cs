@@ -230,10 +230,20 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                // This test was recorded in WestUSValidation, where the platform image typically used for recording is not available.
+                // Hence the following custom image was used.
+                ImageReference imageReference = new ImageReference
+                {
+                    Publisher = "AzureRT.PIRCore.TestWAStage",
+                    Offer = "TestUbuntuServer",
+                    Sku = "16.04",
+                    Version = "latest"
+                };
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
-                        vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false);
+                        vmSize: VirtualMachineSizeTypes.StandardD2sV3, faultDomainCount: 1, capacity: 1, shouldOverProvision: false,
+                        validateVmssVMInstanceView: true, imageReference: imageReference, validateListSku: false);
                 }
             }
             finally
@@ -477,11 +487,12 @@ namespace Compute.Tests
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
-            int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true)
+            int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
+            ImageReference imageReference = null, bool validateListSku = true)
         {
             EnsureClientsInitialized(context);
 
-            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+            ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
             // Create resource group
             var rgName = TestUtilities.GenerateName(TestPrefix);
             var vmssName = TestUtilities.GenerateName("vmss");
@@ -583,9 +594,12 @@ namespace Compute.Tests
                 var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
                 ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
 
-                var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
-                Assert.NotNull(listSkusResponse);
-                Assert.False(listSkusResponse.Count() == 0);
+                if (validateListSku)
+                {
+                    var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
+                    Assert.NotNull(listSkusResponse);
+                    Assert.False(listSkusResponse.Count() == 0);
+                }
 
                 if (zones != null)
                 {
@@ -603,8 +617,11 @@ namespace Compute.Tests
                     }
                 }
 
-                VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
-                ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostReferenceId);
+                if (validateVmssVMInstanceView)
+                {
+                    VirtualMachineScaleSetVMInstanceView vmssVMInstanceView = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmssName, "0");
+                    ValidateVMScaleSetVMInstanceView(vmssVMInstanceView, hasManagedDisks, dedicatedHostReferenceId);
+                }
 
                 vmScaleSetValidator?.Invoke(getResponse);
 

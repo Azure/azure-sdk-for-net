@@ -197,8 +197,18 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus");
+                // This test was recorded in WestUSValidation, where the platform image typically used for recording is not available.
+                // Hence the following custom image was used.
+                ImageReference imageReference = new ImageReference
+                {
+                    Publisher = "AzureRT.PIRCore.TestWAStage",
+                    Offer = "TestUbuntuServer",
+                    Sku = "16.04",
+                    Version = "latest"
+                };
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_AutomaticPlacementOnDedicatedHostGroup",
-                    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true);
+                    hasManagedDisks: true, vmSize: VirtualMachineSizeTypes.StandardD2sV3, isAutomaticPlacementOnDedicatedHostGroupScenario: true,
+                    imageReference: imageReference, validateListAvailableSize: false);
             }
             finally
             {
@@ -228,13 +238,13 @@ namespace Compute.Tests
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false)
+            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                ImageReference imageRef = imageReference ?? GetPlatformVMImage(useWindowsImage: true);
                 const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = ComputerName;
                 // Create resource group
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -304,12 +314,15 @@ namespace Compute.Tests
                         expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId,
                         encryptionAtHostEnabled: encryptionAtHostEnabled, expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
 
-                    var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, 
-                        hasDiffDisks: hasDiffDisks);
+                    if (validateListAvailableSize)
+                    {
+                        var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
+                        Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled,
+                            hasDiffDisks: hasDiffDisks);
 
-                    listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
+                        listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
+                        Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
+                    }
 
                     if(isPpgScenario)
                     {
