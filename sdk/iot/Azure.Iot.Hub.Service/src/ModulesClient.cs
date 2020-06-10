@@ -11,7 +11,7 @@ using Azure.Iot.Hub.Service.Models;
 namespace Azure.Iot.Hub.Service
 {
     /// <summary>
-    /// Modules Client.
+    /// Modules client to interact with device modules and module twins including CRUD operations and method invokations.
     /// </summary>
     public class ModulesClient
     {

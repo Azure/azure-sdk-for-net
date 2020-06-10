@@ -397,7 +397,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         /// <param name="pageSize">The size of each page to be retrieved from the service. Service may override this size.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A pageable set of device twins  <see cref="Pageable{T}"/>.</returns>
+        /// <returns>A pageable set of device twins <see cref="Pageable{T}"/>.</returns>
         public virtual Pageable<TwinData> GetTwins(int? pageSize = null, CancellationToken cancellationToken = default)
         {
             Page<TwinData> FirstPageFunc(int? pageSizeHint)
