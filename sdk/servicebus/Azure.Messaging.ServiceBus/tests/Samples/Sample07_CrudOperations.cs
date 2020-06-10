@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample07_CRUDOperations : ServiceBusLiveTestBase
+    public class Sample07_CrudOperations : ServiceBusLiveTestBase
     {
         [Test]
         public async Task CreateQueue()

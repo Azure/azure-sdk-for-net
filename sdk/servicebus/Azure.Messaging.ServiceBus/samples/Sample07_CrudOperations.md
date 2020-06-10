@@ -143,7 +143,7 @@ await client.DeleteSubscriptionAsync(topicName, subscriptionName);
 
 ### Delete a topic
 
-A topic can be deleted using the topic. Deleting a topic will automatically delete the 
+A topic can be deleted using the topic name. Deleting a topic will automatically delete the 
 associated subscriptions.
 
 ```C# Snippet:DeleteTopic
