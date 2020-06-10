@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         private StorageManagementClient GetStorageManagementClient()
         {
-            return CreateClient<StorageManagementClient>(new StorageManagementClient(TestEnvironment.SubscriptionId,
+            return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
                  Recording.InstrumentClientOptions(new StorageManagementClientOptions())));
         }
 
         private ComputeManagementClient GetComputeManagementClient()
         {
-            return CreateClient<ComputeManagementClient>(new ComputeManagementClient(TestEnvironment.SubscriptionId,
+            return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
                  Recording.InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
         private NetworkManagementClient GetNetworkManagementClient()
         {
-            return CreateClient<NetworkManagementClient>(new NetworkManagementClient(TestEnvironment.SubscriptionId,
+            return InstrumentClient(new NetworkManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
                  Recording.InstrumentClientOptions(new NetworkManagementClientOptions())));
         }
