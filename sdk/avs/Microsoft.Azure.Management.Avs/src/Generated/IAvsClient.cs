@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS
+namespace Microsoft.Azure.Management.Avs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.AVS
     /// <summary>
     /// Azure VMware Solution API
     /// </summary>
-    public partial interface IAzureVMwareSolutionAPIClient : System.IDisposable
+    public partial interface IAvsClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

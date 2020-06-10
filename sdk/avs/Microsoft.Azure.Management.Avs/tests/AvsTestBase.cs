@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.Management.AVS;
+using Microsoft.Azure.Management.Avs;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Avs.Tests
 {
     class AvsTestBase : TestBase, IDisposable
     {
-        public AzureVMwareSolutionAPIClient AvsClient { get; private set; }
+        public AvsClient AvsClient { get; private set; }
 
         public AvsTestBase(MockContext context)
         {
-            this.AvsClient = context.GetServiceClient<AzureVMwareSolutionAPIClient>();
+            this.AvsClient = context.GetServiceClient<AvsClient>();
         }
 
         public void Dispose()

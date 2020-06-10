@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS
+namespace Microsoft.Azure.Management.Avs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AVS
     /// <summary>
     /// ClustersOperations operations.
     /// </summary>
-    internal partial class ClustersOperations : IServiceOperations<AzureVMwareSolutionAPIClient>, IClustersOperations
+    internal partial class ClustersOperations : IServiceOperations<AvsClient>, IClustersOperations
     {
         /// <summary>
         /// Initializes a new instance of the ClustersOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ClustersOperations(AzureVMwareSolutionAPIClient client)
+        internal ClustersOperations(AvsClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Gets a reference to the AzureVMwareSolutionAPIClient
+        /// Gets a reference to the AvsClient
         /// </summary>
-        public AzureVMwareSolutionAPIClient Client { get; private set; }
+        public AvsClient Client { get; private set; }
 
         /// <summary>
         /// List clusters in a private cloud
@@ -453,8 +453,8 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='properties'>
-        /// The properties of a cluster resource
+        /// <param name='cluster'>
+        /// A cluster in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -462,10 +462,10 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -481,8 +481,8 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='properties'>
-        /// The properties of a cluster resource
+        /// <param name='cluster'>
+        /// A cluster in a private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -490,10 +490,10 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -534,8 +534,8 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='properties'>
-        /// The properties of a cluster resource
+        /// <param name='cluster'>
+        /// A cluster in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -558,7 +558,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -576,14 +576,13 @@ namespace Microsoft.Azure.Management.AVS
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
+            if (cluster == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "cluster");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            Cluster cluster = new Cluster();
-            if (properties != null)
-            {
-                cluster.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -767,8 +766,8 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='clusterName'>
         /// Name of the cluster in the private cloud
         /// </param>
-        /// <param name='properties'>
-        /// The properties of a cluster resource
+        /// <param name='cluster'>
+        /// A cluster in a private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -791,7 +790,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -809,14 +808,13 @@ namespace Microsoft.Azure.Management.AVS
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
+            if (cluster == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "cluster");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            Cluster cluster = new Cluster();
-            if (properties != null)
-            {
-                cluster.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

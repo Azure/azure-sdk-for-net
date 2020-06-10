@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS
+namespace Microsoft.Azure.Management.Avs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AVS
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<AzureVMwareSolutionAPIClient>, IOperations
+    internal partial class Operations : IServiceOperations<AvsClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(AzureVMwareSolutionAPIClient client)
+        internal Operations(AvsClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Gets a reference to the AzureVMwareSolutionAPIClient
+        /// Gets a reference to the AvsClient
         /// </summary>
-        public AzureVMwareSolutionAPIClient Client { get; private set; }
+        public AvsClient Client { get; private set; }
 
         /// <summary>
         /// Lists all of the available operations

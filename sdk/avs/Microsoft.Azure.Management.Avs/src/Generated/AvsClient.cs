@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS
+namespace Microsoft.Azure.Management.Avs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AVS
     /// <summary>
     /// Azure VMware Solution API
     /// </summary>
-    public partial class AzureVMwareSolutionAPIClient : ServiceClient<AzureVMwareSolutionAPIClient>, IAzureVMwareSolutionAPIClient, IAzureClient
+    public partial class AvsClient : ServiceClient<AvsClient>, IAvsClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -95,31 +95,31 @@ namespace Microsoft.Azure.Management.AVS
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling AzureVMwareSolutionAPIClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected AzureVMwareSolutionAPIClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling AvsClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected AvsClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AzureVMwareSolutionAPIClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected AvsClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -127,13 +127,13 @@ namespace Microsoft.Azure.Management.AVS
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AzureVMwareSolutionAPIClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected AvsClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AzureVMwareSolutionAPIClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected AvsClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AzureVMwareSolutionAPIClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected AvsClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureVMwareSolutionAPIClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public AvsClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -212,11 +212,11 @@ namespace Microsoft.Azure.Management.AVS
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling AzureVMwareSolutionAPIClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling AvsClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureVMwareSolutionAPIClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public AvsClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureVMwareSolutionAPIClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AvsClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureVMwareSolutionAPIClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public AvsClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.AVS
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureVMwareSolutionAPIClient class.
+        /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.AVS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureVMwareSolutionAPIClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AvsClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

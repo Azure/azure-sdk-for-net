@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.AVS;
+using Microsoft.Azure.Management.Avs;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using System.Linq;

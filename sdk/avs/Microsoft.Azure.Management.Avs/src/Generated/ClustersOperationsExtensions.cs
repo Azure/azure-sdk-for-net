@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS
+namespace Microsoft.Azure.Management.Avs
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -122,12 +122,12 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in the private cloud
             /// </param>
-            public static Cluster CreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties))
+            public static Cluster CreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, clusterName, properties).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,15 +145,15 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> CreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> CreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -174,12 +174,12 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in a private cloud
             /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties))
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
             {
-                return operations.UpdateAsync(resourceGroupName, privateCloudName, clusterName, properties).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,15 +197,15 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in a private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -269,12 +269,12 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in the private cloud
             /// </param>
-            public static Cluster BeginCreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties))
+            public static Cluster BeginCreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, clusterName, properties).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,15 +292,15 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginCreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginCreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -321,12 +321,12 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in a private cloud
             /// </param>
-            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties))
+            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, clusterName, properties).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -344,15 +344,15 @@ namespace Microsoft.Azure.Management.AVS
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='properties'>
-            /// The properties of a cluster resource
+            /// <param name='cluster'>
+            /// A cluster in a private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterProperties properties = default(ClusterProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

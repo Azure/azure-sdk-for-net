@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.AVS.Models
+namespace Microsoft.Azure.Management.Avs.Models
 {
 
     /// <summary>
