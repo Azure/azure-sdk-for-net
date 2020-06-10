@@ -43,6 +43,9 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         public JobsClient Jobs { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IoTHubServiceClient"/> class.
+        /// </summary>
         protected IoTHubServiceClient()
         {
         }
