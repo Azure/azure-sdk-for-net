@@ -806,6 +806,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                     ifMatch: conditions?.IfMatch,
                     ifNoneMatch: conditions?.IfNoneMatch,
+                    ifTags: conditions?.TagConditions,
                     async: async,
                     operationName: "BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
@@ -1640,11 +1641,13 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
+                        sourceIfTags: sourceConditions?.TagConditions,
                         ifModifiedSince: destinationConditions?.IfModifiedSince,
                         ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         ifMatch: destinationConditions?.IfMatch,
                         ifNoneMatch: destinationConditions?.IfNoneMatch,
                         leaseId: destinationConditions?.LeaseId,
+                        ifTags: destinationConditions?.TagConditions,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
                         sealBlob: sealBlob,
@@ -2000,6 +2003,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         ifMatch: destinationConditions?.IfMatch,
                         ifNoneMatch: destinationConditions?.IfNoneMatch,
+                        ifTags: destinationConditions?.TagConditions,
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
@@ -2320,6 +2324,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
@@ -2671,6 +2676,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
@@ -2827,6 +2833,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
@@ -2984,6 +2991,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
@@ -3140,6 +3148,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
@@ -3346,6 +3355,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the tags associated with the underlying blob.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3358,8 +3372,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Tags> GetTags(
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetTagsInternal(
+                conditions: conditions,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -3367,6 +3383,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the tags associated with the underlying blob.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3379,8 +3400,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Tags>> GetTagsAsync(
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetTagsInternal(
+                conditions: conditions,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -3390,6 +3413,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3404,6 +3432,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<Tags>> GetTagsInternal(
             bool async,
+            BlobRequestConditions conditions,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -3420,6 +3449,7 @@ namespace Azure.Storage.Blobs.Specialized
                         pipeline: Pipeline,
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
                         cancellationToken: cancellationToken)
@@ -3452,6 +3482,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="tags">
         /// The tags to set on the blob.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3465,9 +3500,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response SetTags(
             Tags tags,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetTagsInternal(
                 tags: tags,
+                conditions: conditions,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -3480,6 +3517,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3494,9 +3536,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> SetTagsAsync(
             Tags tags,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetTagsInternal(
                 tags: tags,
+                conditions: conditions,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -3509,6 +3553,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3527,6 +3576,7 @@ namespace Azure.Storage.Blobs.Specialized
         //TODO what about content CRC and content MD5?
         private async Task<Response> SetTagsInternal(
             Tags tags,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3545,6 +3595,7 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
                         cancellationToken: cancellationToken)
