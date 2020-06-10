@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.DataProtection.Blobs` package allows storing AS
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs -v 1.0.0-preview.2
+dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs
 ```
 
 ### Prerequisites
@@ -81,7 +81,7 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Blobs/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.DataProtection.Blobs
-[nuget]: https://www.nuget.org/
+[nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Blobs
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
 [storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli

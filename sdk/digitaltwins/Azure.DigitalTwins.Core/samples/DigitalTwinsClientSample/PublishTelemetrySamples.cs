@@ -39,15 +39,13 @@ namespace Azure.DigitalTwins.Samples
 
             // Then we create the models.
             await client
-                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload })
-                ;
+                .CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
 
             Console.WriteLine($"Successfully created models with Ids: {componentModelId}, {modelId}");
 
             // Create digital twin with Component payload.
             string twinPayload = SamplesConstants.TemporaryTwinPayload
-                .Replace(SamplesConstants.ModelId, modelId)
-                .Replace(SamplesConstants.ComponentId, componentModelId);
+                .Replace(SamplesConstants.ModelId, modelId);
 
             await client.CreateDigitalTwinAsync(twinId, twinPayload);
             Console.WriteLine($"Created digital twin {twinId}.");

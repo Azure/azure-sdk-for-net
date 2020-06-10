@@ -112,11 +112,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 .Replace("WIFI_COMPONENT_NAME", wifiComponentName));
         }
 
-        public static string GetRoomWithWifiTwinPayload(string roomWithWifiModelId, string wifiModelId, string wifiComponentName)
+        public static string GetRoomWithWifiTwinPayload(string roomWithWifiModelId, string wifiComponentName)
         {
             return RemoveNewLines(TestAssets.RoomWithWifiTwinPayload
                 .Replace("ROOM_WITH_WIFI_MODEL_ID", roomWithWifiModelId)
-                .Replace("WIFI_MODEL_ID", wifiModelId)
                 .Replace("WIFI_COMPONENT_NAME", wifiComponentName));
         }
 

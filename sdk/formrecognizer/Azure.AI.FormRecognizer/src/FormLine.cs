@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// A list of the words that make up the line.
         /// </summary>
-        public IReadOnlyList<FormWord> Words { get; internal set; }
+        public IReadOnlyList<FormWord> Words { get; }
 
         private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
         {

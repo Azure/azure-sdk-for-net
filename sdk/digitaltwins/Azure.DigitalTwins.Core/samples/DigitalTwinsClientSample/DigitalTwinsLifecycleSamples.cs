@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.Models;
-using Azure.DigitalTwins.Core.Queries;
 using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
@@ -354,12 +353,14 @@ namespace Azure.DigitalTwins.Core.Samples
                 // We deserialize as BasicRelationship to get the entire custom relationship (custom relationship properties).
                 IEnumerable<BasicRelationship> relationships = JsonSerializer.Deserialize<IEnumerable<BasicRelationship>>(relationshipSet.Value);
 
+                #region Snippet:DigitalTwinsSampleCreateRelationship
+
+                // From loaded relationships, get the source Id and Id from each one,
+                // and create it with full relationship payload
                 foreach (BasicRelationship relationship in relationships)
                 {
                     try
                     {
-                        #region Snippet:DigitalTwinsSampleCreateRelationship
-
                         string serializedRelationship = JsonSerializer.Serialize(relationship);
 
                         await client.CreateRelationshipAsync(
@@ -367,15 +368,15 @@ namespace Azure.DigitalTwins.Core.Samples
                             relationship.Id,
                             serializedRelationship);
 
-                        #endregion Snippet:DigitalTwinsSampleCreateRelationship
-
-                        Console.WriteLine($"Linked {serializedRelationship}");
+                        Console.WriteLine($"Linked twin {relationship.SourceId} to twin {relationship.TargetId} as '{relationship.Name}'");
                     }
                     catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
                     {
                         Console.WriteLine($"Relationship {relationship.Id} already exists: {ex.Message}");
                     }
                 }
+
+                #endregion Snippet:DigitalTwinsSampleCreateRelationship
             }
         }
 

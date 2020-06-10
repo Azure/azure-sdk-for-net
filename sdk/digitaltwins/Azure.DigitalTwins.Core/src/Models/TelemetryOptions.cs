@@ -8,6 +8,9 @@ namespace Azure.DigitalTwins.Core.Models
     /// <summary>
     /// The additional information to be used when processing a telemetry request.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     public class TelemetryOptions
     {
         /// <summary>

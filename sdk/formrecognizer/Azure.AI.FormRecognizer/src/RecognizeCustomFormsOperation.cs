@@ -38,26 +38,77 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
         private readonly string _resultId;
 
-        /// <inheritdoc/>
+        private RequestFailedException _requestFailedException;
+
+        /// <summary>
+        /// Gets an ID representing the operation that can be used to poll for the status
+        /// of the long-running operation.
+        /// </summary>
         public override string Id { get; }
 
-        /// <inheritdoc/>
-        public override RecognizedFormCollection Value => OperationHelpers.GetValue(ref _value);
+        /// <summary>
+        /// Final result of the long-running operation.
+        /// </summary>
+        /// <remarks>
+        /// This property can be accessed only after the operation completes successfully (HasValue is true).
+        /// </remarks>
+        public override RecognizedFormCollection Value
+        {
+            get
+            {
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                    return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns true if the long-running operation completed.
+        /// </summary>
         public override bool HasCompleted => _hasCompleted;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
+        /// </summary>
         public override bool HasValue => _value != null;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// The last HTTP response received from the server.
+        /// </summary>
+        /// <remarks>
+        /// The last response returned from the server during the lifecycle of this instance.
+        /// An instance of <see cref="RecognizeCustomFormsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// Responses from these requests can be accessed using GetRawResponse.
+        /// </remarks>
         public override Response GetRawResponse() => _response;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
         public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="pollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
         public override ValueTask<Response<RecognizedFormCollection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
@@ -114,11 +165,25 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationId;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// </remarks>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -126,8 +191,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// Calls the server to get updated status of the long-running operation.
         /// </summary>
         /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The HTTP response from the service.</returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
@@ -142,15 +207,17 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (update.Value.Status == OperationStatus.Succeeded)
                 {
-                    _hasCompleted = true;
+                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
                     _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                    _hasCompleted = true;
                 }
                 else if (update.Value.Status == OperationStatus.Failed)
                 {
+                    _requestFailedException = await ClientCommon
+                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                        .ConfigureAwait(false);
                     _hasCompleted = true;
-                    _value = new RecognizedFormCollection(new List<RecognizedForm>());
-
-                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                    throw _requestFailedException;
                 }
             }
 
@@ -182,37 +249,6 @@ namespace Azure.AI.FormRecognizer.Models
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return new RecognizedFormCollection(forms);
-        }
-
-        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
-        {
-            string errorMessage = default;
-            string errorCode = default;
-
-            if (errors.Count > 0)
-            {
-                var firstError = errors[0];
-
-                errorMessage = firstError.Message;
-                errorCode = firstError.ErrorCode;
-            }
-            else
-            {
-                errorMessage = "RecognizeCustomForms operation failed.";
-            }
-
-            var errorInfo = new Dictionary<string, string>();
-            int index = 0;
-
-            foreach (var error in errors)
-            {
-                errorInfo.Add($"error-{index}", $"{error.ErrorCode}: {error.Message}");
-                index++;
-            }
-
-            return async
-                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }

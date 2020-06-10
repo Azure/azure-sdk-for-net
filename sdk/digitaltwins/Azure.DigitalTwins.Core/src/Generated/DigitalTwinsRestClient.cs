@@ -148,7 +148,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
@@ -192,7 +192,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Content-Type", "application/json");
             if (relationship != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(relationship);
                 request.Content = content;
             }
@@ -303,7 +303,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Content-Type", "application/json-patch+json");
             if (patchDocument != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in patchDocument)
                 {
@@ -525,7 +525,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
             return message;
@@ -551,7 +551,7 @@ namespace Azure.DigitalTwins.Core
                 request.Headers.Add("dt-timestamp", dtTimestamp);
             }
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
             return message;
@@ -593,7 +593,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Content-Type", "application/json-patch+json");
             if (patchDocument != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in patchDocument)
                 {

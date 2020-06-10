@@ -6,7 +6,11 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#else
 using Microsoft.Spatial;
+#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -111,7 +115,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.Zero),
                     Rating = 5,
-                    Location = GeographyPoint.Create(47.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 47.678581)
                 },
                 new Hotel()
                 {
@@ -125,7 +129,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 1,
-                    Location = GeographyPoint.Create(49.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 49.678581)
                 },
                 new Hotel()
                 {
@@ -139,7 +143,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(1995, 7, 1, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(46.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 46.678581)
                 },
                 new Hotel()
                 {
@@ -153,7 +157,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(1995, 7, 1, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(48.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 48.678581)
                 },
                 new Hotel()
                 {
@@ -167,7 +171,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = false,
                     LastRenovationDate = new DateTimeOffset(2012, 8, 12, 0, 0, 0, TimeSpan.Zero),
                     Rating = 4,
-                    Location = GeographyPoint.Create(48.678581, -122.131577)
+                    Location = TestExtensions.CreatePoint(-122.131577, 48.678581)
                 },
                 new Hotel()
                 {
@@ -200,7 +204,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     Rating = 4,
-                    Location = GeographyPoint.Create(40.760586, -73.975403),
+                    Location = TestExtensions.CreatePoint(-73.975403, 40.760586),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "677 5th Ave",
@@ -247,7 +251,7 @@ namespace Azure.Search.Documents.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 3,
-                    Location = GeographyPoint.Create(35.904160, -78.940483),
+                    Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "6910 Fayetteville Rd",
@@ -318,9 +322,13 @@ namespace Azure.Search.Documents.Tests
         [JsonPropertyName("rating")]
         public int? Rating { get; set; }
 
-        // TODO: #10592- Unify on an Azure.Core spatial type
+#if EXPERIMENTAL_SPATIAL
+        [JsonPropertyName("location")]
+        public PointGeometry Location { get; set; }
+#else
         [JsonIgnore]
         public GeographyPoint Location { get; set; } = null;
+#endif
 
         [JsonPropertyName("address")]
         public HotelAddress Address { get; set; }
@@ -341,7 +349,11 @@ namespace Azure.Search.Documents.Tests
             SmokingAllowed == other.SmokingAllowed &&
             LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
             Rating == other.Rating &&
+#if EXPERIMENTAL_SPATIAL
+            (Location?.Position ?? default).Equals(other.Location?.Position ?? default) &&
+#else
             Location.EqualsNullSafe(other.Location) &&
+#endif
             Address.EqualsNullSafe(other.Address) &&
             Rooms.SequenceEqualsNullSafe(other.Rooms);
 
@@ -355,7 +367,11 @@ namespace Azure.Search.Documents.Tests
                 $"Description (French): {DescriptionFr}; Category: {Category}; " +
                 $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
                 $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+#if EXPERIMENTAL_SPATIAL
+                $"Location: [{Location?.Position.Longitude ?? 0}, {Location?.Position.Latitude ?? 0}]; " +
+#else
                 $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
+#endif
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
 
@@ -372,25 +388,55 @@ namespace Azure.Search.Documents.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
-                // TODO: #10592- Unify on an Azure.Core spatial type
-                // ["location"] = Location,
-                ["location"] = Location == null ? null : new SearchDocument()
-                {
-                    ["type"] = "Point",
-                    ["coordinates"] = new double[] { Location.Longitude, Location.Latitude },
-                    ["crs"] = new SearchDocument()
-                    {
-                        ["type"] = "name",
-                        ["properties"] = new SearchDocument()
-                        {
-                            ["name"] = "EPSG:4326"
-                        }
-                    }
-                },
+                ["location"] = Location,
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
             };
+    }
+
+    // Same structure as Hotel, but without attributes that change to camelCase
+    internal class UncasedHotel
+    {
+        public string HotelId { get; set; }
+        public string HotelName { get; set; }
+        public string Description { get; set; }
+        public string DescriptionFr { get; set; }
+        public string Category { get; set; }
+        // TODO: #10596 - Investigate JsonConverter for null arrays
+        public string[] Tags { get; set; } = new string[] { };
+        public bool? ParkingIncluded { get; set; }
+        public bool? SmokingAllowed { get; set; }
+        public DateTimeOffset? LastRenovationDate { get; set; }
+        public int? Rating { get; set; }
+#if EXPERIMENTAL_SPATIAL
+        public PointGeometry Location { get; set; }
+#else
+        public GeographyPoint Location { get; set; } = null;
+#endif
+        public HotelAddress Address { get; set; }
+        public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };
+
+        public override bool Equals(object obj) =>
+            obj is Hotel other &&
+            HotelId == other.HotelId &&
+            HotelName == other.HotelName &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Category == other.Category &&
+            Tags.SequenceEqualsNullSafe(other.Tags) &&
+            ParkingIncluded == other.ParkingIncluded &&
+            SmokingAllowed == other.SmokingAllowed &&
+            LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
+            Rating == other.Rating &&
+#if EXPERIMENTAL_SPATIAL
+            (Location?.Position ?? default).Equals(other.Location?.Position ?? default) &&
+#else
+            Location.EqualsNullSafe(other.Location) &&
+#endif
+            Address.EqualsNullSafe(other.Address) &&
+            Rooms.SequenceEqualsNullSafe(other.Rooms);
+        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
     }
 
     internal class HotelAddress

@@ -80,6 +80,16 @@ namespace Microsoft.Azure.Management.StorageSync
         IStorageSyncServicesOperations StorageSyncServices { get; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
         /// Gets the ISyncGroupsOperations.
         /// </summary>
         ISyncGroupsOperations SyncGroups { get; }

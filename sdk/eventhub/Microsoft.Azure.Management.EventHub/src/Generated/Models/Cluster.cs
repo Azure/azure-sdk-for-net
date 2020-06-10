@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Properties of the cluster SKU.</param>
-        /// <param name="created">The UTC time when the Event Hubs Cluster was
-        /// created.</param>
-        /// <param name="updated">The UTC time when the Event Hubs Cluster was
-        /// last updated.</param>
+        /// <param name="createdAt">The UTC time when the Event Hubs Cluster
+        /// was created.</param>
+        /// <param name="updatedAt">The UTC time when the Event Hubs Cluster
+        /// was last updated.</param>
         /// <param name="metricId">The metric ID of the cluster resource.
         /// Provided by the service and not modifiable by the user.</param>
         /// <param name="status">Status of the Cluster resource</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), string created = default(string), string updated = default(string), string metricId = default(string), string status = default(string))
+        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterSku sku = default(ClusterSku), string createdAt = default(string), string updatedAt = default(string), string metricId = default(string), string status = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
-            Created = created;
-            Updated = updated;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
             MetricId = metricId;
             Status = status;
             CustomInit();
@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Gets the UTC time when the Event Hubs Cluster was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.created")]
-        public string Created { get; private set; }
+        [JsonProperty(PropertyName = "properties.createdAt")]
+        public string CreatedAt { get; private set; }
 
         /// <summary>
         /// Gets the UTC time when the Event Hubs Cluster was last updated.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.updated")]
-        public string Updated { get; private set; }
+        [JsonProperty(PropertyName = "properties.updatedAt")]
+        public string UpdatedAt { get; private set; }
 
         /// <summary>
         /// Gets the metric ID of the cluster resource. Provided by the service
