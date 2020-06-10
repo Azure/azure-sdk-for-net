@@ -8,7 +8,7 @@ namespace Azure.DigitalTwins.Core.Tests
     public class DigitalTwinsTestEnvironment : TestEnvironment
     {
         public DigitalTwinsTestEnvironment()
-            : base(TestSettings.AdtEnvironmentVariablesPrefix)
+            : base("digitaltwins")
         {
         }
 

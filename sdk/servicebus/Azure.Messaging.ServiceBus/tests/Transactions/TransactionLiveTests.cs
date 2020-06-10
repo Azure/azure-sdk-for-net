@@ -176,7 +176,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     // not completing the transaction
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: "sessionId") : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ?
+                    await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions
+                        {
+                            SessionId = "sessionId"
+                        })
+                    : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 
@@ -185,11 +192,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(true, true)]
-        public async Task TransactionalComplete(bool partitioned, bool sessionEnabled)
+        [TestCase(false, false, true)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, false)]
+        [TestCase(true, true, false)]
+        public async Task TransactionalCompleteRollback(bool partitioned, bool sessionEnabled, bool completeInTransactionAfterRollback)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
@@ -223,15 +230,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 // Operating on the same message should not be done.
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                if (completeInTransactionAfterRollback)
+                {
+                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        await receiver.CompleteAsync(deferredMessage);
+                        ts.Complete();
+                    }
+                    // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                    // Operating on the same message should not be done.
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                }
+                else
                 {
                     await receiver.CompleteAsync(deferredMessage);
-                    ts.Complete();
                 }
 
-                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
-                // Operating on the same message should not be done.
-                await Task.Delay(TimeSpan.FromSeconds(2));
                 Assert.That(
                     async () =>
                     await receiver.CompleteAsync(deferredMessage), Throws.InstanceOf<ServiceBusException>()

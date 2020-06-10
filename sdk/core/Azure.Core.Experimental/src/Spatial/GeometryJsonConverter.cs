@@ -26,6 +26,12 @@ namespace Azure.Core.Spatial
         private const string BBoxProperty = "bbox";
 
         /// <inheritdoc />
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeof(Geometry).IsAssignableFrom(typeToConvert);
+        }
+
+        /// <inheritdoc />
         public override Geometry Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var document = JsonDocument.ParseValue(ref reader);

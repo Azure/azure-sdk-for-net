@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusSessionReceiver(
                 GetMockedConnection(),
                 "fakeQueue",
-                options: new ServiceBusReceiverOptions());
+                options: new ServiceBusSessionReceiverOptions());
 
             Assert.That(async () => await receiver.RenewMessageLockAsync(
                 new ServiceBusReceivedMessage()),

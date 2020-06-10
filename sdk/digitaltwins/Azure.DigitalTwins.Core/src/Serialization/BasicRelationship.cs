@@ -10,6 +10,9 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// Although relationships have a user-defined schema, these properties should exist on every instance. This is
     /// useful to use as a base class to ensure your custom relationships have the necessary properties.
     /// </summary>
+    /// <remarks>
+    /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
+    /// </remarks>
     public class BasicRelationship
     {
         /// <summary>

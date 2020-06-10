@@ -38,12 +38,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
         private const string WebSocketsUriScheme = "wss";
 
-        /// <summary>The string formatting mask to apply to the service endpoint to consume events for a given consumer group and partition.</summary>
-        private const string ConsumerPathSuffixMask = "{0}/ConsumerGroups/{1}/Partitions/{2}";
-
-        /// <summary>The string formatting mask to apply to the service endpoint to publish events for a given partition.</summary>
-        private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
-
         /// <summary>
         ///   The version of AMQP to use within the scope.
         /// </summary>
@@ -160,9 +154,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Transport = transport;
             Proxy = proxy;
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
-            Id = identifier ?? $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            Id = identifier ?? $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
 
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
                 connectionFactory,
                 CloseConnection);
@@ -411,7 +407,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
 
+#pragma warning disable CA1806 // Do not ignore method results
             new AmqpCbsLink(connection);
+#pragma warning restore CA1806 // Do not ignore method results
 
             // When the connection is closed, close each of the links associated with it.
 
@@ -1102,7 +1100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if ((transport != ServiceBusTransportType.AmqpTcp) && (transport != ServiceBusTransportType.AmqpWebSockets))
             {
-                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport), nameof(transport));
             }
         }
     }

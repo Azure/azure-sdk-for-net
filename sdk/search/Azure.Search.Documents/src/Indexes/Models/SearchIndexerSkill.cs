@@ -19,8 +19,16 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Inputs = inputs.ToArray();
-            Outputs = outputs.ToArray();
+            Inputs = inputs.ToList();
+            Outputs = outputs.ToList();
         }
+
+        /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
+        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
+        public IList<InputFieldMappingEntry> Inputs { get; }
+
+        /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
+        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
+        public IList<OutputFieldMappingEntry> Outputs { get; }
     }
 }

@@ -330,7 +330,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs, listener);
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
-                    new ServiceBusProcessorOptions
+                    new ServiceBusSessionProcessorOptions
                     {
                         AutoComplete = false,
                         MaxReceiveWaitTime = TimeSpan.FromSeconds(10),

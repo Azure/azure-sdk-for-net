@@ -629,40 +629,34 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        public async Task<Response> SendTelemetryAsync(string id, string ceId, string ceDataschema, string ceSpecversion, string ceType, string ceDatacontenttype = null, string ceSubject = null, string ceTime = null, string telemetry = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> SendTelemetryAsync(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (ceId == null)
+            if (dtId == null)
             {
-                throw new ArgumentNullException(nameof(ceId));
+                throw new ArgumentNullException(nameof(dtId));
             }
-            if (ceDataschema == null)
+            if (telemetry == null)
             {
-                throw new ArgumentNullException(nameof(ceDataschema));
-            }
-            if (ceSpecversion == null)
-            {
-                throw new ArgumentNullException(nameof(ceSpecversion));
-            }
-            if (ceType == null)
-            {
-                throw new ArgumentNullException(nameof(ceType));
+                throw new ArgumentNullException(nameof(telemetry));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendTelemetry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, ceId, ceDataschema, ceSpecversion, ceType, ceDatacontenttype, ceSubject, ceTime, telemetry);
+                using HttpMessage message = CreateSendTelemetryRequest(id, dtId, telemetry, dtTimestamp);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                return message.Response.Status switch
+                switch (message.Response.Status)
                 {
-                    204 => message.Response,
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
-                };
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -671,40 +665,114 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        public Response SendTelemetry(string id, string ceId, string ceDataschema, string ceSpecversion, string ceType, string ceDatacontenttype = null, string ceSubject = null, string ceTime = null, string telemetry = null, CancellationToken cancellationToken = default)
+        internal Response SendTelemetry(string id, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (ceId == null)
+            if (dtId == null)
             {
-                throw new ArgumentNullException(nameof(ceId));
+                throw new ArgumentNullException(nameof(dtId));
             }
-            if (ceDataschema == null)
+            if (telemetry == null)
             {
-                throw new ArgumentNullException(nameof(ceDataschema));
-            }
-            if (ceSpecversion == null)
-            {
-                throw new ArgumentNullException(nameof(ceSpecversion));
-            }
-            if (ceType == null)
-            {
-                throw new ArgumentNullException(nameof(ceType));
+                throw new ArgumentNullException(nameof(telemetry));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendTelemetry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, ceId, ceDataschema, ceSpecversion, ceType, ceDatacontenttype, ceSubject, ceTime, telemetry);
+                using HttpMessage message = CreateSendTelemetryRequest(id, dtId, telemetry, dtTimestamp);
                 _pipeline.Send(message, cancellationToken);
-                return message.Response.Status switch
+                switch (message.Response.Status)
                 {
-                    204 => message.Response,
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
-                };
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal async Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (dtId == null)
+            {
+                throw new ArgumentNullException(nameof(dtId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendComponentTelemetry");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, dtId, telemetry, dtTimestamp);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal Response SendComponentTelemetry(string id, string componentPath, string dtId, string telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+            if (dtId == null)
+            {
+                throw new ArgumentNullException(nameof(dtId));
+            }
+            if (telemetry == null)
+            {
+                throw new ArgumentNullException(nameof(telemetry));
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendComponentTelemetry");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, dtId, telemetry, dtTimestamp);
+                _pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception e)
             {
@@ -804,34 +872,51 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
-        private HttpMessage CreateSendTelemetryRequest(string id, string ceId, string ceDataschema, string ceSpecversion, string ceType, string ceDatacontenttype, string ceSubject, string ceTime, string telemetry)
+        private HttpMessage CreateSendTelemetryRequest(string id, string dtId, string telemetry, string dtTimestamp)
         {
-            HttpMessage message = _pipeline.CreateMessage();
-            Request request = message.Request;
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("ce-id", ceId);
-            if (ceDatacontenttype != null)
+            request.Headers.Add("dt-id", dtId);
+            if (dtTimestamp != null)
             {
-                request.Headers.Add("ce-datacontenttype", ceDatacontenttype);
+                request.Headers.Add("dt-timestamp", dtTimestamp);
             }
-            request.Headers.Add("ce-dataschema", ceDataschema);
-            request.Headers.Add("ce-specversion", ceSpecversion);
-            if (ceSubject != null)
+            request.Headers.Add("Content-Type", "application/json");
+            if (telemetry != null)
             {
-                request.Headers.Add("ce-subject", ceSubject);
+                request.Content = new StringRequestContent(telemetry);
             }
-            if (ceTime != null)
+            return message;
+        }
+
+        private HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string dtId, string telemetry, string dtTimestamp)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/components/", false);
+            uri.AppendPath(componentPath, true);
+            uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("dt-id", dtId);
+            if (dtTimestamp != null)
             {
-                request.Headers.Add("ce-time", ceTime);
+                request.Headers.Add("dt-timestamp", dtTimestamp);
             }
-            request.Headers.Add("ce-type", ceType);
-            request.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/json");
             if (telemetry != null)
             {
                 request.Content = new StringRequestContent(telemetry);
@@ -853,25 +938,35 @@ namespace Azure.DigitalTwins.Core
 
         private Response<object> Add(string id, object twin, CancellationToken cancellationToken = default) => null;
 
-        // Original return type is ValueTask<Response>. Changing to object to allow returning null.
+        // Original return type is Task<Response>. Changing to object to allow returning null.
         private object UpdateAsync(string id, IEnumerable<object> patchDocument, string ifMatch = null, CancellationToken cancellationToken = default) => null;
 
         private Response Update(string id, IEnumerable<object> patchDocument, string ifMatch = null, CancellationToken cancellationToken = default) => null;
 
-        // Original return type is ValueTask<Response<object>>. Changing to object to allow returning null.
+        // Original return type is Task<Response<object>>. Changing to object to allow returning null.
         private object AddRelationshipAsync(string id, string relationshipId, object relationship = null, CancellationToken cancellationToken = default) => null;
 
         private Response<object> AddRelationship(string id, string relationshipId, object relationship = null, CancellationToken cancellationToken = default) => null;
 
-        // Original return type is ValueTask<Response>. Changing to object to allow returning null.
+        // Original return type is Task<Response>. Changing to object to allow returning null.
         private object UpdateRelationshipAsync(string id, string relationshipId, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
 
         private Response UpdateRelationship(string id, string relationshipId, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
 
-        // Original return type is ValueTask<Response>. Changing to object to allow returning null.
+        // Original return type is Task<Response>. Changing to object to allow returning null.
         private object UpdateComponentAsync(string id, string componentPath, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
 
         private Response UpdateComponent(string id, string componentPath, string ifMatch = null, IEnumerable<object> patchDocument = null, CancellationToken cancellationToken = default) => null;
+
+        // Original return type is Task<Response>. Changing to object to allow returning null.
+        private object SendTelemetryAsync(string id, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+
+        private Response SendTelemetry(string id, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+
+        // Original return type is Task<Response>. Changing to object to allow returning null.
+        private Task<Response> SendComponentTelemetryAsync(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
+
+        private Response SendComponentTelemetry(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, CancellationToken cancellationToken = default) => null;
 
         private HttpMessage CreateAddRequest(string id, object twin) => null;
 
