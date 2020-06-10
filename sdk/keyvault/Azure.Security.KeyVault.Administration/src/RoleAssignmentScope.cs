@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public readonly struct RoleAssignmentScope : IEquatable<RoleAssignmentScope>
     {
-        internal const string RootValue = "/";
+        internal const string GlobalValue = "/";
         internal const string KeysValue = "/keys";
 
         private readonly string _value;
@@ -35,12 +35,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Root.
+        /// Role assignments apply to everything on the resource.
         /// </summary>
-        public static RoleAssignmentScope Root { get; } = new RoleAssignmentScope(RootValue);
+        public static RoleAssignmentScope Global { get; } = new RoleAssignmentScope(GlobalValue);
 
         /// <summary>
-        /// Keys.
+        /// Role assignments apply to all Keys.
         /// </summary>
         public static RoleAssignmentScope Keys { get; } = new RoleAssignmentScope(KeysValue);
 
