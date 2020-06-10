@@ -1118,8 +1118,8 @@ directive:
 - from: swagger-document
   where: $.parameters.ListContainersInclude
   transform: >
-    $["x-az-public"] = false;
-    $["x-ms-enum"].name = "ListBlobContainersIncludeType"
+    $.items["x-az-public"] = false;
+    $["x-ms-enum"].name = "ListBlobContainersIncludeItem"
 ```
 
 ### Hide Error models
@@ -1491,17 +1491,49 @@ directive:
     $["x-az-public"] = false;
 ```
 
-### Hide some types.
+### Hide FilterBlobSegment
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions
+  where: $.definitions.FilterBlobSegment
   transform: >
-    $.BlobTag["x-az-public"] = false;
-    $.BlobTagSet["x-az-public"] = false;
-    $.BlobTags["x-az-public"] = false;
-    $.BlobItemInternal["x-az-public"] = false;
-    $.FilterBlobSegment["x-az-public"] = false;
+    $["x-az-public"] = false;
+```
+
+### Hide BlobTags
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobTags
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobTag
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobTag
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobItemInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobItemInternal
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide FilterBlobSegment
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.FilterBlobSegment
+  transform: >
+    $["x-az-public"] = false;
 ```
 
 ### Make AppendBlobSealResult internal

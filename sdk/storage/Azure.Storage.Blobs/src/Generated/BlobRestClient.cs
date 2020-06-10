@@ -19475,7 +19475,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlobTag
     /// </summary>
-    public partial class BlobTag
+    internal partial class BlobTag
     {
         /// <summary>
         /// Key
@@ -19547,7 +19547,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob tags
     /// </summary>
-    public partial class BlobTags
+    internal partial class BlobTags
     {
         /// <summary>
         /// BlobTagSet
@@ -21051,7 +21051,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// The result of a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobSegment
+    internal partial class FilterBlobSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -21076,7 +21076,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new FilterBlobSegment instance
         /// </summary>
-        internal FilterBlobSegment()
+        public FilterBlobSegment()
             : this(false)
         {
         }
@@ -21136,30 +21136,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobSegment value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilterBlobSegment instance for mocking.
-        /// </summary>
-        public static FilterBlobSegment FilterBlobSegment(
-            string serviceEndpoint,
-            string where,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs,
-            string nextMarker = default)
-        {
-            return new FilterBlobSegment()
-            {
-                ServiceEndpoint = serviceEndpoint,
-                Where = where,
-                Blobs = blobs,
-                NextMarker = nextMarker,
-            };
-        }
     }
 }
 #endregion class FilterBlobSegment

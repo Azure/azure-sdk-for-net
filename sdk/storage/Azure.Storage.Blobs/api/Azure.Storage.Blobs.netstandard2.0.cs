@@ -825,7 +825,6 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlockInfo BlockInfo(byte[] contentHash, byte[] contentCrc64, string encryptionKeySha256, string encryptionScope) { throw null; }
         public static Azure.Storage.Blobs.Models.BlockList BlockList(System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = null, System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = null) { throw null; }
         public static Azure.Storage.Blobs.Models.FilterBlobItem FilterBlobItem(string name, string containerName, string tagValue) { throw null; }
-        public static Azure.Storage.Blobs.Models.FilterBlobSegment FilterBlobSegment(string serviceEndpoint, string where, System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs, string nextMarker = null) { throw null; }
         public static Azure.Storage.Blobs.Models.PageBlobInfo PageBlobInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, long blobSequenceNumber) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.PageInfo PageInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, long blobSequenceNumber, string encryptionKeySha256) { throw null; }
@@ -858,17 +857,6 @@ namespace Azure.Storage.Blobs.Models
         public bool Enabled { get { throw null; } set { } }
         public string ErrorDocument404Path { get { throw null; } set { } }
         public string IndexDocument { get { throw null; } set { } }
-    }
-    public partial class BlobTag
-    {
-        public BlobTag() { }
-        public string Key { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class BlobTags
-    {
-        public BlobTags() { }
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobTag> BlobTagSet { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum BlobTraits
@@ -991,14 +979,6 @@ namespace Azure.Storage.Blobs.Models
         public string ContainerName { get { throw null; } }
         public string Name { get { throw null; } }
         public string TagValue { get { throw null; } }
-    }
-    public partial class FilterBlobSegment
-    {
-        internal FilterBlobSegment() { }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> Blobs { get { throw null; } }
-        public string NextMarker { get { throw null; } }
-        public string ServiceEndpoint { get { throw null; } }
-        public string Where { get { throw null; } }
     }
     public enum LeaseDurationType
     {
