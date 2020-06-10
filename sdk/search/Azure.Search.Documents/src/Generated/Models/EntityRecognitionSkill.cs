@@ -27,6 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
+            Categories = new List<EntityCategory>();
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
 
@@ -43,15 +44,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
         internal EntityRecognitionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<EntityCategory> categories, EntityRecognitionSkillLanguage? defaultLanguageCode, bool? includeTypelessEntities, double? minimumPrecision) : base(oDataType, name, description, context, inputs, outputs)
         {
-            Categories = categories;
+            Categories = categories ?? new List<EntityCategory>();
             DefaultLanguageCode = defaultLanguageCode;
             IncludeTypelessEntities = includeTypelessEntities;
             MinimumPrecision = minimumPrecision;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
-
-        /// <summary> A list of entity categories that should be extracted. </summary>
-        public IList<EntityCategory> Categories { get; set; }
         /// <summary> A value indicating which language code to use. Default is en. </summary>
         public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
         /// <summary> Determines whether or not to include entities which are well known but don&apos;t conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don&apos;t conform to one of the pre-defined types will not be surfaced. </summary>

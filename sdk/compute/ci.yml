@@ -38,5 +38,5 @@ stages:
     ServiceDirectory: compute
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Management.Compute
-      safeName: AzureManagementCompute
+    - name: Azure.ResourceManager.Compute
+      safeName: AzureResourceManagerCompute

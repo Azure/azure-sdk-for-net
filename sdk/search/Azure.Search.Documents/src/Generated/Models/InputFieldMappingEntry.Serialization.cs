@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("sourceContext");
                 writer.WriteStringValue(SourceContext);
             }
-            if (Inputs != null)
+            if (Inputs != null && Inputs.Any())
             {
                 writer.WritePropertyName("inputs");
                 writer.WriteStartArray();

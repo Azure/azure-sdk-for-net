@@ -230,7 +230,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Content-Type", "application/json");
             if (eventRoute != null)
             {
-                using var content = new Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(eventRoute);
                 request.Content = content;
             }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +17,16 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("wordList");
-            writer.WriteStartArray();
-            foreach (var item in WordList)
+            if (WordList != null && WordList.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("wordList");
+                writer.WriteStartArray();
+                foreach (var item in WordList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (MinWordSize != null)
             {
                 writer.WritePropertyName("minWordSize");
@@ -63,6 +67,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("wordList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

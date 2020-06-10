@@ -48,13 +48,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="partitionRootPath">Specify the root path where
         /// partition discovery starts from. Type: string (or Expression with
         /// resultType string).</param>
+        /// <param name="deleteFilesAfterCompletion">Indicates whether the
+        /// source files need to be deleted after copy completion. Default is
+        /// false. Type: boolean (or Expression with resultType
+        /// boolean).</param>
         /// <param name="fileListPath">Point to a text file that lists each
         /// file (relative path to the path configured in the dataset) that you
         /// want to copy. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="useBinaryTransfer">Specify whether to use binary
         /// transfer mode for FTP stores.</param>
-        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), bool? useBinaryTransfer = default(bool?))
+        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object deleteFilesAfterCompletion = default(object), object fileListPath = default(object), bool? useBinaryTransfer = default(bool?))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
@@ -62,6 +66,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             WildcardFileName = wildcardFileName;
             EnablePartitionDiscovery = enablePartitionDiscovery;
             PartitionRootPath = partitionRootPath;
+            DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             FileListPath = fileListPath;
             UseBinaryTransfer = useBinaryTransfer;
             CustomInit();
@@ -106,6 +111,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "partitionRootPath")]
         public object PartitionRootPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the source files need to be deleted
+        /// after copy completion. Default is false. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteFilesAfterCompletion")]
+        public object DeleteFilesAfterCompletion { get; set; }
 
         /// <summary>
         /// Gets or sets point to a text file that lists each file (relative
