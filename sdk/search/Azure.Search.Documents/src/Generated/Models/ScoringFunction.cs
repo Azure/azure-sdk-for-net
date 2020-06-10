@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Base type for functions that can modify document scores during ranking. </summary>
     public partial class ScoringFunction
@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
         internal ScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation)
         {
-            Type = type ?? null;
+            Type = type;
             FieldName = fieldName;
             Boost = boost;
             Interpolation = interpolation;
@@ -29,9 +29,9 @@ namespace Azure.Search.Documents.Models
         /// <summary> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </summary>
         internal string Type { get; set; }
         /// <summary> The name of the field used as input to the scoring function. </summary>
-        public string FieldName { get; }
+        public string FieldName { get; set; }
         /// <summary> A multiplier for the raw score. Must be a positive number not equal to 1.0. </summary>
-        public double Boost { get; }
+        public double Boost { get; set; }
         /// <summary> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </summary>
         public ScoringFunctionInterpolation? Interpolation { get; set; }
     }

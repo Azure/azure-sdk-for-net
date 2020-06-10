@@ -44,7 +44,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<KeyValuePair_internal> array = new List<KeyValuePair_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyValuePair_internal.DeserializeKeyValuePair_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KeyValuePair_internal.DeserializeKeyValuePair_internal(item));
+                        }
                     }
                     keyValuePairs = array;
                     continue;
@@ -58,7 +65,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<DataTable_internal> array = new List<DataTable_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTable_internal.DeserializeDataTable_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataTable_internal.DeserializeDataTable_internal(item));
+                        }
                     }
                     tables = array;
                     continue;

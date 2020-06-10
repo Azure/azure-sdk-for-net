@@ -2,10 +2,20 @@
 
 ## Version 4.9.0
 ###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+- Added support for xml dataset in ADF
+- Added support for excel dataset in ADF
+- Added new type conversion support in Copy activity
 - Added support for copying data to and from Snowflake using copy activity
 - Added package store support for Azure-SSIS integration runtime
 - Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
 - Added SharePointOnlineListConnector
+- Added auth by accountKey/SASuri to azure file connector
+- Added prefix filter to azure file source
+- Added fileFilter to file server source
+- Added partitionRootPath to binary connector
+- Added an option to support unzip file directly to target folder
 
 ## Version 4.8.0
 ###  Feature Additions

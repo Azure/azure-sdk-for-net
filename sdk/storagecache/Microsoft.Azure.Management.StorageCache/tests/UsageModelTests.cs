@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 IList<ResourceSku> cacheSkuResponse = client.Skus.List().Value;
                 Assert.True(cacheSkuResponse.Count >= 1);
                 foreach (ResourceSku resourceSku in cacheSkuResponse)
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 IList<UsageModel> usageModelResponse = client.UsageModels.List().Value;
                 Assert.True(usageModelResponse.Count >= 1);
                 foreach (UsageModel usageModel in usageModelResponse)

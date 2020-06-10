@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +8,11 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// A sequence of four <see cref="PointF"/> representing a quadrilateral that outlines
+    /// the text of an element in a recognized form. Coordinates are specified relative to the
+    /// top-left of the original image, and points are ordered clockwise from the top-left corner
+    /// relative to the text orientation. Units are in pixels for images and inches for PDF. The
+    /// <see cref="LengthUnit"/> type of a recognized page can be found at <see cref="FormPage.Unit"/>.
     /// </summary>
     public readonly struct BoundingBox
     {
@@ -32,15 +36,12 @@ namespace Azure.AI.FormRecognizer.Models
         internal PointF[] Points { get; }
 
         /// <summary>
+        /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.
+        /// Coordinates are specified relative to the top-left of the original image, and points
+        /// are ordered clockwise from the top-left corner relative to the text orientation.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-#pragma warning disable CA1822 // mark as static
-        public PointF this[int index] =>
-#pragma warning restore CA1822 // mark as static
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-
+        /// <param name="index">The 0-based index of the point to be retrieved.</param>
+        /// <returns>A <see cref="PointF"/> corresponding to the specified <paramref name="index"/>.</returns>
+        public PointF this[int index] => Points[index];
     }
 }

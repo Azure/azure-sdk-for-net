@@ -78,6 +78,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public static readonly EntityCategory Quantity = new EntityCategory("Quantity");
 
+        /// <summary>
+        /// Specifies that the entity contains an address.
+        /// </summary>
+        public static readonly EntityCategory Address = new EntityCategory("Address");
+
         private readonly string _value;
 
         private EntityCategory(string category)

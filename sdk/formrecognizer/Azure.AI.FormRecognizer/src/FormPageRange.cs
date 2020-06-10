@@ -1,29 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a page interval from the input document. Page numbers are 1-based.
     /// </summary>
-    public class FormPageRange
+    public struct FormPageRange
     {
-        internal FormPageRange(IList<int> pageRange)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormPageRange"/> struct.
+        /// </summary>
+        /// <param name="first">The first page number of the range.</param>
+        /// <param name="last">The last page number of the range.</param>
+        internal FormPageRange(int first, int last)
         {
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
-            FirstPageNumber = pageRange.First();
-            LastPageNumber = pageRange.Last();
+            FirstPageNumber = first;
+            LastPageNumber = last;
         }
 
         /// <summary>
+        /// The first page number of the range.
         /// </summary>
-        public int FirstPageNumber { get; internal set; }
+        public int FirstPageNumber { get; }
 
         /// <summary>
+        /// The last page number of the range.
         /// </summary>
-        public int LastPageNumber { get; internal set; }
+        public int LastPageNumber { get; }
     }
 }

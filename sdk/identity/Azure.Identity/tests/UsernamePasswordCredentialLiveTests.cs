@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
     //   "AADSTS50034: The user account {EmailHidden} does not exist in the
     //   <tenantId> directory."
     //
-    public class UsernamePasswordCredentialLiveTests : RecordedTestBase
+    public class UsernamePasswordCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
@@ -57,6 +57,7 @@ namespace Azure.Identity.Tests
         public void ClearDiscoveryCache()
         {
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
+            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         // !!!!!! WARNING !!!!!
@@ -68,11 +69,11 @@ namespace Azure.Identity.Tests
         // or fork. To re-record these tests the following steps MUST be COMPLETELY
         // followed before pushing any updates. See class comment for instructions
         [Test]
-        public async Task AuthenticateUsernamePasswordLive()
+        public async Task GetToken()
         {
-            var tenantId = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_TENANTID");
-            var username = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_USERNAME");
-            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
@@ -81,6 +82,44 @@ namespace Azure.Identity.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(token.Token);
+        }
+
+        [Test]
+        public async Task AuthenticateNoContext()
+        {
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
+
+            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+
+            var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
+
+            AuthenticationRecord record = await cred.AuthenticateAsync();
+
+            Assert.IsNotNull(record);
+
+            Assert.AreEqual(username, record.Username);
+            Assert.AreEqual(tenantId, record.TenantId);
+        }
+
+        [Test]
+        public async Task AuthenticateWithContext()
+        {
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
+
+            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+
+            var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
+
+            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }));
+
+            Assert.IsNotNull(record);
+
+            Assert.AreEqual(username, record.Username);
+            Assert.AreEqual(tenantId, record.TenantId);
         }
     }
 }

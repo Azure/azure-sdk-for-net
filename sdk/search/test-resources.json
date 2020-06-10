@@ -40,13 +40,45 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "searchSku": {
+            "type": "string",
+            "defaultValue": "free",
+            "allowedValues": [
+                "free",
+                "basic",
+                "standard"
+            ],
+            "metadata": {
+                "description": "The Search service SKU to create."
+            }
         }
     },
     "variables": {
+        "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
+        "searchApiVersion": "2020-03-13",
         "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
         "storageApiVersion": "2019-06-01"
     },
     "resources": [
+        {
+            "name": "[variables('searchServiceName')]",
+            "type": "Microsoft.Search/searchServices",
+            "apiVersion": "[variables('searchApiVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('searchSku')]"
+            },
+            "properties": {
+                "replicaCount": 1,
+                "partitionCount": 1,
+                "hostingMode": "Default",
+                "publicNetworkAccess": "Enabled",
+                "networkRuleSet": {
+                    "ipRules": []
+                }
+            }
+        },
         {
             "name": "[variables('storageAccountName')]",
             "type": "Microsoft.Storage/storageAccounts",
@@ -63,35 +95,23 @@
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
+        "SEARCH_SERVICE_NAME": {
             "type": "string",
-            "value": "[parameters('tenantId')]"
+            "value": "[variables('searchServiceName')]"
         },
-        "AZURE_CLIENT_ID": {
+        "SEARCH_ADMIN_API_KEY": {
             "type": "string",
-            "value": "[parameters('testApplicationId')]"
+            "value": "[listAdminKeys(variables('searchServiceName'), variables('searchApiVersion')).primaryKey]"
         },
-        "AZURE_CLIENT_SECRET": {
+        "SEARCH_QUERY_API_KEY": {
             "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
+            "value": "[listQueryKeys(variables('searchServiceName'), variables('searchApiVersion')).value[0].key]"
         },
-        "AZURE_SUBSCRIPTION_ID": {
-            "type": "string",
-            "value": "[subscription().subscriptionId]"
-        },
-        "AZURE_RESOURCE_GROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        },
-        "AZURE_LOCATION": {
-            "type": "string",
-            "value": "[parameters('location')]"
-        },
-        "AZURE_SEARCH_STORAGE_NAME": {
+        "SEARCH_STORAGE_NAME": {
             "type": "string",
             "value": "[variables('storageAccountName')]"
         },
-        "AZURE_SEARCH_STORAGE_KEY": {
+        "SEARCH_STORAGE_KEY": {
             "type": "string",
             "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         }

@@ -169,6 +169,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ServiceDirectory
+A directory under 'sdk' in the repository root - optionally with subdirectories
+specified - specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Environment
 Name of the cloud environment.
 The default is the Azure Public Cloud

@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EdgeNGramTokenizer : IUtf8JsonSerializable
     {
@@ -26,7 +27,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("maxGram");
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (TokenChars != null)
+            if (TokenChars != null && TokenChars.Any())
             {
                 writer.WritePropertyName("tokenChars");
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.Search.Documents.Models
             int? minGram = default;
             int? maxGram = default;
             IList<TokenCharacterKind> tokenChars = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +87,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -95,7 +96,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new EdgeNGramTokenizer(odatatype, name, minGram, maxGram, tokenChars);
+            return new EdgeNGramTokenizer(odataType, name, minGram, maxGram, tokenChars);
         }
     }
 }

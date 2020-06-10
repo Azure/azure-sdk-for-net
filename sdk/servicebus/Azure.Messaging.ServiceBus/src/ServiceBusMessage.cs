@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Messaging.ServiceBus.Primitives;
+using System.Text;
+using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -24,21 +25,76 @@ namespace Azure.Messaging.ServiceBus
         private TimeSpan _timeToLive;
 
         /// <summary>
-        /// Creates a new Message
+        /// Creates a new message.
         /// </summary>
         public ServiceBusMessage()
-            : this(default)
+            : this(default(ReadOnlyMemory<byte>))
         {
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified string, using UTF-8 encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        public ServiceBusMessage(string body) :
+            this(body, Encoding.UTF8)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified string, using the specified encoding.
+        /// </summary>
+        /// <param name="body">The payload of the message as a string.</param>
+        /// <param name="encoding">The encoding to use for the body.</param>
+        public ServiceBusMessage(string body, Encoding encoding)
+        {
+            Argument.AssertNotNull(encoding, nameof(encoding));
+            Body = BinaryData.Create(body, encoding);
+            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="body">The payload of the message in bytes</param>
+        /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        {
+            Body = new BinaryData(body);
+            Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="BinaryData"/> instance.
+        /// </summary>
+        /// <param name="body">The payload of the message.</param>
+        public ServiceBusMessage(BinaryData body)
         {
             Body = body;
             Properties = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified received message by copying the properties.
+        /// </summary>
+        /// <param name="receivedMessage">The received message to copy the data from.</param>
+        public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
+        {
+            Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
+
+            Body = receivedMessage.Body;
+            ContentType = receivedMessage.ContentType;
+            CorrelationId = receivedMessage.CorrelationId;
+            Label = receivedMessage.Label;
+            MessageId = receivedMessage.MessageId;
+            PartitionKey = receivedMessage.PartitionKey;
+            Properties = new Dictionary<string, object>(receivedMessage.SentMessage.Properties);
+            ReplyTo = receivedMessage.ReplyTo;
+            ReplyToSessionId = receivedMessage.ReplyToSessionId;
+            SessionId = receivedMessage.SessionId;
+            ScheduledEnqueueTime = receivedMessage.ScheduledEnqueueTime;
+            TimeToLive = receivedMessage.TimeToLive;
+            To = receivedMessage.To;
+            ViaPartitionKey = receivedMessage.ViaPartitionKey;
         }
 
         /// <summary>
@@ -50,7 +106,7 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public ReadOnlyMemory<byte> Body { get; set; }
+        public BinaryData Body { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -174,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                TimeoutHelper.ThrowIfNonPositiveArgument(value);
+                Argument.AssertPositive(value, nameof(TimeToLive));
                 _timeToLive = value;
             }
         }
@@ -232,12 +288,6 @@ namespace Azure.Messaging.ServiceBus
         /// depends on the queue's workload and its state.</remarks>
         public DateTimeOffset ScheduledEnqueueTime { get; set; }
 
-        // TODO: Calculate the size of the properties and body
-        /// <summary>
-        /// Gets the total size of the message body in bytes.
-        /// </summary>
-        public long Size => !Body.IsEmpty ? Body.Length : 0;
-
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.
         /// </summary>
@@ -258,33 +308,6 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static ServiceBusMessage CreateFrom(ServiceBusReceivedMessage message)
-        {
-            var copiedMessage = new ServiceBusMessage
-            {
-                Body = message.Body,
-                ContentType = message.ContentType,
-                CorrelationId = message.CorrelationId,
-                Label = message.Label,
-                MessageId = message.MessageId,
-                PartitionKey = message.PartitionKey,
-                Properties = new Dictionary<string, object>(message.Properties),
-                ReplyTo = message.ReplyTo,
-                ReplyToSessionId = message.ReplyToSessionId,
-                SessionId = message.SessionId,
-                ScheduledEnqueueTime = message.ScheduledEnqueueTime,
-                TimeToLive = message.TimeToLive,
-                To = message.To,
-                ViaPartitionKey = message.ViaPartitionKey
-            };
-            return copiedMessage;
         }
 
         private static void ValidateMessageId(string messageId)

@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchField : IUtf8JsonSerializable
     {
@@ -53,32 +54,32 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("facetable");
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Analyzer != null)
+            if (AnalyzerName != null)
             {
                 writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (SearchAnalyzer != null)
+            if (SearchAnalyzerName != null)
             {
                 writer.WritePropertyName("searchAnalyzer");
-                writer.WriteStringValue(SearchAnalyzer.Value.ToString());
+                writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
             }
-            if (IndexAnalyzer != null)
+            if (IndexAnalyzerName != null)
             {
                 writer.WritePropertyName("indexAnalyzer");
-                writer.WriteStringValue(IndexAnalyzer.Value.ToString());
+                writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (SynonymMaps != null)
+            if (SynonymMapNames != null && SynonymMapNames.Any())
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
-                foreach (var item in SynonymMaps)
+                foreach (var item in SynonymMapNames)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -94,16 +95,16 @@ namespace Azure.Search.Documents.Models
         internal static SearchField DeserializeSearchField(JsonElement element)
         {
             string name = default;
-            DataType type = default;
+            SearchFieldDataType type = default;
             bool? key = default;
             bool? retrievable = default;
             bool? searchable = default;
             bool? filterable = default;
             bool? sortable = default;
             bool? facetable = default;
-            AnalyzerName? analyzer = default;
-            AnalyzerName? searchAnalyzer = default;
-            AnalyzerName? indexAnalyzer = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new DataType(property.Value.GetString());
+                    type = new SearchFieldDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("key"))
@@ -182,7 +183,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    analyzer = new AnalyzerName(property.Value.GetString());
+                    analyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("searchAnalyzer"))
@@ -191,7 +192,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchAnalyzer = new AnalyzerName(property.Value.GetString());
+                    searchAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("indexAnalyzer"))
@@ -200,7 +201,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    indexAnalyzer = new AnalyzerName(property.Value.GetString());
+                    indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
@@ -212,7 +213,14 @@ namespace Azure.Search.Documents.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     synonymMaps = array;
                     continue;
@@ -226,7 +234,14 @@ namespace Azure.Search.Documents.Models
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSearchField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSearchField(item));
+                        }
                     }
                     fields = array;
                     continue;

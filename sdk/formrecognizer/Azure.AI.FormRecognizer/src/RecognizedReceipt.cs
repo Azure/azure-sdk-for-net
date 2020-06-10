@@ -6,26 +6,19 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a receipt recognized from the input document.
     /// </summary>
     public class RecognizedReceipt
     {
-        private DocumentResult_internal _documentResult_internal;
-        private IList<ReadResult_internal> _readResults;
-
-
-        internal RecognizedReceipt(DocumentResult_internal documentResult_internal, IList<ReadResult_internal> readResults)
+        internal RecognizedReceipt(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
-            _documentResult_internal = documentResult_internal;
-            _readResults = readResults;
+            RecognizedForm = new RecognizedForm(documentResult, pageResults, readResults);
         }
 
         /// <summary>
+        /// Contains detailed form information about the recognized receipt, such as fields, form type and
+        /// form content elements.
         /// </summary>
-        public string ReceiptLocale { get; internal set; }
-
-        /// <summary>
-        /// </summary>
-        public RecognizedForm RecognizedForm { get; internal set; }
-
+        public RecognizedForm RecognizedForm { get; }
     }
 }

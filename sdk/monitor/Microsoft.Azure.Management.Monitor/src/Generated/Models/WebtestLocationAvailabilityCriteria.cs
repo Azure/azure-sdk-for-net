@@ -12,12 +12,15 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Specifies the metric alert rule criteria for a web test resource.
     /// </summary>
-    public partial class WebtestLocationAvailabilityCriteria
+    [Newtonsoft.Json.JsonObject("Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria")]
+    public partial class WebtestLocationAvailabilityCriteria : MetricAlertCriteria
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,7 +41,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Id.</param>
         /// <param name="failedLocationCount">The number of failed
         /// locations.</param>
-        public WebtestLocationAvailabilityCriteria(string webTestId, string componentId, double failedLocationCount)
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        public WebtestLocationAvailabilityCriteria(string webTestId, string componentId, double failedLocationCount, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+            : base(additionalProperties)
         {
             WebTestId = webTestId;
             ComponentId = componentId;

@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,8 +13,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntities()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             #region Snippet:TextAnalyticsSample4CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -24,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeEntities
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
+            CategorizedEntityCollection entities = client.RecognizeEntities(document);
 
             Console.WriteLine($"Recognized {entities.Count} entities:");
             foreach (CategorizedEntity entity in entities)
