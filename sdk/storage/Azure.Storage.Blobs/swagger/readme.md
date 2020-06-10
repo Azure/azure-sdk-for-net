@@ -1039,6 +1039,15 @@ directive:
     delete $.BlobContainerItem.properties.Metadata;
 ```
 
+### Rename BlobContainerProperties field
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobContainerProperties.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
+```
+
 ### Rename BlobContainerItem fields
 ``` yaml
 directive:

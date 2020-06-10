@@ -16360,7 +16360,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// DeletedTime
         /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
         /// RemainingRetentionDays
@@ -16455,7 +16455,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
             if (_child != null)
             {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
             if (_child != null)
@@ -16501,7 +16501,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             string defaultEncryptionScope = default,
             bool? preventEncryptionScopeOverride = default,
-            System.DateTimeOffset? deletedTime = default,
+            System.DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             bool? hasLegalHold = default)
@@ -16517,7 +16517,7 @@ namespace Azure.Storage.Blobs.Models
                 LeaseStatus = leaseStatus,
                 DefaultEncryptionScope = defaultEncryptionScope,
                 PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
-                DeletedTime = deletedTime,
+                DeletedOn = deletedOn,
                 RemainingRetentionDays = remainingRetentionDays,
                 Metadata = metadata,
                 HasLegalHold = hasLegalHold,
