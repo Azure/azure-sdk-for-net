@@ -256,13 +256,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="name">The Name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default)
+        public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
             try
             {
-                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken);
+                return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), name == default ? Guid.NewGuid().ToString() : name.ToString(), properties, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -278,13 +278,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="properties"> Properties for the role assignment. </param>
         /// <param name="name">The name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, string name = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
             try
             {
-                return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), name ?? Guid.NewGuid().ToString(), properties, cancellationToken)
+                return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), name == default ? Guid.NewGuid().ToString() : name.ToString(), properties, cancellationToken)
                 .ConfigureAwait(false);
             }
             catch (Exception ex)
