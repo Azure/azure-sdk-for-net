@@ -46,7 +46,7 @@ QueueDescription queueDescription = await client.GetQueueAsync(queueName);
 
 ### Update a queue
 
-In order to update a queue, you will need to pass in the `queueDescription` after 
+In order to update a queue, you will need to pass in the `QueueDescription` after 
 getting it from `GetQueueAsync`.
 
 ```C# Snippet:UpdateQueue
