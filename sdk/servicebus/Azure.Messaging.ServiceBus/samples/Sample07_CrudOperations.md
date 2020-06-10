@@ -154,4 +154,4 @@ await client.DeleteTopicAsync(topicName);
 
 To see the full example source, see:
 
-* [Sample07_CRUDOperations.cs](../tests/Samples/Sample07_CrudOperations.cs)
+* [Sample07_CrudOperations.cs](../tests/Samples/Sample07_CrudOperations.cs)
