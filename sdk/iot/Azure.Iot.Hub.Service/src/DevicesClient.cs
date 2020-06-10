@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +15,7 @@ namespace Azure.Iot.Hub.Service
     /// <summary>
     /// Device Client place holder
     /// </summary>
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "String comes from the server.")]
     public class DevicesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
@@ -91,7 +92,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Delete a single device identity.
         /// </summary>
-        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/></param>
+        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
@@ -105,7 +106,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>
         /// Delete a single device identity.
         /// </summary>
-        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/></param>
+        /// <param name="deviceIdentity">the device identity to delete. If no ETag is present on the device, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response.</returns>
@@ -322,6 +323,7 @@ namespace Azure.Iot.Hub.Service
             return _registryManagerClient.BulkDeviceCrud(registryOperations, cancellationToken);
         }
 
+
         /// <summary>
         /// List a set of device twins.
         /// </summary>
@@ -336,7 +338,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     Query = "select * from devices"
                 };
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, null, pageSizeHint?.ToString(), cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
@@ -345,7 +347,7 @@ namespace Azure.Iot.Hub.Service
             async Task<Page<TwinData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, nextLink, pageSizeHint?.ToString(), cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<TwinData>> response = await _registryManagerClient.QueryIotHubAsync(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
             }
@@ -368,7 +370,7 @@ namespace Azure.Iot.Hub.Service
                     Query = "select * from devices"
                 };
 
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, null, pageSizeHint?.ToString(), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, null, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
 
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
 
@@ -378,7 +380,7 @@ namespace Azure.Iot.Hub.Service
             Page<TwinData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var querySpecification = new QuerySpecification();
-                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, nextLink, pageSizeHint?.ToString(), cancellationToken);
+                Response<IReadOnlyList<TwinData>> response = _registryManagerClient.QueryIotHub(querySpecification, nextLink, pageSizeHint?.ToString(CultureInfo.InvariantCulture), cancellationToken);
                 response.GetRawResponse().Headers.TryGetValue(ContinuationTokenHeader, out string continuationToken);
                 return Page.FromValues(response.Value, continuationToken, response.GetRawResponse());
             }
