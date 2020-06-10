@@ -1580,9 +1580,23 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.FilterBlobItem["x-ms-client-name"] = "BlobTagItem";
     $.FilterBlobItem.properties.ContainerName["x-ms-client-name"] = "BlobContainerName";
     $.FilterBlobItem.properties.Name["x-ms-client-name"] = "BlobName";
+    delete $.FilterBlobItem.properties.TagValue;
+```
+
+### Rename enums in BlobQueryResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=query"]
+  transform: >
+    $.post.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    $.post.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
+    $.post.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
+    $.post.responses["206"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    $.post.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
+    $.post.responses["206"].headers["x-ms-lease-status"]["x-ms-enum"].name = "LeaseStatus";
 ```
 
 ### /{containerName}/{blob}?comp=page&update&fromUrl

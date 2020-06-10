@@ -291,7 +291,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsTrue(containerItem.IsDeleted);
             Assert.IsNotNull(containerItem.VersionId);
-            Assert.IsNotNull(containerItem.Properties.DeletedTime);
+            Assert.IsNotNull(containerItem.Properties.DeletedOn);
             Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
@@ -542,8 +542,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
-            Assert.AreEqual(tagValue, filterBlob.TagValue);
+            FilterBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
+            Assert.IsNotNull(filterBlob);
         }
 
         [Test]

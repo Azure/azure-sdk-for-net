@@ -8713,7 +8713,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-status", out _header))
                         {
-                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatusType(_header);
+                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
                         {
@@ -8721,11 +8721,11 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
                         {
-                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStateType(_header);
+                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
-                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatusType(_header);
+                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
@@ -8845,7 +8845,7 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-status", out _header))
                         {
-                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatusType(_header);
+                            _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
                         {
@@ -8853,11 +8853,11 @@ namespace Azure.Storage.Blobs
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
                         {
-                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStateType(_header);
+                            _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_header);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
-                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatusType(_header);
+                            _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
@@ -15496,7 +15496,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
-        public Azure.Storage.Blobs.Models.CopyStatusType CopyStatus { get; internal set; }
+        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
 
         /// <summary>
         /// When a blob is leased, specifies whether the lease is of infinite or fixed duration.
@@ -15506,12 +15506,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Lease state of the blob.
         /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStateType LeaseState { get; internal set; }
+        public Azure.Storage.Blobs.Models.LeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the blob.
         /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStatusType LeaseStatus { get; internal set; }
+        public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// Indicates that the service supports requests for partial blob content.
@@ -19541,60 +19541,6 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobTag
 
-#region class BlobTagItem
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Blob info from a Filter Blobs API call
-    /// </summary>
-    public partial class BlobTagItem
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string BlobName { get; internal set; }
-
-        /// <summary>
-        /// ContainerName
-        /// </summary>
-        public string BlobContainerName { get; internal set; }
-
-        /// <summary>
-        /// TagValue
-        /// </summary>
-        public string TagValue { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of BlobTagItem instances.
-        /// You can use BlobsModelFactory.BlobTagItem instead.
-        /// </summary>
-        internal BlobTagItem() { }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobTagItem instance for mocking.
-        /// </summary>
-        public static BlobTagItem BlobTagItem(
-            string blobName,
-            string blobContainerName,
-            string tagValue)
-        {
-            return new BlobTagItem()
-            {
-                BlobName = blobName,
-                BlobContainerName = blobContainerName,
-                TagValue = tagValue,
-            };
-        }
-    }
-}
-#endregion class BlobTagItem
-
 #region class BlobTags
 namespace Azure.Storage.Blobs.Models
 {
@@ -20481,70 +20427,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum CopyStatus
 
-#region enum CopyStatusType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// State of the copy operation identified by x-ms-copy-id.
-    /// </summary>
-    public enum CopyStatusType
-    {
-        /// <summary>
-        /// pending
-        /// </summary>
-        Pending,
-
-        /// <summary>
-        /// success
-        /// </summary>
-        Success,
-
-        /// <summary>
-        /// aborted
-        /// </summary>
-        Aborted,
-
-        /// <summary>
-        /// failed
-        /// </summary>
-        Failed
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.CopyStatusType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.CopyStatusType.Pending => "pending",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Success => "success",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Aborted => "aborted",
-                    Azure.Storage.Blobs.Models.CopyStatusType.Failed => "failed",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.CopyStatusType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.CopyStatusType ParseCopyStatusType(string value)
-            {
-                return value switch
-                {
-                    "pending" => Azure.Storage.Blobs.Models.CopyStatusType.Pending,
-                    "success" => Azure.Storage.Blobs.Models.CopyStatusType.Success,
-                    "aborted" => Azure.Storage.Blobs.Models.CopyStatusType.Aborted,
-                    "failed" => Azure.Storage.Blobs.Models.CopyStatusType.Failed,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.CopyStatusType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum CopyStatusType
-
 #region class DataLakeStorageError
 namespace Azure.Storage.Blobs.Models
 {
@@ -21014,6 +20896,79 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class FailureNoContent
 
+#region class FilterBlobItem
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Blob info from a Filter Blobs API call
+    /// </summary>
+    public partial class FilterBlobItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string BlobName { get; internal set; }
+
+        /// <summary>
+        /// ContainerName
+        /// </summary>
+        public string BlobContainerName { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FilterBlobItem instances.
+        /// You can use BlobsModelFactory.FilterBlobItem instead.
+        /// </summary>
+        internal FilterBlobItem() { }
+
+        /// <summary>
+        /// Deserializes XML into a new FilterBlobItem instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FilterBlobItem instance.</returns>
+        internal static Azure.Storage.Blobs.Models.FilterBlobItem FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem();
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.BlobName = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ContainerName", ""));
+            if (_child != null)
+            {
+                _value.BlobContainerName = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobItem value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new FilterBlobItem instance for mocking.
+        /// </summary>
+        public static FilterBlobItem FilterBlobItem(
+            string blobName,
+            string blobContainerName)
+        {
+            return new FilterBlobItem()
+            {
+                BlobName = blobName,
+                BlobContainerName = blobContainerName,
+            };
+        }
+    }
+}
+#endregion class FilterBlobItem
+
 #region class FilterBlobSegment
 namespace Azure.Storage.Blobs.Models
 {
@@ -21035,7 +20990,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Blobs
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobTagItem> Blobs { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> Blobs { get; internal set; }
 
         /// <summary>
         /// NextMarker
@@ -21058,7 +21013,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTagItem>();
+                Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
             }
         }
 
@@ -21089,11 +21044,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.Blobs = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Blob", "")),
-                        e => Azure.Storage.Blobs.Models.BlobTagItem.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.FilterBlobItem.FromXml(e)));
             }
             else
             {
-                _value.Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTagItem>();
+                _value.Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
             }
             _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
             if (_child != null)
@@ -21636,77 +21591,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum LeaseState
 
-#region enum LeaseStateType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Lease state of the blob.
-    /// </summary>
-    public enum LeaseStateType
-    {
-        /// <summary>
-        /// available
-        /// </summary>
-        Available,
-
-        /// <summary>
-        /// leased
-        /// </summary>
-        Leased,
-
-        /// <summary>
-        /// expired
-        /// </summary>
-        Expired,
-
-        /// <summary>
-        /// breaking
-        /// </summary>
-        Breaking,
-
-        /// <summary>
-        /// broken
-        /// </summary>
-        Broken
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.LeaseStateType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.LeaseStateType.Available => "available",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Leased => "leased",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Expired => "expired",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Breaking => "breaking",
-                    Azure.Storage.Blobs.Models.LeaseStateType.Broken => "broken",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStateType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.LeaseStateType ParseLeaseStateType(string value)
-            {
-                return value switch
-                {
-                    "available" => Azure.Storage.Blobs.Models.LeaseStateType.Available,
-                    "leased" => Azure.Storage.Blobs.Models.LeaseStateType.Leased,
-                    "expired" => Azure.Storage.Blobs.Models.LeaseStateType.Expired,
-                    "breaking" => Azure.Storage.Blobs.Models.LeaseStateType.Breaking,
-                    "broken" => Azure.Storage.Blobs.Models.LeaseStateType.Broken,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStateType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStateType
-
 #region enum LeaseStatus
 namespace Azure.Storage.Blobs.Models
 {
@@ -21758,56 +21642,6 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum LeaseStatus
-
-#region enum LeaseStatusType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// The current lease status of the blob.
-    /// </summary>
-    public enum LeaseStatusType
-    {
-        /// <summary>
-        /// locked
-        /// </summary>
-        Locked,
-
-        /// <summary>
-        /// unlocked
-        /// </summary>
-        Unlocked
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.LeaseStatusType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.LeaseStatusType.Locked => "locked",
-                    Azure.Storage.Blobs.Models.LeaseStatusType.Unlocked => "unlocked",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStatusType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.LeaseStatusType ParseLeaseStatusType(string value)
-            {
-                return value switch
-                {
-                    "locked" => Azure.Storage.Blobs.Models.LeaseStatusType.Locked,
-                    "unlocked" => Azure.Storage.Blobs.Models.LeaseStatusType.Unlocked,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.LeaseStatusType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum LeaseStatusType
 
 #region enum ListBlobsIncludeItem
 namespace Azure.Storage.Blobs.Models
