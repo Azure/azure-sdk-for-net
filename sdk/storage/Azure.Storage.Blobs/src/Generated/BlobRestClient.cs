@@ -19541,6 +19541,60 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobTag
 
+#region class BlobTagItem
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Blob info from a Filter Blobs API call
+    /// </summary>
+    public partial class BlobTagItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string BlobName { get; internal set; }
+
+        /// <summary>
+        /// ContainerName
+        /// </summary>
+        public string BlobContainerName { get; internal set; }
+
+        /// <summary>
+        /// TagValue
+        /// </summary>
+        public string TagValue { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobTagItem instances.
+        /// You can use BlobsModelFactory.BlobTagItem instead.
+        /// </summary>
+        internal BlobTagItem() { }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobTagItem instance for mocking.
+        /// </summary>
+        public static BlobTagItem BlobTagItem(
+            string blobName,
+            string blobContainerName,
+            string tagValue)
+        {
+            return new BlobTagItem()
+            {
+                BlobName = blobName,
+                BlobContainerName = blobContainerName,
+                TagValue = tagValue,
+            };
+        }
+    }
+}
+#endregion class BlobTagItem
+
 #region class BlobTags
 namespace Azure.Storage.Blobs.Models
 {
@@ -20960,91 +21014,6 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class FailureNoContent
 
-#region class FilterBlobItem
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Blob info from a Filter Blobs API call
-    /// </summary>
-    public partial class FilterBlobItem
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>
-        /// ContainerName
-        /// </summary>
-        public string ContainerName { get; internal set; }
-
-        /// <summary>
-        /// TagValue
-        /// </summary>
-        public string TagValue { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FilterBlobItem instances.
-        /// You can use BlobsModelFactory.FilterBlobItem instead.
-        /// </summary>
-        internal FilterBlobItem() { }
-
-        /// <summary>
-        /// Deserializes XML into a new FilterBlobItem instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized FilterBlobItem instance.</returns>
-        internal static Azure.Storage.Blobs.Models.FilterBlobItem FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem();
-            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
-            if (_child != null)
-            {
-                _value.Name = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ContainerName", ""));
-            if (_child != null)
-            {
-                _value.ContainerName = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("TagValue", ""));
-            if (_child != null)
-            {
-                _value.TagValue = _child.Value;
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobItem value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilterBlobItem instance for mocking.
-        /// </summary>
-        public static FilterBlobItem FilterBlobItem(
-            string name,
-            string containerName,
-            string tagValue)
-        {
-            return new FilterBlobItem()
-            {
-                Name = name,
-                ContainerName = containerName,
-                TagValue = tagValue,
-            };
-        }
-    }
-}
-#endregion class FilterBlobItem
-
 #region class FilterBlobSegment
 namespace Azure.Storage.Blobs.Models
 {
@@ -21066,7 +21035,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Blobs
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> Blobs { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobTagItem> Blobs { get; internal set; }
 
         /// <summary>
         /// NextMarker
@@ -21089,7 +21058,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
+                Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTagItem>();
             }
         }
 
@@ -21120,11 +21089,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.Blobs = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Blob", "")),
-                        e => Azure.Storage.Blobs.Models.FilterBlobItem.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobTagItem.FromXml(e)));
             }
             else
             {
-                _value.Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
+                _value.Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTagItem>();
             }
             _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
             if (_child != null)

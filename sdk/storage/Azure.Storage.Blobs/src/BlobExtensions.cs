@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
                 Snapshot = blobItemInternal.Snapshot,
                 Properties = blobItemInternal.Properties,
                 VersionId = blobItemInternal.VersionId,
-                IsCurrentVersion = blobItemInternal.IsCurrentVersion,
+                IsLatestVersion = blobItemInternal.IsCurrentVersion,
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
                     : null,

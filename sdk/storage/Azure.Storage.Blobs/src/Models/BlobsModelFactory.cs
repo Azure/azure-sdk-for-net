@@ -164,7 +164,7 @@ namespace Azure.Storage.Blobs.Models
             BlobType blobType,
             string versionId,
             IDictionary<string, IDictionary<string, string>> objectReplicationSourceProperties,
-            bool isCurrentVersion,
+            bool isLatestVersion,
             string objectReplicationDestinationPolicy,
             long tagCount,
             IDictionary<string, string> metadata,
@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs.Models
                 BlobType = blobType,
                 VersionId = versionId,
                 ObjectReplicationSourceProperties = objectReplicationSourceProperties,
-                IsLatestVersion = isCurrentVersion,
+                IsLatestVersion = isLatestVersion,
                 ObjectReplicationDestinationPolicy = objectReplicationDestinationPolicy,
                 TagCount = tagCount,
                 Metadata = metadata,
@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs.Models
            BlobItemProperties properties,
            string snapshot = default,
            string versionId = default,
-           bool? isCurrentVersion = default,
+           bool? isLatestVersion = default,
            IDictionary<string, string> metadata = default,
            IDictionary<string, string> tags = default)
         {
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.Models
                 Properties = properties,
                 Snapshot = snapshot,
                 VersionId = versionId,
-                IsCurrentVersion = isCurrentVersion,
+                IsLatestVersion = isLatestVersion,
                 Metadata = metadata,
                 Tags = tags
             };

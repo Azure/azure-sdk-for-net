@@ -1760,9 +1760,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, blobs.Count);
-            Assert.IsNull(blobs[0].IsCurrentVersion);
+            Assert.IsNull(blobs[0].IsLatestVersion);
             Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
-            Assert.IsTrue(blobs[1].IsCurrentVersion);
+            Assert.IsTrue(blobs[1].IsLatestVersion);
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
@@ -1968,9 +1968,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, blobs.Count);
-            Assert.IsNull(blobs[0].Blob.IsCurrentVersion);
+            Assert.IsNull(blobs[0].Blob.IsLatestVersion);
             Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
-            Assert.IsTrue(blobs[1].Blob.IsCurrentVersion);
+            Assert.IsTrue(blobs[1].Blob.IsLatestVersion);
             Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].Blob.VersionId);
         }
 

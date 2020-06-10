@@ -205,7 +205,7 @@ namespace Azure.Storage.Blobs.Test
             BlobQueryCsvTextConfiguration csvTextConfiguration = new BlobQueryCsvTextConfiguration
             {
                 ColumnSeparator = ",",
-                FieldQuote = '"',
+                QuotationCharacter = '"',
                 EscapeCharacter = '\\',
                 RecordSeparator = "\n",
                 HasHeaders = false

@@ -1574,6 +1574,17 @@ directive:
     $.BlobExpiryOptions["x-az-public"] = false;
 ```
 
+### Rename FilterBlobItem and properties
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.FilterBlobItem["x-ms-client-name"] = "BlobTagItem";
+    $.FilterBlobItem.properties.ContainerName["x-ms-client-name"] = "BlobContainerName";
+    $.FilterBlobItem.properties.Name["x-ms-client-name"] = "BlobName";
+```
+
 ### /{containerName}/{blob}?comp=page&update&fromUrl
 ``` yaml
 directive:
