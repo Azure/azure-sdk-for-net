@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
+            "defaultValue": "westcentralus",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
