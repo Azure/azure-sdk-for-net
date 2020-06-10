@@ -73,7 +73,7 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true, smallDisk: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true, sku: "2019-Datacenter-smalldisk");
 
                 // Create resource group
                 string rg1Name = ComputeManagementTestUtilities.GenerateName(TestPrefix) + 1;

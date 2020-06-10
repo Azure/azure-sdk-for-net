@@ -128,10 +128,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vmId">Specifies the VM unique ID which is a 128-bits
         /// identifier that is encoded and stored in all Azure IaaS VMs SMBIOS
         /// and can be read using platform BIOS commands.</param>
+        /// <param name="extensionsTimeBudget">Specifies the time alloted for
+        /// all extensions to start. The time duration should be between 15
+        /// minutes and 120 minutes (inclusive) and should be specified in ISO
+        /// 8601 format. The default value is 90 minutes (PT1H30M).
+        /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -154,6 +159,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             InstanceView = instanceView;
             LicenseType = licenseType;
             VmId = vmId;
+            ExtensionsTimeBudget = extensionsTimeBudget;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -357,6 +363,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmId")]
         public string VmId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the time alloted for all extensions to
+        /// start. The time duration should be between 15 minutes and 120
+        /// minutes (inclusive) and should be specified in ISO 8601 format. The
+        /// default value is 90 minutes (PT1H30M).
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
+        /// 2020-06-01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extensionsTimeBudget")]
+        public string ExtensionsTimeBudget { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine, if configured.

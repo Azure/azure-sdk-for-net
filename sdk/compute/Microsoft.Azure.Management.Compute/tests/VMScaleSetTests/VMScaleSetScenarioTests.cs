@@ -619,4 +619,3 @@ namespace Compute.Tests
         }
     }
 }
-
