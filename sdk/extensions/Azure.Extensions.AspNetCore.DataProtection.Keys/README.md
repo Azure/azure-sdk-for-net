@@ -67,6 +67,7 @@ additional questions or comments.
 [package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys/
 [docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.DataProtection.Keys
 [nuget]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys
+[keyvault_doc]: https://docs.microsoft.com/en-us/azure/key-vault/general/overview
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [keyvault_create_ps]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-powershell#create-a-key-vault
