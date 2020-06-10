@@ -15,7 +15,6 @@ namespace Azure.Iot.Hub.Service
     /// <summary>
     /// Device Client place holder
     /// </summary>
-    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "String comes from the server.")]
     public class DevicesClient
     {
         private const string ContinuationTokenHeader = "x-ms-continuation";
