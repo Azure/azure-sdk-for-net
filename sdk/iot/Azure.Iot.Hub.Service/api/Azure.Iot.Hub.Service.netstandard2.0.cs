@@ -1,3 +1,102 @@
+namespace Azure.Iot.Hub.Service
+{
+    public enum BulkIfMatchPrecondition
+    {
+        Unconditional = 0,
+        IfMatch = 1,
+    }
+    public partial class CloudToDeviceMessagesClient
+    {
+        public CloudToDeviceMessagesClient() { }
+    }
+    public partial class DevicesClient
+    {
+        protected DevicesClient() { }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> CreateIdentities(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> CreateIdentitiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> CreateIdentitiesWithTwin(System.Collections.Generic.IDictionary<Azure.Iot.Hub.Service.Models.DeviceIdentity, Azure.Iot.Hub.Service.Models.TwinData> devices, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> CreateIdentitiesWithTwinAsync(System.Collections.Generic.IDictionary<Azure.Iot.Hub.Service.Models.DeviceIdentity, Azure.Iot.Hub.Service.Models.TwinData> devices, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.DeviceIdentity> CreateOrUpdateIdentity(Azure.Iot.Hub.Service.Models.DeviceIdentity deviceIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.DeviceIdentity>> CreateOrUpdateIdentityAsync(Azure.Iot.Hub.Service.Models.DeviceIdentity deviceIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> DeleteIdentities(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> DeleteIdentitiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteIdentity(Azure.Iot.Hub.Service.Models.DeviceIdentity deviceIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIdentityAsync(Azure.Iot.Hub.Service.Models.DeviceIdentity deviceIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.DeviceIdentity> GetIdentity(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.DeviceIdentity>> GetIdentityAsync(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinData> GetTwin(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> GetTwinAsync(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.Hub.Service.Models.TwinData> GetTwins(int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.Hub.Service.Models.TwinData> GetTwinsAsync(int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse> InvokeMethod(string deviceId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> UpdateIdenties(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> UpdateIdentiesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.DeviceIdentity> deviceIdentities, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinData> UpdateTwin(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> UpdateTwinAsync(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse> UpdateTwins(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.BulkRegistryOperationResponse>> UpdateTwinsAsync(System.Collections.Generic.IEnumerable<Azure.Iot.Hub.Service.Models.TwinData> twinUpdates, Azure.Iot.Hub.Service.BulkIfMatchPrecondition precondition = Azure.Iot.Hub.Service.BulkIfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FilesClient
+    {
+        public FilesClient() { }
+    }
+    public enum IfMatchPrecondition
+    {
+        Unconditional = 0,
+        UnconditionalIfMatch = 1,
+        IfMatch = 2,
+    }
+    public partial class IoTHubServiceClient
+    {
+        protected IoTHubServiceClient() { }
+        public IoTHubServiceClient(System.Uri endpoint) { }
+        public IoTHubServiceClient(System.Uri endpoint, Azure.Iot.Hub.Service.IoTHubServiceClientOptions options) { }
+        public Azure.Iot.Hub.Service.DevicesClient Devices { get { throw null; } }
+        public Azure.Iot.Hub.Service.FilesClient Files { get { throw null; } }
+        public Azure.Iot.Hub.Service.JobsClient Jobs { get { throw null; } }
+        public Azure.Iot.Hub.Service.CloudToDeviceMessagesClient Messages { get { throw null; } }
+        public Azure.Iot.Hub.Service.ModulesClient Modules { get { throw null; } }
+        public Azure.Iot.Hub.Service.StatisticsClient Statistics { get { throw null; } }
+    }
+    public partial class IoTHubServiceClientOptions : Azure.Core.ClientOptions
+    {
+        public IoTHubServiceClientOptions(Azure.Iot.Hub.Service.IoTHubServiceClientOptions.ServiceVersion version = Azure.Iot.Hub.Service.IoTHubServiceClientOptions.ServiceVersion.V2020_03_13) { }
+        public Azure.Iot.Hub.Service.IoTHubServiceClientOptions.ServiceVersion Version { get { throw null; } }
+        public enum ServiceVersion
+        {
+            V2020_03_13 = 1,
+        }
+    }
+    public partial class JobsClient
+    {
+        public JobsClient() { }
+    }
+    public partial class ModulesClient
+    {
+        protected ModulesClient() { }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity> CreateOrUpdateIdentity(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity>> CreateOrUpdateIdentityAsync(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteIdentity(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIdentityAsync(Azure.Iot.Hub.Service.Models.ModuleIdentity moduleIdentity, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.ModuleIdentity>> GetIdentities(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.ModuleIdentity>>> GetIdentitiesAsync(string deviceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity> GetIdentity(string deviceId, string moduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.ModuleIdentity>> GetIdentityAsync(string deviceId, string moduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinData> GetTwin(string deviceId, string moduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> GetTwinAsync(string deviceId, string moduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.Hub.Service.Models.TwinData> GetTwins(int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.Hub.Service.Models.TwinData> GetTwinsAsync(int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse> InvokeMethod(string deviceId, string moduleId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, string moduleId, Azure.Iot.Hub.Service.Models.CloudToDeviceMethodRequest directMethodRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Iot.Hub.Service.Models.TwinData> UpdateTwin(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.Hub.Service.Models.TwinData>> UpdateTwinAsync(Azure.Iot.Hub.Service.Models.TwinData twinUpdate, Azure.Iot.Hub.Service.IfMatchPrecondition precondition = Azure.Iot.Hub.Service.IfMatchPrecondition.IfMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StatisticsClient
+    {
+        public StatisticsClient() { }
+    }
+}
 namespace Azure.Iot.Hub.Service.Models
 {
     public partial class AuthenticationMechanism
@@ -27,9 +126,9 @@ namespace Azure.Iot.Hub.Service.Models
         public static bool operator !=(Azure.Iot.Hub.Service.Models.AuthenticationMechanismType left, Azure.Iot.Hub.Service.Models.AuthenticationMechanismType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BulkRegistryOperationResult
+    public partial class BulkRegistryOperationResponse
     {
-        internal BulkRegistryOperationResult() { }
+        internal BulkRegistryOperationResponse() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.DeviceRegistryOperationError> Errors { get { throw null; } }
         public bool? IsSuccessful { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Iot.Hub.Service.Models.DeviceRegistryOperationWarning> Warnings { get { throw null; } }
