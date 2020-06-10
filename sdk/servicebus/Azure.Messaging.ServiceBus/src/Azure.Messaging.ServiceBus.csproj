@@ -5,7 +5,6 @@
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <GenerateAPIListing>false</GenerateAPIListing>
   </PropertyGroup>
 
   <ItemGroup>
