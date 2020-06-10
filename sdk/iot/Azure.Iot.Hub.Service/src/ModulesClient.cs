@@ -42,7 +42,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleIdentity">The module identity to create.</param>
         /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created module identity.</returns>
+        /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(
             ModuleIdentity moduleIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -59,7 +59,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleIdentity">The module identity to create.</param>
         /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created module identity.</returns>
+        /// <returns>The created module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<ModuleIdentity> CreateOrUpdateIdentity(
             ModuleIdentity moduleIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -76,7 +76,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity.</param>
         /// <param name="moduleId">The unique identifier of the module to get.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The retrieved module identity.</returns>
+        /// <returns>The retrieved module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<ModuleIdentity>> GetIdentityAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
             return _registryManagerClient.GetModuleAsync(deviceId, moduleId, cancellationToken);
@@ -88,7 +88,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity.</param>
         /// <param name="moduleId">The unique identifier of the module to get.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The retrieved module identity.</returns>
+        /// <returns>The retrieved module identity and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<ModuleIdentity> GetIdentity(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
             return _registryManagerClient.GetModule(deviceId, moduleId, cancellationToken);
@@ -99,7 +99,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         /// <param name="deviceId">The unique identifier of the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A list of modules identities within a device.</returns>
+        /// <returns>A list of modules identities within a device and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<IReadOnlyList<ModuleIdentity>>> GetIdentitiesAsync(string deviceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
@@ -111,7 +111,7 @@ namespace Azure.Iot.Hub.Service
         /// </summary>
         /// <param name="deviceId">The unique identifier of the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A list of modules identities within a device.</returns>
+        /// <returns>A list of modules identities within a device and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<IReadOnlyList<ModuleIdentity>> GetIdentities(string deviceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
@@ -124,7 +124,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response.</returns>
+        /// <returns>The http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response> DeleteIdentityAsync(
             ModuleIdentity moduleIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -141,7 +141,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleIdentity">The module identity to delete. If no ETag is present on the module identity, then the condition must be equal to <see cref="IfMatchPrecondition.Unconditional"/> or equal to <see cref="IfMatchPrecondition.UnconditionalIfMatch"/>.</param>
         /// <param name="precondition">The condition on which to delete the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response.</returns>
+        /// <returns>The http response <see cref="Response{T}"/>.</returns>
         public virtual Response DeleteIdentity(
             ModuleIdentity moduleIdentity,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -237,7 +237,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity.</param>
         /// <param name="moduleId">The unique identifier of the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The module's twin, including reported properties and desired properties.</returns>
+        /// <returns>The module's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<TwinData>> GetTwinAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
             return _twinClient.GetModuleTwinAsync(deviceId, moduleId, cancellationToken);
@@ -249,7 +249,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity.</param>
         /// <param name="moduleId">The unique identifier of the module identity.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The module's twin, including reported properties and desired properties.</returns>
+        /// <returns>The module's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<TwinData> GetTwin(string deviceId, string moduleId, CancellationToken cancellationToken = default)
         {
             return _twinClient.GetModuleTwin(deviceId, moduleId, cancellationToken);
@@ -261,7 +261,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="twinUpdate">The properties to update. Any existing properties not referenced by this patch will be unaffected by this patch.</param>
         /// <param name="precondition">The condition for which this operation will execute.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The new representation of the module's twin.</returns>
+        /// <returns>The new representation of the module's twin and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<TwinData>> UpdateTwinAsync(
             TwinData twinUpdate,
             IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch,
@@ -278,7 +278,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="twinUpdate">The properties to update. Any existing properties not referenced by this patch will be unaffected by this patch.</param>
         /// <param name="precondition">The condition for which this operation will execute.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The new representation of the module's twin.</returns>
+        /// <returns>The new representation of the module's twin and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<TwinData> UpdateTwin(TwinData twinUpdate, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(twinUpdate, nameof(twinUpdate));
@@ -293,7 +293,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleId">The unique identifier of the module identity to invoke the method on.</param>
         /// <param name="directMethodRequest">The details of the method to invoke.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The result of the method invocation.</returns>
+        /// <returns>The result of the method invocation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Task<Response<CloudToDeviceMethodResponse>> InvokeMethodAsync(
             string deviceId,
             string moduleId,
@@ -310,7 +310,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="moduleId">The unique identifier of the module identity to invoke the method on.</param>
         /// <param name="directMethodRequest">The details of the method to invoke.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The result of the method invocation.</returns>
+        /// <returns>The result of the method invocation and the http response <see cref="Response{T}"/>.</returns>
         public virtual Response<CloudToDeviceMethodResponse> InvokeMethod(
             string deviceId,
             string moduleId,
