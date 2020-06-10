@@ -48,7 +48,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 else
                 {
                     Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName, sessionId: scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
+                        scope.QueueName,
+                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }

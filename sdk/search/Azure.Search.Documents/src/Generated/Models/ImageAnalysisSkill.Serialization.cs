@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultLanguageCode");
                 writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
             }
-            if (VisualFeatures != null)
+            if (VisualFeatures != null && VisualFeatures.Any())
             {
                 writer.WritePropertyName("visualFeatures");
                 writer.WriteStartArray();
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Details != null)
+            if (Details != null && Details.Any())
             {
                 writer.WritePropertyName("details");
                 writer.WriteStartArray();
@@ -58,20 +59,26 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs != null && Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
+            if (Outputs != null && Outputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -159,6 +166,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("inputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -176,6 +187,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

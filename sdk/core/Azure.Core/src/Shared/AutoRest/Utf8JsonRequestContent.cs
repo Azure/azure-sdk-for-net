@@ -12,28 +12,28 @@ namespace Azure.Core
 {
     internal class Utf8JsonRequestContent: RequestContent
     {
-        private readonly ArrayBufferWriter<byte> _writer;
+        private readonly MemoryStream _stream;
+        private readonly RequestContent _content;
 
         public Utf8JsonWriter JsonWriter { get; }
 
         public Utf8JsonRequestContent()
         {
-            _writer = new ArrayBufferWriter<byte>();
-            JsonWriter = new Utf8JsonWriter(_writer);
+            _stream = new MemoryStream();
+            _content = Create(_stream);
+            JsonWriter = new Utf8JsonWriter(_stream);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
-            using var content = Create(_writer.WrittenMemory);
-            await content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
             JsonWriter.Flush();
-            using var content = Create(_writer.WrittenMemory);
-            content.WriteTo(stream, cancellation);
+            _content.WriteTo(stream, cancellation);
         }
 
         public override bool TryComputeLength(out long length)
@@ -44,6 +44,8 @@ namespace Azure.Core
 
         public override void Dispose()
         {
+            JsonWriter.Dispose();
+            _content.Dispose();
         }
     }
 }

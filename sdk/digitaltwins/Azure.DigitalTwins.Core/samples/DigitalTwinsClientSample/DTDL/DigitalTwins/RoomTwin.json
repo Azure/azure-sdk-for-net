@@ -8,7 +8,6 @@
     "EmployeeId": "Employee1",
     "wifiAccessPoint": {
         "$metadata": {
-            "$model": "dtmi:samples:Wifi;1"
         },
         "RouterName": "Cisco1",
         "Network": "Room1"

@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,8 +11,11 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Blobs
 {
@@ -165,6 +167,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption">Client-side encryption options.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobClient(
             Uri blobUri,
@@ -172,8 +175,9 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, clientSideEncryption, encryptionScope)
         {
         }
         #endregion ctors
@@ -1117,6 +1121,13 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            if (UsingClientSideEncryption)
+            {
+                // content is now unseekable, so PartitionedUploader will be forced to do a buffered multipart upload
+                (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                    .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
+            }
+
             var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
             var uploader = GetPartitionedUploader(
@@ -1164,6 +1175,28 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            // TODO Upload from file will get it's own implementation in the future that opens more
+            //      than one stream at once. This is incompatible with .NET's CryptoStream. We will
+            //      need to uncomment the below code and revert to upload from stream if client-side
+            //      encryption is enabled.
+            //if (ClientSideEncryption != default)
+            //{
+            //    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            //    {
+            //        return await StagedUploadAsync(
+            //            stream,
+            //            blobHttpHeaders,
+            //            metadata,
+            //            conditions,
+            //            progressHandler,
+            //            accessTier,
+            //            transferOptions: transferOptions,
+            //            async: async,
+            //            cancellationToken: cancellationToken)
+            //            .ConfigureAwait(false);
+            //    }
+            //}
+
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadInternal(
@@ -1182,21 +1215,5 @@ namespace Azure.Storage.Blobs
             string operationName = null)
             => new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope)
                 .GetPartitionedUploader(transferOptions, arrayPool, operationName);
-
-        // NOTE: TransformContent is no longer called by the new implementation
-        // of parallel upload.  Leaving the virtual stub in for now to avoid
-        // any confusion.  Will need to be added back for encryption work per
-        // #7127.
-
-        /// <summary>
-        /// Performs a transform on the data for uploads. It is a no-op by default.
-        /// </summary>
-        /// <param name="content">Content to transform.</param>
-        /// <param name="metadata">Content metadata to transform.</param>
-        /// <returns>Transformed content stream and metadata.</returns>
-        internal virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
-        {
-            return (content, metadata); // no-op
-        }
     }
 }

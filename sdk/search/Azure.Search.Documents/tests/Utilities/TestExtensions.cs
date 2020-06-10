@@ -5,6 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#else
+using Microsoft.Spatial;
+#endif
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -148,5 +153,20 @@ namespace Azure.Search.Documents.Tests
             (seq == null || !seq.Any()) ?
             null :
             string.Join(",", seq);
+
+        /// <summary>
+        /// Create a Geometry Point.
+        /// </summary>
+        /// <param name="latitude">The latitude.</param>
+        /// <param name="longitude">The longitude.</param>
+        /// <returns></returns>
+#if EXPERIMENTAL_SPATIAL
+        public static PointGeometry CreatePoint(double longitude, double latitude) =>
+            new PointGeometry(new GeometryPosition(longitude, latitude));
+#else
+        public static GeographyPoint CreatePoint(double longitude, double latitude) =>
+            // Note: GeographyPoint takes latitude first, unlike PointGeometry
+            GeographyPoint.Create(latitude, longitude);
+#endif
     }
 }

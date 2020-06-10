@@ -59,7 +59,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
             request.Content = content;
             return message;
@@ -145,7 +145,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshot);
             request.Content = content;
             return message;
@@ -552,7 +552,7 @@ namespace Azure.Management.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(grantAccessData);
             request.Content = content;
             return message;

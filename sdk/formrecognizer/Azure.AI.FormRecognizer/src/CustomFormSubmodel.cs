@@ -20,13 +20,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The type of form this submodel recognizes.
         /// </summary>
-        public string FormType { get; internal set; }
+        public string FormType { get; }
 
         /// <summary>
         /// The mean of the accuracies of this model's <see cref="CustomFormModelField"/>
         /// instances.
         /// </summary>
-        public float? Accuracy { get; internal set; }
+        public float? Accuracy { get; }
 
         /// <summary>
         /// A dictionary of the fields that this submodel will recognize from the
@@ -35,6 +35,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// label of the field. For models trained with forms only, a unique name is
         /// generated for each field.
         /// </summary>
-        public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
+        public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; }
     }
 }

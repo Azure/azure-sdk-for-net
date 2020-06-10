@@ -247,7 +247,20 @@ namespace Azure.Core.Tests
             var element2 = JsonDocument.Parse(memoryStreamOutput.ToArray()).RootElement;
             var geometry2 = GeometryJsonConverter.Read(element2);
 
-            return (T)geometry2;
+            var options = new JsonSerializerOptions()
+            {
+                Converters = { new GeometryJsonConverter() }
+            };
+
+            // Serialize and deserialize as a base class
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(Geometry), options);
+            var geometry3 = JsonSerializer.Deserialize<Geometry>(bytes, options);
+
+            // Serialize and deserialize as a concrete class
+            var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3, options);
+            var geometry4 = JsonSerializer.Deserialize<T>(bytes2, options);
+
+            return geometry4;
         }
     }
 }

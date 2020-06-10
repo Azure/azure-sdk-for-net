@@ -358,9 +358,9 @@ namespace Azure.Management.Resources.Models
         public DeploymentProperties(Azure.Management.Resources.Models.DeploymentMode mode) { }
         public Azure.Management.Resources.Models.DebugSetting DebugSetting { get { throw null; } set { } }
         public Azure.Management.Resources.Models.DeploymentMode Mode { get { throw null; } }
-        public object Parameters { get { throw null; } set { } }
+        public string Parameters { get { throw null; } set { } }
         public Azure.Management.Resources.Models.ParametersLink ParametersLink { get { throw null; } set { } }
-        public object Template { get { throw null; } set { } }
+        public string Template { get { throw null; } set { } }
         public Azure.Management.Resources.Models.TemplateLink TemplateLink { get { throw null; } set { } }
     }
     public partial class DeploymentPropertiesExtended

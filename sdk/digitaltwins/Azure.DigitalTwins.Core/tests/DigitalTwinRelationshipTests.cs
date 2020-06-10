@@ -68,7 +68,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorTwinCoolsRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, CoolsRelationship);
                 string floorTwinContainedInRelationshipPayload = TestAssetsHelper.GetRelationshipPayload(floorTwinId, ContainedInRelationship);
                 string floorCooledByHvacPayload = TestAssetsHelper.GetRelationshipPayload(hvacTwinId, CooledByRelationship);
-                string floorContainsRoomUpdatePayload = TestAssetsHelper.GetRelationshipUpdatePayload("isAccessRestricted", false);
+                string floorContainsRoomUpdatePayload = TestAssetsHelper.GetRelationshipUpdatePayload("/isAccessRestricted", false);
 
                 // CREATE relationships
 

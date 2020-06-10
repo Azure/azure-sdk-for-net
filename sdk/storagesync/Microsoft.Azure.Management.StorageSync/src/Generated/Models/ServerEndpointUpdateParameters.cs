@@ -44,13 +44,18 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// values include: 'on', 'off'</param>
         /// <param name="offlineDataTransferShareName">Offline data transfer
         /// share name</param>
-        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string))
+        /// <param name="localCacheMode">Policy for enabling follow-the-sun
+        /// business models: link local cache to cloud behavior to pre-populate
+        /// before local access. Possible values include:
+        /// 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'</param>
+        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), LocalCacheMode? localCacheMode = default(LocalCacheMode?))
         {
             CloudTiering = cloudTiering;
             VolumeFreeSpacePercent = volumeFreeSpacePercent;
             TierFilesOlderThanDays = tierFilesOlderThanDays;
             OfflineDataTransfer = offlineDataTransfer;
             OfflineDataTransferShareName = offlineDataTransferShareName;
+            LocalCacheMode = localCacheMode;
             CustomInit();
         }
 
@@ -90,6 +95,15 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.offlineDataTransferShareName")]
         public string OfflineDataTransferShareName { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for enabling follow-the-sun business models:
+        /// link local cache to cloud behavior to pre-populate before local
+        /// access. Possible values include: 'DownloadNewAndModifiedFiles',
+        /// 'UpdateLocallyCachedFiles'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.localCacheMode")]
+        public LocalCacheMode? LocalCacheMode { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// <summary>
     /// The parameters used when creating a storage sync service.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class StorageSyncServiceCreateParameters
     {
         /// <summary>
@@ -46,11 +48,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// tags can be provided for a resource. Each tag must have a key with
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
-        public StorageSyncServiceCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+        /// <param name="incomingTrafficPolicy">Incoming Traffic Policy.
+        /// Possible values include: 'AllowAllTraffic',
+        /// 'AllowVirtualNetworksOnly'</param>
+        public StorageSyncServiceCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), string incomingTrafficPolicy = default(string))
         {
             Location = location;
             Tags = tags;
-            Properties = properties;
+            IncomingTrafficPolicy = incomingTrafficPolicy;
             CustomInit();
         }
 
@@ -81,9 +86,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets incoming Traffic Policy. Possible values include:
+        /// 'AllowAllTraffic', 'AllowVirtualNetworksOnly'
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.incomingTrafficPolicy")]
+        public string IncomingTrafficPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.

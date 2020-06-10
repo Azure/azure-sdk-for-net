@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +17,16 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins");
-            writer.WriteStartArray();
-            foreach (var item in AllowedOrigins)
+            if (AllowedOrigins != null && AllowedOrigins.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("allowedOrigins");
+                writer.WriteStartArray();
+                foreach (var item in AllowedOrigins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (MaxAgeInSeconds != null)
             {
                 writer.WritePropertyName("maxAgeInSeconds");
@@ -39,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("allowedOrigins"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

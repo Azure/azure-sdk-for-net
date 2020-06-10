@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the configuration parameter.
+        /// Gets or sets name of the configuration parameter.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets value of the configuration parameter.
+        /// Gets or sets value of the configuration parameter.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
+        public string Value { get; set; }
 
     }
 }

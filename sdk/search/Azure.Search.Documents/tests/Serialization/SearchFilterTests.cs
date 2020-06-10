@@ -3,8 +3,9 @@
 
 using System;
 using System.Text;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.Spatial;
+#endif
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -149,6 +150,45 @@ namespace Azure.Search.Documents.Tests
             StringBuilder sb = new StringBuilder("bar");
             Assert.AreEqual("Foo eq 'bar'", SearchFilter.Create($"Foo eq {sb}"));
         }
+
+#if EXPERIMENTAL_SPATIAL
+        [Test]
+        public void Points()
+        {
+            GeometryPosition position = new GeometryPosition(2.0, 3.0);
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({position}, Foo) < 3"));
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new GeometryPosition(2.0, 3.0, 5.0)}, Foo) < 3"));
+            Assert.AreEqual("geo.distance(geography'POINT(2 3)', Foo) < 3", SearchFilter.Create($"geo.distance({new PointGeometry(position)}, Foo) < 3"));
+        }
+
+        [Test]
+        public void Polygons()
+        {
+            LineGeometry line = new LineGeometry(
+                new[]
+                {
+                    new GeometryPosition(0, 0),
+                    new GeometryPosition(0, 1),
+                    new GeometryPosition(1, 1),
+                    new GeometryPosition(0, 0),
+                });
+            Assert.AreEqual(
+                "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
+                SearchFilter.Create($"geo.intersects(Foo, {line})"));
+
+            PolygonGeometry polygon = new PolygonGeometry(new[] { line });
+            Assert.AreEqual(
+                "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
+                SearchFilter.Create($"geo.intersects(Foo, {polygon})"));
+
+            Assert.Throws<ArgumentException>(() => SearchFilter.Create(
+                $"{new LineGeometry(new[] { new GeometryPosition(0, 0) })}"));
+            Assert.Throws<ArgumentException>(() => SearchFilter.Create(
+                $"{new LineGeometry(new[] { new GeometryPosition(0, 0), new GeometryPosition(0, 0), new GeometryPosition(0, 0), new GeometryPosition(1, 1) })}"));
+            Assert.Throws<ArgumentException>(() => SearchFilter.Create(
+                $"{new PolygonGeometry(new[] { line, line })}"));
+        }
+#endif
 
         [Test]
         public void OtherThrows()

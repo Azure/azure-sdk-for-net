@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "1680",
+        "Content-Length": "1738",
         "Content-Type": "application/json",
-        "traceparent": "00-893b5ee7c547e045be89e909dc11a4c2-49581700f397b641-00",
+        "traceparent": "00-cd66a50788380544b749b76f39c31999-e776a1d8ec1d7640-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5de7cd27daaba6e6951bc0eddceaac08",
         "x-ms-return-client-request-id": "true"
@@ -34,7 +34,13 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1970-01-18T00:00:00.0000000-05:00",
             "rating": 4,
-            "location": null,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -73.975403,
+                40.760586000000004
+              ]
+            },
             "address": {
               "streetAddress": "677 5th Ave",
               "city": "New York",
@@ -75,16 +81,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "5de7cd27-daab-a6e6-951b-c0eddceaac08",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:53:45 GMT",
-        "elapsed-time": "117",
+        "Date": "Mon, 01 Jun 2020 12:10:20 GMT",
+        "elapsed-time": "115",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "5de7cd27-daab-a6e6-951b-c0eddceaac08",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "5de7cd27-daab-a6e6-951b-c0eddceaac08"
       },
       "ResponseBody": {
         "value": [
@@ -98,17 +106,17 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "378",
         "Content-Type": "application/json",
-        "traceparent": "00-964d3587988e694c894576c98d95e4a0-a8a9d46784fbac47-00",
+        "traceparent": "00-aad6be920540c64cbddd3af3cdce3bc0-4cb09032f11aa341-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "8638f76bb865265973c5f5169a34ec22",
         "x-ms-return-client-request-id": "true"
@@ -149,16 +157,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "8638f76b-b865-2659-73c5-f5169a34ec22",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:53:47 GMT",
-        "elapsed-time": "29",
+        "Date": "Mon, 01 Jun 2020 12:10:22 GMT",
+        "elapsed-time": "62",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "8638f76b-b865-2659-73c5-f5169a34ec22",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "8638f76b-b865-2659-73c5-f5169a34ec22"
       },
       "ResponseBody": {
         "value": [
@@ -172,15 +182,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-516365db8951f04db3e77b1d6ac86663-310b140d22b3e040-00",
+        "traceparent": "00-7568f9f8af42524c9cee45ed7d956b65-5efb27d0b1a9cc43-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "71a8a1f43dd9dc410cc30f0d308050fb",
         "x-ms-return-client-request-id": "true"
@@ -189,68 +199,33 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "71a8a1f4-3dd9-dc41-0cc3-0f0d308050fb",
         "Content-Length": "894",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:53:49 GMT",
-        "elapsed-time": "10",
+        "Date": "Mon, 01 Jun 2020 12:10:24 GMT",
+        "elapsed-time": "14",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "71a8a1f4-3dd9-dc41-0cc3-0f0d308050fb",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "71a8a1f4-3dd9-dc41-0cc3-0f0d308050fb"
       },
-      "ResponseBody": {
-        "hotelId": "1",
-        "hotelName": "Secret Point Motel",
-        "description": null,
-        "descriptionFr": "L\u0027h\u00F4tel est id\u00E9alement situ\u00E9 sur la principale art\u00E8re commerciale de la ville en plein c\u0153ur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d\u0027autres lieux d\u0027int\u00E9r\u00EAt qui font de New York l\u0027une des villes les plus attractives et cosmopolites de l\u0027Am\u00E9rique.",
-        "category": "Economy",
-        "tags": [
-          "pool",
-          "air conditioning"
-        ],
-        "parkingIncluded": true,
-        "smokingAllowed": true,
-        "lastRenovationDate": null,
-        "rating": 3,
-        "location": null,
-        "address": {
-          "streetAddress": "677 5th Ave",
-          "city": "New York",
-          "stateProvince": "NY",
-          "country": "USA",
-          "postalCode": "10022"
-        },
-        "rooms": [
-          {
-            "description": null,
-            "descriptionFr": null,
-            "type": "Budget Room",
-            "baseRate": 10.5,
-            "bedOptions": "1 Queen Bed",
-            "sleepsCount": 2,
-            "smokingAllowed": true,
-            "tags": [
-              "vcr/dvd",
-              "balcony"
-            ]
-          }
-        ]
-      }
+      "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Secret Point Motel\u0022,\u0022description\u0022:null,\u0022descriptionFr\u0022:\u0022L\u0027h\\u00f4tel est id\\u00e9alement situ\\u00e9 sur la principale art\\u00e8re commerciale de la ville en plein c\\u0153ur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d\u0027autres lieux d\u0027int\\u00e9r\\u00eat qui font de New York l\u0027une des villes les plus attractives et cosmopolites de l\u0027Am\\u00e9rique.\u0022,\u0022category\u0022:\u0022Economy\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022air conditioning\u0022],\u0022parkingIncluded\u0022:true,\u0022smokingAllowed\u0022:true,\u0022lastRenovationDate\u0022:null,\u0022rating\u0022:3,\u0022location\u0022:null,\u0022address\u0022:{\u0022streetAddress\u0022:\u0022677 5th Ave\u0022,\u0022city\u0022:\u0022New York\u0022,\u0022stateProvince\u0022:\u0022NY\u0022,\u0022country\u0022:\u0022USA\u0022,\u0022postalCode\u0022:\u002210022\u0022},\u0022rooms\u0022:[{\u0022description\u0022:null,\u0022descriptionFr\u0022:null,\u0022type\u0022:\u0022Budget Room\u0022,\u0022baseRate\u0022:10.5,\u0022bedOptions\u0022:\u00221 Queen Bed\u0022,\u0022sleepsCount\u0022:2,\u0022smokingAllowed\u0022:true,\u0022tags\u0022:[\u0022vcr/dvd\u0022,\u0022balcony\u0022]}]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "1680",
+        "Content-Length": "1738",
         "Content-Type": "application/json",
-        "traceparent": "00-787aa064f8f8184fb0e938f92c3a4146-1ee5a2e5a11e5b49-00",
+        "traceparent": "00-2acabe4a415a3e4bb3cd58d0a89e3a04-75dbd4257b986043-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ebf2967c7a9e6fd973c1e9e6e4d00b61",
         "x-ms-return-client-request-id": "true"
@@ -273,7 +248,13 @@
             "smokingAllowed": true,
             "lastRenovationDate": "1970-01-18T00:00:00.0000000-05:00",
             "rating": 4,
-            "location": null,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -73.975403,
+                40.760586000000004
+              ]
+            },
             "address": {
               "streetAddress": "677 5th Ave",
               "city": "New York",
@@ -314,16 +295,18 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "client-request-id": "ebf2967c-7a9e-6fd9-73c1-e9e6e4d00b61",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:53:49 GMT",
-        "elapsed-time": "29",
+        "Date": "Mon, 01 Jun 2020 12:10:24 GMT",
+        "elapsed-time": "49",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "ebf2967c-7a9e-6fd9-73c1-e9e6e4d00b61",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "ebf2967c-7a9e-6fd9-73c1-e9e6e4d00b61"
       },
       "ResponseBody": {
         "value": [
@@ -337,15 +320,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-bbd2a35c1503574f8aa3121771c6e406-4dc8fff67419ef40-00",
+        "traceparent": "00-57140447b53b53409893d4b64b973462-cbb55e9b13140d4b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "3bf99d2e3b422e2eb65b79a1a94bf5f2",
         "x-ms-return-client-request-id": "true"
@@ -354,79 +337,31 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1559",
+        "client-request-id": "3bf99d2e-3b42-2e2e-b65b-79a1a94bf5f2",
+        "Content-Length": "1664",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:53:52 GMT",
-        "elapsed-time": "5",
+        "Date": "Mon, 01 Jun 2020 12:10:26 GMT",
+        "elapsed-time": "6",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "3bf99d2e-3b42-2e2e-b65b-79a1a94bf5f2",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "3bf99d2e-3b42-2e2e-b65b-79a1a94bf5f2"
       },
-      "ResponseBody": {
-        "hotelId": "1",
-        "hotelName": "Secret Point Motel",
-        "description": "The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time\u0027s Square and the historic centre of the city, as well as other places of interest that make New York one of America\u0027s most attractive and cosmopolitan cities.",
-        "descriptionFr": "L\u0027h\u00F4tel est id\u00E9alement situ\u00E9 sur la principale art\u00E8re commerciale de la ville en plein c\u0153ur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d\u0027autres lieux d\u0027int\u00E9r\u00EAt qui font de New York l\u0027une des villes les plus attractives et cosmopolites de l\u0027Am\u00E9rique.",
-        "category": "Boutique",
-        "tags": [
-          "pool",
-          "air conditioning",
-          "concierge"
-        ],
-        "parkingIncluded": false,
-        "smokingAllowed": true,
-        "lastRenovationDate": "1970-01-18T05:00:00Z",
-        "rating": 4,
-        "location": null,
-        "address": {
-          "streetAddress": "677 5th Ave",
-          "city": "New York",
-          "stateProvince": "NY",
-          "country": "USA",
-          "postalCode": "10022"
-        },
-        "rooms": [
-          {
-            "description": "Budget Room, 1 Queen Bed (Cityside)",
-            "descriptionFr": "Chambre \u00C9conomique, 1 grand lit (c\u00F4t\u00E9 ville)",
-            "type": "Budget Room",
-            "baseRate": 9.69,
-            "bedOptions": "1 Queen Bed",
-            "sleepsCount": 2,
-            "smokingAllowed": true,
-            "tags": [
-              "vcr/dvd"
-            ]
-          },
-          {
-            "description": "Budget Room, 1 King Bed (Mountain View)",
-            "descriptionFr": "Chambre \u00C9conomique, 1 tr\u00E8s grand lit (Mountain View)",
-            "type": "Budget Room",
-            "baseRate": 8.09,
-            "bedOptions": "1 King Bed",
-            "sleepsCount": 2,
-            "smokingAllowed": true,
-            "tags": [
-              "vcr/dvd",
-              "jacuzzi tub"
-            ]
-          }
-        ]
-      }
+      "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Secret Point Motel\u0022,\u0022description\u0022:\u0022The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time\u0027s Square and the historic centre of the city, as well as other places of interest that make New York one of America\u0027s most attractive and cosmopolitan cities.\u0022,\u0022descriptionFr\u0022:\u0022L\u0027h\\u00f4tel est id\\u00e9alement situ\\u00e9 sur la principale art\\u00e8re commerciale de la ville en plein c\\u0153ur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d\u0027autres lieux d\u0027int\\u00e9r\\u00eat qui font de New York l\u0027une des villes les plus attractives et cosmopolites de l\u0027Am\\u00e9rique.\u0022,\u0022category\u0022:\u0022Boutique\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022air conditioning\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:true,\u0022lastRenovationDate\u0022:\u00221970-01-18T05:00:00Z\u0022,\u0022rating\u0022:4,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-73.975403,40.760586],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:{\u0022streetAddress\u0022:\u0022677 5th Ave\u0022,\u0022city\u0022:\u0022New York\u0022,\u0022stateProvince\u0022:\u0022NY\u0022,\u0022country\u0022:\u0022USA\u0022,\u0022postalCode\u0022:\u002210022\u0022},\u0022rooms\u0022:[{\u0022description\u0022:\u0022Budget Room, 1 Queen Bed (Cityside)\u0022,\u0022descriptionFr\u0022:\u0022Chambre \\u00c9conomique, 1 grand lit (c\\u00f4t\\u00e9 ville)\u0022,\u0022type\u0022:\u0022Budget Room\u0022,\u0022baseRate\u0022:9.69,\u0022bedOptions\u0022:\u00221 Queen Bed\u0022,\u0022sleepsCount\u0022:2,\u0022smokingAllowed\u0022:true,\u0022tags\u0022:[\u0022vcr/dvd\u0022]},{\u0022description\u0022:\u0022Budget Room, 1 King Bed (Mountain View)\u0022,\u0022descriptionFr\u0022:\u0022Chambre \\u00c9conomique, 1 tr\\u00e8s grand lit (Mountain View)\u0022,\u0022type\u0022:\u0022Budget Room\u0022,\u0022baseRate\u0022:8.09,\u0022bedOptions\u0022:\u00221 King Bed\u0022,\u0022sleepsCount\u0022:2,\u0022smokingAllowed\u0022:true,\u0022tags\u0022:[\u0022vcr/dvd\u0022,\u0022jacuzzi tub\u0022]}]}"
     },
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027iaefcaam\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-teglaza.search.windows.net/indexes(\u0027wuaihhjd\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-8786b708978a6f43a41ee88ed34265ba-1ab8a8196af0dd43-00",
+        "traceparent": "00-46b6db0678b2f948b1eecb57ec685d8d-4dc6e3b8fb213848-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200601.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "049af97501417983c739fd18535af73c",
         "x-ms-return-client-request-id": "true"
@@ -435,20 +370,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 08 May 2020 06:53:52 GMT",
-        "elapsed-time": "204",
+        "client-request-id": "049af975-0141-7983-c739-fd18535af73c",
+        "Date": "Mon, 01 Jun 2020 12:10:26 GMT",
+        "elapsed-time": "603",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "049af975-0141-7983-c739-fd18535af73c",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "049af975-0141-7983-c739-fd18535af73c"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "1403851089",
-    "SearchIndexName": "iaefcaam",
+    "SearchIndexName": "wuaihhjd",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-teglaza"
   }
 }

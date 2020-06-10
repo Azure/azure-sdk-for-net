@@ -39,13 +39,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="lowerCaseKeepWords"> A value indicating whether to lower case all words first. Default is false. </param>
         internal KeepTokenFilter(string oDataType, string name, IList<string> keepWords, bool? lowerCaseKeepWords) : base(oDataType, name)
         {
-            KeepWords = keepWords;
+            KeepWords = keepWords ?? new List<string>();
             LowerCaseKeepWords = lowerCaseKeepWords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeepTokenFilter";
         }
-
-        /// <summary> The list of words to keep. </summary>
-        public IList<string> KeepWords { get; set; }
         /// <summary> A value indicating whether to lower case all words first. Default is false. </summary>
         public bool? LowerCaseKeepWords { get; set; }
     }

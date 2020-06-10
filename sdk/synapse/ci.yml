@@ -39,5 +39,9 @@ stages:
     ServiceDirectory: synapse
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.Synapse
-      safeName: MicrosoftAzureSynapse
+    - name: Azure.Analytics.Synapse.Spark
+      safeName: AzureAnalyticsSynapseSpark
+    - name: Azure.Analytics.Synapse.AccessControl
+      safeName: AzureAnalyticsSynapseAccessControl
+    - name: Azure.Analytics.Synapse.Artifacts
+      safeName: AzureAnalyticsSynapseArtifacts
