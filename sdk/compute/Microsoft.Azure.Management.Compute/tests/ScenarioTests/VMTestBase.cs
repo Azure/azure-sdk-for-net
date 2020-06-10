@@ -975,6 +975,8 @@ namespace Compute.Tests
             Assert.True(vmOut.HardwareProfile.VmSize
                      == vm.HardwareProfile.VmSize);
 
+            Assert.True(vmOut.ExtensionsTimeBudget == vm.ExtensionsTimeBudget);
+
             Assert.NotNull(vmOut.StorageProfile.OsDisk);
 
             if (vm.StorageProfile.OsDisk != null)
