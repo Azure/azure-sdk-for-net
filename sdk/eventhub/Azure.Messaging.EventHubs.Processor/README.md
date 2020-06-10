@@ -190,7 +190,7 @@ string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like 
 string eventHubName = "<< NAME OF THE EVENT HUB >>";
 string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-TokenCredential credential = new DefaultAzureIdentity();
+TokenCredential credential = new DefaultAzureCredential();
 BlobContainerClient storageClient = new BlobContainerClient(blobStorageUrl, credential);
 
 EventProcessorClient processor = new EventProcessorClient
