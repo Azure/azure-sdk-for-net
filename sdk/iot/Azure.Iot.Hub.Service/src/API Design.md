@@ -273,12 +273,12 @@ public  class Modules
     /// Create a module identity.
     /// </summary>
     /// <param name="moduleIdentity">The module identity to create.</param>
-    /// <param name="precondition">The condition on which to perform this operation. To create a device identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
+    /// <param name="precondition">The condition on which to perform this operation. To create a module identity, this value must be equal to <see cref="IfMatchPrecondition.Unconditional"/>.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The created module identity.</returns>
     public virtual Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(ModuleIdentity moduleIdentity, IfMatchPrecondition precondition = IfMatchPrecondition.IfMatch, CancellationToken cancellationToken = default);
 
-    //// <summary>
+    /// <summary>
     /// Get a single module identity.
     /// </summary>
     /// <param name="deviceId">The unique identifier of the device identity.</param>
