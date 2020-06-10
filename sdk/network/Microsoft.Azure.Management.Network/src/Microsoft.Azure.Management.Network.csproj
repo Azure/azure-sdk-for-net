@@ -11,10 +11,17 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added support for HubRouteTables
-            - Added support for BackendAddressPools in LoadBalancer
-            - Added support for ThreatIntelWhitelist in FirewallPolicy
-            - Fixed type of RoundTripTimeMs property in ConnectionMonitorSuccessThreshold
+            - Renamed Firewall Policy child resource from RuleGroup to RuleCollectionGroup
+            - Moved property TerminateTLS from NatRuleCondition to ApplicationRuleCondition
+            - Added support for VirtualHubBgpConnections, VirtualHubIpConfigurations, NetworkVirtualApplianceSites, HubVirtualNetworkConnections resources
+            - Added support for DnsProxy property to FirewallPolicy
+            - Added support for DestinationFqdns property to FirewallPolicy
+            - Added support for HopLink property to ConnectivityHop
+            - Added support for PrivateLinkConfiguration property to ApplicationGateway
+            - Added support for NvaSku property to NetworkVirtualAppliance
+            - Added support for HubPublicIPAddresses property to VirtualHub
+            - Added support for GetEffectiveVirtualHubRoutes method to VirtualHubs
+            - Added support for RoutingState property to VirtualHubs
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
