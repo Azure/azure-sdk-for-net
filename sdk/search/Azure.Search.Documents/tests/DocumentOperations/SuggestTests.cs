@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             SuggestResults<SearchDocument> suggestions =
-                await resources.GetQueryClient().SuggestAsync(
+                await resources.GetQueryClient().SuggestAsync<SearchDocument>(
                     "more",
                     "sg",
                     new SuggestOptions { OrderBy = new[] { "hotelId" } });
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await resources.GetQueryClient().SuggestAsync(
+                async () => await resources.GetQueryClient().SuggestAsync<SearchDocument>(
                     "hotel",
                     "sg",
                     new SuggestOptions { OrderBy = new[] { "This is not a valid orderby." } }));
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             string invalidName = "Invalid suggester";
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
-                async () => await resources.GetQueryClient().SuggestAsync(
+                async () => await resources.GetQueryClient().SuggestAsync<SearchDocument>(
                     "hotel",
                     invalidName));
             Assert.AreEqual(400, ex.Status);

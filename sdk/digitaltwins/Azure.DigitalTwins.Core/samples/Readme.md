@@ -8,9 +8,9 @@ The guides mentioned above can help you get started with key elements of Azure D
 
 # Digital Twins Samples
 
-You can explore azure digital twin APIs (using the client library) using the samples project. 
+You can explore the digital twins APIs (using the client library) using the samples project.
 
-Sample project demonstrates the following:
+The samples project demonstrates the following:
 
 - Instantiate the client
 - Create, get, and decommission models

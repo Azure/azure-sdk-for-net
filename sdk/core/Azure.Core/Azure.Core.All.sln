@@ -139,33 +139,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.DigitalTwins.Core.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Graph.Rbac", "..\..\testcommon\Azure.Graph.Rbac\src\Azure.Graph.Rbac.csproj", "{804834A9-209B-44BA-9634-349342000112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.AppConfiguration", "..\..\appconfiguration\Azure.Management.AppConfiguration\src\Azure.Management.AppConfiguration.csproj", "{ECCCB3AB-E922-4298-AC8F-DB62321BA762}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.AppConfiguration", "..\..\appconfiguration\Azure.ResourceManager.AppConfiguration\src\Azure.ResourceManager.AppConfiguration.csproj", "{ECCCB3AB-E922-4298-AC8F-DB62321BA762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.AppConfiguration.Tests", "..\..\appconfiguration\Azure.Management.AppConfiguration\tests\Azure.Management.AppConfiguration.Tests.csproj", "{466EE435-B21A-4642-A355-5752F0007691}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.AppConfiguration.Tests", "..\..\appconfiguration\Azure.ResourceManager.AppConfiguration\tests\Azure.ResourceManager.AppConfiguration.Tests.csproj", "{466EE435-B21A-4642-A355-5752F0007691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Compute", "..\..\compute\Azure.Management.Compute\src\Azure.Management.Compute.csproj", "{25441F2C-796F-4F06-922F-E39A2A8A68CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Compute", "..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj", "{25441F2C-796F-4F06-922F-E39A2A8A68CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Compute.Tests", "..\..\compute\Azure.Management.Compute\tests\Azure.Management.Compute.Tests.csproj", "{2B9978B6-3E34-4D49-B544-3C23574B1C79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Compute.Tests", "..\..\compute\Azure.ResourceManager.Compute\tests\Azure.ResourceManager.Compute.Tests.csproj", "{2B9978B6-3E34-4D49-B544-3C23574B1C79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.EventHub", "..\..\eventhub\Azure.Management.EventHub\src\Azure.Management.EventHub.csproj", "{3E3B12AD-2993-4A64-9B10-5F648039B54D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.EventHubs", "..\..\eventhub\Azure.ResourceManager.EventHubs\src\Azure.ResourceManager.EventHubs.csproj", "{3E3B12AD-2993-4A64-9B10-5F648039B54D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.EventHub.Tests", "..\..\eventhub\Azure.Management.EventHub\tests\Azure.Management.EventHub.Tests.csproj", "{0E2E0392-176A-4175-8EFD-1B892C77584B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.EventHubs.Tests", "..\..\eventhub\Azure.ResourceManager.EventHubs\tests\Azure.ResourceManager.EventHubs.Tests.csproj", "{0E2E0392-176A-4175-8EFD-1B892C77584B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.KeyVault", "..\..\keyvault\Azure.Management.KeyVault\src\Azure.Management.KeyVault.csproj", "{AD53DDDE-EE11-461B-B257-636F4C7DF7CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.KeyVault", "..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj", "{AD53DDDE-EE11-461B-B257-636F4C7DF7CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.KeyVault.Tests", "..\..\keyvault\Azure.Management.KeyVault\tests\Azure.Management.KeyVault.Tests.csproj", "{DE87BF6A-4424-4C8C-83E7-286176E4A0D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.KeyVault.Tests", "..\..\keyvault\Azure.ResourceManager.KeyVault\tests\Azure.ResourceManager.KeyVault.Tests.csproj", "{DE87BF6A-4424-4C8C-83E7-286176E4A0D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Network", "..\..\network\Azure.Management.Network\src\Azure.Management.Network.csproj", "{D7BCCC21-9700-454B-AB58-1A99A502309D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Network", "..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj", "{D7BCCC21-9700-454B-AB58-1A99A502309D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Network.Tests", "..\..\network\Azure.Management.Network\tests\Azure.Management.Network.Tests.csproj", "{0B3FEA8B-91A7-4621-8F95-5A81AFF0D7E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Network.Tests", "..\..\network\Azure.ResourceManager.Network\tests\Azure.ResourceManager.Network.Tests.csproj", "{0B3FEA8B-91A7-4621-8F95-5A81AFF0D7E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Resources", "..\..\resources\Azure.Management.Resources\src\Azure.Management.Resources.csproj", "{9C361667-DD1F-4E15-B974-9BF3B434E12D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Resources", "..\..\resources\Azure.ResourceManager.Resources\src\Azure.ResourceManager.Resources.csproj", "{9C361667-DD1F-4E15-B974-9BF3B434E12D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Resources.Tests", "..\..\resources\Azure.Management.Resources\tests\Azure.Management.Resources.Tests.csproj", "{52ABC8A3-DEF5-4E41-B5F8-212925A6A51E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Resources.Tests", "..\..\resources\Azure.ResourceManager.Resources\tests\Azure.ResourceManager.Resources.Tests.csproj", "{52ABC8A3-DEF5-4E41-B5F8-212925A6A51E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Storage", "..\..\storage\Azure.Management.Storage\src\Azure.Management.Storage.csproj", "{DEC0ECED-67D6-49FC-86A6-C680C34F6142}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Storage", "..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj", "{DEC0ECED-67D6-49FC-86A6-C680C34F6142}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Management.Storage.Tests", "..\..\storage\Azure.Management.Storage\tests\Azure.Management.Storage.Tests.csproj", "{A1B7E19A-B4C5-4EAD-9526-9F05E6C74D4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Storage.Tests", "..\..\storage\Azure.ResourceManager.Storage\tests\Azure.ResourceManager.Storage.Tests.csproj", "{A1B7E19A-B4C5-4EAD-9526-9F05E6C74D4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalTwinsClientSample", "..\..\digitaltwins\Azure.DigitalTwins.Core\samples\DigitalTwinsClientSample\DigitalTwinsClientSample.csproj", "{635AF2FC-2E5D-4335-8F8D-72F25BD61C95}"
 EndProject
