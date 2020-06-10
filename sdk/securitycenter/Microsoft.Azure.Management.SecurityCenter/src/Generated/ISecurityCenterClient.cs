@@ -122,16 +122,6 @@ namespace Microsoft.Azure.Management.Security
         IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
 
         /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
@@ -187,11 +177,6 @@ namespace Microsoft.Azure.Management.Security
         IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
 
         /// <summary>
-        /// Gets the IServerVulnerabilityAssessmentOperations.
-        /// </summary>
-        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
-
-        /// <summary>
         /// Gets the ISubAssessmentsOperations.
         /// </summary>
         ISubAssessmentsOperations SubAssessments { get; }
@@ -200,6 +185,16 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAutomationsOperations.
         /// </summary>
         IAutomationsOperations Automations { get; }
+
+        /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; }
+
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// </summary>
+        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
 
         /// <summary>
         /// Gets the IAssessmentsMetadataOperations.
@@ -235,6 +230,31 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IJitNetworkAccessPoliciesOperations.
         /// </summary>
         IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoresOperations.
+        /// </summary>
+        ISecureScoresOperations SecureScores { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlsOperations.
+        /// </summary>
+        ISecureScoreControlsOperations SecureScoreControls { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlDefinitionsOperations.
+        /// </summary>
+        ISecureScoreControlDefinitionsOperations SecureScoreControlDefinitions { get; }
 
     }
 }
