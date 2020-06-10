@@ -1,10 +1,14 @@
 # Release History
 
-## 1.2.0-preview.4 (Unreleased)
+## 1.2.0-preview.4
 
 ### New Features
 - Makes `AzureCliCredential`, `VisualStudioCredential` and `VisualStudioCodeCredential` public to allow direct usage.
 - Added `Authenticate` methods to `UsernamePasswordCredential`
+
+### Fixes and improvements
+- Fix `SharedTokenCacheCredential` account filter to be case-insensitive (Issue [#10816](https://github.com/Azure/azure-sdk-for-net/issues/10816))
+- Update `VisualStudioCodeCredential` to properly throw `CredentialUnavailableException` when re-authentication is needed. (Issue [#11595](https://github.com/Azure/azure-sdk-for-net/issues/11595))
 
 ## 1.2.0-preview.3
 
