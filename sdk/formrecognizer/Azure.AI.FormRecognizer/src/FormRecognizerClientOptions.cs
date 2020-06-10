@@ -58,9 +58,9 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         private void AddLoggedHeadersAndQueryParameters()
         {
-            Diagnostics.LoggedHeaderNames.Add(Constants.LocationHeader);
             Diagnostics.LoggedHeaderNames.Add(Constants.OperationLocationHeader);
             Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Location");
             Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
             Diagnostics.LoggedHeaderNames.Add("X-Content-Type-Options");
             Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
