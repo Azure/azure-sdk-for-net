@@ -12,6 +12,7 @@ namespace Azure.Iot.Hub.Service
 {
     /// <summary>
     /// Modules client to interact with device modules and module twins including CRUD operations and method invokations.
+    /// See <see href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-portal-csharp-module-twin-getstarted"> Getting started with module identity</see>.
     /// </summary>
     public class ModulesClient
     {
