@@ -22,6 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("format");
                 writer.WriteStringValue(Format);
             }
+            else
+            {
+                writer.WriteNull("format");
+            }
             writer.WritePropertyName("synonyms");
             writer.WriteStringValue(Synonyms);
             if (EncryptionKey != null)

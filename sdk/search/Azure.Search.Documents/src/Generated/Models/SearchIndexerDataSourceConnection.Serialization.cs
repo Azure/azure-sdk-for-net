@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("credentials");
                 writer.WriteObjectValue(CredentialsInternal);
             }
+            else
+            {
+                writer.WriteNull("credentials");
+            }
             writer.WritePropertyName("container");
             writer.WriteObjectValue(Container);
             if (DataChangeDetectionPolicy != null)

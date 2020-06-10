@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </param>
         internal ResourceSkusResult(IReadOnlyList<ResourceSku> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<ResourceSku>();
             NextLink = nextLink;
         }
 

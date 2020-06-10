@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
         internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSet> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<DiskEncryptionSet>();
             NextLink = nextLink;
         }
 
