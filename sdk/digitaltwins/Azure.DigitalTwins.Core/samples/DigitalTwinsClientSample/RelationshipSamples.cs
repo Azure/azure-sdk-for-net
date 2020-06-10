@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.DigitalTwins.Core.Models;
 using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
@@ -60,18 +60,83 @@ namespace Azure.DigitalTwins.Core.Samples
 
             // Setup a relationship between the source and target digital twins
             string relationshipId = await GetUniqueRelationshipIdAsync(sourceDtId, SamplesConstants.TemporaryRelationshipIdPrefix, client);
-            string newRelationshipPayload = SamplesConstants.TemporaryRelationsshipPayload
-                .Replace(SamplesConstants.RelationshipId, relationshipId)
-                .Replace(SamplesConstants.TargetId, targetDtId)
-                .Replace(SamplesConstants.SourceId, sourceDtId);
 
             #region Snippet:DigitalTwinsSampleCreateRelationship
 
-            Response<string> createRelationshipResponse = await client.CreateRelationshipAsync(sourceDtId, relationshipId, newRelationshipPayload);
+            var basicRelationship = new BasicRelationship()
+            {
+                Id = relationshipId,
+                TargetId = targetDtId,
+                SourceId = sourceDtId,
+                Name = "related"
+            };
+
+            string serializedRelationship = JsonSerializer.Serialize(basicRelationship);
+            Response<string> createRelationshipResponse = await client.CreateRelationshipAsync(sourceDtId, relationshipId, serializedRelationship);
             Console.WriteLine($"Created a digital twin relationship with Id {relationshipId} from digital twin with Id {sourceDtId} to digital twin with Id {targetDtId}. " +
                 $"Response status: {createRelationshipResponse.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateRelationship
+
+            // Get all incoming relationships for a digital twin.
+            #region Snippet:DigitalTwinsSampleGetIncomingRelationships
+
+            AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(targetDtId);
+
+            await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
+            {
+                Console.WriteLine($"Found an incoming relationship with Id {incomingRelationship.RelationshipId} coming from a digital twin with Id {incomingRelationship.SourceId}.");
+            }
+
+            #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
+
+            // Get all relationships in a digital twin graph.
+            #region Snippet:DigitalTwinsSampleGetRelationships
+
+            AsyncPageable<string> relationships = client.GetRelationshipsAsync(sourceDtId);
+
+            await foreach (var relationshipJson in relationships)
+            {
+                BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
+                Console.WriteLine($"Found relationship with Id {relationship.Id} with a digital twin source Id {relationship.SourceId} and " +
+                    $"a digital twin target Id {relationship.TargetId}.");
+            }
+
+            #endregion Snippet:DigitalTwinsSampleGetRelationships
+
+            // Delete all relationships in a digital twin graph.
+            #region Snippet:DigitalTwinsSampleDeleteAllRelationships
+
+            AsyncPageable<string> relationshipsToDelete = client.GetRelationshipsAsync(sourceDtId);
+
+            await foreach (var relationshipToDelete in relationshipsToDelete)
+            {
+                BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipToDelete);
+                Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
+                Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
+            }
+
+            #endregion Snippet:DigitalTwinsSampleDeleteAllRelationships
+
+            // Clean up.
+            try
+            {
+                await client.DeleteDigitalTwinAsync(sourceDtId);
+                await client.DeleteDigitalTwinAsync(targetDtId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Failed to delete digital twin due to {ex}.");
+            }
+
+            try
+            {
+                await client.DeleteModelAsync(modelId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Failed to delete model due to {ex}.");
+            }
         }
     }
 }

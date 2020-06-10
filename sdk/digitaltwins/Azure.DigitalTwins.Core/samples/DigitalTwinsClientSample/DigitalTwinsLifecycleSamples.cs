@@ -199,32 +199,12 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     // Delete all relationships
-
-                    #region Snippet:DigitalTwinsSampleGetRelationships
-
                     AsyncPageable<string> relationships = client.GetRelationshipsAsync(twin.Key);
-
-                    #endregion Snippet:DigitalTwinsSampleGetRelationships
-
                     await foreach (var relationshipJson in relationships)
                     {
                         BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                         await client.DeleteRelationshipAsync(twin.Key, relationship.Id);
                         Console.WriteLine($"Found and deleted relationship {relationship.Id}");
-                    }
-
-                    // Delete any incoming relationships
-
-                    #region Snippet:DigitalTwinsSampleGetIncomingRelationships
-
-                    AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
-
-                    #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
-
-                    await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
-                    {
-                        await client.DeleteRelationshipAsync(incomingRelationship.SourceId, incomingRelationship.RelationshipId);
-                        Console.WriteLine($"Found and deleted incoming relationship {incomingRelationship.RelationshipId}");
                     }
 
                     // Now the digital twin should be safe to delete
@@ -353,8 +333,6 @@ namespace Azure.DigitalTwins.Core.Samples
                 // We deserialize as BasicRelationship to get the entire custom relationship (custom relationship properties).
                 IEnumerable<BasicRelationship> relationships = JsonSerializer.Deserialize<IEnumerable<BasicRelationship>>(relationshipSet.Value);
 
-                #region Snippet:DigitalTwinsSampleCreateRelationship
-
                 // From loaded relationships, get the source Id and Id from each one,
                 // and create it with full relationship payload
                 foreach (BasicRelationship relationship in relationships)
@@ -375,8 +353,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         Console.WriteLine($"Relationship {relationship.Id} already exists: {ex.Message}");
                     }
                 }
-
-                #endregion Snippet:DigitalTwinsSampleCreateRelationship
             }
         }
 
