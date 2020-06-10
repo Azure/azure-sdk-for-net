@@ -3408,7 +3408,7 @@ namespace Azure.Storage.Files.DataLake
                     // Relative
                     if (options.TimeToExpire.HasValue)
                     {
-                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOffset.CreationTime)
+                        if (options.SetExpiryRelativeTo.Value == DataLakeFileExpirationOrigin.CreationTime)
                         {
                             blobExpiryOptions = PathExpiryOptions.RelativeToCreation;
                         }

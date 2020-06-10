@@ -290,7 +290,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Permissions { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
-    public enum DataLakeFileExpirationOffset
+    public enum DataLakeFileExpirationOrigin
     {
         CreationTime = 0,
         Now = 1,
@@ -299,9 +299,9 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileScheduleDeletionOptions() { }
         public DataLakeFileScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
-        public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset setRelativeTo) { }
+        public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin setRelativeTo) { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOffset? SetExpiryRelativeTo { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class DataLakeFileUploadOptions
