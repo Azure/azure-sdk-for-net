@@ -77,7 +77,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D-154241d7-6004-450b-632d-f294d9c262b1",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D%253A-154241d7-6004-450b-632d-f294d9c262b1",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -245,7 +245,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D-154241d7-6004-450b-632d-f294d9c262b1?comp=range",
+      "RequestUri": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D%253A-154241d7-6004-450b-632d-f294d9c262b1?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -292,7 +292,7 @@
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "6ecf2ecd-c341-8270-1fe5-a722a5d5b5fa",
-        "x-ms-copy-source": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D-154241d7-6004-450b-632d-f294d9c262b1",
+        "x-ms-copy-source": "https://seanmcccanary.file.core.windows.net/test-share-d3a43671-e53f-c502-602e-f30387696a2a/test-directory-8927c7c3-d2fd-d89c-004c-8f25ed08f217/test-\u0192\u00A1\u00A3\u20AC\u203D%253A-154241d7-6004-450b-632d-f294d9c262b1",
         "x-ms-date": "Tue, 26 May 2020 18:55:19 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
