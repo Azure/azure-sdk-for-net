@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -13,6 +13,43 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
+    /// <example>
+    /// Here's an example of  how to use the BasicRelationship helper class to serialize and create a relationship.
+    ///
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship">
+    /// var basicRelationshipPayload = new BasicRelationship
+    /// {
+    ///     Id = &quot;sampleRelationship1Id&quot;,
+    ///     SourceId = &quot;sampleTwin1Id&quot;,
+    ///     TargetId = &quot;sampleTwin2Id&quot;,
+    ///     Name = &quot;related&quot;,
+    ///     CustomProperties =
+    ///     {
+    ///         { &quot;Prop1&quot;, &quot;Prop1 value&quot; },
+    ///         { &quot;Prop2&quot;, 6 }
+    ///     }
+    /// };
+    ///
+    /// string serializedRelationship = JsonSerializer.Serialize(basicRelationshipPayload);
+    /// Response&lt;string&gt; createRelationshipResponse = await client.CreateRelationshipAsync(&quot;sampleTwin1Id&quot;, &quot;sampleRelationship1Id&quot;, serializedRelationship);
+    /// Console.WriteLine($&quot;Created a digital twin relationship with Id sampleRelationship1Id from digital twin with Id sampleTwin1Id to digital twin with Id sampleTwin2Id. &quot; +
+    ///     $&quot;Response status: {createRelationshipResponse.GetRawResponse().Status}.&quot;);
+    /// </code>
+    ///
+    /// Here's an example of  how to use the BasicRelationship helper class to get and deserialize a relationship.
+    ///
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship">
+    /// Response&lt;string&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync(&quot;sampleTwin1Id&quot;, &quot;sampleRelationship1Id&quot;);
+    /// if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
+    /// {
+    ///     BasicRelationship basicRelationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(getBasicRelationshipResponse.Value);
+    ///     Console.WriteLine($&quot;Retrieved relationship with Id {basicRelationship.Id} from digital twin with Id {basicRelationship.SourceId}. &quot; +
+    ///         $&quot;Response status: {getBasicRelationshipResponse.GetRawResponse().Status}.\n\t&quot; +
+    ///         $&quot;Prop1: {basicRelationship.CustomProperties[&quot;Prop1&quot;]}\n\t&quot; +
+    ///         $&quot;Prop2: {basicRelationship.CustomProperties[&quot;Prop2&quot;]}&quot;);
+    /// }
+    /// </code>
+    /// </example>
     public class BasicRelationship
     {
         /// <summary>

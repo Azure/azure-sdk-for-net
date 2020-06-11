@@ -145,26 +145,6 @@ namespace Azure.DigitalTwins.Core.Samples
         public const string RelationshipTargetModelId = "RELATIONSHIP_TARGET_MODEL_ID";
 
         /// <summary>
-        /// Temporary relationship Id prefix.
-        /// </summary>
-        public const string TemporaryRelationshipIdPrefix = "sampleRelationship";
-
-        /// <summary>
-        /// Placeholder for a relationship Id in the temporary relationship payload.
-        /// </summary>
-        public const string RelationshipId = "RELATIONSHIP_ID";
-
-        /// <summary>
-        /// Placeholder for a digital twin Id that is used as the source of a relationship.
-        /// </summary>
-        public const string SourceId = "SOURCE_ID";
-
-        /// <summary>
-        /// Placeholder for a digital twin Id that is used as the target of a relationship.
-        /// </summary>
-        public const string TargetId = "TARGET_ID";
-
-        /// <summary>
         /// The application/json description of a temporary model with a relationship
         /// </summary>
         public const string TemporaryModelWithRelationshipPayload = @"
@@ -180,17 +160,6 @@ namespace Azure.DigitalTwins.Core.Samples
                         ""target"": ""RELATIONSHIP_TARGET_MODEL_ID""
                     }
                 ]
-            }";
-
-        /// <summary>
-        /// The application/json description of a temporary relationship
-        /// </summary>
-        public const string TemporaryRelationsshipPayload = @"
-            {
-                ""$relationshipId"": ""RELATIONSHIP_ID"",
-                ""$sourceId"": ""SOURCE_ID"",
-                ""$relationshipName"": ""related"",
-                ""$targetId"": ""TARGET_ID""
             }";
     }
 }

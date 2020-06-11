@@ -77,7 +77,7 @@ namespace Azure.DigitalTwins.Core.Samples
             string basicDtPayload = JsonSerializer.Serialize(basicTwin);
 
             Response<string> createBasicDtResponse = await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-            Console.WriteLine($"Created digital twin with id {basicDtId}. Response status: {createBasicDtResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created digital twin with Id {basicDtId}. Response status: {createBasicDtResponse.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
 
@@ -129,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Samples
             string dt2Payload = JsonSerializer.Serialize(customTwin);
 
             Response<string> createCustomDtResponse = await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-            Console.WriteLine($"Created digital twin with id {customDtId}. Response status: {createCustomDtResponse.GetRawResponse().Status}.");
+            Console.WriteLine($"Created digital twin with Id {customDtId}. Response status: {createCustomDtResponse.GetRawResponse().Status}.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
 
@@ -161,7 +161,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             Response<string> response = await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
 
-            Console.WriteLine($"Updated component for digital twin with id {basicDtId}. Response status: {response.GetRawResponse().Status}");
+            Console.WriteLine($"Updated component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleUpdateComponent
 
@@ -171,7 +171,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
             response = await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
 
-            Console.WriteLine($"Retrieved component for digital twin with id {basicDtId}. Response status: {response.GetRawResponse().Status}");
+            Console.WriteLine($"Retrieved component for digital twin with Id {basicDtId}. Response status: {response.GetRawResponse().Status}");
 
             #endregion Snippet:DigitalTwinsSampleGetComponent
 

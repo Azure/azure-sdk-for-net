@@ -204,15 +204,25 @@ namespace Azure.DigitalTwins.Core.Samples
                     {
                         BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                         await client.DeleteRelationshipAsync(twin.Key, relationship.Id);
-                        Console.WriteLine($"Found and deleted relationship {relationship.Id}");
+                        Console.WriteLine($"Found and deleted relationship with Id {relationship.Id}.");
+                    }
+
+                    // Delete any incoming relationships
+                    AsyncPageable<IncomingRelationship> incomingRelationships = client.GetIncomingRelationshipsAsync(twin.Key);
+
+                    await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
+                    {
+                        await client.DeleteRelationshipAsync(incomingRelationship.SourceId, incomingRelationship.RelationshipId);
+                        Console.WriteLine($"Found and deleted incoming relationship with Id {incomingRelationship.RelationshipId}.");
                     }
 
                     // Now the digital twin should be safe to delete
+                    string digitalTwinId = twin.Key;
 
                     #region Snippet:DigitalTwinsSampleDeleteTwin
 
-                    Response deleteDigitalTwinResponse = await client.DeleteDigitalTwinAsync(twin.Key);
-                    Console.WriteLine($"Deleted digital twin with Id {twin.Key}. Response Status: {deleteDigitalTwinResponse.Status}");
+                    Response deleteDigitalTwinResponse = await client.DeleteDigitalTwinAsync(digitalTwinId);
+                    Console.WriteLine($"Deleted digital twin with Id {digitalTwinId}. Response Status: {deleteDigitalTwinResponse.Status}");
 
                     #endregion Snippet:DigitalTwinsSampleDeleteTwin
 
