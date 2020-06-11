@@ -178,15 +178,16 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #endregion Snippet:DigitalTwinsSampleGetIncomingRelationships
 
+            // Delete the contains relationship, created earlier in the sample code, from building to floor.
+            
             #region Snippet:DigitalTwinsSampleDeleteRelationship
 
-            // Delete the contains relationship from building to floor.
             Response deleteBuildingRelationshipResponse = await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
             Console.WriteLine($"Deleted relationship with Id buildingFloorRelationshipId. Status response: {deleteBuildingRelationshipResponse.Status}.");
 
             #endregion Snippet:DigitalTwinsSampleDeleteRelationship
 
-            // Delete the containedIn relationship from floor to building.
+            // Delete the containedIn relationship, created earlier in the sample code, from floor to building.
             Response deleteFloorRelationshipResponse = await client.DeleteRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
             Console.WriteLine($"Deleted relationship with Id floorBuildingRelationshipId. Status response: {deleteFloorRelationshipResponse.Status}.");
 

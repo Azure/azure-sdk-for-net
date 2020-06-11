@@ -417,7 +417,6 @@ await foreach (IncomingRelationship incomingRelationship in incomingRelationship
 To delete all outgoing relationships for a digital twin, simply iterate over the relationships and delete them iteratively.
 
 ```C# Snippet:DigitalTwinsSampleDeleteRelationship
-// Delete the contains relationship from building to floor.
 Response deleteBuildingRelationshipResponse = await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
 Console.WriteLine($"Deleted relationship with Id buildingFloorRelationshipId. Status response: {deleteBuildingRelationshipResponse.Status}.");
 ```
