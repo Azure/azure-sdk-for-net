@@ -156,7 +156,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 { Constants.ChangeFeed.Event.EventType, eventType },
                 { Constants.ChangeFeed.Event.EventTime, eventTime.ToString() },
                 { Constants.ChangeFeed.Event.EventId, eventId.ToString() },
-                { Constants.ChangeFeed.Event.DataVersion, dataVersion },
+                { Constants.ChangeFeed.Event.SchemaVersion, dataVersion },
                 { Constants.ChangeFeed.Event.MetadataVersion, metadataVersion },
                 { Constants.ChangeFeed.Event.Data, new Dictionary<string, object>
                     {
@@ -224,7 +224,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(BlobChangeFeedEventType.BlobCreated, changeFeedEvent.EventType);
             Assert.AreEqual(eventTime, changeFeedEvent.EventTime);
             Assert.AreEqual(eventId, changeFeedEvent.Id);
-            Assert.AreEqual(dataVersion, changeFeedEvent.DataVersion);
+            Assert.AreEqual(dataVersion, changeFeedEvent.SchemaVersion);
             Assert.AreEqual(metadataVersion, changeFeedEvent.MetadataVersion);
 
             Assert.AreEqual(api, changeFeedEvent.EventData.Api);

@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
                 EventTime = eventTime,
                 Id = id,
                 EventData = eventData,
-                DataVersion = dataVersion,
+                SchemaVersion = dataVersion,
                 MetadataVersion = metadataVersion
             };
 
