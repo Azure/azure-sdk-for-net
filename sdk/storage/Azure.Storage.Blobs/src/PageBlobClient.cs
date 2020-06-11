@@ -6,10 +6,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -98,6 +100,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -117,6 +120,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -139,6 +143,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -161,6 +166,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -188,8 +194,23 @@ namespace Azure.Storage.Blobs.Specialized
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             string encryptionScope)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(
+                  blobUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics,
+                  customerProvidedKey,
+                  clientSideEncryption: default,
+                  encryptionScope)
         {
+        }
+
+        private static void AssertNoClientSideEncryption(BlobClientOptions options)
+        {
+            if (options._clientSideEncryptionOptions != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
         }
         #endregion ctors
 
@@ -222,24 +243,109 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
-        ///// <summary>
-        ///// Creates a new PageBlobClient object identical to the source but with the specified version ID.
-        ///// Pass "" to remove the version ID returning a URL to the base blob.
-        ///// </summary>
-        ///// <param name="versionId">version ID</param>
-        ///// <returns></returns>
-        //public new PageBlobClient WithVersionId(string versionId) => (PageBlobUri)this.WithVersionIdImpl(versionId);
+        /// <summary>
+        /// Creates a new PageBlobClient object identical to the source but with the specified version ID.
+        /// Pass "" to remove the version ID returning a URL to the base blob.
+        /// </summary>
+        /// <param name="versionId">version ID</param>
+        /// <returns></returns>
+        public new PageBlobClient WithVersion(string versionId)
+        {
+            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
 
-        //protected sealed override BlobBaseClient WithVersionIdImpl(string versionId)
-        //{
-        //    var builder = new BlobUriBuilder(this.Uri) { VersionId = versionId };
-        //    return new PageBlobClient(builder.ToUri(), this.Pipeline);
-        //}
+            return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+        }
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new page blob of
-        /// the specified <paramref name="size"/>.  The content of any
+        /// The <see cref="Create(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.
+        /// The content of any existing blob is overwritten with the newly initialized page blob
+        /// To add content to the page blob, call the
+        /// <see cref="UploadPages"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// newly created page blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Create(
+            long size,
+            CreatePageBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            CreateInternal(
+                size,
+                options?.SequenceNumber,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                async: false,
+                cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateAsync(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.
+        /// The content of any existing blob is overwritten with the newly initialized page blob
+        /// To add content to the page blob, call the
+        /// <see cref="UploadPages"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// newly created page blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
+            long size,
+            CreatePageBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await CreateInternal(
+                size,
+                options?.SequenceNumber,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                async: true,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Create(long, long?, BlobHttpHeaders, Metadata, PageBlobRequestConditions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
         /// <see cref="UploadPages"/> operation.
@@ -278,6 +384,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> Create(
             long size,
             long? sequenceNumber = default,
@@ -290,14 +397,15 @@ namespace Azure.Storage.Blobs.Specialized
                 sequenceNumber,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new page blob of
-        /// the specified <paramref name="size"/>.  The content of any
+        /// The <see cref="CreateAsync(long, long?, BlobHttpHeaders, Metadata, PageBlobRequestConditions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  The content of any
         /// existing blob is overwritten with the newly initialized page blob
         /// To add content to the page blob, call the
         /// <see cref="UploadPagesAsync"/> operation.
@@ -336,6 +444,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> CreateAsync(
             long size,
             long? sequenceNumber = default,
@@ -348,15 +457,100 @@ namespace Azure.Storage.Blobs.Specialized
                 sequenceNumber,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new page blob
-        /// of the specified <paramref name="size"/>.  If the blob already exists, the content of
-        /// the existing blob will remain unchanged. If the blob does not already exists,
+        /// The <see cref="CreateIfNotExists(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
+        /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
+        /// a new page blob with the specified <paramref name="size"/> will be created.
+        /// <see cref="UploadPages"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the page blob does not already exist, A <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created page blob. Otherwise, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> CreateIfNotExists(
+            long size,
+            CreatePageBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                size,
+                options?.SequenceNumber,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(long, CreatePageBlobOptions, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
+        /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
+        /// a new page blob with the specified <paramref name="size"/> will be created.
+        /// <see cref="UploadPages"/> operation.
+        ///
+        /// For more information, see https://docs.microsoft.com/rest/api/storageservices/put-blob.
+        /// </summary>
+        /// <param name="size">
+        /// Specifies the maximum size for the page blob, up to 8 TB.  The
+        /// size must be aligned to a 512-byte boundary.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the page blob does not already exist, A <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created page blob. Otherwise, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+            long size,
+            CreatePageBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                size,
+                options?.SequenceNumber,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(long, long?, BlobHttpHeaders, Metadata, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already
+        /// exists, the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
         /// <see cref="UploadPages"/> operation.
         ///
@@ -390,6 +584,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> CreateIfNotExists(
             long size,
             long? sequenceNumber = default,
@@ -401,14 +596,15 @@ namespace Azure.Storage.Blobs.Specialized
                 sequenceNumber,
                 httpHeaders,
                 metadata,
+                default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new page blob
-        /// of the specified <paramref name="size"/>.  If the blob already exists, the content of
-        /// the existing blob will remain unchanged. If the blob does not already exists,
+        /// The <see cref="CreateIfNotExistsAsync(long, long?, BlobHttpHeaders, Metadata, CancellationToken)"/>
+        /// operation creates a new page blob of the specified <paramref name="size"/>.  If the blob already exists,
+        /// the content of the existing blob will remain unchanged. If the blob does not already exists,
         /// a new page blob with the specified <paramref name="size"/> will be created.
         /// <see cref="UploadPagesAsync"/> operation.
         ///
@@ -442,6 +638,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             long size,
             long? sequenceNumber = default,
@@ -453,6 +650,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sequenceNumber,
                 httpHeaders,
                 metadata,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -483,6 +681,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this page blob.
         /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this page blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -503,6 +704,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber,
             BlobHttpHeaders httpHeaders,
             Metadata metadata,
+            Tags tags,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -523,6 +725,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sequenceNumber,
                         httpHeaders,
                         metadata,
+                        tags,
                         conditions,
                         async,
                         cancellationToken,
@@ -571,6 +774,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this page blob.
         /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this page blob.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the creation of this new page blob.
@@ -598,6 +804,7 @@ namespace Azure.Storage.Blobs.Specialized
             long? sequenceNumber,
             BlobHttpHeaders httpHeaders,
             Metadata metadata,
+            Tags tags,
             PageBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -636,8 +843,10 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(PageBlobClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
@@ -870,6 +1079,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPages)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1210,6 +1420,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
                         cancellationToken: cancellationToken)
@@ -1438,6 +1649,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
@@ -2567,6 +2779,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
@@ -2610,13 +2823,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         public static PageBlobClient GetPageBlobClient(
             this BlobContainerClient client,
-            string blobName) =>
-            new PageBlobClient(
+            string blobName)
+        {
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
+            return new PageBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);
+        }
     }
 }

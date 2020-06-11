@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MergeSkill : IUtf8JsonSerializable
     {
@@ -43,20 +44,26 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs != null && Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            if (Outputs != null && Outputs.Any())
             {
-                writer.WriteObjectValue(item0);
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -64,12 +71,12 @@ namespace Azure.Search.Documents.Models
         {
             string insertPreTag = default;
             string insertPostTag = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>();
-            IList<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>();
+            IList<InputFieldMappingEntry> inputs = default;
+            IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("insertPreTag"))
@@ -92,7 +99,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -124,26 +131,48 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("inputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        }
                     }
                     inputs = array;
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        }
                     }
                     outputs = array;
                     continue;
                 }
             }
-            return new MergeSkill(insertPreTag, insertPostTag, odatatype, name, description, context, inputs, outputs);
+            return new MergeSkill(odataType, name, description, context, inputs, outputs, insertPreTag, insertPostTag);
         }
     }
 }

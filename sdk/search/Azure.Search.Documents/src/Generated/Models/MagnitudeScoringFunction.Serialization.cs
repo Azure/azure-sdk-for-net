@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MagnitudeScoringFunction : IUtf8JsonSerializable
     {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MagnitudeScoringFunction(magnitude, type, fieldName, boost, interpolation);
+            return new MagnitudeScoringFunction(type, fieldName, boost, interpolation, magnitude);
         }
     }
 }

@@ -2,18 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// The <see cref="ServiceBusSessionProcessor"/> provides an abstraction around a set of <see cref="ServiceBusSessionReceiver"/> that
+    /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
+    /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusSessionProcessorOptions)"/>.
+    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
+    /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
     public class ServiceBusSessionProcessor
     {
@@ -44,17 +46,18 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount => _innerProcessor.PrefetchCount;
 
         /// <summary>
-        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> is currently processing messages.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is processing messages; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsProcessing => _innerProcessor.IsProcessing;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
+        /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusSessionProcessor"/> should automatically
+        /// complete messages after the event handler has completed processing. If the event handler
+        /// triggers an exception, the message will not be automatically completed.</summary>
+        ///
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete => _innerProcessor.AutoComplete;
 
@@ -69,8 +72,11 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the event handler.</value>
         public int MaxConcurrentCalls => _innerProcessor.MaxConcurrentCalls;
 
         /// <summary>
@@ -79,18 +85,22 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
 
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? MaxReceiveWaitTime => _innerProcessor.MaxReceiveWaitTime;
+
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,
-            ServiceBusProcessorOptions options,
-            string sessionId = default)
+            ServiceBusSessionProcessorOptions options)
         {
             _innerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
-                options,
-                sessionId);
+                options.ToProcessorOptions(),
+                options.SessionIds);
         }
 
         /// <summary>
@@ -138,6 +148,45 @@ namespace Azure.Messaging.ServiceBus
             remove
             {
                 _innerProcessor.ProcessErrorAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Optional event that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionInitializingAsync += value;
+
+            }
+
+            remove
+            {
+                _innerProcessor.SessionInitializingAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Optional event that can be set to be notified when a session is about to be closed for processing.
+        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
+        /// available to be received for the session.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionClosingAsync += value;
+            }
+
+            remove
+            {
+                _innerProcessor.SessionClosingAsync -= value;
             }
         }
 

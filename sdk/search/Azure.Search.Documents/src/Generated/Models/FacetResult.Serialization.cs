@@ -16,7 +16,8 @@ namespace Azure.Search.Documents.Models
         internal static FacetResult DeserializeFacetResult(JsonElement element)
         {
             long? count = default;
-            IDictionary<string, object> additionalProperties = new Dictionary<string, object>();
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -28,8 +29,17 @@ namespace Azure.Search.Documents.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
-                additionalProperties.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary ??= new Dictionary<string, object>();
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                }
             }
+            additionalProperties = additionalPropertiesDictionary;
             return new FacetResult(count, additionalProperties);
         }
     }

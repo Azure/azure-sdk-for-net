@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Output field mapping for a skill. </summary>
     public partial class OutputFieldMappingEntry
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the output defined by the skill. </param>
         public OutputFieldMappingEntry(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
         }
 
@@ -27,7 +34,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the output defined by the skill. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The target name of the output. It is optional and default to name. </summary>
         public string TargetName { get; set; }
     }

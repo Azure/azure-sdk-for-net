@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -23,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
@@ -32,17 +33,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, partitionKey).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
                 foreach (ServiceBusMessage message in sentMessages)
                 {
                     sentMessageIdToMsg.Add(message.MessageId, message);
                 }
 
-                var receiver = await client.GetSessionReceiverAsync(
+                var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    null,
-                    sessionId);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = sessionId
+                    });
 
                 sequenceNumber ??= 1;
 
@@ -52,14 +55,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
-                    var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                    var peekedText = peekedMessage.Body.AsString();
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
-                    Assert.AreEqual(Encoding.Default.GetString(sentMsg.Body.ToArray()), peekedText);
+                    Assert.AreEqual(sentMsg.Body.AsString(), peekedText);
                     Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
-                    TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
                     ct++;
                 }
                 if (sequenceNumber == 1)
@@ -75,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 int messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
@@ -83,17 +85,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messageBatch);
-
-                ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
+                await sender.SendAsync(messageBatch);
+                var options = new ServiceBusSessionReceiverOptions
+                {
+                    SessionId = sessionId
+                };
+                ServiceBusReceiver receiver1 = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: sessionId);
+                    options);
 
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().GetSessionReceiverAsync(
+                    await GetNoRetryClient().CreateSessionReceiverAsync(
                         scope.QueueName,
-                        sessionId: sessionId),
+                        options),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
             }
         }
@@ -108,15 +113,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messagebatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messagebatch);
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                await sender.SendAsync(messagebatch);
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
                 long seq = 0;
                 for (int i = 0; i < messageCt / peekCt; i++)
@@ -143,15 +148,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messagebatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messagebatch);
+                await sender.SendAsync(messagebatch);
 
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
                 long seq = 0;
                 for (int i = 0; i < messageCt; i++)
@@ -173,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCt = 10;
                 HashSet<string> sessions = new HashSet<string>() { "1", "2", "3" };
@@ -182,13 +187,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                     ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, session);
-                    await sender.SendBatchAsync(messageBatch);
+                    await sender.SendAsync(messageBatch);
                 }
 
                 // create receiver not scoped to a specific session
                 for (int i = 0; i < 10; i++)
                 {
-                    ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                    ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
                     foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
                         sequenceNumber: 1,
                         maxMessages: 10))
@@ -209,16 +214,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
                 var messageEnum = messages.GetEnumerator();
 
@@ -246,24 +251,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                var clientOptions = new ServiceBusReceiverOptions()
+                var clientOptions = new ServiceBusSessionReceiverOptions()
                 {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                    SessionId = sessionId
                 };
 
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    clientOptions,
-                    sessionId);
+                    clientOptions);
 
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
@@ -293,18 +298,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: sessionId);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = useSpecificSession ? sessionId : null
+                    });
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
 
@@ -334,18 +342,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: useSpecificSession ? sessionId : null);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = useSpecificSession ? sessionId : null
+                    });
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
                 IList<ServiceBusReceivedMessage> receivedMessages = new List<ServiceBusReceivedMessage>();
@@ -392,17 +403,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                var receiver = await client.GetSessionReceiverAsync(
+                var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: useSpecificSession ? sessionId : null);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = useSpecificSession ? sessionId : null
+                    });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
@@ -424,7 +438,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.GetDeadLetterReceiver(scope.QueueName);
+                var deadLetterReceiver = client.CreateDeadLetterReceiver(scope.QueueName);
 
                 while (remainingMessages > 0)
                 {
@@ -454,20 +468,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.TopicName);
+                ServiceBusSender sender = client.CreateSender(scope.TopicName);
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
                 var topicName = scope.TopicName;
                 var subscriptionName = scope.SubscriptionNames.First();
 
-                var receiver = await client.GetSessionReceiverAsync(
+                var receiver = await client.CreateSessionReceiverAsync(
                     topicName: topicName,
                     subscriptionName: subscriptionName,
-                    sessionId: useSpecificSession ? sessionId : null);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = useSpecificSession ? sessionId : null
+                    });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
@@ -494,7 +511,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 remainingMessages = messageCount;
-                var deadLetterReceiver = client.GetDeadLetterReceiver(topicName, subscriptionName);
+                var deadLetterReceiver = client.CreateDeadLetterReceiver(topicName, subscriptionName);
 
                 while (remainingMessages > 0)
                 {
@@ -526,18 +543,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
-                var receiver = await client.GetSessionReceiverAsync(
+                var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: useSpecificSession ? sessionId : null);
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = useSpecificSession ? sessionId : null
+                    });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
@@ -573,7 +593,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCount = 1;
                 var sessionId1 = "sessionId1";
                 ServiceBusMessage message = GetMessage(sessionId1);
@@ -582,7 +602,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendAsync(GetMessage("sessionId2"));
                 await sender.SendAsync(message);
 
-                ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName, sessionId: isSessionSpecified ? sessionId1 : null);
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = isSessionSpecified ? sessionId1 : null
+                    });
                 if (isSessionSpecified)
                 {
                     Assert.AreEqual(sessionId1, receiver.SessionId);
@@ -614,18 +639,168 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ReceiverThrowsAfterSessionLockLost(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true, lockDuration: TimeSpan.FromSeconds(5)))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var sessionId1 = "sessionId1";
+
+                await sender.SendAsync(GetMessage(sessionId1));
+                // send another session message before the one we are interested in to make sure that when isSessionSpecified=true, it is being respected
+                await sender.SendAsync(GetMessage("sessionId2"));
+
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = isSessionSpecified ? sessionId1 : null
+                    });
+                if (isSessionSpecified)
+                {
+                    Assert.AreEqual(sessionId1, receiver.SessionId);
+                }
+
+                var message = await receiver.ReceiveAsync();
+
+                await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
+
+                Assert.That(async () => await receiver.ReceiveAsync(),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.SetSessionStateAsync(null),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.GetSessionStateAsync(),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.CompleteAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.CompleteAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.DeadLetterAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.DeferAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+
+                Assert.That(async () => await receiver.AbandonAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.SessionLockLost));
+            }
+        }
+
+        [Test]
+        public async Task ClientThrowsSessionCannotBeLockedWhenSessionLocked()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var sessionId = "sessionId";
+                var options = new ServiceBusSessionReceiverOptions
+                {
+                    SessionId = sessionId
+                };
+                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName, options);
+
+                // should not throw when using different session
+                options.SessionId = "sessionId2";
+                await client.CreateSessionReceiverAsync(scope.QueueName, options);
+
+                // for some reason, using Throws.InstanceOf and Assert.ThrowsAsync always end up coming back
+                // as a timeout exception.
+                try
+                {
+                    options.SessionId = sessionId;
+                    await client.CreateSessionReceiverAsync(scope.QueueName, options);
+                }
+                catch (ServiceBusException ex)
+                when (ex.Reason == ServiceBusException.FailureReason.SessionCannotBeLocked)
+                {
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Expected exception not thrown: {ex}");
+                }
+                Assert.Fail("No exception thrown!");
+            }
+        }
+
+        [Test]
         public async Task SessionReceiverThrowsWhenUsingNonSessionEntity()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusMessage sentMessage = GetMessage();
                 await sender.SendAsync(sentMessage);
 
                 Assert.That(
-                    async () => await client.GetSessionReceiverAsync(scope.QueueName),
+                    async () => await client.CreateSessionReceiverAsync(scope.QueueName),
                     Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAndSetSessionStateTest(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var sessionId = "test-sessionId";
+                ServiceBusMessage message = GetMessage(sessionId);
+                await sender.SendAsync(message);
+
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        SessionId = isSessionSpecified ? sessionId : null
+                    });
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+                Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
+                Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
+
+                var sessionStateString = "Received Message From Session!";
+                var sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                await receiver.SetSessionStateAsync(sessionState);
+
+                var returnedSessionState = await receiver.GetSessionStateAsync();
+                var returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                Assert.AreEqual(sessionStateString, returnedSessionStateString);
+
+                // Complete message using Session Receiver
+                await receiver.CompleteAsync(receivedMessage);
+
+                var peekedMessage = receiver.PeekAsync();
+                Assert.IsNull(peekedMessage.Result);
+
+                sessionStateString = "Completed Message On Session!";
+                sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                await receiver.SetSessionStateAsync(sessionState);
+
+                returnedSessionState = await receiver.GetSessionStateAsync();
+                returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                Assert.AreEqual(sessionStateString, returnedSessionStateString);
             }
         }
     }

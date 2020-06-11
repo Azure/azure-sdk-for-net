@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// state</param>
         /// <param name="actionRequired">Action required on the private
         /// connection state</param>
-        public PrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus? status = default(PrivateLinkServiceConnectionStatus?), string description = default(string), string actionRequired = default(string))
+        public PrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description = default(string), string actionRequired = default(string))
         {
             Status = status;
             Description = description;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// 'Disconnected'
         /// </remarks>
         [JsonProperty(PropertyName = "status")]
-        public PrivateLinkServiceConnectionStatus? Status { get; set; }
+        public PrivateLinkServiceConnectionStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets description of the private Connection state
@@ -74,5 +74,14 @@ namespace Microsoft.Azure.Management.Batch.Models
         [JsonProperty(PropertyName = "actionRequired")]
         public string ActionRequired { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

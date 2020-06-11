@@ -6,16 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
     <Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-    <Version>2.0.7-preview</Version>
+    <Version>2.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
     <PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
 		  Updates in this release:
 			 * Incremental changes:
-			 ** Azure Site Recovery (ASR) service now supports NIC renaming for failover and test failover.
-			 ** Azure Site Recovery (ASR) service now supports NIC resource group naming for failover and test failover.
-			 ** Azure Site Recovery (ASR) service now supports using existing NIC for failover and test failover.
+			 ** Azure Site Recovery (ASR) service supports zone to zone replication for Azure to Azure provider.
 		    ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

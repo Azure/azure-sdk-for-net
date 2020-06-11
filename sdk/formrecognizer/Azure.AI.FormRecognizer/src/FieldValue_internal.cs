@@ -5,8 +5,17 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("FieldValue")]
+    [CodeGenModel("FieldValue")]
     internal partial class FieldValue_internal
     {
+        /// <summary>Integer value.</summary>
+        public long? ValueInteger { get; }
+
+        internal FieldValue_internal(string value)
+        {
+            Type = FieldValueType.String;
+            ValueString = value;
+            Text = value;
+        }
     }
 }

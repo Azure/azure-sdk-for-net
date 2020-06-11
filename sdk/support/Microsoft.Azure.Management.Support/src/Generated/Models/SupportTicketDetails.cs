@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// Object that represents SupportTicketDetails resource
+    /// Object that represents SupportTicketDetails resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SupportTicketDetails : IResource
@@ -36,52 +36,51 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <param name="description">Detailed description of the question or
         /// issue.</param>
         /// <param name="problemClassificationId">Each Azure service has its
-        /// own set of issue category called problem classification that
-        /// corresponds to the type of problem you're experiencing. This
-        /// parameter is the resource id of ProblemClassification
-        /// resource.</param>
+        /// own set of issue categories, also known as problem classification.
+        /// This parameter is the unique Id for the type of problem you are
+        /// experiencing.</param>
         /// <param name="severity">A value that indicates the urgency of the
         /// case, which in turn determines the response time according to the
         /// service level agreement of the technical support plan you have with
-        /// Azure. Note: 'Highest critical impact' severity is reserved only to
-        /// our Premium customers. Possible values include: 'minimal',
+        /// Azure. Note: 'Highest critical impact' severity is reserved only
+        /// for our Premium customers. Possible values include: 'minimal',
         /// 'moderate', 'critical', 'highestcriticalimpact'</param>
         /// <param name="contactDetails">Contact information of the user
         /// requesting to create a support ticket.</param>
         /// <param name="title">Title of the support ticket.</param>
-        /// <param name="serviceId">This is the resource id of the Azure
+        /// <param name="serviceId">This is the resource Id of the Azure
         /// service resource associated with the support ticket.</param>
-        /// <param name="id">Id of the resource</param>
-        /// <param name="name">Name of the resource</param>
+        /// <param name="id">Id of the resource.</param>
+        /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource
-        /// 'Microsoft.Support/supportTickets'</param>
-        /// <param name="supportTicketId">System generated support ticket id
+        /// 'Microsoft.Support/supportTickets'.</param>
+        /// <param name="supportTicketId">System generated support ticket Id
         /// that is unique.</param>
         /// <param name="problemClassificationDisplayName">Localized name of
         /// problem classification.</param>
-        /// <param name="enrollmentId">Enrollment ID associated with the
+        /// <param name="enrollmentId">Enrollment Id associated with the
         /// support ticket.</param>
         /// <param name="require24X7Response">Indicates if this requires a 24x7
         /// response from Azure.</param>
         /// <param name="serviceLevelAgreement">Service Level Agreement
         /// information for this support ticket.</param>
-        /// <param name="supportEngineer">Information about support engineer
-        /// working on this support ticket.</param>
+        /// <param name="supportEngineer">Information about the support
+        /// engineer working on this support ticket.</param>
         /// <param name="supportPlanType">Support plan type associated with the
         /// support ticket.</param>
         /// <param name="problemStartTime">Time in UTC (ISO 8601 format) when
         /// the problem started.</param>
-        /// <param name="serviceDisplayName">Localized name of Azure
+        /// <param name="serviceDisplayName">Localized name of the Azure
         /// service.</param>
         /// <param name="status">Status of the support ticket.</param>
-        /// <param name="createdDate">Time in UTC (ISO 8601 format) when
+        /// <param name="createdDate">Time in UTC (ISO 8601 format) when the
         /// support ticket was created.</param>
-        /// <param name="modifiedDate">Time in UTC (ISO 8601 format) when
+        /// <param name="modifiedDate">Time in UTC (ISO 8601 format) when the
         /// support ticket was last modified.</param>
         /// <param name="technicalTicketDetails">Additional ticket details
-        /// associated with a technical support ticket request. </param>
+        /// associated with a technical support ticket request.</param>
         /// <param name="quotaTicketDetails">Additional ticket details
-        /// associated with a quota support ticket request. </param>
+        /// associated with a quota support ticket request.</param>
         public SupportTicketDetails(string description, string problemClassificationId, string severity, ContactProfile contactDetails, string title, string serviceId, string id = default(string), string name = default(string), string type = default(string), string supportTicketId = default(string), string problemClassificationDisplayName = default(string), string enrollmentId = default(string), bool? require24X7Response = default(bool?), ServiceLevelAgreement serviceLevelAgreement = default(ServiceLevelAgreement), SupportEngineer supportEngineer = default(SupportEngineer), string supportPlanType = default(string), System.DateTime? problemStartTime = default(System.DateTime?), string serviceDisplayName = default(string), string status = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? modifiedDate = default(System.DateTime?), TechnicalTicketDetails technicalTicketDetails = default(TechnicalTicketDetails), QuotaTicketDetails quotaTicketDetails = default(QuotaTicketDetails))
         {
             Id = id;
@@ -116,25 +115,25 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the resource
+        /// Gets id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource
+        /// Gets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource 'Microsoft.Support/supportTickets'
+        /// Gets type of the resource 'Microsoft.Support/supportTickets'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets system generated support ticket id that is unique.
+        /// Gets or sets system generated support ticket Id that is unique.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportTicketId")]
         public string SupportTicketId { get; set; }
@@ -146,10 +145,9 @@ namespace Microsoft.Azure.Management.Support.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets each Azure service has its own set of issue category
-        /// called problem classification that corresponds to the type of
-        /// problem you're experiencing. This parameter is the resource id of
-        /// ProblemClassification resource.
+        /// Gets or sets each Azure service has its own set of issue
+        /// categories, also known as problem classification. This parameter is
+        /// the unique Id for the type of problem you are experiencing.
         /// </summary>
         [JsonProperty(PropertyName = "properties.problemClassificationId")]
         public string ProblemClassificationId { get; set; }
@@ -164,7 +162,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Gets or sets a value that indicates the urgency of the case, which
         /// in turn determines the response time according to the service level
         /// agreement of the technical support plan you have with Azure. Note:
-        /// 'Highest critical impact' severity is reserved only to our Premium
+        /// 'Highest critical impact' severity is reserved only for our Premium
         /// customers. Possible values include: 'minimal', 'moderate',
         /// 'critical', 'highestcriticalimpact'
         /// </summary>
@@ -172,7 +170,7 @@ namespace Microsoft.Azure.Management.Support.Models
         public string Severity { get; set; }
 
         /// <summary>
-        /// Gets enrollment ID associated with the support ticket.
+        /// Gets enrollment Id associated with the support ticket.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enrollmentId")]
         public string EnrollmentId { get; private set; }
@@ -198,7 +196,7 @@ namespace Microsoft.Azure.Management.Support.Models
         public ServiceLevelAgreement ServiceLevelAgreement { get; set; }
 
         /// <summary>
-        /// Gets or sets information about support engineer working on this
+        /// Gets or sets information about the support engineer working on this
         /// support ticket.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportEngineer")]
@@ -224,14 +222,14 @@ namespace Microsoft.Azure.Management.Support.Models
         public System.DateTime? ProblemStartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets this is the resource id of the Azure service resource
+        /// Gets or sets this is the resource Id of the Azure service resource
         /// associated with the support ticket.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceId")]
         public string ServiceId { get; set; }
 
         /// <summary>
-        /// Gets localized name of Azure service.
+        /// Gets localized name of the Azure service.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceDisplayName")]
         public string ServiceDisplayName { get; private set; }
@@ -243,13 +241,14 @@ namespace Microsoft.Azure.Management.Support.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets time in UTC (ISO 8601 format) when support ticket was created.
+        /// Gets time in UTC (ISO 8601 format) when the support ticket was
+        /// created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
         public System.DateTime? CreatedDate { get; private set; }
 
         /// <summary>
-        /// Gets time in UTC (ISO 8601 format) when support ticket was last
+        /// Gets time in UTC (ISO 8601 format) when the support ticket was last
         /// modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.modifiedDate")]

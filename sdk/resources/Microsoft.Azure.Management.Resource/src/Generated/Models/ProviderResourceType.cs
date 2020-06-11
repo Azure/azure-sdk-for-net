@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="capabilities">The additional capabilities offered by
         /// this resource type.</param>
         /// <param name="properties">The properties.</param>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<AliasType> aliases = default(IList<AliasType>), IList<string> apiVersions = default(IList<string>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<Alias> aliases = default(IList<Alias>), IList<string> apiVersions = default(IList<string>), string capabilities = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the aliases that are supported by this resource type.
         /// </summary>
         [JsonProperty(PropertyName = "aliases")]
-        public IList<AliasType> Aliases { get; set; }
+        public IList<Alias> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the API version.

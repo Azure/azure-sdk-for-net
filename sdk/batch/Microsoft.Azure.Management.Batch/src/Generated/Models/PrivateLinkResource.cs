@@ -43,11 +43,14 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// resource.</param>
         /// <param name="requiredMembers">The list of required members that are
         /// used to establish the private link connection.</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>))
+        /// <param name="requiredZoneNames">The list of required zone names for
+        /// the private DNS resource name</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
             : base(id, name, type, etag)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             CustomInit();
         }
 
@@ -71,6 +74,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredMembers")]
         public IList<string> RequiredMembers { get; private set; }
+
+        /// <summary>
+        /// Gets the list of required zone names for the private DNS resource
+        /// name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requiredZoneNames")]
+        public IList<string> RequiredZoneNames { get; private set; }
 
     }
 }

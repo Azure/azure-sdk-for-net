@@ -6,23 +6,27 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MappingCharFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mappings");
-            writer.WriteStartArray();
-            foreach (var item in Mappings)
+            if (Mappings != null && Mappings.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("mappings");
+                writer.WriteStartArray();
+                foreach (var item in Mappings)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name");
@@ -32,24 +36,35 @@ namespace Azure.Search.Documents.Models
 
         internal static MappingCharFilter DeserializeMappingCharFilter(JsonElement element)
         {
-            IList<string> mappings = new List<string>();
-            string odatatype = default;
+            IList<string> mappings = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mappings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     mappings = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -58,7 +73,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MappingCharFilter(mappings, odatatype, name);
+            return new MappingCharFilter(odataType, name, mappings);
         }
     }
 }

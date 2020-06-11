@@ -407,7 +407,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareInfo>> CreateInternal(
+        internal async Task<Response<ShareInfo>> CreateInternal(
             Metadata metadata,
             int? quotaInGB,
             bool async,
@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> DeleteInternal(
+        internal async Task<Response> DeleteInternal(
             bool includeSnapshots,
             bool async,
             CancellationToken cancellationToken,

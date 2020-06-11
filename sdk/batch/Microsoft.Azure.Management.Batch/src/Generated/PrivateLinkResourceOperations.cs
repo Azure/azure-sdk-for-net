@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -326,9 +326,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (privateLinkResourceName == null)
@@ -337,17 +337,17 @@ namespace Microsoft.Azure.Management.Batch
             }
             if (privateLinkResourceName != null)
             {
-                if (privateLinkResourceName.Length > 64)
+                if (privateLinkResourceName.Length > 101)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "privateLinkResourceName", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "privateLinkResourceName", 101);
                 }
                 if (privateLinkResourceName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "privateLinkResourceName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(privateLinkResourceName, "^[a-zA-Z0-9_-]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(privateLinkResourceName, "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "privateLinkResourceName", "^[a-zA-Z0-9_-]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "privateLinkResourceName", "^[a-zA-Z0-9_-]+\\.?[a-fA-F0-9-]*$");
                 }
             }
             if (Client.ApiVersion == null)

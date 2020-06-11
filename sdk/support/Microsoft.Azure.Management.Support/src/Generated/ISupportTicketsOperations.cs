@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Support
     public partial interface ISupportTicketsOperations
     {
         /// <summary>
-        /// Check the availability of a resource name. This API should to be
-        /// used to check the uniqueness of the name for support ticket
-        /// creation for the selected subscription.
+        /// Check the availability of a resource name. This API should be used
+        /// to check the uniqueness of the name for support ticket creation for
+        /// the selected subscription.
         /// </summary>
         /// <param name='checkNameAvailabilityInput'>
         /// Input to check.
@@ -64,9 +64,10 @@ namespace Microsoft.Azure.Management.Support
         /// The filter to apply on the operation. We support 'odata v4.0'
         /// filter semantics. [Learn
         /// more](https://docs.microsoft.com/odata/concepts/queryoptions-overview).
-        /// _Status_ filter can only be used with 'eq' operator. For
-        /// _CreatedDate_ filter, the supported operators are 'gt' and 'ge'.
-        /// When using both filters, combine them using the logical 'AND'.
+        /// _Status_ filter can only be used with Equals ('eq') operator. For
+        /// _CreatedDate_ filter, the supported operators are Greater Than
+        /// ('gt') and Greater Than or Equals ('ge'). When using both filters,
+        /// combine them using the logical 'AND'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Support
         /// error.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -122,10 +123,10 @@ namespace Microsoft.Azure.Management.Support
         /// ticket closure request by sending a note to your engineer.
         /// </summary>
         /// <param name='supportTicketName'>
-        /// Support ticket name
+        /// Support ticket name.
         /// </param>
         /// <param name='updateSupportTicket'>
-        /// UpdateSupportTicket object
+        /// UpdateSupportTicket object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -151,7 +152,7 @@ namespace Microsoft.Azure.Management.Support
         /// support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and
         /// ProblemClassifications API to get the most recent set of services
         /// and problem categories required for support ticket
-        /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+        /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently
         /// supported via the API. To add a file to an existing support ticket,
         /// visit the [Manage support
         /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
@@ -159,13 +160,13 @@ namespace Microsoft.Azure.Management.Support
         /// file upload control to add a new
         /// file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic
         /// information with Azure support is currently not supported via the
-        /// API. Azure support engineer, working on your ticket, will reach out
-        /// to you for consent if your issue requires gathering diagnostic
+        /// API. The Azure support engineer working on your ticket will reach
+        /// out to you for consent if your issue requires gathering diagnostic
         /// information from your Azure
         /// resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for
         /// on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
         /// provide an auxiliary token as per
-        /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+        /// [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
         /// The primary token will be from the tenant for whom a support ticket
         /// is being raised against the subscription, i.e. Cloud solution
         /// provider (CSP) customer tenant. The auxiliary token will be from
@@ -201,7 +202,7 @@ namespace Microsoft.Azure.Management.Support
         /// support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and
         /// ProblemClassifications API to get the most recent set of services
         /// and problem categories required for support ticket
-        /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+        /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently
         /// supported via the API. To add a file to an existing support ticket,
         /// visit the [Manage support
         /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
@@ -209,13 +210,13 @@ namespace Microsoft.Azure.Management.Support
         /// file upload control to add a new
         /// file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic
         /// information with Azure support is currently not supported via the
-        /// API. Azure support engineer, working on your ticket, will reach out
-        /// to you for consent if your issue requires gathering diagnostic
+        /// API. The Azure support engineer working on your ticket will reach
+        /// out to you for consent if your issue requires gathering diagnostic
         /// information from your Azure
         /// resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for
         /// on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
         /// provide an auxiliary token as per
-        /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+        /// [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
         /// The primary token will be from the tenant for whom a support ticket
         /// is being raised against the subscription, i.e. Cloud solution
         /// provider (CSP) customer tenant. The auxiliary token will be from

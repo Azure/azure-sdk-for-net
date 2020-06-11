@@ -9,21 +9,28 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AnalyzeResult
+    internal partial class AnalyzeResult
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
-            IReadOnlyList<TokenInfo> tokens = new List<TokenInfo>();
+            IReadOnlyList<AnalyzedTokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"))
                 {
-                    List<TokenInfo> array = new List<TokenInfo>();
+                    List<AnalyzedTokenInfo> array = new List<AnalyzedTokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TokenInfo.DeserializeTokenInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalyzedTokenInfo.DeserializeAnalyzedTokenInfo(item));
+                        }
                     }
                     tokens = array;
                     continue;

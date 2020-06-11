@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using data from Visual Studio
     /// </summary>
-    internal class VisualStudioCredential : TokenCredential
+    public class VisualStudioCredential : TokenCredential
     {
         private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
         private const string ResourceArgumentName = "--resource";
@@ -32,17 +32,20 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
         /// </summary>
-        protected VisualStudioCredential() : this(default, default) {}
+        public VisualStudioCredential() : this(null) { }
 
-        /// <inheritdoc />
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Options for configuring the credential.</param>
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
 
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService)
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
         {
             _tenantId = tenantId;
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
         }
@@ -72,16 +75,12 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("No installed instance of Visual Studio was found");
                 }
 
-                return await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
+                var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(accessToken);
             }
             catch (Exception e)
             {
-                throw scope.FailAndWrap(e);
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -100,10 +99,11 @@ namespace Azure.Identity
             var exceptions = new List<Exception>();
             foreach (ProcessStartInfo processStartInfo in processStartInfos)
             {
+                string output = string.Empty;
                 try
                 {
                     var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
-                    string output = async
+                    output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
 
@@ -115,6 +115,10 @@ namespace Azure.Identity
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
+                }
+                catch (JsonException exception)
+                {
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has non-json output: {output}.", exception));
                 }
                 catch (Exception exception)
                 {
@@ -183,7 +187,9 @@ namespace Azure.Identity
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
-            JsonElement providersElement = JsonDocument.Parse(content).RootElement.GetProperty("TokenProviders");
+            using JsonDocument document = JsonDocument.Parse(content);
+
+            JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
 
             var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
             for (int i = 0; i < providers.Length; i++)
@@ -210,6 +216,10 @@ namespace Azure.Identity
             catch (FileNotFoundException exception)
             {
                 throw new CredentialUnavailableException($"Visual Studio Token provider file not found at {tokenProviderPath}", exception);
+            }
+            catch (IOException exception)
+            {
+                throw new CredentialUnavailableException($"Visual Studio Token provider can't be accessed at {tokenProviderPath}", exception);
             }
         }
 

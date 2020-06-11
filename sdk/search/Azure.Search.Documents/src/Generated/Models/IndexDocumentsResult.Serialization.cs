@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static IndexDocumentsResult DeserializeIndexDocumentsResult(JsonElement element)
         {
-            IReadOnlyList<IndexingResult> value = new List<IndexingResult>();
+            IReadOnlyList<IndexingResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -23,7 +23,14 @@ namespace Azure.Search.Documents.Models
                     List<IndexingResult> array = new List<IndexingResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IndexingResult.DeserializeIndexingResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IndexingResult.DeserializeIndexingResult(item));
+                        }
                     }
                     value = array;
                     continue;

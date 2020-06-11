@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class ModelsSummary_internal
     {
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

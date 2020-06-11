@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs
             V2019_07_07 = 2,
 
             /// <summary>
-            /// The 2019_12_12 service version.
+            /// The 2019-12-12 service version.
             /// </summary>
             V2019_12_12 = 3
 #pragma warning restore CA1707 // Identifiers should not contain underscores
@@ -73,6 +73,10 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        #region Advanced Options
+        internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClientOptions"/>

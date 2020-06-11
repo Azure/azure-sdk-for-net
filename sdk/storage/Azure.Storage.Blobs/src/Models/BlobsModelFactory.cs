@@ -131,6 +131,96 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
         /// </summary>
+        public static BlobProperties BlobProperties(
+            DateTimeOffset lastModified,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            LeaseState leaseState,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            long blobSequenceNumber,
+            LeaseDurationType leaseDuration,
+            string acceptRanges,
+            string destinationSnapshot,
+            int blobCommittedBlockCount,
+            bool isIncrementalCopy,
+            bool isServerEncrypted,
+            CopyStatus copyStatus,
+            string encryptionKeySha256,
+            Uri copySource,
+            string encryptionScope,
+            string copyProgress,
+            string accessTier,
+            string copyId,
+            bool accessTierInferred,
+            string copyStatusDescription,
+            string archiveStatus,
+            DateTimeOffset copyCompletedOn,
+            DateTimeOffset accessTierChangedOn,
+            BlobType blobType,
+            string versionId,
+            IDictionary<string, IDictionary<string, string>> objectReplicationSourceProperties,
+            bool isCurrentVersion,
+            string objectReplicationDestinationPolicy,
+            long tagCount,
+            IDictionary<string, string> metadata,
+            DateTimeOffset expiresOn,
+            DateTimeOffset createdOn,
+            bool isSealed,
+            byte[] contentHash)
+        {
+            return new BlobProperties()
+            {
+                LastModified = lastModified,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                LeaseState = leaseState,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                LeaseDuration = leaseDuration,
+                AcceptRanges = acceptRanges,
+                DestinationSnapshot = destinationSnapshot,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsIncrementalCopy = isIncrementalCopy,
+                IsServerEncrypted = isServerEncrypted,
+                CopyStatus = copyStatus,
+                EncryptionKeySha256 = encryptionKeySha256,
+                CopySource = copySource,
+                EncryptionScope = encryptionScope,
+                CopyProgress = copyProgress,
+                AccessTier = accessTier,
+                CopyId = copyId,
+                AccessTierInferred = accessTierInferred,
+                CopyStatusDescription = copyStatusDescription,
+                ArchiveStatus = archiveStatus,
+                CopyCompletedOn = copyCompletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
+                BlobType = blobType,
+                VersionId = versionId,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                IsCurrentVersion = isCurrentVersion,
+                ObjectReplicationDestinationPolicy = objectReplicationDestinationPolicy,
+                TagCount = tagCount,
+                Metadata = metadata,
+                ExpiresOn = expiresOn,
+                CreatedOn = createdOn,
+                IsSealed = isSealed,
+                ContentHash = contentHash,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobProperties BlobProperties(
             DateTimeOffset lastModified,
@@ -284,13 +374,39 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItem instance for mocking.
         /// </summary>
+        public static BlobItem BlobItem(
+           string name,
+           bool deleted,
+           BlobItemProperties properties,
+           string snapshot = default,
+           string versionId = default,
+           bool? isCurrentVersion = default,
+           IDictionary<string, string> metadata = default,
+           IDictionary<string, string> tags = default)
+        {
+            return new BlobItem()
+            {
+                Name = name,
+                Deleted = deleted,
+                Properties = properties,
+                Snapshot = snapshot,
+                VersionId = versionId,
+                IsCurrentVersion = isCurrentVersion,
+                Metadata = metadata,
+                Tags = tags
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobItem BlobItem(
             string name,
             bool deleted,
             BlobItemProperties properties,
-            string snapshot = default,
-            IDictionary<string, string> metadata = default)
+            string snapshot,
+            IDictionary<string, string> metadata)
             => new BlobItem()
             {
                 Name = name,
@@ -315,6 +431,84 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
+            };
+
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        public static BlobInfo blobInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModifed = default,
+            long blobSequenceNumber = default,
+            string versionId = default) =>
+            new BlobInfo
+            {
+                ETag = eTag,
+                LastModified = lastModifed,
+                BlobSequenceNumber = blobSequenceNumber,
+                VersionId = versionId
+            };
+
+        /// <summary>
+        /// Creates a new BlobContainerItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerItem BlobContainerItem(
+            string name,
+            BlobContainerProperties properties)
+            => new BlobContainerItem()
+            {
+                Name = name,
+                Properties = properties
+            };
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            PublicAccessType? publicAccess,
+            bool? hasImmutabilityPolicy,
+            LeaseStatus? leaseStatus,
+            string defaultEncryptionScope,
+            bool? preventEncryptionScopeOverride,
+            IDictionary<string, string> metadata,
+            bool? hasLegalHold)
+        {
+            return new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                Metadata = metadata,
+                HasLegalHold = hasLegalHold,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static BlobQueryError BlobQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new BlobQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
             };
     }
 }

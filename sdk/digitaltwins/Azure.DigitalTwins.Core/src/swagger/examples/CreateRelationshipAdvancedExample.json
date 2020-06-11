@@ -1,0 +1,25 @@
+{
+  "parameters": {
+    "api-version": "2020-05-31-preview",
+    "id": "mySourceTwin",
+    "relationshipId": "myRelationshipId",
+    "relationship": {
+      "$targetId": "myTargetTwin",
+      "$relationshipName": "myRelationship",
+      "relationshipProperty1": 1,
+      "relationshipProperty2": "some value"
+    }
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "$relationshipId": "myRelationshipId",
+        "$sourceId": "mySourceTwin",
+        "$targetId": "myTargetTwin",
+        "$relationshipName": "myRelationship",
+        "relationshipProperty1": 1,
+        "relationshipProperty2": "some value"
+      }
+    }
+  }
+}

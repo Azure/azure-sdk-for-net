@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,15 +16,20 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        internal AutocompleteResults(IReadOnlyList<Autocompletion> results)
+        internal AutocompleteResults(IEnumerable<AutocompleteItem> results)
         {
-            Results = results;
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results.ToArray();
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        internal AutocompleteResults(double? coverage, IReadOnlyList<Autocompletion> results)
+        internal AutocompleteResults(double? coverage, IReadOnlyList<AutocompleteItem> results)
         {
             Coverage = coverage;
             Results = results;
@@ -31,6 +38,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </summary>
         public double? Coverage { get; }
         /// <summary> The list of returned Autocompleted items. </summary>
-        public IReadOnlyList<Autocompletion> Results { get; } = new List<Autocompletion>();
+        public IReadOnlyList<AutocompleteItem> Results { get; }
     }
 }

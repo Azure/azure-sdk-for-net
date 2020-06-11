@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data deletion detection policy that implements a soft-deletion strategy. It determines whether an item should be deleted based on the value of a designated &apos;soft delete&apos; column. </summary>
     public partial class SoftDeleteColumnDeletionDetectionPolicy : DataDeletionDetectionPolicy
@@ -17,10 +17,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of SoftDeleteColumnDeletionDetectionPolicy. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         /// <param name="softDeleteColumnName"> The name of the column to use for soft-deletion detection. </param>
         /// <param name="softDeleteMarkerValue"> The marker value that identifies an item as deleted. </param>
-        /// <param name="oDataType"> The model type. </param>
-        internal SoftDeleteColumnDeletionDetectionPolicy(string softDeleteColumnName, string softDeleteMarkerValue, string oDataType) : base(oDataType)
+        internal SoftDeleteColumnDeletionDetectionPolicy(string oDataType, string softDeleteColumnName, string softDeleteMarkerValue) : base(oDataType)
         {
             SoftDeleteColumnName = softDeleteColumnName;
             SoftDeleteMarkerValue = softDeleteMarkerValue;

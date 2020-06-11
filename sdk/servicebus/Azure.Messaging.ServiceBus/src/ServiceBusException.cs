@@ -39,6 +39,11 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath { get; }
 
         /// <summary>
+        /// Can be used to hold the processor error source when we rethrow exceptions.
+        /// </summary>
+        internal ServiceBusErrorSource? ProcessorErrorSource { get; set; }
+
+        /// <summary>
         ///   Gets a message that describes the current exception.
         /// </summary>
         ///
@@ -130,17 +135,17 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The exception was the result of a general error within the client library.</summary>
             GeneralError,
 
-            /// <summary>An operation has been attempted using an Service Bus client instance which has already been closed.</summary>
+            /// <summary>An operation has been attempted using an Service Bus client instance
+            /// which has already been closed.
+            /// </summary>
             ClientClosed,
-
-            /// <summary>A client was forcefully disconnected from an Service Bus entity instance.</summary>
-            ReceiverDisconnected,
 
             /// <summary>A Service Bus resource cannot be found by the Service Bus service.</summary>
             MessagingEntityNotFound,
 
             /// <summary>
-            ///
+            /// The lock on the message is lost. Callers should call attempt to
+            /// receive and process the message again.
             /// </summary>
             MessageLockLost,
 
@@ -153,7 +158,7 @@ namespace Azure.Messaging.ServiceBus
             MessageSizeExceeded,
 
             /// <summary>
-            ///
+            /// The Messaging Entity is disabled. Enable the entity again using Portal.
             /// </summary>
             MessagingEntityDisabled,
 
@@ -170,19 +175,24 @@ namespace Azure.Messaging.ServiceBus
             ServiceCommunicationProblem,
 
             /// <summary>
-            ///
+            /// The requested session cannot be locked.
             /// </summary>
             SessionCannotBeLocked,
 
             /// <summary>
-            ///
+            /// The lock on the session has expired.  Callers should request the session again.
             /// </summary>
             SessionLockLost,
 
             /// <summary>
-            ///
+            /// The user doesn't have access to the entity.
             /// </summary>
-            Unauthorized
+            Unauthorized,
+
+            /// <summary>
+            /// An entity with the same name exists under the same namespace.
+            /// </summary>
+            MessagingEntityAlreadyExists
         }
     }
 }

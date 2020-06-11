@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Contains information about a receiver that has attempted to receive a message from the Azure Service Bus entity.
+    /// The <see cref="ProcessMessageEventArgs"/> contain event args that are specific
+    /// to the <see cref="ServiceBusReceivedMessage"/> that is being processed.
     /// </summary>
     public class ProcessMessageEventArgs : EventArgs
     {
@@ -50,9 +51,12 @@ namespace Azure.Messaging.ServiceBus
         public async Task AbandonAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         ///
@@ -62,11 +66,14 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public async Task CompleteAsync(
             ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _receiver.CompleteAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         ///
@@ -80,13 +87,16 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _receiver.DeadLetterAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         ///
@@ -98,12 +108,15 @@ namespace Azure.Messaging.ServiceBus
         public async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _receiver.DeadLetterAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
 
         /// <summary>
         ///
@@ -115,25 +128,14 @@ namespace Azure.Messaging.ServiceBus
         public async Task DeferAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
             await _receiver.DeferAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task RenewMessageLockAsync(
-            ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default) =>
-            await _receiver.RenewMessageLockAsync(
-                message,
-                cancellationToken)
-            .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
     }
 }

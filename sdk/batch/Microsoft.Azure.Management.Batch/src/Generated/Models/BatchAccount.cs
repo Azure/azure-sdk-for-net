@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// associated with the Batch account.</param>
         /// <param name="publicNetworkAccess">The network interface type for
         /// accessing Azure Batch service and Batch account operations.</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections associated with the Batch account</param>
         /// <param name="autoStorage">The properties and status of any
         /// auto-storage account associated with the Batch account.</param>
         /// <param name="encryption">The encryption configuration for the Batch
@@ -69,7 +71,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
         /// schedule quota for the Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
+        /// <param name="identity">The identity of the Batch account.</param>
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int), BatchAccountIdentity identity = default(BatchAccountIdentity))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
@@ -77,6 +80,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             PoolAllocationMode = poolAllocationMode;
             KeyVaultReference = keyVaultReference;
             PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
             AutoStorage = autoStorage;
             Encryption = encryption;
             DedicatedCoreQuota = dedicatedCoreQuota;
@@ -85,6 +89,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             DedicatedCoreQuotaPerVMFamilyEnforced = dedicatedCoreQuotaPerVMFamilyEnforced;
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
+            Identity = identity;
             CustomInit();
         }
 
@@ -136,6 +141,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         public PublicNetworkAccessType? PublicNetworkAccess { get; private set; }
 
         /// <summary>
+        /// Gets list of private endpoint connections associated with the Batch
+        /// account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets the properties and status of any auto-storage account
         /// associated with the Batch account.
         /// </summary>
@@ -145,6 +157,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Gets the encryption configuration for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// Configures how customer data is encrypted inside the Batch account.
+        /// By default, accounts are encrypted using a Microsoft managed key.
+        /// For additional control, a customer-managed key can be used instead.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.encryption")]
         public EncryptionProperties Encryption { get; private set; }
 
@@ -208,6 +225,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         public int ActiveJobAndJobScheduleQuota { get; private set; }
 
         /// <summary>
+        /// Gets or sets the identity of the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchAccountIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -219,9 +242,23 @@ namespace Microsoft.Azure.Management.Batch.Models
             {
                 KeyVaultReference.Validate();
             }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
             if (AutoStorage != null)
             {
                 AutoStorage.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

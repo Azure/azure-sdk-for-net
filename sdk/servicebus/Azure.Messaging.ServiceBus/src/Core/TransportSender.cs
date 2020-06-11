@@ -46,19 +46,22 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract ValueTask<TransportMessageBatch> CreateBatchAsync(
             CreateBatchOptions options,
             CancellationToken cancellationToken);
+
         /// <summary>
-        ///   Sends a message to the associated Service Bus entity.
+        ///   Sends a list of messages to the associated Service Bus entity using a batched approach.
+        ///   If the size of the messages exceed the maximum size of a single batch,
+        ///   an exception will be triggered and the send will fail. In order to ensure that the messages
+        ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
         /// </summary>
         ///
-        /// <param name="message">A message to send.</param>
+        /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         public abstract Task SendAsync(
-            ServiceBusMessage message,
+            IList<ServiceBusMessage> messages,
             CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Sends a set of messages to the associated Queue/Topic using a batched approach.
+        ///   Sends a <see cref="ServiceBusMessageBatch"/> to the associated Queue/Topic.
         /// </summary>
         ///
         /// <param name="messageBatch">The set of messages to send.</param>

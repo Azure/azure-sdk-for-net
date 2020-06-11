@@ -359,12 +359,12 @@ directive:
         $.BlobsFlatSegment.properties.BlobItems = {
             "type": "array",
             "xml": { "name": "Blobs", "wrapped": true },
-            "items": { "$ref": path + "BlobItem" }
+            "items": { "$ref": path + "BlobItemInternal" }
         };
         delete $.BlobsFlatSegment.properties.Segment;
         delete $.BlobFlatListSegment;
     }
-    $.BlobItem.required = [ "Name", "Properties", "Deleted" ];
+    $.BlobItemInternal.required = [ "Name", "Properties", "Deleted" ];
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=list&flat"]
   transform: >
@@ -393,7 +393,7 @@ directive:
         $.BlobsHierarchySegment.properties.BlobItems = {
             "type": "array",
             "xml": { "name": "Blobs", "wrapped": true },
-            "items": { "$ref": path + "BlobItem" }
+            "items": { "$ref": path + "BlobItemInternal" }
         };
         $.BlobsHierarchySegment.properties.BlobPrefixes = {
             "type": "array",
@@ -452,8 +452,8 @@ directive:
   where: $.definitions
   transform: >
     if (!$.BlobItemProperties) {
-        $.BlobItemProperties = $.BlobProperties;
-        delete $.BlobProperties;
+        $.BlobItemProperties = $.BlobPropertiesInternal;
+        delete $.BlobPropertiesInternal;
         $.BlobItemProperties.properties.ETag = $.BlobItemProperties.properties.Etag;
         $.BlobItemProperties.properties.ETag.xml = { "name":  "Etag" };
         delete $.BlobItemProperties.properties.Etag;
@@ -461,8 +461,8 @@ directive:
         $.BlobItemProperties.properties["Content-MD5"]["x-ms-client-name"] = "ContentHash";
         $.BlobItemProperties.properties.CopySource.format = "url";
         $.BlobItemProperties.required = ["AccessTierInferred"];
-        const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
-        $.BlobItem.properties.Properties = { "$ref": path };
+        const path = $.BlobItemInternal.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
+        $.BlobItemInternal.properties.Properties = { "$ref": path };
 
         $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties["Creation-Time"];
         $.BlobItemProperties.properties.CreatedOn.xml = {"name": "Creation-Time"};
@@ -479,6 +479,8 @@ directive:
         $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
         $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
         delete $.BlobItemProperties.properties.AccessTierChangeTime;
+        
+        $.BlobItemInternal["x-az-public"] = false;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}"]
@@ -507,7 +509,8 @@ directive:
         "x-az-create-exception": true,
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
-    $.head.responses["200"]["x-az-response-name"] = "BlobProperties";
+    $.head.responses["200"]["x-az-response-name"] = "BlobPropertiesInternal";
+    $.head.responses["200"]["x-az-public"] = false;
     $.head.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -1182,6 +1185,7 @@ directive:
     - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["200"].headers["x-ms-blob-type"]
     - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["206"].headers["x-ms-blob-type"]
     - $["x-ms-paths"]["/{containerName}/{blob}"].head.responses["200"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}?comp=query"].post.responses["200"].headers["x-ms-blob-type"]
   transform: >
     $.enum = [ "Block", "Page", "Append" ];
     $["x-ms-enum"].values = [ { name: "Block", value: "BlockBlob" }, { name: "Page", value: "PageBlob" }, { name: "Append", value: "AppendBlob" }];
@@ -1396,7 +1400,22 @@ directive:
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
-### Make BlobQuickQueryResult internal
+### /{containerName}/{blob}?comp=query
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=query"]
+  transform: >
+    $.post.responses.default = {
+        "description": "Failure",
+        "x-az-response-name": "FailureNoContent",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
+### Make BlobQueryResult internal
 ``` yaml
 directive:
 - from: swagger-document
@@ -1404,6 +1423,119 @@ directive:
   transform: >
     $.post.responses["200"]["x-az-public"] = false;
     $.post.responses["206"]["x-az-public"] = false;
+```
+
+### Hide QueryRequest
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QueryRequest
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide QueryFormat
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QueryFormat
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide QuerySerialization
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QuerySerialization
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide JsonTextConfiguration
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.JsonTextConfiguration
+  transform: >
+    $["x-az-public"] = false;
+    $["x-ms-client-name"] = "JsonTextConfigurationInternal";
+```
+
+### Hide DelimitedTextConfiguration
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.DelimitedTextConfiguration
+  transform: >
+    $["x-az-public"] = false;
+    $["x-ms-client-name"] = "DelimitedTextConfigurationInternal";
+```
+
+### Hide QueryType
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QueryType
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobTag["x-az-public"] = false;
+    $.BlobTagSet["x-az-public"] = false;
+    $.BlobTags["x-az-public"] = false;
+    $.BlobItemInternal["x-az-public"] = false;
+    $.FilterBlobSegment["x-az-public"] = false;
+```
+
+### Make AppendBlobSealResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=seal"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "AppendBlobSealInternal";
+```
+
+### Make BlobSetExpiryResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=expiry"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "BlobSetExpiryInternal";
+```
+
+### Make BlobExpiryOptions internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobExpiryOptions["x-az-public"] = false;
+```
+
+### /{containerName}/{blob}?comp=page&update&fromUrl
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=copy&sync"]
+  transform: >
+    $.put.responses["304"] = {
+        "description": "The condition specified using HTTP conditional header(s) is not met.",
+        "x-az-response-name": "ConditionNotMetError",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
 ```
 
 ### Treat the API version as a parameter instead of a constant

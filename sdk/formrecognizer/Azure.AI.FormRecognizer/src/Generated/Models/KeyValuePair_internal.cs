@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted key-value pair. </summary>
@@ -16,6 +18,15 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence value. </param>
         internal KeyValuePair_internal(KeyValueElement_internal key, KeyValueElement_internal value, float confidence)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             Key = key;
             Value = value;
             Confidence = confidence;

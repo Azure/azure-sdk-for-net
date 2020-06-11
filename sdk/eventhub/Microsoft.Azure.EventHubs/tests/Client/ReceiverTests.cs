@@ -549,19 +549,19 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 try
                 {
                     TestUtility.Log("Starting nonepoch receiver");
-                    await nonEpochReceiver.ReceiveAsync(10);
+                    await nonEpochReceiver.ReceiveAsync(10, TimeSpan.FromSeconds(10));
 
                     await Task.Delay(TimeSpan.FromSeconds(10));
 
                     TestUtility.Log("Starting epoch receiver");
-                    await epochReceiver.ReceiveAsync(10);
+                    await epochReceiver.ReceiveAsync(10, TimeSpan.FromSeconds(10));
 
                     await Task.Delay(TimeSpan.FromSeconds(10));
 
                     try
                     {
                         TestUtility.Log("Restarting nonepoch receiver, this should fail");
-                        await nonEpochReceiver.ReceiveAsync(10);
+                        await nonEpochReceiver.ReceiveAsync(10, TimeSpan.FromSeconds(10));
                         throw new InvalidOperationException("Non-Epoch receiver should have encountered an exception by now!");
                     }
                     catch (ReceiverDisconnectedException ex) when (ex.Message.Contains("non-epoch receiver is not allowed"))
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                             });
 
                         // Issue a receive call so link will become active.
-                        await newReceiver.ReceiveAsync(10);
+                        await newReceiver.ReceiveAsync(10, TimeSpan.FromSeconds(10));
                         receivers.Add(newReceiver);
                     }
 
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     {
                         // Attempt to create 6th receiver. This should fail.
                         var failReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "1", EventPosition.FromStart());
-                        await failReceiver.ReceiveAsync(10);
+                        await failReceiver.ReceiveAsync(10, TimeSpan.FromSeconds(10));
                         throw new InvalidOperationException("6th receiver should have encountered QuotaExceededException.");
                     }
                     catch (QuotaExceededException ex)

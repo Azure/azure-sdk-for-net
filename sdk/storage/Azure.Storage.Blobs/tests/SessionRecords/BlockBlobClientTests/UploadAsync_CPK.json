@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanstagetest.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a?restype=container",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-708d83f431cb76438c6ca4bb421a1f60-7dae1b5beb014647-00",
+        "traceparent": "00-177909ba5b281b49bd6f6ac651a4390d-adb63ebe0e76da47-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "abfea911-f149-f565-dc3a-95b9244e13a0",
-        "x-ms-date": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "x-ms-date": "Thu, 02 Apr 2020 23:54:32 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -20,33 +20,33 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 05 Mar 2020 21:11:22 GMT",
-        "ETag": "\u00220x8D7C149C1FAB543\u0022",
-        "Last-Modified": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "Date": "Thu, 02 Apr 2020 23:54:31 GMT",
+        "ETag": "\u00220x8D7D76130887E61\u0022",
+        "Last-Modified": "Thu, 02 Apr 2020 23:54:32 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "abfea911-f149-f565-dc3a-95b9244e13a0",
-        "x-ms-request-id": "1982a1bc-201e-0011-5432-f3088f000000",
+        "x-ms-request-id": "69a9ab2d-e01e-0053-2c4a-096e94000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanstagetest.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a/test-blob-fae5cbd5-a6f0-ac8d-81ae-9e1bb0f0c3a8",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a/test-blob-fae5cbd5-a6f0-ac8d-81ae-9e1bb0f0c3a8",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "4096",
-        "traceparent": "00-14c7ccb74599ae45825995e8392c3400-256c4e417fcccc40-00",
+        "traceparent": "00-9cb3c8f45be04c44a4d9e5cc9f5e27fa-789b3cbf595a0d4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "66e24124-75ab-d17e-6570-8c7872cde167",
-        "x-ms-date": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "x-ms-date": "Thu, 02 Apr 2020 23:54:33 GMT",
         "x-ms-encryption-algorithm": "AES256",
         "x-ms-encryption-key": "zFEgcDtvQJwMSqyY4pvtj5d8rS8EK\u002BhrHFEqm1JJROw=",
         "x-ms-encryption-key-sha256": "mvt0z8a69TNLw3n7om5Ha3quXwrR5SXJKxwjROvqkpw=",
@@ -58,9 +58,9 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "\u002Bnl6rt9A8NW2v30I2SzhdQ==",
-        "Date": "Thu, 05 Mar 2020 21:11:22 GMT",
-        "ETag": "\u00220x8D7C149C2085136\u0022",
-        "Last-Modified": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "Date": "Thu, 02 Apr 2020 23:54:31 GMT",
+        "ETag": "\u00220x8D7D76130971387\u0022",
+        "Last-Modified": "Thu, 02 Apr 2020 23:54:32 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -68,24 +68,24 @@
         "x-ms-client-request-id": "66e24124-75ab-d17e-6570-8c7872cde167",
         "x-ms-content-crc64": "sonbUHsyagk=",
         "x-ms-encryption-key-sha256": "mvt0z8a69TNLw3n7om5Ha3quXwrR5SXJKxwjROvqkpw=",
-        "x-ms-request-id": "1982a1c4-201e-0011-5a32-f3088f000000",
+        "x-ms-request-id": "69a9ab4d-e01e-0053-494a-096e94000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanstagetest.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a?restype=container",
+      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-7cc0d524-cdc7-be73-92f3-2a321a391a8a?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-157001a3a28f424d8dad0432c38b2460-0b405612f0f58745-00",
+        "traceparent": "00-ca630a18d251d444876253bcc565785a-873831b032a09c4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.4.0-dev.20200305.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200402.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "c7644f72-5702-0cab-3d4a-45b6aad0aa93",
-        "x-ms-date": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "x-ms-date": "Thu, 02 Apr 2020 23:54:33 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -93,13 +93,13 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 05 Mar 2020 21:11:22 GMT",
+        "Date": "Thu, 02 Apr 2020 23:54:31 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "c7644f72-5702-0cab-3d4a-45b6aad0aa93",
-        "x-ms-request-id": "1982a1cc-201e-0011-6032-f3088f000000",
+        "x-ms-request-id": "69a9ab61-e01e-0053-5c4a-096e94000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
@@ -107,6 +107,6 @@
   ],
   "Variables": {
     "RandomSeed": "1215883470",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttps://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
   }
 }

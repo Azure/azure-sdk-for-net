@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// Contact information associated with support ticket.
+    /// Contact information associated with the support ticket.
     /// </summary>
     public partial class ContactProfile
     {

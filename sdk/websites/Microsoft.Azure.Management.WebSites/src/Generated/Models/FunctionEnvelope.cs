@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Web Job Information.
+    /// Function information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class FunctionEnvelope : ProxyOnlyResource
@@ -42,24 +42,33 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="scriptRootPathHref">Script root path URI.</param>
         /// <param name="scriptHref">Script URI.</param>
         /// <param name="configHref">Config URI.</param>
+        /// <param name="testDataHref">Test data URI.</param>
         /// <param name="secretsFileHref">Secrets file URI.</param>
         /// <param name="href">Function URI.</param>
         /// <param name="config">Config information.</param>
         /// <param name="files">File list.</param>
         /// <param name="testData">Test data used when testing via the Azure
         /// Portal.</param>
-        public FunctionEnvelope(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string functionAppId = default(string), string scriptRootPathHref = default(string), string scriptHref = default(string), string configHref = default(string), string secretsFileHref = default(string), string href = default(string), object config = default(object), IDictionary<string, string> files = default(IDictionary<string, string>), string testData = default(string))
+        /// <param name="invokeUrlTemplate">The invocation URL</param>
+        /// <param name="language">The function language</param>
+        /// <param name="isDisabled">Gets or sets a value indicating whether
+        /// the function is disabled</param>
+        public FunctionEnvelope(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string functionAppId = default(string), string scriptRootPathHref = default(string), string scriptHref = default(string), string configHref = default(string), string testDataHref = default(string), string secretsFileHref = default(string), string href = default(string), object config = default(object), IDictionary<string, string> files = default(IDictionary<string, string>), string testData = default(string), string invokeUrlTemplate = default(string), string language = default(string), bool? isDisabled = default(bool?))
             : base(id, name, kind, type)
         {
             FunctionAppId = functionAppId;
             ScriptRootPathHref = scriptRootPathHref;
             ScriptHref = scriptHref;
             ConfigHref = configHref;
+            TestDataHref = testDataHref;
             SecretsFileHref = secretsFileHref;
             Href = href;
             Config = config;
             Files = files;
             TestData = testData;
+            InvokeUrlTemplate = invokeUrlTemplate;
+            Language = language;
+            IsDisabled = isDisabled;
             CustomInit();
         }
 
@@ -93,6 +102,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ConfigHref { get; set; }
 
         /// <summary>
+        /// Gets or sets test data URI.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.test_data_href")]
+        public string TestDataHref { get; set; }
+
+        /// <summary>
         /// Gets or sets secrets file URI.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secrets_file_href")]
@@ -121,6 +136,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.test_data")]
         public string TestData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the invocation URL
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.invoke_url_template")]
+        public string InvokeUrlTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the function language
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.language")]
+        public string Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the function is disabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDisabled")]
+        public bool? IsDisabled { get; set; }
 
     }
 }

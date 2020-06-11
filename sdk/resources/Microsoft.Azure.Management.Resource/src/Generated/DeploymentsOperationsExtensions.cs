@@ -2028,6 +2028,54 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static DeploymentValidateResult BeginValidateAtScope(this IDeploymentsOperations operations, string scope, string deploymentName, Deployment parameters)
+            {
+                return operations.BeginValidateAtScopeAsync(scope, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> BeginValidateAtScopeAsync(this IDeploymentsOperations operations, string scope, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateAtScopeWithHttpMessagesAsync(scope, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a deployment from the deployment history.
             /// </summary>
             /// <remarks>
@@ -2123,6 +2171,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentExtended> BeginCreateOrUpdateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static DeploymentValidateResult BeginValidateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters)
+            {
+                return operations.BeginValidateAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> BeginValidateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2242,6 +2332,54 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static DeploymentValidateResult BeginValidateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters)
+            {
+                return operations.BeginValidateAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> BeginValidateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a deployment from the deployment history.
             /// </summary>
             /// <remarks>
@@ -2337,6 +2475,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentExtended> BeginCreateOrUpdateAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static DeploymentValidateResult BeginValidateAtSubscriptionScope(this IDeploymentsOperations operations, string deploymentName, Deployment parameters)
+            {
+                return operations.BeginValidateAtSubscriptionScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> BeginValidateAtSubscriptionScopeAsync(this IDeploymentsOperations operations, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2498,6 +2678,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<DeploymentExtended> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            public static DeploymentValidateResult BeginValidate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
+            {
+                return operations.BeginValidateAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentValidateResult> BeginValidateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

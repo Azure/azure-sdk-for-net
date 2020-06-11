@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async void InvalidAuthority()
         {
             // Provide authority parameter value that will not parse properly
-            var parameters = new SqlAppAuthenticationParameters("http://badauthority", Constants.KeyVaultResourceId, default(string));
+            var parameters = new SqlAppAuthenticationParameters("http://badauthority", Constants.KeyVaultResourceId, default);
 
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<ArgumentException>(() => (new SqlAppAuthenticationProvider()).AcquireTokenAsync(parameters));
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async void MissingResource()
         {
             // Do not provide any resource parameter value
-            var parameters = new SqlAppAuthenticationParameters($"{Constants.AzureAdInstance}{Constants.TenantId}", string.Empty, default(string));
+            var parameters = new SqlAppAuthenticationParameters($"{Constants.AzureAdInstance}{Constants.TenantId}", string.Empty, default);
 
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<ArgumentException>(() => (new SqlAppAuthenticationProvider()).AcquireTokenAsync(parameters));
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             string returnValue = SqlAppAuthenticationProvider.GetConnectionStringByUserId("NotAGuid");
 
-            Assert.Equal(default(string), returnValue);
+            Assert.Equal(default, returnValue);
         }
 
         [Fact]

@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Input field mapping for a skill. </summary>
     public partial class InputFieldMappingEntry
@@ -16,7 +17,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the input. </param>
         public InputFieldMappingEntry(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
+            Inputs = new List<InputFieldMappingEntry>();
         }
 
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
@@ -29,16 +36,14 @@ namespace Azure.Search.Documents.Models
             Name = name;
             Source = source;
             SourceContext = sourceContext;
-            Inputs = inputs;
+            Inputs = inputs ?? new List<InputFieldMappingEntry>();
         }
 
         /// <summary> The name of the input. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The source of the input. </summary>
         public string Source { get; set; }
         /// <summary> The source context used for selecting recursive inputs. </summary>
         public string SourceContext { get; set; }
-        /// <summary> The recursive inputs used when creating a complex type. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; set; }
     }
 }

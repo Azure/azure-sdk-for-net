@@ -600,7 +600,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US",

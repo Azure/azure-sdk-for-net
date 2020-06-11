@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -12,13 +14,18 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage
     {
+        /// <summary>
+        /// Indicates whether the user has settled the message as part of their callback.
+        /// If they have done so, we will not autocomplete.
+        /// </summary>
+        internal bool IsSettled { get; set; }
 
         internal ServiceBusMessage SentMessage { get; set; } = new ServiceBusMessage();
 
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public ReadOnlyMemory<byte> Body => SentMessage.Body;
+        public BinaryData Body => SentMessage.Body;
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -139,12 +146,6 @@ namespace Azure.Messaging.ServiceBus
         /// depends on the queue's workload and its state.</remarks>
         public DateTimeOffset ScheduledEnqueueTime => SentMessage.ScheduledEnqueueTime;
 
-        // TODO: Calculate the size of the properties and body
-        /// <summary>
-        /// Gets the total size of the message body in bytes.
-        /// </summary>
-        public long Size => SentMessage.Size;
-
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.
         /// </summary>
@@ -153,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
-        public IDictionary<string, object> Properties => SentMessage.Properties;
+        public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object> (SentMessage.Properties);
 
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.

@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='parameters'>
             /// Parameters for the create or update operation
             /// </param>
-            public static SignalRResource CreateOrUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRCreateParameters parameters = default(SignalRCreateParameters))
+            public static SignalRResource CreateOrUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
             }
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SignalRResource> CreateOrUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRCreateParameters parameters = default(SignalRCreateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SignalRResource> CreateOrUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='parameters'>
             /// Parameters for the update operation
             /// </param>
-            public static SignalRResource Update(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRUpdateParameters parameters = default(SignalRUpdateParameters))
+            public static SignalRResource Update(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource))
             {
                 return operations.UpdateAsync(resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
             }
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SignalRResource> UpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRUpdateParameters parameters = default(SignalRUpdateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SignalRResource> UpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -499,7 +499,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='parameters'>
             /// Parameters for the create or update operation
             /// </param>
-            public static SignalRResource BeginCreateOrUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRCreateParameters parameters = default(SignalRCreateParameters))
+            public static SignalRResource BeginCreateOrUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource))
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
             }
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SignalRResource> BeginCreateOrUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRCreateParameters parameters = default(SignalRCreateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SignalRResource> BeginCreateOrUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='parameters'>
             /// Parameters for the update operation
             /// </param>
-            public static SignalRResource BeginUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRUpdateParameters parameters = default(SignalRUpdateParameters))
+            public static SignalRResource BeginUpdate(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource))
             {
                 return operations.BeginUpdateAsync(resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
             }
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SignalRResource> BeginUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRUpdateParameters parameters = default(SignalRUpdateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SignalRResource> BeginUpdateAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, SignalRResource parameters = default(SignalRResource), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="description">The description of the operation</param>
+        /// <param name="description">The description of the operation.</param>
         /// <param name="operation">The action that users can perform, based on
-        /// their permission level</param>
-        /// <param name="provider">Service provider: Microsoft Support</param>
+        /// their permission level.</param>
+        /// <param name="provider">Service provider: Microsoft Support.</param>
         /// <param name="resource">Resource on which the operation is
-        /// performed</param>
+        /// performed.</param>
         public OperationDisplay(string description = default(string), string operation = default(string), string provider = default(string), string resource = default(string))
         {
             Description = description;
@@ -50,26 +50,26 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the description of the operation
+        /// Gets the description of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }
 
         /// <summary>
         /// Gets the action that users can perform, based on their permission
-        /// level
+        /// level.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets service provider: Microsoft Support
+        /// Gets service provider: Microsoft Support.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets resource on which the operation is performed
+        /// Gets resource on which the operation is performed.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; private set; }

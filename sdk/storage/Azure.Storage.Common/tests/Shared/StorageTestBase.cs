@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
@@ -31,59 +31,12 @@ namespace Azure.Storage.Test.Shared
 #endif
         }
 
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// </summary>
-        private static TestEventListener s_listener;
-
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new StorageRecordedTestSanitizer();
-            Matcher = new StorageRecordMatcher(Sanitizer);
+            Matcher = new StorageRecordMatcher();
         }
-
-        /// <summary>
-        /// Start logging events to the console if debugging or in Live mode.
-        /// This will run once before any tests.
-        /// </summary>
-        [OneTimeSetUp]
-        public void StartLoggingEvents()
-        {
-            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
-            {
-                s_listener = new TestEventListener();
-            }
-        }
-
-        /// <summary>
-        /// Stop logging events and do necessary cleanup.
-        /// This will run once after all tests have finished.
-        /// </summary>
-        [OneTimeTearDown]
-        public void StopLoggingEvents()
-        {
-            s_listener?.Dispose();
-            s_listener = null;
-        }
-
-        /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// This will run prior to the start of each test.
-        /// </summary>
-        [SetUp]
-        public void SetupEventsForTest() =>
-            s_listener?.SetupEventsForTest();
-
-        /// <summary>
-        /// Output the Events to the console in the case of test failure.
-        /// This will include the HTTP requests and responses.
-        /// This will run after each test finishes.
-        /// </summary>
-        [TearDown]
-        public void OutputEventsForTest() =>
-            s_listener?.OutputEventsForTest();
 
         /// <summary>
         /// Gets the tenant to use by default for our tests.
@@ -137,6 +90,14 @@ namespace Azure.Storage.Test.Shared
         public TenantConfiguration TestConfigManagedDisk => GetTestConfig(
                 "Storage_TestConfigManagedDisk",
                 () => TestConfigurations.DefaultTargetManagedDiskTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigSoftDelete => GetTestConfig(
+                "Storage_TestConfigSoftDelete",
+                () => TestConfigurations.DefaultTargetSoftDeleteTenant);
 
         /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
@@ -287,7 +248,7 @@ namespace Azure.Storage.Test.Shared
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
-        public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        public virtual void AssertDictionaryEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");
             Assert.IsNotNull(actual, "Actual metadata is null");

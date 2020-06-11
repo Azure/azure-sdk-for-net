@@ -16,8 +16,8 @@ namespace Azure.AI.FormRecognizer.Models
         internal static DocumentResult_internal DeserializeDocumentResult_internal(JsonElement element)
         {
             string docType = default;
-            IReadOnlyList<int> pageRange = new List<int>();
-            IReadOnlyDictionary<string, FieldValue_internal> fields = new Dictionary<string, FieldValue_internal>();
+            IReadOnlyList<int> pageRange = default;
+            IReadOnlyDictionary<string, FieldValue_internal> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"))
@@ -40,7 +40,14 @@ namespace Azure.AI.FormRecognizer.Models
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
+                        }
                     }
                     fields = dictionary;
                     continue;

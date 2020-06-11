@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a distance scoring function. </summary>
     public partial class DistanceScoringParameters
@@ -15,13 +17,18 @@ namespace Azure.Search.Documents.Models
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
         public DistanceScoringParameters(string referencePointParameter, double boostingDistance)
         {
+            if (referencePointParameter == null)
+            {
+                throw new ArgumentNullException(nameof(referencePointParameter));
+            }
+
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the reference location. </summary>
-        public string ReferencePointParameter { get; }
+        public string ReferencePointParameter { get; set; }
         /// <summary> The distance in kilometers from the reference location where the boosting range ends. </summary>
-        public double BoostingDistance { get; }
+        public double BoostingDistance { get; set; }
     }
 }

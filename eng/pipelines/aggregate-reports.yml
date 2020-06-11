@@ -32,11 +32,23 @@ jobs:
           & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(System.ArtifactsDirectory)/BuildArtifacts/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
           -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
         displayName: "Analyze dependencies"
+
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          version: "$(DotNetCoreSDKVersion)"
+
+      - pwsh: |
+          dotnet restore eng/ApiCompat/ApiCompat.csproj
+          dotnet build eng/ApiCompat/ApiCompat.csproj  /t:GeneratePublishDependencyFile /p:PublishDepsFilePath=$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json
+        displayName: "Generate azure-sdk.deps.json"
+
       - task: PublishPipelineArtifact@1
         displayName: "Publish Report Artifacts"
         inputs:
           artifactName: reports
           path: $(Build.ArtifactStagingDirectory)/reports
+
       - task: AzureFileCopy@2
         displayName: 'Upload dependency report'
         inputs:

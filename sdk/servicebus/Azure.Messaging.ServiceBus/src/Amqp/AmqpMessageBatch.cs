@@ -27,6 +27,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The maximum number of bytes that a message may be to be considered small.</summary>
         private const byte MaximumBytesSmallMessage = 255;
 
+        /// <summary>The size of the batch, in bytes, to reserve for the AMQP message overhead.</summary>
+        private readonly long _reservedSize;
+
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
         private bool _disposed = false;
 
@@ -38,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public override long MaximumSizeInBytes { get; }
+        public override long MaxSizeInBytes { get; }
 
         /// <summary>
         ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic
@@ -74,15 +77,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpMessageBatch(CreateBatchOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.MaximumSizeInBytes, nameof(options.MaximumSizeInBytes));
+            Argument.AssertNotNull(options.MaxSizeInBytes, nameof(options.MaxSizeInBytes));
 
             Options = options;
-            MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
+            MaxSizeInBytes = options.MaxSizeInBytes.Value;
 
             // Initialize the size by reserving space for the batch envelope.
 
             using AmqpMessage envelope = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(Enumerable.Empty<ServiceBusMessage>());
-            _sizeBytes = envelope.SerializedMessageSize;
+            _reservedSize = envelope.SerializedMessageSize;
+            _sizeBytes = _reservedSize;
         }
 
         /// <summary>
@@ -112,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         ? OverheadBytesSmallMessage
                         : OverheadBytesLargeMessage);
 
-                if (size > MaximumSizeInBytes)
+                if (size > MaxSizeInBytes)
                 {
                     return false;
                 }
@@ -120,12 +124,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _sizeBytes = size;
                 BatchMessages.Add(message);
 
-                return true;
+            return true;
             }
             finally
             {
                 amqpMessage?.Dispose();
             }
+        }
+
+        /// <summary>
+        ///   Clears the batch, removing all messages and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public override void Clear()
+        {
+            BatchMessages.Clear();
+            _sizeBytes = _reservedSize;
         }
 
         /// <summary>
@@ -141,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (typeof(T) != typeof(ServiceBusMessage))
             {
-                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources1.UnsupportedTransportEventType, typeof(T).Name));
+                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
             return (IEnumerable<T>)BatchMessages;
@@ -154,9 +169,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override void Dispose()
         {
             _disposed = true;
-
-            BatchMessages.Clear();
-            _sizeBytes = 0;
+            Clear();
         }
     }
 }

@@ -123,6 +123,12 @@ namespace Microsoft.Azure.EventHubs.Processor
             Checkpoint capturedCheckpoint;
             lock(this.ThisLock)
             {
+                // Don't checkpoint for start of stream so that we can still respect initial offset provider.
+                if (this.Offset == "-1")
+                {
+                    return Task.CompletedTask;
+                }
+
                 capturedCheckpoint = new Checkpoint(this.PartitionId, this.Offset, this.SequenceNumber);
             }
 

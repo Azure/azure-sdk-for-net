@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListIndexersResult
     {
         internal static ListIndexersResult DeserializeListIndexersResult(JsonElement element)
         {
-            IReadOnlyList<SearchIndexer> value = new List<SearchIndexer>();
+            IReadOnlyList<SearchIndexer> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -23,7 +23,14 @@ namespace Azure.Search.Documents.Models
                     List<SearchIndexer> array = new List<SearchIndexer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexer.DeserializeSearchIndexer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexer.DeserializeSearchIndexer(item));
+                        }
                     }
                     value = array;
                     continue;

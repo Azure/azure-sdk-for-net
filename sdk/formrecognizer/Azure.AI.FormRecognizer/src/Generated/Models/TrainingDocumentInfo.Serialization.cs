@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     public partial class TrainingDocumentInfo
     {
@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             string documentName = default;
             int pages = default;
-            IReadOnlyList<FormRecognizerError> errors = new List<FormRecognizerError>();
+            IReadOnlyList<FormRecognizerError> errors = default;
             TrainingStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,14 @@ namespace Azure.AI.FormRecognizer.Custom
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        }
                     }
                     errors = array;
                     continue;
