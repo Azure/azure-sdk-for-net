@@ -76,6 +76,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual Pageable<RoleDefinition> GetRoleDefinitions(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
@@ -115,6 +116,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope"> The scope of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual AsyncPageable<RoleDefinition> GetRoleDefinitionsAsync(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
@@ -156,6 +158,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual Pageable<RoleAssignment> GetRoleAssignments(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
@@ -195,6 +198,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
         public virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(RoleAssignmentScope roleScope, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
@@ -238,6 +242,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name">The Name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="properties"/> is null.</exception>
         public virtual Response<RoleAssignment> CreateRoleAssignment(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
@@ -262,6 +267,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name">The name used to create the role assignment.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="properties"/> is null.</exception>
         public virtual async Task<Response<RoleAssignment>> CreateRoleAssignmentAsync(RoleAssignmentScope roleScope, RoleAssignmentProperties properties, Guid name = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
@@ -286,6 +292,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
         public virtual Response<RoleAssignment> GetRoleAssignment(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
@@ -308,6 +315,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
         public virtual async Task<Response<RoleAssignment>> GetRoleAssignmentAsync(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
@@ -331,6 +339,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
         public virtual Response<RoleAssignment> DeleteRoleAssignment(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
@@ -353,6 +362,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> or <paramref name="roleAssignmentName"/> is null.</exception>
         public virtual async Task<Response<RoleAssignment>> DeleteRoleAssignmentAsync(RoleAssignmentScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
