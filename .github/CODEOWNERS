@@ -30,6 +30,8 @@
 /sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
+/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+
 /sdk/identity/                                  @schaabs
 
 /sdk/keyvault/                                  @schaabs @heaths
