@@ -12,10 +12,6 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added changes for Azure Backup Health.
-       ]]>
-			<![CDATA[
-New features:
 - Added 4 new rest api related to private endpoint connection work (JEDI).
        ]]>
 		</PackageReleaseNotes>
