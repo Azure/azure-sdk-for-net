@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DatasetListResponse(IReadOnlyList<DatasetResource> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<DatasetResource>();
             NextLink = nextLink;
         }
 

@@ -3,7 +3,6 @@
 
 using System;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -12,12 +11,12 @@ namespace Azure.DigitalTwins.Core.Samples
     {
         private static readonly Random s_random = new Random();
 
-        internal static async Task<string> GetUniqueModelIdAsync(string baseName, DigitalTwinsClient client, [CallerMemberName] string caller = "")
+        internal static async Task<string> GetUniqueModelIdAsync(string baseName, DigitalTwinsClient client)
         {
             return await GetUniqueIdAsync(baseName, (modelId) => client.GetModelAsync(modelId));
         }
 
-        internal static async Task<string> GetUniqueTwinIdAsync(string baseName, DigitalTwinsClient client, [CallerMemberName] string caller = "")
+        internal static async Task<string> GetUniqueTwinIdAsync(string baseName, DigitalTwinsClient client)
         {
             return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync(twinId));
         }

@@ -26,15 +26,15 @@ namespace Azure.DigitalTwins.Samples
             // For the purpose of this example we will create temporary models using random model Ids and then decommission a model.
             // We have to make sure these model Ids are unique within the DT instance.
 
-            string newComponentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
+            string componentModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryComponentModelPrefix, client);
             string sampleModelId = await GetUniqueModelIdAsync(SamplesConstants.TemporaryModelPrefix, client);
 
             string newComponentModelPayload = SamplesConstants.TemporaryComponentModelPayload
-                .Replace(SamplesConstants.ComponentId, newComponentModelId);
+                .Replace(SamplesConstants.ComponentId, componentModelId);
 
             string newModelPayload = SamplesConstants.TemporaryModelWithComponentPayload
                 .Replace(SamplesConstants.ModelId, sampleModelId)
-                .Replace(SamplesConstants.ComponentId, newComponentModelId);
+                .Replace(SamplesConstants.ComponentId, componentModelId);
 
             // Then we create the model
 
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Samples
                 #region Snippet:DigitalTwinsSampleCreateModels
 
                 Response<IReadOnlyList<ModelData>> response = await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
-                Console.WriteLine($"Successfully created a model with Id: {newComponentModelId}, {sampleModelId}, status: {response.GetRawResponse().Status}");
+                Console.WriteLine($"Created models with Ids {componentModelId} and {sampleModelId}. Response status: {response.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinsSampleCreateModels
             }
@@ -62,10 +62,10 @@ namespace Azure.DigitalTwins.Samples
                 #region Snippet:DigitalTwinsSampleGetModel
 
                 Response<ModelData> sampleModel = await client.GetModelAsync(sampleModelId);
+                Console.WriteLine($"Retrieved model with Id {sampleModelId}. Response status: {sampleModel.GetRawResponse().Status}");
 
                 #endregion Snippet:DigitalTwinsSampleGetModel
 
-                Console.WriteLine($"{sampleModel.Value.Id} has decommission status of {sampleModel.Value.Decommissioned}");
             }
             catch (Exception ex)
             {
@@ -78,12 +78,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.DecommissionModelAsync(sampleModelId);
-                Console.WriteLine($"Successfully decommissioned model {sampleModelId}");
+                Response decommissionModelResponse = await client.DecommissionModelAsync(sampleModelId);
+                Console.WriteLine($"Decommissioned model with Id {sampleModelId}. Response status: {decommissionModelResponse.Status}");
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to decommision model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to decommision model with Id {sampleModelId} due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDecommisionModel
@@ -94,13 +94,12 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.DeleteModelAsync(sampleModelId);
-
-                Console.WriteLine($"Deleted model {sampleModelId}");
+                Response deleteModelResponse = await client.DeleteModelAsync(sampleModelId);
+                Console.WriteLine($"Deleted model with Id {sampleModelId}. Response status: {deleteModelResponse.Status}");
             }
             catch (Exception ex)
             {
-                FatalError($"Failed to delete model {sampleModelId} due to:\n{ex}");
+                FatalError($"Failed to delete model with Id {sampleModelId} due to:\n{ex}");
             }
 
             #endregion Snippet:DigitalTwinsSampleDeleteModel

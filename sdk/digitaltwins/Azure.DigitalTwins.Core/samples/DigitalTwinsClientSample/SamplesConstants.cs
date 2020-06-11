@@ -51,7 +51,17 @@ namespace Azure.DigitalTwins.Core.Samples
         public const string TemporaryComponentModelPrefix = "dtmi:samples:ComponentModel;";
 
         /// <summary>
-        /// The application/json description of a temporary model
+        /// Placeholder for model display name in the temporary payload.
+        /// </summary>
+        public const string ModelDisplayName = "MODEL_DISPLAY_NAME";
+
+        /// <summary>
+        /// Placeholder for model relationship name in the temporary payload.
+        /// </summary>
+        public const string RelationshipName = "RELATIONSHIP_NAME";
+
+        /// <summary>
+        /// The application/json description of a temporary model with a component.
         /// </summary>
         public const string TemporaryModelWithComponentPayload = @"
             {
@@ -137,6 +147,41 @@ namespace Azure.DigitalTwins.Core.Samples
                 ""ComponentProp1"": ""Value"",
                 ""ComponentProp2"": 123
               }
+            }";
+
+        /// <summary>
+        /// Placeholder for a relationship target model Id in the temporary model with relationship payload.
+        /// </summary>
+        public const string RelationshipTargetModelId = "RELATIONSHIP_TARGET_MODEL_ID";
+
+        /// <summary>
+        /// The application/json description of a temporary model with a relationship
+        /// </summary>
+        public const string TemporaryModelWithRelationshipPayload = @"
+            {
+                ""@id"": ""MODEL_ID"",
+                ""@type"": ""Interface"",
+                ""@context"": ""dtmi:dtdl:context;2"",
+                ""displayName"": ""MODEL_DISPLAY_NAME"",
+                ""contents"": [
+                    {
+                        ""@type"": ""Relationship"",
+                        ""name"": ""RELATIONSHIP_NAME"",
+                        ""target"": ""RELATIONSHIP_TARGET_MODEL_ID"",
+                        ""properties"": [
+                            {
+                                ""@type"": ""Property"",
+                                ""name"": ""Prop1"",
+                                ""schema"": ""string""
+                            },
+                            {
+                                ""@type"": ""Property"",
+                                ""name"": ""Prop2"",
+                                ""schema"": ""integer""
+                            }
+                        ]
+                    }
+                ]
             }";
     }
 }

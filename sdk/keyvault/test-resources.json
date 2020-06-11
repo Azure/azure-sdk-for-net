@@ -134,6 +134,10 @@
         "KEYVAULT_SKU": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))).sku.name]"
+        },
+        "CLIENT_OBJECTID" : {
+            "type": "string",
+            "value": "[parameters('testApplicationOid')]"
         }
     }
 }

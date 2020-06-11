@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
+    <PackageReference Update="Azure.AI.TextAnalytics" Version="1.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
     <PackageReference Update="Azure.Core" Version="1.2.2" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.1" />
