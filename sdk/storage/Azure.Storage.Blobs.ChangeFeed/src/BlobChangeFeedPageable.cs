@@ -3,49 +3,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
-    /// BlobChangeFeedPagableAsync.
+    /// BlobChangeFeedPagable.
     /// </summary>
-    public class BlobChangeFeedAsyncPagable : AsyncPageable<BlobChangeFeedEvent>
+    internal class BlobChangeFeedPageable : Pageable<BlobChangeFeedEvent>
     {
         private readonly ChangeFeedFactory _changeFeedFactory;
-        private readonly BlobServiceClient _blobServiceClient;
         private readonly DateTimeOffset? _startTime;
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
-        /// <summary>
-        /// Internal constructor.
-        /// </summary>
-        internal BlobChangeFeedAsyncPagable(
+        internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default)
         {
             _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
-            _blobServiceClient = blobServiceClient;
             _startTime = startTime;
             _endTime = endTime;
         }
 
-        internal BlobChangeFeedAsyncPagable(
+        internal BlobChangeFeedPageable(
             BlobServiceClient blobServiceClient,
             string continuation)
         {
             _changeFeedFactory = new ChangeFeedFactory(blobServiceClient);
-            _blobServiceClient = blobServiceClient;
             _continuation = continuation;
         }
 
@@ -54,35 +41,33 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         /// <param name="continuationToken">
         /// Throws an <see cref="ArgumentException"/>.  To use contination, call
-        /// <see cref="BlobChangeFeedClient.GetChangesAsync(string)"/>.
+        /// <see cref="BlobChangeFeedClient.GetChanges(string)"/>.
         /// </param>
         /// <param name="pageSizeHint">
         /// Page size.
         /// </param>
         /// <returns>
-        /// <see cref="IAsyncEnumerable{Page}"/>.
+        /// <see cref="IEnumerable{Page}"/>.
         /// </returns>
-        public override async IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPages(
-            string continuationToken = null,
-            int? pageSizeHint = null)
+        public override IEnumerable<Page<BlobChangeFeedEvent>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
             if (continuationToken != null)
             {
-                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChangesAsync(string) instead");
+                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChanges(string) instead");
             }
 
-            ChangeFeed changeFeed = await _changeFeedFactory.BuildChangeFeed(
-                async: true,
+            ChangeFeed changeFeed = _changeFeedFactory.BuildChangeFeed(
+                async: false,
                 _startTime,
                 _endTime,
                 _continuation)
-                .ConfigureAwait(false);
+                .EnsureCompleted();
 
             while (changeFeed.HasNext())
             {
-                yield return await changeFeed.GetPage(
-                    async: true,
-                    pageSize: pageSizeHint ?? 512).ConfigureAwait(false);
+                yield return changeFeed.GetPage(
+                    async: false,
+                    pageSize: pageSizeHint ?? 512).EnsureCompleted();
             }
         }
     }
