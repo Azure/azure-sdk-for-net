@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         {
             Topic = (string)record[Constants.ChangeFeed.Event.Topic];
             Subject = (string)record[Constants.ChangeFeed.Event.Subject];
-            EventType = ToBlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
+            EventType = new BlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
             EventTime = DateTimeOffset.Parse((string)record[Constants.ChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
             Id = Guid.Parse((string)record[Constants.ChangeFeed.Event.EventId]);
             EventData = new BlobChangeFeedEventData((Dictionary<string, object>)record[Constants.ChangeFeed.Event.Data]);
@@ -74,18 +74,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
 
         /// <inheritdoc/>
         public override string ToString() => $"{EventTime}: {EventType} {Subject} ({EventData?.ToString() ?? "Unknown Event"})";
-
-        private static BlobChangeFeedEventType ToBlobChangeFeedEventType(string s)
-        {
-            switch (s)
-            {
-                case "BlobCreated":
-                    return BlobChangeFeedEventType.BlobCreated;
-                case "BlobDeleted":
-                    return BlobChangeFeedEventType.BlobDeleted;
-                default:
-                    return default;
-            }
-        }
     }
 }

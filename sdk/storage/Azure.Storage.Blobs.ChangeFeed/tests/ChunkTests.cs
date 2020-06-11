@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(dataVersion, changeFeedEvent.SchemaVersion);
             Assert.AreEqual(metadataVersion, changeFeedEvent.MetadataVersion);
 
-            Assert.AreEqual(api, changeFeedEvent.EventData.Api);
+            Assert.AreEqual(api, changeFeedEvent.EventData.BlobOperationName);
             Assert.AreEqual(clientRequestId, changeFeedEvent.EventData.ClientRequestId);
             Assert.AreEqual(requestId, changeFeedEvent.EventData.RequestId);
             Assert.AreEqual(etag, changeFeedEvent.EventData.ETag);
