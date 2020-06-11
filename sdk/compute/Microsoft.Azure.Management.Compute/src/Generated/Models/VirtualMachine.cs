@@ -95,9 +95,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
         /// Azure Spot virtual machine and Azure Spot scale set.
-        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
-        /// supported value is 'Deallocate' and the minimum api-version is
-        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
+        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
         /// 'Deallocate' and 'Delete' are supported and the minimum api-version
         /// is 2017-10-30-preview. Possible values include: 'Deallocate',
         /// 'Delete'</param>
@@ -275,11 +275,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the eviction policy for the Azure Spot
         /// virtual machine and Azure Spot scale set.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
-        /// machines, the only supported value is 'Deallocate' and the minimum
-        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
-        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
-        /// and the minimum api-version is 2017-10-30-preview. Possible values
-        /// include: 'Deallocate', 'Delete'
+        /// machines, both 'Deallocate' and 'Delete' are supported and the
+        /// minimum api-version is 2019-03-01.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
