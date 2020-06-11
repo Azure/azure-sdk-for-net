@@ -107,7 +107,10 @@ namespace Azure.Storage.Blobs
                 CreatedOn = properties.CreatedOn,
                 Metadata = properties.Metadata,
                 ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
-                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules),
+                ObjectReplicationSourceProperties =
+                    properties.ObjectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules)
+                    : null,
                 BlobType = properties.BlobType,
                 CopyCompletedOn = properties.CopyCompletedOn,
                 CopyStatusDescription = properties.CopyStatusDescription,
@@ -157,40 +160,46 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// If the blob has object replication policy(s) applied and is the source blob, this method will return a
-        /// dictionary of policy Ids, with a dictionary of rules and replication status for each policy
-        /// (As each policy id, could have multiple rule ids).
+        /// List of <see cref="ObjectReplicationPolicy"/>, which contains the Policy ID and the respective
+        /// rule(s) and replication status(s) for each policy.
         /// If the blob has object replication policy applied and is the destination blob,
         /// this method will return default as the policy id should be set in ObjectReplicationDestinationPolicy
         /// (e.g. <see cref="BlobProperties.ObjectReplicationDestinationPolicy"/>,<see cref="BlobDownloadDetails.ObjectReplicationDestinationPolicy"/>).
-        /// Otherwise null will be returned.
         /// </returns>
-        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
+        internal static IList<ObjectReplicationPolicy> ParseObjectReplicationIds(this IDictionary<string, string> OrIds)
         {
-            if (OrIds == null)
-            {
-                return null;
-            }
-            // If the dictionary is empty or it contains a key with policy id, we are not required to do any parsing since
+            // If the dictionary contains a key with policy id, we are not required to do any parsing since
             // the policy id should already be stored in the ObjectReplicationDestinationPolicy.
-            if (OrIds.Count == 0 ||
-                (OrIds.Count > 0 &&
-                (OrIds.First().Key == "policy-id")))
+            if (OrIds.First().Key == "policy-id")
             {
                 return default;
             }
-            IDictionary<string, IDictionary<string, string>> OrProperties = new Dictionary<string, IDictionary<string, string>>();
+            List <ObjectReplicationPolicy> OrProperties = new List<ObjectReplicationPolicy>();
             foreach (KeyValuePair<string, string> status in OrIds)
             {
                 string[] ParsedIds = status.Key.Split('_');
-                if (OrProperties.ContainsKey(ParsedIds[0]))
+                int policyIndex = OrProperties.FindIndex(policy => policy.PolicyId == ParsedIds[0]);
+                if (policyIndex > -1)
                 {
-                    OrProperties[ParsedIds[0]].Add(ParsedIds[1], status.Value);
+                    OrProperties[policyIndex].Rules.Add(new ObjectReplicationRule
+                    {
+                        RuleId = ParsedIds[1],
+                        ReplicationStatus = (ObjectReplicationStatus) Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                    });
                 }
                 else
                 {
-                    IDictionary<string, string> NewRuleStatus = new Dictionary<string, string>();
-                    NewRuleStatus.Add(ParsedIds[1], status.Value);
-                    OrProperties.Add(ParsedIds[0], NewRuleStatus);
+                    IList<ObjectReplicationRule> NewRuleStatus = new List<ObjectReplicationRule>();
+                    NewRuleStatus.Add(new ObjectReplicationRule
+                    {
+                        RuleId = ParsedIds[1],
+                        ReplicationStatus = (ObjectReplicationStatus)Enum.Parse(typeof(ObjectReplicationStatus), status.Value, true)
+                    });
+                    OrProperties.Add(new ObjectReplicationPolicy()
+                    {
+                        PolicyId = ParsedIds[0],
+                        Rules = NewRuleStatus
+                    });
                 }
             }
             return OrProperties;

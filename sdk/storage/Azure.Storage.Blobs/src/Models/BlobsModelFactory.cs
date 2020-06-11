@@ -163,7 +163,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset accessTierChangedOn,
             BlobType blobType,
             string versionId,
-            IDictionary<string, IDictionary<string, string>> objectReplicationSourceProperties,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
             bool isCurrentVersion,
             string objectReplicationDestinationPolicy,
             long tagCount,
