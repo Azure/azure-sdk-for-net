@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
     /// <example>
-    /// Here's an example of  how to use the BasicRelationship helper class to serialize and create a relationship.
+    /// Here's an example of how to use the BasicRelationship helper class to serialize and create a relationship.
     ///
     /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship">
     /// var basicRelationshipPayload = new BasicRelationship
@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     $&quot;Response status: {createRelationshipResponse.GetRawResponse().Status}.&quot;);
     /// </code>
     ///
-    /// Here's an example of  how to use the BasicRelationship helper class to get and deserialize a relationship.
+    /// Here's an example of how to use the BasicRelationship helper class to get and deserialize a relationship.
     ///
     /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship">
     /// Response&lt;string&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync(&quot;sampleTwin1Id&quot;, &quot;sampleRelationship1Id&quot;);
