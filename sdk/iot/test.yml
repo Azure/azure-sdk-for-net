@@ -12,7 +12,6 @@ jobs:
   parameters:
     ServiceDirectory: iot
     Location: westcentralus
-    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     EnvVars:
       # Runs live tests.
       AZURE_IOT_TEST_MODE: Live
