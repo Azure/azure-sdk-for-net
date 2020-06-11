@@ -5,6 +5,7 @@ using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Data.Tables.Tests;
+using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -20,6 +21,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies";
 
             #region Snippet:TablesSample1CreateClient
+            // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -28,17 +30,18 @@ namespace Azure.Data.Tables.Samples
             try
             {
                 #region Snippet:TablesSample1CreateTable
-                serviceClient.CreateTable(tableName);
+                // Create a new table. Getting response is not necessary to create; just gives more info.
+                TableItem response = serviceClient.CreateTable(tableName);
+
+                // Get a reference to a new instance of <see cref="TableClient" /> affinized to the table we created.
                 var client = serviceClient.GetTableClient(tableName);
+                Console.WriteLine($"The created table's name is {response.TableName}.");
                 #endregion
-            }
-            catch
-            {
-                Console.WriteLine("Shouldn't throw an error.");
             }
             finally
             {
                 #region Snippet:TablesSample1DeleteTable
+                // Deletes the table made previously.
                 serviceClient.DeleteTable(tableName);
                 #endregion
             }

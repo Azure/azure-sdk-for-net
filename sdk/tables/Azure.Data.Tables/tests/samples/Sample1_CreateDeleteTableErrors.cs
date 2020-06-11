@@ -23,34 +23,24 @@ namespace Azure.Data.Tables.Samples
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
 
+            #region Snippet:TablesSample1CreateExistingTable
             try
             {
-                #region Snippet:TablesSample1CreateExistingTable
+                // Creates a table.
                 serviceClient.CreateTable(tableName);
-                serviceClient.CreateTable(tableName); // second create request
-                #endregion
+
+                // Second attempt to create table with the same name should throw exception.
+                serviceClient.CreateTable(tableName);
             }
-            catch (Exception e)
+            catch (RequestFailedException e)
             {
-                Console.WriteLine("Create Existing Table throws the following:");
+                Console.WriteLine("Create existing table throws the following exception:");
                 Console.WriteLine(e.Message);
             }
+            #endregion
             finally
             {
                 serviceClient.DeleteTable(tableName);
-            }
-
-            try
-            {
-                #region Snippet:TablesSample1DeleteNonexistentTable
-                serviceClient.DeleteTable(tableName);
-                serviceClient.DeleteTable(tableName);
-                #endregion
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Delete Nonexistent Table throws the following:");
-                Console.WriteLine(e.Message);
             }
         }
     }
