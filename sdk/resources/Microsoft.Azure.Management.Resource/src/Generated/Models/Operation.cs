@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Microsoft.Features operation
+    /// Microsoft.Resources operation
     /// </summary>
     public partial class Operation
     {
