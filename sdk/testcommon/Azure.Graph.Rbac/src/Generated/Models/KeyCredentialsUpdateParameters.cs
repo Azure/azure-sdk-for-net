@@ -30,7 +30,7 @@ namespace Azure.Graph.Rbac.Models
         /// <param name="value"> A collection of KeyCredentials. </param>
         internal KeyCredentialsUpdateParameters(IList<KeyCredential> value)
         {
-            Value = value;
+            Value = value ?? new List<KeyCredential>();
         }
 
         /// <summary> A collection of KeyCredentials. </summary>

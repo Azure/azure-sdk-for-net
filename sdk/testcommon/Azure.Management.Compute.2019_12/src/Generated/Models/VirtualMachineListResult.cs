@@ -31,7 +31,7 @@ namespace Azure.Management.Compute.Models
         /// <param name="nextLink"> The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page of Virtual Machines. </param>
         internal VirtualMachineListResult(IReadOnlyList<VirtualMachine> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<VirtualMachine>();
             NextLink = nextLink;
         }
 

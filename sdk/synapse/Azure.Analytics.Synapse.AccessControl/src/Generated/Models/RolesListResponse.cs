@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal RolesListResponse(IReadOnlyList<SynapseRole> value, string nextLink)
         {
-            Value = value;
+            Value = value ?? new List<SynapseRole>();
             NextLink = nextLink;
         }
 

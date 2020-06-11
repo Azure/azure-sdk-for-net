@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("patterns");
+            }
             if (PreserveOriginal != null)
             {
                 writer.WritePropertyName("preserveOriginal");

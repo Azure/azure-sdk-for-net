@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            else
+            {
+                writer.WriteNull("wordList");
+            }
             if (MinWordSize != null)
             {
                 writer.WritePropertyName("minWordSize");

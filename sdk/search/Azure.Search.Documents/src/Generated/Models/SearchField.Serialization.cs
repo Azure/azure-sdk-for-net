@@ -22,6 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            else
+            {
+                writer.WriteNull("name");
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             if (IsKey != null)

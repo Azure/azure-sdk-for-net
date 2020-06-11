@@ -4119,7 +4119,7 @@ namespace Azure.Management.Network.Models
         public ApplicationGatewayFirewallRuleGroup(string ruleGroupName, System.Collections.Generic.IEnumerable<Azure.Management.Network.Models.ApplicationGatewayFirewallRule> rules) { }
         public string Description { get { throw null; } set { } }
         public string RuleGroupName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Management.Network.Models.ApplicationGatewayFirewallRule> Rules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Management.Network.Models.ApplicationGatewayFirewallRule> Rules { get { throw null; } }
     }
     public partial class ApplicationGatewayFirewallRuleSet : Azure.Management.Network.Models.Resource
     {
@@ -5488,11 +5488,11 @@ namespace Azure.Management.Network.Models
     public partial class ConnectionMonitorTestGroup
     {
         public ConnectionMonitorTestGroup(string name, System.Collections.Generic.IEnumerable<string> testConfigurations, System.Collections.Generic.IEnumerable<string> sources, System.Collections.Generic.IEnumerable<string> destinations) { }
-        public System.Collections.Generic.IList<string> Destinations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Destinations { get { throw null; } }
         public bool? Disable { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Sources { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> TestConfigurations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Sources { get { throw null; } }
+        public System.Collections.Generic.IList<string> TestConfigurations { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorType : System.IEquatable<Azure.Management.Network.Models.ConnectionMonitorType>
@@ -6882,7 +6882,7 @@ namespace Azure.Management.Network.Models
     public partial class HubRoute
     {
         public HubRoute(string name, string destinationType, System.Collections.Generic.IEnumerable<string> destinations, string nextHopType, string nextHop) { }
-        public System.Collections.Generic.IList<string> Destinations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Destinations { get { throw null; } }
         public string DestinationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string NextHop { get { throw null; } set { } }
@@ -7510,7 +7510,7 @@ namespace Azure.Management.Network.Models
     {
         public ManagedRulesDefinition(System.Collections.Generic.IEnumerable<Azure.Management.Network.Models.ManagedRuleSet> managedRuleSets) { }
         public System.Collections.Generic.IList<Azure.Management.Network.Models.OwaspCrsExclusionEntry> Exclusions { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Management.Network.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Management.Network.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
     }
     public partial class ManagedRuleSet
     {
@@ -7530,8 +7530,8 @@ namespace Azure.Management.Network.Models
     public partial class MatchCondition
     {
         public MatchCondition(System.Collections.Generic.IEnumerable<Azure.Management.Network.Models.MatchVariable> matchVariables, Azure.Management.Network.Models.WebApplicationFirewallOperator @operator, System.Collections.Generic.IEnumerable<string> matchValues) { }
-        public System.Collections.Generic.IList<string> MatchValues { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Management.Network.Models.MatchVariable> MatchVariables { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Management.Network.Models.MatchVariable> MatchVariables { get { throw null; } }
         public bool? NegationConditon { get { throw null; } set { } }
         public Azure.Management.Network.Models.WebApplicationFirewallOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Management.Network.Models.WebApplicationFirewallTransform> Transforms { get { throw null; } set { } }
@@ -9135,8 +9135,8 @@ namespace Azure.Management.Network.Models
     public partial class TrafficSelectorPolicy
     {
         public TrafficSelectorPolicy(System.Collections.Generic.IEnumerable<string> localAddressRanges, System.Collections.Generic.IEnumerable<string> remoteAddressRanges) { }
-        public System.Collections.Generic.IList<string> LocalAddressRanges { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> RemoteAddressRanges { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LocalAddressRanges { get { throw null; } }
+        public System.Collections.Generic.IList<string> RemoteAddressRanges { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TransportProtocol : System.IEquatable<Azure.Management.Network.Models.TransportProtocol>
@@ -10179,7 +10179,7 @@ namespace Azure.Management.Network.Models
         public WebApplicationFirewallCustomRule(int priority, Azure.Management.Network.Models.WebApplicationFirewallRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.Management.Network.Models.MatchCondition> matchConditions, Azure.Management.Network.Models.WebApplicationFirewallAction action) { }
         public Azure.Management.Network.Models.WebApplicationFirewallAction Action { get { throw null; } set { } }
         public string Etag { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Management.Network.Models.MatchCondition> MatchConditions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Management.Network.Models.MatchCondition> MatchConditions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }
         public Azure.Management.Network.Models.WebApplicationFirewallRuleType RuleType { get { throw null; } set { } }

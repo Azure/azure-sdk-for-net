@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class VaultAccessPolicyProperties
     {
         public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> accessPolicies) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
     }
     public partial class VaultCheckNameAvailabilityParameters
     {

@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The ID of the target resource. </summary>
-        public string TargetId { get; set; }
+        public string TargetId { get; }
     }
 }

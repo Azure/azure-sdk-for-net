@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
         internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets)
         {
-            Skillsets = skillsets;
+            Skillsets = skillsets ?? new List<SearchIndexerSkillset>();
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>

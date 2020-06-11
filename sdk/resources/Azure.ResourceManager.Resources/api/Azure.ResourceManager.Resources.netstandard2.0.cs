@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ApplicationDefinition(Azure.ResourceManager.Resources.Models.ApplicationLockLevel lockLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ApplicationProviderAuthorization> authorizations) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationArtifact> Artifacts { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationProviderAuthorization> Authorizations { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationProviderAuthorization> Authorizations { get { throw null; } }
         public object CreateUiDefinition { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }

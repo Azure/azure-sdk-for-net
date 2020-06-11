@@ -691,7 +691,7 @@ namespace Azure.Graph.Rbac.Models
         public RequiredResourceAccess(System.Collections.Generic.IEnumerable<Azure.Graph.Rbac.Models.ResourceAccess> resourceAccess) { }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.ResourceAccess> ResourceAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Graph.Rbac.Models.ResourceAccess> ResourceAccess { get { throw null; } }
         public string ResourceAppId { get { throw null; } set { } }
         int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }

@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobRestoreParameters
     {
         public BlobRestoreParameters(System.DateTimeOffset timeToRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobRestoreRange> blobRanges) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobRestoreRange> BlobRanges { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobRestoreRange> BlobRanges { get { throw null; } }
         public System.DateTimeOffset TimeToRestore { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -440,10 +440,10 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class CorsRule
     {
         public CorsRule(System.Collections.Generic.IEnumerable<string> allowedOrigins, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethodsItem> allowedMethods, int maxAgeInSeconds, System.Collections.Generic.IEnumerable<string> exposedHeaders, System.Collections.Generic.IEnumerable<string> allowedHeaders) { }
-        public System.Collections.Generic.IList<string> AllowedHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethodsItem> AllowedMethods { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ExposedHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AllowedHeaders { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethodsItem> AllowedMethods { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExposedHeaders { get { throw null; } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public LegalHold(System.Collections.Generic.IEnumerable<string> tags) { }
         public bool? HasLegalHold { get { throw null; } }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
     }
     public partial class LegalHoldProperties
     {
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public ManagementPolicyFilter(System.Collections.Generic.IEnumerable<string> blobTypes) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.TagFilter> BlobIndexMatch { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> BlobTypes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> BlobTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> PrefixMatch { get { throw null; } set { } }
     }
     public partial class ManagementPolicyRule
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ManagementPolicySchema
     {
         public ManagementPolicySchema(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> rules) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> Rules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> Rules { get { throw null; } }
     }
     public partial class ManagementPolicySnapShot
     {
