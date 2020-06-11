@@ -62,6 +62,9 @@ ipch/
 *.psess
 *.vsp
 
+# VS Code
+.vscode/
+
 # Code analysis
 *.CodeAnalysisLog.xml
 

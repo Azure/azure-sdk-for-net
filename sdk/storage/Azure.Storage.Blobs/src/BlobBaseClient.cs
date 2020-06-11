@@ -3,13 +3,13 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -76,6 +76,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
+
+        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// The name of the Encryption Scope to be used when sending requests.
@@ -206,6 +218,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -304,6 +317,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -327,6 +341,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption">Client-side encryption options.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobBaseClient(
             Uri blobUri,
@@ -334,6 +349,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope)
         {
             _uri = blobUri;
@@ -341,6 +357,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -372,7 +389,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
         }
 
         /// <summary>
@@ -399,7 +416,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
         }
 
         /// <summary>
@@ -667,11 +684,17 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            HttpRange requestedRange = range;
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
+                    if (UsingClientSideEncryption)
+                    {
+                        range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
+                    }
+
                     // Start downloading the blob
                     (Response<FlattenedDownloadProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
@@ -690,7 +713,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    response.Value.Content = RetriableStream.Create(
+                    stream = RetriableStream.Create(
                         stream,
                          startOffset =>
                             StartDownloadAsync(
@@ -714,6 +737,16 @@ namespace Azure.Storage.Blobs.Specialized
                             .Item2,
                         Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
+
+                    // if using clientside encryption, wrap the auto-retry stream in a decryptor
+                    // we already return a nonseekable stream; returning a crypto stream is fine
+                    if (UsingClientSideEncryption)
+                    {
+                        stream = await new BlobClientSideDecryptor(new ClientSideDecryptor(ClientSideEncryption))
+                            .DecryptInternal(stream, response.Value.Metadata, requestedRange, response.Value.ContentRange, async, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    response.Value.Content = stream;
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
@@ -806,6 +839,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                     ifMatch: conditions?.IfMatch,
                     ifNoneMatch: conditions?.IfNoneMatch,
+                    ifTags: conditions?.TagConditions,
                     async: async,
                     operationName: "BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
@@ -1230,7 +1264,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
 
@@ -1640,11 +1674,13 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
+                        sourceIfTags: sourceConditions?.TagConditions,
                         ifModifiedSince: destinationConditions?.IfModifiedSince,
                         ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         ifMatch: destinationConditions?.IfMatch,
                         ifNoneMatch: destinationConditions?.IfNoneMatch,
                         leaseId: destinationConditions?.LeaseId,
+                        ifTags: destinationConditions?.TagConditions,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
                         sealBlob: sealBlob,
@@ -2000,6 +2036,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
                         ifMatch: destinationConditions?.IfMatch,
                         ifNoneMatch: destinationConditions?.IfNoneMatch,
+                        ifTags: destinationConditions?.TagConditions,
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
@@ -2320,6 +2357,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
@@ -2671,6 +2709,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
@@ -2827,6 +2866,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
@@ -2984,6 +3024,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
+                            ifTags: conditions?.TagConditions,
                             async: async,
                             operationName: "BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
@@ -3140,6 +3181,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         leaseId: conditions?.LeaseId,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: "BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
@@ -3346,6 +3388,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the tags associated with the underlying blob.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3358,8 +3405,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Tags> GetTags(
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetTagsInternal(
+                conditions: conditions,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -3367,6 +3416,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the tags associated with the underlying blob.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3379,8 +3433,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Tags>> GetTagsAsync(
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetTagsInternal(
+                conditions: conditions,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -3390,6 +3446,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by GetTags.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3404,6 +3465,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<Tags>> GetTagsInternal(
             bool async,
+            BlobRequestConditions conditions,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -3420,6 +3482,7 @@ namespace Azure.Storage.Blobs.Specialized
                         pipeline: Pipeline,
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
                         cancellationToken: cancellationToken)
@@ -3452,6 +3515,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="tags">
         /// The tags to set on the blob.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3465,9 +3533,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response SetTags(
             Tags tags,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetTagsInternal(
                 tags: tags,
+                conditions: conditions,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -3480,6 +3550,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3494,9 +3569,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response> SetTagsAsync(
             Tags tags,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetTagsInternal(
                 tags: tags,
+                conditions: conditions,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -3509,6 +3586,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="tags">
         /// The tags to set on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// setting the blob's tags.  Note that TagConditions is currently the
+        /// only condition supported by SetTags.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3527,6 +3609,7 @@ namespace Azure.Storage.Blobs.Specialized
         //TODO what about content CRC and content MD5?
         private async Task<Response> SetTagsInternal(
             Tags tags,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3545,6 +3628,7 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
                         cancellationToken: cancellationToken)
@@ -3589,6 +3673,24 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
+                client.ClientSideEncryption,
+                client.EncryptionScope);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same
+        /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
+        /// </summary>
+        /// <param name="client">Client to base off of.</param>
+        /// <param name="clientSideEncryptionOptions">New encryption options. Setting this to <code>default</code> will clear client-side encryption.</param>
+        /// <returns>New instance with provided options and same internals otherwise.</returns>
+        public static BlobClient WithClientSideEncryptionOptions(this BlobClient client, ClientSideEncryptionOptions clientSideEncryptionOptions)
+            => new BlobClient(
+                client.Uri,
+                client.Pipeline,
+                client.Version,
+                client.ClientDiagnostics,
+                client.CustomerProvidedKey,
+                clientSideEncryptionOptions,
                 client.EncryptionScope);
     }
 }

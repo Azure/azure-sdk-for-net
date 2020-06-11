@@ -280,7 +280,6 @@ namespace Azure.DigitalTwins.Core.Tests {
         ///  &quot;EmployeeId&quot;: &quot;Employee1&quot;,
         ///  &quot;WIFI_COMPONENT_NAME&quot;: {
         ///        &quot;$metadata&quot;: {
-        ///            &quot;$model&quot;: &quot;WIFI_MODEL_ID&quot;
         ///        },
         ///        &quot;RouterName&quot;: &quot;Cisco1&quot;,
         ///        &quot;Network&quot;: &quot;Room1&quot;

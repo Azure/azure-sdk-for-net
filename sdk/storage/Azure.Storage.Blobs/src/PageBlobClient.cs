@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -99,6 +100,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -118,6 +120,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -140,6 +143,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -162,6 +166,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            AssertNoClientSideEncryption(options);
         }
 
         /// <summary>
@@ -189,8 +194,23 @@ namespace Azure.Storage.Blobs.Specialized
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             string encryptionScope)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(
+                  blobUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics,
+                  customerProvidedKey,
+                  clientSideEncryption: default,
+                  encryptionScope)
         {
+        }
+
+        private static void AssertNoClientSideEncryption(BlobClientOptions options)
+        {
+            if (options._clientSideEncryptionOptions != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
         }
         #endregion ctors
 
@@ -823,6 +843,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
                         blobTagsString: tags?.ToTagsString(),
@@ -1058,6 +1079,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPages)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1398,6 +1420,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
                         cancellationToken: cancellationToken)
@@ -1626,6 +1649,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
@@ -2755,6 +2779,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        ifTags: conditions?.TagConditions,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceConditions?.IfMatch,
@@ -2798,13 +2823,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         public static PageBlobClient GetPageBlobClient(
             this BlobContainerClient client,
-            string blobName) =>
-            new PageBlobClient(
+            string blobName)
+        {
+            if (client.ClientSideEncryption != default)
+            {
+                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
+            }
+            return new PageBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);
+        }
     }
 }

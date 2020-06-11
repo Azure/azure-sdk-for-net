@@ -117,7 +117,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the
-        /// document to assist the text analytics model in predicting the language
+        /// document to assist the Text Analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -176,7 +176,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the
-        /// document to assist the text analytics model in predicting the language
+        /// document to assist the Text Analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -235,7 +235,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="documents">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the documents to assist the text analytics model in predicting
+        /// the documents to assist the Text Analytics model in predicting
         /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -269,7 +269,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="documents">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the documents to assist the text analytics model in predicting
+        /// the documents to assist the Text Analytics model in predicting
         /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.

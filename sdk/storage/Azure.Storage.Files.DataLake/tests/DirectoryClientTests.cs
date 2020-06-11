@@ -2318,5 +2318,93 @@ namespace Azure.Storage.Files.DataLake.Tests
                 InstrumentClient(directory.GetDataLakeLeaseClient()).BreakAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
+
+        [Test]
+        public async Task GetDirectoryClientAsync_AsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            await directory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(directoryName, names);
+        }
+
+        [Test]
+        public async Task GetDirectoryClientAsync_NonAsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewNonAsciiDirectoryName();
+            DataLakeDirectoryClient file = test.FileSystem.GetDirectoryClient(directoryName);
+            await file.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(1, names.Count);
+            Assert.Contains(directoryName, names);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClientAsync_AsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            string subDirectoryName = GetNewDirectoryName();
+            string fullPathName = string.Join("/", directoryName, subDirectoryName);
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(subDirectoryName);
+
+            await subdirectory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(2, names.Count);
+            Assert.Contains(fullPathName, names);
+        }
+
+        [Test]
+        public async Task GetSubDirectoryClientAsync_NonAsciiName()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            string directoryName = GetNewDirectoryName();
+            string subDirectoryName = GetNewNonAsciiDirectoryName();
+            string fullPathName = string.Join("/", directoryName, subDirectoryName);
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+            DataLakeDirectoryClient subdirectory = directory.GetSubDirectoryClient(subDirectoryName);
+
+            await subdirectory.CreateAsync();
+
+            List<string> names = new List<string>();
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            {
+                names.Add(pathItem.Name);
+            }
+
+            // Verify the file name exists in the filesystem
+            Assert.AreEqual(2, names.Count);
+            Assert.Contains(fullPathName, names);
+        }
     }
 }

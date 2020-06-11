@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
+    <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />

@@ -14,12 +14,12 @@ namespace Azure.DigitalTwins.Core.Samples
 
         internal static async Task<string> GetUniqueModelIdAsync(string baseName, DigitalTwinsClient client, [CallerMemberName] string caller = "")
         {
-            return await GetUniqueIdAsync(baseName, (modelId) => client.GetModelAsync(modelId)).ConfigureAwait(false);
+            return await GetUniqueIdAsync(baseName, (modelId) => client.GetModelAsync(modelId));
         }
 
         internal static async Task<string> GetUniqueTwinIdAsync(string baseName, DigitalTwinsClient client, [CallerMemberName] string caller = "")
         {
-            return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync(twinId)).ConfigureAwait(false);
+            return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync(twinId));
         }
 
         private static async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)
@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 try
                 {
-                    await getResource(id).ConfigureAwait(false);
+                    await getResource(id);
                 }
                 catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
                 {

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.ServiceBus.Filters;
+using Azure.Messaging.ServiceBus.Management;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.RuleManager
@@ -13,13 +13,13 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
         public void SqlFilterValidation()
         {
             Assert.That(
-                () => new SqlFilter(null),
+                () => new SqlRuleFilter(null),
                 Throws.InstanceOf<ArgumentNullException>());
             Assert.That(
-                () => new SqlFilter(string.Empty),
+                () => new SqlRuleFilter(string.Empty),
                 Throws.InstanceOf<ArgumentException>());
             Assert.That(
-                () => new SqlFilter(new string('a', Constants.MaximumSqlFilterStatementLength + 1)),
+                () => new SqlRuleFilter(new string('a', Constants.MaximumSqlRuleFilterStatementLength + 1)),
                 Throws.InstanceOf<ArgumentException>());
         }
 

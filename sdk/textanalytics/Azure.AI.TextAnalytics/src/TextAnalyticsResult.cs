@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Base type for results of text analytics operations corresponding to a
+    /// Base type for results of Text Analytics operations corresponding to a
     /// document.  If the operation is unsuccessful, the Id and
     /// Error properties will be populated, but not others.
     /// </summary>

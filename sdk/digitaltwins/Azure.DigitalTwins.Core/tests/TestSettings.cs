@@ -24,6 +24,7 @@ namespace Azure.DigitalTwins.Core.Tests
         private static readonly string s_applicationClientIdEnv = $"{AdtEnvironmentVariablesPrefix}_CLIENT_ID";
         private static readonly string s_applicationClientSecretEnv = $"{AdtEnvironmentVariablesPrefix}_CLIENT_SECRET";
         private static readonly string s_digitalTwinHostnameEnv = $"{AdtEnvironmentVariablesPrefix}_URL";
+        private static readonly string s_digitalTwinTestMode = $"AZURE_IOT_TEST_MODE";
 
         public static TestSettings Instance { get; private set; }
 
@@ -142,6 +143,17 @@ namespace Azure.DigitalTwins.Core.Tests
             else
             {
                 Environment.SetEnvironmentVariable(s_digitalTwinHostnameEnv, Instance.DigitalTwinsInstanceHostName);
+            }
+
+            string testMode = Environment.GetEnvironmentVariable(s_digitalTwinTestMode);
+            if (!string.IsNullOrWhiteSpace(testMode))
+            {
+                // Enum.Parse<type>(value) cannot be used in net461 so using the type casting syntax.
+                Instance.TestMode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), testMode);
+            }
+            else
+            {
+                Environment.SetEnvironmentVariable(s_digitalTwinTestMode, Instance.TestMode.ToString());
             }
         }
     }

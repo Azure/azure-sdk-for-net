@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Name = name;
             Description = description;
-            Skills = skills;
+            Skills = skills ?? new List<SearchIndexerSkill>();
             CognitiveServicesAccount = cognitiveServicesAccount;
             _etag = Etag;
         }
@@ -51,8 +51,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
         /// <summary> The description of the skillset. </summary>
         public string Description { get; set; }
-        /// <summary> A list of skills in the skillset. </summary>
-        public IList<SearchIndexerSkill> Skills { get; set; }
         /// <summary> Details about cognitive services to be used when running skills. </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }
     }

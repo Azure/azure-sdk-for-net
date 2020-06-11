@@ -56,6 +56,22 @@ namespace Azure.Storage.Shared
             throw new NotImplementedException();
         }
 
+        public override int ReadByte()
+        {
+            if (Length - _position == 0)
+            {
+                return -1;
+            }
+
+            int val = InnerStream.ReadByte();
+            if (val != -1)
+            {
+                _position++;
+            }
+
+            return val;
+        }
+
         public override int Read(byte[] buffer, int offset, int count)
         {
             count = (int)Math.Min(count, Length - _position);
@@ -67,6 +83,10 @@ namespace Azure.Storage.Shared
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             count = (int)Math.Min(count, Length - _position);
+            if (count == 0)
+            {
+                return 0;
+            }
             int result = await InnerStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             _position += result;
             return result;
@@ -77,5 +97,7 @@ namespace Azure.Storage.Shared
         public override void SetLength(long value) => throw new NotSupportedException();
 
         public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+
+        public override void WriteByte(byte value) => throw new NotSupportedException();
     }
 }
