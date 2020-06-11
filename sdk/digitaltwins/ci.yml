@@ -30,3 +30,5 @@ extends:
     Artifacts:
     - name: Azure.DigitalTwins.Core
       safeName: AzureDigitalTwinsCore
+    - name: Azure.ResourceManager.DigitalTwins
+      safeName: AzureResourceManagerDigitalTwins
