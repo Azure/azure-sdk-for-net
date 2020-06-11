@@ -209,13 +209,10 @@ public class ScheduledJobs
     /// <param name="query">Query condition to evaluate which devices to run the job on</param>
     /// <param name="twin">Twin object to use for the update</param>
     /// <param name="startTimeInUtc">Date time in Utc to start the job</param>
-    /// <param name="maxExecutionTime">Max execution time, i.e., ttl duration the job can run</param>
+    /// <param name="maxExecutionTime">Max execution time in seconds, i.e., time-to-live duration the job can run. If not provided, the default is 3600 seconds</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
-    public virtual Task<Response<JobResponse>> ScheduleTwinUpdateJobAsync(string jobId, string query, Twin twin, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobResponse>> ScheduleTwinUpdateJobAsync(string jobId, string query, Twin twin, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new scheduled job to run a device method on one or multiple devices.
@@ -224,13 +221,10 @@ public class ScheduledJobs
     /// <param name="query">Query condition to evaluate which devices to run the job on</param>
     /// <param name="cloudToDeviceMethod">Method call parameters</param>
     /// <param name="startTimeInUtc">Date time in Utc to start the job</param>
-    /// <param name="maxExecutionTime">Max execution time in seconds, i.e., ttl duration the job can run</param>
+    /// <param name="maxExecutionTime">Max execution time in seconds, i.e., time-to-live duration the job can run. If not provided, the default is 3600 seconds</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
-    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodJobAsync(string jobId, string query, CloudToDeviceMethod cloudToDeviceMethod, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime, CancellationToken cancellationToken = default);
+    public virtual Task<Response<JobResponse>> ScheduleDeviceMethodJobAsync(string jobId, string query, CloudToDeviceMethod cloudToDeviceMethod, DateTimeOffset startTimeInUtc, TimeSpan maxExecutionTime = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves details of a scheduled job from the IoT Hub.
@@ -238,9 +232,6 @@ public class ScheduledJobs
     /// <param name="jobId">Id of the Job to retrieve</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>The matching JobResponse object</returns>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
     public virtual Task<Response<JobResponse>> GetScheduledJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -249,9 +240,6 @@ public class ScheduledJobs
     /// <param name="jobId">Id of the job to cancel</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>A JobResponse object</returns>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
     public virtual Task<Response<JobResponse>> CancelJobAsync(string jobId, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -261,9 +249,6 @@ public class ScheduledJobs
     /// <param name="jobStatus">The job status to query.</param>
     /// <param name="cancellationToken">Task cancellation token</param>
     /// <returns>The pageable list of query results and the raw HTTP response.</returns>
-    /// <remarks>
-    /// See https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-jobs for more information.
-    /// </remarks>
     public virtual AsyncPageable<string> QueryScheduledJobsAsync(ScheduledJobType? jobType = null, ScheduledJobStatus? jobStatus = null, CancellationToken cancellationToken = default);
 }
 ```
