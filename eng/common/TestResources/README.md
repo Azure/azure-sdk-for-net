@@ -72,6 +72,11 @@ setx AZURE_SEARCH_STORAGE_NAME $env:AZURE_SEARCH_STORAGE_NAME
 setx AZURE_SEARCH_STORAGE_KEY $env:AZURE_SEARCH_STORAGE_KEY
 ```
 
+Alternatively, when running the `New-TestResources.ps1` command, specify the `-OutFile` switch 
+which will save test environment settings into a test-resources.json.env file next to test-resources.json. 
+The file is protected via DPAPI. The environment file would be scoped to the current repository directory.
+Note: Supported only on Windows.
+
 After running or recording live tests, if you do not plan on further testing
 you can remove the test resources you created above by running:
 [Remove-TestResources.ps1][]:
