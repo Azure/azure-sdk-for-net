@@ -20,21 +20,20 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Search" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Azure.Identity" />
 
-    <!-- These will be removed when Track 2 is further along -->
-    <PackageReference Include="Microsoft.Azure.Search" />
-    <PackageReference Include="System.ComponentModel.Annotations" />
+    <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->
+    <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
   </ItemGroup>
 
-  <!-- Pull in the Azure.Core Test Framework -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\tests\TestFramework.props" />
+  <!-- Pull in Shared Source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

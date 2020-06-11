@@ -6,76 +6,80 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchField : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            if (Name != null)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
-            if (Key != null)
+            if (IsKey != null)
             {
                 writer.WritePropertyName("key");
-                writer.WriteBooleanValue(Key.Value);
+                writer.WriteBooleanValue(IsKey.Value);
             }
-            if (Retrievable != null)
+            if (IsRetrievable != null)
             {
                 writer.WritePropertyName("retrievable");
-                writer.WriteBooleanValue(Retrievable.Value);
+                writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (Searchable != null)
+            if (IsSearchable != null)
             {
                 writer.WritePropertyName("searchable");
-                writer.WriteBooleanValue(Searchable.Value);
+                writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (Filterable != null)
+            if (IsFilterable != null)
             {
                 writer.WritePropertyName("filterable");
-                writer.WriteBooleanValue(Filterable.Value);
+                writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (Sortable != null)
+            if (IsSortable != null)
             {
                 writer.WritePropertyName("sortable");
-                writer.WriteBooleanValue(Sortable.Value);
+                writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (Facetable != null)
+            if (IsFacetable != null)
             {
                 writer.WritePropertyName("facetable");
-                writer.WriteBooleanValue(Facetable.Value);
+                writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Analyzer != null)
+            if (AnalyzerName != null)
             {
                 writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (SearchAnalyzer != null)
+            if (SearchAnalyzerName != null)
             {
                 writer.WritePropertyName("searchAnalyzer");
-                writer.WriteStringValue(SearchAnalyzer.Value.ToString());
+                writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
             }
-            if (IndexAnalyzer != null)
+            if (IndexAnalyzerName != null)
             {
                 writer.WritePropertyName("indexAnalyzer");
-                writer.WriteStringValue(IndexAnalyzer.Value.ToString());
+                writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
             }
-            if (SynonymMaps != null)
+            if (SynonymMapNames != null && SynonymMapNames.Any())
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
-                foreach (var item in SynonymMaps)
+                foreach (var item in SynonymMapNames)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -90,17 +94,33 @@ namespace Azure.Search.Documents.Models
 
         internal static SearchField DeserializeSearchField(JsonElement element)
         {
-            SearchField result = new SearchField();
+            string name = default;
+            SearchFieldDataType type = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            IList<string> synonymMaps = default;
+            IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    result.Type = new DataType(property.Value.GetString());
+                    type = new SearchFieldDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("key"))
@@ -109,7 +129,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Key = property.Value.GetBoolean();
+                    key = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("retrievable"))
@@ -118,7 +138,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Retrievable = property.Value.GetBoolean();
+                    retrievable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"))
@@ -127,7 +147,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Searchable = property.Value.GetBoolean();
+                    searchable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("filterable"))
@@ -136,7 +156,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Filterable = property.Value.GetBoolean();
+                    filterable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sortable"))
@@ -145,7 +165,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Sortable = property.Value.GetBoolean();
+                    sortable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facetable"))
@@ -154,7 +174,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Facetable = property.Value.GetBoolean();
+                    facetable = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("analyzer"))
@@ -163,7 +183,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Analyzer = new AnalyzerName(property.Value.GetString());
+                    analyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("searchAnalyzer"))
@@ -172,7 +192,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SearchAnalyzer = new AnalyzerName(property.Value.GetString());
+                    searchAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("indexAnalyzer"))
@@ -181,7 +201,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IndexAnalyzer = new AnalyzerName(property.Value.GetString());
+                    indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
@@ -190,11 +210,19 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SynonymMaps = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.SynonymMaps.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    synonymMaps = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
@@ -203,15 +231,23 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Fields = new List<SearchField>();
+                    List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Fields.Add(DeserializeSearchField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSearchField(item));
+                        }
                     }
+                    fields = array;
                     continue;
                 }
             }
-            return result;
+            return new SearchField(name, type, key, retrievable, searchable, filterable, sortable, facetable, analyzer, searchAnalyzer, indexAnalyzer, synonymMaps, fields);
         }
     }
 }

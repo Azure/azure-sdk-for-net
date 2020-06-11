@@ -5,23 +5,28 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class StemmerOverrideTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rules");
-            writer.WriteStartArray();
-            foreach (var item in Rules)
+            if (Rules != null && Rules.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("rules");
+                writer.WriteStartArray();
+                foreach (var item in Rules)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name");
@@ -31,29 +36,44 @@ namespace Azure.Search.Documents.Models
 
         internal static StemmerOverrideTokenFilter DeserializeStemmerOverrideTokenFilter(JsonElement element)
         {
-            StemmerOverrideTokenFilter result = new StemmerOverrideTokenFilter();
+            IList<string> rules = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Rules.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    rules = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new StemmerOverrideTokenFilter(odataType, name, rules);
         }
     }
 }

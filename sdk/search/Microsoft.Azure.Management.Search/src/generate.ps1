@@ -29,4 +29,4 @@ Param(
 
 "$PSScriptRoot\..\..\Install-BuildTools.ps1"
 
-Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
+Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch

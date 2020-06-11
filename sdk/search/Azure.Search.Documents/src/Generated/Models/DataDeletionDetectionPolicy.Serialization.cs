@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class DataDeletionDetectionPolicy : IUtf8JsonSerializable
     {
@@ -29,16 +29,16 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy": return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element);
                 }
             }
-            DataDeletionDetectionPolicy result = new DataDeletionDetectionPolicy();
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DataDeletionDetectionPolicy(odataType);
         }
     }
 }

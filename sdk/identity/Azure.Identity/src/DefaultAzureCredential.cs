@@ -112,20 +112,14 @@ namespace Azure.Identity
 
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
-               throw scope.FailAndWrap(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+               throw scope.FailWrapAndThrow(new AuthenticationFailedException(UnhandledExceptionMessage, e));
             }
         }
 
         private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-
             int i;
 
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
@@ -169,7 +163,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[5];
+            TokenCredential[] chain = new TokenCredential[7];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -184,6 +178,16 @@ namespace Azure.Identity
             if (!options.ExcludeSharedTokenCacheCredential)
             {
                 chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername);
+            }
+
+            if (!options.ExcludeVisualStudioCredential)
+            {
+                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId);
+            }
+
+            if (!options.ExcludeVisualStudioCodeCredential)
+            {
+                chain[i++] = factory.CreateVisualStudioCodeCredential(options.VisualStudioCodeTenantId);
             }
 
             if (!options.ExcludeAzureCliCredential)

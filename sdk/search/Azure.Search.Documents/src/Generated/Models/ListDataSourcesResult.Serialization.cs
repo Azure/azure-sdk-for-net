@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListDataSourcesResult
     {
         internal static ListDataSourcesResult DeserializeListDataSourcesResult(JsonElement element)
         {
-            ListDataSourcesResult result = new ListDataSourcesResult();
+            IReadOnlyList<SearchIndexerDataSourceConnection> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    List<SearchIndexerDataSourceConnection> array = new List<SearchIndexerDataSourceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.DataSources.Add(DataSource.DeserializeDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(item));
+                        }
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new ListDataSourcesResult(value);
         }
     }
 }

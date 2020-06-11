@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class InputFieldMappingEntry : IUtf8JsonSerializable
     {
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("sourceContext");
                 writer.WriteStringValue(SourceContext);
             }
-            if (Inputs != null)
+            if (Inputs != null && Inputs.Any())
             {
                 writer.WritePropertyName("inputs");
                 writer.WriteStartArray();
@@ -43,12 +44,15 @@ namespace Azure.Search.Documents.Models
 
         internal static InputFieldMappingEntry DeserializeInputFieldMappingEntry(JsonElement element)
         {
-            InputFieldMappingEntry result = new InputFieldMappingEntry();
+            string name = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("source"))
@@ -57,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Source = property.Value.GetString();
+                    source = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceContext"))
@@ -66,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SourceContext = property.Value.GetString();
+                    sourceContext = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inputs"))
@@ -75,15 +79,23 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Inputs = new List<InputFieldMappingEntry>();
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Inputs.Add(DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeInputFieldMappingEntry(item));
+                        }
                     }
+                    inputs = array;
                     continue;
                 }
             }
-            return result;
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs);
         }
     }
 }

@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class EdgeNGramTokenizer : IUtf8JsonSerializable
     {
@@ -26,7 +27,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("maxGram");
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (TokenChars != null)
+            if (TokenChars != null && TokenChars.Any())
             {
                 writer.WritePropertyName("tokenChars");
                 writer.WriteStartArray();
@@ -45,7 +46,11 @@ namespace Azure.Search.Documents.Models
 
         internal static EdgeNGramTokenizer DeserializeEdgeNGramTokenizer(JsonElement element)
         {
-            EdgeNGramTokenizer result = new EdgeNGramTokenizer();
+            int? minGram = default;
+            int? maxGram = default;
+            IList<TokenCharacterKind> tokenChars = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minGram"))
@@ -54,7 +59,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinGram = property.Value.GetInt32();
+                    minGram = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxGram"))
@@ -63,7 +68,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxGram = property.Value.GetInt32();
+                    maxGram = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("tokenChars"))
@@ -72,25 +77,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TokenChars = new List<TokenCharacterKind>();
+                    List<TokenCharacterKind> array = new List<TokenCharacterKind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.TokenChars.Add(item.GetString().ToTokenCharacterKind());
+                        array.Add(item.GetString().ToTokenCharacterKind());
                     }
+                    tokenChars = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new EdgeNGramTokenizer(odataType, name, minGram, maxGram, tokenChars);
         }
     }
 }

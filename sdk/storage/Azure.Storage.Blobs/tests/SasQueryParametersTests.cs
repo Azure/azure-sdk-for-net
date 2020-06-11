@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Storage.Sas;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test

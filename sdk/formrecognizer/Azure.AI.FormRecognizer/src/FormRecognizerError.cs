@@ -6,18 +6,22 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents an error that occurred during an operation in the Form Recognizer Azure
+    /// Cognitive Service.
     /// </summary>
-    [CodeGenSchema("ErrorInformation")]
+    [CodeGenModel("ErrorInformation")]
     public partial class FormRecognizerError
     {
         /// <summary>
+        /// The error code.
         /// </summary>
-        [CodeGenSchemaMember("Code")]
-        public string Code { get; set; }
+        [CodeGenMember("Code")]
+        public string ErrorCode { get; }
 
         /// <summary>
+        /// The error message.
         /// </summary>
-        [CodeGenSchemaMember("Message")]
-        public string Message { get; set; }
+        [CodeGenMember("Message")]
+        public string Message { get; }
     }
 }

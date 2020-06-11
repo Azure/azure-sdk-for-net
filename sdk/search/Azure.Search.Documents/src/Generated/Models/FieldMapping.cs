@@ -5,14 +5,23 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a mapping between a field in a data source and a target field in an index. </summary>
     public partial class FieldMapping
     {
         /// <summary> Initializes a new instance of FieldMapping. </summary>
-        public FieldMapping()
+        /// <param name="sourceFieldName"> The name of the field in the data source. </param>
+        public FieldMapping(string sourceFieldName)
         {
+            if (sourceFieldName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceFieldName));
+            }
+
+            SourceFieldName = sourceFieldName;
         }
 
         /// <summary> Initializes a new instance of FieldMapping. </summary>

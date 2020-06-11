@@ -6,13 +6,11 @@
 	<PropertyGroup>
 		<Description>Microsoft Azure Monitor Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-		<Version>0.24.1-preview</Version>
+		<Version>0.25.1-preview</Version>
 		<PackageId>Microsoft.Azure.Management.Monitor</PackageId>
-		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;</PackageTags>
+		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope</PackageTags>
 		<PackageReleaseNotes>
-      - Adding some metric unit names to the **Metrics API 2018-01-01**. The complete list now includes the following: "Count", "Bytes", "Seconds", "CountPerSecond", "BytesPerSecond", "Percent", "MilliSeconds", "ByteSeconds", "Unspecified", "Cores", "MilliCores", "NanoCores", "BitsPerSecond"
-      - Adding support for a new attribute in the DiagnosticSettings object (**Diagnostic Settings API 2017-05-01-preview**,) i.e.: the attribute is "logAnalyticsDestinationType," which is a string that accepts the following values: Dedicated or null
-      - Minor modification to the documentation
+	  - Fixing API **2018-03-01/metricAlert_API**. Fix WebtestLocationAvailabilityCriteria criteria type.
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

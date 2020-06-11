@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -51,6 +51,37 @@ namespace Azure.Core.Tests
             Assert.AreEqual(100, reliableStream.Position);
 
             Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            AssertReads(_buffer, 100);
+        }
+
+        [Test]
+        public async Task DisposesStreams()
+        {
+            var stream1 = new MockReadStream(100, throwAfter: 50);
+            var stream2 = new MockReadStream(50, offset: 50);
+
+            MockTransport mockTransport = CreateMockTransport(
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            Stream reliableStream = await CreateAsync(
+                offset => SendTestRequest(pipeline, offset),
+                offset => SendTestRequestAsync(pipeline, offset),
+                new ResponseClassifier(), maxRetries: 5);
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
+            Assert.True(stream1.IsDisposed);
+
+            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.False(stream2.IsDisposed);
+
+            reliableStream.Dispose();
+            Assert.True(stream2.IsDisposed);
+
             AssertReads(_buffer, 100);
         }
 
@@ -405,6 +436,14 @@ namespace Azure.Core.Tests
             public override bool CanSeek { get; } = false;
             public override long Length { get; }
             public override long Position { get; set; }
+            public bool IsDisposed { get; set; }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                IsDisposed = true;
+            }
+
         }
     }
 }

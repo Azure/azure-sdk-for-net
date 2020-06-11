@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// <summary>
     /// Parameters for updating an Storage sync service.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class StorageSyncServiceUpdateParameters
     {
         /// <summary>
@@ -35,12 +38,13 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         /// <param name="tags">The user-specified tags associated with the
         /// storage sync service.</param>
-        /// <param name="properties">The properties of the storage sync
-        /// service.</param>
-        public StorageSyncServiceUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+        /// <param name="incomingTrafficPolicy">Incoming Traffic Policy.
+        /// Possible values include: 'AllowAllTraffic',
+        /// 'AllowVirtualNetworksOnly'</param>
+        public StorageSyncServiceUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string incomingTrafficPolicy = default(string))
         {
             Tags = tags;
-            Properties = properties;
+            IncomingTrafficPolicy = incomingTrafficPolicy;
             CustomInit();
         }
 
@@ -57,10 +61,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the storage sync service.
+        /// Gets or sets incoming Traffic Policy. Possible values include:
+        /// 'AllowAllTraffic', 'AllowVirtualNetworksOnly'
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.incomingTrafficPolicy")]
+        public string IncomingTrafficPolicy { get; set; }
 
     }
 }

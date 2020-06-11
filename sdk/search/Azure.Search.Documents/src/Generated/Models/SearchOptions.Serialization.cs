@@ -117,7 +117,23 @@ namespace Azure.Search.Documents
 
         internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
-            SearchOptions result = new SearchOptions();
+            bool? count = default;
+            IList<string> facets = default;
+            string filter = default;
+            string highlight = default;
+            string highlightPostTag = default;
+            string highlightPreTag = default;
+            double? minimumCoverage = default;
+            string orderby = default;
+            SearchQueryType? queryType = default;
+            IList<string> scoringParameters = default;
+            string scoringProfile = default;
+            string search = default;
+            string searchFields = default;
+            SearchMode? searchMode = default;
+            string select = default;
+            int? skip = default;
+            int? top = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -126,7 +142,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.IncludeTotalCount = property.Value.GetBoolean();
+                    count = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facets"))
@@ -135,11 +151,19 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.Facets = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Facets.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    facets = array;
                     continue;
                 }
                 if (property.NameEquals("filter"))
@@ -148,7 +172,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.Filter = property.Value.GetString();
+                    filter = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlight"))
@@ -157,7 +181,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.HighlightFieldsRaw = property.Value.GetString();
+                    highlight = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlightPostTag"))
@@ -166,7 +190,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.HighlightPostTag = property.Value.GetString();
+                    highlightPostTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlightPreTag"))
@@ -175,7 +199,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.HighlightPreTag = property.Value.GetString();
+                    highlightPreTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("minimumCoverage"))
@@ -184,7 +208,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.MinimumCoverage = property.Value.GetDouble();
+                    minimumCoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("orderby"))
@@ -193,7 +217,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.OrderByRaw = property.Value.GetString();
+                    orderby = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queryType"))
@@ -202,7 +226,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.QueryType = property.Value.GetString().ToSearchQueryType();
+                    queryType = property.Value.GetString().ToSearchQueryType();
                     continue;
                 }
                 if (property.NameEquals("scoringParameters"))
@@ -211,11 +235,19 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.ScoringParameters = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ScoringParameters.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    scoringParameters = array;
                     continue;
                 }
                 if (property.NameEquals("scoringProfile"))
@@ -224,7 +256,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.ScoringProfile = property.Value.GetString();
+                    scoringProfile = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("search"))
@@ -233,7 +265,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.SearchText = property.Value.GetString();
+                    search = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("searchFields"))
@@ -242,7 +274,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.SearchFieldsRaw = property.Value.GetString();
+                    searchFields = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("searchMode"))
@@ -251,7 +283,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.SearchMode = property.Value.GetString().ToSearchMode();
+                    searchMode = property.Value.GetString().ToSearchMode();
                     continue;
                 }
                 if (property.NameEquals("select"))
@@ -260,7 +292,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.SelectRaw = property.Value.GetString();
+                    select = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skip"))
@@ -269,7 +301,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.Skip = property.Value.GetInt32();
+                    skip = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("top"))
@@ -278,11 +310,11 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    result.Size = property.Value.GetInt32();
+                    top = property.Value.GetInt32();
                     continue;
                 }
             }
-            return result;
+            return new SearchOptions(count, facets, filter, highlight, highlightPostTag, highlightPreTag, minimumCoverage, orderby, queryType, scoringParameters, scoringProfile, search, searchFields, searchMode, select, skip, top);
         }
     }
 }

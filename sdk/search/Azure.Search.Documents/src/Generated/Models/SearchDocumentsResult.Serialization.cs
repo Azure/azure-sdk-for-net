@@ -16,7 +16,12 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
         {
-            SearchDocumentsResult result = new SearchDocumentsResult();
+            long? odataCount = default;
+            double? searchCoverage = default;
+            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
+            SearchOptions searchNextPageParameters = default;
+            IReadOnlyList<SearchResult> value = default;
+            string odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"))
@@ -25,7 +30,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Count = property.Value.GetInt64();
+                    odataCount = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("@search.coverage"))
@@ -34,7 +39,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Coverage = property.Value.GetDouble();
+                    searchCoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.facets"))
@@ -43,16 +48,31 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Facets = new Dictionary<string, IList<FacetResult>>();
+                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        IList<FacetResult> value = new List<FacetResult>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            value.Add(FacetResult.DeserializeFacetResult(item));
+                            dictionary.Add(property0.Name, null);
                         }
-                        result.Facets.Add(property0.Name, value);
+                        else
+                        {
+                            List<FacetResult> array = new List<FacetResult>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FacetResult.DeserializeFacetResult(item));
+                                }
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
+                    searchFacets = dictionary;
                     continue;
                 }
                 if (property.NameEquals("@search.nextPageParameters"))
@@ -61,15 +81,24 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.NextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
+                    List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Results.Add(SearchResult.DeserializeSearchResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchResult.DeserializeSearchResult(item));
+                        }
                     }
+                    value = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.nextLink"))
@@ -78,11 +107,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.NextLink = property.Value.GetString();
+                    odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new SearchDocumentsResult(odataCount, searchCoverage, searchFacets, searchNextPageParameters, value, odataNextLink);
         }
     }
 }

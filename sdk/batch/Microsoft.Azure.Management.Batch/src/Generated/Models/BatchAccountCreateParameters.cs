@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// accessing Azure Batch account.</param>
         /// <param name="encryption">The encryption configuration for the Batch
         /// account.</param>
-        public BatchAccountCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), EncryptionProperties encryption = default(EncryptionProperties))
+        /// <param name="identity">The identity of the Batch account.</param>
+        public BatchAccountCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), EncryptionProperties encryption = default(EncryptionProperties), BatchAccountIdentity identity = default(BatchAccountIdentity))
         {
             Location = location;
             Tags = tags;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             KeyVaultReference = keyVaultReference;
             PublicNetworkAccess = publicNetworkAccess;
             Encryption = encryption;
+            Identity = identity;
             CustomInit();
         }
 
@@ -112,7 +114,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// If not specified, the default value is 'enabled'. Possible values
+        /// include: 'Enabled', 'Disabled'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
@@ -120,8 +123,19 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Gets or sets the encryption configuration for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// Configures how customer data is encrypted inside the Batch account.
+        /// By default, accounts are encrypted using a Microsoft managed key.
+        /// For additional control, a customer-managed key can be used instead.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.encryption")]
         public EncryptionProperties Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchAccountIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -142,6 +156,10 @@ namespace Microsoft.Azure.Management.Batch.Models
             if (KeyVaultReference != null)
             {
                 KeyVaultReference.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

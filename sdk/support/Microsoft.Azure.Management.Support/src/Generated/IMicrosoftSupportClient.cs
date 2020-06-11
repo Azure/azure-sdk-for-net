@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.Support
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure subscription id
+        /// Azure subscription Id.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Api version
+        /// API version.
         /// </summary>
         string ApiVersion { get; }
 

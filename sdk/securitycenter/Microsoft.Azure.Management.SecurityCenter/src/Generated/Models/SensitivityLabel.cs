@@ -31,12 +31,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         /// <param name="displayName">The name of the sensitivity
         /// label.</param>
+        /// <param name="description">The description of the sensitivity
+        /// label.</param>
+        /// <param name="rank">The rank of the sensitivity label. Possible
+        /// values include: 'None', 'Low', 'Medium', 'High', 'Critical'</param>
         /// <param name="order">The order of the sensitivity label.</param>
         /// <param name="enabled">Indicates whether the label is enabled or
         /// not.</param>
-        public SensitivityLabel(string displayName = default(string), double? order = default(double?), bool? enabled = default(bool?))
+        public SensitivityLabel(string displayName = default(string), string description = default(string), Rank? rank = default(Rank?), int? order = default(int?), bool? enabled = default(bool?))
         {
             DisplayName = displayName;
+            Description = description;
+            Rank = rank;
             Order = order;
             Enabled = enabled;
             CustomInit();
@@ -54,10 +60,23 @@ namespace Microsoft.Azure.Management.Security.Models
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the sensitivity label.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rank of the sensitivity label. Possible values
+        /// include: 'None', 'Low', 'Medium', 'High', 'Critical'
+        /// </summary>
+        [JsonProperty(PropertyName = "rank")]
+        public Rank? Rank { get; set; }
+
+        /// <summary>
         /// Gets or sets the order of the sensitivity label.
         /// </summary>
         [JsonProperty(PropertyName = "order")]
-        public double? Order { get; set; }
+        public int? Order { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether the label is enabled or not.

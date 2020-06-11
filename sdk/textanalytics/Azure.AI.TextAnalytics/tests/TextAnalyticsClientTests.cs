@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -38,69 +38,76 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void DetectLanguageArgumentValidation()
         {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void RecognizeEntitiesArgumentValidation()
         {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void AnalyzeSentimentArgumentValidation()
         {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void ExtractKeyPhrasesArgumentValidation()
         {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new TextAnalyticsRequestOptions()));
-        }
-
-        [Test]
-        public void RecognizePiiEntitiesArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
+            var documents = new List<string>();
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesBatchAsync(documents));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void ConvertToDocumentInputTest()
         {
-            string input = "This is a test";
-            var expectedDocument = new TextDocumentInput("0", input)
+            string document = "This is a test";
+            var expectedDocument = new TextDocumentInput("0", document)
             {
                 Language = "en"
             };
 
-            TextDocumentInput textInput = Client.ConvertToDocumentInput(input, null);
+            TextDocumentInput textInput = Client.ConvertToDocumentInput(document, null);
             Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
 
-            textInput = Client.ConvertToDocumentInput(input, "es");
+            textInput = Client.ConvertToDocumentInput(document, "es");
             expectedDocument.Language = "es";
             Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
 
-            textInput = Client.ConvertToDocumentInput(input, "es", 2);
-            var expectedDocument2 = new TextDocumentInput("2", input)
+            textInput = Client.ConvertToDocumentInput(document, "es", 2);
+            var expectedDocument2 = new TextDocumentInput("2", document)
             {
                 Language = "es"
             };

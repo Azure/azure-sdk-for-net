@@ -23,6 +23,7 @@ namespace Batch.Tests.ScenarioTests
                 string batchAccountName = TestUtilities.GenerateName();
                 string paasPoolName = "test_paas_pool";
                 string iaasPoolName = "test_iaas_pool";
+                string displayName = "test_pool";
                 ResourceGroup group = new ResourceGroup(this.Location);
                 await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
 
@@ -34,7 +35,7 @@ namespace Batch.Tests.ScenarioTests
                 {
                     // Create PaaS pool
                     Pool paasPool = new Pool();
-                    paasPool.DisplayName = "test_pool";
+                    paasPool.DisplayName = displayName;
                     paasPool.VmSize = "small";
                     paasPool.DeploymentConfiguration = new DeploymentConfiguration()
                     {
@@ -80,7 +81,7 @@ namespace Batch.Tests.ScenarioTests
 
                     // Create IaaS pool
                     Pool iaasPool = new Pool();
-                    iaasPool.DisplayName = "test_pool";
+                    iaasPool.DisplayName = displayName;
                     iaasPool.VmSize = "Standard_A1";
                     iaasPool.DeploymentConfiguration = new DeploymentConfiguration()
                     {
@@ -118,8 +119,8 @@ namespace Batch.Tests.ScenarioTests
                     // Verify get operation
                     var pool = await this.BatchManagementClient.Pool.GetAsync(resourceGroupName, batchAccountName, iaasPoolName);
                     Assert.Equal("STANDARD_A1", pool.VmSize);
-                    Assert.Null(pool.DisplayName);
-                    Assert.Equal(AllocationState.Steady, pool.AllocationState);
+                    Assert.Equal(displayName, pool.DisplayName);
+                    Assert.Equal(AllocationState.Resizing, pool.AllocationState);
                     Assert.Equal("batch.node.windows amd64", pool.DeploymentConfiguration.VirtualMachineConfiguration.NodeAgentSkuId);
 
                     // Verify stop resize operation

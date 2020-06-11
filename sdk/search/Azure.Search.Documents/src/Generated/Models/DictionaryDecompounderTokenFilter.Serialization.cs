@@ -5,23 +5,28 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class DictionaryDecompounderTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("wordList");
-            writer.WriteStartArray();
-            foreach (var item in WordList)
+            if (WordList != null && WordList.Any())
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("wordList");
+                writer.WriteStartArray();
+                foreach (var item in WordList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (MinWordSize != null)
             {
                 writer.WritePropertyName("minWordSize");
@@ -51,15 +56,34 @@ namespace Azure.Search.Documents.Models
 
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
-            DictionaryDecompounderTokenFilter result = new DictionaryDecompounderTokenFilter();
+            IList<string> wordList = default;
+            int? minWordSize = default;
+            int? minSubwordSize = default;
+            int? maxSubwordSize = default;
+            bool? onlyLongestMatch = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("wordList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.WordList.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    wordList = array;
                     continue;
                 }
                 if (property.NameEquals("minWordSize"))
@@ -68,7 +92,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinWordSize = property.Value.GetInt32();
+                    minWordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minSubwordSize"))
@@ -77,7 +101,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinSubwordSize = property.Value.GetInt32();
+                    minSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxSubwordSize"))
@@ -86,7 +110,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxSubwordSize = property.Value.GetInt32();
+                    maxSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("onlyLongestMatch"))
@@ -95,21 +119,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OnlyLongestMatch = property.Value.GetBoolean();
+                    onlyLongestMatch = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch);
         }
     }
 }

@@ -43,6 +43,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -72,7 +75,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed { get; protected set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            protected set => _closed = value;
+        }
 
         /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
@@ -601,8 +608,8 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             IsClosed = true;
 
-            var clientHash = GetHashCode().ToString();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConsumerClient), EventHubName, clientHash);
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConsumerClient), EventHubName, clientHash);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -623,7 +630,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -639,13 +646,13 @@ namespace Azure.Messaging.EventHubs.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConsumerClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConsumerClient), EventHubName, clientHash);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConsumerClient), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
@@ -895,10 +902,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = ex;
                         break;
                     }
-                    catch (Exception ex) when
-                        (ex is OutOfMemoryException
-                        || ex is StackOverflowException
-                        || ex is ThreadAbortException)
+                    catch (Exception ex) when (ex.IsFatalException())
                     {
                         channel.Writer.TryComplete(ex);
                         throw;

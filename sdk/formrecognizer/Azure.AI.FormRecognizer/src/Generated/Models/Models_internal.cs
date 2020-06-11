@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Response to the list custom models operation. </summary>
     internal partial class Models_internal
@@ -22,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="summary"> Summary of all trained custom models. </param>
         /// <param name="modelList"> Collection of trained custom models. </param>
         /// <param name="nextLink"> Link to the next page of custom models. </param>
-        internal Models_internal(ModelsSummary_internal summary, IList<ModelInfo_internal> modelList, string nextLink)
+        internal Models_internal(ModelsSummary_internal summary, IReadOnlyList<ModelInfo_internal> modelList, string nextLink)
         {
             Summary = summary;
             ModelList = modelList;
@@ -30,10 +29,10 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         /// <summary> Summary of all trained custom models. </summary>
-        public ModelsSummary_internal Summary { get; internal set; }
+        public ModelsSummary_internal Summary { get; }
         /// <summary> Collection of trained custom models. </summary>
-        public IList<ModelInfo_internal> ModelList { get; internal set; }
+        public IReadOnlyList<ModelInfo_internal> ModelList { get; }
         /// <summary> Link to the next page of custom models. </summary>
-        public string NextLink { get; internal set; }
+        public string NextLink { get; }
     }
 }

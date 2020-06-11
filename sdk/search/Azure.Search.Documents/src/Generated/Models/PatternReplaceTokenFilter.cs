@@ -5,27 +5,47 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+using System;
+
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A character filter that replaces characters in the input string. It uses a regular expression to identify character sequences to preserve and a replacement pattern to identify characters to replace. For example, given the input text &quot;aa bb aa bb&quot;, pattern &quot;(aa)\s+(bb)&quot;, and replacement &quot;$1#$2&quot;, the result would be &quot;aa#bb aa#bb&quot;. This token filter is implemented using Apache Lucene. </summary>
     public partial class PatternReplaceTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
-        public PatternReplaceTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="pattern"> A regular expression pattern. </param>
+        /// <param name="replacement"> The replacement text. </param>
+        public PatternReplaceTokenFilter(string name, string pattern, string replacement) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (pattern == null)
+            {
+                throw new ArgumentNullException(nameof(pattern));
+            }
+            if (replacement == null)
+            {
+                throw new ArgumentNullException(nameof(replacement));
+            }
+
+            Pattern = pattern;
+            Replacement = replacement;
             ODataType = "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
         }
 
         /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal PatternReplaceTokenFilter(string pattern, string replacement, string oDataType, string name) : base(oDataType, name)
+        internal PatternReplaceTokenFilter(string oDataType, string name, string pattern, string replacement) : base(oDataType, name)
         {
             Pattern = pattern;
             Replacement = replacement;
-            ODataType = "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
         }
 
         /// <summary> A regular expression pattern. </summary>

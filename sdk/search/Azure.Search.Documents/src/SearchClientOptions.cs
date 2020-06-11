@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -39,11 +38,28 @@ namespace Azure.Search.Documents
         internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06_Preview;
 
         /// <summary>
+        /// The service version to use when creating continuation tokens that
+        /// can be passed between different client libraries.  Changing this
+        /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
+        /// </summary>
+        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2019_05_06_Preview;
+
+        /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
         /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
         /// </summary>
         public ServiceVersion Version { get; }
+
+#if EXPERIMENTAL_SERIALIZER
+        /// <summary>
+        /// Gets or sets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.  The
+        /// serializer needs to support JSON and <see cref="JsonObjectSerializer"/>
+        /// will be used if no value is provided.
+        /// </summary>
+        public ObjectSerializer Serializer { get; set; }
+#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
@@ -122,6 +138,7 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
+            Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
             Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }

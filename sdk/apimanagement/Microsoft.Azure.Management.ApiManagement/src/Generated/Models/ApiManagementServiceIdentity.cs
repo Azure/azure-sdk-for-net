@@ -43,7 +43,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="principalId">The principal id of the identity.</param>
         /// <param name="tenantId">The client tenant id of the
         /// identity.</param>
-        public ApiManagementServiceIdentity(string type, System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties> userAssignedIdentities = default(IDictionary<string, Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties>))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the resource. The user identity
+        /// dictionary key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
+        /// providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public ApiManagementServiceIdentity(string type, System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, UserIdentityProperties> userAssignedIdentities = default(IDictionary<string, UserIdentityProperties>))
         {
             Type = type;
             PrincipalId = principalId;
@@ -81,9 +86,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.Guid? TenantId { get; private set; }
 
         /// <summary>
+        /// Gets or sets the list of user identities associated with the
+        /// resource. The user identity
+        /// dictionary key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
+        /// providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserIdentityProperties> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

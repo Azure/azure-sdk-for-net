@@ -98,7 +98,10 @@ namespace Microsoft.Azure.Management.Peering
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-01-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -109,7 +112,6 @@ namespace Microsoft.Azure.Management.Peering
                 tracingParameters.Add("peeringLocation", peeringLocation);
                 tracingParameters.Add("kind", kind);
                 tracingParameters.Add("asn", asn);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -130,9 +132,9 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _queryParameters.Add(string.Format("asn={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(asn, Client.SerializationSettings).Trim('"'))));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             try
             {

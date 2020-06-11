@@ -7,7 +7,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
@@ -33,7 +33,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
         public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiDirectoryName() => $"test-dire¢t Ø®ϒ%3A-{Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
+        public string GetNewNonAsciiFileName() => $"test-ƒ¡£€‽%3A-{Recording.Random.NewGuid()}";
 
         public ShareClientOptions GetOptions()
         {
@@ -85,11 +87,12 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetFaultyFileConnectionOptions(
             int raiseAt = default,
-            Exception raise = default)
+            Exception raise = default,
+            Action onFault = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
             ShareClientOptions options = GetOptions();
-            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
 
@@ -109,6 +112,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigPremiumBlob.AccountName,
                         TestConfigPremiumBlob.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_SoftDelete()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigSoftDelete.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigSoftDelete.AccountName,
+                        TestConfigSoftDelete.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)

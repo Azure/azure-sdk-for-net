@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Apis under the resource provider
         /// </summary>
         /// <remarks>
-        /// Implements Csm operations Api to exposes the list of available Csm
-        /// Apis under the resource provider
+        /// Description for Implements Csm operations Api to exposes the list
+        /// of available Csm Apis under the resource provider
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Apis under the resource provider
         /// </summary>
         /// <remarks>
-        /// Implements Csm operations Api to exposes the list of available Csm
-        /// Apis under the resource provider
+        /// Description for Implements Csm operations Api to exposes the list
+        /// of available Csm Apis under the resource provider
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

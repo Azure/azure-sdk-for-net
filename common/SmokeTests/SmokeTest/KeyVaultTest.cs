@@ -5,13 +5,20 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmokeTest
 {
     class KeyVaultTest
     {
-        private const string defaultAuthorityHost = "https://login.microsoftonline.com";
+        private static Dictionary<string, Uri> authorityHostMap = new Dictionary<string, Uri>
+        {
+            { "AzureCloud", KnownAuthorityHosts.AzureCloud },
+            { "AzureChinaCloud", KnownAuthorityHosts.AzureChinaCloud },
+            { "AzureGermanCloud", KnownAuthorityHosts.AzureGermanCloud },
+            { "AzureUSGovernment", KnownAuthorityHosts.AzureUSGovernment },
+        };
 
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
         private const string SecretValue = "smokeTestValue";
@@ -30,17 +37,12 @@ namespace SmokeTest
             Console.WriteLine("2.- Get that Secret");
             Console.WriteLine("3.- Delete that Secret (Clean up)\n");
 
-            string tenantID = Environment.GetEnvironmentVariable("DIR_TENANT_ID");
-            string clientID = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
-            string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
-            
-            var authorityHost = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST") 
-                ?? defaultAuthorityHost;
+            var authorityHost = GetAuthorityHost(Environment.GetEnvironmentVariable("AZURE_CLOUD"), KnownAuthorityHosts.AzureCloud);
 
             var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
-            { 
-                AuthorityHost = new Uri(authorityHost) 
+            {
+                AuthorityHost = authorityHost
             };
 
 
@@ -81,6 +83,16 @@ namespace SmokeTest
             var secretDeletePoller = await client.StartDeleteSecretAsync(SecretName);
             await secretDeletePoller.WaitForCompletionAsync();
             Console.WriteLine("\tdone");
+        }
+
+        private static Uri GetAuthorityHost(string cloudName, Uri defaultAuthorityHost)
+        {
+            Uri output;
+            if (authorityHostMap.TryGetValue(cloudName, out output))
+            {
+                return output;
+            }
+            return defaultAuthorityHost;
         }
     }
 }

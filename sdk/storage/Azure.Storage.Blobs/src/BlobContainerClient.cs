@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -91,6 +92,16 @@ namespace Azure.Storage.Blobs
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        private readonly ClientSideEncryptionOptions _clientSideEncryption;
+
+        /// <summary>
+        /// The <see cref="ClientSideEncryptionOptions"/> to be used when sending/receiving requests.
+        /// </summary>
+        internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
         /// <summary>
         /// The <see cref="EncryptionScope"/> to be used when sending requests.
@@ -287,6 +298,7 @@ namespace Azure.Storage.Blobs
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -309,6 +321,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="clientSideEncryption"></param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobContainerClient(
             Uri containerUri,
@@ -316,6 +329,7 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
+            ClientSideEncryptionOptions clientSideEncryption,
             string encryptionScope)
         {
             _uri = containerUri;
@@ -323,6 +337,7 @@ namespace Azure.Storage.Blobs
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _clientSideEncryption = clientSideEncryption?.Clone();
             _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
@@ -350,7 +365,14 @@ namespace Azure.Storage.Blobs
         /// </returns>
         protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlobContainerClient(containerUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
+            return new BlobContainerClient(
+                containerUri,
+                pipeline,
+                options.Version,
+                new ClientDiagnostics(options),
+                customerProvidedKey: null,
+                clientSideEncryption: null,
+                encryptionScope: null);
         }
         #endregion ctor
 
@@ -363,7 +385,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) =>
-            new BlobClient(Uri.AppendToPath(blobName), _pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            new BlobClient(Uri.AppendToPath(blobName), _pipeline, Version, ClientDiagnostics, CustomerProvidedKey, ClientSideEncryption, EncryptionScope);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -585,7 +607,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -636,7 +658,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -686,7 +708,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -737,7 +759,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -1133,7 +1155,8 @@ namespace Azure.Storage.Blobs
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound
+                || storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2127,7 +2150,7 @@ namespace Azure.Storage.Blobs
                           .ConfigureAwait(false);
                     if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
                     {
-                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems;
+                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems.ToBlobItems();
                         foreach (BlobItem blobItem in blobItems)
                         {
                             blobItem.Metadata = null;

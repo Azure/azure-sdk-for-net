@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -266,9 +268,31 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListContainersSegmentAsync_Deleted()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient containerClient = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await containerClient.CreateAsync();
+            await containerClient.DeleteAsync();
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(containerItem.Deleted);
+            Assert.IsNotNull(containerItem.Version);
+            Assert.IsNotNull(containerItem.Properties.DeletedTime);
+            Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
         [Test]
@@ -482,6 +506,105 @@ namespace Azure.Storage.Blobs.Test
             await service.DeleteBlobContainerAsync(name);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Task.Delay(2000);
+
+            // Act
+            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
+            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
+            Assert.AreEqual(tagValue, filterBlob.TagValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync_Error()
+        {
+            // Arrange
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UndeleteBlobContainerAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync();
+            await container.DeleteAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            // It takes some time for the Container to be deleted.
+            await Delay(30000);
+
+            // Act
+            Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
+                containerItem.Name,
+                containerItem.Version,
+                GetNewContainerName());
+
+            // Assert
+            await response.Value.GetPropertiesAsync();
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UndeleteBlobContainerAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.UndeleteBlobContainerAsync(GetNewBlobName(), "01D60F8BB59A4652"),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public abstract long MaximumSizeInBytes { get; }
+        public abstract long MaxSizeInBytes { get; }
 
         /// <summary>
         ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic
@@ -44,6 +44,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
         public abstract bool TryAdd(ServiceBusMessage message);
+
+        /// <summary>
+        ///   Clears the batch, removing all messages and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public abstract void Clear();
 
         /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific

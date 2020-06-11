@@ -177,6 +177,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Converts the instance to string representation.
+        /// </summary>
+        ///
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        ///
+        public override string ToString() => $"{ typeof(EventHubsException).Name }({ Reason })";
+
+        /// <summary>
         ///   The set of well-known reasons for an Event Hubs operation failure that
         ///   was the cause of an exception.
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -48,6 +48,13 @@ namespace Azure.Core.Tests
         public void AsyncOnlyWorks()
         {
             Assert.IsTrue(IsAsync);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SyncOnlyWorks()
+        {
+            Assert.IsFalse(IsAsync);
         }
 
         public enum FakeClientVersion

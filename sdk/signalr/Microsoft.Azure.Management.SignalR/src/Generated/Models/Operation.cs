@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="name">Name of the operation with format:
         /// {provider}/{resource}/{operation}</param>
+        /// <param name="isDataAction">If the operation is a data action. (for
+        /// data plane rbac)</param>
         /// <param name="display">The object that describes the
         /// operation.</param>
         /// <param name="origin">Optional. The intended executor of the
@@ -38,9 +40,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// the audit logs UX.</param>
         /// <param name="properties">Extra properties for the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
@@ -58,6 +61,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the operation is a data action. (for data plane
+        /// rbac)
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets the object that describes the operation.

@@ -160,7 +160,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             var storageAccount = this.AddStorageAccount(
                 context,
                 this.fixture.ResourceGroup,
-                suffix, addPermissions,
+                suffix,
+                addPermissions,
                 testOutputHelper,
                 sleep: sleep,
                 waitForPermissions: waitForPermissions);

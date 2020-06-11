@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="name">Name of Cache.</param>
         /// <param name="type">Type of the Cache;
         /// Microsoft.StorageCache/Cache</param>
+        /// <param name="identity">The identity of the cache, if
+        /// configured.</param>
         /// <param name="cacheSizeGB">The size of this Cache, in GB.</param>
         /// <param name="health">Health of the Cache.</param>
         /// <param name="mountAddresses">Array of IP addresses that can be used
@@ -47,20 +49,30 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// 'Creating', 'Deleting', 'Updating'</param>
         /// <param name="subnet">Subnet used for the Cache.</param>
         /// <param name="upgradeStatus">Upgrade status of the Cache.</param>
+        /// <param name="networkSettings">Specifies network settings of the
+        /// cache.</param>
+        /// <param name="encryptionSettings">Specifies encryption settings of
+        /// the cache.</param>
+        /// <param name="securitySettings">Specifies security settings of the
+        /// cache.</param>
         /// <param name="sku">SKU for the Cache.</param>
-        public Cache(object tags = default(object), string id = default(string), string location = default(string), string name = default(string), string type = default(string), int? cacheSizeGB = default(int?), CacheHealth health = default(CacheHealth), IList<string> mountAddresses = default(IList<string>), string provisioningState = default(string), string subnet = default(string), CacheUpgradeStatus upgradeStatus = default(CacheUpgradeStatus), CacheSku sku = default(CacheSku))
+        public Cache(object tags = default(object), string id = default(string), string location = default(string), string name = default(string), string type = default(string), CacheIdentity identity = default(CacheIdentity), int? cacheSizeGB = default(int?), CacheHealth health = default(CacheHealth), IList<string> mountAddresses = default(IList<string>), string provisioningState = default(string), string subnet = default(string), CacheUpgradeStatus upgradeStatus = default(CacheUpgradeStatus), CacheNetworkSettings networkSettings = default(CacheNetworkSettings), CacheEncryptionSettings encryptionSettings = default(CacheEncryptionSettings), CacheSecuritySettings securitySettings = default(CacheSecuritySettings), CacheSku sku = default(CacheSku))
         {
             Tags = tags;
             Id = id;
             Location = location;
             Name = name;
             Type = type;
+            Identity = identity;
             CacheSizeGB = cacheSizeGB;
             Health = health;
             MountAddresses = mountAddresses;
             ProvisioningState = provisioningState;
             Subnet = subnet;
             UpgradeStatus = upgradeStatus;
+            NetworkSettings = networkSettings;
+            EncryptionSettings = encryptionSettings;
+            SecuritySettings = securitySettings;
             Sku = sku;
             CustomInit();
         }
@@ -99,6 +111,12 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the cache, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public CacheIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the size of this Cache, in GB.
@@ -141,10 +159,45 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public CacheUpgradeStatus UpgradeStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies network settings of the cache.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkSettings")]
+        public CacheNetworkSettings NetworkSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies encryption settings of the cache.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionSettings")]
+        public CacheEncryptionSettings EncryptionSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies security settings of the cache.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securitySettings")]
+        public CacheSecuritySettings SecuritySettings { get; set; }
+
+        /// <summary>
         /// Gets or sets SKU for the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public CacheSku Sku { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (NetworkSettings != null)
+            {
+                NetworkSettings.Validate();
+            }
+            if (EncryptionSettings != null)
+            {
+                EncryptionSettings.Validate();
+            }
+        }
     }
 }

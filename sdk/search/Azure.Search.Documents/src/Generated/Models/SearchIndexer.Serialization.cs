@@ -6,10 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexer : IUtf8JsonSerializable
     {
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
-            if (FieldMappings != null)
+            if (FieldMappings != null && FieldMappings.Any())
             {
                 writer.WritePropertyName("fieldMappings");
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputFieldMappings != null)
+            if (OutputFieldMappings != null && OutputFieldMappings.Any())
             {
                 writer.WritePropertyName("outputFieldMappings");
                 writer.WriteStartArray();
@@ -67,22 +68,32 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("disabled");
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (ETag != null)
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }
 
         internal static SearchIndexer DeserializeSearchIndexer(JsonElement element)
         {
-            SearchIndexer result = new SearchIndexer();
+            string name = default;
+            string description = default;
+            string dataSourceName = default;
+            string skillsetName = default;
+            string targetIndexName = default;
+            IndexingSchedule schedule = default;
+            IndexingParameters parameters = default;
+            IList<FieldMapping> fieldMappings = default;
+            IList<FieldMapping> outputFieldMappings = default;
+            bool? disabled = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -91,12 +102,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dataSourceName"))
                 {
-                    result.DataSourceName = property.Value.GetString();
+                    dataSourceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skillsetName"))
@@ -105,12 +116,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SkillsetName = property.Value.GetString();
+                    skillsetName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetIndexName"))
                 {
-                    result.TargetIndexName = property.Value.GetString();
+                    targetIndexName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("schedule"))
@@ -119,7 +130,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
+                    schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
@@ -128,7 +139,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
+                    parameters = IndexingParameters.DeserializeIndexingParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fieldMappings"))
@@ -137,11 +148,19 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.FieldMappings = new List<FieldMapping>();
+                    List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.FieldMappings.Add(FieldMapping.DeserializeFieldMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FieldMapping.DeserializeFieldMapping(item));
+                        }
                     }
+                    fieldMappings = array;
                     continue;
                 }
                 if (property.NameEquals("outputFieldMappings"))
@@ -150,11 +169,19 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OutputFieldMappings = new List<FieldMapping>();
+                    List<FieldMapping> array = new List<FieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.OutputFieldMappings.Add(FieldMapping.DeserializeFieldMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FieldMapping.DeserializeFieldMapping(item));
+                        }
                     }
+                    outputFieldMappings = array;
                     continue;
                 }
                 if (property.NameEquals("disabled"))
@@ -163,7 +190,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IsDisabled = property.Value.GetBoolean();
+                    disabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
@@ -172,11 +199,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ETag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, disabled, odataEtag);
         }
     }
 }

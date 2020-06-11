@@ -17,6 +17,10 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
+    <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
   <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
   <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
     <Touch Files="$(MSBuildThisFileDirectory)Shared\TestConfigurations.xml" AlwaysCreate="True" ContinueOnError="WarnAndContinue" />

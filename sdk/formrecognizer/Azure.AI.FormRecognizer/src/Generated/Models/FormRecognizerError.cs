@@ -5,22 +5,28 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The ErrorInformation. </summary>
     public partial class FormRecognizerError
     {
         /// <summary> Initializes a new instance of FormRecognizerError. </summary>
-        internal FormRecognizerError()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FormRecognizerError. </summary>
-        /// <param name="code"> . </param>
+        /// <param name="errorCode"> . </param>
         /// <param name="message"> . </param>
-        internal FormRecognizerError(string code, string message)
+        internal FormRecognizerError(string errorCode, string message)
         {
-            Code = code;
+            if (errorCode == null)
+            {
+                throw new ArgumentNullException(nameof(errorCode));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            ErrorCode = errorCode;
             Message = message;
         }
     }

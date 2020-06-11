@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class WebApiSkill : IUtf8JsonSerializable
     {
@@ -18,7 +20,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri);
-            if (HttpHeaders != null)
+            if (HttpHeaders != null && HttpHeaders.Any())
             {
                 writer.WritePropertyName("httpHeaders");
                 writer.WriteStartObject();
@@ -66,31 +68,48 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("context");
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Inputs != null && Inputs.Any())
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("inputs");
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
-            writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            if (Outputs != null && Outputs.Any())
             {
-                writer.WriteObjectValue(item0);
+                writer.WritePropertyName("outputs");
+                writer.WriteStartArray();
+                foreach (var item in Outputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
         internal static WebApiSkill DeserializeWebApiSkill(JsonElement element)
         {
-            WebApiSkill result = new WebApiSkill();
+            string uri = default;
+            IDictionary<string, string> httpHeaders = default;
+            string httpMethod = default;
+            TimeSpan? timeout = default;
+            int? batchSize = default;
+            int? degreeOfParallelism = default;
+            string odataType = default;
+            string name = default;
+            string description = default;
+            string context = default;
+            IList<InputFieldMappingEntry> inputs = default;
+            IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    result.Uri = property.Value.GetString();
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("httpHeaders"))
@@ -99,11 +118,19 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.HttpHeaders = new Dictionary<string, string>();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.HttpHeaders.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
+                    httpHeaders = dictionary;
                     continue;
                 }
                 if (property.NameEquals("httpMethod"))
@@ -112,7 +139,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.HttpMethod = property.Value.GetString();
+                    httpMethod = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeout"))
@@ -121,7 +148,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Timeout = property.Value.GetTimeSpan("P");
+                    timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("batchSize"))
@@ -130,7 +157,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.BatchSize = property.Value.GetInt32();
+                    batchSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("degreeOfParallelism"))
@@ -139,12 +166,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.DegreeOfParallelism = property.Value.GetInt32();
+                    degreeOfParallelism = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -153,7 +180,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -162,7 +189,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
@@ -171,27 +198,53 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Context = property.Value.GetString();
+                    context = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Inputs.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        }
                     }
+                    inputs = array;
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Outputs.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        }
                     }
+                    outputs = array;
                     continue;
                 }
             }
-            return result;
+            return new WebApiSkill(odataType, name, description, context, inputs, outputs, uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism);
         }
     }
 }

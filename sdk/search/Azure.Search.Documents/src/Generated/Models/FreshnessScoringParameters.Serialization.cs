@@ -5,10 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class FreshnessScoringParameters : IUtf8JsonSerializable
     {
@@ -22,16 +23,16 @@ namespace Azure.Search.Documents.Models
 
         internal static FreshnessScoringParameters DeserializeFreshnessScoringParameters(JsonElement element)
         {
-            FreshnessScoringParameters result = new FreshnessScoringParameters();
+            TimeSpan boostingDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingDuration"))
                 {
-                    result.BoostingDuration = property.Value.GetTimeSpan("P");
+                    boostingDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return result;
+            return new FreshnessScoringParameters(boostingDuration);
         }
     }
 }

@@ -7,19 +7,14 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a freshness scoring function. </summary>
     public partial class FreshnessScoringParameters
     {
         /// <summary> Initializes a new instance of FreshnessScoringParameters. </summary>
-        public FreshnessScoringParameters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FreshnessScoringParameters. </summary>
         /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
-        internal FreshnessScoringParameters(TimeSpan boostingDuration)
+        public FreshnessScoringParameters(TimeSpan boostingDuration)
         {
             BoostingDuration = boostingDuration;
         }

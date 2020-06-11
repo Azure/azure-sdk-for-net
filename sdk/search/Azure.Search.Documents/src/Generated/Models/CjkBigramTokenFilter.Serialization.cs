@@ -6,17 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CjkBigramTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IgnoreScripts != null)
+            if (IgnoreScripts != null && IgnoreScripts.Any())
             {
                 writer.WritePropertyName("ignoreScripts");
                 writer.WriteStartArray();
@@ -40,7 +41,10 @@ namespace Azure.Search.Documents.Models
 
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element)
         {
-            CjkBigramTokenFilter result = new CjkBigramTokenFilter();
+            IList<CjkBigramTokenFilterScripts> ignoreScripts = default;
+            bool? outputUnigrams = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreScripts"))
@@ -49,11 +53,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IgnoreScripts = new List<CjkBigramTokenFilterScripts>();
+                    List<CjkBigramTokenFilterScripts> array = new List<CjkBigramTokenFilterScripts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.IgnoreScripts.Add(item.GetString().ToCjkBigramTokenFilterScripts());
+                        array.Add(item.GetString().ToCjkBigramTokenFilterScripts());
                     }
+                    ignoreScripts = array;
                     continue;
                 }
                 if (property.NameEquals("outputUnigrams"))
@@ -62,21 +67,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OutputUnigrams = property.Value.GetBoolean();
+                    outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new CjkBigramTokenFilter(odataType, name, ignoreScripts, outputUnigrams);
         }
     }
 }

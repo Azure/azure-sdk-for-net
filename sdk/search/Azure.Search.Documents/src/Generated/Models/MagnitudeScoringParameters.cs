@@ -5,14 +5,18 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a magnitude scoring function. </summary>
     public partial class MagnitudeScoringParameters
     {
         /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
-        public MagnitudeScoringParameters()
+        /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
+        /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
+        public MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd)
         {
+            BoostingRangeStart = boostingRangeStart;
+            BoostingRangeEnd = boostingRangeEnd;
         }
 
         /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>

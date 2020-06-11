@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternTokenizer : IUtf8JsonSerializable
     {
@@ -20,10 +20,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
             if (Group != null)
             {
@@ -39,7 +39,11 @@ namespace Azure.Search.Documents.Models
 
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
-            PatternTokenizer result = new PatternTokenizer();
+            string pattern = default;
+            string flags = default;
+            int? group = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"))
@@ -48,7 +52,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Pattern = property.Value.GetString();
+                    pattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("flags"))
@@ -57,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("group"))
@@ -66,21 +70,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Group = property.Value.GetInt32();
+                    group = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PatternTokenizer(odataType, name, pattern, flags, group);
         }
     }
 }

@@ -5,10 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class IndexingSchedule : IUtf8JsonSerializable
     {
@@ -20,19 +21,20 @@ namespace Azure.Search.Documents.Models
             if (StartTime != null)
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "S");
+                writer.WriteStringValue(StartTime.Value, "O");
             }
             writer.WriteEndObject();
         }
 
         internal static IndexingSchedule DeserializeIndexingSchedule(JsonElement element)
         {
-            IndexingSchedule result = new IndexingSchedule();
+            TimeSpan interval = default;
+            DateTimeOffset? startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"))
                 {
-                    result.Interval = property.Value.GetTimeSpan("P");
+                    interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -41,11 +43,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.StartTime = property.Value.GetDateTimeOffset("S");
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return result;
+            return new IndexingSchedule(interval, startTime);
         }
     }
 }

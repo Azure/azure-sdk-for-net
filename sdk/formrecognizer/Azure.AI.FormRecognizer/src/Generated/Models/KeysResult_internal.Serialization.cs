@@ -15,24 +15,40 @@ namespace Azure.AI.FormRecognizer
     {
         internal static KeysResult_internal DeserializeKeysResult_internal(JsonElement element)
         {
-            KeysResult_internal result = new KeysResult_internal();
+            IReadOnlyDictionary<string, IList<string>> clusters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusters"))
                 {
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        IList<string> value = new List<string>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            value.Add(item.GetString());
+                            dictionary.Add(property0.Name, null);
                         }
-                        result.Clusters.Add(property0.Name, value);
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
+                    clusters = dictionary;
                     continue;
                 }
             }
-            return result;
+            return new KeysResult_internal(clusters);
         }
     }
 }

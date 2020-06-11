@@ -2583,6 +2583,90 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionString = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionString"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithConnectionStringAndAccountKeyInAKV = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithConnectionStringAndAccountKeyInAKV"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            accountKey: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithSasUri = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithSasUri"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            sasUri: {
+                value : ""fakeSasUri"",
+                type : ""SecureString""
+            },
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedServiceWithSasUriAndSasTokenInAKV = @"
+{
+    name: ""AzureFileStorageLinkedServiceWithSasUriAndSasTokenInAKV"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        typeProperties:
+        {
+            sasUri: {
+                value : ""fakeSasUri"",
+                type : ""SecureString""
+            },
+            sasToken: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string GoogleCloudStorageLinkedService = @"
 {
     name: ""GoogleCloudStorageLinkedService"",
@@ -2595,6 +2679,27 @@ namespace DataFactory.Tests.JsonSamples
             accessKeyId : ""fakeaccess"",
             secretAccessKey : {
                 value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SharePointOnlineListLinkedService = @"
+{
+    name: ""LinkedService-SharePointOnlineList"",
+    properties:
+    {
+        type: ""SharePointOnlineList"",
+        description: ""test description"",
+        typeProperties:
+        {
+            siteUrl : ""http://localhost/webhdfs/v1/"",
+            tenantId: ""tenantId"",
+            servicePrincipalId: ""servicePrincipalId"",
+            servicePrincipalKey : {
+                value : ""servicePrincipalKey"",
                 type : ""SecureString""
             }
         }

@@ -5,15 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public class ServiceBusTestBase
+    public abstract class ServiceBusTestBase
     {
-        protected IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        protected IList<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
@@ -77,26 +76,14 @@ namespace Azure.Messaging.ServiceBus.Tests
             return text;
         }
 
-        protected TokenCredential GetTokenCredential() =>
-        new ClientSecretCredential(
-            TestEnvironment.ServiceBusTenant,
-            TestEnvironment.ServiceBusClient,
-            TestEnvironment.ServiceBusSecret);
-
-        protected ServiceBusClient GetNoRetryClient()
+        internal ServiceBusConnection GetMockedConnection()
         {
-            var options =
-                new ServiceBusClientOptions
-                {
-                    RetryOptions = new ServiceBusRetryOptions
-                    {
-                        TryTimeout = TimeSpan.FromSeconds(5),
-                        MaximumRetries = 0
-                    }
-                };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
+            var mockConnection = new Mock<ServiceBusConnection>();
+
+            mockConnection
+                .Setup(connection => connection.RetryOptions)
+                .Returns(new ServiceBusRetryOptions());
+            return mockConnection.Object;
         }
     }
 }

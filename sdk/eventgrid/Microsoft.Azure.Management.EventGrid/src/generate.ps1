@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "eventgrid/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "eventgrid/resource-manager" -AutoRestVersion "v2"

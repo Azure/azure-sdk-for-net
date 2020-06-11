@@ -43,6 +43,11 @@ namespace Azure.Storage.Files.DataLake
         private readonly Uri _blobUri;
 
         /// <summary>
+        /// The paths's blob <see cref="Uri"/> endpoint.
+        /// </summary>
+        internal virtual Uri BlobUri => _blobUri;
+
+        /// <summary>
         /// The path's dfs <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _dfsUri;
@@ -279,6 +284,20 @@ namespace Azure.Storage.Files.DataLake
             : this(pathUri, credential.AsPolicy(), options)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="fileSystemClient"><see cref="DataLakeFileSystemClient"/> of the path's File System.</param>
+        /// <param name="path">The path to the <see cref="DataLakePathClient"/>.</param>
+        public DataLakePathClient(DataLakeFileSystemClient fileSystemClient, string path)
+            : this(
+                  (new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
+                  fileSystemClient.Pipeline,
+                  fileSystemClient.Version,
+                  fileSystemClient.ClientDiagnostics)
+        {
         }
 
         /// <summary>
@@ -651,7 +670,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> CreateInternal(
+        internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
@@ -1538,12 +1557,25 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(sourceConditions)}: {sourceConditions}");
                 try
                 {
-                    DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
-                    string renameSource = "/" + uriBuilder.FileSystemName + "/" + uriBuilder.DirectoryOrFilePath;
+                    // Build renameSource
+                    DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath;
 
-                    uriBuilder.FileSystemName = destinationFileSystem ?? uriBuilder.FileSystemName;
-                    uriBuilder.DirectoryOrFilePath = destinationPath;
-                    DataLakePathClient destPathClient = new DataLakePathClient(uriBuilder.ToUri(), Pipeline);
+                    if (sourceUriBuilder.Sas != null)
+                    {
+                        renameSource += "?" + sourceUriBuilder.Sas;
+                    }
+
+                    // Build destination URI
+                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    destUriBuilder.FileSystemName = destinationFileSystem ?? destUriBuilder.FileSystemName;
+                    destUriBuilder.DirectoryOrFilePath = destinationPath;
+
+                    // We will get sas with destPath, if it was provided by the user.
+                    destUriBuilder.Sas = null;
+
+                    // Build destPathClient
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
@@ -2853,11 +2885,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2914,11 +2942,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2975,11 +2999,7 @@ namespace Azure.Storage.Files.DataLake
                     conditions.ToBlobRequestConditions());
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3035,11 +3055,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)

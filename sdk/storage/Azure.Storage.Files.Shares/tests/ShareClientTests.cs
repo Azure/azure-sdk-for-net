@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
@@ -179,7 +180,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -509,7 +510,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
