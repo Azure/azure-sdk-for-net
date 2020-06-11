@@ -16,7 +16,6 @@
       REST API Reference for Data Lake - https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
