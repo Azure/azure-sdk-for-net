@@ -1,0 +1,18 @@
+trigger: none
+
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: iot
+    Location: westcentralus
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+    EnvVars:
+      # Runs live tests.
+      AZURE_IOT_TEST_MODE: Live

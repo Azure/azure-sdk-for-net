@@ -69,15 +69,12 @@ if (-not $appId)
     $appId = az ad app create --display-name $AppRegistrationName --native-app --query 'appId' --output tsv
 }
 
-$sp = az ad sp list --show-mine --query "[?appId=='$appId'].appId" --output tsv
-if (-not $sp)
+$spExists = az ad sp list --show-mine --query "[?appId=='$appId'].appId" --output tsv
+if (-not $spExists)
 {
     Write-Host "`nCreating service principal for app $appId`n"
     az ad sp create --id $appId --output none
 }
-
-# Get test application OID from the service principal
-$applicationOId = az ad sp show --id $appId --query "objectId" --output tsv
 
 $rgExists = az group exists --name $ResourceGroup
 if ($rgExists -eq "False")
@@ -86,25 +83,13 @@ if ($rgExists -eq "False")
     az group create --name $ResourceGroup --location $Region --output none
 }
 
-Write-Host "`nDeploying resources to $ResourceGroup in $Region`n"
-
-$armTemplateFile = Join-Path -Path $PSScriptRoot -ChildPath "../../../test-resources.json"
-
-if (-not (Test-Path $armTemplateFile -PathType leaf))
+$hubExists = az iot hub list -g $ResourceGroup --query "[?name=='$IotHubName']" --output tsv --only-show-errors
+if (-not $hubExists)
 {
-    throw "`nARM template was not found. Please make sure you have an ARM template file named test-resources.json in the root of the service directory`n"
+    Write-Host "`nCreating IoT Hub $IotHubName`n"
+    az iot hub create -n $IotHubName -g $ResourceGroup --location $Region --output none --only-show-errors
 }
-
-# Deploy test-resources.json ARM template.
-az deployment group create --resource-group $ResourceGroup --name $IotHubName --template-file $armTemplateFile --parameters `
-    baseName=$IotHubName `
-    testApplicationOid=$applicationOId `
-    location=$Region
-
-# Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
-# and we have to use that casing in order to get them from the deployment outputs.
-$iotHubConnectionString = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_CONNECTIONSTRING.value' --output tsv
-$iotHubHostName = az deployment group show -g $ResourceGroup -n $IotHubName --query 'properties.outputs.ioT_HUB_ENDPOINT_URL.value' --output tsv
+$iotHubHostName = az iot hub show -n $IotHubName -g $ResourceGroup --query 'properties.hostName' --output tsv --only-show-errors
 
 Write-Host("Set a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
@@ -115,14 +100,21 @@ Write-Host("Writing user config file - $fileName`n")
 $appSecretJsonEscaped = ConvertTo-Json $appSecret
 $config = @"
 {
-    "IotHubConnectionString": "$iotHubConnectionString",
-    "IotHubHostName": "$iotHubHostName",
+    "IotHubHostName": "https://$($iotHubHostName)",
     "ApplicationId": "$appId",
     "ClientSecret": $appSecretJsonEscaped,
     "TestMode":  "Live"
 }
 "@
-
 $config | Out-File "$PSScriptRoot\..\config\$fileName"
+
+$userSettingsFileSuffix = ".test.assets.config.json"
+$userSettingsFileName = "$user$userSettingsFileSuffix"
+$userTestAssetSettingsFileName = "$PSScriptRoot\..\config\$userSettingsFileName"
+if (-not (Test-Path $userTestAssetSettingsFileName))
+{
+    Write-Host "Creating empty user test assets config file - $userSettingsFileName`n"
+    New-Item -ItemType File -Path $userTestAssetSettingsFileName -Value "{}" | Out-Null
+}
 
 Write-Host "Done!"
