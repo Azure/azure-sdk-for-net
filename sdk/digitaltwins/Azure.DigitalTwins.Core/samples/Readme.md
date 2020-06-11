@@ -416,24 +416,9 @@ await foreach (IncomingRelationship incomingRelationship in incomingRelationship
 
 To delete all outgoing relationships for a digital twin, simply iterate over the relationships and delete them iteratively.
 
-```C# Snippet:DigitalTwinsSampleDeleteAllRelationships
-// Delete all relationships from building to floor. These relationships were created using the BasicRelationship type.
-AsyncPageable<string> buildingRelationshipsToDelete = client.GetRelationshipsAsync("buildingTwinId");
-await foreach (var relationshipToDelete in buildingRelationshipsToDelete)
-{
-    BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipToDelete);
-    Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
-    Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
-}
-
-// Delete all relationships from floor to building. These relationships were created using the CustomRelationship type.
-AsyncPageable<string> floorRelationshipsToDelete = client.GetRelationshipsAsync("floorTwinId");
-await foreach (var relationshipToDelete in floorRelationshipsToDelete)
-{
-    CustomRelationship relationship = JsonSerializer.Deserialize<CustomRelationship>(relationshipToDelete);
-    Response deleteRelationshipResponse = await client.DeleteRelationshipAsync(relationship.SourceId, relationship.Id);
-    Console.WriteLine($"Deleted relationship with Id {relationship.Id}. Status response: {deleteRelationshipResponse.Status}.");
-}
+```C# Snippet:DigitalTwinsSampleDeleteRelationship
+Response deleteBuildingRelationshipResponse = await client.DeleteRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
+Console.WriteLine($"Deleted relationship with Id buildingFloorRelationshipId. Status response: {deleteBuildingRelationshipResponse.Status}.");
 ```
 
 ## Create, list, and delete event routes of digital twins
