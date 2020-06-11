@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>4.0.2-preview</Version>
+		<Version>4.0.3-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
 		<PackageTags>Recoveryservices;Backup;RestoreWithDiskExclusion;SoftDeleteFeature</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added 4 new rest api related to private endpoint connection work (JEDI).
+- Added new rest api related to Cross Region Restore.
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
